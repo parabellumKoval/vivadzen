@@ -1,0 +1,51 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.input__wrapper-checkbox {
+  display: flex;
+  cursor: pointer;
+}
+
+.input-checkbox {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  opacity: 0;
+
+  &:checked {
+    & + .custome-checkbox {
+      border: 1px solid $color-text;
+      .icon {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.custome-checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 5px;
+  width: 15px;
+  height: 15px;
+  color: $color-text;
+  margin-right: 15px;
+  border: 1px solid $color-gray;
+  border-radius: 2px;
+  transition: border-color 0.4s;
+  background: $color-bg;
+}
+.custome-checkbox .icon {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.input__wrapper-checkbox{
+  &:hover {
+    .custome-checkbox {
+      background: $color-bg-3;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.main {
+  position: relative;
+  width: 100%;
+  
+  @include _tablet {
+    overflow-x: initial;
+  }
+
+  @include _desktop {
+    width: auto;
+  }
+}

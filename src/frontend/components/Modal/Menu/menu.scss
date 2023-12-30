@@ -1,0 +1,110 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.mm {
+
+  &-header {
+    margin: -30px -20px 20px -20px;
+    width: calc(100vw - 25px);
+    padding: 30px 20px;
+    background: $color-1;
+
+    @include _desktop {
+      display: none;
+    }
+
+    &-user {
+      display: grid;
+      grid-template-columns: 50px min-content;
+      grid-gap: 20px;
+
+      &-btns {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: min-content;
+        align-items: center;
+        grid-gap: 10px;
+  
+      }
+    }
+
+    &-btn {
+      font-weight: 500;
+      color: $color-8;
+    }
+
+    &-delimiter {
+      height: 20px;
+      width: 2px;
+      background: $color-8;
+    }
+  }
+
+  &-content {
+    display: grid;
+    grid-gap: 30px;
+    padding: 0 0 30px 0;
+
+    @include _desktop {
+      padding: 0;
+      width: calc(100% + 30px);
+      margin: -15px;
+    }
+
+    &-catalog {
+      display: block;
+      position: relative;
+      background: $color-6;
+
+      @include _desktop {
+        display: none;
+      }
+
+      :deep(.icon) {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
+
+.menu {
+  &-label {
+    margin: 0 0 15px 0;
+    color: $color-4;
+  }
+
+  &-ul {
+    display: grid;
+    grid-gap: 15px;
+  }
+}
+
+.avatar-faker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background: $color-11;
+  color: $color-8;
+}
+
+.langs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0 0 0;
+
+  &-label {
+    color: $color-3;
+  }
+
+  &-switcher {
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+  }
+}

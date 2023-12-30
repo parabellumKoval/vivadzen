@@ -1,0 +1,72 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  grid-gap: 15px;
+
+  @include _tablet {
+    flex-direction: row;
+  }
+  @include _desktop {
+  }
+
+  &-wrapper {
+    margin: 0 0 30px 0;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $color-gray;
+
+    @include _tablet {
+      padding: 0;
+      border-bottom: 0;
+    }
+  }
+}
+
+.details {
+  padding: 0;
+
+  @include _tablet {
+    padding: 30px 0 10px 0;
+  }
+}
+
+.show-more-btn {
+  align-self: flex-start;
+  width: 40px;
+  flex-shrink: 0;
+
+  @include _desktop {
+    align-self: center;
+  }
+
+  .icon {
+    transform: rotate(90deg);
+    transition: transform $speed;
+  }
+
+  &.active {
+    .icon {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
+
+    > * {
+      pointer-events: none;
+    }
+  }
+}
+
+.button-disabled {
+  flex-shrink: 0;
+  height: 30px;
+  width: 40px;
+  border-radius: 15px;
+  background: $color-bg-3;
+}

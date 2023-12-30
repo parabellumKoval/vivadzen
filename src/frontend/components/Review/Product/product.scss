@@ -1,0 +1,26 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.devide {
+  display: none;
+  @include _desktop {
+    display: block;
+    border-left: 1px solid $color-6;
+  }
+}
+
+.review {
+  &-wrapper {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 15px;
+    align-items: stretch;
+    width: 100%;
+
+    @include _tablet {}
+    @include _desktop {
+      grid-template-columns: minmax(calc(40% - 20px), 1fr) 1px minmax(calc(60% - 20px), 1fr);
+      grid-gap: 20px;
+    }
+  }
+}

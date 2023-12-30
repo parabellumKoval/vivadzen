@@ -1,0 +1,65 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  margin: 0 5px;
+
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    max-width: calc(100vw - 30px);
+
+    @include _desktop {
+      max-width: calc(100vw - 70px);
+    }
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  flex-shrink: 0;
+  font-weight: 300;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid $color-5;
+  background: $color-8;
+  transition: box-shadow $speed, width $speed, background $speed;
+
+  @include _tablet {
+    height: 40px;
+    width: 40px;
+    font-size: 16px;
+  }
+
+  &.active {
+    background: $color-6;
+    color: $color-3 !important;
+    border: 1px solid $color-6;
+    // box-shadow: 0px 4px 10px 0px rgba(146, 128, 255, 0.15);
+  }
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  &.active {
+    cursor: default;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: $color-3 !important;
+    border: 1px solid $color-6;
+    background: $color-6;
+  }
+}

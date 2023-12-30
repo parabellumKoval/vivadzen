@@ -1,0 +1,17 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  width: 100%;
+
+  .button {
+    width: 100%;
+  }
+}
+
+.email-btn {
+  border: 2px solid $color-0;
+}

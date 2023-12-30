@@ -1,0 +1,86 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.cart {
+  display: block;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: $color-8;
+
+  @include _tablet {
+  }
+}
+
+.product {
+  &-card {
+    padding: 20px 0;
+    border-bottom: 1px solid $color-6;
+  }
+}
+
+.title {
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 135%;
+}
+
+.body {
+}
+
+.footer {
+  position: sticky;
+  bottom: -40px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 15px;
+  justify-content: flex-end;
+  width: calc(100% + 40px);
+  margin: 0 -20px;
+  padding: 20px;
+  background: $color-7;
+
+  @include _tablet {
+    grid-template-columns: 1fr min-content;
+  }
+
+  @include _desktop {
+    grid-gap: 40px;
+    width: calc(100% + 100px);
+    margin: 0 -50px 0 -50px;
+    bottom: -50px;
+    padding: 40px 50px 50px 50px;
+  }
+}
+
+.checkout-btn {
+  min-width: 220px;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include _tablet {
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .label {
+    @include _desktop {
+      margin-bottom: 5px;
+    }
+  }
+
+  .price {
+    font-size: 20px;
+
+    @include _desktop {
+      font-size: 22px;
+    }
+  }
+}

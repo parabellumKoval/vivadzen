@@ -1,0 +1,24 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.review {
+  &-grid {
+    column-gap: 25px;
+
+    @include _desktop {
+      columns: 2;
+    }
+  }
+
+  &-pagination {
+    margin-top: 50px;
+  }
+}
+
+.shop-review-card {
+  margin-bottom: 25px;
+
+  @include _desktop {
+    margin-bottom: 50px;
+  }
+}

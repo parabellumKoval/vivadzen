@@ -1,0 +1,59 @@
+// MOBILE FIRST
+
+@mixin _tablet {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin _desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin _large-desktop {
+  @media (min-width: 1441px) {
+    @content;
+  }
+}
+
+//
+
+@mixin _scrollbar {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: scale-color($color-primary, $lightness: 60%);
+
+    &:hover {
+      background: $color-primary;
+    }
+  }
+}
+
+@mixin _scrollbar-secondary {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-6;
+
+    &:hover {
+      background: $color-4;
+    }
+  }
+}

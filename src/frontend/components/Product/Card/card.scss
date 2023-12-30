@@ -1,0 +1,199 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.card {
+  display: grid;
+  grid-auto-rows: auto;
+  grid-gap: 10px;
+  padding: 0 10px;
+  width: 100%;
+  background: $color-8;
+
+  @include _tablet {
+    grid-gap: 15px;
+    padding: 0 15px;
+  }
+
+  @include _desktop {
+    grid-gap: 20px;
+    padding: 0 20px;
+  }
+}
+
+.name {
+  display: block;
+  display: -webkit-box;
+  width: 100%;
+  height: 50px;
+  font-size: 12px;
+  overflow: hidden;
+  text-align: center;
+  line-height: 140%;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  @include _tablet {
+    height: 70px;
+    font-size: 16px;
+  }
+}
+
+.image {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-position: center center;
+
+  &-wrapper {
+    display: block;
+    width: calc(100% + 10px);
+    height: 50vw;
+    margin: 0 -5px;
+
+    @include _tablet {
+      width: calc(100% + 30px);
+      margin: 0 -15px;
+    }
+
+    @include _desktop {
+      width: calc(100% + 40px);
+      height: 260px;
+      margin: 0 -20px;
+    }
+  }
+}
+
+.reviews {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+
+  @include _desktop {
+    justify-content: space-between;
+  }
+
+  &-btn {
+    max-width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: $color-3;
+    font-size: 12px;
+
+    @include _tablet {
+      font-size: 14px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+  }
+}
+
+.line {
+  border: 0;
+  border-top: 1px solid $color-6;
+}
+
+.amount {
+  text-align: center;
+  color: $color-green;
+  font-size: 14px;
+
+  @include _tablet {
+    font-size: 16px;
+  }
+
+  .running_out {
+    color: $color-red;
+  }
+
+  .not_available {
+    color: $color-2;
+  }
+}
+
+.sale {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+
+  @include _tablet {
+
+  }
+  @include _desktop {
+    flex-direction: row;
+  }
+
+  .buy-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+
+    @include _tablet {
+
+    }
+
+    @include _desktop {
+      width: 100px;
+    }
+
+    &-name {
+      display: none;
+
+      @include _desktop {
+        display: block;
+      }
+    }
+
+    &-icon {
+      font-size: 20px;
+
+      @include _desktop {
+        display: none;
+      }
+    }
+  }
+
+  .price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 105%;
+
+    @include _desktop {
+      align-items: flex-end;
+    }
+
+    .pr {
+      font-size: 16px;
+
+      @include _tablet {
+        font-size: 18px;
+      }
+      @include _desktop {
+        font-size: 20px;
+      }
+    }
+
+    .old-pr {
+      :deep(.value) {
+        font-weight: 100;
+        font-size: 12px;
+        text-decoration: line-through;
+        color: $color-2;
+
+        @include _tablet {
+          font-size: 14px;
+        }
+      }
+
+      & + .pr {
+        color: $color-red;
+      }
+    }
+  }
+}

@@ -1,0 +1,134 @@
+version: '3.8'
+
+name: djini
+
+services:
+  nginx:
+    build:
+      context: .docker/dev/nginx
+      dockerfile: Dockerfile
+    volumes:
+      - .docker/dev/nginx/sites-enabled:/etc/nginx/sites-enabled:ro
+      - .docker/dev/nginx/snippets:/etc/nginx/snippets:ro
+      - .docker/dev/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - .docker/dev/nginx/ssl:/etc/nginx/ssl:ro
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - nginx
+    depends_on:
+      - api
+      - frontend
+
+  api:
+    build:
+      dockerfile: .docker/dev/api/Dockerfile
+      args:
+        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+        IMAGE_TAG: ${IMAGE_TAG}
+    volumes:
+      - ./src/api:/var/www/html
+    ports:
+      - "8000:8000"
+    networks:
+      - api
+      - nginx
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    working_dir: /var/www/html
+
+  frontend:
+    build:
+      dockerfile: .docker/dev/frontend/Dockerfile
+    volumes:
+      - ./src/frontend:/var/www/html
+      - /var/www/html/node_modules
+    hostname: frontend
+    tty: true
+    ports:
+      - "3000:3000"
+      - "24678:24678"
+    networks:
+      - nginx
+    restart: unless-stopped
+    depends_on:
+      - api
+    command: npm run dev
+
+  mysql:
+    build:
+      dockerfile: .docker/dev/mysql/Dockerfile
+    platform: linux/amd64
+    container_name: mysql
+    tty: true
+    ports: 
+        - "3306:3306"
+    volumes: 
+        - mysql:/var/lib/mysql
+        - ./.docker/dev/mysql/dumps/:/tmp
+    environment: 
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_USER: ${DB_USERNAME}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_ROOT_PASSWORD: root
+        SERVICE_TAGS: dev
+        SERVICE_NAME: mysql
+    networks:
+      - api
+    restart: unless-stopped
+
+  phpmyadmin:
+    build:
+      dockerfile: .docker/dev/phpmyadmin/Dockerfile
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mysql
+      PMA_ARBITRARY: 1
+    networks:
+      - api
+    depends_on:
+      - mysql
+  
+  redis:
+    build:
+      dockerfile: .docker/dev/redis/Dockerfile
+    volumes:
+      - redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - api
+
+  queue:
+    build:
+      dockerfile: .docker/dev/queue/Dockerfile
+      args:
+        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+        IMAGE_TAG: ${IMAGE_TAG}
+    volumes:
+      - ./src/api:/var/www/html
+    depends_on:
+      - redis
+      - mysql
+    networks:
+      - api
+    restart: always
+
+volumes:
+  mysql:
+    driver: local
+
+  redis:
+    driver: local
+
+networks:
+  api:
+    name: api
+    driver: bridge
+  nginx:
+    name: nginx
+    driver: bridge

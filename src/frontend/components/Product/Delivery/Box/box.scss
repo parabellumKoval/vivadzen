@@ -1,0 +1,70 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.method {
+  display: grid;
+  grid-gap: 15px;
+
+  &-item {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 0px;
+    align-items: center;
+
+    @include _desktop {
+      grid-template-columns: 20px 1fr min-content;
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+    }
+  }
+
+  &-image {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+  }
+
+  &-name {
+    line-height: 115%;
+
+    @include _desktop {
+      line-height: 145%;
+    }
+  }
+
+  &-desc {
+    grid-column-start: 2;
+    white-space: nowrap;
+    color: $color-3;
+
+    @include _desktop {
+      grid-column-start: initial;
+    }
+  }
+}
+
+.free-delivery {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  grid-gap: 10px;
+  align-items: center;
+  margin-top: 30px;
+
+  &-icon {
+    font-size: 24px;
+    color: $color-violet;
+  }
+
+  &-name {
+    color: $color-violet;
+  }
+
+  &-desc {
+    color: $color-1;
+
+    .bold {
+      font-weight: 500;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.supheader {
+  display: flex;
+  align-items: center;
+  height: initial;
+  padding: 10px 0;
+  background: linear-gradient(90deg, #427CD2 0%, #C6D242 100%);
+
+  @include _desktop {
+    height: 40px;
+    padding: 0;
+  }
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: #FFFFFF;
+  font-size: 14px;
+}
+
+.content {
+  overflow-y: auto;
+  line-height: 145%;
+  // white-space: nowrap;
+}
+
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: $radius;
+  border: 1px solid $color-5;
+
+  .icon {
+    color: $color-8;
+  }
+
+  &:hover {
+    background: rgba($color-8, 0.1);
+  }
+}

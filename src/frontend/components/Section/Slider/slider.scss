@@ -1,0 +1,23 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.items-wrapeer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(50%, 1fr));
+
+  @include _tablet {
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
+  }
+
+  @include _desktop {
+    grid-template-columns: repeat(5, minmax(min-content, 1fr));
+  }
+}
+
+.product-card {
+  border-right: 1px solid $color-6;
+
+  &:last-child {
+    border-right: 0;
+  }
+}

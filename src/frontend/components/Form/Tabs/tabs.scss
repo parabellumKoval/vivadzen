@@ -1,0 +1,51 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.tabs-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-flow: wrap;
+  grid-gap: 15px;
+}
+
+.tab {
+  display: grid;;
+  justify-items: flex-start;
+  grid-gap: 10px;
+  min-height: 50px;
+  min-width: 50px;
+  width: 100%;
+  padding: 15px 15px;
+  font-size: 15px;
+  background: $color-8;
+  border: 2px solid $color-8;
+  border-radius: $radiusBtn;
+  text-align: left;
+  transition: color .3s, background .3s, border .3s;
+
+  @include _desktop {
+    width: initial;
+  }
+
+  &-image {
+    display: block;
+    width: 100px;
+    height: 20px;
+    object-fit: contain;
+    object-position: left center;
+    // margin: 0 0 10px 0;
+  }
+
+  &.active {
+    border: 2px solid $color-primary;
+    // background: scale-color($color-primary, $lightness: 90%);
+    cursor: auto;
+  }
+
+  &:hover {
+    // color: $color-primary;
+    background: scale-color($color-primary, $lightness: 90%);
+    // border: 1px solid $color-primary;
+  }
+}

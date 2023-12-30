@@ -1,0 +1,50 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.personal-wrapper {
+  display: grid;
+  grid-auto-rows: auto;
+  grid-gap: 15px;
+  justify-items: center;
+  text-align: center;
+}
+
+.link {
+  .name {
+    font-weight: 500;
+    vertical-align: middle;
+  }
+
+  .icon {
+    font-size: 20px;
+    margin-right: 6px;
+  }
+}
+
+.image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 65px;
+}
+
+.content {
+  padding: 25px;
+  line-height: 160%;
+  border: 2px solid $color-green;
+  border-radius: 4px;
+
+  @include _desktop {
+    padding: 35px;
+  }
+
+  .date {
+    margin-top: 10px;
+    color: $color-4;
+    font-size: 12px;
+
+    @include _desktop {
+      font-size: 14px;
+    }
+  }
+}

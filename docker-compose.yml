@@ -1,0 +1,144 @@
+version: '3.8'
+
+name: djini
+
+services:
+  nginx:
+    build:
+      context: .docker/dev/nginx
+      dockerfile: Dockerfile
+    volumes:
+      - .docker/dev/nginx/sites-enabled:/etc/nginx/sites-enabled:ro
+      - .docker/dev/nginx/snippets:/etc/nginx/snippets:ro
+      - .docker/dev/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - .docker/dev/nginx/ssl:/etc/nginx/ssl:ro
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - nginx
+    depends_on:
+      - api
+      - frontend
+
+  api:
+    build:
+      dockerfile: .docker/prod/api/Dockerfile
+      args:
+        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+        IMAGE_TAG: ${IMAGE_TAG}
+    volumes:
+      - ./storage:/var/www/html/storage
+      - ./uploads:/var/www/html/public/uploads
+    ports:
+      - "8000:8000"
+    networks:
+      - api
+      - nginx
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    working_dir: /var/www/html
+
+  frontend:
+    build:
+      dockerfile: .docker/prod/frontend/Dockerfile
+    volumes:
+      - /var/www/html/node_modules
+    networks:
+      - nginx
+    tty: true
+    restart: unless-stopped
+    depends_on:
+      - api
+    command: npm run start
+
+  mysql:
+    build:
+      dockerfile: .docker/prod/mysql/Dockerfile
+    platform: linux/amd64
+    container_name: mysql
+    ports: 
+        - "3306:3306"
+    volumes: 
+        - mysql:/var/lib/mysql
+        - ./.docker/prod/mysql/dumps/:/tmp
+    environment: 
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_USER: ${DB_USERNAME}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_ROOT_PASSWORD: root
+        SERVICE_TAGS: prod
+        SERVICE_NAME: mysql
+    tty: true
+    restart: unless-stopped
+    networks:
+      - api
+
+  phpmyadmin:
+    build:
+      dockerfile: .docker/prod/phpmyadmin/Dockerfile
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mysql
+      PMA_ARBITRARY: 1
+    networks:
+      - api
+    depends_on:
+      - mysql
+
+  redis:
+    build:
+      dockerfile: .docker/prod/redis/Dockerfile
+    volumes:
+      - redis:/data
+    networks:
+      - api
+    restart: unless-stopped
+
+  queue:
+    build:
+      dockerfile: .docker/prod/queue/Dockerfile
+      args:
+        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+        IMAGE_TAG: ${IMAGE_TAG}
+    volumes:
+      - ./src/api:/var/www/html
+    depends_on:
+      - redis
+      - mysql
+    networks:
+      - api
+    restart: always
+
+  # schedule:
+  #   build:
+  #     dockerfile: .docker/prod/schedule/Dockerfile
+  #     args:
+  #       IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+  #       IMAGE_TAG: ${IMAGE_TAG}
+  #   volumes:
+  #     - ./storage:/var/www/html/storage
+  #   links:
+  #     - postgres
+  #     - redis
+  #   networks:
+  #     - api
+  #   restart: unless-stopped
+
+volumes:
+  postgres:
+    driver: local
+
+  redis:
+    driver: local
+
+networks:
+  api:
+    name: api
+
+  gateway:
+    name: gateway
+    external: true

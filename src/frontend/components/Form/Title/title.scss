@@ -1,0 +1,11 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.title {
+  margin-top: 30px;
+  font-size: 18px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}

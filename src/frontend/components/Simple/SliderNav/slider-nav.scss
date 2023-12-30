@@ -1,0 +1,43 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+
+.nav {
+  display: none;
+
+  @include _desktop {
+    display: grid;
+    grid-template-columns: 50px auto 50px;
+    grid-gap: 10px;
+    width: 100%;
+    max-width: 1440px;
+    padding: 0 35px;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+    transition: opacity $speed-slow;
+
+    &-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: $color-7;
+      color: $color-1;
+      border-radius: $radius;
+      transition: transform $speed-slow, box-shadow $speed;
+
+      &.prev {
+      }
+      &.next {
+      }
+
+      &.disabled {
+        color: $color-4;
+        pointer-events: none;
+        cursor:auto;
+      }
+    }
+  }
+}

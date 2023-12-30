@@ -1,0 +1,18 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.inner {
+
+}
+
+.image {
+  width: 70px;
+  height: 20px;
+  margin-bottom: 5px;
+  object-fit: contain;
+  object-position: left;
+}
+
+.title {
+  white-space: nowrap;
+}

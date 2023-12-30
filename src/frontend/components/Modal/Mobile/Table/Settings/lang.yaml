@@ -1,0 +1,30 @@
+en:
+  settings: Settings
+  view: View
+  select: Select multiple
+  sort: Sorting
+  per_page: Items per page
+  change_order: Change order
+  pagination: Pagination
+  numbers: Digital
+  loadmore: Loadmore
+ru:
+  settings: Настройки
+  view: Вид
+  select: Выбрать несколько
+  sort: Сортировка
+  per_page: Элементов на странице
+  change_order: Изменить порядок
+  pagination: Пагинация
+  numbers: Цыфровая
+  loadmore: Загрузить больше
+uk:
+  settings: Настройки
+  view: Вид
+  select: Вибрати декілька
+  sort: Сортування
+  per_page: Елементів на сторінці
+  change_order: Змінити порядок
+  pagination: Пагінація
+  numbers: Цифрова
+  loadmore: Завантажити більше

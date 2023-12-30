@@ -1,0 +1,50 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.filter {
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &-label {
+    margin-right: 20px;
+    color: $color-2;
+  }
+
+  &-remove-all-btn {
+    height: 34px;
+    padding: 0 15px;
+    margin-right: 10px;
+    background: $color-8;
+    border: 1px solid $color-1;
+  }
+
+  &-remove-btn {
+    font-size: 24px;
+    transition: color $speed;
+
+    &:hover {
+      color: $color-red;
+    }
+  }
+
+  &-item {
+    display: grid;
+    grid-template-columns: min-content 24px;
+    align-items: center;
+    grid-gap: 5px;
+    height: 34px;
+    padding: 0 5px 0 10px;
+    margin-right: 10px;
+    background: scale-color($color-blue, $lightness: 85%);
+    border: 1px solid $color-8;
+    border-radius: $radius;
+    white-space: nowrap;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

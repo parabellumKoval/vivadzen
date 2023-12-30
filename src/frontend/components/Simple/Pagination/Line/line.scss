@@ -1,0 +1,21 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.pagination {
+
+  &-wrapper {
+    display: flex;
+    grid-gap: 5px;
+  }
+
+  &-item {
+    height: 8px;
+    width: 8px;
+    border-radius: 4px;
+    background: $color-text-2;
+    border: 2px solid $color-bg;
+    opacity: 0.25;
+    max-width: 50px;
+    min-width: 8px;
+  }
+}

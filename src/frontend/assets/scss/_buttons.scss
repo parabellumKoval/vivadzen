@@ -1,0 +1,274 @@
+@import './vars';
+@import './mixins';
+
+// BUTTONS
+.btn {
+  height: 40px;
+  border-radius: $radius;
+  transition: border $speed-fast, color $speed-fast, background $speed-fast;
+
+  @include _desktop {
+    height: 50px;
+  }
+}
+
+.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 10px;
+  width: 100%;
+  height: 40px;
+  padding: 0 35px;
+  border-radius: $radius;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: transform $speed-fast, color $speed-fast .3s, border $speed-fast, background $speed-fast;
+
+  @include _tablet {
+    width: min-content;
+  }
+
+  @include _desktop {
+    height: 50px;
+    font-size: 14px;
+  }
+
+  &.clear-padding {
+    padding: 0;
+  }
+
+  &.lowcase {
+    text-transform: none;
+  }
+
+  &.wide {
+    padding: 0 45px;
+  }
+
+  &.light {
+    text-transform: none;
+    font-weight: 400;
+  }
+  
+  &.small {
+    height: 40px;
+    padding: 0 20px;
+  }
+  
+  &.mini {
+    height: 34px;
+    padding: 0 15px;
+  }
+
+  &.primary {
+    background: $color-green;
+    color: #fff;
+
+    &:hover {
+      background: lighten($color-green, 10%);
+    }
+
+    &.loading {
+      &:before {
+        background: lighten($color-green, 10%);
+      }
+    }
+  }
+
+  &.secondary {
+    background: $color-7;
+    color: $color-2;
+
+    &:hover {
+      background: darken($color-7, 4%);
+    }
+
+    &.loading {
+      &:before {
+        background: $color-5;
+      }
+    }
+  }
+
+  &.color-primary {
+    border: 1px solid $color-green;
+    color: $color-green;
+
+    &:hover {
+      border-color: lighten($color-green, 10%);
+      color: lighten($color-green, 10%);
+    }
+  }
+
+
+  &.violet {
+    background: scale-color($color-violet, $lightness: 94%);
+    // background: lighten($color-violet, 40%);
+    color: $color-violet;
+
+    &:hover {
+      background: scale-color($color-violet, $lightness: 84%);
+    }
+
+    &.loading {
+      &:before {
+        background: scale-color($color-violet, $lightness: 80%);
+      }
+    }
+  }
+
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:active {
+    transition: transform 0s;
+    transform: scale(0.95);
+  }
+  
+  &.loading {
+    opacity: 0.35;
+    pointer-events: none;
+
+    & > * {
+      pointer-events: none;
+    }
+
+    &:before {
+      animation: loading 2s infinite;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.35;
+    pointer-events: none;
+
+    & > * {
+      pointer-events: none;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    left: 20px;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+
+  .inline-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  &.inline-icon {
+    .icon {
+      position: relative;
+      left: initial;
+    }
+  }
+
+  &.large-icon {
+    .icon {
+      font-size: 24px;
+    }
+  }
+}
+
+// LINK
+.link {
+  transition: color $speed;
+
+  &:hover {
+    color: $color-green !important;
+  }
+}
+
+.a-link {
+  text-decoration: underline;
+}
+
+.text-link {
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-gap: 6px;
+  transition: color $speed;
+  white-space: nowrap;
+
+  span {
+    position: relative;
+    padding: 2px 0;
+    border-bottom: 1px dashed;
+  }
+
+  &:hover {
+    color: $color-green;
+  }
+
+  &.loading {
+    pointer-events: none;
+    cursor: auto;
+
+    &:hover {
+      color: initial;
+    }
+
+    span{
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100px;
+        width: 100px;
+        border-radius: 50px;
+        background: $color-0;
+        z-index: -1;
+        margin: -50px 0 0 -50px;
+        transform: scale(0);
+        opacity: 1;
+        animation: loading2 1.5s infinite;
+      }
+    }
+  }
+}
+
+.router-link-active {
+  color: $color-green;  
+}
+
+@keyframes loading {
+  0%{
+    width: 0;
+    padding-bottom: 0;
+  }
+  50%{
+    width: 100%;
+    padding-bottom: 100%;
+  }
+  100%{
+    width: 0;
+    padding-bottom: 0;
+  }
+}
+
+@keyframes loading2 {
+  0%{
+    opacity: 1;
+    transform: scale(0);
+  }
+  50%{
+    opacity: 0;
+    transform: scale(1);
+  }
+  100%{
+    opacity: 0;
+    transform: scale(0);
+  }
+}

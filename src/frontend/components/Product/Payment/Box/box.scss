@@ -1,0 +1,55 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.payment {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  margin: 0 0 20px 0;
+
+  @include _desktop {
+    grid-template-columns: initial;
+    grid-auto-flow: column;
+    grid-auto-columns: 60px;
+    margin: 0 0 30px 0;
+  }
+  
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 40px;
+    border-radius: $radius;
+    background: $color-7;
+  }
+
+  &-image {
+    width: 50px;
+    height: 30px;
+    object-fit: contain;
+  }
+}
+
+.type {
+  display: grid;
+  grid-template-columns: repeat(2, min-content);
+  grid-gap: 10px;
+
+  @include _desktop {
+    grid-auto-flow: column;
+    grid-auto-columns: min-content;
+  }
+
+  &-item {
+    padding: 6px 10px;
+    border: 1px solid $color-6;
+    border-radius: $radius;
+    white-space: nowrap;
+
+
+    @include _desktop {
+      white-space: nowrap;
+    }
+  }
+}

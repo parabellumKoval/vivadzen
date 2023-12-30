@@ -1,0 +1,82 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.stars {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover {
+    .item {
+      color: $color-secondary;
+
+      .icon {
+        color: $color-secondary;
+      }
+    }
+  }
+}
+
+.item {
+  width: 100%;
+  padding: 0;
+  text-align: center;
+  font-size: 10px;
+  color: $color-bg-3;
+  text-transform: uppercase;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform $speed cubic-bezier(1, 0, 0, 1.61), color $speed;
+
+  &:hover {
+    ~.item {
+      color: $color-bg-3 !important;
+
+      .icon {
+        color: $color-bg-3;
+      }
+    }
+  }
+
+  &.active {
+    color: $color-secondary;
+    transform: scale(1.1);
+
+    .icon {
+      color: $color-secondary;
+
+      &:after,
+      &:before {
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.icon {
+  position: relative;
+  color: $color-bg-3;
+  transition: color $speed;
+
+  overflow: hidden;
+
+  &:after,
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background: $color-bg;
+    transform: scale(0);
+  }
+  &:after {
+    transition: transform $speed;
+  }
+  &:before  {
+    background: $color-secondary;
+    transition: transform $speed 150ms;
+    z-index: 1;
+  }
+}

@@ -1,0 +1,39 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.search {
+  position: relative;
+  display: grid;
+  justify-self: flex-end;
+  grid-template-columns: 1fr 100px;
+  align-items: center;
+  height: 50px;
+  max-width: 335px;
+  overflow: hidden;
+  margin: 0 30px;
+
+  .icon {
+    position: absolute;
+    left: 20px;
+    top: 14px;
+    margin: 0 0 0 auto;
+  }
+
+  &-btn {
+    height: 100%;
+    background: $color-green;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+    color: $color-8;
+    border-radius: 0 $radius $radius 0;
+  }
+
+  &-input {
+    height: 100%;
+    background: $color-8;
+    border: 0;
+    padding-left: 55px;
+    border-radius: $radius 0 0 $radius;
+  }
+}

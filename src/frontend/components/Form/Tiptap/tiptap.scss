@@ -1,0 +1,39 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.tiptap {
+  &-wrapper {
+    padding: 10px 0 0 0;
+  }
+
+  &-editor {
+    margin: 5px 0 0 0;
+    padding: 17px 20px;
+    border-radius: $radiusBtn;
+    background: $form-bg;
+    line-height: 135%;
+
+    :deep(*) {
+      touch-action: auto !important;
+      pointer-events: all !important;
+    }
+
+    // @include _tablet {
+    //   padding: 20px 20px;
+    // }
+    
+    :deep(.tiptap) {
+      &:focus {
+        outline: 0px solid;
+      }
+
+      p.is-editor-empty:first-child::before {
+        content: attr(data-placeholder);
+        float: left;
+        color: $color-text-5;
+        pointer-events: none;
+        height: 0;
+      }
+   }
+  }
+}

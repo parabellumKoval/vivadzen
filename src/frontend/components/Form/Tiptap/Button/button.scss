@@ -1,0 +1,13 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.tiptap-btn {
+  box-shadow: $shadow-default;
+  transition: box-shadow .3s, border .3s, background .3s, color .3s;
+
+  &.active {
+    color: $color-primary;
+    border: 1px solid scale-color($color-primary, $whiteness: 70%);
+    background: scale-color($color-primary, $whiteness: 85%);
+  }
+}

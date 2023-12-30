@@ -1,0 +1,25 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.error {
+  text-align: center;
+}
+
+.status {
+  font-weight: 700;
+  font-size: 300px;
+  line-height: 135%;
+  color: $color-3;
+}
+
+.text {
+}
+
+.btn {
+  max-width: 240px;
+  margin: 30px auto;
+
+  .icon {
+    margin-right: 5px;
+  }
+}

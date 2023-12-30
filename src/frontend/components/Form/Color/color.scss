@@ -1,0 +1,98 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.colors {
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 10px;
+  }
+
+  &-item {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 3px solid transparent;
+    transition: border .3s;
+
+    &.active {
+      border: 3px solid $color-bg;
+    }
+
+    .icon {
+      color: rgba($color-bg, 0.9);
+    }
+
+    &.default {
+      background: #eee;
+
+      &.active {
+        outline: 3px solid #ddd;
+      }
+    }
+
+    &.red {
+      background: scale-color($color-red, $lightness: 55%);
+
+      &.active {
+        outline: 3px solid scale-color($color-red, $lightness: 35%);
+      }
+    }
+
+    &.orange {
+      background: scale-color($color-orange, $lightness: 55%);
+
+      &.active {
+        outline: 3px solid scale-color($color-orange, $lightness: 35%);
+      }
+    }
+
+    &.yellow {
+      background: scale-color($color-yellow, $lightness: 55%);
+
+      &.active {
+        outline: 3px solid scale-color($color-yellow, $lightness: 5%);
+      }
+    }
+
+    &.green {
+      background: scale-color($color-green, $lightness: 55%);
+
+      &.active {
+        outline: 3px solid scale-color($color-green, $lightness: 35%);
+      }
+    }
+
+    &.cyan {
+      background: scale-color($color-cyan, $lightness: 55%);
+
+      &.active {
+        outline: 3px solid scale-color($color-cyan, $lightness: 35%);
+      }
+    }
+
+    &.blue {
+      background: scale-color($color-blue, $lightness: 55%);
+
+      &.active {
+        outline: 3px solid scale-color($color-blue, $lightness: 35%);
+      }
+    }
+
+    &.purple {
+      background: scale-color($color-purple, $lightness: 55%);
+
+      &.active {
+        outline: 3px solid scale-color($color-purple, $lightness: 35%);
+      }
+    }
+
+    &.pink {
+      background: scale-color($color-pink, $lightness: 55%);
+
+      &.active {
+        outline: 3px solid scale-color($color-pink, $lightness: 35%);
+      }
+    }
+  }
+}

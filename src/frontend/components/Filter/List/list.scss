@@ -1,0 +1,56 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.filter {
+  &-wrapper {
+    width: 100%;
+  }
+
+  &-item {
+    width: 100%;
+
+    &.active {
+      .filter-header-icon {
+        transform: rotate(180deg);
+      }
+
+      .filter-values {
+        opacity: 1;
+        height: auto;
+        margin: 0 0 20px 0;
+        z-index: 1;
+      }
+    }
+  }
+
+  &-header {
+    display: grid;
+    grid-template-columns: 1fr 24px;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    padding: 0 30px;
+
+    &-icon {
+      font-size: 24px;
+    }
+  }
+
+  &-name {
+    color: $color-3;
+    text-align: left;
+  }
+
+  &-values {
+    position: relative;
+    opacity: 0;
+    height: 0;
+    max-height: 240px;
+    overflow-y: auto;
+    margin: 0;
+    z-index: -1;
+    transition: opacity $speed, margin $speed;
+
+    @include  _scrollbar-secondary
+  }
+}

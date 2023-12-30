@@ -1,0 +1,183 @@
+// @import './assets/scss/vars';
+// @import './assets/scss/mixins';
+
+// .fade-enter-active,
+// .fade-leave-active {
+//   transition: transform 0.3s, opacity .3s;
+// }
+
+// .fade-enter-from {
+//   opacity: 0;
+//   transform: translateX(50%) translateY(30%);
+
+//   @include _desktop {
+//     transform: translateY(15%);
+//   }
+// }
+
+// .fade-leave-to {
+//   transition: transform 0s, opacity 0s;
+//   transform: translateX(50%) translateY(0);
+
+//   @include _desktop {
+//     transform: translateY(0);
+//   }
+// }
+
+// //modal
+// .modal-enter-active,
+// .modal-leave-active {
+//   transition: all 0.3s;
+
+//   // :deep(.modal) {
+//   //   transition: transform 0.3s, opacity .3s;
+//   // }
+// }
+// .modal-enter-from {
+//   opacity: 0;
+//   filter: blur(1rem);
+
+//   // :deep(.modal) {
+//   //   transform: translateX(50%) translateY(30%);
+
+//   //   @include _desktop {
+//   //     transform: translateY(15%);
+//   //   }
+//   // }
+// }
+
+// .modal-leave-to {
+//   transition: transform 0s, opacity 0s;
+
+//   // :deep(.modal) {
+//   //   transform: translateX(50%) translateY(0);
+
+//   //   @include _desktop {
+//   //     transform: translateY(0);
+//   //   }
+//   // }
+// }
+
+// :deep(.modal) {
+//   position: absolute;
+//   bottom: 0px;
+//   top: initial;
+//   right: 50%;
+//   transform: translateX(50%);
+//   width: calc(100% - 20px); 
+
+//   @include _tablet {
+//     max-width: 728px;
+//   }
+
+//   @include _desktop {
+//     max-width: calc(100vw - 90px);
+//     top: initial;
+//     left: initial;
+//     right: initial;
+//     bottom: initial;
+//     transform: translateX(50%) translateY(50%);
+//     width: max-content;
+//   }
+// }
+
+// .modal-wrapper {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background: rgba(0,0,0, 0.2);
+//   z-index: 200;
+// }
+
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: transform 0.3s, opacity .3s;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(50%) translateY(30%);
+
+  @include _desktop {
+    transform: translateY(15%);
+  }
+}
+
+.fade-leave-to {
+  transition: transform 0s, opacity 0s;
+  transform: translateX(50%) translateY(0);
+
+  @include _desktop {
+    transform: translateY(0);
+  }
+}
+
+//modal
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.3s;
+
+  // :deep(.modal) {
+  //   transition: transform 0.3s, opacity .3s;
+  // }
+}
+.modal-enter-from {
+  opacity: 0;
+  filter: blur(1rem);
+
+  // :deep(.modal) {
+  //   transform: translateX(50%) translateY(30%);
+
+  //   @include _desktop {
+  //     transform: translateY(15%);
+  //   }
+  // }
+}
+
+.modal-leave-to {
+  transition: transform 0s, opacity 0s;
+
+  // :deep(.modal) {
+  //   transform: translateX(50%) translateY(0);
+
+  //   @include _desktop {
+  //     transform: translateY(0);
+  //   }
+  // }
+}
+
+:deep(.modal) {
+  position: absolute;
+  bottom: 0px;
+  top: initial;
+  right: 50%;
+  transform: translateX(50%);
+  width: calc(100% - 20px); 
+
+  // @include _tablet {
+  //   max-width: 728px;
+  // }
+
+  @include _desktop {
+    max-width: calc(100vw - 90px);
+    max-height: calc(100vh - 90px);
+    bottom: initial;
+    transform: initial;
+    width: max-content;
+  }
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0, 0.2);
+  z-index: 200;
+}

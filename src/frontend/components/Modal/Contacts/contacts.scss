@@ -1,0 +1,58 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.contacts {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 60px;
+
+  @include _desktop {
+    grid-template-columns: 260px 1px 410px;
+  }
+
+  &-btn {
+    width: 100%;
+    margin: 0 0 10px 0;
+
+    &:last-of-type {
+      margin: 0;
+    }
+
+    .icon {
+      font-size: 20px;
+    }
+
+    .text {
+    }
+  }
+}
+
+.divide {
+  width: 1px;
+  height: 100%;
+  background: $color-6;
+}
+
+.map {
+  &-title {
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  &-iframe {
+    width: 410px;
+    height: 320px;
+  }
+}
+
+.phones {
+  margin: 0 0 40px 0;
+}
+
+.email {
+  &-btn {
+    text-transform: none;
+  }
+}

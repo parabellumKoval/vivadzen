@@ -1,0 +1,126 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.wrapper {
+  position: fixed;
+  right: 15px;
+  top: 65px;
+  width: calc(100% - 30px);
+  z-index: 110;
+
+  @include _tablet {
+    top: 85px;
+    width: 280px;
+  }
+}
+
+.noty {
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  background: $color-bg;
+  box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+
+  &.primary {
+    background: scale-color($color-primary, $whiteness: 90%);
+
+    .header {
+      background: scale-color($color-primary, $whiteness: 80%);
+
+      &-btn,
+      &-countdown {
+        color: $color-primary;
+      }
+    }
+  }
+
+
+  &.error {
+    background: scale-color($color-red, $whiteness: 90%);
+
+    .header {
+      background: scale-color($color-red, $whiteness: 80%);
+
+      &-btn,
+      &-countdown {
+        color: $color-red;
+      }
+    }
+  }
+
+
+  &.warning {
+    background: scale-color($color-orange, $whiteness: 90%);
+
+    .header {
+      background: scale-color($color-orange, $whiteness: 80%);
+
+      &-btn,
+      &-countdown {
+        color: $color-orange;
+      }
+    }
+  }
+
+
+  &.success {
+    background: scale-color($color-green, $whiteness: 80%);
+
+    .header {
+      background: scale-color($color-green, $whiteness: 45%);
+
+      &-btn,
+      &-countdown {
+        color: $color-green;
+      }
+    }
+  }
+}
+
+.title {
+  margin: 20px 20px 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.content{
+  margin: 10px 20px 0 20px;
+  color: $color-4;
+  font-size: 14px;
+  line-height: 135%;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  grid-gap: 10px;
+  height: 30px;
+  width: 100%;
+  padding: 10px;
+  background-color: $color-bg;
+
+  &-countdown {
+    margin: 4px auto 0 10px;
+    font-size: 12px;
+  }
+
+  &-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    background: $color-bg;
+    border-radius: $radiusBtn;
+    color: $color-4;
+    transition: box-shadow $speed;
+  
+    &:hover {
+      box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.10);
+    }
+  }
+}
