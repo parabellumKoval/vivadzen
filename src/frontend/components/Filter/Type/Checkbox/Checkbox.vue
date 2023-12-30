@@ -6,7 +6,7 @@ const props = defineProps({
 })
 </script>
 
-<style src="./checkbox.scss" lang="scss" scoped></style>
+<style src="./checkbox2.scss" lang="scss" scoped></style>
 
 <template>
   <div class="wrapper">
