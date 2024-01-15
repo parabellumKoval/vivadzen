@@ -10,7 +10,7 @@ export const useCategoryFaker = () => {
       content: ``,
       children: [
         {
-          id: 1,
+          id: 11,
           name: 'спортивное питание',
           slug: '/fsdfsdf',
           image: {
@@ -18,7 +18,7 @@ export const useCategoryFaker = () => {
           },
           content: ``,
         },{
-          id: 1,
+          id: 12,
           name: 'косметика',
           slug: '/fsdfsdf',
           image: {
@@ -27,7 +27,7 @@ export const useCategoryFaker = () => {
           content: ``,
           children: [
             {
-              id: 1,
+              id: 121,
               name: 'спортивное питание',
               slug: '/fsdfsdf',
               image: {
@@ -35,7 +35,7 @@ export const useCategoryFaker = () => {
               },
               content: ``,
             },{
-              id: 1,
+              id: 122,
               name: 'косметика',
               slug: '/fsdfsdf',
               image: {
@@ -43,7 +43,7 @@ export const useCategoryFaker = () => {
               },
               content: ``,
             },{
-              id: 1,
+              id: 123,
               name: 'витамины и минералы',
               slug: '/fsdfsdf',
               image: {
@@ -52,7 +52,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 124,
               name: 'бады',
               slug: '/fsdfsdf',
               image: {
@@ -61,7 +61,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 125,
               name: 'Антивозрастная косметика',
               slug: '/fsdfsdf',
               image: {
@@ -70,7 +70,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 126,
               name: 'Натуральная органическая косметика',
               slug: '/fsdfsdf',
               image: {
@@ -79,7 +79,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 127,
               name: 'Омега 3 (Рыбий жир)',
               slug: '/fsdfsdf',
               image: {
@@ -88,7 +88,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 128,
               name: 'Коллаген',
               slug: '/fsdfsdf',
               image: {
@@ -96,7 +96,7 @@ export const useCategoryFaker = () => {
               },
               content: ``,
             },{
-              id: 1,
+              id: 129,
               name: 'спортивное питание',
               slug: '/fsdfsdf',
               image: {
@@ -104,7 +104,7 @@ export const useCategoryFaker = () => {
               },
               content: ``,
             },{
-              id: 1,
+              id: 130,
               name: 'косметика',
               slug: '/fsdfsdf',
               image: {
@@ -112,7 +112,7 @@ export const useCategoryFaker = () => {
               },
               content: ``,
             },{
-              id: 1,
+              id: 131,
               name: 'витамины и минералы',
               slug: '/fsdfsdf',
               image: {
@@ -121,7 +121,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 132,
               name: 'бады',
               slug: '/fsdfsdf',
               image: {
@@ -130,7 +130,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 133,
               name: 'Антивозрастная косметика',
               slug: '/fsdfsdf',
               image: {
@@ -139,7 +139,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 134,
               name: 'Натуральная органическая косметика',
               slug: '/fsdfsdf',
               image: {
@@ -148,7 +148,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 135,
               name: 'Омега 3 (Рыбий жир)',
               slug: '/fsdfsdf',
               image: {
@@ -157,7 +157,7 @@ export const useCategoryFaker = () => {
               content: ``,
             },{
               
-              id: 1,
+              id: 136,
               name: 'Коллаген',
               slug: '/fsdfsdf',
               image: {
@@ -167,7 +167,7 @@ export const useCategoryFaker = () => {
             }
           ]
         },{
-          id: 1,
+          id: 13,
           name: 'витамины и минералы',
           slug: '/fsdfsdf',
           image: {
@@ -176,7 +176,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 14,
           name: 'бады',
           slug: '/fsdfsdf',
           image: {
@@ -185,7 +185,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 15,
           name: 'Антивозрастная косметика',
           slug: '/fsdfsdf',
           image: {
@@ -194,7 +194,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 16,
           name: 'Натуральная органическая косметика',
           slug: '/fsdfsdf',
           image: {
@@ -203,7 +203,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 17,
           name: 'Омега 3 (Рыбий жир)',
           slug: '/fsdfsdf',
           image: {
@@ -212,7 +212,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 18,
           name: 'Коллаген',
           slug: '/fsdfsdf',
           image: {
@@ -220,7 +220,7 @@ export const useCategoryFaker = () => {
           },
           content: ``,
         },{
-          id: 1,
+          id: 19,
           name: 'спортивное питание',
           slug: '/fsdfsdf',
           image: {
@@ -228,7 +228,7 @@ export const useCategoryFaker = () => {
           },
           content: ``,
         },{
-          id: 1,
+          id: 20,
           name: 'косметика',
           slug: '/fsdfsdf',
           image: {
@@ -236,7 +236,7 @@ export const useCategoryFaker = () => {
           },
           content: ``,
         },{
-          id: 1,
+          id: 21,
           name: 'витамины и минералы',
           slug: '/fsdfsdf',
           image: {
@@ -245,7 +245,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 22,
           name: 'бады',
           slug: '/fsdfsdf',
           image: {
@@ -254,7 +254,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 23,
           name: 'Антивозрастная косметика',
           slug: '/fsdfsdf',
           image: {
@@ -263,7 +263,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 24,
           name: 'Натуральная органическая косметика',
           slug: '/fsdfsdf',
           image: {
@@ -272,7 +272,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 25,
           name: 'Омега 3 (Рыбий жир)',
           slug: '/fsdfsdf',
           image: {
@@ -281,7 +281,7 @@ export const useCategoryFaker = () => {
           content: ``,
         },{
           
-          id: 1,
+          id: 26,
           name: 'Коллаген',
           slug: '/fsdfsdf',
           image: {
@@ -291,7 +291,7 @@ export const useCategoryFaker = () => {
         }
       ]
     },{
-      id: 1,
+      id: 2,
       name: 'косметика',
       slug: '/fsdfsdf',
       image: {
@@ -299,7 +299,7 @@ export const useCategoryFaker = () => {
       },
       content: ``,
     },{
-      id: 1,
+      id: 3,
       name: 'витамины и минералы',
       slug: '/fsdfsdf',
       image: {
@@ -308,7 +308,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 4,
       name: 'бады',
       slug: '/fsdfsdf',
       image: {
@@ -317,7 +317,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 5,
       name: 'Антивозрастная косметика',
       slug: '/fsdfsdf',
       image: {
@@ -326,7 +326,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 6,
       name: 'Натуральная органическая косметика',
       slug: '/fsdfsdf',
       image: {
@@ -335,7 +335,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 7,
       name: 'Омега 3 (Рыбий жир)',
       slug: '/fsdfsdf',
       image: {
@@ -344,7 +344,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 8,
       name: 'Коллаген',
       slug: '/fsdfsdf',
       image: {
@@ -352,7 +352,7 @@ export const useCategoryFaker = () => {
       },
       content: ``,
     },{
-      id: 1,
+      id: 9,
       name: 'спортивное питание',
       slug: '/fsdfsdf',
       image: {
@@ -360,7 +360,7 @@ export const useCategoryFaker = () => {
       },
       content: ``,
     },{
-      id: 1,
+      id: 10,
       name: 'косметика',
       slug: '/fsdfsdf',
       image: {
@@ -368,7 +368,7 @@ export const useCategoryFaker = () => {
       },
       content: ``,
     },{
-      id: 1,
+      id: 11,
       name: 'витамины и минералы',
       slug: '/fsdfsdf',
       image: {
@@ -377,7 +377,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 12,
       name: 'бады',
       slug: '/fsdfsdf',
       image: {
@@ -386,7 +386,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 13,
       name: 'Антивозрастная косметика',
       slug: '/fsdfsdf',
       image: {
@@ -395,7 +395,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 14,
       name: 'Натуральная органическая косметика',
       slug: '/fsdfsdf',
       image: {
@@ -404,7 +404,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 15,
       name: 'Омега 3 (Рыбий жир)',
       slug: '/fsdfsdf',
       image: {
@@ -413,7 +413,7 @@ export const useCategoryFaker = () => {
       content: ``,
     },{
       
-      id: 1,
+      id: 16,
       name: 'Коллаген',
       slug: '/fsdfsdf',
       image: {

@@ -23,16 +23,21 @@
   left: 20px;
   font-size: 10px;
   line-height: 12px;
-  color: #EB5757;
+  color: $color-red;
 }
 
 .main-textarea {
   width: 100%;
   padding: 17px 20px !important;
-  border: none;
-  background: $form-bg;
+  border: 2px solid $color-5;
+  background: $color-8;
   resize: none;
   line-height: 135%;
   border-radius: $radiusBtn;
   outline-color: rgba($color-primary, 0.2);
+
+
+  &::placeholder {
+    color: $color-4;
+  }
 }

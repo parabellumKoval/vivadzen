@@ -4,7 +4,7 @@ export const useArticleFaker = () => {
     {
       id: 1,
       title: 'Пищеварительные ферменты – какую функцию они выполняют в организме и почему они так важны?',
-      slug: '/',
+      slug: 'fsdfsdf',
       image: {
         src: 'https://woman.ua/media/cache/0a/f0/0af04e553cd1975194d2eea4c28341dc.jpg'
       },
@@ -12,7 +12,7 @@ export const useArticleFaker = () => {
     },{
       id: 2,
       title: 'Добавка NAC - недооцененный  ингредиент предшественник глутатиона',
-      slug: '/',
+      slug: 'ghfghfg',
       image: {
         src: 'https://fitseven.ru/wp-content/uploads/2019/07/pitanie-pri-trenirovkah-na-massu.jpg'
       },
@@ -20,7 +20,7 @@ export const useArticleFaker = () => {
     },{
       id: 3,
       title: 'Лесной орех Карпат. Полезные, лечебные свойства, рецепты. В Карпатах открыт сезон сбора карпатского лесного ореха.',
-      slug: '/',
+      slug: 'hfghfgh',
       image: {
         src: 'https://growfood.pro/blog/wp-content/uploads/2017/11/IMG_1481.jpg'
       },
@@ -28,7 +28,7 @@ export const useArticleFaker = () => {
     },{
       id: 4,
       title: 'Гидрогелевая маска Gold & Snail, Petitfee, с улиточным муцином и коллоидным золотом, 30 мл',
-      slug: '/',
+      slug: 'hfghfgh',
       image: {
         src: 'https://life.pravda.com.ua/images/doc/f/7/f7cdeb3-sport-big.jpg'
       },
@@ -37,7 +37,7 @@ export const useArticleFaker = () => {
     {
       id: 5,
       title: 'Пищеварительные ферменты – какую функцию они выполняют в организме и почему они так важны?',
-      slug: '/',
+      slug: 'fsdf',
       image: {
         src: 'https://www.med157.ru/images/articles/2020-03-16_00_24_55_pitanie.jpg'
       },
@@ -45,7 +45,7 @@ export const useArticleFaker = () => {
     },{
       id: 6,
       title: 'Добавка NAC - недооцененный  ингредиент предшественник глутатиона',
-      slug: '/',
+      slug: 'hfghfgh',
       image: {
         src: 'https://fitseven.ru/wp-content/uploads/2019/07/pitanie-pri-trenirovkah-na-massu.jpg'
       },
@@ -53,7 +53,7 @@ export const useArticleFaker = () => {
     },{
       id: 7,
       title: 'Лесной орех Карпат. Полезные, лечебные свойства, рецепты. В Карпатах открыт сезон сбора карпатского лесного ореха.',
-      slug: '/',
+      slug: 'gfhfgh',
       image: {
         src: 'https://www.gastronom.ru/binfiles/images/20141105/bcecef86.jpg'
       },
@@ -61,7 +61,7 @@ export const useArticleFaker = () => {
     },{
       id: 8,
       title: 'Гидрогелевая маска Gold & Snail, Petitfee, с улиточным муцином и коллоидным золотом, 30 мл',
-      slug: '/',
+      slug: 'sdfsdf',
       image: {
         src: 'https://life.pravda.com.ua/images/doc/f/7/f7cdeb3-sport-big.jpg'
       },

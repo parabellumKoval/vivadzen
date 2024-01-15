@@ -7,11 +7,22 @@ COPY ./../src/frontend /var/www/html
 # Set up the working directory
 WORKDIR /var/www/html
 
-RUN apk update && apk upgrade
-RUN apk add git
+RUN apk update \
+    && apk upgrade \
+    && apk add git \
+    && cp .env.prod .env
+
 
 RUN npm install && npm cache clean --force
+RUN npm run build
 
-COPY . .
+# Specify the host variable
+# ENV HOST 0.0.0.0
 
-ENV PATH ./node_modules/.bin/:$PATH
+# Expose the Nuxt port
+EXPOSE 3000
+
+# Init the command
+# CMD ["npm", "run", "build"]
+# CMD ["yarn", "start"]
+

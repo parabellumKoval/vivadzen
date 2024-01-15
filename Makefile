@@ -7,81 +7,248 @@ BASE_IMAGE_DOCKERFILE ?= .docker/prod/base/Dockerfile
 IMAGE_REGISTRY ?= prod
 IMAGE_TAG ?= latest
 
+
+
 #-----------------------------------------------------------
-# Docker
+# Common
 #-----------------------------------------------------------
 
-# Create shared gateway network
-gateway:
-	docker network create gateway
+# Enter the bash session
+%.exec:
+	docker compose -f ${COMPOSE_FILE} exec $* /bin/sh
+
+# Build the container
+%.build:
+	docker compose -f ${COMPOSE_FILE} build --no-cache $*
+
+# Up the container
+%.up:
+	docker compose -f ${COMPOSE_FILE} up -d --no-deps $*
+
+# Build and Up the container
+%.bup:
+	docker compose -f ${COMPOSE_FILE} up -d --no-deps --build $*
+
+# Stop the container
+%.stop:
+	docker compose -f ${COMPOSE_FILE} stop $*
+
+# Stop and remove containers
+%.down:
+	docker compose -f ${COMPOSE_FILE} down --remove-orphans $*
+
+# Reload service
+%.reload:
+	docker compose -f ${COMPOSE_FILE} reload $*
+
+# Restart container
+%.restart:
+	docker compose -f ${COMPOSE_FILE} restart $*
+
+# Show container logs
+%.logs:
+	docker compose -f ${COMPOSE_FILE} logs $* --tail 500
+
+
+#-----------------------------------------------------------
+# All
+#-----------------------------------------------------------
 
 # Init variables for development environment
-env.dev:
-	cp .env.dev .env
+all.env.dev:
+	cp .env.dev .env && \
+	cp ./src/frontend/.env.dev ./src/frontend/.env && \
+	cp ./src/api/.env.dev ./src/api/.env
 
 # Init variables for production environment
-env.prod:
-	cp .env.prod .env
+all.env.prod:
+	cp .env.prod .env && \
+	cp ./src/frontend/.env.prod ./src/frontend/.env && \
+	cp ./src/api/.env.prod ./src/api/.env
 
-# Build and start containers
-bup: build.all up
+# Init variables for stage environment
+all.env.stage:
+	cp .env.stage .env && \
+	cp ./src/frontend/.env.stage ./src/frontend/.env && \
+	cp ./src/api/.env.stage ./src/api/.env
 
-# Start containers
-up:
-	docker compose -f ${COMPOSE_FILE} up -d
-
-# Stop containers
-down:
-	docker compose -f ${COMPOSE_FILE} down --remove-orphans
-
-# Build containers
-build:
-	docker compose -f ${COMPOSE_FILE} build
-
-# Build all containers
-build.all: build.base build
-
-# Build the base api image
-build.base:
-	docker build --file ${BASE_IMAGE_DOCKERFILE} --tag ${IMAGE_REGISTRY}/api-base:${IMAGE_TAG} .
-
-# Show list of running containers
-ps:
-	docker compose -f ${COMPOSE_FILE} ps
-
-# Restart containers
-restart:
-	docker compose -f ${COMPOSE_FILE} restart
-
-# Reboot containers
-reboot: down up
-
-# View output logs from containers
-logs:
-	docker compose -f ${COMPOSE_FILE} logs --tail 500
-
-# Follow output logs from containers
-logs.f:
-	docker compose -f ${COMPOSE_FILE} logs --tail 500 -f
 
 #-----------------------------------------------------------
-# Application
+# Mysql
 #-----------------------------------------------------------
 
-# Enter the api container
-bash:
-	docker compose -f ${COMPOSE_FILE} exec api /bin/bash
+# Enter the mysql container
+mysql:
+	docker compose -f ${COMPOSE_FILE} exec mysql /bin/bash
 
-# Restart the app container
-restart.api:
-	docker compose -f ${COMPOSE_FILE} restart api
+# Dump database into file (only for development environment) (TODO: replace file name with env variable)
+mysql.dump:
+	docker compose -f ${COMPOSE_FILE} exec mysql mysql -U ${DB_USERNAME} -d ${DB_DATABASE} > ./.docker/stage/mysql/dumps/dump.sql
 
-# Alias to restart the api container
-ra: restart.api
+# Import db dump
+mysql.import.%:
+	docker compose -f ${COMPOSE_FILE} exec -T mysql mysql -uroot -p${DB_PASSWORD} app < ./.docker/$*/mysql/dumps/init.sql
+
+
+#-----------------------------------------------------------
+# PhpMyAdmin
+#-----------------------------------------------------------
+
+# Enter the phpmyadmin container
+phpmyadmin:
+	docker compose -f ${COMPOSE_FILE} exec phpmyadmin /bin/bash
+
+#-----------------------------------------------------------
+# Frontend
+#-----------------------------------------------------------
+
+# Copy frontend source files to container
+copy.frontend:
+	docker cp ./src/frontend/. frontend:/var/www/html/
+
+# Init variables for development environment
+env.frontend.dev:
+	cp ./src/frontend/.env.dev ./src/frontend/.env
+
+# Init variables for production environment
+env.frontend.prod:
+	cp ./src/frontend/.env.prod ./src/frontend/.env
+
+# Init variables for stage environment
+env.frontend.stage:
+	cp ./src/frontend/.env.stage ./src/frontend/.env
+
+# Install yarn dependencies
+yarn.install:
+	docker compose -f ${COMPOSE_FILE} exec frontend yarn install
+
+# Alias to install yarn dependencies
+yi: yarn.install
+
+# Upgrade yarn dependencies
+yarn.upgrade:
+	docker compose -f ${COMPOSE_FILE} exec frontend yarn upgrade
+
+# Alias to upgrade yarn dependencies
+yu: yarn.upgrade
+
+# Show outdated yarn dependencies
+yarn.outdated:
+	docker compose exec -f ${COMPOSE_FILE} frontend yarn outdated
+
+# Install yarn dependencies
+yarn.build:
+	docker compose -f ${COMPOSE_FILE} exec frontend yarn build
+
+# Install yarn dependencies
+yarn.start:
+	docker compose -f ${COMPOSE_FILE} exec -d frontend yarn start
+
+#-----------------------------------------------------------
+# Nginx
+#-----------------------------------------------------------
+
+# Enter the nginx bash session
+nginx:
+	docker compose -f ${COMPOSE_FILE} exec nginx /bin/sh
+
+# Reload the Nginx service
+reload:
+	docker compose -f ${COMPOSE_FILE} exec nginx nginx -s reload
+
+
+#-----------------------------------------------------------
+# Certbot
+#-----------------------------------------------------------
+
+#-----------------------------------------------------------
+# SSL
+#-----------------------------------------------------------
+
+# Issue SSL certificates according to the environment variables
+ssl.cert:
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps \
+		--publish 80:80 \
+		certbot \
+		certbot certonly \
+		--domains ${LETSENCRYPT_DOMAINS} \
+		--email ${LETSENCRYPT_EMAIL} \
+		--agree-tos \
+		--no-eff-email \
+		--standalone
+
+# Issue testing SSL certificates according to the environment variables
+ssl.cert.test:
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps \
+		--publish 80:80 \
+		certbot \
+		certbot certonly \
+		--domains ${LETSENCRYPT_DOMAINS} \
+		--email ${LETSENCRYPT_EMAIL} \
+		--agree-tos \
+		--no-eff-email \
+		--standalone \
+		--dry-run
+
+# Issue staging SSL certificates according to the environment variables
+ssl.cert.staging:
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps \
+		--publish 80:80 \
+		certbot \
+		certbot certonly \
+		--domains ${LETSENCRYPT_DOMAINS} \
+		--email ${LETSENCRYPT_EMAIL} \
+		--agree-tos \
+		--no-eff-email \
+		--standalone \
+		--staging
+
+# Generate a 2048-bit DH parameter file
+ssl.dh:
+	sudo openssl dhparam -out ./.docker/${IMAGE_REGISTRY}/nginx/ssl/dhparam.pem 2048
+
+# Show the list of registered certificates
+ssl.ls:
+	docker compose -f ${COMPOSE_FILE} run --rm --entrypoint "certbot certificates" certbot
+
+
+#-----------------------------------------------------------
+# Common back
+#-----------------------------------------------------------
 
 # Artisan optimize
-optimize:
-	docker compose -f ${COMPOSE_FILE} exec api php artisan optimize
+optimize.%:
+	docker compose -f ${COMPOSE_FILE} exec $* php artisan optimize
+
+# Copy laravel source files to container
+copy.laravel.%:
+	docker cp ./src/api/. $*:/var/www/html/
+
+#
+copy.uploads.%:
+	docker cp ./src/api/public/uploads/. $*:/var/www/html/public/uploads/
+
+#-----------------------------------------------------------
+# Dashboard
+#-----------------------------------------------------------
+
+
+
+#-----------------------------------------------------------
+# Api
+#-----------------------------------------------------------
+
+# Init variables for development environment
+env.api.dev:
+	cp ./src/api/.env.dev ./src/api/.env
+
+# Init variables for production environment
+env.api.prod:
+	cp ./src/api/.env.prod ./src/api/.env
+
+# Init variables for stage environment
+env.api.stage:
+	cp ./src/api/.env.stage ./src/api/.env
 
 # Run the tinker service
 tinker:
@@ -112,16 +279,6 @@ db.fresh:
 
 # Refresh the database
 db.refresh: db.fresh db.seed
-
-# Dump database into file (only for development environment) (TODO: replace file name with env variable)
-db.dump:
-	docker compose -f ${COMPOSE_FILE} exec postgres pg_dump -U ${DB_USERNAME} -d ${DB_DATABASE} > ./.docker/postgres/dumps/dump.sql
-
-# TODO: add command to import db dump
-
-# Restart the queue process
-queue.restart:
-	docker compose -f ${COMPOSE_FILE} exec queue php artisan queue:restart
 
 # Install composer dependencies
 composer.install:
@@ -157,19 +314,40 @@ composer.autoload:
 storage.link:
 	docker compose -f ${COMPOSE_FILE} exec api php artisan storage:link --relative
 
+# Clear temps
+remove.temps: 
+	rm -rf ./storage/logs/*
+	rm -rf ./storage/framework/sessions/*
+	rm -rf ./storage/framework/views/*
+	rm -rf ./storage/framework/cache/data/*
+
+# Permissions
+permissions: 
+	chown -R www-data:www-data ./public
+	chown -R www-data:www-data ./storage
+	chmod -R 755 ./public
+	chmod -R 755 ./storage	
+
+# Give permissions of the storage folder to the www-data
+storage.public:
+	chmod -R 755 ./storage
+	chmod -R 755 ./public
+	chown -R 0:0 ./storage
+	chown -R 0:0 ./public
+
 # Give permissions of the storage folder to the www-data
 storage.perm:
-	sudo chmod -R 755 storage
-	sudo chown -R www-data:www-data storage
+	chmod -R 755 ./src/api/public
+	chown -R www-data:www-data ./src/api/public
 
 # Give permissions of the storage folder to the current user
 storage.perm.me:
-	sudo chmod -R 755 storage
-	sudo chown -R "$(shell id -u):$(shell id -g)" storage
+	chmod -R 755 ./src/api/public
+	chown -R "$(shell id -u):$(shell id -g)" ./src/api/public
 
 # Give files ownership to the current user
 own.me:
-	sudo chown -R "$(shell id -u):$(shell id -g)" .
+	sudo chown -R "$(shell id -u):$(shell id -g)" ./src/api
 
 # Reload the Octane workers
 octane.reload:
@@ -177,6 +355,15 @@ octane.reload:
 
 # Alias to reload the Octane workers
 or: octane.reload
+
+
+#-----------------------------------------------------------
+# Queue
+#-----------------------------------------------------------
+
+# Restart the queue process
+queue.restart:
+	docker compose -f ${COMPOSE_FILE} exec queue php artisan queue:restart
 
 #-----------------------------------------------------------
 # Testing (only for development environment)
@@ -236,6 +423,72 @@ swarm.ps:
 # Init the Docker Swarm Leader node
 swarm.init:
 	docker swarm init
+
+
+#-----------------------------------------------------------
+# Docker
+#-----------------------------------------------------------
+
+# Create shared gateway network
+network.api:
+	docker network create api
+
+# Init variables for development environment
+env.dev:
+	cp .env.dev .env
+
+# Init variables for production environment
+env.prod:
+	cp .env.prod .env
+
+# Init variables for stage environment
+env.stage:
+	cp .env.stage .env
+
+
+# Build and start containers
+bupbus: bup yarn.build yarn.start 
+
+# Build and start containers
+bup: build.all up
+
+# Start containers
+up:
+	docker compose -f ${COMPOSE_FILE} up -d
+
+# Stop containers
+down:
+	docker compose -f ${COMPOSE_FILE} down --remove-orphans
+
+# Build containers
+build:
+	docker compose -f ${COMPOSE_FILE} build
+
+# Build all containers
+build.all: build.base build
+
+# Build the base api image
+build.base:
+	docker build --file ${BASE_IMAGE_DOCKERFILE} --tag ${IMAGE_REGISTRY}/api-base:${IMAGE_TAG} .
+
+# Show list of running containers
+ps:
+	docker compose -f ${COMPOSE_FILE} ps
+
+# Restart containers
+restart:
+	docker compose -f ${COMPOSE_FILE} restart
+
+# Reboot containers
+reboot: down up
+
+# View output logs from containers
+logs:
+	docker compose -f ${COMPOSE_FILE} logs --tail 500
+
+# Follow output logs from containers
+logs.f:
+	docker compose -f ${COMPOSE_FILE} logs --tail 500 -f
 
 #-----------------------------------------------------------
 # Danger zone

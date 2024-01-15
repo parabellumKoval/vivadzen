@@ -85,7 +85,9 @@ export default {
       class="main-input"
     >
 
-    <slot name="icon-right"></slot>
+    <div class="right">
+      <slot name="right"></slot>
+    </div>
     
     <form-error :error="error"></form-error>
 

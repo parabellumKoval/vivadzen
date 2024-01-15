@@ -13,6 +13,10 @@ const props = defineProps({
   showContent: {
     type: Boolean,
     default: false
+  },
+  type: {
+    type: String,
+    default: 'default' // default and full
   }
 })
 
@@ -87,7 +91,7 @@ watch(() => props.showContent, (v) => {
 </style> 
 
 <template>
-  <div clickable class="wrapper">
+  <div :class="type" clickable class="wrapper">
     <div class="modal-container">
       <button @click="closeHandler" class="close-btn">
         <span class="close-btn-inner">

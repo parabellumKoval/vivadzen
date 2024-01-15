@@ -1,0 +1,48 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.title {
+  font-weight: 500;
+  text-align: center;
+
+  @include _desktop {
+    text-align: left;
+  }
+}
+
+.share {
+  display: grid;
+  grid-template-columns: repeat(2, min-content);
+  grid-gap: 20px;
+  align-items: center;
+  width: min-content;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 10px;
+
+  @include _desktop {
+    justify-content: flex-start;
+  }
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 60px;
+  border-radius: $radius;
+  transition: background $speed;
+
+  &:hover {
+    background-color: $color-6;
+  }
+}
+
+.copy-bg {
+  background: $color-6;
+}

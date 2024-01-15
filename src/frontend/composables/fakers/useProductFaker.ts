@@ -61,6 +61,7 @@ export const useProductFaker = () => {
       amount: 1
     },{
       id: 2,
+      code: 'GG-556643',
       name: 'Жидкий йод (йодид калия) "Liquid Iodine Plus" Life-flo, 150 мкг, 59 мл',
       slug: '/fdfsdfsdf',
       image: {
@@ -87,6 +88,7 @@ export const useProductFaker = () => {
       amount: 2
     },{
       id: 3,
+      code: 'GG-556643',
       name: 'Пророщенные зерна, Добра їжа, измельченные пророщенные зерна, 300 г',
       slug: '/fsasfa',
       image: {
@@ -113,6 +115,7 @@ export const useProductFaker = () => {
       amount: 1
     },{
       id: 4,
+      code: 'GG-556643',
       name: 'Гидрогелевая маска Gold & Snail, Petitfee, с улиточным муцином и коллоидным золотом, 30 мл',
       slug: '/fsdfasf',
       image: {
@@ -138,6 +141,7 @@ export const useProductFaker = () => {
       }
     },{
       id: 1,
+      code: 'GG-556643',
       name: 'Гидрогелевая маска Gold & Snail, Petitfee, с улиточным муцином и коллоидным золотом, 30 мл',
       slug: '/fsdfwe',
       image: {
@@ -163,6 +167,7 @@ export const useProductFaker = () => {
       }
     },{
       id: 2,
+      code: 'GG-556643',
       name: 'Жидкий йод (йодид калия) "Liquid Iodine Plus" Life-flo, 150 мкг, 59 мл',
       slug: '/vcxvzx',
       image: {
@@ -188,6 +193,7 @@ export const useProductFaker = () => {
       }
     },{
       id: 3,
+      code: 'GG-556643',
       name: 'Пророщенные зерна, Добра їжа, измельченные пророщенные зерна, 300 г',
       slug: '/czxasv',
       image: {
@@ -213,6 +219,7 @@ export const useProductFaker = () => {
       }
     },{
       id: 4,
+      code: 'GG-556643',
       name: 'Гидрогелевая маска Gold & Snail, Petitfee, с улиточным муцином и коллоидным золотом, 30 мл',
       slug: '/kblvcblcv',
       image: {

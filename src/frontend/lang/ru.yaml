@@ -4,6 +4,12 @@ title:
   contacts: Контакты
   cart: Корзина
   checkout: Оформление заказа
+  settings: Настройки
+  network: Партнерская программа
+  support: Поддержка
+  search_results: Результаты поиска
+  comparison: Сравнение товаров
+  favorite: Избранное
 meta:
   address: Днепропетровская область, Днепр, улица Троицкая, 3А
 label:
@@ -20,6 +26,8 @@ label:
   payment: Оплата
   promocode: Промокод
   brand: Бренд
+  thorough: Подробнее
+  filters: Фильтрация
 messages:
   empty_cart: В корзине нет товаров
   leave_review: Оставить отзыв
@@ -31,6 +39,7 @@ messages:
   use_promocode: Применить промокод
   accept_payment: Принимаем оплату
   payment_methods: Способы оплаты
+  checkout_complete: Спасибо за заказ!
 button:
   yes: Да
   enter: Войти
@@ -39,6 +48,10 @@ button:
   reply: Ответить
   buy: Купить
   1_click_buy: Купить в один клик 
+  filters: Фильтры
+  sorting: Сортировка
+  apply: Применить
+  reset_all: Сбросить все
 form:
   firstname: Имя
   lastname: Фамилия
@@ -46,3 +59,13 @@ form:
   email: Email
   settlement: Населенный пункт
   warehouse: Номер отделения
+  city: Населенный пункт
+  zip: Индекс
+  address: Адрес доставки
+  method: Метод
+  delivery:
+    warehouse: В отделение почты
+  payment:
+    liqpay: Liqpay
+noty:
+  copied: "Скопировано в буфер: {text}"

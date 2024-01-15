@@ -1,6 +1,13 @@
 @import './assets/scss/vars';
 @import './assets/scss/mixins';
 
+.right {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
 .input__wrapper {
   position: relative;
   display: block;

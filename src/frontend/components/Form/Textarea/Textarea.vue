@@ -24,6 +24,9 @@ export default {
     isDisabled: {
       type: Boolean,
       default: false
+    },
+    minHeight: {
+      default: '40'
     }
   },
 
@@ -62,7 +65,7 @@ export default {
     <form-textarea-resize
       :model-value="modelValue"
       @update:modelValue="updateHandler"
-      :min-height="40"
+      :min-height="minHeight"
       :max-height="350"
       :rows="1"
       :id="id"

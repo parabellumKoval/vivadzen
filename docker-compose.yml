@@ -5,21 +5,83 @@ name: djini
 services:
   nginx:
     build:
-      context: .docker/dev/nginx
-      dockerfile: Dockerfile
+      dockerfile: .docker/prod/nginx/Dockerfile
     volumes:
-      - .docker/dev/nginx/sites-enabled:/etc/nginx/sites-enabled:ro
-      - .docker/dev/nginx/snippets:/etc/nginx/snippets:ro
-      - .docker/dev/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - .docker/dev/nginx/ssl:/etc/nginx/ssl:ro
+      # SSL certificates folder (shared with certbot service)
+      - .docker/prod/nginx/ssl:/etc/nginx/ssl:ro
+      # ACME challenge folder (shared with certbot service)
+      - .docker/prod/nginx/acme:/var/www/acme:ro
+      # Uploads
+      - ./public/uploads:/var/www/html/public/uploads
     ports:
       - "443:443"
       - "80:80"
+      # Publish a port for status pages
+      - "8001:8001"
+    restart: unless-stopped
+    expose:
+      - 8001
     networks:
-      - nginx
+      - api
     depends_on:
       - api
+      - dashboard
       - frontend
+      - phpmyadmin
+
+  certbot:
+    build:
+      context: .docker/prod/certbot
+      dockerfile: Dockerfile
+    environment:
+      NGINX_SERVICE: nginx
+    volumes:
+      # SSL certificates folder
+      - .docker/prod/nginx/ssl:/etc/letsencrypt:rw
+      # ACME challenge folder
+      - .docker/prod/nginx/acme:/var/www/acme:rw
+      # Docker Unix Socket (allow restarting reverse-proxy service after renewal)
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - api
+
+  dashboard:
+    build:
+      dockerfile: .docker/prod/dashboard/Dockerfile
+      args:
+        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+        IMAGE_TAG: ${IMAGE_TAG}
+        MY_USER: ${MY_USER}
+        MY_UID: ${MY_UID}
+    environment:
+      PHP_FPM_PM_MAX_CHILDREN: ${PHP_FPM_PM_MAX_CHILDREN:-5}
+      PHP_FPM_PM_START_SERVERS: ${PHP_FPM_PM_START_SERVERS:-2}
+      PHP_FPM_PM_MIN_SPARE_SERVERS: ${PHP_FPM_PM_MIN_SPARE_SERVERS:-1}
+      PHP_FPM_PM_MAX_SPARE_SERVERS: ${PHP_FPM_PM_MAX_SPARE_SERVERS:-3}  
+    env_file:
+      - ./src/api/.env  
+    volumes:
+      - ./storage_dashboard:/var/www/html/storage
+      - ./public/uploads:/var/www/html/public/uploads
+      # - mysql:/var/www/html/certs
+      # - mysql/client-key.pem:/var/lib/mysql/client-key.pem
+      # - mysql/client-cert.pem:/var/lib/mysql/client-cert.pem
+      # - mysql/ca.pem:/var/lib/mysql/ca.pem
+    container_name: dashboard
+    hostname: dashboard
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - api
+    restart: unless-stopped
+    depends_on:
+      - mysql
 
   api:
     build:
@@ -28,41 +90,58 @@ services:
         IMAGE_REGISTRY: ${IMAGE_REGISTRY}
         IMAGE_TAG: ${IMAGE_TAG}
     volumes:
-      - ./storage:/var/www/html/storage
-      - ./uploads:/var/www/html/public/uploads
-    ports:
-      - "8000:8000"
+      - ./storage_api:/var/www/html/storage
+      - ./public/uploads:/var/www/html/public/uploads
+    container_name: api_host
+    hostname: api_host
+    env_file:
+      - ./src/api/.env
     networks:
       - api
-      - nginx
     restart: unless-stopped
     depends_on:
       - mysql
     working_dir: /var/www/html
+    deploy:
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 512M
+        reservations:
+          cpus: "0.1"
+          memory: 256M
 
   frontend:
     build:
       dockerfile: .docker/prod/frontend/Dockerfile
     volumes:
       - /var/www/html/node_modules
+    container_name: frontend
     networks:
-      - nginx
+      - api
     tty: true
     restart: unless-stopped
     depends_on:
       - api
-    command: npm run start
+    working_dir: /var/www/html
+    command: yarn start
+    deploy:
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 512M
+        reservations:
+          cpus: "0.1"
+          memory: 256M
 
   mysql:
     build:
       dockerfile: .docker/prod/mysql/Dockerfile
     platform: linux/amd64
     container_name: mysql
-    ports: 
-        - "3306:3306"
     volumes: 
         - mysql:/var/lib/mysql
-        - ./.docker/prod/mysql/dumps/:/tmp
+        # - ./.docker/prod/mysql/dumps:/tmp
     environment: 
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_USER: ${DB_USERNAME}
@@ -79,8 +158,8 @@ services:
     build:
       dockerfile: .docker/prod/phpmyadmin/Dockerfile
     restart: always
-    ports:
-      - 8080:80
+    container_name: phpmyadmin
+    hostname: phpmyadmin
     environment:
       PMA_HOST: mysql
       PMA_ARBITRARY: 1
@@ -113,23 +192,23 @@ services:
       - api
     restart: always
 
-  # schedule:
-  #   build:
-  #     dockerfile: .docker/prod/schedule/Dockerfile
-  #     args:
-  #       IMAGE_REGISTRY: ${IMAGE_REGISTRY}
-  #       IMAGE_TAG: ${IMAGE_TAG}
-  #   volumes:
-  #     - ./storage:/var/www/html/storage
-  #   links:
-  #     - postgres
-  #     - redis
-  #   networks:
-  #     - api
-  #   restart: unless-stopped
+  schedule:
+    build:
+      dockerfile: .docker/prod/schedule/Dockerfile
+      args:
+        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+        IMAGE_TAG: ${IMAGE_TAG}
+    volumes:
+      - ./storage:/var/www/html/storage
+    links:
+      - mysql
+      - redis
+    networks:
+      - api
+    restart: unless-stopped
 
 volumes:
-  postgres:
+  mysql:
     driver: local
 
   redis:
@@ -139,6 +218,6 @@ networks:
   api:
     name: api
 
-  gateway:
-    name: gateway
-    external: true
+  nginx:
+    name: nginx
+    driver: bridge

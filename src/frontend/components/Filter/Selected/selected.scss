@@ -3,22 +3,54 @@
 
 .filter {
   &-wrapper {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
     align-items: center;
+    grid-gap: 10px;
+
+    @include _desktop {
+      // grid-template-columns: min-content 1fr;
+      grid-template-columns: 1fr 4fr;
+      grid-gap: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+  }
+
+  &-list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 5px;
+    overflow-x: auto;
+    padding: 0 15px;
+    width: 100vw;
+    margin: 0 -15px;
+
+    @include _desktop {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      overflow-y: hidden;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+
+      @include _scrollbar;
+    }
   }
 
   &-label {
-    margin-right: 20px;
-    color: $color-2;
+    color: $color-3;
+    white-space: nowrap;
   }
 
   &-remove-all-btn {
+    width: min-content;
     height: 34px;
     padding: 0 15px;
-    margin-right: 10px;
     background: $color-8;
     border: 1px solid $color-1;
+    flex-shrink: 0;
   }
 
   &-remove-btn {
@@ -37,7 +69,6 @@
     grid-gap: 5px;
     height: 34px;
     padding: 0 5px 0 10px;
-    margin-right: 10px;
     background: scale-color($color-blue, $lightness: 85%);
     border: 1px solid $color-8;
     border-radius: $radius;

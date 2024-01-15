@@ -1,0 +1,64 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.status {
+  &.new {
+    color: $color-primary;
+  }
+  &.failed {
+    color: $color-red;
+  }
+  &.canceled {
+    color: $color-3;
+  }
+  &.completed {
+    color: $color-green;
+  }
+}
+
+.detailes-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  grid-gap: 30px;
+
+  @include _desktop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.order-products {
+  .product {
+    margin-bottom: 30px;
+  }
+}
+
+
+.order-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include _desktop {
+    padding: 15px 0 15px 30px;
+    border-left: 1px solid $color-6;
+  }
+
+  &__item {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .label {
+      color: $color-4;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .value {
+      line-height: 145%;
+    }
+  }
+}

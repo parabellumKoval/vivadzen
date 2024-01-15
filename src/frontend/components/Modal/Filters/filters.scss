@@ -1,0 +1,37 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.filters {
+  width: calc(100vw - 5px);
+  margin: 0 -15px;
+}
+
+.selected-wrapper {
+  width: calc(100vw - 5px);
+  margin: 0 -15px 10px -15px;
+  padding: 20px 15px;
+  overflow: hidden;
+  border-top: 1px solid $color-6;
+  border-bottom: 1px solid $color-6;
+}
+
+.buttons {
+  position: sticky;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 10px;
+  align-items: center;
+  width: calc(100% + 30px);
+  bottom: -20px;
+  left: 0;
+  transform: translateX(-15px);
+  border-top: 3px solid $color-6;
+  padding: 15px;
+  z-index: 100;
+  background: $color-8;
+  overflow: hidden;
+
+  .apply-btn {
+    width: 100%;
+  }
+}

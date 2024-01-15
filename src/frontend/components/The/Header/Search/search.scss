@@ -3,23 +3,77 @@
 
 .search {
   position: relative;
-  display: grid;
-  justify-self: flex-end;
-  grid-template-columns: 1fr 100px;
-  align-items: center;
-  height: 50px;
-  max-width: 335px;
+  background: $color-8;
+  border-radius: $radius;
   overflow: hidden;
-  margin: 0 30px;
+  z-index: 10;
 
-  .icon {
-    position: absolute;
-    left: 20px;
-    top: 14px;
-    margin: 0 0 0 auto;
+  @include _desktop {
+    overflow: initial;
   }
 
-  &-btn {
+  &-wrapper {
+    position: relative;
+    z-index: 10;
+
+    @include _desktop {
+      margin: 0 30px;
+    }
+
+    &.active {
+      .search {
+        position: fixed;
+        top: 5px;
+        left: 5px;
+        width: calc(100vw - 10px); 
+
+        &-inner {
+          grid-template-columns: 1fr 50px 50px;;
+        }
+      }
+
+      .search-close {
+        display: flex;
+      }
+
+      .search-action {
+        display: flex;
+      }
+    }
+  }
+
+  &-inner {
+    position: relative;
+    display: grid;
+    justify-self: flex-end;
+    grid-template-columns: 1fr;
+    align-items: center;
+    height: 50px;
+    z-index: 100;
+    // max-width: 335px;
+
+    @include _tablet {
+      grid-template-columns: 1fr 100px;
+    }
+  }
+
+
+  &-close {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px; 
+    
+    &-icon {
+      font-size: 20px;
+    }
+  }
+
+  &-action {
+    display: none;
+    align-items: center;
+    justify-content: center;
     height: 100%;
     background: $color-green;
     text-transform: uppercase;
@@ -27,13 +81,173 @@
     font-weight: 500;
     color: $color-8;
     border-radius: 0 $radius $radius 0;
+
+    @include _tablet {
+      display: flex;
+    }
+
+    &-icon {
+      font-size: 20px;
+    }
   }
 
   &-input {
+    width: 100%;
     height: 100%;
-    background: $color-8;
     border: 0;
-    padding-left: 55px;
+    padding-left: 15px;
     border-radius: $radius 0 0 $radius;
+
+    @include _desktop {
+      padding-left: 55px;
+    }
+
+    &-icon {
+      position: absolute;
+      left: 20px;
+      top: 14px;
+      margin: 0 0 0 auto;
+    }
+  }
+}
+
+.livesearch {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  min-height: 100px;
+  padding: 15px;
+  border-radius: $radius;
+  background: $color-8;
+  z-index: 2;
+
+  @include _desktop {
+    padding: 30px;
+  }
+
+  &-wrapper {
+    position: fixed;
+    top: 0;
+    left: 5px;
+    width: calc(100vw - 10px);
+    z-index: 1;
+
+    @include _desktop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+
+    }
+
+    &:before {
+      content: '';
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba($color-0, 50%);
+    }
+  }
+
+  &-box {
+    padding: 20px 0;
+    border-top: 1px solid $color-6;
+
+    &:last-child {
+      padding: 20px 0 0 0;
+    }
+  }
+
+  &-label {
+    font-size: 12px;
+    color: $color-3;
+  }
+
+  &-list {
+    display: grid;
+    grid-gap: 10px;
+    margin: 10px 0 0 0;
+  }
+
+  &-item {
+  }
+
+  &-link {
+
+    &:hover {
+      color: $color-green;
+    }
+
+  }
+}
+
+.product {
+  &-card {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    align-items: center;
+    grid-gap: 10px;
+    padding: 0 0 10px 0;
+
+    &:last-child {
+      padding: 0;
+    }
+  }
+
+  &-image {
+    width: 60px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: $radius;
+    border: 1px solid $color-6;
+  }
+
+  &-content {
+  }
+
+  &-name {
+    margin-bottom: 10px;
+    line-height: 132%;
+  }
+
+  &-price {
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    grid-auto-rows: min-content;
+    grid-gap: 10px;
+
+    .old-price {
+      font-size: 14px;
+      color: $color-3;
+      text-decoration: line-through;
+
+      + .base-price {
+        color: $color-red;
+      }
+    }
+  }
+}
+
+.all-results-btn {
+  display: grid;
+  grid-template-columns: repeat(2, min-content);
+  align-items: center;
+  grid-gap: 10px;
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  color: $color-green;
+
+  &:hover {
+    color: scale-color($color-green, $lightness: 30%);
+  }
+
+  .text {
+    padding: 5px 0;
+    border-bottom: 1px dashed;
+    white-space: nowrap;
   }
 }

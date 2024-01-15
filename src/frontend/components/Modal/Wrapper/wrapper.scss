@@ -10,6 +10,21 @@
     transform: initial;
     left: initial;
   }
+
+  &.full {
+    .modal-inner {
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
+      margin: 0 -10px;
+      padding: 20px 15px;
+      border-radius: 0;
+    }
+
+    .close-btn {
+      right: 0;
+    }
+  }
 }
 
 .modal{

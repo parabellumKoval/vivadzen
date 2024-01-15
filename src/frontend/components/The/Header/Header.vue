@@ -25,13 +25,13 @@ const { t } = useI18n()
     </NuxtLink>
 
     <!-- CATALOG -->
-    <the-header-catalog class="catalog"></the-header-catalog>
+    <the-header-catalog v-if="!$device.isMobile" class="catalog"></the-header-catalog>
 
     <!-- SEARCH -->
     <the-header-search class="search"></the-header-search>
 
     <!-- PHONE -->
-   <the-header-contacts class="contacts"></the-header-contacts>
+   <the-header-contacts v-if="!$device.isMobile" class="contacts"></the-header-contacts>
 
     <!-- LANGUAGE -->
     <the-header-languages class="languages"></the-header-languages>

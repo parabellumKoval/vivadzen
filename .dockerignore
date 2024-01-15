@@ -3,7 +3,6 @@
 /.idea
 /.vscode
 /.git
-/public/storage
 /bootstrap/cache/*
 /storage/app/*
 /storage/framework/views/*
@@ -21,10 +20,17 @@ docker-compose.yml
 Makefile
 
 # Included files
-!/.docker/*/app/php-fpm.d
 !/.docker/*/base/conf.d
 !/.docker/*/base/php.ini
 !/.docker/*/gateway/conf.d
 !/.docker/*/gateway/nginx.conf
-!/.docker/*/postgres/dumps
+!/.docker/*/dashboard/conf.d
+!/.docker/*/dashboard/php-fpm.d
+!/.docker/*/mysql/
 !/.docker/*/schedule/cron.d
+!/.docker/*/nginx/nginx.conf
+!/.docker/*/nginx/snippets
+!/.docker/*/nginx/sites-internal
+!/.docker/*/nginx/sites-enabled
+!/.docker/*/nginx/fastcgi_params
+!/src/api/public

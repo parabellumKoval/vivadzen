@@ -20,7 +20,7 @@
   margin-bottom: 20px;
   background: $color-bg;
   box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.15);
-  border-radius: 8px;
+  border-radius: $radius;
   overflow: hidden;
 
   &.primary {
@@ -87,7 +87,7 @@
 
 .content{
   margin: 10px 20px 0 20px;
-  color: $color-4;
+  color: $color-2;
   font-size: 14px;
   line-height: 135%;
 }
@@ -116,11 +116,12 @@
     z-index: 10;
     background: $color-bg;
     border-radius: $radiusBtn;
+    border: 1px solid $color-8;
     color: $color-4;
-    transition: box-shadow $speed;
+    transition: border $speed;
   
     &:hover {
-      box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.10);
+      border: 1px solid $color-5;
     }
   }
 }

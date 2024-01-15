@@ -54,7 +54,9 @@
     &-catalog {
       display: block;
       position: relative;
-      background: $color-6;
+      background: scale-color($color-green, $lightness: 85%);
+      color: $color-green;
+      border: 2px solid $color-green;
 
       @include _desktop {
         display: none;

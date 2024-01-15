@@ -1,0 +1,13 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.code,
+.date,
+.status,
+.price {
+  display: block;
+  width: 100px;
+  height: 16px;
+  border-radius: 8px;
+  background: $color-6;
+}

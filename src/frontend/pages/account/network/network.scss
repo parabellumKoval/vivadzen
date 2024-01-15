@@ -1,0 +1,21 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.tab {
+  &-wrapper {
+    position: sticky;
+    top: 120px;
+    margin: 0 -15px;
+    width: 100vw;
+
+    @include _desktop {
+      top: 80px;
+      width: calc(100% + 60px);
+      margin: 0 -30px;
+    }
+  }
+}
+
+.content {
+  margin: 50px 0;
+}

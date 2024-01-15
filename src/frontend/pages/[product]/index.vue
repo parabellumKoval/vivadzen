@@ -105,16 +105,19 @@ const reviewHandler = () => {
             <template v-else-if="tab === 3">
               <div class="">
                 <div class="tab-title">Доставка</div>
+                <product-delivery-info></product-delivery-info>
               </div>
             </template>
             <template v-else-if="tab === 4">
               <div class="">
                 <div class="tab-title">Оплата</div>
+                <product-payment-info></product-payment-info>
               </div>
             </template>
             <template v-else-if="tab === 5">
               <div class="">
                 <div class="tab-title">Гарантии</div>
+                <product-guarantees-info></product-guarantees-info>
               </div>
             </template>
           </transition>

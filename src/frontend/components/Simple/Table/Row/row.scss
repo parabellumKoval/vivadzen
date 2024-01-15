@@ -2,50 +2,105 @@
 @import './assets/scss/mixins';
 
 .row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   grid-gap: 15px;
+  padding: 20px 0;
+  border-bottom: 1px solid $color-6;
 
   @include _tablet {
-    flex-direction: row;
+    grid-template-columns: 1fr 40px;
   }
+
   @include _desktop {
   }
 
   &-wrapper {
-    margin: 0 0 30px 0;
-    padding-bottom: 15px;
-    border-bottom: 1px solid $color-gray;
+    width: 100%;
 
     @include _tablet {
-      padding: 0;
-      border-bottom: 0;
     }
   }
 }
 
+.columns-area {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  grid-gap: 15px;
+  width: 100%;
+
+  @include _tablet {
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    grid-gap: 30px;
+  }
+}
+
 .details {
-  padding: 0;
+  padding: 20px 0;
+  border-bottom: 3px solid $color-6;
 
   @include _tablet {
     padding: 30px 0 10px 0;
   }
 }
 
+
+.action-column {
+  width: 100%;
+
+  @include _desktop {
+    width: 40px;
+  }
+
+  &.empty {
+    display: none;
+
+    @include _desktop {
+      display: block;
+    }
+  }
+}
+
 .show-more-btn {
-  align-self: flex-start;
-  width: 40px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min-content;
+  grid-gap: 5px;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  height: 30px;
+  width: 100%;
+  background: $color-6;
+  border-radius: $radius;
+  font-size: 12px;
 
   @include _desktop {
     align-self: center;
+    height: 100%;
+    width: 40px;
+    background: transparent;
   }
 
   .icon {
     transform: rotate(90deg);
     transition: transform $speed;
+    font-size: 16px;
+
+    @include _desktop {
+      font-size: 20px;
+    }
+  }
+
+  .text {
+    @include _desktop {
+      display: none;
+    }
   }
 
   &.active {
@@ -65,8 +120,7 @@
 
 .button-disabled {
   flex-shrink: 0;
-  height: 30px;
+  height: 40px;
   width: 40px;
-  border-radius: 15px;
-  background: $color-bg-3;
+  background: $color-8;
 }

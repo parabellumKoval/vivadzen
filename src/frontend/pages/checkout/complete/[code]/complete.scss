@@ -1,0 +1,170 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-gap: 20px;
+  margin: 0 -15px;
+  width: 100vw;
+
+  @include _desktop {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    margin: 0;
+    width: 100%;
+  }
+}
+
+.product{
+  &-wrapper {}
+
+  &-grid {
+    display: grid;
+    grid-auto-columns: minmax(400px, 100%);
+    grid-gap: 20px;
+    width: 100%;
+  }
+
+  &-card {
+    min-width: 320px;
+    width: min-content;
+
+    @include _desktop {
+      min-width: 480px;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 30px;
+  height: fit-content;
+  order: 2;
+  border-radius: $radius;
+  padding: 15px;
+
+  @include _desktop {
+    grid-gap: 60px;
+    order: 1;
+    padding: 0;
+  }
+}
+
+.grid-title {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 135%;
+  margin-bottom: 5px;
+
+  @include _desktop {
+    margin-bottom: 0;
+  }
+
+  &.p-title {
+    margin-bottom: 10px;
+  }
+}
+
+.aside {
+  height: fit-content;
+  padding: 30px;
+  border: 2px solid $color-6;
+  border-radius: $radius;
+  order: 1;
+
+  @include _desktop {
+    order: 2;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns:  minmax(0, 1fr);
+  grid-gap: 10px;
+
+  @include _desktop {
+    grid-template-columns:  repeat(3, minmax(0, 1fr));
+    grid-gap: 20px;
+  }
+
+  .full-width {
+    @include _desktop {
+      grid-column-start: 1;
+      grid-column-end: 4;
+    }
+  }
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    margin-top: 20px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    @include _desktop {
+      margin-top: 0;
+      grid-gap: 15px;
+    }
+
+    .grid-title {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.cell {
+  line-height: 135%;
+
+  .label {
+    display: inline-block;
+    position: relative;
+    font-weight: 400;
+    margin-right: 10px;
+
+    &:after {
+      content: ':';
+    }
+  }
+  .value {
+    display: inline-block;
+    color: $color-1;
+
+    &.paied,
+    &.completed,
+    &.pickedup {
+      color: $color-green;
+    }
+
+    &.failed {
+      color: $color-red;
+    }
+    &.new,
+    &.sent {
+      color: $color-primary;
+    }
+
+    &.waiting {
+      color: $color-1;
+    }
+
+    &.canceled {
+      color: $color-5;
+    }
+  }
+
+  &-price {
+    .value {
+      color: $color-0;
+
+      :deep(.value) {
+        font-family: inherit;
+        font-weight: inherit;
+      }
+    }
+  }
+}
+

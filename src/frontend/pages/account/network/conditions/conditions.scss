@@ -1,0 +1,33 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 15px;
+  grid-column-gap: 40px;
+
+  @include _desktop {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &-title {
+    margin: 0 0 25px 0;
+    font-weight: 500;
+  }
+
+  &-item {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    grid-gap: 15px;
+
+    &-icon {
+      font-size: 20px;
+      line-height: 30px;
+    }
+
+    &-text {
+      line-height: 145%;
+    }
+  }
+}

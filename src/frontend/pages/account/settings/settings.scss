@@ -1,0 +1,28 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.settings {
+  &-box {
+    margin: 0 0 40px 0;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+
+  &-label {
+    margin-bottom: 15px;
+  }
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+  }
+
+  &-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    grid-gap: 20px;
+  }
+}

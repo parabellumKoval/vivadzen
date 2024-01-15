@@ -19,9 +19,9 @@ RUN apt-get update \
     && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
     && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ \
     && docker-php-ext-install gd \
-# Install PostgreSQL
-    && apt-get install -y libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql \
+# Install MySql
+    && docker-php-ext-install mysqli pdo pdo_mysql \
+    && apt-get install -y default-mysql-client \
 # Install BC Math
     && docker-php-ext-install bcmath \
 # Install internationalization functions
@@ -42,3 +42,14 @@ RUN apt-get update \
 # Copy PHP configuration
 COPY ./.docker/dev/base/php.ini "/${PHP_INI_DIR}/php.ini"
 COPY ./.docker/dev/base/conf.d "/${PHP_INI_DIR}/conf.d"
+
+RUN sed -i 's/providers = provider_sect/providers = provider_sect\n\
+ssl_conf = ssl_sect\n\
+\n\
+[ssl_sect]\n\
+system_default = system_default_sect\n\
+\n\
+[system_default_sect]\n\
+MinProtocol = TLSv1\n\
+CipherString = DEFAULT:@SECLEVEL=1\n\
+Options = UnsafeLegacyRenegotiation/' /etc/ssl/openssl.cnf

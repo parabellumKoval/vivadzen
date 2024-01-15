@@ -1,36 +1,30 @@
-<script>
-export default {
-  data() {
-    return {}
+<script setup>
+const {t} = useI18n()
+const props = defineProps({
+  modelValue: {
+    type: String
   },
-
-  props: {
-    modelValue: {
-      type: String
-    },
-    placeholder: {
-      type: String
-    },
-    required: {
-      type: Boolean,
-      default: false
-    },
-    error: {
-      type: [Object, Boolean],
-      default: false
-    },
-    isDisabled: {
-      type: Boolean,
-      default: false
-    }
+  placeholder: {
+    type: String
   },
-
-  methods: {
-    copyHandler() {
-      navigator.clipboard.writeText(this.modelValue)
-      useNoty().setNoty(this.$t('noty.copied', {text: this.modelValue}))
-    }
+  required: {
+    type: Boolean,
+    default: false
+  },
+  error: {
+    type: [Object, Boolean],
+    default: false
+  },
+  isDisabled: {
+    type: Boolean,
+    default: false
   }
+})
+
+
+const copyHandler = () => {
+  navigator.clipboard.writeText(props.modelValue)
+  useNoty().setNoty({content: t('noty.copied', {text: props.modelValue})})
 }
 </script>
 
@@ -47,7 +41,7 @@ export default {
   >
     <template v-slot:icon-right>
       <button @click="copyHandler" clickable class="copy-referral-link">
-        <img src="~assets/svg-icons/copy.svg" class="icon"/>
+        <IconCSS name="iconoir:copy" class="icon"></IconCSS>
       </button>
     </template>
   </form-text>

@@ -1,0 +1,21 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.code {
+  display: grid;
+  grid-template-columns: repeat(2, min-content);
+  grid-gap: 5px;
+  align-items: center;
+
+  &-value {
+    padding: 0;
+    color: $color-violet;
+    border-bottom: 1px dashed $color-violet;
+  }
+
+  &:hover {
+    .value-code-value {
+      color: scale-color($color-violet, $lightness: 30%);
+    }
+  }
+}

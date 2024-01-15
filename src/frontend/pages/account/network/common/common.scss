@@ -1,0 +1,110 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+
+  @include _desktop {
+    grid-template-columns: repeat(2, min-content) 1fr;
+    grid-gap: 70px;
+  }
+
+  &-item {
+    .label {
+      font-size: 10px;
+      text-transform: uppercase;
+      white-space: nowrap;
+
+      @include _desktop {
+        margin: 0 0 10px 0;
+      }
+    }
+
+    .value {
+      display: flex;
+      align-items: center;
+      height: 40px;
+
+      @include _desktop {
+        height: 50px;
+      }
+
+      &-price,
+      &-code {
+        font-size: 18px;
+        line-height: 130%;
+
+        @include _desktop {
+          font-size: 24px;
+        }
+      }
+    }
+
+    &-link {
+      grid-column-start: 1;
+      grid-column-end: 3;
+
+      @include _desktop {
+        grid-column-start: initial;
+        grid-column-end: initial;
+      }
+    }
+  }
+}
+
+.conds {
+  margin: 35px 0;
+  padding: 0 0 0 25px;
+  list-style-type: disc;
+
+  &-item {
+    margin: 0 0 10px 0;
+    line-height: 145%;
+  }
+}
+
+.percent {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+
+  @include _desktop {
+    grid-template-columns: repeat(2, min-content);
+    grid-gap: 25px;
+  }
+
+  &-item {
+    display: grid;
+    grid-template-columns: 60px 180px;
+    height: 80px;
+    align-items: center;
+    padding: 0 20px;
+    border: 3px solid $color-violet;
+    border-radius: $radius;
+  }
+
+  &-value {
+    display: flex;
+    align-items: center;
+    height: 74px;
+    font-size: 44px;
+    font-weight: 700;
+    color: scale-color($color-violet, $lightness: 40%);
+
+    .symbol {
+      font-size: 20px;
+      font-weight: 200;
+    }
+  }
+
+  &-text {
+    font-weight: 600;
+    line-height: 145%;
+
+    .select {
+      color: $color-violet;
+    }
+  }
+}

@@ -18,6 +18,7 @@ const toggleFilter = (key) => {
 
 const filterDoubleslider = resolveComponent('filter-type-doubleslider')
 const filterCheckbox = resolveComponent('filter-type-checkbox')
+const filterList = resolveComponent('filter-type-list')
 </script>
 
 <style src="./list.scss" lang="scss" scoped></style>
@@ -34,6 +35,7 @@ const filterCheckbox = resolveComponent('filter-type-checkbox')
         
         <component v-if="filter.type === 'Doubleslider'" :is="filterDoubleslider" :filter="filter"></component>
         <component v-else-if="filter.type === 'Checkbox'" :is="filterCheckbox" :filter="filter"></component>
+        <component v-else-if="filter.type === 'List'" :is="filterList" :filter="filter"></component>
       </div>
     </div>
   </div>

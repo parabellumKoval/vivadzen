@@ -66,7 +66,7 @@ console.log('values', props.values)
         v-for="(tab, index) in values"
         :key="index"
         @click="selectHandler(index)"
-        :class="[{active: index == activeIndex}, 'class-'+index]"
+        :class="{active: index == activeIndex}"
         class="item"
         clickable
         scrollable

@@ -2,41 +2,79 @@
 @import './assets/scss/mixins';
 @import './assets/scss/rich-text';
 
-.header {
+.selected {
   display: none;
 
   @include _tablet {
     position: sticky;
     top: 80px;
     width: 100%;
-    height: 50px;
+    min-height: 50px;
     z-index: 10;
-    background: $color-7;
+    background: $color-8;
     display: flex;
     align-items: center;
-
-    &-inner {
-      display: grid;
-      grid-template-columns: 1fr min-content;
-      grid-gap: 30px;
-    }
+    padding: 8px 0;
+    border-top: 1px solid $color-6;
+    border-bottom: 1px solid $color-6;
   }
 }
 
-.sorting-btn {
-  border: 1px solid $color-4;
-  background: $color-8;
+.header {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  margin: 0 0 15px 0;
+
+  @include _desktop {
+    grid-template-columns: 1fr 2fr 2fr;
+    margin: 30px 0 15px 0;
+  }
+
+  &-title {
+    display: none;
+
+    @include _desktop {
+      display: block;
+      font-weight: 500;
+      font-size: 20px;
+    }
+  }
+
+  &-desc {
+    color: $color-3;
+  }
+
+  &-actions {
+    display: none;
+
+    @include _desktop {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .sorting-btn {
+    border: 1px solid $color-4;
+    background: $color-8;
+  }
+
 }
 
 .content {
   display: grid;
   grid-template-columns: 1fr;
-  margin-top: 30px;
 
   @include _desktop {
     grid-template-columns: 1fr 4fr;
   }
 
+  &-inner {
+    display: grid;
+    grid-gap: 20px;
+    justify-items: flex-end;
+  }
+  
   &-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -106,4 +144,14 @@
 
 .seo-text {
   margin: 70px 0;
+}
+
+.brand {
+  &-content {
+    margin: 0 0 30px 0;
+
+    @include _desktop {
+      margin: 30px 0;
+    }
+  }
 }

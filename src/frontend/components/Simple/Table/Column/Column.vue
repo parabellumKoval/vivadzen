@@ -4,7 +4,8 @@ const props = defineProps({
     type: String
   },
   value: {
-    type: [String, Number, Boolean]
+    type: [String, Number, Boolean],
+    default: null
   }
 })
 </script>
@@ -14,7 +15,7 @@ const props = defineProps({
   <div class="column">
     <div class="label">{{ label }}</div>
     <div class="value">
-      <template v-if="value">
+      <template v-if="value !== null && value !== undefined">
         {{ value }}
       </template>
       <template v-else>

@@ -28,6 +28,13 @@ const category = computed(() => {
   }
 })
 
+const brand = computed(() => {
+  return {
+    name: 'Now Foods',
+    image: '/images/categories/category-1.png',
+    desc: 'Английский бренд MyProtein с 2004 года зарекомендовал себя среди спортсменом и приверженцев здорового образа жизни не только в Европе, но и других странах мира (до 70 стран). Занимается производством витаминов, минералов, спортивного питания, аксессуаров для спорта, спортивной одежды. Продукты в основном диетические, вегетарианские, веганские, безлактозные и безглютеновые. Спортивная одежда производится только с ультрасовременным дизайном и высококачественными тканями, чтобы поддержать всех и в любом месте в стремлении достичь своих целей.'
+  }
+})
 </script>
 
 <style src="./category.scss" lang="scss" scoped></style>
@@ -40,10 +47,28 @@ const category = computed(() => {
       <div class="title-common">Сывороточный протеин</div>
     </div>
 
-    <div class="header">
+    <div class="selected">
       <div class="container">
-        <div class="header-inner">
-          <filter-selected></filter-selected>
+        <filter-selected></filter-selected>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="brand-content">
+        <div></div>
+        <catalog-brand :item="brand"></catalog-brand>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <div class="header-title">
+          Фильтры
+        </div>
+        <div class="header-desc">
+          Выбрано 120 товаров
+        </div>
+        <div class="header-actions">
           <button class="button mini light sorting-btn">
             <IconCSS name="iconoir:sort-down" class="inline-icon"></IconCSS>
             <span>От дешевых к дорогим</span>
@@ -81,6 +106,7 @@ const category = computed(() => {
       </div>
     </div>
 
+    <filter-mobile-buttons v-if="$device.isMobile"></filter-mobile-buttons>
 
   </div>
 </template>

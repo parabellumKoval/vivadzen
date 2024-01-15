@@ -1,0 +1,27 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.deliveries {
+  margin-bottom: 30px;
+
+  @include _tablet {
+    margin-bottom: 50px;
+  }
+
+  @include _desktop {
+    margin-bottom: 75px;
+  }
+}
+
+.delivery {
+  line-height: 165%;
+
+  :deep(p),
+  p {
+    margin-bottom: 25px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

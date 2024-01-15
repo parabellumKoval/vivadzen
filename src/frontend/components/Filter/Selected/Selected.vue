@@ -12,6 +12,15 @@ const selected = computed(() => {
     },{
       id: 3,
       name: 'Акции'
+    },{
+      id: 3,
+      name: 'Страна изготовления товара: Украина'
+    },{
+      id: 3,
+      name: 'Цена: 100 - 2000грн.'
+    },{
+      id: 3,
+      name: 'Акции'
     }
   ]
 })
@@ -21,13 +30,15 @@ const selected = computed(() => {
 
 <template>
   <div class="filter-wrapper">
-    <div class="filter-label">Выбрано 120 товаров:</div>
-    <button class="button small light filter-remove-all-btn">Сбросить все</button>
-    <div v-for="filter in selected" :key="filter.id" class="filter-item">
-      <span class="filter-name">{{ filter.name }}</span>
-      <button class="filter-remove-btn">
-        <IconCSS name="iconoir:cancel"></IconCSS>
-      </button>
+    <div class="filter-label">Примененные фильтры:</div>
+    <div class="filter-list">
+      <button class="button small light filter-remove-all-btn">Сбросить все</button>
+      <div v-for="filter in selected" :key="filter.id" class="filter-item">
+        <span class="filter-name">{{ filter.name }}</span>
+        <button class="filter-remove-btn">
+          <IconCSS name="iconoir:cancel"></IconCSS>
+        </button>
+      </div>
     </div>
   </div>
 </template>

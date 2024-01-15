@@ -1,0 +1,65 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.checkbox {
+  &-list {
+
+  }
+
+  &-item {
+    &-btn {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      grid-gap: 15px;
+      align-items: center;
+      height: 40px;
+      width: 100%;
+      padding: 0 30px;
+    }
+
+    &:hover {
+      background: $color-7;
+    }
+  }
+
+  &-content {
+    display: grid;
+    grid-template-columns: max-content min-content;
+    grid-gap: 5px;
+    align-items: center;
+  }
+
+  &-name {
+
+  }
+
+  &-count {
+    margin-top: 2px;
+    font-size: 14px;
+    color: $color-4;
+  }
+
+  &-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border: 1px solid $color-3;
+    border-radius: $radius;
+    background: $color-8;
+
+    &-icon {
+      opacity: 0;
+      font-size: 14px;
+    }
+
+    &.checked {
+      border: 1px solid $color-0;
+
+      .checkbox-input-icon {
+        opacity: 1;
+      }
+    }
+  }
+}

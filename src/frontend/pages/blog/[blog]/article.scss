@@ -1,0 +1,135 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+@import './assets/scss/rich-text';
+
+.article {
+  &-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 25px;
+
+    @include _desktop {
+      grid-template-columns: 5fr 2fr;
+      grid-gap: 45px;
+
+    }
+  }
+
+  &-content {
+
+  }
+
+  &-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: $radius;
+    margin: 30px 0;
+  }
+
+  &-header {
+
+  }
+
+  &-meta {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    align-items: center;
+
+    @include _desktop {
+      grid-template-columns: min-content 1fr;
+      grid-gap: 35px;
+    }
+
+    &-box {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      background: $color-7;
+      border-radius: $radius;
+      // border: 2px solid $color-5;
+    }
+  }
+
+
+  &-time,
+  &-comments {
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    grid-gap: 7px;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0 20px;
+
+    &-icon {
+      font-size: 18px;
+    }
+  }
+
+  &-comments {
+    border-left: 2px solid $color-5;
+    color: $color-3;
+
+    &-text {
+      color: $color-3;
+
+      &.active {
+        color: $color-0;
+      }
+
+      &:hover {
+        color: $color-green;
+      }
+    }
+  }
+
+  &-share {
+    margin: 0 auto;
+
+    @include _desktop {
+      margin: 0 0 0 auto;
+    }
+  }
+
+  &-text {
+
+  }
+
+  &-aside {
+    height: min-content;
+    padding: 20px;
+    border-radius: $radius;
+    border: 2px solid $color-6;
+    background: $color-8;
+    order:1;
+
+    @include _desktop {
+      padding: 30px;
+      order: 2;
+    }
+
+    &-title {
+      // font-size: 20px;
+      font-weight: 500;
+      margin: 0 0 20px 0;
+    }
+
+    &-list {
+      display: grid;
+      grid-gap: 10px;
+      list-style-type: decimal;
+      padding: 0 0 0 20px;
+    }
+
+    &-link {
+      line-height: 135%;
+      color: $color-3;
+
+      &:hover {
+        color: $color-green;
+      }
+    }
+  }
+}
+

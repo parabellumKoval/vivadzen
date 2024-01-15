@@ -3,23 +3,48 @@ version: '3.8'
 name: djini
 
 services:
-  nginx:
-    build:
-      context: .docker/dev/nginx
-      dockerfile: Dockerfile
-    volumes:
-      - .docker/dev/nginx/sites-enabled:/etc/nginx/sites-enabled:ro
-      - .docker/dev/nginx/snippets:/etc/nginx/snippets:ro
-      - .docker/dev/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - .docker/dev/nginx/ssl:/etc/nginx/ssl:ro
-    ports:
-      - "443:443"
-      - "80:80"
-    networks:
-      - nginx
-    depends_on:
-      - api
-      - frontend
+  # nginx:
+  #   build:
+  #     context: .docker/dev/nginx
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./src/api/public:/var/www/html/public:ro
+  #     - .docker/dev/nginx/sites-enabled:/etc/nginx/sites-enabled:ro
+  #     # - .docker/dev/nginx/snippets:/etc/nginx/snippets:ro
+  #     - .docker/dev/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     # - .docker/dev/nginx/ssl:/etc/nginx/ssl:ro
+  #   ports:
+  #     - "9000:9000"
+  #   networks:
+  #     - api
+  #   depends_on:
+  #     # - api
+  #     - dashboard
+
+  # dashboard:
+  #   build:
+  #     dockerfile: .docker/dev/dashboard/Dockerfile
+  #     args:
+  #       IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+  #       IMAGE_TAG: ${IMAGE_TAG}
+  #       MY_USER: ${MY_USER}
+  #       MY_UID: ${MY_UID}
+  #   volumes:
+  #     - ./src/api:/var/www/html
+  #     # - mysql:/var/www/html/certs
+  #     # - mysql/client-key.pem:/var/lib/mysql/client-key.pem
+  #     # - mysql/client-cert.pem:/var/lib/mysql/client-cert.pem
+  #     # - mysql/ca.pem:/var/lib/mysql/ca.pem
+  #   container_name: dashboard
+  #   hostname: dashboard
+  #   ports:
+  #     - "9000:9000"
+  #   networks:
+  #     - api
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - mysql
+  #   working_dir: /var/www/html
 
   api:
     build:
@@ -27,13 +52,16 @@ services:
       args:
         IMAGE_REGISTRY: ${IMAGE_REGISTRY}
         IMAGE_TAG: ${IMAGE_TAG}
+        MY_USER: ${MY_USER}
+        MY_UID: ${MY_UID}
     volumes:
       - ./src/api:/var/www/html
+    container_name: api.local
+    hostname: api.local
     ports:
       - "8000:8000"
     networks:
       - api
-      - nginx
     restart: unless-stopped
     depends_on:
       - mysql
@@ -46,15 +74,16 @@ services:
       - ./src/frontend:/var/www/html
       - /var/www/html/node_modules
     hostname: frontend
+    container_name: frontend
     tty: true
     ports:
       - "3000:3000"
       - "24678:24678"
     networks:
-      - nginx
-    restart: unless-stopped
-    depends_on:
       - api
+    restart: unless-stopped
+    # depends_on:
+    #   - api
     command: npm run dev
 
   mysql:
@@ -67,7 +96,9 @@ services:
         - "3306:3306"
     volumes: 
         - mysql:/var/lib/mysql
-        - ./.docker/dev/mysql/dumps/:/tmp
+        # - ./.docker/dev/mysql/dumps/init.sql:/docker-entrypoint-initdb.d/init.sql
+        # config mysql server
+        # - .docker/dev/mysql/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     environment: 
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_USER: ${DB_USERNAME}
@@ -93,32 +124,70 @@ services:
     depends_on:
       - mysql
   
-  redis:
-    build:
-      dockerfile: .docker/dev/redis/Dockerfile
-    volumes:
-      - redis:/data
-    ports:
-      - "6379:6379"
-    networks:
-      - api
+  # redis:
+  #   build:
+  #     dockerfile: .docker/dev/redis/Dockerfile
+  #   volumes:
+  #     - redis:/data
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - api
 
-  queue:
+  # queue:
+  #   build:
+  #     dockerfile: .docker/dev/queue/Dockerfile
+  #     args:
+  #       IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+  #       IMAGE_TAG: ${IMAGE_TAG}
+  #   volumes:
+  #     - ./src/api:/var/www/html
+  #   depends_on:
+  #     - redis
+  #     - mysql
+  #   networks:
+  #     - api
+  #   restart: always
+
+# DAILY
+  backup_daily:
     build:
-      dockerfile: .docker/dev/queue/Dockerfile
-      args:
-        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
-        IMAGE_TAG: ${IMAGE_TAG}
-    volumes:
-      - ./src/api:/var/www/html
+      dockerfile: .docker/dev/backup/Dockerfile
     depends_on:
-      - redis
-      - mysql
+      - mysql  
     networks:
       - api
-    restart: always
+    environment:
+      LOCAL_PATH: /var/www/html/public
+      DB_USER: ${DB_USERNAME}
+      DB_HOST: ${DB_HOST}
+      DB_PASS: ${DB_PASSWORD}
+      DB_NAME: ${DB_DATABASE}
+      FTP_PROTO: ftp
+      FTP_PORT: ${BACKUP_FTP_PORT}
+      FTP_HOST: ${BACKUP_FTP_HOST}
+      FTP_USER: ${BACKUP_FTP_USERNAME}
+      FTP_PASS: ${BACKUP_FTP_PASSWORD}
+      REMOTE_PATH: ${BACKUP_FTP_ROOT}
+    volumes:
+      - ./src/api/public:/var/www/html/public:ro
+      # - /public/uploads:/public/uploads:ro
 
+  backup_cleanup_daily:
+    image: ambroisemaupate/ftp-cleanup
+    environment:
+      FTP_PROTO: ftp
+      FTP_PORT: ${BACKUP_FTP_PORT}
+      FTP_HOST: ${BACKUP_FTP_HOST}
+      FTP_USER: ${BACKUP_FTP_USERNAME}
+      FTP_PASS: ${BACKUP_FTP_PASSWORD}
+      STORE_DAYS: 7
+      FTP_PATH: ${BACKUP_FTP_ROOT}
+      
 volumes:
+  backups:
+    driver: local
+    
   mysql:
     driver: local
 
@@ -129,6 +198,7 @@ networks:
   api:
     name: api
     driver: bridge
+
   nginx:
     name: nginx
     driver: bridge

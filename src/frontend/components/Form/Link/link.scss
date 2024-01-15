@@ -1,4 +1,5 @@
-@import 'assets/scss/global/vars';
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
 
 .copy-referral-link {
   position: absolute;
@@ -8,13 +9,11 @@
   transform: translateY(-50%);
   transition: color 0.4s;
 
-  img {
-    filter: $filter-color-gray;
-  }
+  .icon{
+    font-size: 20px;
 
-  &:hover {
-    img {
-      filter: $filter-color-white;
+    &:hover {
+      color: $color-primary;
     }
   }
 }

@@ -20,7 +20,7 @@ const photo = computed(() => {
 <style src="./card.scss" lang="scss" scoped></style>
 
 <template>
-  <NuxtLink :to="localePath(item.slug)" class="article-card">
+  <NuxtLink :to="localePath('/blog/' + item.slug)" class="article-card">
     <nuxt-img
       v-if="photo"
       :src = "photo"

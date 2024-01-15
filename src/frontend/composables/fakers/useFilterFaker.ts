@@ -1,5 +1,13 @@
+import {useCategoryFaker} from '~/composables/fakers/useCategoryFaker.ts'
+
 export const useFilterFaker = () => {
   const list =  [
+    {
+      id: 0,
+      name: 'Категории',
+      type: 'List',
+      values: useCategoryFaker()(4)
+    },
     {
       id: 1,
       name: 'Страна производитель',
