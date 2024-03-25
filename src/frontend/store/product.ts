@@ -31,12 +31,12 @@ type ProductLarge = {
 
 export const useProductStore = defineStore('productStore', {
   state: () => ({ 
-    allState: {
-      data: [] as ProductSmall[],
-      meta: Object
-    },
+    // allState: {
+    //   data: [] as ProductSmall[],
+    //   meta: Object
+    // },
 
-    productState: null as ProductLarge | null,
+    // productState: null as ProductLarge | null,
 
     searchState: {
       data: [] as ProductSmall[],
@@ -47,41 +47,36 @@ export const useProductStore = defineStore('productStore', {
   }),
   
   getters: {
-    all: (state) => state.allState.data,
-    meta: (state) => state.allState.meta,
-    product: (state) => state.productState,
+    // all: (state) => state.allState.data,
+    // meta: (state) => state.allState.meta,
+    // product: (state) => state.productState,
     found: (state) => state.searchState.data,
     grid: (state) => state.gridData,
   },
 
   actions: {
     async search(query: string) {
-      await this.index(query).then(({ data }) => {
+      await this.getAll(query).then(({ data }) => {
         this.searchState.data = data.data
         this.searchState.meta = data.meta
       })
     },
 
-    async index(query: string) {
-      const url = useRuntimeConfig().public.apiBase + '/products'
+    async getAll(query: Object) {
+      const url = useRuntimeConfig().public.apiBase + '/product'
       return await useServerApiFetch(url, query)
     },
 
-    async getAll(query: string, refresh: boolean = true) {
-      return await this.index(query).then(({ data }) => {
+    async index(query: Object, refresh: boolean = true) {
+      return await this.getAll(query).then(({ data }) => {
+
         if(!data)
           return
 
-        if(refresh)
-          this.allState.data = data.data
-        else
-          this.allState.data = this.allState.data.concat(data.data)
-
-        this.allState.meta = data.meta
-
         return {
-          data: data.data,
-          meta: data.meta
+          products: data.products.data || null,
+          filters: data.filters || null,
+          meta: data.products.meta || null
         }
       })
     },
@@ -103,14 +98,14 @@ export const useProductStore = defineStore('productStore', {
         })
     },
 
-    async getOne(slug: string) {
-      const url = `${useRuntimeConfig().public.apiBase}/products/${slug}`;
+    async show(slug: string) {
+      const url = `${useRuntimeConfig().public.apiBase}/product/${slug}`;
 
       return await useServerApiFetch(url).then(({data, error}) => {
         console.log('pinia', data, error)
-        if(data && data.data) {
-          //this.productState = data.data
-          return data.data
+
+        if(data) {
+          return data
         }
         
         if(error)

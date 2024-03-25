@@ -15,13 +15,13 @@ export const useCategoryStore = defineStore('categoryStore', {
   }),
   
   getters: {
-    all: (state) => state.allState.data,
+    list: (state) => state.allState.data,
     category: (state) => state.categoryState,
   },
 
   actions: {
-    async getAll(query: string) {
-      const url = useRuntimeConfig().public.apiBase + '/categories'
+    async index(query: string) {
+      const url = useRuntimeConfig().public.apiBase + '/category'
 
       return await useServerApiFetch(url, query).then(({data, error}) => {
         if(data) {
@@ -36,12 +36,12 @@ export const useCategoryStore = defineStore('categoryStore', {
       })
     },
 
-    async getOne(slug: string) {
-      const url = `${useRuntimeConfig().public.apiBase}/categories/${slug}`
+    async show(slug: string) {
+      const url = `${useRuntimeConfig().public.apiBase}/category/${slug}`
 
       return await useServerApiFetch(url).then(({data, error}) => {
 
-        console.log('getOne', data)
+        console.log('show', data)
         
         if(data && data.data) {
           //this.categoryState = data

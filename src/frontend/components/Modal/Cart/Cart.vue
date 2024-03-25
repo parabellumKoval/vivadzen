@@ -1,14 +1,11 @@
 <script setup>
-import {useProductFaker} from '~/composables/fakers/useProductFaker.ts'
 import {useCartStore} from '~/store/cart'
-import {useModalStore} from '~~/store/modal';
 
 const { t } = useI18n()
 
 
 const products = computed(() => {
-  return useProductFaker()(4)
-  // return useCartStore().cart
+  return useCartStore().cart
 })
 
 const closeHandler = () => {
@@ -23,14 +20,16 @@ const closeHandler = () => {
     <div class="cart">
       <div class="body" scrollable>
         <div v-if="products.length">
-          <product-card-checkout
-            v-for="product in products"
-            :key="product.id"
-            :item="product"
-            class="product-card"
-            edit
-          >
-          </product-card-checkout>
+          <transition-group name="fade-in">
+            <product-card-checkout
+              v-for="product in products"
+              :key="product.id"
+              :item="product"
+              class="product-card"
+              edit
+            >
+            </product-card-checkout>
+          </transition-group>
         </div>
         <div v-else>
           {{ $t('messages.empty_cart') }}

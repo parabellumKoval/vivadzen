@@ -1,10 +1,31 @@
 <script setup>
-import {useReviewFaker} from '~/composables/fakers/useReviewFaker.ts'
+import {useFetchReview} from '~/composables/review/useFetchReview.ts'
 
-const reviews = computed(() => {
-  return useReviewFaker()(4)
+const reviews = ref([])
+const feedback = ref([])
+
+const getProductReviewQuery = () => {
+  return {
+    per_page: 3,
+    reviewable_type: String.raw`Backpack\Store\app\Models\Product`,
+    resource: 'large'
+  }
+}
+
+const getShopReviewQuery = () => {
+  return {
+    per_page: 3,
+    reviewable_type: null,
+  }
+}
+
+await useFetchReview().getReviews(getProductReviewQuery(), true).then(({reviews: r, meta: m}) => {
+  reviews.value = r
 })
 
+await useFetchReview().getReviews(getShopReviewQuery(), true).then(({reviews: r, meta: m}) => {
+  feedback.value = r
+})
 
 const getPhotoSrc = (image) => {
   if(image?.src) {
@@ -15,19 +36,19 @@ const getPhotoSrc = (image) => {
   }
 }
 
-const feedback = computed(() => {
-  return [
-    {
-      id: 1,
-      author: {
-        name: 'Натали Кыргызтан',
-        photo: '/images/avatars/4.jpg',
-      },
-      created_at: new Date(), 
-      text: 'Я хотел бы поделиться своим положительным опытом покупок в магазине биодобавок djini.com.ua. Этот магазин предлагает широкий выбор высококачественных биологических добавок,помогают поддерживать мое здоровье.'
-    }
-  ]
-})
+// const feedback = computed(() => {
+//   return [
+//     {
+//       id: 1,
+//       author: {
+//         name: 'Натали Кыргызтан',
+//         photo: '/images/avatars/4.jpg',
+//       },
+//       created_at: new Date(), 
+//       text: 'Я хотел бы поделиться своим положительным опытом покупок в магазине биодобавок djini.com.ua. Этот магазин предлагает широкий выбор высококачественных биологических добавок,помогают поддерживать мое здоровье.'
+//     }
+//   ]
+// })
 </script>
 
 <style src="./review.scss" lang="scss" scoped></style>

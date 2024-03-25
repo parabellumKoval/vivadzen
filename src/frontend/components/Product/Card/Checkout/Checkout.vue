@@ -1,4 +1,5 @@
 <script setup>
+import {useCartStore} from '~/store/cart'
 const { t } = useI18n()
 
 const props = defineProps({
@@ -7,7 +8,7 @@ const props = defineProps({
   }
 })
 
-const amount = ref(1)
+// const amount = ref(1)
 
 const photo = computed(() => {
   if(props.item.image?.src) {
@@ -18,7 +19,12 @@ const photo = computed(() => {
   }
 })
 
-const deleteHandler = () => {}
+const deleteHandler = () => {
+  useCartStore().remove(props.item.id)
+  useNoty().setNoty({
+    content: t('noty.product_delete_cart', {product: props.item.name})
+  }, 1000)
+}
 </script>
 
 <style src="./checkout.scss" lang="scss" scoped></style>
@@ -57,7 +63,7 @@ const deleteHandler = () => {}
     </button>
   </div>
   <div class="footer">
-    <form-amount v-model="amount"></form-amount>
+    <form-amount v-model="item.amount"></form-amount>
     <div class="price">
       <simple-price v-if="+item.oldPrice" :value="+item.oldPrice" class="price-old"></simple-price>
       <simple-price v-if="+item.price" :value="+item.price" class="price-base"></simple-price>

@@ -1,4 +1,5 @@
 import dynamicRoutes from './helpers/dynamicRoutes'
+import fetchCategories from './helpers/fetchCategories'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -11,7 +12,17 @@ export default defineNuxtConfig({
       siteUrl: process.env.SITE_URL || 'https://abu.com.ua',
       frontendUrl: process.env.SITE_URL,
       novaposhtaKey: process.env.NOVAPOSHTA_KEY,
-      apiBase: process.env.API_SERVER_URL
+      apiBase: process.env.SERVER_URL + '/api'
+    }
+  },
+  hooks: {
+    async 'pages:extend' (pages) {
+      const routes = await fetchCategories()
+
+      // add a route
+      routes.forEach((page) => {
+        pages.push(page)
+      })
     }
   },
   app: {
@@ -43,6 +54,7 @@ export default defineNuxtConfig({
   ],
 
   modules: [
+    'nuxt-anchorscroll',
     [
       '@nuxtjs/supabase',
       {
@@ -153,38 +165,6 @@ export default defineNuxtConfig({
     ],
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/i18n',
-    // [
-    //   '@nuxtjs/i18n',
-    //   {
-    //     baseUrl: 'https://po.ua',
-    //     defaultLocale: 'uk',
-    //     lazy: true,
-    //     langDir: './lang',
-    //     locales: [
-    //       {
-    //         iso: 'uk-UA',
-    //         code: 'uk',
-    //         file: 'uk.yaml',
-    //         name: 'Українська',
-    //         shortName: 'UA',
-    //       },
-    //       {
-    //         iso: 'ru-RU',
-    //         code: 'ru',
-    //         file: 'ru.yaml',
-    //         name: 'Русский',
-    //         shortName: 'RU',
-    //       }
-    //     ],
-    //     // experimental: {
-    //     //   jsTsFormatResource: true,
-    //     // },
-    //     precompile: {
-    //       strictMessage: false
-    //     },
-    //     vueI18n: './i18n.config.ts'
-    //   }
-    // ],
     [
       '@nuxt/content', 
       {

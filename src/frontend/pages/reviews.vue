@@ -2,6 +2,7 @@
 const localePath = useLocalePath()
 const {t} = useI18n()
 
+// VARS
 const breadcrumbs = [
   {
     name: t('title.home'),
@@ -13,19 +14,33 @@ const breadcrumbs = [
 ]
 
 const tab = ref(0)
+const amounts = ref({
+  shop: 0,
+  products: 0
+})
 
+const content = ref(null)
+
+// COMPUTEDS
 const tabs = computed(() => {
   return [
     {
       id: 1,
-      name: 'Отзывы о магазине <span class="budge green">34</span>'
+      name: `Отзывы о магазине <span class="budge green">${amounts.value.shop}</span>`
     },{
       id: 2,
-      name: 'Отзывы о товарах <span class="budge green">1532</span>'
+      name: `Отзывы о товарах <span class="budge green">${amounts.value.products}</span>`
     }
   ]
 })
 
+// HANDLERS
+const setAmountHandler = (v) => {
+  amounts.value[v.type] = v.value
+}
+
+
+// WATCH
 watch(tab, (index) => {
   if(index === 0) {
     navigateTo(localePath('/reviews/shop'))
@@ -39,6 +54,19 @@ watch(() => useRoute().meta.tab, (v) => {
 }, {
   immediate: true
 })
+
+// METHODS
+const scrollToContent = () => {
+  var headerOffset = 180;
+  var elementPosition = content.value.getBoundingClientRect().top;
+  var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: "smooth"
+  })
+}
+
 // HOOK
 // if(useRoute()?.meta?.tab !== undefined) {
 //   tab.value = useRoute().meta.tab
@@ -49,7 +77,7 @@ watch(() => useRoute().meta.tab, (v) => {
 <style src="./reviews/reviews.scss" lang="scss" scoped></style>
 
 <template>
-  <div class="page-base">
+  <div class="page-base" ref="content">
     <div class="container">
       <the-breadcrumbs :crumbs="breadcrumbs"></the-breadcrumbs>
     </div>
@@ -59,7 +87,7 @@ watch(() => useRoute().meta.tab, (v) => {
     <div class="container">
       <div class="grid">
         <div>
-          <NuxtPage />
+          <NuxtPage @scroll:top="scrollToContent" @set:amount="setAmountHandler"/>
         </div>
         <div>
           <div class="review-form">

@@ -35,6 +35,7 @@ const minHeight = computed(() => {
 })
 
 const maxHeight = computed(() => {
+  console.log('maxHeight', activeModalOptions.value)
   if(activeModalOptions.value?.height.max !== 'initial')
     return getPxValue(activeModalOptions.value?.height.max - margin)
   else
@@ -42,12 +43,10 @@ const maxHeight = computed(() => {
 })
 
 const minWidth = computed(() => {
-  console.log('minWidth', activeModalOptions.value?.width)
   return getPxValue(activeModalOptions.value?.width.min)
 })
 
 const maxWidth = computed(() => {
-  console.log('maxWidth', activeModalOptions.value?.width)
   return getPxValue(activeModalOptions.value?.width.max)
 })
 
@@ -68,12 +67,6 @@ const closeHandler = () => {
   if(props.canClose)
     useModal().close()
 }
-
-watch(() => props.showContent, (v) => {
-  console.log('showContent', v)
-}, {
-  immediate: true
-})
 </script>
 
 <style src="./wrapper.scss" lang="sass" scoped />

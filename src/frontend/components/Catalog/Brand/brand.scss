@@ -6,13 +6,13 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 30px;
-    border: 2px solid $color-6;
+    border: 1px solid $color-6;
     padding: 20px;
     border-radius: $radius;
 
     @include _desktop {
       grid-template-columns: 260px 1fr;
-      padding: 30px;
+      padding: 25px;
     }
   }
 
@@ -32,6 +32,10 @@
     &.active {
       max-height: 100%;
     }
+
+    &.full {
+      max-height: 100%;
+    }
   }
 
   &-image {
@@ -43,6 +47,10 @@
     @include _desktop {
       width: 260px;
       height: 150px;
+    }
+
+    &-wrapper {
+      height: fit-content;
     }
   }
 }

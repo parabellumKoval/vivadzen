@@ -1,17 +1,53 @@
 @import './assets/scss/vars';
 @import './assets/scss/mixins';
 
-.search {
-  position: relative;
-  background: $color-8;
-  border-radius: $radius;
-  overflow: hidden;
-  z-index: 10;
+.typing {
+  display: grid;
+  grid-template-columns: repeat(3, 5px);
+  grid-gap: 5px;
+  align-items: center;
+  
+  .dot {
+    opacity: 0;
 
-  @include _desktop {
-    overflow: initial;
+    &:nth-child(1) {
+      animation: dot1 1s infinite;
+    }
+    &:nth-child(2) {
+      animation: dot2 1s infinite;
+    }
+    &:nth-child(3) {
+      animation: dot3 1s infinite;
+    }
   }
+}
 
+@keyframes dot1 {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+}
+@keyframes dot2 {
+  25% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes dot3 {
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+}
+
+.search {
   &-wrapper {
     position: relative;
     z-index: 10;
@@ -41,74 +77,11 @@
       }
     }
   }
+}
 
-  &-inner {
-    position: relative;
-    display: grid;
-    justify-self: flex-end;
-    grid-template-columns: 1fr;
-    align-items: center;
-    height: 50px;
-    z-index: 100;
-    // max-width: 335px;
-
-    @include _tablet {
-      grid-template-columns: 1fr 100px;
-    }
-  }
-
-
-  &-close {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px; 
-    
-    &-icon {
-      font-size: 20px;
-    }
-  }
-
-  &-action {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    background: $color-green;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 500;
-    color: $color-8;
-    border-radius: 0 $radius $radius 0;
-
-    @include _tablet {
-      display: flex;
-    }
-
-    &-icon {
-      font-size: 20px;
-    }
-  }
-
-  &-input {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    padding-left: 15px;
-    border-radius: $radius 0 0 $radius;
-
-    @include _desktop {
-      padding-left: 55px;
-    }
-
-    &-icon {
-      position: absolute;
-      left: 20px;
-      top: 14px;
-      margin: 0 0 0 auto;
-    }
-  }
+.message-box {
+  color: $color-4;
+  line-height: 135%;
 }
 
 .livesearch {
@@ -120,10 +93,26 @@
   padding: 15px;
   border-radius: $radius;
   background: $color-8;
+  font-size: 14px;
   z-index: 2;
 
   @include _desktop {
-    padding: 30px;
+    padding: 30px 30px 45px 30px;
+  }
+
+  .powered-by {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+
+    display: flex;
+    align-items: center;
+    color: $color-4;
+    font-size: 14px;
+
+    .algolia {
+      display: inline-block;
+    }
   }
 
   &-wrapper {
@@ -154,11 +143,14 @@
   }
 
   &-box {
-    padding: 20px 0;
-    border-top: 1px solid $color-6;
+    padding: 10px 0;
 
-    &:last-child {
-      padding: 20px 0 0 0;
+    &:first-of-type {
+      padding: 0 0 10px 0;
+    }
+
+    &:last-of-type{
+      padding: 10px 0 0 0;
     }
   }
 
@@ -171,6 +163,17 @@
     display: grid;
     grid-gap: 10px;
     margin: 10px 0 0 0;
+  }
+
+  &-inline {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+
+    & > .livesearch-item {
+      flex-shrink: 0;
+      margin: 10px 15px 0 0;
+    }
   }
 
   &-item {
@@ -188,7 +191,7 @@
 .product {
   &-card {
     display: grid;
-    grid-template-columns: 50px 1fr;
+    grid-template-columns: 30px 1fr;
     align-items: center;
     grid-gap: 10px;
     padding: 0 0 10px 0;
@@ -196,22 +199,34 @@
     &:last-child {
       padding: 0;
     }
+
+    &:hover {
+      .product-name {
+        color: $color-green;
+      }
+    }
   }
 
   &-image {
-    width: 60px;
-    height: 70px;
-    object-fit: contain;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
     border-radius: $radius;
     border: 1px solid $color-6;
   }
 
   &-content {
+    width: 100%;
+    overflow: hidden;
   }
 
   &-name {
-    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     line-height: 132%;
+    color: $color-1;
+    transition: color $speed;
   }
 
   &-price {
@@ -219,9 +234,15 @@
     grid-template-columns: repeat(2, min-content);
     grid-auto-rows: min-content;
     grid-gap: 10px;
+    font-weight: 500;
+
+    .base-price {
+      color: $color-0;
+      font-size: 12px;
+    }
 
     .old-price {
-      font-size: 14px;
+      font-size: 10px;
       color: $color-3;
       text-decoration: line-through;
 
@@ -237,8 +258,6 @@
   grid-template-columns: repeat(2, min-content);
   align-items: center;
   grid-gap: 10px;
-  margin: 0 0 20px 0;
-  font-size: 16px;
   color: $color-green;
 
   &:hover {

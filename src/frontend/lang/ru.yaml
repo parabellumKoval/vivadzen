@@ -8,8 +8,10 @@ title:
   network: Партнерская программа
   support: Поддержка
   search_results: Результаты поиска
+  search: Поиск
   comparison: Сравнение товаров
   favorite: Избранное
+  brands:  Бренды
 meta:
   address: Днепропетровская область, Днепр, улица Троицкая, 3А
 label:
@@ -52,6 +54,7 @@ button:
   sorting: Сортировка
   apply: Применить
   reset_all: Сбросить все
+  send: Отправить
 form:
   firstname: Имя
   lastname: Фамилия
@@ -69,3 +72,5 @@ form:
     liqpay: Liqpay
 noty:
   copied: "Скопировано в буфер: {text}"
+  product_to_cart: "Товар {product} добавлен в корзину"
+  product_delete_cart: "Товар {product} удален из корзины"

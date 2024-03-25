@@ -6,6 +6,11 @@ const props = defineProps({
     type: Object
   }
 })
+
+// HANDLERS
+const oneClickHandler = () => {
+  useModal().open(resolveComponent('Modal1Click'), props.product)
+}
 </script>
 
 <style src="./block.scss" lang="scss" scoped></style>
@@ -20,10 +25,11 @@ const props = defineProps({
     </div>
 
     <div class="available">
-      <IconCSS name="iconoir:check" class="icon"></IconCSS>
-      <span class="text">
+      <product-available :in-stock="product.inStock" type="full"></product-available>
+      <!-- <span class="text">
         <span class="status">Есть в наличие</span>
-        <span class="comment"> / заканчивается</span></span>
+        <span class="comment"> / заканчивается</span>
+      </span> -->
     </div>
     
     <div class="sale">
@@ -32,7 +38,7 @@ const props = defineProps({
         <simple-price :value="product.price" class="price-base"></simple-price>
       </div>
       <button class="button primary">{{ t('button.buy') }}</button>
-      <button class="button color-primary inline-icon">
+      <button @click="oneClickHandler" class="button color-primary inline-icon">
         <IconCSS name="iconoir:flash" class="icon"></IconCSS>
         <span>{{ t('button.1_click_buy') }}</span>
       </button>

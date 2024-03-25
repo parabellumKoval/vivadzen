@@ -1,11 +1,11 @@
 <script setup>
-import {useCategoryFaker} from '~/composables/fakers/useCategoryFaker.ts'
+import { useCategoryStore } from '~/store/category'
 const {t} = useI18n()
 
 const selectedIndex = ref(null)
 
 const categories = computed(() => {
-  return useCategoryFaker()(16)
+  return useCategoryStore().list
 })
 
 const selectedCategory = computed(() => {
@@ -19,7 +19,14 @@ const sub = computed(() => {
   if(selectedIndex.value === null)
     return []
   else 
-    return categories.value[selectedIndex.value].children
+    return [
+      {
+        id: selectedCategory.value.id,
+        name: 'Все товары',
+        slug: selectedCategory.value.slug
+      },
+      ...selectedCategory.value.children
+    ]
 })
 
 

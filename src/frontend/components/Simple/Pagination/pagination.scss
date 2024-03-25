@@ -27,7 +27,7 @@
   width: 30px;
   padding: 0;
   flex-shrink: 0;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 14px;
   border-radius: 6px;
   border: 1px solid $color-5;
@@ -41,6 +41,7 @@
   }
 
   &.active {
+    font-weight: 300;
     background: $color-6;
     color: $color-3 !important;
     border: 1px solid $color-6;

@@ -53,7 +53,7 @@ const prevHandler = () => {
 
 const nextHandler = () => {
   const value = props.current + 1
-  if(value < props.total)
+  if(value <= props.total)
     emit('update:current', value)
 }
 </script>
@@ -62,7 +62,7 @@ const nextHandler = () => {
 <template>
   <div class="pagination-wrapper">
 
-    <button @click="prevHandler" class="btn item prev">
+    <button @click="prevHandler" class="button btn item prev">
       <IconCSS name="ph:caret-left" size="20" ></IconCSS>
     </button>
 
@@ -75,14 +75,14 @@ const nextHandler = () => {
           disabled: i === false,
         }"
         @click="clickHandler(i)"
-        class="item"
+        class="button item"
       >
         <div v-if="i === false" class="more">...</div>
         <span v-else>{{ i }}</span>
       </button>
     </div>
 
-    <button @click="nextHandler" class="btn item next">
+    <button @click="nextHandler" class="button btn item next">
       <IconCSS name="ph:caret-right" size="20" ></IconCSS>
     </button>
 

@@ -59,7 +59,7 @@ watch(locale, (v) => {
 })
 
 // HOOKS
-const {refresh: refreshCategories} = useAsyncData('all-categories', async () =>  await useCategoryStore().getAll())
+const {refresh: refreshCategories} = useAsyncData('all-categories', async () =>  await useCategoryStore().index())
 
 useSchemaOrg([
   defineWebSite({
@@ -105,42 +105,6 @@ useSchemaOrg([
             <component :is="useModal().active.component"></component>
         </modal-transition>
         
-        <!-- <transition name="move-x-right">
-          <lazy-modal-menu-mobile v-if="isShowModalMenuMobile" @close="closeMenuMobileHandler"></lazy-modal-menu-mobile>
-        </transition>
-
-        <transition v-if="$device.isDesktop" name="modal-right">
-          <lazy-modal-cart v-if="isShowModalCart"></lazy-modal-cart>
-        </transition>
-
-        <transition v-else name="move-x-right">
-          <lazy-modal-cart v-if="isShowModalCart"></lazy-modal-cart>
-        </transition>
-
-        <transition name="fade-in">
-          <lazy-popup-auth-sign-in-social v-if="isShowPopupAuthSingInSocial"></lazy-popup-auth-sign-in-social>
-        </transition>
-
-        <transition name="fade-in">
-          <lazy-popup-auth-sign-in-email v-if="isShowPopupAuthSingInEmail"></lazy-popup-auth-sign-in-email>
-        </transition>
-
-        <transition name="fade-in">
-          <lazy-popup-auth-log-in-email v-if="isShowPopupAuthLogInEmail"></lazy-popup-auth-log-in-email>
-        </transition>
-
-        <transition name="fade-in">
-          <lazy-popup-auth-password-new v-if="isShowPopupAuthPasswordNew"></lazy-popup-auth-password-new>
-        </transition>
-
-        <transition name="fade-in">
-          <lazy-popup-auth-password-reset v-if="isShowPopupAuthPasswordReset"></lazy-popup-auth-password-reset>
-        </transition>
-
-        <transition name="fade-in">
-          <lazy-popup-auth-email-new v-if="isShowPopupAuthEmailNew"></lazy-popup-auth-email-new>
-        </transition> -->
-
 
         <simple-clicker></simple-clicker>
       </Body>

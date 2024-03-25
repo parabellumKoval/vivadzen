@@ -50,25 +50,28 @@ export const useReviewStore = defineStore('reviewStore', {
     async getAll(query: string, refresh: boolean = true) {
       const runtimeConfig = useRuntimeConfig()
       const params = query? '?' + new URLSearchParams(query).toString(): '';
-      const url = `${runtimeConfig.public.apiBase}/reviews${params}`
+      const url = `${runtimeConfig.public.apiBase}/review${params}`
 
       return await useApiFetch(url).then(({data: {data, meta}}) => {
-        if(refresh){
-          this.allState.data = data
-        }else {
-          this.allState.data = this.allState.data.concat(data)
-        }
+        // if(refresh){
+        //   this.allState.data = data
+        // }else {
+        //   this.allState.data = this.allState.data.concat(data)
+        // }
         
-        this.allState.meta = meta
+        // this.allState.meta = meta
 
-        return data
+        return {
+          reviews: data,
+          meta
+        }
       })
     },
 
     async create(data: object) {
       const runtimeConfig = useRuntimeConfig()
       const context = this
-      const url = `${runtimeConfig.public.apiBase}/reviews`
+      const url = `${runtimeConfig.public.apiBase}/review`
 
       const fullData = {
         ...data,
@@ -92,7 +95,7 @@ export const useReviewStore = defineStore('reviewStore', {
 
     async like(id: number, data: object) {
       const runtimeConfig = useRuntimeConfig()
-      const url = `${runtimeConfig.public.apiBase}/reviews/${id}/like`;
+      const url = `${runtimeConfig.public.apiBase}/review/${id}/like`;
 
       return await useApiFetch(url, data, 'POST').then(({data, error}) => {
 

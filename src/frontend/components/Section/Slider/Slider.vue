@@ -1,11 +1,18 @@
 <script setup>
-import {useProductFaker} from '~/composables/fakers/useProductFaker.ts'
+// import {useProductFaker} from '~/composables/fakers/useProductFaker.ts'
+import { useProductStore } from '~/store/product'
 
-const products = computed(() => {
-  return useProductFaker()(5)
+const products = ref([])
+
+await useAsyncData('products-main', () => useProductStore().index({
+  per_page: 10
+})).then(({data}) => {
+  if(data?.value?.products) {
+    products.value = data.value.products
+  }
 })
 
-console.log(products.value)
+// console.log(products.value)
 </script>
 
 <style src="./slider.scss" lang="scss" scoped></style>

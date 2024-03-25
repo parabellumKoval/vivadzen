@@ -15,22 +15,22 @@ const props = defineProps({
     <div class="header">
       <div class="name">{{ item.author.name }}</div>
       <simple-stars :amount="item.rating" mobile="medium" class="stars"></simple-stars>
-      <div class="date">{{ $d(item.created_at, 'short') }}</div>
+      <div class="date">{{ $d(item.created_at, 'long') }}</div>
     </div>
-    <div class="approved">
+    <div v-if="item.extras?.verified_purchase === '1'" class="approved">
       <IconCSS name="iconoir:user-cart" class="approved-icon"></IconCSS>
       <span class="approved-text">{{ t('verified_purchase') }}</span>
     </div>
     <div class="content">
       {{ item.text }}
     </div>
-    <div class="review-adv">
+    <div v-if="item.extras?.advantages" class="review-adv">
       <div class="review-label">{{ t('dignity') }}</div>
-      <div>Не має запаху, крута сіль</div>
+      <div>{{ item.extras?.advantages }}</div>
     </div>
-    <div class="review-adv">
+    <div v-if="item.extras?.flaws" class="review-adv">
       <div class="review-label">{{ t('flaws') }}</div>
-      <div>Не має</div>
+      <div>{{ item.extras?.flaws }}</div>
     </div>
     <div class="buttons">
       <button :class="{violet: item.likes > 0, secondary: item.likes <= 0}" class="button mini">

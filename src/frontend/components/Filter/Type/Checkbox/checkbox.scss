@@ -20,23 +20,42 @@
     &:hover {
       background: $color-7;
     }
+
+    &.disabled {
+      .checkbox-name,
+      .checkbox-count {
+        color: $color-4;
+      }
+      .checkbox-input {
+        opacity: 0.3;
+      }
+    }
+
+    &.checked {
+      .checkbox-input {
+        border: 1px solid $color-0;
+      }
+
+      .checkbox-input-icon {
+        opacity: 1;
+      }
+    }
   }
 
   &-content {
     display: grid;
     grid-template-columns: max-content min-content;
-    grid-gap: 5px;
+    grid-gap: 10px;
     align-items: center;
   }
 
-  &-name {
-
-  }
+  &-name {}
 
   &-count {
     margin-top: 2px;
     font-size: 14px;
-    color: $color-4;
+    font-weight: 100;
+    color: $color-3;
   }
 
   &-input {
@@ -52,14 +71,6 @@
     &-icon {
       opacity: 0;
       font-size: 14px;
-    }
-
-    &.checked {
-      border: 1px solid $color-0;
-
-      .checkbox-input-icon {
-        opacity: 1;
-      }
     }
   }
 }

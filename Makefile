@@ -2,9 +2,9 @@
 -include .env
 
 # Define default values for variables
-COMPOSE_FILE ?= docker-compose.yml
-BASE_IMAGE_DOCKERFILE ?= .docker/prod/base/Dockerfile
-IMAGE_REGISTRY ?= prod
+COMPOSE_FILE ?= docker-compose.dev.yml
+BASE_IMAGE_DOCKERFILE ?= .docker/dev/base/Dockerfile
+IMAGE_REGISTRY ?= dev
 IMAGE_TAG ?= latest
 
 
@@ -228,6 +228,8 @@ copy.laravel.%:
 copy.uploads.%:
 	docker cp ./src/api/public/uploads/. $*:/var/www/html/public/uploads/
 
+create_dirs.%:
+	docker compose -f ${COMPOSE_FILE} exec $* mkdir /var/www/html/storage/framework/sessions
 #-----------------------------------------------------------
 # Dashboard
 #-----------------------------------------------------------

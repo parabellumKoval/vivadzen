@@ -45,7 +45,7 @@
 <style src="./stars.scss" lang="scss" scoped />
 
 <template>
-  <div v-if="showMedium" class="stars-medium">
+  <div v-if="showMedium" :style="{fontSize: size + 'px'}" class="stars-medium">
     <IconCSS v-for="i in 5" :key="i" name="bxs:star" :class="{active: i <= amount }" class="star" />
   </div>
   <div v-else-if="showSmall" class="stars-small">

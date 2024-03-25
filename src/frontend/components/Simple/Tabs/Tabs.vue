@@ -24,21 +24,6 @@ const emit = defineEmits([
 ])
 
 const activeIndex = ref(0)
-// const isTabActive = (index) => {
-//   if(props.key)
-//     return props.values[index][props.key] === props.modelValue
-//   else
-//     return index === props.modelValue
-// }
-
-// const activeTabIndex = computed(() => {
-//   if(props.key) {
-//     console.log('props.key')
-//   } else {
-//     console.log('props.modelValue', activeIndex.value)
-//     return activeIndex.value
-//   }
-// })
 
 const selectHandler = (index) => {
   if(props.key)
@@ -48,13 +33,10 @@ const selectHandler = (index) => {
 }
 
 watch(() => props.modelValue, (v) => {
-  console.log('v', v)
   activeIndex.value = v
 }, {
   immediate: true
 })
-
-console.log('values', props.values)
 </script>
 
 <style src="./tabs.scss" lang="sass" scoped />
@@ -66,7 +48,7 @@ console.log('values', props.values)
         v-for="(tab, index) in values"
         :key="index"
         @click="selectHandler(index)"
-        :class="{active: index == activeIndex}"
+        :class="[{active: index == activeIndex}, {disabled: tab.disabled}]"
         class="item"
         clickable
         scrollable

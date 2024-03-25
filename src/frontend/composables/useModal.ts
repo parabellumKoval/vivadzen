@@ -111,7 +111,7 @@ export const useModal = () => {
     }
 
     setTimeout(() => {
-      console.log('options', options)
+      // console.log('options', options)
       setPositions(target, options)
 
       active.value.component = component
@@ -139,7 +139,7 @@ export const useModal = () => {
 
     if(!target){
       active.value.options = JSON.parse(JSON.stringify(optionsDefault.value))
-      console.log('NO TARGET', active.value.options)
+      // console.log('NO TARGET', active.value.options)
       active.value.element = null
     }else if(target === 'save') {
       return
@@ -168,16 +168,16 @@ export const useModal = () => {
   }
 
   const setupSizes = (optionsData: Options | null = null) => {
-
     const elementPositionY = active.value.options.y
     const innerHeight = window.innerHeight
 
-    if(elementPositionY.top !== 'initial') {
+    if(elementPositionY.top !== 'initial' && typeof elementPositionY.top !== 'string') {
       active.value.options.height.max = innerHeight - elementPositionY.top
-    }else if(elementPositionY.bottom !== 'initial')
+    }else if(elementPositionY.bottom !== 'initial' && typeof elementPositionY.bottom !== 'string') {
       active.value.options.height.max = innerHeight - elementPositionY.bottom
-
-    // console.log('elementPositionY', active.value.options)
+    }
+    
+      console.log('setupSizes', elementPositionY, innerHeight, active.value.options)
   }
 
   const setupPositionX = (optionsData: Options | null = null) => {

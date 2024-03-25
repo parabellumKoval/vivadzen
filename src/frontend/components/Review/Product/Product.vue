@@ -8,6 +8,7 @@ const props = defineProps({
     default: 'mini'
   }
 })
+
 </script>
 
 <style src="./product.scss" lang="scss" scoped></style>
@@ -15,7 +16,7 @@ const props = defineProps({
 <template>
   <div class="review-wrapper">
     <div class="product">
-      <product-card-micro :item="item.reviewable"></product-card-micro>
+      <product-card-micro :item="item.product"></product-card-micro>
     </div>
     <div class="devide"></div>
     <review-card-mini v-if="type === 'mini'" :item="item" class="review-mini"></review-card-mini>

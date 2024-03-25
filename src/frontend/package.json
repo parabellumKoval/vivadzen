@@ -31,6 +31,7 @@
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@types/node": "^18",
     "nuxt": "^3.8.2",
+    "nuxt-anchorscroll": "^1.0.3",
     "nuxt-icon": "^0.6.6",
     "nuxt-schema-org": "^2.1.1",
     "nuxt-simple-sitemap": "^1.0.7",

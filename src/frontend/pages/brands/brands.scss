@@ -24,6 +24,8 @@
     }
 
     &-value {
+      font-weight: 500;
+      white-space: nowrap;
     }
   }
 
@@ -39,10 +41,11 @@
   }
 
   &-item {
-
   }
 
   &-link {
+    color: $color-2;
+
     &:hover {
       color: $color-green;
     }
@@ -123,6 +126,7 @@
     border-radius: $radius;
     font-size: 20px;
     color: $color-blue;
+    text-transform: uppercase;
 
     &:hover {
       background: scale-color($color-blue, $lightness: 85%);

@@ -1,0 +1,35 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.form {
+  &-wrapper {
+    display: grid;
+    grid-auto-flow: row;
+    grid-gap: 25px;
+    margin: 25px 0 0 0;
+    padding: 25px 0 0 0;
+    border-top: 1px solid $color-5;
+  }
+
+  &-label {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+}
+
+.rate {
+  &-wrapper {
+  }
+
+  &-forms {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    align-items: center;
+    grid-gap: 30px;
+  }
+}
+
+.send-btn {
+  max-width: 100%;
+  width: 100%;
+}

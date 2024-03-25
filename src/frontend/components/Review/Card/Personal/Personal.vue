@@ -5,6 +5,36 @@ const props = defineProps({
     required: true
   }
 })
+
+const link = computed(() => {
+  let url = null
+  let link = {
+    type: null,
+    href: props.item?.extras?.link || null
+  }
+
+  if(!link.href) {
+    return link;
+  }
+
+  // type = link.match('^(?:https?://)?(?:www.)?(\w*)\/')
+
+  try {
+    url = new URL(link.href)
+  }catch(e) {
+    console.log(e)
+  }
+
+  if(url.host.match('(?:www.)?facebook.com')){ 
+    link.type = 'facebook'
+  }else if(url.host.match('(?:www.)?instagram.com')) {
+    link.type = 'instagram'
+  }else {
+    link.type = null
+  }
+  
+  return link
+})
 </script>
 
 <style src="./personal.scss" lang="scss" scoped></style>
@@ -37,13 +67,9 @@ const props = defineProps({
       <div>
         <div class="author-name">{{ item.author.name }}</div>
         <div class="author-source">
-          <a v-if="item.author.link?.type === 'instagram'" :href="item.author.link.href" target="_blank" class="social-link instagram-link">
-            <IconCSS name="basil:instagram-outline" class="social-link-icon"></IconCSS>
-            <span class="social-link-text">Instagram автора</span>
-          </a>
-          <a v-else-if="item.author.link?.type === 'facebook'" :href="item.author.link.href" target="_blank" class="social-link facebook-link">
-            <IconCSS name="basil:facebook-outline" class="social-link-icon"></IconCSS>
-            <span class="social-link-text">Facebook автора</span>
+          <a :href="link.href" :class="link.type + '-link'" target="_blank" rel="nofollow" class="social-link" >
+            <IconCSS :name="'basil:' + link.type +'-outline'" class="social-link-icon"></IconCSS>
+            <span class="social-link-text">{{ link.type }} автора</span>
           </a>
         </div>
       </div>

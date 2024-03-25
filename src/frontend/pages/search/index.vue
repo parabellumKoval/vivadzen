@@ -1,67 +1,179 @@
 <script setup>
-import {useProductFaker} from '~/composables/fakers/useProductFaker.ts'
+import {useSearchStore} from '~/store/search'
 
 const {t} = useI18n()
+const route = useRoute()
 
-const breadcrumbs = [
-  {
-    name: t('title.home'),
-    item: '/'
-  },{
-    name: t('title.search_results'),
-    item: '/search'
-  }
-]
+const searchInput = ref(null)
 
-const products = computed(() => {
-  return useProductFaker()(8)
+// Attributes
+const attributes = ref([])
+
+// Filters
+const filters = ref(null)
+
+// Products
+const products = ref(null)
+const meta = ref(null)
+
+// Categories
+const categories = ref([])
+
+// Brands
+const brands = ref([])
+
+const pending = ref(false)
+const isLoading = ref(true)
+
+// Breadcrumbs
+const breadcrumbs = ref(null)
+
+// COMPUTEDS
+const search = computed(() => {
+  return route.query.q
 })
 
+// METHODS
+const setCrumbs = (title) => {
+  breadcrumbs.value = [
+    {
+      name: t('title.home'),
+      item: '/'
+    },{
+      name: title,
+      item: '/search'
+    }
+  ]
+}
+
+const getQuery = () => {
+  return {
+    per_page: 20,
+    page: 1
+  }
+}
+
+
+const setAttributes = () => {
+  // attributes.value = []
+  if(categories.value) {
+    attributes.value.push(
+      {
+        id: 'categories',
+        name: 'Категории',
+        type: 'tree',
+        noMeta: true,
+        isOpen: true,
+        values: [...categories.value]
+      }
+    )
+  }
+
+  if(brands.value) {
+    attributes.value.push(
+      {
+        id: 'brands',
+        name: 'Бренды',
+        type: 'list',
+        noMeta: true,
+        isOpen: true,
+        values: [...brands.value]
+      }
+    )
+
+  }
+
+  console.log('setAttributes', attributes.value)
+}
+
+const fetchSearch = async (search) => {
+
+  const params = {
+    search: search
+  }
+
+  if(!params.search?.length) {
+    return
+  }
+
+  isLoading.value = true
+
+  await useAsyncData('search', () => useSearchStore().index(params)).then(({data, error}) => {
+    
+    if(data?.value?.products) {
+      products.value = data.value.products.data || null
+      meta.value = data.value.products.meta || null
+    }
+    
+    if(data?.value?.categories) {
+      categories.value = data.value.categories
+    }
+    
+    if(data?.value?.brands) {
+      brands.value = data.value.brands
+    }
+
+    setAttributes()
+
+  }).finally(() => {
+    isLoading.value = false
+  })
+}
+
+// HANDLERS
+const searchHandler = () => {
+  useRouter().replace({
+    query: {
+      q: searchInput.value
+    }
+  })
+}
+
+// WATCH
+watch(search, (v) => {
+  searchInput.value = v
+  if(v) {
+    setCrumbs(t('title.search_results') + ` «${v}»`)
+    fetchSearch(v)
+  }else {
+    setCrumbs(t('title.search'))
+  }
+}, {
+  immediate: false
+})
+
+await fetchSearch(search.value)
 </script>
 
 <style src="./search.scss" lang="scss" scoped></style>
 
 <template>
-  <div class="page-base">
+
+<NuxtLayout
+  name="catalog"
+  :breadcrumbs="breadcrumbs"
+  :filters="attributes"
+  :filters-meta="filters"
+  :products="products"
+  :meta="meta"
+>
+  <template #title>
+    <template v-if="search">
+      {{ t('title.search_results') }} «<span class="title-search">{{ search }}</span>»
+    </template>
+    <template v-else>
+      {{ t('title.search') }}
+    </template>
+  </template>
+
+  <template #header>
     <div class="container">
-      <the-breadcrumbs :crumbs="breadcrumbs"></the-breadcrumbs>
-
-      <div class="title-common">
-        Результаты поиска «<span class="title-search">Биологические добавки</span>»
-      </div>
+      <simple-search
+        v-model="searchInput"
+        @btn:click="searchHandler"
+        class="simple-search"
+      ></simple-search>
     </div>
-
-    <div class="selected">
-      <div class="container">
-        <filter-selected></filter-selected>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="header">
-        <div class="header-title">
-          Фильтры
-        </div>
-        <div class="header-desc">
-          Найдено 120 товаров
-        </div>
-        <div class="header-actions">
-          <button class="button mini light sorting-btn">
-            <IconCSS name="iconoir:sort-down" class="inline-icon"></IconCSS>
-            <span>От дешевых к дорогим</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="content">
-      <filter-list class="filters"></filter-list>
-      <div class="content-grid">
-        <product-card v-for="product in products" :key="product.id" :item="product" class="content-grid-item"></product-card>
-      </div>
-    </div>
-
-    <filter-mobile-buttons v-if="$device.isMobile"></filter-mobile-buttons>
-
-  </div>
+  </template>
+</NuxtLayout>
 </template>

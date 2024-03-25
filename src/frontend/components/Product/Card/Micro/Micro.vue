@@ -39,6 +39,7 @@ const photo = computed(() => {
   </NuxtLink>
   <div class="body">
     <NuxtLink
+      v-if="item.category"
       :to="localePath('/' + item.category.slug)"
       :aria-label="item.category.name"
       clickable

@@ -1,8 +1,8 @@
 <script setup>
-import {useCategoryFaker} from '~/composables/fakers/useCategoryFaker.ts'
+import { useCategoryStore } from '~/store/category'
 
 const categories = computed(() => {
-  return useCategoryFaker()(8)
+  return useCategoryStore().list
 })
 
 
@@ -15,7 +15,7 @@ const getPhotoSrc = (image) => {
   }
 }
 
-console.log(categories.value)
+// console.log('categories', categories.value)
 </script>
 
 <style src="./category.scss" lang="scss" scoped></style>
@@ -51,7 +51,7 @@ console.log(categories.value)
         <IconCSS name="ph:caret-right-fill" class="category-icon"></IconCSS>
         <div class="category-content">
           <div class="category-name">{{ category.name }}</div>
-          <div class="category-children">Подкатегорий: {{ 5 }}</div>
+          <div class="category-children">Подкатегорий: {{ category.children.length }}</div>
         </div>
       </NuxtLink>
     </div>
