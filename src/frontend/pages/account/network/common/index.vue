@@ -2,8 +2,9 @@
 const {t} = useI18n()
 
 definePageMeta({
-  tab: 0
+  subTab: 0
 });
+
 const referralLink = ref('https://djini.com.ua?ref=GTRE43')
 const referralCode = ref('GTRE43')
 const props = defineProps({})

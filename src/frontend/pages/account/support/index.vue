@@ -1,6 +1,15 @@
 <script setup>
 const {t} = useI18n()
 const props = defineProps({})
+
+definePageMeta({
+  crumb: {
+    name: 'title.account.support',
+    item: '/'
+  },
+  tab: 'support'
+});
+
 // COMPUTEDS
 // METHODS
 // HANDLERS
@@ -13,6 +22,6 @@ const props = defineProps({})
 
 <template>
   <div>
-    <div class="title-secondary">{{ t('title.support') }}</div>
+    <div class="title-secondary">{{ t('title.account.support') }}</div>
   </div>
 </template>

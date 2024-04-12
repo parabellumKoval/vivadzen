@@ -131,16 +131,11 @@ export const useModal = () => {
   }
 
   const setPositions = (target: HTMLElement | null | 'save' = null, optionsData: Options | null = null) => {
-    setupOptions(target, optionsData)
-
-    // if(target !== 'save' && !optionsData) {
-    //   active.value.options = JSON.parse(JSON.stringify(optionsDefault.value))
-    // }
 
     if(!target){
       active.value.options = JSON.parse(JSON.stringify(optionsDefault.value))
-      // console.log('NO TARGET', active.value.options)
       active.value.element = null
+      setupOptions(target, optionsData)
     }else if(target === 'save') {
       return
     } else {
@@ -165,6 +160,8 @@ export const useModal = () => {
     active.value.options.margin.y = optionsData?.margin?.y || 0
     active.value.options.width.min = optionsData?.width?.min || 'initial'
     active.value.options.width.max = optionsData?.width?.max || 'initial'
+
+    // console.log('setupOptions', active.value.options)
   }
 
   const setupSizes = (optionsData: Options | null = null) => {
@@ -177,7 +174,7 @@ export const useModal = () => {
       active.value.options.height.max = innerHeight - elementPositionY.bottom
     }
     
-      console.log('setupSizes', elementPositionY, innerHeight, active.value.options)
+      // console.log('setupSizes', elementPositionY, innerHeight, active.value.options)
   }
 
   const setupPositionX = (optionsData: Options | null = null) => {

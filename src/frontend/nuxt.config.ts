@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   appConfig: {},
   runtimeConfig: {
     public: {
-      siteUrl: process.env.SITE_URL || 'https://abu.com.ua',
+      siteUrl: process.env.SITE_URL || 'https://djini.com.ua',
       frontendUrl: process.env.SITE_URL,
       novaposhtaKey: process.env.NOVAPOSHTA_KEY,
       apiBase: process.env.SERVER_URL + '/api'
@@ -58,7 +58,10 @@ export default defineNuxtConfig({
     [
       '@nuxtjs/supabase',
       {
-        redirect: '/'
+        redirectOptions: {
+          login: '/',
+          include: ['/account(/*)?']
+        }
       }
     ],
     [

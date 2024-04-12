@@ -17,7 +17,7 @@ const updateCurrentHandler = (v) => {
 }
 
 const createReviewHandler = () => {
-  useModal().open(resolveComponent('ModalReviewCreate'))
+  useModal().open(resolveComponent('ModalReviewCreate'), null, null, {width: {min: 420, max: 420}})
 }
 </script>
 

@@ -43,7 +43,7 @@ const toCartHandler = () => {
 <i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
-  <div :class="stock" class="card">
+  <div v-if="item" :class="stock" class="card">
     <NuxtLink :to="localePath('/' + item.slug)" :aria-label="item.name" clickable class="image-wrapper">
         <nuxt-img
           v-if="photo"

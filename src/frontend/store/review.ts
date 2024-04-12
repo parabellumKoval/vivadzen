@@ -70,7 +70,6 @@ export const useReviewStore = defineStore('reviewStore', {
 
     async create(data: object) {
       const runtimeConfig = useRuntimeConfig()
-      const context = this
       const url = `${runtimeConfig.public.apiBase}/review`
 
       const fullData = {
@@ -81,12 +80,14 @@ export const useReviewStore = defineStore('reviewStore', {
 
       return await useApiFetch(url, fullData, 'POST').then((response) => {
         if(response.data) {
-          if(data.parent_id) {
-            const parent_comment = context.allState.data.find((item) => item.id === data.parent_id)
-            parent_comment.children.unshift(response.data as Review)
-          }else {
-            context.allState.data.unshift(response.data as Review)
-          }
+
+          // if(data.parent_id) {
+          //   const parent_comment = context.allState.data.find((item) => item.id === data.parent_id)
+          //   parent_comment.children.unshift(response.data as Review)
+          // }else {
+          //   context.allState.data.unshift(response.data as Review)
+          // }
+
         }
 
         return {data: response.data, error: response.error}

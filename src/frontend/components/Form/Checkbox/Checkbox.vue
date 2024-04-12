@@ -6,7 +6,8 @@ const props = defineProps({
     default: false
   },
   value: {
-    type: String
+    type: String,
+    default: true
   },
   name: {
     type: String
@@ -22,6 +23,10 @@ const props = defineProps({
   isDisabled: {
     type: Boolean,
     default: false
+  },
+  isBoolean: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -30,10 +35,18 @@ const emit = defineEmits([
 ])
 
 const changeHandler = (v) => {
-  emit('update:modelValue', v.target.value)
+  if(props.isBoolean) {
+    emit('update:modelValue', !props.modelValue)
+  }else {
+    emit('update:modelValue', v.target.value)
+  }
 }
 
 const isChecked = computed(() => {
+  if(props.isBoolean){
+    return  props.modelValue
+  }
+
   if(Array.isArray(props.modelValue)) {
     return props.modelValue.find((item) => {
       return item === props.value

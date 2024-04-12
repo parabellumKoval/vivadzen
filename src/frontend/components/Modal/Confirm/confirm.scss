@@ -2,7 +2,21 @@
 @import './assets/scss/mixins';
 
 .buttons-wrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 15px;
   align-items: center;
-  grid-gap: 10px;
+  width: 100%;
+
+  &.default {
+    direction: ltr;
+  }
+
+  &.good {
+    direction: rtl;
+  }
+  
+  &.bad {
+    direction: ltr;
+  }
 }

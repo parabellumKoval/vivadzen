@@ -1,4 +1,6 @@
 <script setup>
+const {t} = useI18n()
+
 const props = defineProps({
   error: {
     type: Object
@@ -15,10 +17,10 @@ console.log('error', props.error)
     <div class="container">
       <div class="error">
         <div class="status">{{ error.statusCode }}</div>
-        <div class="text">{{ error.statusMessage }}</div>
-        <NuxtLink :to="localePath('/')" class="button primary btn">
-          <IconCSS name="fluent:arrow-hook-up-right-28-regular" size="20px" class="icon"></IconCSS>
-          <span>Перейти на главную</span>
+        <div class="text">{{ error.statusMessage || error.message }}</div>
+        <NuxtLink :to="localePath('/')" class="button primary action-btn">
+          <IconCSS name="iconoir:home" size="20px" class="icon"></IconCSS>
+          <span>{{ t('button.go_home') }}</span>
         </NuxtLink>
       </div>
     </div>

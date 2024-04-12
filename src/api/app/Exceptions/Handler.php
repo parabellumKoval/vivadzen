@@ -38,4 +38,34 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+
+
+    /**
+   * Render an exception into an HTTP response.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \Throwable  $exception
+   * @return \Illuminate\Http\Response
+   */
+  // public function render($request, Throwable $exception)
+  // {
+  //   // return response()->json(['class' => get_class($exception), 'code' => $exception->getCode(), 'message' => $exception]);
+
+  //   $response = [
+  //     'success' => false,
+  //     'message' => $exception->getMessage(),
+  //     'code' => $exception->getCode(),
+  //     'options' => null,
+  //   ];
+
+  //   if(method_exists($exception, 'getOptions')){
+  //     $response['options'] = $exception->getOptions();
+  //   }
+
+  //   return response()->json(
+  //     $response,
+  //     $exception->getCode()
+  //   );
+  // }
 }

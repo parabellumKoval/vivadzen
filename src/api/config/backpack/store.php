@@ -10,7 +10,7 @@ return [
     'per_page' => 12,
 
     // GUARD
-    'auth_guard' => 'profile',
+    'auth_guard' => null,
     
     // USER
     'user_model' => 'Backpack\Profile\app\Models\Profile',
@@ -67,28 +67,54 @@ return [
           'rules' => 'array:method,status',
           'store_in' => 'info',
           'method' => [
-            'rules' => 'required|in:liqpay,cash'
+            'rules' => 'required|in:online,cash'
           ]
         ],
         
         'delivery' => [
-          'rules' => 'array:city,address,zip,method,warehouse',
+          'rules' => 'array:city,street,house,room,zip,method,warehouse,comment',
           'store_in' => 'info',
           'method' => [
             'rules' => 'required|in:address,warehouse,pickup'
           ],
           'warehouse' => [
-            'rules' => 'required_if:delivery.method,warehouse|string|min:1|max:500'
+            'rules' => 'required_if:delivery.method,warehouse|nullable|string|min:1|max:500'
           ],
           'city' => [
-            'rules' => 'required_if:delivery.method,address,warehouse|string|min:2|max:255'
+            'rules' => 'required_if:delivery.method,address,warehouse|nullable|string|min:2|max:255'
           ],
-          'address' => [
-            'rules' => 'required_if:delivery.method,address|string|min:2|max:255'
+          'street' => [
+            'rules' => 'required_if:delivery.method,address|nullable|string|min:2|max:255'
+          ],
+          'house' => [
+            'rules' => 'required_if:delivery.method,address|nullable|string|min:2|max:50'
+          ],
+          'room' => [
+            'rules' => 'required_if:delivery.method,address|nullable|string|min:2|max:50'
           ],
           'zip' => [
-            'rules' => 'required_if:delivery.method,address|string|min:5|max:255'
+            'rules' => 'required_if:delivery.method,address|nullable|string|min:5|max:255'
           ],
+          'comment' => [
+            'rules' => 'nullable|string|min:1|max:1000'
+          ],
+          // 'rules' => 'array:city,address,zip,method,warehouse',
+          // 'store_in' => 'info',
+          // 'method' => [
+          //   'rules' => 'required|in:address,warehouse,pickup'
+          // ],
+          // 'warehouse' => [
+          //   'rules' => 'required_if:delivery.method,warehouse|string|min:1|max:500'
+          // ],
+          // 'city' => [
+          //   'rules' => 'required_if:delivery.method,address,warehouse|string|min:2|max:255'
+          // ],
+          // 'address' => [
+          //   'rules' => 'required_if:delivery.method,address|string|min:2|max:255'
+          // ],
+          // 'zip' => [
+          //   'rules' => 'required_if:delivery.method,address|string|min:5|max:255'
+          // ],
         ],
         
         'products' => [
@@ -209,28 +235,38 @@ return [
       ]
     ],
 
-    // PRODUCT -> properties
+
+    // PROMOCODE
+    'promocodes' => [
+      'enable' => true,
+
+      'resource' => [
+
+        'large' => 'Backpack\Store\app\Http\Resources\PromocodeLargeResource',
+
+        'small' => 'Backpack\Store\app\Http\Resources\PromocodeSmallResource'
+      ],
+
+    ],
     
-    //is hit
-    'enable_is_hit' => false,
 
-    // rating
-    'enable_product_rating' => true,
+    // BRAND
+    'brands' => [
+      'enable' => true,
 
+      'resource' => [
 
-    // PRODUCT -> resources
-    'product_tiny_resource' => 'Backpack\Store\app\Http\Resources\ProductTinyResource',
-    
-    // Small product resource used for catalog pages (index route)
-    'product_small_resource' => 'Backpack\Store\app\Http\Resources\ProductSmallResource',
-    'product_medium_resource' => 'Backpack\Store\app\Http\Resources\ProductMediumResource',
-    
-    // Large product resource used for product page (show route)
-    'product_large_resource' => 'Backpack\Store\app\Http\Resources\ProductLargeResource',
+        'large' => 'Backpack\Store\app\Http\Resources\BrandLargeResource',
 
-    // Cart product resource used for order
-    'product_cart_resource' => 'Backpack\Store\app\Http\Resources\ProductCartResource',
+        'small' => 'Backpack\Store\app\Http\Resources\BrandSmallResource'
+      ],
 
-    // BRANDS
-    'enable_brands' => false,
+      'alpha_groups' => [
+        'patterns' => [
+          '/[А-Яа-яЁё]/u',
+          '/[0-9]/u',
+          '/[A-Za-z]/u',
+        ]
+      ]
+    ]
 ];

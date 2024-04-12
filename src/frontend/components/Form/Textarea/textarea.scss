@@ -6,25 +6,22 @@
   display: block;
   width: 100%;
   line-height: 0;
-}
 
-.input__wrapper.disabled {
+  &.disabled {
     pointer-events: none;
+
+    .main-textarea {
+      pointer-events: none;
+    }
+  }
+
+  &.error {
+    .main-textarea {
+      border: 2px solid rgba($color-red, 0.4);
+    }
+  }
 }
 
-.input__wrapper.error .input-error-text {
-  display: block;
-}
-
-.input-error-text {
-  display: none;
-  position: absolute;
-  top: calc(100% + 3px);
-  left: 20px;
-  font-size: 10px;
-  line-height: 12px;
-  color: $color-red;
-}
 
 .main-textarea {
   width: 100%;
@@ -35,7 +32,6 @@
   line-height: 135%;
   border-radius: $radiusBtn;
   outline-color: rgba($color-primary, 0.2);
-
 
   &::placeholder {
     color: $color-4;

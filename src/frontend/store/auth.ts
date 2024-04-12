@@ -29,6 +29,17 @@ export const useAuthStore = defineStore('authStore', {
     },
     avatar: (state) => {
       return state.userState.photo? state.userState.photo: '/images/account.png'
+    },
+    name: (state) => {
+      const fullname = [(state.userState.firstname || ''), (state.userState.lastname || '')].join(' ').trim()
+
+      if(fullname !== '')
+          return fullname
+      
+      if(state.userState.fullname)
+          return state.userState.fullname
+      else
+        return null
     }
   },
 
@@ -51,7 +62,8 @@ export const useAuthStore = defineStore('authStore', {
         fullname: supauser.user_metadata.full_name,
         photo: supauser.user_metadata.avatar_url,
         phone: supauser.user_metadata.phone,
-        telegram: supauser.user_metadata.telegram
+        firstname: supauser.user_metadata.firstname,
+        lastname: supauser.user_metadata.lastname
       }
     },
 
@@ -67,7 +79,8 @@ export const useAuthStore = defineStore('authStore', {
           fullname: supauser.value.user_metadata.full_name,
           photo: supauser.value.user_metadata.avatar_url,
           phone: supauser.value.user_metadata.phone,
-          telegram: supauser.value.user_metadata.telegram
+          firstname: supauser.value.user_metadata.firstname,
+          lastname: supauser.value.user_metadata.lastname
         }
       }else {
         this.authState = false
@@ -92,7 +105,7 @@ export const useAuthStore = defineStore('authStore', {
     },
 
     async logout() {
-      const { auth } = useSupabaseAuthClient()
+      const { auth } = useSupabaseClient()
 
       return await auth.signOut().then(() => {
         this.resetUser()
@@ -101,7 +114,7 @@ export const useAuthStore = defineStore('authStore', {
 
     async oAuth(provider: 'google' | 'facebook', redirectTo: String = '/') {
       const runtimeConfig = useRuntimeConfig()
-      const { auth } = useSupabaseAuthClient()
+      const { auth } = useSupabaseClient()
 
       const { data, error } = await auth.signInWithOAuth({
         provider: provider,
@@ -112,7 +125,7 @@ export const useAuthStore = defineStore('authStore', {
     },
 
     async login(data: Object) {
-      const { auth } = useSupabaseAuthClient()
+      const { auth } = useSupabaseClient()
       
       return await auth.signInWithPassword({
         email: data.email,
@@ -121,20 +134,20 @@ export const useAuthStore = defineStore('authStore', {
     },
 
     async register(data: Object) {
-      const { auth } = useSupabaseAuthClient()
+      const runtimeConfig = useRuntimeConfig()
+      const { auth } = useSupabaseClient()
+      
       return await auth.signUp({
         email: data.email,
         password: data.password,
         options: {
-          data: {
-            full_name: data.fullname,
-          }
+          emailRedirectTo: `${runtimeConfig.public.frontendUrl}/auth/email/confirmed`
         }
       })
     },
 
     async update(newData: Object, redirect: String = '/') {
-      const { auth } = useSupabaseAuthClient()
+      const { auth } = useSupabaseClient()
       return await auth.updateUser({
         ...newData
       }, {
@@ -142,18 +155,18 @@ export const useAuthStore = defineStore('authStore', {
       })
     },
 
-    async sendPasswordResetLink(email: string, redirect: String = '/password-recovery') {
-      const { auth } = useSupabaseAuthClient()
+    async sendPasswordResetLink(email: string, redirect: String = '/auth/password/change') {
+      const { auth } = useSupabaseClient()
 
       return await auth.resetPasswordForEmail(email, {
         redirectTo: `${useRuntimeConfig().public.frontendUrl}${redirect}`,
       })
     },
 
-    async changePassword(data: changePassword) {
-      const runtimeConfig = useRuntimeConfig()
-      const url = `${runtimeConfig.public.base}/change-password`
-    },
+    // async changePassword(data: changePassword) {
+    //   const runtimeConfig = useRuntimeConfig()
+    //   const url = `${runtimeConfig.public.base}/change-password`
+    // },
 
     // async register(data: Auth) {
     //   const runtimeConfig = useRuntimeConfig()

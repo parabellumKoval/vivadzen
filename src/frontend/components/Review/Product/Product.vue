@@ -9,12 +9,13 @@ const props = defineProps({
   }
 })
 
+console.log('PRODUCT REVIEW', props.item, props.item.product)
 </script>
 
 <style src="./product.scss" lang="scss" scoped></style>
 
 <template>
-  <div class="review-wrapper">
+  <div v-if="item" class="review-wrapper">
     <div class="product">
       <product-card-micro :item="item.product"></product-card-micro>
     </div>

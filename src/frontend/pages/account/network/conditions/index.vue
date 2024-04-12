@@ -2,7 +2,7 @@
 const {t} = useI18n()
 
 definePageMeta({
-  tab: 2
+  subTab: 2
 });
 
 const props = defineProps({})

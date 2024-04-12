@@ -1,0 +1,41 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.user-wrapper {
+
+}
+
+.auth-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 15px;
+  align-items: center;
+
+  @include _desktop {
+    grid-template-columns: minmax(25%, max-content) 1px 40%;
+    grid-gap: 25px;
+  }
+
+  
+  &-line {
+    display: none;
+
+    @include _desktop {
+      display: block;
+      width: 1px;
+      height: 100%;
+      background: $color-5;
+    }
+  }
+
+  &-text {
+    color: $color-2;
+    line-height: 135%;
+  }
+}
+
+.form-static {
+  .label {
+    margin-bottom: 10px;
+  }
+}

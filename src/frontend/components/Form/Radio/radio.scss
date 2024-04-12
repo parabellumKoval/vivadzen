@@ -15,19 +15,19 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    border: 1px solid $color-gray;
+    border: 1px solid $color-6;
     background: $color-bg;
     margin-right: 15px;
     transition: border-color $speed, background $speed;
   
     .icon {
       opacity: 0;
-      color: $color-text-2;
+      color: $color-0;
       transition: opacity $speed;
     }
 
     &:hover {
-      background: $color-bg-3;
+      background: $color-green;
     }
   }
 }
@@ -41,7 +41,7 @@
 
   &:checked {
     & + .radio-custom {
-      border: 1px solid $color-text-2;
+      border: 1px solid $color-0;
 
       .icon {
         opacity: 1;

@@ -39,19 +39,19 @@ export const useMenu = () => {
         title: t('crumbs.o-nas')
       },{
         id: 2,
-        link: '/science',
+        link: '/news',
         title: 'Новости'
       },{
         id: 3,
-        link: '/articles',
+        link: '/reviews/products',
         title: 'Отзывы'
       },{
         id: 4,
-        link: '/contacts',
+        link: '/blog',
         title: 'Блог'
       },{
         id: 5,
-        link: '/contacts',
+        link: '/sales',
         title: 'Акции'
       },{
         id: 6,

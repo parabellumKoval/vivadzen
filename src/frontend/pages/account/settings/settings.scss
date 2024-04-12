@@ -25,4 +25,8 @@
     grid-template-columns: repeat(2, min-content);
     grid-gap: 20px;
   }
+
+  &-action-btn {
+    margin-top: 20px;
+  }
 }

@@ -6,22 +6,16 @@ const props = defineProps({
 })
 
 const photo = computed(() => {
-  if(props.item.image?.src) {
-    return props.item.image.src
-    // return '/server/' + props.item.image.src
-  } else {
-    return null
-  }
+  return props.item?.image?.src || '/images/noimage.png'
 })
 </script>
 
 <style src="./micro.scss" lang="scss" scoped></style>
 
 <template>
-<div class="wrapper">
+<div v-if="item" class="wrapper">
   <NuxtLink :to="localePath('/' + item.slug)" :aria-label="item.name" clickable class="image-wrapper">
     <nuxt-img
-      v-if="photo"
       :src = "photo"
       :alt = "item.image.alt || item.name"
       :title = "item.image.title || item.name"

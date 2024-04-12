@@ -1,6 +1,46 @@
 @import './assets/scss/vars';
 @import './assets/scss/mixins';
 
+
+.zoom {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  height: 300px;
+  background: $color-8;
+  border: 3px solid $color-green;
+  border-radius: $radius;
+  overflow: hidden;
+  z-index: 100;
+  box-shadow: 0 0 25px rgba(0,0,0,0.15);
+
+  // &:after {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   border: 3px solid $color-green;
+  //   z-index: 101;
+  // }
+
+  .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1200px;
+    height: 1200px;
+    // transform: translateX(-50%) translateY(-50%);
+    object-fit: cover;
+    object-position: left top;
+    overflow: visible;
+    // cursor: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/happy.png"), auto;
+  }
+}
+
 .thumbnail {
   display: grid;
   grid-auto-flow: column;
@@ -29,11 +69,44 @@
     height: 230px;
     border: 1px solid $color-5;
     border-radius: $radius;
-    overflow: hidden;
 
     @include _desktop {
       width: 85px;
       height: 85px;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      border: 2px solid $color-8;
+      background: $color-green;
+      border-radius: 100%;
+      transform: translateX(-50%) translateY(-50%);
+      opacity: 0;
+      transition: opacity $speed, width $speed, height $speed, border $speed;
+    }
+
+    @include _desktop {
+      &.active {
+        border: 1px solid $color-green;
+
+        &:after {
+          opacity: 1;
+        }
+      }
+
+      &:hover {
+        &:after {
+          width: 20px;
+          height: 20px;
+          border: 8px solid $color-8;
+          opacity: 1;
+        }
+      }
     }
   }
 
@@ -43,6 +116,7 @@
     width: 100%;
     height: 230px;
     object-fit: contain;
+    border-radius: $radius;
 
     @include _desktop {
       position: absolute;
@@ -74,15 +148,26 @@
     height: 530px;
     border-radius: $radius;
     overflow: hidden;
+    background: $color-5;
   
     &-image {
+      max-width: 100%;
+      max-height: 100%;
+      height: 100%;
+      margin: auto;
+    }
+  }
+
+
+  @include _desktop {
+    .cursor {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: $color-5;
+      z-index: 120;
+      border: 2px solid rgba($color-green, 0.6);
+      background: rgba($color-8, 0.3);
+      pointer-events: none;
     }
   }
 }

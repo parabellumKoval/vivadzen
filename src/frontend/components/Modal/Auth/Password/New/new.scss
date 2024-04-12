@@ -1,0 +1,20 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.form-component,
+:deep(.form-component) {
+  margin-bottom: 25px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.footer {
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  margin: 0 auto;
+}

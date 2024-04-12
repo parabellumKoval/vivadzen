@@ -15,9 +15,9 @@
 
   &:checked {
     & + .custome-checkbox {
-      background: $color-primary;
+      background: $color-green;
       .icon {
-        color: $color-bg;
+        color: $color-8;
         opacity: 1;
       }
     }
@@ -32,9 +32,10 @@
   font-size: 5px;
   width: 20px;
   height: 20px;
-  color: $color-text;
+  color: $color-0;
   // margin-right: 15px;
-  background: $color-bg-3;
+  // background: $color-6;
+  border: 2px solid $color-5;
   border-radius: 4px;
   transition: background 0.3s;
 }
@@ -46,7 +47,7 @@
 .input__wrapper-checkbox{
   &:hover {
     .custome-checkbox {
-      background: rgba($color-primary, 0.55);
+      background: rgba($color-green, 0.55);
     }
   }
 }

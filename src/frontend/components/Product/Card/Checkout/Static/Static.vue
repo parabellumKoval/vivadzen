@@ -18,6 +18,10 @@ const photo = computed(() => {
   }
 })
 
+const totalPrice = computed(() => {
+  return props.item.amount * props.item.price
+})
+
 const deleteHandler = () => {}
 </script>
 
@@ -45,7 +49,7 @@ const deleteHandler = () => {}
   </NuxtLink>
   <div class="body">
     <span v-if="item.code" class="code label">
-      код товара: 
+      {{ t('label.product_code') }}: 
       <span class="value">{{ item.code }}</span>
     </span>
     <NuxtLink
@@ -61,7 +65,7 @@ const deleteHandler = () => {}
       <span class="price-delimiter">X</span>
       <span class="price-amount">{{ item.amount }}</span>
     </div>
-    <simple-price :value="+item.price" class="price price-total"></simple-price>
+    <simple-price :value="totalPrice" class="price price-total"></simple-price>
   </div>
 </div>
 </template>

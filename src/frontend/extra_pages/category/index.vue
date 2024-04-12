@@ -149,8 +149,6 @@ const setCrumbs = () => {
 const getCategory = async (query) => {
   return useAsyncData(`categories`, () => useCategoryStore().show(slug.value)).then(({data, error}) => {
     
-    console.log('Category', data, error)
-
     if(data.value) {
       category.value = data.value
       setCrumbs()

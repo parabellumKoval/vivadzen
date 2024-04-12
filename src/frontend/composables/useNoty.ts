@@ -2,7 +2,7 @@ type Noty = {
   k: number,
   title: string,
   content: string,
-  type: string,
+  type: 'primary' | 'error' | 'warning' | 'success' | null,
   duraction: number,
   countdown: number,
   intervalInstance: any
@@ -51,7 +51,7 @@ export const useNoty = () => {
   }
 
   const startInterval = (key: string) => {
-    if(noties.value[key] === undefined)
+    if(noties.value[key] === undefined || !noties.value[key])
       return null
 
     return setInterval(() => {

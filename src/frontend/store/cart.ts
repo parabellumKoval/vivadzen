@@ -5,38 +5,58 @@ export const useCartStore = defineStore('cartStore', {
     orderState: {
       delivery: {
         method: 'warehouse',
-        warehouse: null,
         city: null,
-        address: null,
+        street: null,
+        house: null,
+        room: null,
         zip: null,
+        warehouse: null,
         comment: null
       },
       payment: {
-        method: null
+        method: 'online'
       },
       user: {
         phone: null,
         email: null,
         firstname: null,
         lastname: null,
-      }
+      },
+      promocode: null
     },
     
     data: [] as Product[],
 
     errorsState: {},
 
-    flashOrder: null
+    flashOrder: null,
+
+    promocodeData: null
   }),
 
   getters: {
+    promocode: (state) => state.promocodeData,
+    promocodeSale: (state) => {
+      if(!state.promocodeData)
+        return 0
+    
+      if(state.promocodeData.type === 'value') {
+        return state.promocodeData.value
+      }else if(state.promocodeData.type === 'percent') {
+        return useCartStore().totalProducts * state.promocodeData.value / 100
+      }
+    },
     cart: (state) => state.data,
-    total: (state) => {
-      const total = state.data.reduce((carry, item) => {
+    totalProducts: (state) => {
+      const v = state.data.reduce((carry, item) => {
         return carry + item.price * item.amount
       }, 0)
     
-      return Number(total.toFixed(2))
+      return Number(v.toFixed(2))
+    },
+    total: (state) => {
+      const v = useCartStore().totalProducts - useCartStore().promocodeSale
+      return v
     },
     order: (state) => state.orderState,
     errors: (state) => state.errorsState,
@@ -66,7 +86,14 @@ export const useCartStore = defineStore('cartStore', {
   },
 
   actions: {
-    
+    removeCode() {
+      this.orderState.promocode = null
+    },
+
+    setPromocode(data) {
+      this.promocodeData = data
+    },
+
     add(data: Product) {
       const product: Product = this.toProductType(data)
       const issetProduct = this.data.find((item) => item.id === product.id)
@@ -135,10 +162,10 @@ export const useCartStore = defineStore('cartStore', {
     },
 
     async index(data: Object) {
-      const url = `${useRuntimeConfig().public.apiBase}/orders/all`
+      const url = `${useRuntimeConfig().public.apiBase}/order/all`
 
       const query = {
-        ...data,
+        ...data
       }
 
       return await useApiFetch(url, query, 'GET')
@@ -177,8 +204,34 @@ export const useCartStore = defineStore('cartStore', {
         })
     },
 
+
+    normalizedOrderState() {
+      if(this.orderState.delivery.method === 'warehouse') {
+        this.orderState.delivery.street = null
+        this.orderState.delivery.house = null
+        this.orderState.delivery.room = null
+        this.orderState.delivery.zip = null
+      }else if(this.orderState.delivery.method === 'address') {
+        this.orderState.delivery.warehouse = null
+      }else  if(this.orderState.delivery.method === 'pickup') {
+        this.orderState.delivery = {
+          method: 'pickup',
+          city: null,
+          street: null,
+          house: null,
+          room: null,
+          zip: null,
+          warehouse: null,
+          comment: null
+        }
+      }
+    },
+
     async createOrder(orderable: Object) {
-      const url = `${useRuntimeConfig().public.apiBase}/orders`
+      const url = `${useRuntimeConfig().public.apiBase}/order`
+
+      // Normalize delivery at first
+      this.normalizedOrderState()
 
       const dataPost = {
         ...orderable,
@@ -197,7 +250,7 @@ export const useCartStore = defineStore('cartStore', {
           }
 
           if(error) {
-            this.errorsState = error
+            this.errorsState = error?.options
             throw error
           }
 

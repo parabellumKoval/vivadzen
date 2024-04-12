@@ -60,7 +60,10 @@ export default {
 <style src="./textarea.scss" lang="sass" scoped />
 
 <template>
-  <div :class="{error: error}" class="input__wrapper">
+  <div
+    :class="{error: error && error.length, disabled: isDisabled}"
+    class="input__wrapper"
+  >
     
     <form-textarea-resize
       :model-value="modelValue"
@@ -76,6 +79,6 @@ export default {
     >
     </form-textarea-resize>
 
-    <span v-if="error" class="input-error-text">{{ error.message }}</span>
+    <form-error :error="error"></form-error>
   </div>
 </template>

@@ -1,20 +1,10 @@
 ru:
-  number: 'Номер'
-  created_at: 'Дата и время'
-  status: 'Статус'
-  amount: 'Сумма'
-  delivery: 'Доставка'
-  payment: 'Оплата'
-  recipient: 'Получатель'
-  phone: 'Телефон'
-  comment: 'Комментарий'
+  number: Номер
+  valid_until: Годен до
+  status: Статус
+  sale: Скидка 
 uk:
-  number: 'Номер'
-  created_at: 'Дата та час'
-  status: 'Статус'
-  amount: 'Сума'
-  delivery: 'Доставка'
-  payment: 'Оплата'
-  recipient: 'Одержувач'
-  phone: 'Телефон'
-  comment: 'Комментарий'
+  number: Номер
+  valid_until: Годен до
+  status: Статус
+  sale: Скидка

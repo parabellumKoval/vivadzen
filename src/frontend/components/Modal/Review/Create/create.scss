@@ -1,6 +1,10 @@
 @import './assets/scss/vars';
 @import './assets/scss/mixins';
 
+.modal-wrapper {
+  width: 100%;
+}
+
 .form {
   &-wrapper {
     display: grid;

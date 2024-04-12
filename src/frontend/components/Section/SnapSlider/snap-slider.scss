@@ -1,0 +1,20 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+
+.slider {
+  width: 100%;
+  margin: 20px 0 0 0 ;
+
+  @include _desktop {
+    margin-top: 30px;
+  }
+}
+
+.nav-btns {
+  margin: 20px auto 0 auto;
+
+  @include _desktop {
+    margin: 30px auto 0 auto;
+  }
+}

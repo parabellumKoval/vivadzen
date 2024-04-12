@@ -28,10 +28,10 @@ const getReviewsAmount = async (type: string) => {
   })
 }
 
-const getReviews = async (query: object, refresh: boolean) => {
+const getReviews = async (query: object, refresh: boolean, uid: string = 'reviews') => {
   isLoading.value = true
 
-  return await useAsyncData('reviews', () => useReviewStore().getAll(query, refresh)).then(({data, error}) => {
+  return await useAsyncData(uid, () => useReviewStore().getAll(query, refresh)).then(({data, error}) => {
     
     if(data.value) {
       return data.value

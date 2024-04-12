@@ -83,7 +83,7 @@ export default {
     :error="error"
     :is-disabled="isDisabled"
   >
-    <template v-slot:icon-right>
+    <template v-slot:right>
       <button @click="showHandler" :class="{active: isVisible}" clickable class="show-password">
         <IconCSS v-if="isVisible" name="iconoir:eye-alt" size="24px" class="icon"></IconCSS>
         <IconCSS v-else name="iconoir:eye-closed" size="24px" class="icon"></IconCSS>

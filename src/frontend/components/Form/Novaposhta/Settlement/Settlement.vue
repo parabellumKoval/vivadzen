@@ -76,7 +76,7 @@ const cities = computed(() => {
       @update:modelValue = "updateModelValue"
       v-model:search-value = "searchSettlement"
       :values = "cities"
-      :placeholder="$t('form.settlement')"
+      :placeholder="$t('form.delivery.settlement')"
       :min-symbols="1"
       list-value="value"
       list-key="key"

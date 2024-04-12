@@ -24,7 +24,7 @@ export const useOrderStore = defineStore('orderStore', {
     },
 
     async getOrder(code: string) {
-      const url = `${useRuntimeConfig().public.apiBase}/orders/${code}`
+      const url = `${useRuntimeConfig().public.apiBase}/order/${code}`
 
       return await useServerApiFetch(url)
         .then(({data, error}) => {
@@ -41,17 +41,21 @@ export const useOrderStore = defineStore('orderStore', {
 
     async getOrders(data = null, refresh = true) {
       const runtimeConfig = useRuntimeConfig()
-      const url = `${runtimeConfig.public.apiBase}/orders/get`
+      const url = `${runtimeConfig.public.apiBase}/order/get`
 
       return await useApiFetch(url, data, 'POST')
         .then(({data, error}) => {
-          if(data) {
-            if(refresh)
-              this.ordersState.data = data.data
-            else
-              this.ordersState.data = this.ordersState.data.concat(data.data)
+          console.log('getOrders', data)
           
-            this.ordersState.meta = data.meta
+          if(data) {
+            // if(refresh)
+            //   this.ordersState.data = data.data
+            // else
+            //   this.ordersState.data = this.ordersState.data.concat(data.data)
+          
+            // this.ordersState.meta = data.meta
+
+            return data
           }
 
           if(error)

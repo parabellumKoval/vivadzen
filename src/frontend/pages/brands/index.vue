@@ -145,8 +145,6 @@ await useAsyncData('brands', () => useBrandStore().index({alpha_grouped: 1})).th
   if(data.value) {
     brands_grouped.value = data.value
   }
-
-  console.log('brand page', data.value)
 })
 </script>
 

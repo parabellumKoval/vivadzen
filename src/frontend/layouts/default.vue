@@ -1,6 +1,5 @@
 <script setup>
 import { useCategoryStore } from '~/store/category'
-import { useModalStore } from '~~/store/modal';
 import { useAuthStore } from '~~/store/auth';
 import { useAppPersistStore } from '~/store/appPersist';
 
@@ -21,18 +20,22 @@ const background = computed(() => {
 })
 
 // AUTH
-const { auth } = useSupabaseAuthClient()
+const { auth } = useSupabaseClient()
 
 auth.onAuthStateChange((event, session) => {
-  console.log(event, session);
+  // console.log(event, session);
   if(event === 'SIGNED_OUT') {
-    useNoty().setNoty(t('noty.logout'))
+    useNoty().setNoty({
+      content: t('noty.auth.logout')
+    })
   }else if(event === 'INITIAL_SESSION'){
     if(session) {
       useAuthStore().setUserFromSession(session.user)
       
       if(useAppPersistStore().from === 'login') {
-        useNoty().setNoty(t('noty.login_success'))
+        useNoty().setNoty({
+          content: t('noty.auth.login.success')
+        })
         useAppPersistStore().setFrom(null)
       }
     }else {
@@ -63,8 +66,8 @@ const {refresh: refreshCategories} = useAsyncData('all-categories', async () => 
 
 useSchemaOrg([
   defineWebSite({
-    url: 'https://abu.com.ua',
-    name: 'abu.com.ua',
+    url: 'https://djini.com.ua',
+    name: 'djini.com.ua',
   }),
   defineWebPage(),
 ])

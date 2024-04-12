@@ -5,7 +5,7 @@
   &.new {
     color: $color-primary;
   }
-  &.failed {
+  &.fail {
     color: $color-red;
   }
   &.canceled {
@@ -28,6 +28,9 @@
 }
 
 .order-products {
+  height: min-content;
+  margin: auto 0;
+
   .product {
     margin-bottom: 30px;
   }

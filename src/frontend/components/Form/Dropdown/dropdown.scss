@@ -30,38 +30,40 @@
   padding-right: 0;
   
   @include _tablet {
-    padding-right: 15px;
+    padding-right: 10px;
   } 
 
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
+  @include _scrollbar;
+  // &::-webkit-scrollbar {
+  //   width: 5px;
+  // }
 
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
+  // &::-webkit-scrollbar-track {
+  //   background: #f1f1f1;
+  // }
 
-  &::-webkit-scrollbar-thumb {
-    background: $color-3;
+  // &::-webkit-scrollbar-thumb {
+  //   background: $color-green;
 
-    &:hover {
-      background: darken($color-3, 7%)
-    }
-  }
+  //   &:hover {
+  //     background: darken($color-green, 7%)
+  //   }
+  // }
 
   &-wrapper {
     position: absolute;
     top: 54px;
     left: 0;
     width: 100%;
-    padding: 18px 0 18px 0px;
-    border-radius: 22px;
-    background: $color-7;
-    border: 1px solid $color-3;
+    padding: 0 5px 0 15px;
+    border-radius: $radius;
+    background: $color-6;
+    border: 2px solid $color-6;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
     z-index: 10;
 
     @include _tablet {
-      padding: 18px 15px 18px 30px;
+      padding: 0 5px 0 15px;
     }
 
     .no-results {
@@ -77,19 +79,29 @@
   .item {
     display: flex;
     align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid $color-3;
+    padding: 12px 0 12px 5px;
+    margin: 5px 0 0 0;
+    border: 1px solid $color-5;
+    // border-bottom: 1px solid $color-8;
+    background: $color-8;
+    border-radius: $radius;
     line-height: 135%;
     font-size: 14px;
-    color: $color-3;
+    color: $color-1;
     cursor: pointer;
-    transition: fontWeight $speed, border $speed, color $speed;
+    transition: background $speed, border $speed, color $speed;
+
+    &:first-child {
+      margin: 15px 0 0 0;
+    }
 
     &:last-child {
-      border-bottom: 0;
+      margin: 5px 0 15px 0;
+      border-bottom: 1px solid $color-5;
     }
 
     .icon {
+      flex-shrink: 0;
       margin-right: 5px;
       opacity: 0;
       transform: translateX(-20px);
@@ -97,8 +109,9 @@
     }
 
     &:hover {
-      color: $color-3;
-      border-bottom: 1px solid darken($color-3, 55%);
+      color: $color-green;
+      border: 1px solid $color-green;
+      // background: rgba($color-green, 0.05);
 
       .icon {
         opacity: 1;

@@ -9,7 +9,7 @@ const props = defineProps({
 
 // HANDLERS
 const oneClickHandler = () => {
-  useModal().open(resolveComponent('Modal1Click'), props.product)
+  useModal().open(resolveComponent('Modal1Click'), props.product, null, {width: {min: 420, max: 420}})
 }
 </script>
 

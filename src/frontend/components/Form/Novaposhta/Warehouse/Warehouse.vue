@@ -89,7 +89,7 @@ const updateModelValueHandler = (ref) => {
       :search-value = "searchWarehouse"
       @update:searchValue = "updateSearchWarehouseHandler"
       :values = "postOffices"
-      :placeholder="$t('form.warehouse')"
+      :placeholder="$t('form.delivery.warehouse')"
       :error="error"
       list-value="value"
       list-key="key"

@@ -4,3 +4,17 @@
 .table {
   width: 100%;
 }
+
+:deep(.row-wrapper) {
+  &:first-child {
+    .row {
+      padding-top: 0;
+    }
+  }
+  &:last-child {
+    .row {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+  }
+}

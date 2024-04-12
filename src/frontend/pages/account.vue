@@ -1,5 +1,7 @@
 <script setup>
+import { useAuthStore } from '~~/store/auth';
 const {t} = useI18n()
+const route = useRoute()
 
 definePageMeta({
   bg: '#eee'
@@ -9,26 +11,29 @@ const props = defineProps({})
 
 const isMenuOpen = ref(false)
 
-const breadcrumbs = [
-  {
-    name: t('title.home'),
-    item: '/'
-  },{
-    name: t('title.catalog'),
-    item: '/catalog'
-  }
-]
+const breadcrumbs = computed(() => {
+  let list = [
+    {
+      name: t('title.home'),
+      item: '/'
+    },{
+      name: t('title.account.account'),
+      item: '/account'
+    }
+  ]
 
-// COMPUTEDS
-const photo = computed(() => {
-  return '/images/avatars/1.jpg'
+  if(route?.meta?.crumb) {
+    let crumb = {...route?.meta?.crumb}
+    crumb.name = t(crumb.name)
+    list.push(crumb)
+  }
+
+  return  list
 })
 
-const user = computed(() => {
-  return {
-    name: 'Алина Штайнер',
-    email: 'gopashola2@gmail.com'
-  }
+// COMPUTEDS
+const activeMenuItem = computed(() => {
+  return route?.meta?.tab
 })
 
 const menus = computed(() => {
@@ -36,42 +41,82 @@ const menus = computed(() => {
     [
       {
         id: 1,
-        title: 'История заказов',
+        title: t('title.account.orders'),
+        slug: 'orders',
         icon: 'iconoir:shopping-bag',
         link: '/account/orders'
       },{
         id: 2,
-        title: 'Мои промокоды',
+        title: t('title.account.promocodes'),
+        slug: 'promocodes',
         icon: 'iconoir:percentage',
         link: '/account/promocodes'
       },{
         id: 3,
-        title: 'Партнерская программа',
+        title: t('title.account.referrals'),
+        slug: 'network',
         icon: 'iconoir:user-crown',
         link: '/account/network/common'
       },{
         id: 4,
-        title: 'Настройки',
+        title: t('title.account.settings'),
+        slug: 'settings',
         icon: 'iconoir:settings',
         link: '/account/settings'
       },{
         id: 5,
-        title: 'Выйти',
+        title: t('button.logout'),
         icon: 'iconoir:log-out',
-        link: '/'
+        callback: logoutConfirmHandler
       }
     ],[
       {
         id: 6,
         title: 'Поддержка',
+        slug: 'support',
         icon: 'iconoir:headset-help',
         link: '/account/support'
       }
     ]
   ]
 })
+
 // METHODS
 // HANDLERS
+const clickMenuHandler = (item) => {
+  if(item.link){
+    navigateTo(useLocalePath()(item.link))
+  }else if(item.callback) {
+    item.callback()
+  }
+}
+
+const logoutHandler = () => {
+  useAuthStore().logout().then(() => {
+    navigateTo('/')
+  })
+}
+
+const logoutConfirmHandler = () => {
+  useModal().open(resolveComponent('ModalConfirm'), {
+    title: 'Выход из аккаунта',
+    desc: 'Вы точно хотите выйти из аккаунта?',
+    yes: {
+      title: 'Выйти',
+      callback: logoutHandler
+    },
+    no: {
+      title: 'Отмена',
+      callback: null
+    },
+    type: 'default'
+  }, null, {
+    width: {
+      max: 420
+    }
+  })
+}
+
 const openMenuHandler = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
@@ -87,45 +132,30 @@ const openMenuHandler = () => {
       <the-breadcrumbs :crumbs="breadcrumbs" class="account-breadcrumbs"></the-breadcrumbs>
 
       <aside class="aside">
-        <div class="profile">
-          <nuxt-img
-            v-if="photo"
-            :src = "photo"
-            width="70"
-            height="70"
-            sizes = "mobile:100vw tablet:70px desktop:70px"
-            format = "webp"
-            quality = "60"
-            loading = "lazy"
-            fit="outside"
-            class="profile-image"
-          >
-          </nuxt-img>
-          <div class="profile-data">
-            <div class="profile-name">{{ user.name }}</div>
-            <div class="profile-email">{{ user.email }}</div>
-          </div>
+
+        <div class="profile-wrapper">
+          <account-card></account-card>
           <button v-if="$device.isMobile" @click="openMenuHandler" class="more-btn">
             <IconCSS name="iconoir:more-vert" class="more-btn-icon"></IconCSS>
           </button>
         </div>
+
         <div v-if="!$device.isMobile || isMenuOpen" class="menu-wrapper">
           <ul v-for="(menu, index) in menus" :key="index" class="menu-ul">
-            <li v-for="item in menu" :key="item.id" class="menu-li">
-              <NuxtLink :to="localePath(item.link)" class="menu-link">
+            <li v-for="item in menu" :key="item.id" :class="{active: item.slug === activeMenuItem}" class="menu-li">
+              <button @click="clickMenuHandler(item)" class="menu-link">
                 <IconCSS :name="item.icon" class="menu-icon"></IconCSS>
                 <span class="menu-title">{{ item.title }}</span>
-              </NuxtLink>
+              </button>
             </li>
           </ul>
         </div>
       </aside>
+      
       <div class="content">
         <NuxtPage />
       </div>
 
-      <!-- <div class="account-wrapper">
-      </div> -->
     </div>
   </div>
   

@@ -1,0 +1,83 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.nav-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+
+  .icon {}
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.slider-button {
+  height: 50px;
+  border-radius: $radius;
+  border: 1px solid $color-6;
+  background-color: $color-6;
+  color: $color-1;
+  transition: background $speed, color $speed;
+
+  &:hover {
+    color: $color-green;
+    background-color: $color-7;
+  }
+
+  &:active {
+    transition: transform 0s;
+    transform: scale(0.95);
+  }
+}
+
+
+.btns-wrapper {
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  grid-gap: 10px;
+  width: calc(100% - 20px);
+  margin: 0 auto;
+
+  @include _desktop {
+    width: min-content;
+  }
+
+  &.hide {
+    .slider-button {
+      visibility: hidden;
+    }
+  }
+}
+
+.dots {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 10px;
+  grid-gap: 5px;
+  width: min-content;
+  margin: 20px auto;
+
+  @include _desktop {
+    // display: none;
+  }
+
+  &-item {
+    width: 10px;
+    height: 10px;
+    border: 1px solid $color-5;
+    background-color: $color-8;
+    border-radius: 2px;
+    transition: border 0.4s, background-color 0.4s;
+
+    &.active {
+      background-color: $color-green;
+      border: 1px solid $color-green;
+    }
+  }
+
+}

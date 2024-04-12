@@ -3,7 +3,7 @@ import {useReferralFaker} from '~/composables/fakers/useReferralFaker.ts'
 const {t} = useI18n()
 
 definePageMeta({
-  tab: 1
+  subTab: 1
 });
 
 const props = defineProps({})

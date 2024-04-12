@@ -6,18 +6,18 @@
   align-items: center;
   justify-content: space-between;
   position: absolute;
-  top: 1px;
-  right: 1px;
+  top: 2px;
+  right: 2px;
   width: 36px;
-  height: calc(100% - 2px);
+  height: calc(100% - 4px);
   background: $color-bg;
-  border-radius: 20px;
+  border-radius: $radius;
   padding: 5px 0;
   overflow: hidden;
   transition: width $speed, background $speed;
 
   &.active {
-    width: 100%;
+    width: calc(100% - 4px);
     background: $color-red;
 
     .error-text {

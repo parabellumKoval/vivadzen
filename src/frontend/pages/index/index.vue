@@ -1,7 +1,9 @@
 <template>
   <div>
     <section-banner></section-banner>
-    <section-slider></section-slider>
+    
+    <section-slider-top-products></section-slider-top-products>
+
     <section-category></section-category>
     
     <div class="container">

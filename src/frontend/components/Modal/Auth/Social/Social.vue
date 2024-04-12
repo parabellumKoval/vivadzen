@@ -1,12 +1,21 @@
 <script setup>
+import { useAuthStore } from '~/store/auth';
+import { useAppPersistStore } from '~/store/appPersist';
+
 const { t } = useI18n()
 
+// HANDLERS
 const regHandler = () => {
   useModal().open(resolveComponent('ModalAuthRegister'), null, null, {width: {min: 420, max: 420}})
 }
 
 const emailLoginHandler = () => {
   useModal().open(resolveComponent('ModalAuthLogin'), null, null, {width: {min: 420, max: 420}})
+}
+
+const googleHandler = async () => {
+  useAppPersistStore().setFrom('login')
+  useAuthStore().oAuth('google', useRoute().path)
 }
 </script>
 
@@ -17,7 +26,7 @@ const emailLoginHandler = () => {
   <modal-wrapper :title="t('label.auth_enter')" class="modal-wrapper-auth">
     <div class="modal-content-wrapper">
       <div class="buttons">
-        <button class="button google-bg">
+        <button @click="googleHandler" class="button google-bg">
           <IconCSS name="iconoir:google" class="icon"></IconCSS>
           <span class="text">Войти с помощью Google</span>
         </button>
@@ -27,7 +36,7 @@ const emailLoginHandler = () => {
           <span class="text">Войти с помощью Facebook</span>
         </button>
 
-        <button @click="emailLoginHandler" class="button email-btn">
+        <button @click="emailLoginHandler" class="button color-dark">
           <IconCSS name="iconoir:mail-opened" class="icon"></IconCSS>
           <span class="text">Войти с помощью Email</span>
         </button>

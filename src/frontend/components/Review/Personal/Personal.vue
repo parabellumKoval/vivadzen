@@ -6,12 +6,7 @@ const props = defineProps({
 })
 
 const photo = computed(() => {
-  if(props.item.author?.photo) {
-    return props.item.author.photo
-    // return '/server/' + props.item.image.src
-  } else {
-    return null
-  }
+  return props.item?.author?.photo || '/images/account.png'
 })
 </script>
 
@@ -20,7 +15,6 @@ const photo = computed(() => {
 <template>
   <div class="personal-wrapper">
     <nuxt-img
-      v-if="photo"
       :src = "photo"
       :alt = "item.author.name"
       :title = "item.author.name"

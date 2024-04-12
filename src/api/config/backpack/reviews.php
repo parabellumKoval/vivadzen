@@ -12,7 +12,7 @@ return [
   'per_page' => 12,
 
   // OWNER
-  'owner_model' => 'Backpack\Profile\app\Models\Profile',
+  'owner_model' => null,
 
   //GUARD
   'auth_guard' => 'profile',
@@ -81,10 +81,23 @@ return [
       ],
     ],
     'provider' => [
-      'rules' => 'required|string|in:id,data,auth'
+      'rules' => 'required|string|in:id,data,auth',
+      'hidden' => true
     ],
     'extras' => [
       'rules' => 'nullable|array'
+    ],
+    'advantages' => [
+      'rules' => 'nullable|string|min:2|max:255',
+      'store_in' => 'extras',
+    ],
+    'flaws' => [
+      'rules' => 'nullable|string|min:2|max:255',
+      'store_in' => 'extras',
+    ],
+    'verified_purchase' => [
+      'rules' => 'nullable|boolean',
+      'store_in' => 'extras',
     ]
   ]
 ];

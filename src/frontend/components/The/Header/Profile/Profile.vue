@@ -1,5 +1,4 @@
 <script setup>
-import { useModalStore } from '~~/store/modal';
 import { useAuthStore } from '~~/store/auth';
 
 const { t } = useI18n()

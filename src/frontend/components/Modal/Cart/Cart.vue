@@ -9,6 +9,7 @@ const products = computed(() => {
 })
 
 const closeHandler = () => {
+  useModal().close()
 }
 </script>
 

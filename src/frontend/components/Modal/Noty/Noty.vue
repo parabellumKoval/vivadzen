@@ -40,12 +40,12 @@ const getKey = (message) => {
           </div>
           <button @click="playHandler(key)" class="header-btn play-btn" type="button">
             <transition name="fade-in">
-              <IconCSS v-if="noty.intervalInstance" name="ph:pause-light" size="20px" class="icon"></IconCSS>
-              <IconCSS v-else name="ph:play-light" size="20px" class="icon"></IconCSS>
+              <IconCSS v-if="noty.intervalInstance" name="iconoir:pause" size="20px" class="icon"></IconCSS>
+              <IconCSS v-else name="iconoir:play" size="20px" class="icon"></IconCSS>
             </transition>
           </button>
           <button @click="closeHandler(key)" class="header-btn close-btn" type="button">
-            <IconCSS name="ph:x-light" size="20px" class="icon"></IconCSS>
+            <IconCSS name="iconoir:xmark" size="20px" class="icon"></IconCSS>
           </button>
         </div>
 

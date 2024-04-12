@@ -15,6 +15,7 @@ const reviews = ref([])
 const reviewsMeta = ref({})
 const isReviewsLoading = ref(false)
 const tab = ref(0)
+
 // Content HTML ref
 const content = ref(null)
 const isLoading = ref(false)
@@ -117,7 +118,7 @@ const tabs = computed(() => {
 
 // HANDLERS
 const reviewHandler = () => {
-  useModal().open(resolveComponent('ModalReviewCreate'), productMicro.value)
+  useModal().open(resolveComponent('ModalReviewCreate'), productMicro.value, null, {width: {min: 420, max: 420}})
 }
 
 const loadReviewsHandler = async (page) => {
@@ -194,7 +195,7 @@ const setCrumbs = () => {
 const getReviews = async (query, refresh) => {
   isReviewsLoading.value = true
   await useAsyncData('reviews', () => useReviewStore().getAll(query, refresh)).then(({data, error}) => {
-    console.log('reviews reviews', data.value.reviews, data.value.meta)
+    // console.log('reviews reviews', data.value.reviews, data.value.meta)
     
     if(data?.value?.reviews) {
       reviews.value = data.value.reviews
@@ -214,7 +215,7 @@ await Promise.all([
     if(data && data.value) {
       product.value = data.value
       setCrumbs()
-      console.log('product', product.value)
+      // console.log('product', product.value)
       return product
     }
 
@@ -223,7 +224,7 @@ await Promise.all([
     }
   }), 
   await useAsyncData('product_reviews', () => useReviewStore().getAll(reviewQuery.value, true)).then(({data, error}) => {
-    console.log('data reviews', data.value)
+    // console.log('data reviews', data.value)
     if(data?.value?.reviews) {
       reviews.value = data.value.reviews
     }

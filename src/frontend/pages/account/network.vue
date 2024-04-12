@@ -2,9 +2,15 @@
 const localePath = useLocalePath()
 const {t} = useI18n()
 
-const props = defineProps({})
 
-const tab = ref(0)
+definePageMeta({
+  crumb: {
+    name: 'title.account.referrals',
+    item: '/'
+  },
+  tab: 'network'
+});
+const subTab = ref(0)
 
 const tabs = computed(() => {
   return [
@@ -24,7 +30,7 @@ const tabs = computed(() => {
 // METHODS
 // HANDLERS
 // WATCHERS
-watch(tab, (index) => {
+watch(subTab, (index) => {
   if(index === 0) {
     navigateTo(localePath('/account/network/common'))
   }else if(index === 1) {
@@ -34,8 +40,8 @@ watch(tab, (index) => {
   }
 })
 
-watch(() => useRoute().meta.tab, (v) => {
-  tab.value = v
+watch(() => useRoute().meta.subTab, (v) => {
+  subTab.value = v
 }, {
   immediate: true
 })
@@ -47,8 +53,8 @@ watch(() => useRoute().meta.tab, (v) => {
 
 <template>
   <div>
-    <div class="title-secondary">{{ t('title.network') }}</div>
-    <simple-tabs v-model="tab" :values="tabs" value="name" class="tab-wrapper"></simple-tabs>
+    <div class="title-secondary">{{ t('title.account.referrals') }}</div>
+    <simple-tabs v-model="subTab" :values="tabs" value="name" class="tab-wrapper"></simple-tabs>
     <div class="content">
       <NuxtPage />
     </div>

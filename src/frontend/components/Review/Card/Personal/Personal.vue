@@ -6,12 +6,17 @@ const props = defineProps({
   }
 })
 
+const photo = computed(() => {
+  return props.item?.author?.photo || '/images/account.png'
+})
+
 const link = computed(() => {
   let url = null
   let link = {
     type: null,
     href: props.item?.extras?.link || null
   }
+
 
   if(!link.href) {
     return link;
@@ -50,24 +55,29 @@ const link = computed(() => {
     </div>
     <div class="author">
       <nuxt-img
-          v-if="item.author.photo"
-          :src = "item.author.photo"
-          :alt = "item.author.name"
-          :title = "item.author.name"
-          width="50"
-          height="50"
-          sizes = "mobile:60px tablet:60px desktop:60px"
-          format = "webp"
-          quality = "60"
-          loading = "lazy"
-          fit="outside"
-          class="author-image"
-        >
+        :src = "photo"
+        :alt = "item.author.name"
+        :title = "item.author.name"
+        width="50"
+        height="50"
+        sizes = "mobile:60px tablet:60px desktop:60px"
+        format = "webp"
+        quality = "60"
+        loading = "lazy"
+        fit="outside"
+        class="author-image"
+      >
       </nuxt-img>
       <div>
         <div class="author-name">{{ item.author.name }}</div>
-        <div class="author-source">
-          <a :href="link.href" :class="link.type + '-link'" target="_blank" rel="nofollow" class="social-link" >
+        <div v-if="link.href" class="author-source">
+          <a
+            :href="link.href"
+            :class="link.type + '-link'"
+            target="_blank"
+            rel="nofollow"
+            class="social-link"
+          >
             <IconCSS :name="'basil:' + link.type +'-outline'" class="social-link-icon"></IconCSS>
             <span class="social-link-text">{{ link.type }} автора</span>
           </a>

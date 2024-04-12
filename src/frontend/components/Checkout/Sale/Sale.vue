@@ -1,4 +1,7 @@
 <script setup>
+import {useCartStore} from '~/store/cart'
+import {usePromocodeStore} from '~/store/promocode'
+
 const {t} = useI18n()
 const props = defineProps({
   cart: {
@@ -6,18 +9,51 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['scrollToError'])
+
+
 // COMPUTEDS
-const productsPrice = computed(() => {
-  return props.cart.products.reduce((carry, item) => {
-    return carry + item.price * item.amount
-  }, 0)
+const productsLength = computed(() => {
+  return useCartStore().cart?.length || 0
+})
+
+const productsTotal = computed(() => {
+  return useCartStore().totalProducts
 })
 
 const total = computed(() => {
-  return productsPrice.value
+  return useCartStore().total
 })
+
+const order = computed(() => {
+  return useCartStore().order
+})
+
+const promocodeSale = computed(() => {
+  return useCartStore().promocodeSale
+})
+
 // METHODS
+
 // HANDLERS
+const goCompleteHandler = () => {
+  useCartStore().createOrder(null).then((r) => {
+    console.log('r', r)
+  }).catch((e) => {
+    useNoty().setNoty({
+      title: t('error.error'),
+      content: t('error.check_fields'),
+      type: 'error'
+    }, 7000)
+
+    emit('scrollToError')
+    console.log('e', e)
+  })
+}
+
+const goPayHandler = () => {
+
+}
 // WATCHERS
 </script>
 
@@ -28,20 +64,20 @@ const total = computed(() => {
   <div class="sale">
     <div class="sale-list">
       <div class="sale-item">
-        <div class="sale-label">{{ cart.products.length }} {{ t('messages.products_total') }}</div>
-        <div class="sale-value">{{ $n(productsPrice, 'currency') }}</div>
-      </div>
-      <div class="sale-item">
-        <div class="sale-label">{{ t('label.promocode') }}</div>
-        <div class="sale-value">{{ $n(500, 'currency') }}</div>
+        <div class="sale-label">{{ productsLength }} {{ t('messages.products_total') }}</div>
+        <div class="sale-value">{{ $n(productsTotal, 'currency') }}</div>
       </div>
       <div class="sale-item">
         <div class="sale-label">{{ t('messages.delivery_price') }}</div>
         <div class="sale-value">{{ t('messages.delivery_vendor_price') }}</div>
       </div>
-      <div class="promocode-wrapper">
-        <simple-button-text icon="fluent:tag-28-regular" :text="t('messages.use_promocode')" class="promocode-open-btn"></simple-button-text>
+      <div v-if="promocodeSale" class="sale-item">
+        <div class="sale-label">{{ t('label.promocode') }}</div>
+        <div class="sale-value">-{{ $n(promocodeSale, 'currency') }}</div>
       </div>
+      
+      <checkout-promocode></checkout-promocode>
+
       <div class="sale-footer">
         <div class="sale-item">
           <div class="sale-label">{{ t('messages.to_pay') }}</div>
@@ -49,9 +85,22 @@ const total = computed(() => {
         </div>
       </div>
 
-      <button class="button primary sale-button">
-        <span>{{ t('button.pay') }}</span>
-      </button>
+      <transition name="fade-in">
+        <button
+          v-if="order.payment.method === 'online'"
+          @click="goPayHandler"
+          class="button primary sale-button"
+        >
+          <span>{{ t('button.pay') }}</span>
+        </button>
+        <button
+          v-else
+          @click="goCompleteHandler"
+          class="button primary sale-button"
+        >
+          <span>{{ t('button.create_order') }}</span>
+        </button>
+      </transition>
     </div>
   </div>
 </template>

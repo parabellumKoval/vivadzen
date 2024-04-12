@@ -2,8 +2,13 @@
 const {t} = useI18n()
 
 // COMPUTED
+// default, good, bad
+const type = computed(() => {
+  return confirm?.value?.type || 'default' 
+})
+
 const confirm = computed(() => {
-  return useModal().active?.data?.confirm
+  return useModal().active?.data
 })
 
 const yes = computed(() => {
@@ -24,18 +29,18 @@ const desc = computed(() => {
 
 // HANDLERS
 const trueHandler = () => {
+  useModal().close()
+
   if(yes.value.callback) {
     yes.value.callback()
-    useModal().close()
-    console.log('trueHandler')
   }
 }
 
 const falseHandler = () => {
+  useModal().close()
+
   if(no.value.callback) {
-    yes.value.callback()
-    useModal().close()
-    console.log('falseHandler')
+    no.value.callback()
   }
 }
 </script>
@@ -44,9 +49,17 @@ const falseHandler = () => {
 
 <template>
   <modal-wrapper :title="title" :description="desc">
-    <div class="buttons-wrapper">
-      <button @click="trueHandler" class="button">{{ yes.title || t('label.yes') }}</button>
-      <button @click="falseHandler" class="button button-primary">{{ no.title || t('label.no') }}</button>
+    <div :class="type" class="buttons-wrapper">
+      <button
+        @click="trueHandler"
+        :class="[{secondary: type === 'default'}, {primary: type === 'good'}]"
+        class="button  full"
+      >{{ yes.title || t('label.yes') }}</button>
+      <button
+        @click="falseHandler"
+        :class="[{primary: type === 'default'}, {error: type === 'bad'}, {secondary: type === 'good'}]"
+        class="button full"
+      >{{ no.title || t('label.no') }}</button>
     </div>
   </modal-wrapper>
 </template>

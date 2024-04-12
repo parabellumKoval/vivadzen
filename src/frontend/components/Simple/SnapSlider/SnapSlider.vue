@@ -15,9 +15,13 @@ const props = defineProps({
     default: 0
   },
 
-  width: {
-    type: String,
+  options: {
+    type: Object
   },
+
+  // width: {
+  //   type: String,
+  // },
 
   keyName: {
     type: String,
@@ -34,7 +38,13 @@ const props = defineProps({
       }
     }
   },
+
+  itemDataName:{
+    type: String
+  }
 })
+
+const device = useDevice()
 
 // EMITS
 const emit = defineEmits([
@@ -82,27 +92,41 @@ const pagination = ref({
 })
 
 // COMPUTED
+const width = computed(() => {
+  if(device.isMobile) {
+    return props.options.card?.width?.mobile || props.options.card?.width?.tablet || props.options.card?.width?.desktop
+  }else if(device.isTablet){
+    return props.options.card?.width?.tablet || props.options.card?.width?.mobile || props.options.card?.width?.desktop
+  }else if(device.isDesktop) {
+    return props.options.card?.width?.desktop || props.options.card?.width?.tablet || props.options.card?.width?.desktop
+  }
+})
+
 // css
 const gutterCss = computed(() => {
-  return props.gutter + 'px'
+  return (props.gutter / 2) + 'px'
+})
+
+const halfGutterCss = computed(() => {
+  return (props.gutter / 4) + 'px'
 })
 
 const gridAutoColumnsCss = computed(() => {
-  if(props.width)
-    return props.width
+  if(width.value)
+    return width.value
   else
     return `minmax(min-content, auto)`
 })
 
 const widthCss = computed(() => {
-  if(!props.width)
+  if(!width.value)
     return `initial`
   else
-    return `100%`
+    return width.value
 })
 
 const slides = computed(() => {
-  return props.values
+  return props.values || []
 })
 
 // METHODS
@@ -173,17 +197,37 @@ const getProgress = (index) => {
 
 // HANDLERS
 const prevHandler = () => {
-  if(!cardSizes.value[activeIndex.value - 1])
+  // Srcoll to the end
+  if(!cardSizes.value[activeIndex.value - 1]) {
+    listRef.value.scrollTo(Math.abs(offsetSize.value), 0)
     return
+  }
 
+  // Srcoll to the end
+  if(listRef.value.scrollLeft <= 0) {
+    listRef.value.scrollTo(Math.abs(offsetSize.value), 0)
+    return 
+  }
+
+  // Regular scroll undo
   const offset = cardSizes.value[activeIndex.value - 1].startX
   listRef.value.scrollTo(offset, 0)
 }
 
 const nextHandler = () => {
-  if(!cardSizes.value[activeIndex.value + 1])
+  // Srcoll to the start
+  if(!cardSizes.value[activeIndex.value + 1]) {
+    listRef.value.scrollTo(0, 0)
     return
+  }
 
+  // Srcoll to the start
+  if((offsetSize.value + listRef.value.scrollLeft) >= 0) {
+    listRef.value.scrollTo(0, 0)
+    return 
+  }
+
+  // Regular scroll redo
   const offset = cardSizes.value[activeIndex.value + 1].startX
   listRef.value.scrollTo(offset, 0)
 }
@@ -227,12 +271,6 @@ watch(activeIndex, (val) => {
   immediate: true
 })
 
-// watchEffect(() => {
-//   if (cardRef.value) {
-//     console.log('cardRef.value', cardRef.value)
-//     setCardSizes()
-//   }
-// })
 
 watchEffect(() => {
   if (listRef.value && cardRef.value && totalWidth.value) {
@@ -266,13 +304,20 @@ defineExpose({
 <style src="./snap-slider.scss" lang="scss" scoped />
 
 <style lang="scss" scoped>
-@import '~/assets/scss/mixins';
+@import './assets/scss/mixins'; 
 .list-ul {
   grid-auto-columns: v-bind(gridAutoColumnsCss);
-  grid-gap: v-bind(gutterCss);
+  // grid-gap: v-bind(gutterCss);
 }
 .item {
   width: v-bind(widthCss);
+  padding-left: v-bind(gutterCss);
+  padding-right: v-bind(gutterCss);
+
+  &:last-child {
+    // padding-right: v-bind(gutterCss);
+    width: calc(v-bind(widthCss) - v-bind(halfGutterCss));
+  }
 }
 </style>
 
@@ -292,7 +337,7 @@ defineExpose({
         >
           <component
             :is="component"
-            :item="item"
+            :[itemDataName]="item"
             :progress="getProgress(index)"
             :is-active="index === activeIndex"
           >
