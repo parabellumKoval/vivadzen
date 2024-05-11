@@ -1,23 +1,13 @@
 <script setup>
-const insta = computed(() => {
-  return [
-    {
-      id: 1,
-      image: '/images/insta/img-1.png'
-    },{
-      id: 2,
-      image: '/images/insta/img-2.png'
-    },{
-      id: 3,
-      image: '/images/insta/img-3.png'
-    },{
-      id: 4,
-      image: '/images/insta/img-4.png'
-    },{
-      id: 5,
-      image: '/images/insta/img-5.png'
-    }
-  ]
+import {useInstaStore} from '~/store/insta'
+
+const posts = ref([])
+
+// METHODS
+await useLazyAsyncData('insta-posts', () => useInstaStore().posts({per_page: 6})).then(({data, error}) => {
+  if(data.value){
+    posts.value = data.value
+  }
 })
 </script>
 
@@ -33,15 +23,22 @@ const insta = computed(() => {
       </a>
     </div>
     <div class="feed">
-      <a v-for="item in insta" :key="item.id" href="/" target="_blank" class="feed-item">
+      <a
+        v-for="post in posts"
+        :href="post.permalink"
+        :key="post.permalink"
+        target="_blank"
+        class="feed-item"
+      >
         <nuxt-img
-          :src = "item.image"
+          :src = "post.media_url"
           width="220"
           height="220"
           sizes = "mobile:100vw tablet:220px desktop:220px"
           format = "webp"
           quality = "60"
           loading = "lazy"
+          placeholder="./images/noimage.png"
           fit="outside"
           class="image"
         />

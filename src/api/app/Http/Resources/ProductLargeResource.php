@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Resources;
+use \Backpack\Store\app\Http\Resources\BaseResource;
 
-class ProductLargeResource extends \Backpack\Store\app\Http\Resources\BaseResource
+use App\Http\Resources\CategoryParentResource;
+
+class ProductLargeResource extends BaseResource
 {
     /**
      * Transform the resource into an array.
@@ -24,11 +27,12 @@ class ProductLargeResource extends \Backpack\Store\app\Http\Resources\BaseResour
         'images' => $this->images,
         'content' => $this->content,
         'inStock' => $this->in_stock,
-        'categories' => $this->categories && $this->categories->count()? 
-          self::$resources['category']['tiny']::collection($this->categories): 
+        'categories' => $this->categories && $this->categories->count()?
+          CategoryParentResource::collection($this->categories):
             null,
-        'attrs' => $this->attributes,
-        'seo' => $this->seoArray
+        'attrs' => $this->properties,
+        'seo' => $this->seoArray,
+        'brand' => $this->brand? new BrandProductResource($this->brand): null
       ];
     }
 }

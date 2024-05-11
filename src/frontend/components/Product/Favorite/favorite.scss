@@ -1,0 +1,8 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.favorite-link {
+  &.active {
+    color: $color-red;
+  }
+}

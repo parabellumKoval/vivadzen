@@ -1,5 +1,7 @@
 <script setup>
 import {useCartStore} from '~/store/cart'
+import {useCard} from '~/composables/product/useCard.ts'
+
 const { t } = useI18n()
 
 const props = defineProps({
@@ -8,16 +10,8 @@ const props = defineProps({
   }
 })
 
-// const amount = ref(1)
 
-const photo = computed(() => {
-  if(props.item.image?.src) {
-    return props.item.image.src
-    // return '/server/' + props.item.image.src
-  } else {
-    return null
-  }
-})
+const {photo, photoAlt, photoTitle, photoSize} = useCard(props.item)
 
 const deleteHandler = () => {
   useCartStore().remove(props.item.id)
@@ -33,11 +27,10 @@ const deleteHandler = () => {
 <div class="wrapper">
   <NuxtLink :to="localePath('/' + item.slug)" :aria-label="item.name" clickable class="image-wrapper">
     <nuxt-img
-      v-if="photo"
       :src = "photo"
-      :alt = "item.image.alt || item.name"
-      :title = "item.image.title || item.name"
-      :class="item.image.size"
+      :alt = "photoAlt"
+      :title = "photoTitle"
+      :class = "photoSize"
       width="85"
       height="110"
       sizes = "mobile:50px tablet:165px desktop:165px"
@@ -45,6 +38,7 @@ const deleteHandler = () => {
       quality = "60"
       loading = "lazy"
       fit="outside"
+      placeholder="./images/noimage.png"
       class="image"
     >
     </nuxt-img> 
@@ -64,10 +58,7 @@ const deleteHandler = () => {
   </div>
   <div class="footer">
     <form-amount v-model="item.amount"></form-amount>
-    <div class="price">
-      <simple-price v-if="+item.oldPrice" :value="+item.oldPrice" class="price-old"></simple-price>
-      <simple-price v-if="+item.price" :value="+item.price" class="price-base"></simple-price>
-    </div>
+    <product-price :price="item.price" :old-price="item.oldPrice"></product-price>
   </div>
 </div>
 </template>

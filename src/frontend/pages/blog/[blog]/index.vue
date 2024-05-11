@@ -1,55 +1,106 @@
 <script setup>
-import {useArticleFaker} from '~/composables/fakers/useArticleFaker.ts'
+import {useArticleStore} from '~/store/article'
 
 const {t} = useI18n()
+const route = useRoute()
 
-const breadcrumbs = [
-  {
-    name: t('title.home'),
-    item: '/'
-  },{
-    name: t('title.blog'),
-    item: '/blog'
-  }
-]
+const html = ref(null)
+
+const tableOfContents = ref([])
+const article = ref(null)
+const articles = ref([])
+
+const breadcrumbs = ref(null)
+
+const { scrollToAnchor } = useAnchorScroll({
+  toAnchor: {
+    scrollOptions: {
+      behavior: 'smooth',
+      offsetTop: -90,
+    }
+  },
+})
 
 // COMPUTEDS
-const article = computed(() => {
-  return useArticleFaker()(1)[0]
+const slug = computed(() => {
+  return route.params.blog
 })
 
-const tableOfContents = computed(() => {
-  return [
+const image = computed(() => {
+  if(article.value.image) {
+    return '/server/' + article.value.image
+  } else {
+    return null
+  }
+})
+
+// METHODS
+const setCrumbs = () => {
+  breadcrumbs.value = [
     {
-      id: 1,
-      title: 'Наиболее распространенные глазные болезни'
+      name: t('title.home'),
+      item: '/'
     },{
-      id: 2,
-      title: 'Как выбрать витамины для зрения'
+      name: t('title.blog'),
+      item: '/blog'
     },{
-      id: 3,
-      title: 'ТОП-10 витаминных комплексов и бад для глаз'
-    },{
-      id: 4,
-      title: 'Факторы защиты макулы Jarrow Formulas (Macula Protective Factors) 30 капсул'
+      name: article.value.title,
+      item: article.value.slug
     }
   ]
-})
+}
 
-const content = computed(() => {
-  return 'Наши глаза - это путь ко всем краскам окружающего мира, но к сожалению с возрастом, в условиях тяжелого труда, длительного нахождения перед экранами всевозможных гаджетов, зрения может ухудшаться и затруднять повседневные привычные дела, влиять на психоэмоциональное состояние и физическое здоровье. Заболеваний глаз предостаточно, но наиболее распространенными считаются:'
-})
-// METHODS
+const scrollHandler = (item) => {
+  nextTick(() => {
+    scrollToAnchor(item)
+  });
+}
+
 // HANDLERS
 // WATCHERS
+watch(() => html.value, (v) => {
+  if(v) {
+    // clear headers
+    tableOfContents.value = []
+    
+    const headers = v.querySelectorAll('h2, h3')
+    
+    headers.forEach((item, i) => {
+      const index = i + 1
+      const id = 'header-' + index
+      const tagName = item.tagName
+      const headerText = item.innerText || item.textContent
+      
+      if(headerText) {
+        tableOfContents.value.push({
+          id: id,
+          title: headerText,
+          tag: tagName
+        })
+      }
+
+      item.setAttribute("id", id);
+    })
+  }
+}, {
+  immediate: true
+})
+
+
+useAsyncData('get-article', () => useArticleStore().show(slug.value)).then(({data, error}) => {
+  if(data.value) {
+    article.value = data.value
+    setCrumbs()
+  }
+})
 </script>
 
 <style src='./article.scss' lang='scss' scoped></style>
-<!-- <i18n src='' lang='yaml'></i18n> -->
+<i18n src='./lang.yaml' lang='yaml'></i18n>
 
 <template>
   <div class="page-base">
-    <div class="container">
+    <div v-if="article" class="container">
       <the-breadcrumbs :crumbs="breadcrumbs"></the-breadcrumbs>
 
       <div class="title-common">{{ article.title }}</div>
@@ -61,13 +112,13 @@ const content = computed(() => {
             <div class="article-meta-box">
               <div class="article-time">
                 <IconCSS name="iconoir:clock" class="article-comments-icon"></IconCSS>
-                <span>{{ article.time }} мин. чтения</span>
+                <span>{{ parseFloat(article.time).toFixed(0) }} {{ t('label.min_read') }}</span>
               </div>
 
               <div class="article-comments">
                 <IconCSS name="iconoir:message" class="article-comments-icon"></IconCSS>
                 <button :class="{active: false}" class="text-link article-comments-text">
-                  <span>0 комментариев</span>
+                  <span>0 {{ t('comments') }}</span>
                 </button>
               </div>
             </div>
@@ -78,8 +129,8 @@ const content = computed(() => {
           <div class="article-header">
             
             <nuxt-img
-              v-if="article.image"
-              :src = "article.image.src"
+              v-if="image"
+              :src = "image"
               width="800"
               height="400"
               sizes = "mobile:100vw tablet:100vw desktop:800px"
@@ -90,17 +141,30 @@ const content = computed(() => {
               class="article-image"
             />
           </div>
-          <div class="article-text rich-text" v-html="content"></div>
+          <div class="article-text rich-text" ref="html" v-html="article.content"></div>
         </div>
+        
         <div class="article-aside">
-          <div class="article-aside-title">Содержание</div>
+          <div class="article-aside-title">{{ t('content') }}</div>
           <ol class="article-aside-list">
-            <li v-for="item in tableOfContents" :key="item.id">
-              <a href="#"  class="article-aside-link">{{ item.title }}</a>
+            <li
+              v-for="item in tableOfContents"
+              :key="item.id"
+              :class="item.tag"
+              class="article-aside-item"
+            >
+              <button
+                @click="scrollHandler(item.id)"
+                :class="item.tag"
+                class="article-aside-link"
+              >{{ item.title }}</button>
             </li>
           </ol>
         </div>
+        
       </div>
+
+      <section-article></section-article>
     </div>
   </div>
 </template>

@@ -8,8 +8,6 @@ const props = defineProps({
     default: 'mini'
   }
 })
-
-console.log('PRODUCT REVIEW', props.item, props.item.product)
 </script>
 
 <style src="./product.scss" lang="scss" scoped></style>

@@ -87,6 +87,10 @@ return [
     'extras' => [
       'rules' => 'nullable|array'
     ],
+    'link' => [
+      'rules' => 'nullable|string|min:2|max:255',
+      'store_in' => 'extras',
+    ],
     'advantages' => [
       'rules' => 'nullable|string|min:2|max:255',
       'store_in' => 'extras',

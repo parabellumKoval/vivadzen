@@ -4,8 +4,8 @@ const props = defineProps({
     type: Number
   },
   currency: {
-    type: [String, Boolean],
-    default: 'uah'
+    type: Boolean,
+    default: true
   }
 })
 </script>
@@ -14,7 +14,8 @@ const props = defineProps({
 
 <template>
   <div class="price" v-if="value">
-    <span class="value">{{ $n(value, 'currency') }}</span>
-    <!-- <span v-if="currency" class="currency">&nbsp;{{ currency }}</span> -->
+    <span class="value">
+      {{ currency? $n(value, 'currency'): $n(value, 'cur') }}
+    </span>
   </div>
 </template>

@@ -5,8 +5,13 @@ const props = defineProps({
   }
 })
 
+// COMPUTEDS
 const photo = computed(() => {
   return props.item?.author?.photo || '/images/account.png'
+})
+
+const link = computed(() => {
+  return props.item?.extras?.link || null
 })
 </script>
 
@@ -16,8 +21,8 @@ const photo = computed(() => {
   <div class="personal-wrapper">
     <nuxt-img
       :src = "photo"
-      :alt = "item.author.name"
-      :title = "item.author.name"
+      :alt = "item?.author?.name"
+      :title = "item?.author?.name"
       width="130"
       height="130"
       sizes = "mobile:100vw tablet:130px desktop:130px"
@@ -29,10 +34,7 @@ const photo = computed(() => {
     >
     </nuxt-img> 
 
-    <a href="/" target="_blank" class="link">
-      <IconCSS name="basil:instagram-outline" class="icon"></IconCSS>
-      <span class="name">{{ item.author.name }}</span>
-    </a>
+    <review-social v-if="link" :source="link" :name="item?.author?.name"></review-social>
 
     <div class="content">
       <div class="text">{{ item.text }}</div>

@@ -1,4 +1,6 @@
 <script setup>
+import {useFilterItem} from '~/composables/product/useFilterItem.ts'
+
 const props = defineProps({
   filter: {
     type: Object
@@ -9,36 +11,85 @@ const props = defineProps({
     default: []
   },
 
+  metaInit: {
+    type: Array,
+    default: null
+  },
+
   modelValue: {
     type: Object,
-    default: {}
+    default: []
   }
 })
 
 const emit = defineEmits(['update:modelValue'])
+const meta = ref([])
 
-const checkHandler = (id) => {
-  const allFiltersCopy = {...props.modelValue}
-  const thisFilter = allFiltersCopy[props.filter.id]
+const {updateCheckboxValue, thisFilter, isMetaBlocked} = useFilterItem(props.modelValue, props.filter.id)
 
-  // if this filter not exists inside selected yet
-  if(!allFiltersCopy[props.filter.id]) {
-    allFiltersCopy[props.filter.id] = [id]
-  // if filter already exists
-  }else {
-    const findIndex = allFiltersCopy[props.filter.id].indexOf(id)
+// COMPUTED
 
-    // Add
-    if(findIndex === -1) {
-      allFiltersCopy[props.filter.id].push(id)
-    // Remove
-    }else {
-      allFiltersCopy[props.filter.id].splice(findIndex, 1)
-    }   
-  }
-  
-  emit('update:modelValue', allFiltersCopy)
+// HANDLERS
+const checkHandler = (valueId) => {
+  const newValue = updateCheckboxValue(valueId)
+  emit('update:modelValue', newValue)
 }
+
+// METHODS
+const isPlus = (valueId) => {
+  return thisFilter.value && getMeta(valueId) > 0 && !isValueChecked(valueId)
+}
+
+const isValueChecked = (valueId) => {
+  if(!thisFilter.value)
+    return false
+
+  return thisFilter.value.values.indexOf(valueId) !== -1
+}
+
+const isDisabled = (valueId) => {
+  if(props.filter.noMeta)
+    return false
+
+  if(isValueChecked(valueId))
+    return false
+
+  if(meta.value && !meta.value[valueId]) {
+    return true
+  }
+}
+
+const getMeta = (valueId) => {
+  if(props.filter.noMeta){
+    return null
+  }
+
+  if(meta.value && meta.value[valueId]){
+    return meta.value[valueId]
+  }else {
+    return 0
+  }
+}
+
+// WATCH
+watch(() => props.meta, (v) => {
+  if(isMetaBlocked.value || !v)
+    return
+
+  meta.value = v
+}, {
+  deep: true
+})
+
+watch(() => props.metaInit, (v) => {
+  if(!v)
+    return
+
+  meta.value = v
+}, {
+  immediate: true,
+  deep: true
+})
 </script>
 
 <!-- <style src="checkbox2.scss" lang="scss" scoped></style> -->
@@ -47,22 +98,33 @@ const checkHandler = (id) => {
 <template>
   <div class="wrapper">
     <ul class="checkbox-list">
-      <li v-for="(value, index) in filter.values"
+      <template v-for="(value, index) in filter.values">
+        <li
+          v-if="filter.noMeta || metaInit[value.id]"
           :key="value.id"
-          :class="[{disabled: !meta[value.id]}, {checked: modelValue[filter.id]?.includes(value.id)}]"
-          @click="checkHandler(value.id)"
+          :class="[
+            {disabled: isDisabled(value.id)},
+            {checked: isValueChecked(value.id)}
+          ]"
           class="checkbox-item"
-      >
-        <button class="checkbox-item-btn">
-          <div class="checkbox-input">
-            <IconCSS name="iconoir:check" class="checkbox-input-icon"></IconCSS>
-          </div>
-          <span class="checkbox-content">
-            <span class="checkbox-name">{{ value.value }}</span>
-            <span class="checkbox-count">{{ meta[value.id] || 0 }}</span>
-          </span>
-        </button>
-      </li>
+        >
+          <button @click="checkHandler(value.id)" class="checkbox-item-btn" button>
+            <div class="checkbox-input">
+              <IconCSS name="iconoir:check" class="checkbox-input-icon"></IconCSS>
+            </div>
+            <span class="checkbox-content">
+              <span class="checkbox-name">{{ value.value }}</span>
+              <span
+                :class="{plus: isPlus(value.id)}"
+                class="checkbox-count">
+                <template v-if="!isValueChecked(value.id)">
+                  {{ getMeta(value.id) }}
+                </template>
+              </span>
+            </span>
+          </button>
+        </li>
+      </template>
     </ul>
   </div>
 </template>

@@ -23,6 +23,10 @@ const props = defineProps({
     type: Object,
     default: null
   },
+  filtersMetaInit: {
+    type: Object,
+    default: null
+  },
   products: {
     type: Array,
     default: []
@@ -39,7 +43,7 @@ const emit = defineEmits([
   'update:page'
 ])
 
-const selectedFilters = ref({})
+const selectedFilters = ref([])
 const sortSelectedIndex = ref(1)
 const sort = ref({order_by: 'created_at', order_dir: 'desc'})
 
@@ -51,19 +55,19 @@ const sortingOptions = computed(() => {
     {
       by: 'created_at',
       dir: 'asc',
-      caption: 'По-возрастанию по-новизне'
+      caption: t('news_asc')
     },{
       by: 'created_at',
       dir: 'desc',
-      caption: 'По-убыванию по-новизне'
+      caption: t('news_desc')
     },{
       by: 'price',
       dir: 'asc',
-      caption: 'По-возрастанию цены'
+      caption: t('price_asc')
     }, {
       by: 'price',
       dir: 'desc',
-      caption: 'По-убыванию цены'
+      caption: t('price_desc')
     }
   ]
 })
@@ -95,9 +99,22 @@ const updatePageHandler = (v) => {
 }
 
 const updateSelectedHandler = (v) => {
+
+  // remove filters with empty values
+  const values = v.filter((item) => {
+    if(item.values === undefined || !item.values)
+      return true
+    
+    if(Array.isArray(item.values)){
+      return item.values.length? true: false
+    }else {
+      return true
+    }
+  })
+
   scrollHandler('title')
-  selectedFilters.value = v
-  emit('update:filters', v)
+  selectedFilters.value = values
+  emit('update:filters', values)
 }
 
 // METHODS
@@ -105,6 +122,7 @@ const updateSelectedHandler = (v) => {
 </script>
 
 <style src="~/assets/scss/layout-catalog.scss" lang="scss" scoped></style>
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <div class="page-base">
@@ -118,7 +136,7 @@ const updateSelectedHandler = (v) => {
     </div>
 
     <transition name="fade-in">
-      <div v-if="Object.keys(selectedFilters).length" class="selected">
+      <div v-if="selectedFilters.length" class="selected">
         <div class="container">
           <filter-selected
             :modelValue="selectedFilters"
@@ -135,10 +153,10 @@ const updateSelectedHandler = (v) => {
     <div class="container">
       <div class="header">
         <div v-if="meta?.total" class="header-title">
-          Фильтры
+          {{ t('label.filters') }}
         </div>
         <div class="header-desc">
-          Найдено {{ meta?.total || 0 }} товаров
+          {{ t('messages.products_found', {amount: (meta?.total || 0)}) }}
         </div>
         <div v-if="meta?.total" class="header-actions">
           <div class="sorting-wrapper">
@@ -166,8 +184,10 @@ const updateSelectedHandler = (v) => {
         v-if="filters"
         :modelValue="selectedFilters"
         @update:modelValue="updateSelectedHandler"
+        :brands="brands"
         :filters="filters"
         :meta="filtersMeta"
+        :meta-init="filtersMetaInit"
         class="filters"
       ></filter-list> 
 
@@ -175,8 +195,8 @@ const updateSelectedHandler = (v) => {
       <div class="content-grid">
         <transition-group name="fade-in">
           <product-card
-            v-for="product in products"
-            :key="product.id"
+            v-for="(product, index) in products"
+            :key="product.id + index"
             :item="product"
             class="content-grid-item"
           ></product-card>

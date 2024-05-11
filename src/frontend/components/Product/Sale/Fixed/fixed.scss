@@ -28,11 +28,21 @@
     &.comparison-btn {
       color: $color-blue;
       background: scale-color($color-blue, $lightness: 80%);
+
+      &.active {
+        color: $color-8;
+        background: $color-blue;
+      }
     }
 
     &.favorite-btn {
       color: $color-red;
       background: scale-color($color-red, $lightness: 85%);
+
+      // &.active {
+      //   color: $color-8;
+      //   background: $color-red;
+      // }
     }
   }
 

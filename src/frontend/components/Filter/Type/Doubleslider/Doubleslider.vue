@@ -1,4 +1,5 @@
 <script setup>
+import {useFilterItem} from '~/composables/product/useFilterItem.ts'
 import Slider from '@vueform/slider'
 
 const props = defineProps({
@@ -12,6 +13,11 @@ const props = defineProps({
 
   meta: {
     type: Object
+  },
+
+  metaInit: {
+    type: Object,
+    default: null
   }
 })
 
@@ -21,33 +27,39 @@ const limits = ref([0, 0])
 const value = ref([0, 0])
 const delay = ref(null)
 
-watch(() => props.meta, (v) => {
-  // console.log('watch', v)
-  if(v && v.min && v.max) {
-    limits.value = [v.min, v.max]
-    value.value = [v.min, v.max]
-  }
-}, {
-  deep: true,
-  immediate: true
-})
+const {updateRangeValue, isMetaBlocked} = useFilterItem(props.modelValue, props.filter.id)
 
 // HANDLERS
 const changeHandler = (v) => {}
 
 const setHandler = (v) => {
-  let modelValueCopy = {...props.modelValue}
-
-  if(!modelValueCopy[props.filter.id]) {
-    modelValueCopy[props.filter.id] = {}
-  }
-
-  modelValueCopy[props.filter.id] = {min: v[0], max: v[1]}
+  const value = updateRangeValue(v)
 
   delay.value = setTimeout(() => {
-    emit('update:modelValue', modelValueCopy)
+    emit('update:modelValue', value)
   }, 500)
 }
+
+// WATCHERS
+watch(() => props.meta, (v) => {
+  if(isMetaBlocked.value || !v || v.min === undefined || v.max === undefined)
+    return
+  
+  limits.value = [v.min, v.max]
+}, {
+  deep: true,
+})
+
+watch(() => props.metaInit, (v) => {
+  if(!v || v.min === undefined || v.max === undefined)
+    return
+
+  limits.value = [v.min, v.max]
+  value.value = [v.min, v.max]
+}, {
+  deep: true,
+  immediate: true
+})
 </script>
 
 <style src="./doubleslider.scss" lang="scss" scoped />

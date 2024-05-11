@@ -29,9 +29,9 @@ const search = ref(null)
 const alphaList = computed(() => {
   let list = []
 
-  if(brands_grouped.value[1]) {
+  if(brands_grouped.value[2]) {
     list = [
-      ...Object.keys(brands_grouped.value[1])
+      ...Object.keys(brands_grouped.value[2])
     ]
   }
 
@@ -48,9 +48,9 @@ const alphaList = computed(() => {
 const alphaList2 = computed(() => {
   let list = []
 
-  if(brands_grouped.value[2]) {
+  if(brands_grouped.value[1]) {
     list = [
-      ...Object.keys(brands_grouped.value[2])
+      ...Object.keys(brands_grouped.value[1])
     ]
   }
 
@@ -58,18 +58,6 @@ const alphaList2 = computed(() => {
 })
 
 const numbersList = computed(() => {
-  if(!brands_grouped.value[1])
-    return []
-
-  if(search.value) {
-    return filterValues(brands_grouped.value[1])
-  }else {
-    return brands_grouped.value[1]
-  }
-
-})
-
-const latinList = computed(() => {
   if(!brands_grouped.value[2])
     return []
 
@@ -77,6 +65,18 @@ const latinList = computed(() => {
     return filterValues(brands_grouped.value[2])
   }else {
     return brands_grouped.value[2]
+  }
+
+})
+
+const latinList = computed(() => {
+  if(!brands_grouped.value[1])
+    return []
+
+  if(search.value) {
+    return filterValues(brands_grouped.value[1])
+  }else {
+    return brands_grouped.value[1]
   }
   
 })
@@ -128,6 +128,13 @@ const filterValues = (values) => {
   }
 
   return filteredValues
+}
+
+const getPhoto = (item) => {
+  if(item?.image?.src)
+    return '/server/images/brands/' + item.image.src
+  else
+    return null
 }
 
 // HANDLERS
@@ -191,7 +198,8 @@ await useAsyncData('brands', () => useBrandStore().index({alpha_grouped: 1})).th
         <div class="popular">
           <NuxtLink v-for="item in populars" :key="item.id" :to="localePath('/brands/' + item.slug)" class="popular-item">
             <nuxt-img
-              :src = "item.image.src"
+              v-if="getPhoto(item)"
+              :src = "getPhoto(item)"
               width="254"
               height="150"
               sizes = "mobile:300px tablet:300px desktop:300px"

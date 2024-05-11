@@ -71,10 +71,6 @@ const zoomStyle = computed(() => {
 const cursorStyle = computed(() => {
   const width = zoomSizes.value.width / 2
   const height = zoomSizes.value.height / 2
-  // console.log('cursore', width, height)
-  // const width = position.value.width * 100 / zoomSizes.value.width
-  // const height = width
-  // const height = position.value.height * 100 / zoomSizes.value.height
 
   const wrapperWidth = mainImageWrapperRef.value?.offsetWidth || 0
   const wrapperHeight = mainImageWrapperRef.value?.offsetHeight || 0
@@ -115,12 +111,24 @@ const cursorStyle = computed(() => {
 })
 
 const image = computed(() => {
-  return props.items[activeIndex.value]
+  return props.items?.length? props.items[activeIndex.value]: {
+    src: './images/noimage.png',
+    alt: null,
+    title: null
+  }
 })
 
 const images = computed(() => {
   return props.items
 })
+
+// METHODS
+const getImage = (src) => {
+  if(src)
+    return '/server/images/products/' + src
+  else
+    return null
+}
 
 // HANDLERS
 const selectHandler = (index) => {
@@ -139,7 +147,7 @@ const mouseOverHandler = (e) => {
 <style src="./gallery.scss" lang="scss" scoped></style>
 
 <template>
-  <div class="gallery">
+  <div class="gallery" :class="'length-' + (images?.length || 1)">
     <div class="thumbnail">
       <button
         v-for="(item, index) in images"
@@ -150,7 +158,7 @@ const mouseOverHandler = (e) => {
       >
         <nuxt-img
           v-if="item.src"
-          :src = "item.src"
+          :src = "getImage(item.src)"
           :alt = "item.alt"
           :title = "item.title"
           :class="item.size"
@@ -160,6 +168,7 @@ const mouseOverHandler = (e) => {
           format = "webp"
           quality = "60"
           loading = "lazy"
+          placeholder="./images/noimage.png"
           fit="outside"
           class="thumbnail-image"
         >
@@ -167,15 +176,11 @@ const mouseOverHandler = (e) => {
       </button>
     </div>
     <div ref="mainImageWrapperRef" class="main">
-      <!-- <div>
-         width="575"
-        height="530"
-      </div> -->
-      <div v-if="isZoom" :style="cursorStyle" class="cursor"></div>
+      <div v-if="isZoom && images?.length" :style="cursorStyle" class="cursor"></div>
       
       <nuxt-img
         v-if="image.src"
-        :src = "image.src"
+        :src = "getImage(image.src)"
         :alt = "image.alt"
         :title = "image.title"
         :class="image.size"
@@ -185,6 +190,7 @@ const mouseOverHandler = (e) => {
         loading = "lazy"
         fit="outside"
         class="main-image"
+        placeholder="./images/noimage.png"
         @mousemove.passive="mouseOverHandler"
         @mouseenter="() => isZoom = true"
         @mouseleave="() => isZoom = false"
@@ -192,13 +198,13 @@ const mouseOverHandler = (e) => {
     </div>
       <transition name="fade-in">
         <div
-          v-if="isZoom"
+          v-if="isZoom && images?.length"
           :style="zoomWrapperStyle"
           class="zoom"
         >
           <nuxt-img
             v-if="image.src"
-            :src = "image.src"
+            :src = "getImage(image.src)"
             sizes = "mobile:0px tablet:0px desktop:1200px"
             format = "webp"
             quality = "100"

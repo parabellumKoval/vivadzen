@@ -1,4 +1,5 @@
 <script setup>
+import {useCart} from '~/composables/product/useCart.ts'
 const {t} = useI18n()
 
 const props = defineProps({
@@ -6,6 +7,9 @@ const props = defineProps({
     type: Object
   }
 })
+
+console.log('product brand', props.product)
+const {toCartHandler} = useCart(props.product)
 
 // HANDLERS
 const oneClickHandler = () => {
@@ -17,10 +21,10 @@ const oneClickHandler = () => {
 
 <template>
   <div class="block">
-    <div class="brand">
+    <div v-if="product.brand" class="brand">
       <span class="brand-label">{{ t('label.brand') }}:</span>
-      <NuxtLink :to="localePath('/')" class="brand-value text-link">
-        <span>All be Ukraine</span>
+      <NuxtLink :to="localePath('/brands/' + product.brand.slug)" class="brand-value text-link">
+        <span>{{ product.brand.name }}</span>
       </NuxtLink>
     </div>
 
@@ -33,11 +37,20 @@ const oneClickHandler = () => {
     </div>
     
     <div class="sale">
-      <div class="price-block">
+
+      <product-price
+        :price="product.price"
+        :old-price="product.oldPrice"
+        dir="left"
+        class="price-block"
+      ></product-price>
+      <!-- <div class="price-block">
         <simple-price :value="product.oldPrice" class="price-old"></simple-price>
         <simple-price :value="product.price" class="price-base"></simple-price>
-      </div>
-      <button class="button primary">{{ t('button.buy') }}</button>
+      </div> -->
+
+      <button @click="toCartHandler" class="button primary">{{ t('button.buy') }}</button>
+      
       <button @click="oneClickHandler" class="button color-primary inline-icon">
         <IconCSS name="iconoir:flash" class="icon"></IconCSS>
         <span>{{ t('button.1_click_buy') }}</span>

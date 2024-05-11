@@ -1,10 +1,44 @@
 <script setup>
+import {useLikesStore} from '~~/store/likes';
+
 const {t} = useI18n()
 const props = defineProps({
   item: {
     type: Object
   }
 })
+
+const likes = ref(0)
+
+// COMPUTED
+const isMyLike = computed(() => {
+  const likes = useLikesStore().getLikes || []
+
+  if(likes.includes(props.item.id)){
+    return true
+  }else {
+    return false
+  }
+})
+
+
+// HANDLERS
+const toggleLikeHandler = () => {
+  if(isMyLike.value) {
+    likes.value -= 1
+  }else {
+    likes.value += 1
+  }
+
+  useLikesStore().toggleLike(props.item.id)
+}
+
+// METHODS
+const setLikes = () => {
+  likes.value = props.item.likes
+}
+
+setLikes()
 </script>
 
 <style src="./full.scss" lang="scss" scoped></style>
@@ -33,14 +67,21 @@ const props = defineProps({
       <div>{{ item.extras?.flaws }}</div>
     </div>
     <div class="buttons">
-      <button :class="{violet: item.likes > 0, secondary: item.likes <= 0}" class="button mini">
+
+      <button
+        @click="toggleLikeHandler"
+        :class="{violet: likes > 0, secondary: likes <= 0, active: isMyLike}"
+        class="button mini"
+      >
         <IconCSS name="iconoir:thumbs-up" class="inline-icon"></IconCSS>
-        <span v-if="item.likes">{{ item.likes }}</span>
+        <span v-if="likes">{{ likes }}</span>
       </button>
+
       <button class="button mini secondary lowcase">
         <IconCSS name="iconoir:reply" class="inline-icon"></IconCSS>
         <span>{{ t('button.reply') }}</span>
       </button>
+
     </div>
   </div>
 </template>

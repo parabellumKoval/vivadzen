@@ -1,13 +1,14 @@
 <script setup>
+import {useCard} from '~/composables/product/useCard.ts'
+
 const props = defineProps({
   item: {
     type: Object
   }
 })
 
-const photo = computed(() => {
-  return props.item?.image?.src || '/images/noimage.png'
-})
+const {photo, photoAlt, photoTitle, photoSize} = useCard(props.item)
+
 </script>
 
 <style src="./micro.scss" lang="scss" scoped></style>
@@ -17,9 +18,9 @@ const photo = computed(() => {
   <NuxtLink :to="localePath('/' + item.slug)" :aria-label="item.name" clickable class="image-wrapper">
     <nuxt-img
       :src = "photo"
-      :alt = "item.image.alt || item.name"
-      :title = "item.image.title || item.name"
-      :class="item.image.size"
+      :alt = "photoAlt"
+      :title = "photoTitle"
+      :class = "photoSize"
       width="85"
       height="110"
       sizes = "mobile:100vw tablet:85px desktop:85px"
@@ -27,6 +28,7 @@ const photo = computed(() => {
       quality = "60"
       loading = "lazy"
       fit="outside"
+      placeholder="./images/noimage.png"
       class="image"
     >
     </nuxt-img> 
@@ -47,7 +49,8 @@ const photo = computed(() => {
     >{{ item.name }}</NuxtLink>
     <div class="footer">
       <simple-stars :amount="item.rating" mobile="medium"></simple-stars>
-      <simple-price v-if="+item.price" :value="+item.price"></simple-price>
+
+      <product-price :price="item.price" :old-price="item.oldPrice" class="price-block"></product-price>
     </div>
   </div>
 </div>

@@ -121,8 +121,8 @@ export const useCartStore = defineStore('cartStore', {
     },
 
     toProductType(data: Product) {
-      const {id, name, slug, price, amount, image} = data
-      return {id, name, slug, price, amount, image} as Product
+      const {id, name, slug, price, oldPrice, amount, image} = data
+      return {id, name, slug, price, oldPrice, amount, image} as Product
     },
 
     serializeCart() {

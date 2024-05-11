@@ -1,4 +1,5 @@
 <script setup>
+import {useFilter} from '~/composables/product/useFilter.ts'
 import {useCatalog} from '~/composables/product/useCatalog.ts'
 import {useFetchReview} from '~/composables/review/useFetchReview.ts'
 import {useCategoryStore} from '~/store/category'
@@ -6,11 +7,18 @@ import {useCategoryStore} from '~/store/category'
 const {t} = useI18n()
 const route = useRoute()
 
+const {getFilters, prepareAttrs} = useFilter()
+const {getProducts} = useCatalog()
+
 // Attributes
 const attributes = ref([])
 
+// Brands
+const brands = ref([])
+
 // Filters
-const filters = ref(null)
+const filtersMeta = ref(null)
+const filtersMetaInit = ref(null)
 
 // Products
 const products = ref([])
@@ -27,6 +35,9 @@ const category = ref({})
 const queryObject = ref({
   order: null,
   filters: null,
+  brands: null,
+  price: null,
+  selections: null,
   page: 1
 })
 
@@ -51,8 +62,20 @@ const query = computed(() => {
     page: queryObject.value.page || 1
   }
 
+  if(queryObject.value.brands) {
+    query.brands = queryObject.value.brands
+  }
+
+  if(queryObject.value.selections) {
+    query.selections = queryObject.value.selections
+  }
+
   if(queryObject.value.filters) {
     query.attrs = queryObject.value.filters
+  }
+
+  if(queryObject.value.price) {
+    query.price = queryObject.value.price
   }
 
   if(queryObject.value.order) {
@@ -95,8 +118,18 @@ watch(() => meta.value, (v) => {
 
 const updateQueryHandler = async (key = null, v = null) => {
   if(key === 'filters') {
-    queryObject.value.page = 1
-    queryObject.value.filters = useCatalog().prepareAttrs(v)
+
+    queryObject.value.page = 1;
+
+    console.log('updateQueryHandler', queryObject.value);
+    (
+      {
+        filters: queryObject.value.filters,
+        brands: queryObject.value.brands,
+        selections: queryObject.value.selections,
+        price: queryObject.value.price,
+      } = prepareAttrs(v)
+    );
   }
   
   if(key === 'order') {
@@ -107,7 +140,11 @@ const updateQueryHandler = async (key = null, v = null) => {
     queryObject.value.page = v;
   }
 
-  ({products: products.value, meta: meta.value, filters: filters.value} = await useCatalog().getProducts(query.value, true).finally(() => {}))
+  ({
+    products: products.value,
+    meta: meta.value,
+    filters: filtersMeta.value
+  } = await getProducts(query.value).finally(() => {}))
 }
 
 // METHODS
@@ -121,7 +158,7 @@ const getQuery = (filters = null, order = null) => {
     query.category_slug = slug.value
 
   if(filters) {
-    query.attrs = useCatalog().prepareAttrs(filters)
+    query.attrs = prepareAttrs(filters)
   }
 
   if(order) {
@@ -161,9 +198,25 @@ const getCategory = async (query) => {
 }
 
 // HOOKS
-({attributes: attributes.value} = await useCatalog().getAttributes(getQuery(), true).finally(() => {}));
+attributes.value = await getFilters(getQuery()).then(({data}) => {
+  return data.value || []
+});
 
-({products: products.value, meta: meta.value, filters: filters.value} = await useCatalog().getProducts(getQuery(), true).finally(() => {}));
+// ({brands: brands.value} = await useAsyncData('brands', () => useCatalog().getBrands(getQuery()))
+// .then((r) => {
+//   console.log('brands response  -- ', r);
+//   return r
+// }).finally(() => {}));
+
+// ({attributes: attributes.value} = await useCatalog().getAttributes(getQuery())
+// .then((r) => {
+//   return r
+// }).finally(() => {}));
+
+({products: products.value, meta: meta.value, filters: filtersMetaInit.value} = await getProducts(getQuery())
+.then((r) => {
+  return r
+}).finally(() => {}));
 
 await getCategory()
 
@@ -178,13 +231,16 @@ await useFetchReview().getReviews({
 </script>
 
 <style src="./category.scss" lang="scss" scoped></style>
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <NuxtLayout
     name="catalog"
     :breadcrumbs="breadcrumbs"
+    :brands="brands"
     :filters="attributes"
-    :filters-meta="filters"
+    :filters-meta="filtersMeta"
+    :filters-meta-init="filtersMetaInit"
     :products="products"
     :meta="meta"
     @update:filters="(v) => updateQueryHandler('filters', v)"
@@ -198,10 +254,12 @@ await useFetchReview().getReviews({
 
     <template #footer> 
       <div v-if="reviewsMeta?.total" class="review">
-        <div class="title-secondary review-title">Отзывы о {{ category.name }}</div>
+        <div class="title-secondary review-title">{{ t('review') }} {{ category.name }}</div>
         <div class="review-header">
           <simple-stars :amount="reviewsMeta?.rating_avg || 0"></simple-stars>
-          <div class="review-count">{{ reviewsMeta?.rating_count || 0 }} оценок и {{ reviewsMeta?.total || 0 }} отзывов</div>
+          <div class="review-count">
+            {{ t('messages.rates_reviews', {rates: (reviewsMeta?.rating_count || 0),reviews: (reviewsMeta?.total || 0)}) }}
+          </div>
         </div>
         <review-product v-for="review in reviews" :key="review.id" :item="review" type="mini" class="review-item"></review-product>
       </div>

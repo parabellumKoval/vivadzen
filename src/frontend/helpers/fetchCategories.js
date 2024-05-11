@@ -12,7 +12,6 @@ export default async () => {
     const data = await getData()
 
     const categories = data.map((category) => {
-      console.log(category.slug)
       return {
         name: 'category-' + category.id,
         path: '/' + category.slug,
@@ -21,8 +20,6 @@ export default async () => {
         // component: () => import('~/pages/category/index.vue').then(r => r.default || r)
       }
     })
-
-    // console.log('new categories', categories);  
 
     return categories
   }

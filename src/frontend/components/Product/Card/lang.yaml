@@ -1,4 +1,10 @@
 ru:
-  buy: "Купить"
+  label:
+    sale: Акция
+    price: Супер цена
+    top: Топ продаж
 uk:
-  buy: "Купити"
+  label:
+    sale: Акція
+    price: Супер ціна
+    top: Топ продажів

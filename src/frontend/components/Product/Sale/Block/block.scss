@@ -57,43 +57,47 @@
   }
 }
 
-.price {
-  &-block {
-    display: grid;
-    grid-auto-flow: row;
-    grid-gap: 5px;
-    margin-bottom: 10px;
-
-    @include _desktop {
-      margin-bottom: 0;
-    }
-  }
-
-  &-base {
-    order: 1;
-    :deep(.value) {
-      font-size: 24px;
-      font-weight: 500;
-      color: $color-0;
-
-      @include _desktop {
-        font-size: 30px;
-      }
-    }
-  }
-
-  &-old {
-    order: 2;
-    :deep(.value) {
-      font-weight: 400;
-      color: $color-3;
-      text-decoration: line-through;
-    }
-
-    + .price-base {
-      :deep(.value) {
-        color: $color-red;
-      }
-    }
-  }
+.price-block {
+  font-size: 20px;
 }
+
+// .price {
+//   &-block {
+//     display: grid;
+//     grid-auto-flow: row;
+//     grid-gap: 5px;
+//     margin-bottom: 10px;
+
+//     @include _desktop {
+//       margin-bottom: 0;
+//     }
+//   }
+
+//   &-base {
+//     order: 1;
+//     :deep(.value) {
+//       font-size: 24px;
+//       font-weight: 500;
+//       color: $color-0;
+
+//       @include _desktop {
+//         font-size: 30px;
+//       }
+//     }
+//   }
+
+//   &-old {
+//     order: 2;
+//     :deep(.value) {
+//       font-weight: 400;
+//       color: $color-3;
+//       text-decoration: line-through;
+//     }
+
+//     + .price-base {
+//       :deep(.value) {
+//         color: $color-red;
+//       }
+//     }
+//   }
+// }

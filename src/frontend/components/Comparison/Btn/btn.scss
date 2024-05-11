@@ -1,0 +1,18 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+.comparison {
+  &-wrapper {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+
+  &-btn {
+    border: 3px solid $color-8;
+  }
+}

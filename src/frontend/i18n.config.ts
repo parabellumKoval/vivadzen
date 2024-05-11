@@ -7,8 +7,14 @@ export default defineI18nConfig(() => {
         currency: {
           style: 'currency', 
           currency: 'UAH',
-          useGrouping: true,
-          currencyDisplay: 'symbol'
+          currencyDisplay: 'narrowSymbol',
+          useGrouping: true
+          // notation: 'compact'
+          // unitDisplay: 'symbol'
+        },
+        cur: {
+          style: 'decimal',
+          minimumFractionDigits: 2
         },
         distance: {
           style: 'unit',

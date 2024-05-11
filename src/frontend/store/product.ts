@@ -81,6 +81,22 @@ export const useProductStore = defineStore('productStore', {
       })
     },
 
+    async getMultiple(ids: Number[]) {
+      const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.apiBase}/product/ids`;
+
+      return await useServerApiFetch(url, {ids: ids})
+        .then(({data, error}) => {
+
+          if(data?.data) {
+            return data.data
+          }
+
+          if(error)
+            throw new Error(error)
+        })
+    },
+
     async getRandom(id: Number) {
       const runtimeConfig = useRuntimeConfig()
       const url = `${runtimeConfig.public.apiBase}/products/random?not_id=${id}`;

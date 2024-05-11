@@ -10,7 +10,7 @@
     top: 80px;
     width: 100%;
     min-height: 50px;
-    z-index: 10;
+    z-index: 20;
     background: $color-8;
     display: flex;
     align-items: center;
@@ -60,7 +60,7 @@
     }
 
     &-btn {
-      border: 1px solid $color-4;
+      border: 1px solid $color-5;
       background: $color-8;
       pointer-events: none;
     }
@@ -82,7 +82,7 @@
   grid-template-columns: 1fr;
 
   @include _desktop {
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 20% 80%;
   }
 
   &-inner {
@@ -94,7 +94,7 @@
   &-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-row-gap: 30px;
+    grid-row-gap: 50px;
 
     @include _tablet {
 

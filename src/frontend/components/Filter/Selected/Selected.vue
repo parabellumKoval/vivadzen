@@ -14,29 +14,30 @@ const emit = defineEmits([
 
 const {t} = useI18n()
 
-
 const selected = computed(() => {
   const values = []
 
   // For each selected filter
-  for (const [key, value] of Object.entries(props.modelValue)) {
+  for(const index in props.modelValue) {
+    const key = props.modelValue[index].id
+    const value = props.modelValue[index].values
 
     // Find this iterration filter by ID
     let filter = props.filters.find((filter) => {
       return filter.id == key
     })
 
-    // console.log('selected', props.modelValue, filter)
+    // console.log('filter', props.modelValue[index], filter, props.filters)
 
     if(!filter)
       continue
     
     // For lists
-    if(filter.type === 'checkbox' || filter.type === 'radio') {
+    if(filter.type === 'checkbox' || filter.type === 'radio' || filter.type === 'brand') {
       // For each values
       value.forEach((selectedValue) => {
         let filterValue = filter.values.find(v => v.id == selectedValue)
-        let filterValueName = filterValue?.value || null
+        let filterValueName = filterValue?.value || filterValue?.name || null
 
         values.push({
           filterId: filter.id,
@@ -65,7 +66,7 @@ const deleteHandler = (filter) => {
   if(filterModel.type === 'number') {
     delete modelValueCopy[filter.filterId]
   // For lists checkbox, radio
-  }else if(filterModel.type === 'checkbox' || filterModel.type === 'radio') {
+  }else if(filterModel.type === 'checkbox' || filterModel.type === 'radio' || filterModel.type === 'brand') {
     const valueIndex = modelValueCopy[filter.filterId].indexOf(filter.valueId)
 
     if(valueIndex !== -1){
@@ -81,7 +82,7 @@ const deleteHandler = (filter) => {
 }
 
 const removeAllHandler = () => {
-  emit('update:modelValue', {})
+  emit('update:modelValue', [])
 }
 </script>
 
@@ -89,15 +90,17 @@ const removeAllHandler = () => {
 
 <template>
   <div class="filter-wrapper">
-    <div class="filter-label">Примененные фильтры:</div>
+    <div class="filter-label">{{ t('label.active_filters') }}:</div>
     <div class="filter-list">
-      <button @click="removeAllHandler" class="button small light filter-remove-all-btn">Сбросить все</button>
-      <div v-for="filter in selected" :key="filter.filterId" class="filter-item">
-        <span class="filter-name">{{ filter.name }}</span>
-        <button @click="deleteHandler(filter)" class="filter-remove-btn">
-          <IconCSS name="iconoir:cancel"></IconCSS>
-        </button>
-      </div>
+      <button @click="removeAllHandler" class="button small light filter-remove-all-btn" button>{{ t('button.reset_all') }}</button>
+      <transition-group name="move-x">
+        <div v-for="filter in selected" :key="filter.filterId" class="filter-item">
+          <span class="filter-name">{{ filter.name }}</span>
+          <button @click="deleteHandler(filter)" class="filter-remove-btn">
+            <IconCSS name="iconoir:cancel"></IconCSS>
+          </button>
+        </div>
+      </transition-group>
     </div>
   </div>
 </template>

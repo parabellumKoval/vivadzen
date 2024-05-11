@@ -24,7 +24,7 @@
     "laravel/scout": "^9.8",
     "laravel/socialite": "^5.6",
     "laravel/tinker": "^2.5",
-    "parabellumkoval/backpack-articles": "0.1.x-dev",
+    "parabellumkoval/backpack-articles": "0.1.1.x-dev",
     "parabellumkoval/backpack-banners": "dev-main",
     "parabellumkoval/backpack-feedback": "dev-main",
     "parabellumkoval/backpack-pages": "0.1.x-dev",

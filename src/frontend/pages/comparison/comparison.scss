@@ -65,10 +65,22 @@
   }
 }
 
+.field {
+  &-link {
+    text-decoration: underline;
+    transition: color $speed;
+
+    &:hover {
+      color: $color-green;
+    }
+  }
+}
+
 .product-image {
   width: 290px;
   height: 150px;
   object-fit: contain;
+  border-radius: $radius;
 }
 
 .delete-btn {

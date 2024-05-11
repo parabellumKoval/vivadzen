@@ -12,7 +12,8 @@ export default defineNuxtConfig({
       siteUrl: process.env.SITE_URL || 'https://djini.com.ua',
       frontendUrl: process.env.SITE_URL,
       novaposhtaKey: process.env.NOVAPOSHTA_KEY,
-      apiBase: process.env.SERVER_URL + '/api'
+      apiBase: process.env.SERVER_URL + '/api',
+      instagramToken: process.env.INSTAGRAM_TOKEN
     }
   },
   hooks: {
@@ -54,129 +55,105 @@ export default defineNuxtConfig({
   ],
 
   modules: [
-    'nuxt-anchorscroll',
-    [
-      '@nuxtjs/supabase',
-      {
-        redirectOptions: {
-          login: '/',
-          include: ['/account(/*)?']
-        }
+  'nuxt-anchorscroll', 
+  [
+    '@nuxtjs/supabase',
+    {
+      redirectOptions: {
+        login: '/',
+        include: ['/account(/*)?']
       }
-    ],
-    [
-      '@nuxtjs/prismic',
-      {
-        endpoint: 'https://all-be-ukraine.cdn.prismic.io/api/v2',
-        preview: false,
-        toolbar: false
-      }
-    ],
-    [
-      'nuxt-icon',
-      {
-        class: 'icon'
-      }
-    ],
-    // [
-    //   '@nuxtjs/partytown',
-    //   {
-    //     debug: process.env.NODE_ENV === 'development',
-    //     forward: ['dataLayer.push']
-    //   }
-    // ],
-    [
-      'nuxt-simple-sitemap',
-      {
-        enabled: true,
-        exclude: [
-            '/account/**'
-        ],
-        defaults: {
-          changefreq: 'daily',
-          priority: 1,
-          lastmod: new Date().toISOString(),
+    }
+  ], [
+    '@nuxtjs/prismic',
+    {
+      endpoint: 'https://all-be-ukraine.cdn.prismic.io/api/v2',
+      preview: false,
+      toolbar: false
+    }
+  ], [
+    'nuxt-icon',
+    {
+      class: 'icon'
+    }
+  ], // [
+  //   '@nuxtjs/partytown',
+  //   {
+  //     debug: process.env.NODE_ENV === 'development',
+  //     forward: ['dataLayer.push']
+  //   }
+  // ],
+  [
+    '@nuxtjs/device',
+    {
+      refreshOnResize: true
+    }
+  ], // '@nuxtjs/fontaine',
+  [
+    '@nuxtjs/google-fonts',
+    {
+      families: {
+        Rubik: {
+          wght: [300, 400, 500, 700]
         },
-        urls: dynamicRoutes
-      }
-    ],
-    'nuxt-schema-org',
-    [
-      '@nuxtjs/device',
-      {
-        refreshOnResize: true
-      }
-    ],
-    // '@nuxtjs/fontaine',
-    [
-      '@nuxtjs/google-fonts',
-      {
-        families: {
-          Rubik: {
-            wght: [300, 400, 500, 700]
-          },
-        },
-        display: 'swap',
-        preload: true
-      }
-    ],
-    [
-      '@nuxt/image',
-      {
-        provider: process.env.IMAGE_PROVIDER || "ipx",
-        
-        screens: {
-          mobile: 767,
-          tablet: 1023,
-          desktop: 1919,
-        },
-        
+      },
+      display: 'swap',
+      preload: true
+    }
+  ], [
+    '@nuxt/image',
+    {
+      provider: process.env.IMAGE_PROVIDER || "ipx",
+      
+      screens: {
+        mobile: 767,
+        tablet: 1023,
+        desktop: 1919,
+      },
+
+      domains: [
+        process.env.DOMAIN,
+        '*.googleusercontent.com',
+        'lh3.googleusercontent.com',
+        'images.prismic.io',
+        '*.cdninstagram.com'
+      ],
+      
+      alias: {
+        server: process.env.SERVER_URL
+      },
+      
+      dir: process.env.IMAGE_DIR || "public",
+      
+      vercel: {
+        dirname: 'public'
+      },
+
+      ipx: {
         domains: [
           process.env.DOMAIN,
           '*.googleusercontent.com',
           'lh3.googleusercontent.com',
-          'images.prismic.io'
-        ],
-        
-        alias: {
-          server: process.env.SERVER_URL
-        },
-        
-        dir: process.env.IMAGE_DIR || "public",
-        
-        vercel: {
-          dirname: 'public'
-        },
-
-        ipx: {
-          domains: [
-            process.env.DOMAIN,
-            '*.googleusercontent.com',
-            'lh3.googleusercontent.com',
-            'images.prismic.io'
-          ]
-        }
+          'images.prismic.io',
+          '*.cdninstagram.com'
+        ]
       }
-    ],
-    [
-      '@pinia/nuxt',
-      {
-        autoImports: [
-          'defineStore',
-        ],
-      },
-    ],
-    '@pinia-plugin-persistedstate/nuxt',
-    '@nuxtjs/i18n',
-    [
-      '@nuxt/content', 
-      {
-        defaultLocale: 'ru',
-        locales: ['uk','ru']
-      }
-    ],
-    // '@vueuse/nuxt',
-  ],
+    }
+  ], [
+    '@pinia/nuxt',
+    {
+      autoImports: [
+        'defineStore',
+      ],
+    },
+  ], '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/i18n', // '@vueuse/nuxt',
+  [
+    '@nuxt/content', 
+    {
+      defaultLocale: 'ru',
+      locales: ['uk','ru']
+    }
+  ], "@nuxtjs/seo"],
 
   experimental: {
     renderJsonPayloads: false,
@@ -209,6 +186,22 @@ export default defineNuxtConfig({
   //   '/**/*.xml': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
   //   '/**/*.svg': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
   // },
+
+  sitemap: {
+    enabled: true,
+    exclude: [
+        '/account/**'
+    ],
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+      lastmod: new Date().toISOString(),
+    },
+    urls: dynamicRoutes
+  }, 
+  schemaOrg: {
+    enabled: true,
+  },
   i18n: {
     baseUrl: 'https://po.ua',
     defaultLocale: 'uk',

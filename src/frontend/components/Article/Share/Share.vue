@@ -7,7 +7,6 @@ const props = defineProps({
   }
 })
 
-
 const url = computed(() => {
   return useRuntimeConfig().public.frontendUrl + useRoute().fullPath
 })
@@ -22,9 +21,13 @@ const xLink = computed(() => {
 
 const copyHandler = () => {
   navigator.clipboard.writeText(url.value).then(function() {
-    useNoty().setNoty(t('noty.copied', {text: url.value}))
+    useNoty().setNoty({
+      content: t('noty.copied', {text: url.value})
+    })
   }, function(err) {
-    useNoty().setNoty(t('noty.copied_fail'))
+    useNoty().setNoty({
+      content: t('noty.copied_fail')
+    })
   })
 }
 </script>

@@ -100,34 +100,35 @@ export const useReviewStore = defineStore('reviewStore', {
 
       return await useApiFetch(url, data, 'POST').then(({data, error}) => {
 
+        console.log(data, error)
         if(data) {
           const likes = data.likes
           const dislikes = data.dislikes
 
-          this.allState.data.map((item) => {
+          // this.allState.data.map((item) => {
 
-            if(item.id === id){
-              if(likes !== undefined && likes !== null)
-                item.likes = likes
+          //   if(item.id === id){
+          //     if(likes !== undefined && likes !== null)
+          //       item.likes = likes
 
-              if(dislikes !== undefined && dislikes !== null)
-                item.dislikes = dislikes
-            }else {
-              item.children && item.children.map((ch) => {
-                if(ch.id === id){
-                  if(likes !== undefined && likes !== null)
-                    ch.likes = likes
+          //     if(dislikes !== undefined && dislikes !== null)
+          //       item.dislikes = dislikes
+          //   }else {
+          //     item.children && item.children.map((ch) => {
+          //       if(ch.id === id){
+          //         if(likes !== undefined && likes !== null)
+          //           ch.likes = likes
   
-                  if(dislikes !== undefined && dislikes !== null)
-                    ch.dislikes = dislikes
-                }
+          //         if(dislikes !== undefined && dislikes !== null)
+          //           ch.dislikes = dislikes
+          //       }
     
-                return ch
-              })
-            }
+          //       return ch
+          //     })
+          //   }
     
-            return item
-          })
+          //   return item
+          // })
         }
 
         if(error) {

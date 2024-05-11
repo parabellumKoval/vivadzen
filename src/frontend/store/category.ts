@@ -24,6 +24,7 @@ export const useCategoryStore = defineStore('categoryStore', {
       const url = useRuntimeConfig().public.apiBase + '/category'
 
       return await useServerApiFetch(url, query).then(({data, error}) => {
+
         if(data) {
           this.allState.data = data.data
           this.allState.meta = data.meta
@@ -40,18 +41,11 @@ export const useCategoryStore = defineStore('categoryStore', {
       const url = `${useRuntimeConfig().public.apiBase}/category/${slug}`
 
       return await useServerApiFetch(url).then(({data, error}) => {
-
-        console.log('show', data)
         
         if(data && data.data) {
-          //this.categoryState = data
           return data.data
         }
       })
-
-      // $fetch(runtimeConfig.public.apiBase + '/categories/' + slug)
-      //   .then(({ data }) => (this.categoryState = data))
-      //   .catch((error) => console.log(error));
     },
   },
 })

@@ -20,7 +20,7 @@ class ProductSmallResource extends \Backpack\Store\app\Http\Resources\BaseResour
         'oldPrice' => $this->old_price,
         'rating' => $this->rating,
         'reviews_rating_detailes' => $this->reviewsRatingDetailes,
-        'image' => $this->image,
+        'images' => $this->getImages(2),
         'inStock' => $this->in_stock,
       ];
     }

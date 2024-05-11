@@ -2,7 +2,8 @@
 @import './assets/scss/mixins';
 
 .card {
-  display: grid;
+  display: inline-block;
+  width: 100%;
   
   &-content {
     display: grid;
@@ -43,21 +44,5 @@
   &-name {
     font-weight: 500;
     white-space: nowrap
-  }
-}
-
-.social-link {
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 5px;
-  align-items: center;
-  white-space: nowrap;
-
-  &-icon {
-    font-size: 20px;
-  }
-
-  &-text {
-    font-size: 14px;
   }
 }

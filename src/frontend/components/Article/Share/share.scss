@@ -37,10 +37,6 @@
   width: 60px;
   border-radius: $radius;
   transition: background $speed;
-
-  &:hover {
-    background-color: $color-6;
-  }
 }
 
 .copy-bg {

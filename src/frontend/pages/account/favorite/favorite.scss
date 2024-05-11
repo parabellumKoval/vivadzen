@@ -1,0 +1,46 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+
+
+.products-wrapper {
+  display: grid;
+  grid-template-columns: minmax(min-content, 1fr);
+  grid-gap: 20px;
+  transition: filter $speed;
+
+  @include _tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include _desktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  :deep(.card) {
+    background: #fff;
+  }
+
+  &.pending {
+    filter: blur(3px);
+  }
+}
+
+
+.load-more-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  grid-gap: 25px;
+  margin-top: 40px;
+
+  @include _desktop {
+    flex-direction: row;
+  }
+}
+
+.pagi {
+  @include _desktop {
+    margin: 0 0 0 auto;
+  }
+}

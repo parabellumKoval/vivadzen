@@ -160,9 +160,9 @@ return [
       'resource' => [
         'tiny' => 'Backpack\Store\app\Http\Resources\CategoryTinyResource',
 
-        'small' => 'Backpack\Store\app\Http\Resources\CategorySmallResource',
+        'small' => 'App\Http\Resources\CategorySmallResource',
 
-        'large' => 'Backpack\Store\app\Http\Resources\CategoryLargeResource',
+        'large' => 'App\Http\Resources\CategoryLargeResource',
       ]
     ],
 

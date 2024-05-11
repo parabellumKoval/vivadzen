@@ -1,6 +1,7 @@
 <script setup>
 import { useCategoryStore } from '~/store/category'
 
+const {t} = useI18n()
 const categories = computed(() => {
   return useCategoryStore().list
 })
@@ -8,8 +9,7 @@ const categories = computed(() => {
 
 const getPhotoSrc = (image) => {
   if(image?.src) {
-    return image.src
-    // return '/server/' + image.src
+    return '/server/images/categories/' + image.src
   } else {
     return null
   }
@@ -19,10 +19,11 @@ const getPhotoSrc = (image) => {
 </script>
 
 <style src="./category.scss" lang="scss" scoped></style>
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <section class="main-section">
-    <div class="section-title">категории</div>
+    <div class="section-title">{{ t('categories') }}</div>
     <div class="category-wrapper">
       <NuxtLink
         v-for="category in categories"
@@ -45,13 +46,14 @@ const getPhotoSrc = (image) => {
           quality = "60"
           loading = "lazy"
           fit="outside"
+          placeholder="./images/noimage.png"
           class="category-image"
         >
         </nuxt-img>
         <IconCSS name="ph:caret-right-fill" class="category-icon"></IconCSS>
         <div class="category-content">
           <div class="category-name">{{ category.name }}</div>
-          <div class="category-children">Подкатегорий: {{ category.children.length }}</div>
+          <div class="category-children">{{ t('subcats') }}: {{ category.children.length }}</div>
         </div>
       </NuxtLink>
     </div>

@@ -17,6 +17,11 @@ const googleHandler = async () => {
   useAppPersistStore().setFrom('login')
   useAuthStore().oAuth('google', useRoute().path)
 }
+
+const facebookHandler = async () => {
+  useAppPersistStore().setFrom('login')
+  useAuthStore().oAuth('facebook', useRoute().path)
+}
 </script>
 
 <style src="./../auth.scss" lang="scss" scoped></style>
@@ -31,7 +36,7 @@ const googleHandler = async () => {
           <span class="text">Войти с помощью Google</span>
         </button>
 
-        <button class="button facebook-bg">
+        <button @click="facebookHandler" class="button facebook-bg">
           <IconCSS name="iconoir:facebook" class="icon"></IconCSS>
           <span class="text">Войти с помощью Facebook</span>
         </button>

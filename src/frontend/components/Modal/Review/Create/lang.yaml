@@ -1,18 +1,28 @@
 ru:
   new_review: Новый отзыв
   set_rating: Оцените товар от 1 до 5
+  set_rating_shop: Оцените магазин Djini в целом от 1 до 5
   w_review: Напишите ваш отзыв
   w_advantages: Опишите достоинства товара
   w_flaws: Опишите недостатки товара
+  w_link: Оставьте ссылку на Facebook или Instagram 
+  link: Например https://facebook.com/my_account
+  link_desc_1: Добавьте ссылку на вашу действующую страницу в Facebook или Instagram чтобы показать другим пользвателям, что ваш отзыв настоящий.
+  link_desc_2: После модерации вашего отзыва со ссылкой вы получите купон со скидкой 5% для покупок в магазине Djini.com.ua.
   your_review: Ваш отзыв
   advantages: Достоинства
   flaws: Недостатки
 uk:
   new_review: Новый отзыв
   set_rating: Оцените товар от 1 до 5
+  set_rating_shop: Оцените магазин Djini в целом от 1 до 5
   w_review: Напишите ваш отзыв
   w_advantages: Опишите достоинства товара
   w_flaws: Опишите недостатки товара
+  w_link: Оставьте ссылку на Facebook или Instagram 
+  link: Например https://facebook.com/my_account
+  link_desc_1: Добавьте ссылку на вашу действующую страницу в Facebook или Instagram чтобы показать другим пользвателям, что ваш отзыв настоящий.
+  link_desc_2: После модерации вашего отзыва со ссылкой вы получите купон со скидкой 5% для покупок в магазине Djini.com.ua. 
   your_review: Ваш отзыв
   advantages: Достоинства
   flaws: Недостатки

@@ -35,6 +35,15 @@ label,
   pointer-events: auto; 
 }
 
+*[button] {
+  transition: transform $speed-fast;
+
+  &:active {
+    transition: transform 0s;
+    transform: scale(0.95);
+  }
+}
+
 *[scrollable],
 *[pointer] {
   pointer-events: auto;
@@ -231,22 +240,47 @@ img {
 .google-bg {
   background: $color-google;
   color: $color-8;
+  transition: background $speed;
+
+  &:hover {
+    background: scale-color($color-google, $lightness: 20%);
+  }
 }
 .facebook-bg {
   background: $color-facebook;
   color: $color-8;
+  transition: background $speed;
+
+  &:hover {
+    background: scale-color($color-facebook, $lightness: 20%);
+  }
 }
 .x-bg {
   background: $color-0;
   color: $color-8;
+  transition: background $speed;
+
+  &:hover {
+    background: scale-color($color-0, $lightness: 20%);
+  }
 }
 .instagram-bg {
   background: $color-instagram;
   color: $color-8;
+  transition: background $speed;
+
+  &:hover {
+    background: scale-color($color-instagram, $lightness: 20%);
+  }
 }
 .tiktok-bg {
   background: $color-tiktok;
   color: $color-8;
+  transition: background $speed;
+
+  &:hover {
+    background: scale-color($color-tiktok, $lightness: 20%);
+  }
 }
 
 

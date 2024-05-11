@@ -16,7 +16,6 @@
   }
 
   &-content {
-
   }
 
   &-image {
@@ -93,18 +92,34 @@
   }
 
   &-text {
+    &:deep(img) {
+      width: 100% !important;
+      object-fit: contain;
+      max-height: calc(50vh);
+      margin: 30px 0;
 
+      @include _desktop {
+        max-height: calc(100vh - 300px);
+        margin: 70px 0
+      }
+    }
   }
 
   &-aside {
     height: min-content;
+    max-height: calc(100vh - 130px);
     padding: 20px;
+    overflow-y: scroll;
     border-radius: $radius;
     border: 2px solid $color-6;
     background: $color-8;
     order:1;
 
+    @include _scrollbar;
+
     @include _desktop {
+      position: sticky;
+      top: 100px;
       padding: 30px;
       order: 2;
     }
@@ -122,12 +137,28 @@
       padding: 0 0 0 20px;
     }
 
+    &-item {
+      &.H3 {
+        list-style-type: circle;
+        margin: 0 0 0 15px;
+      }
+    }
+
     &-link {
       line-height: 135%;
-      color: $color-3;
+      color: $color-0;
+      text-align: left;
 
       &:hover {
         color: $color-green;
+      }
+
+      &.H3 {
+        color: $color-2;
+
+        &:hover {
+          color: $color-green;
+        }
       }
     }
   }

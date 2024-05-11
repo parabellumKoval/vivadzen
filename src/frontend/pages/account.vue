@@ -53,25 +53,31 @@ const menus = computed(() => {
         link: '/account/promocodes'
       },{
         id: 3,
+        title: t('title.account.favorite'),
+        slug: 'favorite',
+        icon: 'iconoir:heart',
+        link: '/account/favorite'
+      }, {
+        id: 4,
         title: t('title.account.referrals'),
         slug: 'network',
         icon: 'iconoir:user-crown',
         link: '/account/network/common'
       },{
-        id: 4,
+        id: 5,
         title: t('title.account.settings'),
         slug: 'settings',
         icon: 'iconoir:settings',
         link: '/account/settings'
       },{
-        id: 5,
+        id: 6,
         title: t('button.logout'),
         icon: 'iconoir:log-out',
         callback: logoutConfirmHandler
       }
     ],[
       {
-        id: 6,
+        id: 7,
         title: 'Поддержка',
         slug: 'support',
         icon: 'iconoir:headset-help',

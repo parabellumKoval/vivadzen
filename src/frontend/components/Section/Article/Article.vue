@@ -1,8 +1,13 @@
 <script setup>
-import {useArticleFaker} from '~/composables/fakers/useArticleFaker.ts'
+import {useArticleStore} from '~/store/article'
 
-const articles = computed(() => {
-  return useArticleFaker()(4)
+const {t} = useI18n()
+const articles = ref([])
+
+useAsyncData('get-4-articles', () => useArticleStore().index({per_page: 4})).then(({data, error}) => {
+  if(data.value) {
+    articles.value = data.value.data
+  }
 })
 </script>
 
@@ -10,8 +15,8 @@ const articles = computed(() => {
 
 <template>
   <section class="main-section">
-    <div class="section-title">Статьи</div>
-    <div class="articles-wrapper">
+    <div class="section-title">{{ t('title.articles') }}</div>
+    <div v-if="articles" class="articles-wrapper">
       <article-card v-for="article in articles" :key="article.id" :item="article"></article-card>
     </div>
   </section>

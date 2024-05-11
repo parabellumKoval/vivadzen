@@ -193,13 +193,7 @@
     grid-auto-columns: 100%;
   }
 
-  &-html {
-    line-height: 165%;
-
-    :deep(p) {
-      margin-bottom: 25px;
-    }
-  }
+  &-html {}
 }
 
 .params {

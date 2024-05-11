@@ -22,10 +22,15 @@
     }
 
     &.disabled {
+      .checkbox-item-btn {
+        pointer-events: none;
+      }
+
       .checkbox-name,
       .checkbox-count {
         color: $color-4;
       }
+
       .checkbox-input {
         opacity: 0.3;
       }
@@ -44,18 +49,33 @@
 
   &-content {
     display: grid;
-    grid-template-columns: max-content min-content;
+    grid-template-columns: minmax(min-content, max-content) min-content;
     grid-gap: 10px;
     align-items: center;
+    text-align: left;
   }
 
-  &-name {}
+  &-name {
+    font-size: 16px;
+    line-height: 90%;
+  }
 
   &-count {
+    display: flex;
+    align-items: center;
     margin-top: 2px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 100;
     color: $color-3;
+
+    &.plus {
+      color: $color-green;
+
+      &:before {
+        content: '+';
+        font-size: 10px;
+      }
+    }
   }
 
   &-input {

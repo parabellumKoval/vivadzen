@@ -19,10 +19,7 @@ class ProductTinyResource extends \Backpack\Store\app\Http\Resources\BaseResourc
         'slug' => $this->slug,
         'price' => $this->price,
         'oldPrice' => $this->old_price,
-        'inStock' => $this->in_stock,
-        'attrs' => $this->attrs && $this->attrs->count()? 
-          self::$resources['attribute']['small']::collection($this->attrs): 
-            null,
+        'inStock' => $this->in_stock
       ];
     }
 }

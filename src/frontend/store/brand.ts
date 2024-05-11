@@ -4,6 +4,19 @@ export const useBrandStore = defineStore('brandStore', {
   getters: {},
 
   actions: {
+    async filter(params: Object) {
+      const url = useRuntimeConfig().public.apiBase + '/product/brands'
+
+      return await useServerApiFetch(url, params).then(({data, error}) => {
+        if(data.data) {
+          return data.data
+        }
+
+        if(error)
+          throw error
+      })
+    },
+
     async index(params: Object) {
       const url = useRuntimeConfig().public.apiBase + '/brand'
 

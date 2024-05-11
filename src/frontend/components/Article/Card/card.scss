@@ -27,7 +27,7 @@
   &-image {
     max-width: initial;
     width: calc(100% + 40px);
-    height: 160px;
+    height: 220px;
     margin: -20px -20px 20px -20px;
     object-fit: cover;
     object-position: center;
@@ -43,10 +43,9 @@
 
   &-title {
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    height: 80px;
     font-size: 14px;
     line-height: 140%;
     color: $color-1;
@@ -58,7 +57,6 @@
     }
     
     @include _desktop {
-      height: 140px;
       font-size: 20px;
     }
   }

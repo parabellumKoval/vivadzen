@@ -33,5 +33,18 @@
   &-content {
     line-height: 160%;
     color: $color-2;
+
+    &-wrapper {
+      max-height: 80px;
+      overflow: hidden;
+
+      &.active {
+        max-height: initial;
+      }
+    }
+  }
+
+  .more-btn {
+    margin-top: 5px;
   }
 }

@@ -5,28 +5,28 @@ export const useMenu = () => {
     return [
       {
         id: 1,
-        link: '/o-nas',
-        title: 'Договор публичной оферты'
+        link: '/agreement',
+        title: t('title.agreement')
       },{
         id: 7,
-        link: '/science',
-        title: 'Условия возврата товара'
+        link: '/returns',
+        title: t('title.returns')
       },{
         id: 8,
-        link: '/certification',
-        title: 'Вопрос / Ответ'
+        link: '/faq',
+        title: t('title.qa')
       },{
         id: 2,
         link: '/guarantees',
-        title: t('crumbs.guarantees')
+        title: t('title.guarantees')
       },{
         id: 3,
         link: '/delivery',
-        title: t('crumbs.delivery')
+        title: t('title.delivery')
       },{
         id: 4,
         link: '/payment',
-        title: t('crumbs.payment')
+        title: t('title.payment')
       }
     ]
   })
@@ -36,27 +36,31 @@ export const useMenu = () => {
       {
         id: 1,
         link: '/o-nas',
-        title: t('crumbs.o-nas')
+        title: t('title.o-nas')
       },{
         id: 2,
         link: '/news',
-        title: 'Новости'
+        title: t('title.news')
       },{
         id: 3,
         link: '/reviews/products',
-        title: 'Отзывы'
+        title: t('title.reviews')
       },{
         id: 4,
-        link: '/blog',
-        title: 'Блог'
+        link: '/brands',
+        title: t('title.brands')
       },{
         id: 5,
-        link: '/sales',
-        title: 'Акции'
+        link: '/blog',
+        title: t('title.blog')
       },{
         id: 6,
+        link: '/sales',
+        title: t('title.sales')
+      },{
+        id: 7,
         link: '/contacts',
-        title: 'Контакты'
+        title: t('title.contacts')
       }
     ]
   })

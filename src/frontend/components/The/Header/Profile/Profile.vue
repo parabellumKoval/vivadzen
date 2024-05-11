@@ -25,6 +25,7 @@ const showAuthHandler = () => {
 </script>
 
 <style src="./profile.scss" lang="scss" scoped />
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <div>
@@ -37,7 +38,7 @@ const showAuthHandler = () => {
         format = "avif"
         fit = "cover"
         quality = "100"
-        class = "icon-image"
+        class = "avatar-image"
       />
       <span class="hint">{{ t('profile') }}</span>
     </button>
@@ -48,10 +49,3 @@ const showAuthHandler = () => {
     </button>
   </div>
 </template>
-
-<i18n lang="yaml">
-uk:
-  profile: "Профіль"
-ru:
-  profile: "Профиль"
-</i18n>

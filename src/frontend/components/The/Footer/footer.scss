@@ -104,17 +104,17 @@
       height: 40px;
     }
 
-    &.instagram {
-      background: $color-instagram;
-    }
+    // &.instagram {
+    //   background: $color-instagram;
+    // }
 
-    &.facebook {
-      background: $color-facebook;
-    }
+    // &.facebook {
+    //   background: $color-facebook;
+    // }
 
-    &.tiktok {
-      background: $color-tiktok;
-    }
+    // &.tiktok {
+    //   background: $color-tiktok;
+    // }
   }
 
   &-icon {
@@ -234,6 +234,7 @@
       border: 1px solid $color-green;
       background: #3C3C3C;
       text-align: center;
+      color: $color-8;
     }
   }
 

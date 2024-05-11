@@ -73,7 +73,7 @@ await useAsyncData(`brand-${slug.value}`, () => useBrandStore().show(slug.value)
 </script>
 
 <style src='./brand.scss' lang='scss' scoped></style>
-<!-- <i18n src='' lang='yaml'></i18n> -->
+<i18n src='./lang.yaml' lang='yaml'></i18n>
 
 <template>
   <NuxtLayout
@@ -85,7 +85,7 @@ await useAsyncData(`brand-${slug.value}`, () => useBrandStore().show(slug.value)
     :meta="meta"
   >
     <template #title>
-      Продукция компании {{ brand.name }}
+      {{ t('company_prod') }} {{ brand.name }}
     </template>
 
     <template #header>

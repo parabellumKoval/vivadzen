@@ -1,5 +1,4 @@
 
-import type { localePath } from 'vue-i18n-routing';
 <script setup>
 const props = defineProps({
   item: {
@@ -7,10 +6,12 @@ const props = defineProps({
   }
 })
 
+const {t} = useI18n()
+
 const photo = computed(() => {
-  if(props.item.image?.src) {
-    return props.item.image.src
-    // return '/server/' + props.item.image.src
+  if(props.item.image) {
+    // return props.item.image.src
+    return '/server/' + props.item.image
   } else {
     return null
   }
@@ -31,9 +32,10 @@ const photo = computed(() => {
       height="260"
       sizes = "mobile:100vw tablet:230px desktop:300px"
       format = "webp"
-      quality = "60"
+      quality = "40"
       loading = "lazy"
       fit="outside"
+      placeholder="./images/noimage.png"
       class="article-image"
     />
 
@@ -41,7 +43,7 @@ const photo = computed(() => {
 
     <div class="article-time">
       <IconCSS name="iconoir:clock" size="16" class="icon"></IconCSS>
-      <span class="label">{{ item.time }} мин. чтения</span>
+      <span v-if="item.time" class="label">{{ parseFloat(item.time).toFixed(0) }} {{ t('label.min_read') }}</span>
     </div>
   </NuxtLink>
 </template>

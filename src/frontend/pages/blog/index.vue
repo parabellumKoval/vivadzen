@@ -1,5 +1,5 @@
 <script setup>
-import {useArticleFaker} from '~/composables/fakers/useArticleFaker.ts'
+import {useArticleStore} from '~/store/article'
 
 const {t} = useI18n()
 
@@ -13,13 +13,43 @@ const breadcrumbs = [
   }
 ]
 
+const articles = ref([])
+const articlesMeta = ref(null)
+const isLoading = ref(false)
+
 // COMPUTEDS
-const articles = computed(() => {
-  return useArticleFaker()(8)
-})
 // METHODS
 // HANDLERS
+const loadmoreHandler = async () => {
+  let nextPage = articlesMeta.value.current_page + 1
+  isLoading.value = true
+
+  await useArticleStore().index({per_page: 12, page: nextPage}).then(({data, meta}) => {
+
+    if(data) {
+      articles.value = [
+        ...articles.value,
+        ...data
+      ]
+    }
+
+    if(meta) {
+      articlesMeta.value = meta
+    }
+
+  }).finally(() => {
+    isLoading.value = false
+  })
+}
+
 // WATCHERS
+
+useAsyncData('get-4-articles', () => useArticleStore().index({per_page: 12})).then(({data, error}) => {
+  if(data.value) {
+    articles.value = data.value.data
+    articlesMeta.value = data.value.meta
+  }
+})
 </script>
 
 <style src='./blog.scss' lang='scss' scoped></style>
@@ -30,11 +60,18 @@ const articles = computed(() => {
     <div class="container">
       <the-breadcrumbs :crumbs="breadcrumbs"></the-breadcrumbs>
 
-      <div class="title-common">Блог</div>
+      <div class="title-common">{{ t('title.blog') }}</div>
 
-      <div class="articles-wrapper">
+      <div v-if="articles" class="articles-wrapper">
         <article-card v-for="article in articles" :key="article.id" :item="article"></article-card>
       </div>
+
+      <div v-if="articlesMeta && articlesMeta.current_page !== articlesMeta.last_page" @click="loadmoreHandler" class="load-more-wrapper">
+        <button :class="{loading: isLoading}" class="button secondary can-loading">
+          <span>{{ t('button.load_more') }}</span>
+        </button>
+      </div>
+
     </div>
   </div>
 </template>

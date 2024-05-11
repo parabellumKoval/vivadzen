@@ -2,6 +2,7 @@
 import { useCategoryStore } from '~/store/category'
 import { useAuthStore } from '~~/store/auth';
 import { useAppPersistStore } from '~/store/appPersist';
+import { useFavoritesStore } from '~/store/favorites';
 
 const {t, locale} = useI18n()
 const route = useRoute()
@@ -31,6 +32,7 @@ auth.onAuthStateChange((event, session) => {
   }else if(event === 'INITIAL_SESSION'){
     if(session) {
       useAuthStore().setUserFromSession(session.user)
+      // useFavoritesStore().getIds({user_id: user?.value?.id})
       
       if(useAppPersistStore().from === 'login') {
         useNoty().setNoty({
@@ -43,6 +45,8 @@ auth.onAuthStateChange((event, session) => {
     }
   }else if(event === 'SIGNED_IN') {
     useAuthStore().setUserFromSession(session.user)
+    // useFavoritesStore().getIds({user_id: user?.value?.id})
+    // getFavoriteIds()
   }else if(event === 'PASSWORD_RECOVERY') {
   }
 })
@@ -52,9 +56,18 @@ const user = computed(() => {
 })
 
 // HANDLERS
-const closeMenuMobileHandler = () => {
-  useModalStore().close('menuMobile')
-}
+// const closeMenuMobileHandler = () => {
+//   useModalStore().close('menuMobile')
+// }
+
+// METHODS
+
+// const getFavoriteIds = async () => {
+//   if(!user || !user.value?.id)
+//     return
+
+//   await useAsyncData('favorites', () => useFavoritesStore().getIds({user_id: user.value.id}))
+// }
 
 // WATCHERS
 watch(locale, (v) => {
@@ -71,6 +84,9 @@ useSchemaOrg([
   }),
   defineWebPage(),
 ])
+
+// await useAsyncData('favorites', () => useFavoritesStore().getIds({user_id: user?.value?.id}))
+// await getFavoriteIds()
 </script>
 
 <style src="~/assets/scss/layout-default.scss" lang="scss" scoped />
@@ -103,9 +119,10 @@ useSchemaOrg([
       
         <lazy-the-footer></lazy-the-footer>
 
+        <comparison-btn></comparison-btn>
 
         <modal-transition :is-show="useModal().show" mode="out-in">
-            <component :is="useModal().active.component"></component>
+          <component :is="useModal().active.component"></component>
         </modal-transition>
         
 

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\MigrateDbController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::redirect('/', '/admin', 301);
+
+Route::get('/html', function(){
+  Artisan::call('db-copy:normalize-product-content');
+});
+
+Route::get('/migr', [MigrateDbController::class, 'all']);
 
 Route::get('/mailable', function () {
   // $feedback = Backpack\Feedback\app\Models\Feedback::find(40);

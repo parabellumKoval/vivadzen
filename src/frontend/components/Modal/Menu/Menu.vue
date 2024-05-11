@@ -26,13 +26,13 @@ const menu = computed(() => {
             <IconCSS name="iconoir:user" size="24"></IconCSS>
           </div>
           <div class="mm-header-user-btns">
-            <button class="mm-header-btn">Вход</button>
+            <button class="mm-header-btn">{{ t('label.login') }}</button>
             <div class="mm-header-delimiter"></div>
-            <button class="mm-header-btn">Регистрация</button>
+            <button class="mm-header-btn">{{ t('label.label') }}</button>
           </div>
         </div>
         <div class="langs">
-          <span class="langs-label">Язык</span>
+          <span class="langs-label">{{ t('label.lang') }}</span>
           <the-header-languages class="langs-switcher"></the-header-languages>
         </div>
       </div>
@@ -40,7 +40,7 @@ const menu = computed(() => {
         <the-header-catalog class="mm-content-catalog"></the-header-catalog>
 
         <div class="menu menu-1">
-          <div class="menu-label">Гид по покупке</div>
+          <div class="menu-label">{{ t('label.guide') }}</div>
           <ul class="menu-ul">
             <li v-for="item in menu.customer" :key="item.id">
               <NuxtLink :to="localePath(item.link)" class="menu-link">{{ item.title }}</NuxtLink>
@@ -49,7 +49,7 @@ const menu = computed(() => {
         </div>
 
         <div class="menu menu-2">
-          <div class="menu-label">Общая информация</div>
+          <div class="menu-label">{{ t('label.common_info') }}</div>
           <ul class="menu-ul">
             <li v-for="item in menu.info" :key="item.id">
               <NuxtLink :to="localePath(item.link)" class="menu-link">{{ item.title }}</NuxtLink>

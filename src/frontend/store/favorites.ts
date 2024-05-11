@@ -36,8 +36,12 @@ export const useFavoritesStore = defineStore('favoritesStore', {
       })
     },
 
-    async getIds(query: string) {
+    async getIds(query: Object) {
+      if(!query?.user_id)
+          return
+
       const url = useRuntimeConfig().public.apiBase + '/favorites/ids'
+
       return await useServerApiFetch(url, query).then(({ data }) => {
         if(!data)
           return

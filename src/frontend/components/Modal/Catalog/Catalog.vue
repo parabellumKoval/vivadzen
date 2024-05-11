@@ -32,8 +32,7 @@ const sub = computed(() => {
 
 const getPhotoSrc = (image) => {
   if(image?.src) {
-    return image.src
-    // return '/server/' + image.src
+    return '/server/images/categories/' + image.src
   } else {
     return null
   }
@@ -77,6 +76,7 @@ if(useDevice().isDesktop) {
             quality = "60"
             loading = "lazy"
             fit="outside"
+            placeholder="./images/noimage.png"
             class="category-image"
           >
           </nuxt-img>
@@ -99,6 +99,7 @@ if(useDevice().isDesktop) {
             quality = "60"
             loading = "lazy"
             fit="outside"
+            placeholder="./images/noimage.png"
             class="category-image"
           >
           </nuxt-img>

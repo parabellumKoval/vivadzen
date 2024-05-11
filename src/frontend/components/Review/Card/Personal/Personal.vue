@@ -6,39 +6,13 @@ const props = defineProps({
   }
 })
 
+// COMPUTEDS
 const photo = computed(() => {
   return props.item?.author?.photo || '/images/account.png'
 })
 
 const link = computed(() => {
-  let url = null
-  let link = {
-    type: null,
-    href: props.item?.extras?.link || null
-  }
-
-
-  if(!link.href) {
-    return link;
-  }
-
-  // type = link.match('^(?:https?://)?(?:www.)?(\w*)\/')
-
-  try {
-    url = new URL(link.href)
-  }catch(e) {
-    console.log(e)
-  }
-
-  if(url.host.match('(?:www.)?facebook.com')){ 
-    link.type = 'facebook'
-  }else if(url.host.match('(?:www.)?instagram.com')) {
-    link.type = 'instagram'
-  }else {
-    link.type = null
-  }
-  
-  return link
+  return props.item?.extras?.link || null
 })
 </script>
 
@@ -70,18 +44,7 @@ const link = computed(() => {
       </nuxt-img>
       <div>
         <div class="author-name">{{ item.author.name }}</div>
-        <div v-if="link.href" class="author-source">
-          <a
-            :href="link.href"
-            :class="link.type + '-link'"
-            target="_blank"
-            rel="nofollow"
-            class="social-link"
-          >
-            <IconCSS :name="'basil:' + link.type +'-outline'" class="social-link-icon"></IconCSS>
-            <span class="social-link-text">{{ link.type }} автора</span>
-          </a>
-        </div>
+        <review-social v-if="link" :source="link" class="author-source"></review-social>
       </div>
     </div>
   </div>

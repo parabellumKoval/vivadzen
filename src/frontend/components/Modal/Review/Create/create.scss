@@ -1,8 +1,20 @@
 @import './assets/scss/vars';
 @import './assets/scss/mixins';
 
+.tab-wrapper {
+  width: calc(100% + 100px) !important;
+  padding: 0 50px !important;
+  margin: 0 -50px 25px -50px;
+}
+
 .modal-wrapper {
   width: 100%;
+}
+
+.product-wrapper {
+  margin: 0 0 25px 0;
+  padding: 0 0 25px 0;
+  border-bottom: 1px solid $color-5;
 }
 
 .form {
@@ -10,14 +22,27 @@
     display: grid;
     grid-auto-flow: row;
     grid-gap: 25px;
-    margin: 25px 0 0 0;
-    padding: 25px 0 0 0;
-    border-top: 1px solid $color-5;
   }
 
   &-label {
     margin-bottom: 10px;
     font-size: 14px;
+  }
+
+  &-hint {
+    margin-top: 15px;
+    font-size: 14px;
+    color: $color-3;
+    line-height: 135%;
+  }
+
+  &-list {
+    padding: 0 0 0 15px;
+    list-style-type: square;
+
+    li {
+      padding: 0 0 10px 0;
+    }
   }
 }
 

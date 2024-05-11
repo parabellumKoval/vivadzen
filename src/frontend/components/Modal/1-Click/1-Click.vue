@@ -1,7 +1,14 @@
 <script setup>
+import { useFeedbackStore } from '~~/store/feedback';
 const { t } = useI18n()
 
 const form = ref({
+  type: '1_click_buy',
+  phone: null,
+  text: null
+})
+
+const errors = ref({
   phone: null,
   text: null
 })
@@ -10,6 +17,67 @@ const form = ref({
 const product = computed(() => {
   return useModal().active.data
 })
+
+// METHODS
+// const setProductInfo = () => {
+//   form.value.extras = {...product.value}
+// }
+
+const resetForm = () => {
+  form.value.phone = null
+  form.value.text = null
+  // form.value.extras = null
+}
+
+const resetErrors = () => {
+  errors.value.phone = null
+  errors.value.text = null
+}
+
+const getFormData = () => {
+  let formData = {...form.value}
+  formData.text = 'Товар: ' + product.value.name + '. Комментарий: ' + form.value.text
+
+  return formData
+}
+
+// HANDLERS
+const buyHandler = () => {
+  let formData = getFormData()
+
+  useFeedbackStore().create(formData).then(({data, error}) => {
+
+    if(data) {
+      useNoty().setNoty({
+        title: t('noty.1_click.title'),
+        content: t('noty.1_click.sent'),
+        type: 'success'
+      }, 5000)
+
+      resetForm()
+      resetErrors()
+      useModal().close()
+    }
+
+    if(error) {
+      throw error
+    }
+
+  }).catch((e) => {
+
+    useNoty().setNoty({
+      title: t('noty.1_click.fail'),
+      content: t('error.check_fields'),
+      type: 'error'
+    }, 5000)
+
+    errors.value = e
+  })
+
+}
+
+//
+// setProductInfo()
 </script>
 
 <style src="./1-click.scss" lang="scss" scoped></style>
@@ -27,15 +95,25 @@ const product = computed(() => {
         
         <div>
           <div class="form-label">{{ t('w_phone') }}</div>
-          <form-text v-model="form.phone" :placeholder="t('phone')"></form-text>
+          <form-text
+            v-model="form.phone"
+            :error="errors?.phone"
+            @input="() => errors.phone = null"
+            :placeholder="t('form.enter.phone')"
+          ></form-text>
         </div>
 
         <div>
           <div class="form-label">{{ t('w_comment') }}</div>
-          <form-textarea v-model="form.text" :placeholder="t('comment')"></form-textarea>
+          <form-textarea
+            v-model="form.text"
+            :error="errors?.text"
+            @input="() => errors.text = null"
+            :placeholder="t('form.enter.comment')"
+          ></form-textarea>
         </div>
 
-        <button class="button primary send-btn">{{ t('button.send') }}</button>
+        <button @click="buyHandler" class="button primary send-btn">{{ t('button.send') }}</button>
       </div>
     </div>
   </modal-wrapper>

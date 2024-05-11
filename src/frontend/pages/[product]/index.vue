@@ -1,10 +1,7 @@
 <script setup>
-// import {useProductFaker} from '~/composables/fakers/useProductFaker.ts'
 import {useSchema} from '~/composables/product/useSchema.ts'
 import {useProductStore} from '~/store/product'
 import {useReviewStore} from '~/store/review'
-// import {useAuthStore} from '~/store/auth'
-import {useFavoritesStore} from '~/store/favorites';
 
 const {t} = useI18n()
 const route = useRoute()
@@ -29,10 +26,6 @@ const category = computed(() => {
   }
 })
 
-const images = computed(() => {
-  return product.value?.images
-})
-
 const slug = computed(() => {
   return route.params.product
 })
@@ -43,12 +36,21 @@ const productMicro = computed(() => {
     code: product.value.code,
     name: product.value.name,
     slug: product.value.slug,
-    image: product.value.images[0],
+    image: product.value.images?.length? product.value.images[0]: null,
     price: product.value.price,
     oldPrice: product.value.oldPrice,
     inStock: product.value.inStock,
   }
 })
+
+const ratingCount = computed(() => {
+  return product.value.reviews_rating_detailes?.rating_count || 0
+})
+
+const reviewsCount = computed(() => {
+  return product.value.reviews_rating_detailes?.reviews_count || 0
+})
+
 
 // const getReviewQuery = (productId) => {
 //   const type = String.raw`Backpack\Store\app\Models\Product`;
@@ -73,35 +75,27 @@ const reviewQuery = computed(() => {
 //   return currentTab.value === 0? reviews.value.slice(0, 3): reviews.value
 // })
 
-const isFavorite = computed(() => {
-  const fi = useFavoritesStore().ids
-  
-  if(fi && fi.length)
-    return fi.includes(product.value.id)
-  
-  return false
-})
 
 const tabs = computed(() => {
   const list = [
     {
       id: 1,
-      name: 'Описание'
+      name: t('label.desc')
     },{
       id: 2,
-      name: 'Характеристики'
+      name: t('label.props')
     },{
-      id: 2,
-      name: 'Отзывы ' + (reviewsMeta.value.total? `<span class="budge green">${reviewsMeta.value.total}</span>`: '')
+      id: 3,
+      name: t('title.reviews') + ' ' + (reviewsMeta.value.total? `<span class="budge green">${reviewsMeta.value.total}</span>`: '')
     },{
-      id: 2,
-      name: 'Доставка'
+      id: 4,
+      name: t('title.delivery')
     },{
-      id: 2,
-      name: 'Оплата'
+      id: 5,
+      name: t('title.payment')
     },{
-      id: 2,
-      name: 'Гарантии'
+      id: 6,
+      name: t('title.guarantees')
     }
   ]
 
@@ -133,24 +127,6 @@ const loadReviewsHandler = async (page) => {
   })
 }
 
-const toFavoriteHandler = () => {
-  if(!auth.value || !user.value) {
-    console.log('NEED TO OPEN SING IN MODAL')
-    // useModalStore().open('signInSocial')
-  }else {
-    useFavoritesStore().sync({
-      user_id: user.value.id,
-      product_id: product.value.id
-    }).then((r) => {
-      if(r) {
-        // useNoty().setNoty(t('noty.favorites_success'))
-      }
-    }).catch((e) => {
-      // useNoty().setNoty(t('noty.favorites_error'))
-    })
-  }
-}
-
 // METHODS
 const scrollToContent = () => {
   var headerOffset = 180;
@@ -178,7 +154,7 @@ const setSeo = () => {
 const setCrumbs = () => {
   breadcrumbs.value = [
     {
-      name: t('crumbs.home'),
+      name: t('title.home'),
       item: '/'
     },{
       name: category?.value?.name,
@@ -189,8 +165,6 @@ const setCrumbs = () => {
     }
   ]
 }
-
-
 
 const getReviews = async (query, refresh) => {
   isReviewsLoading.value = true
@@ -237,9 +211,19 @@ await Promise.all([
   useSchema(product.value, reviews?.value?.reviews)
   setSeo()
 })
+
+// WATCHERS
+watch(() => route.hash, (v) => {
+  if(v === '#reviews') {
+    tab.value = 2
+  }
+}, {
+  immediate: true
+})
 </script>
 
 <style src="./product.scss" lang="scss" scoped></style>
+<style src="~/assets/scss/_rich-text.scss" lang="scss" scoped></style>
 <i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
@@ -249,20 +233,27 @@ await Promise.all([
 
       <div class="header">
         <span class="name title-common">{{ product.name }}</span>
-        <span class="code">
-          <span class="label">{{ t('code') }}:</span>
+        
+        <span v-if="product.code" class="code">
+          <span class="label">{{ t('label.product_code') }}:</span>
           <span class="value">{{ product.code }}</span>
         </span>
+
         <div class="header-reviews">
           <simple-stars :amount="product.rating|| 0" desktop="large" mobile="large"></simple-stars>
           <div class="rating-label">
-            {{ t('rating', {rating: product.reviews_rating_detailes?.rating_count || 0, reviews: product.reviews_rating_detailes?.reviews_count || 0 }) }}
+            {{ t('messages.rates_reviews', {rates: ratingCount, reviews: reviewsCount }) }}
           </div>
-          <simple-button-text text="Оставить отзыв" :callback="reviewHandler" class="header-reviews-btn"></simple-button-text>
+          <simple-button-text
+            :text="t('button.leave_review')"
+            :callback="reviewHandler"
+            class="header-reviews-btn"
+          ></simple-button-text>
         </div>
+
         <div class="right">
-          <simple-button-text text="Добавить к сравнению" icon="ph:scales-light" :callback="reviewHandler"></simple-button-text>
-          <simple-button-text text="В избранное" icon="iconoir:heart" :callback="reviewHandler"></simple-button-text>
+          <product-comparison :product-id="product.id"></product-comparison>
+          <product-favorite :product-id="product.id"></product-favorite>
         </div>
       </div>
     </div>
@@ -278,16 +269,18 @@ await Promise.all([
             <template v-if="tab === 0">
               <div class="content-common">
                 <product-gallery :items="product.images" class="gallery-wrapper"></product-gallery>
-                <div v-if="$device.isDesktop" class="content-html" v-html="product.content"></div>
+                <div v-if="$device.isDesktop" class="content-html rich-text" v-html="product.content"></div>
               </div>
             </template>
+
             <!-- Properties -->
             <template v-else-if="tab === 1">
               <div class="params-wrapper">
-                <div class="tab-title">Характеристики товара</div>
+                <div class="tab-title">{{  t('attrs') }}</div>
                 <simple-list-params :items="product.attrs"></simple-list-params>
               </div>
             </template>
+
             <!-- Reviews -->
             <template v-else-if="tab === 2">
               <product-reviews
@@ -296,21 +289,27 @@ await Promise.all([
                 @update:current="loadReviewsHandler"
               ></product-reviews>
             </template>
+
+            <!-- Delivery -->
             <template v-else-if="tab === 3">
               <div class="">
-                <div class="tab-title">Доставка</div>
+                <div class="tab-title">{{ t('label.delivery') }}</div>
                 <product-delivery-info></product-delivery-info>
               </div>
             </template>
+
+            <!-- Payment -->
             <template v-else-if="tab === 4">
               <div class="">
-                <div class="tab-title">Оплата</div>
+                <div class="tab-title">{{ t('label.payment') }}</div>
                 <product-payment-info></product-payment-info>
               </div>
             </template>
+
+            <!-- Guarantees -->
             <template v-else-if="tab === 5">
               <div class="">
-                <div class="tab-title">Гарантии</div>
+                <div class="tab-title">{{ t('label.guarantees') }}</div>
                 <product-guarantees-info></product-guarantees-info>
               </div>
             </template>
@@ -320,7 +319,7 @@ await Promise.all([
         <div class="content-sale">
           <product-sale-block
             v-if="$device.isDesktop || tab === 0"
-            :product="productMicro"
+            :product="product"
             :class="{mini: tab !== 0}"
             class="content-sale-block"
           ></product-sale-block>
@@ -335,12 +334,12 @@ await Promise.all([
                 <div v-if="product.attrs && product.attrs.length" class="params-mini">
                   <simple-list-params :items="product.attrs" class="params-wrapper"></simple-list-params>
                   <button class="text-link params-mini-btn">
-                    <span>Все характеристики</span>
+                    <span>{{ t('all_attrs') }}</span>
                     <IconCSS name="iconoir:arrow-right" class="icon"></IconCSS>
                   </button>
                 </div>
 
-                <div v-if="$device.isMobile" class="content-html" v-html="product.content"></div>
+                <div v-if="$device.isMobile" class="content-html rich-text" v-html="product.content"></div>
               </div>
             </template>
           </transition>
