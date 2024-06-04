@@ -60,10 +60,10 @@
       &::before {
         content: "";
         position: absolute;
-        left: 0px;
-        top: 7px;
-        width: 6px;
-        height: 6px;
+        left: 0;
+        top: 11px;
+        width: 5px;
+        height: 5px;
         border-radius: 50%;
         background-color: $color-0;
       }

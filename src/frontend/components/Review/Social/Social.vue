@@ -48,8 +48,6 @@ const socialName = computed(() => {
 // METHODS
 // HANDLERS
 // WATCHERS
-
-console.log('props', props.name, props.source)
 </script>
 
 <style src='./social.scss' lang='scss' scoped></style>

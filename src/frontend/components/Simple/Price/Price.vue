@@ -13,7 +13,7 @@ const props = defineProps({
 <style src="./price.scss" lang="scss" scoped />
 
 <template>
-  <div class="price" v-if="value">
+  <div class="price" v-if="value !== null">
     <span class="value">
       {{ currency? $n(value, 'currency'): $n(value, 'cur') }}
     </span>

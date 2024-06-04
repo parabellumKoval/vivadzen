@@ -120,6 +120,7 @@
           height: auto;
           max-height: 200px;
           -webkit-line-clamp: 5;
+          padding: 0 0 10px 0;
         }
       }
     }
@@ -241,10 +242,10 @@
       color: $color-red;
       background: scale-color($color-red, $lightness: 85%);
 
-      // &.active {
-      //   color: $color-8;
-      //   background: $color-red;
-      // }
+      &.active {
+        color: $color-8;
+        background: $color-red;
+      }
     }
   }
 }

@@ -32,6 +32,7 @@ onMounted(() => {
 </script>
 
 <style src="./thanks.scss" lang="scss" scoped />
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <div @mouseenter="playHandler" ref="ctaElement" class="thx">
@@ -47,13 +48,8 @@ onMounted(() => {
       />
     </div>
 
-    <div class="title">{{ t('thx') }}</div>
+    <div class="title-secondary">{{ t('thx') }}</div>
     <div class="desc">{{ t('thx_desc') }}</div>
-
-    <div class="line"></div>
-
-    <checkout-support class="support" no-lottie></checkout-support>
+    
   </div>
 </template>
-
-<i18n src="./lang.yaml" lang="yaml"></i18n>

@@ -2,7 +2,7 @@ import {useAttributeStore} from '~/store/attribute'
 import {useBrandStore} from '~/store/brand'
 
 export const useFilter = (query: Object) => {
-  const {t} = useI18n()
+  const {t} = useI18n({useScope: 'global'})
 
   const getFilters = async (query: Object) => {
     return useAsyncData('filters', async () => {
@@ -17,7 +17,7 @@ export const useFilter = (query: Object) => {
         })
       ]).then(([brands, attributes]) => {
         // console.log('brands, attributes - ', brands, attributes)
-        return prepareFilters(brands, attributes)
+        return prepareFilters(attributes, brands)
       })
     }).then((data) => {
       return data
@@ -36,7 +36,7 @@ export const useFilter = (query: Object) => {
     })
   }
 
-  const prepareFilters = (brands: Object[], attributes: Object[]) => {
+  const prepareFilters = (attributes: Object[], brands: Object[]) => {
     const filtersCopy = [...attributes]
 
     filtersCopy.push({
@@ -47,15 +47,17 @@ export const useFilter = (query: Object) => {
       type: 'number'
     })
 
-    filtersCopy.unshift({
-      id: 'brand',
-      name: t('label.brand'),
-      si: null,
-      isOpen: true,
-      noMeta: true,
-      type: 'brand',
-      values: [...brands]
-    })
+    if(brands) {
+      filtersCopy.unshift({
+        id: 'brand',
+        name: t('label.brand'),
+        si: null,
+        isOpen: true,
+        noMeta: true,
+        type: 'brand',
+        values: [...brands]
+      })
+    }
 
     filtersCopy.unshift({
       id: 'selections',
@@ -99,21 +101,25 @@ export const useFilter = (query: Object) => {
       const key = attr.id
       const value = attr.values
 
+      // Price
       if(key === 'price') {
         price = {...value}
-        break
+        continue
       }
 
+      // Brand
       if(key === 'brand') {
         brands = [...value]
-        break
+        continue
       }
 
+      // Selections
       if(key === 'selections') {
         selections = [...value]
         continue
       }
 
+      // Filters
       if(Array.isArray(value)) {
         for(const v of value) {
           filters.push({
@@ -129,7 +135,7 @@ export const useFilter = (query: Object) => {
         })
       }
     }
-
+    
     return {filters, brands, selections, price}
   }
 
@@ -137,6 +143,7 @@ export const useFilter = (query: Object) => {
     getAttributes,
     getBrands,
     getFilters,
-    prepareAttrs
+    prepareAttrs,
+    prepareFilters
   }
 }

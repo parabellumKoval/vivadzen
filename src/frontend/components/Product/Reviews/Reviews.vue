@@ -1,4 +1,5 @@
 <script setup>
+import { useAuthStore } from '~~/store/auth';
 const {t} = useI18n()
 
 const props = defineProps({
@@ -6,6 +7,9 @@ const props = defineProps({
     type: Array
   },
   meta: {
+    type: Object
+  },
+  product: {
     type: Object
   }
 })
@@ -17,7 +21,16 @@ const updateCurrentHandler = (v) => {
 }
 
 const createReviewHandler = () => {
-  useModal().open(resolveComponent('ModalReviewCreate'), null, null, {width: {min: 420, max: 420}})
+  if(useAuthStore().auth) {
+    useModal().open(resolveComponent('ModalReviewCreate'), props.product, null, {width: {min: 420, max: 420}})
+  }else{
+    useNoty().setNoty({
+      content: t('noty.review.need_login'),
+      type: 'warning'
+    }, 7000)
+    
+    useModal().open(resolveComponent('ModalAuthSocial'), null, null, {width: {min: 420, max: 420}})
+  }
 }
 </script>
 

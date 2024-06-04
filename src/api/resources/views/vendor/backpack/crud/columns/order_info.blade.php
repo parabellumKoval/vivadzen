@@ -16,6 +16,18 @@
     //$payment = is_array($info['payment'])? array_filter($info['payment']): $info['payment'];
   }
 
+  
+  if(isset($info['delivery'])) {
+    if(is_array($info['delivery'])) {
+      $delivery_items = array_filter($info['delivery']);
+      $delivery = implode(', ', $delivery_items);
+    }else {
+      $delivery = $info['delivery'];
+    }
+    //$delivery = is_array($info['delivery'])? array_filter($info['delivery']): $info['delivery'];
+  }
+
+  //$delivery = isset($info['delivery'])? array_filter($info['delivery']): null;
 @endphp
 
 <span>
@@ -27,12 +39,8 @@
     <p>Оплата: <strong>{{ $payment }}</strong></p>
   @endif
 
-  @if($entry->delivery && !empty($entry->delivery))
-    <p>Доставка: <strong>{{ $entry->delivery }}</strong></p>
-  @endif
-
-  @if($entry->address && !empty($entry->address))
-    <p>Адрес доставки: <strong>{{ $entry->address }}</strong></p>
+  @if($delivery && !empty($delivery))
+    <p>Доставка: <strong>{{ $delivery }}</strong></p>
   @endif
   
   @if(isset($info['comment']))
@@ -47,7 +55,7 @@
   @foreach($products as $product)
     <div>
       @if(isset($product['image']['src']))
-        <p><img src="{{ url($product['image']['src']) }}" width="100" height="100" /></p>
+        <p><img src="{{ url('/images/products/' . $product['image']['src']) }}" width="100" height="100" /></p>
       @endif
 
       <p><strong>{{ $product['name'] ?? '' }}</strong> {{ $product['short_name'] ?? '' }}</p>
@@ -60,7 +68,7 @@
     </div>
     <br>
   @endforeach
-  
+
   @if(config('backpack.store.order.enable_bonus', false))
     <h4>Использовано бонусов: <strong>{{ config('backpack.store.currency.symbol') . $bonusesUsed }}</strong></h4>
   @endif

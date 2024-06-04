@@ -36,37 +36,37 @@ const headerRows = computed(() => {
   let list = {
     images: [
       {
-        value: 'Товаров в сравнении: ' + (products.value?.length || 0),
+        value: t('count') + ': ' + (products.value?.length || 0),
         type: 'text',
       }
     ],
     names: [
       {
-        value: 'Название товара',
+        value: t('product_name'),
         type: 'text'
       }
     ],
     prices: [
       {
-        value: 'Цена',
+        value: t('label.price'),
         type: 'text'
       }
     ],
     sales: [
       {
-        value: 'Скидка',
+        value: t('label.sale'),
         type: 'text'
       }
     ],
     dates: [
       {
-        value: 'Артикул',
+        value: t('label.product_code'),
         type: 'text'
       }
     ],
     categories: [
       {
-        value: 'Категория',
+        value: t('category'),
         type: 'text'
       }
     ]
@@ -237,7 +237,7 @@ watch(() => useComparisonStore().ids, (v) => {
   grid-template-columns: v-bind(gridColumns);
 }
 </style>
-<!-- <i18n src='' lang='yaml'></i18n> -->
+<i18n src='./lang.yaml' lang='yaml'></i18n>
 
 <template>
   <div class="page-base">

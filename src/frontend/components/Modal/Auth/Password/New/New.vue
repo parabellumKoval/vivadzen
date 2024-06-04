@@ -39,8 +39,6 @@ const saveHandler = () => {
   useAuthStore().update({
     password: user.value.password
   }).then(({data, error}) => {
-    
-    console.log(data, error)
 
     if(data.user){
       useNoty().setNoty({

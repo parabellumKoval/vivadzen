@@ -93,7 +93,7 @@ const regHandler = () => {
         <div class="registration">
           <div class="label">{{ t('have_not') }}</div>
           <simple-button-text
-            :text="t('reg')"
+            :text="t('label.register')"
             :callback="regHandler"
             icon="iconoir:lock"
           ></simple-button-text>

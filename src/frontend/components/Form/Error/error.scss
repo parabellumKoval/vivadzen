@@ -11,7 +11,7 @@
   width: 36px;
   height: calc(100% - 4px);
   background: $color-bg;
-  border-radius: $radius;
+  border-radius: 2px;
   padding: 5px 0;
   overflow: hidden;
   transition: width $speed, background $speed;

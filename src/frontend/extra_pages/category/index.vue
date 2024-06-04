@@ -93,8 +93,8 @@ const query = computed(() => {
 })
 
 // WATCH
-watch(() => meta.value, (v) => {
-  if(v.current_page === 1){
+watch(() => meta.value, (v) => { 
+  if(v?.current_page === 1){
     useRouter().replace()
   }else {
     useRouter().replace({ query: {page: v.current_page} })
@@ -115,36 +115,41 @@ watch(() => meta.value, (v) => {
 
 //   getProducts(queryObject, false)
 // }
+const updateFiltersHandler = async (v) => {
+  queryObject.value.page = 1;
 
-const updateQueryHandler = async (key = null, v = null) => {
-  if(key === 'filters') {
+  (
+    {
+      filters: queryObject.value.filters,
+      brands: queryObject.value.brands,
+      selections: queryObject.value.selections,
+      price: queryObject.value.price,
+    } = prepareAttrs(v)
+  );
 
-    queryObject.value.page = 1;
+  await updateQueryHandler()
+}
 
-    console.log('updateQueryHandler', queryObject.value);
-    (
-      {
-        filters: queryObject.value.filters,
-        brands: queryObject.value.brands,
-        selections: queryObject.value.selections,
-        price: queryObject.value.price,
-      } = prepareAttrs(v)
-    );
-  }
-  
-  if(key === 'order') {
-    queryObject.value.order = v;
-  }
+const updateOrderHandler = (v) => {
+  queryObject.value.order = v;
+  updateQueryHandler()
+}
 
-  if(key === 'page') {
-    queryObject.value.page = v;
-  }
+const updatePageHandler = (v) => {
+  queryObject.value.page = v;
+  updateQueryHandler()
+}
+
+const updateQueryHandler = async (v = null) => {
+  pending.value = true;
 
   ({
     products: products.value,
     meta: meta.value,
     filters: filtersMeta.value
-  } = await getProducts(query.value).finally(() => {}))
+  } = await getProducts(query.value).finally(() => {
+    pending.value = false
+  }))
 }
 
 // METHODS
@@ -243,9 +248,10 @@ await useFetchReview().getReviews({
     :filters-meta-init="filtersMetaInit"
     :products="products"
     :meta="meta"
-    @update:filters="(v) => updateQueryHandler('filters', v)"
-    @update:order="(v) => updateQueryHandler('order', v)"
-    @update:page="(v) => updateQueryHandler('page', v)"
+    :pending="pending"
+    :updateFiltersCallback = "updateFiltersHandler"
+    :updateOrderCallback = "updateOrderHandler"
+    :updatePageCallback = "updatePageHandler"
   >
 
     <template #title>
@@ -266,7 +272,7 @@ await useFetchReview().getReviews({
 
       <div v-if="category.content" class="seo-text rich-text" v-html="category.content"></div>
 
-      <section-faq class="faq-section"></section-faq>
+      <section-faq-catalog :category="category" class="faq-section"></section-faq-catalog>
     </template>
 
   </NuxtLayout>

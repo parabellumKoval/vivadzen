@@ -1,6 +1,15 @@
-export const useFilterItem = (vModel: [], filterId: Number) => {
+export const useFilterItem = (filterId: Number) => {
   
-  const modelValue = ref([...vModel])
+  const modelValue = useState('activeFilters', () => {return []})
+  // const modelValue = ref([...vModel])
+
+  //WATCHERS
+  // watch(vModel, (v) => {
+  //   modelValue.value = v
+  // }, {
+  //   deep: true,
+  //   immediate: true
+  // })
 
   // COMPUTEDS
   const thisFilter = computed(() => {
@@ -25,6 +34,16 @@ export const useFilterItem = (vModel: [], filterId: Number) => {
   })
 
   // METHODS
+  const updateModelValue = (newModelValue) => {
+    modelValue.value = newModelValue
+  }
+
+  const isValueChecked = (valueId) => {
+    if(!thisFilter.value)
+      return false
+
+    return thisFilter.value.values.indexOf(valueId) !== -1
+  }
 
   const updateRangeValue = (data: any) => {
     const filter = thisFilter.value
@@ -64,14 +83,16 @@ export const useFilterItem = (vModel: [], filterId: Number) => {
       } 
     }
     
-    return modelValue.value
-    // emit('update:modelValue', modelValue)
+    // return modelValue.value
   }
 
 
   return {
+    modelValue,
+    updateModelValue,
     updateRangeValue,
     updateCheckboxValue,
+    isValueChecked,
     thisFilter,
     isMetaBlocked
   }

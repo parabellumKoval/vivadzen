@@ -25,26 +25,24 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 const meta = ref([])
 
-const {updateCheckboxValue, thisFilter, isMetaBlocked} = useFilterItem(props.modelValue, props.filter.id)
+const {
+  updateCheckboxValue,
+  isValueChecked,
+  thisFilter,
+  isMetaBlocked
+} = useFilterItem(props.filter.id)
 
 // COMPUTED
 
 // HANDLERS
 const checkHandler = (valueId) => {
-  const newValue = updateCheckboxValue(valueId)
-  emit('update:modelValue', newValue)
+   updateCheckboxValue(valueId)
+  // emit('update:modelValue', newValue)
 }
 
 // METHODS
 const isPlus = (valueId) => {
   return thisFilter.value && getMeta(valueId) > 0 && !isValueChecked(valueId)
-}
-
-const isValueChecked = (valueId) => {
-  if(!thisFilter.value)
-    return false
-
-  return thisFilter.value.values.indexOf(valueId) !== -1
 }
 
 const isDisabled = (valueId) => {
@@ -72,6 +70,12 @@ const getMeta = (valueId) => {
 }
 
 // WATCH
+// watch(() => props.modelValue, (v) => {
+//   updateModelValue(v)
+// }, {
+//   deep: true
+// })
+
 watch(() => props.meta, (v) => {
   if(isMetaBlocked.value || !v)
     return
@@ -92,7 +96,6 @@ watch(() => props.metaInit, (v) => {
 })
 </script>
 
-<!-- <style src="checkbox2.scss" lang="scss" scoped></style> -->
 <style src="./checkbox.scss" lang="scss" scoped></style>
 
 <template>

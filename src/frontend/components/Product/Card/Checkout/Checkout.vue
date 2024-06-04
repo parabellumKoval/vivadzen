@@ -53,7 +53,7 @@ const deleteHandler = () => {
     >{{ item.name }}</NuxtLink>
     <button @click="deleteHandler" class="remove-btn">
       <IconCSS name="iconoir:trash" class="remove-btn-icon"></IconCSS>
-      <span class="remove-btn-text">{{ t('label.delete') }}</span>
+      <span class="remove-btn-text">{{ t('button.delete') }}</span>
     </button>
   </div>
   <div class="footer">

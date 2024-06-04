@@ -1,15 +1,9 @@
 <script setup>
 import { useAuthStore } from '~~/store/auth';
-const {t} = useI18n()
-const props = defineProps({})
 
 // COMPUTEDS
 const user = computed(() => {
   return useAuthStore().user
-})
-
-const auth = computed(() => {
-  return useAuthStore().auth
 })
 
 const photo = computed(() => {

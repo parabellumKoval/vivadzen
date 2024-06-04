@@ -1,4 +1,5 @@
 <script setup>
+const {t} = useI18n()
 import {useInstaStore} from '~/store/insta'
 
 const posts = ref([])
@@ -12,14 +13,15 @@ await useLazyAsyncData('insta-posts', () => useInstaStore().posts({per_page: 6})
 </script>
 
 <style src="./insta.scss" lang="scss" scoped></style>
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <section class="main-section insta-section">
     <div class="box">
-      <div class="box-title">Подпишитесь на instagram djini.shop</div>
+      <div class="box-title">{{ t('subto') }} instagram djini.shop</div>
       <a href="/" class="button primary box-btn">
         <IconCSS name="basil:instagram-outline" size="20" class="icon"></IconCSS>
-        <span class="name">Перейти в instagram</span>
+        <span class="name">{{ t('goto') }} instagram</span>
       </a>
     </div>
     <div class="feed">

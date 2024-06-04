@@ -17,6 +17,10 @@ const props = defineProps({
   type: {
     type: String,
     default: 'default' // default and full
+  },
+  noPadding: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -35,7 +39,6 @@ const minHeight = computed(() => {
 })
 
 const maxHeight = computed(() => {
-  console.log('maxHeight', activeModalOptions.value)
   if(activeModalOptions.value?.height.max !== 'initial')
     return getPxValue(activeModalOptions.value?.height.max - margin)
   else

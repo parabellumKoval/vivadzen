@@ -37,7 +37,7 @@ const items = computed(() => {
 <i18n src='./lang.yaml' lang='yaml'></i18n>
 
 <template>
-  <div>
+  <div class="cond-wrapper">
     <div class="grid-title">{{ t('title') }}</div>
     <div class="grid">
       <div v-for="item in items" :key="item.id" class="grid-item">

@@ -68,7 +68,6 @@ const registerHandler = () => {
   useAuthStore().register(auth.value)
     .then(({data, error}) => {
       if(data && data.user) {
-        // useAuthStore().setUserFromSession(data.user)
 
         useNoty().setNoty({
           content: t('noty.auth.email.confirmation.sent')

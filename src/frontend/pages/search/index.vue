@@ -82,8 +82,6 @@ const setAttributes = () => {
     )
 
   }
-
-  console.log('setAttributes', attributes.value)
 }
 
 const fetchSearch = async (search) => {
@@ -99,21 +97,11 @@ const fetchSearch = async (search) => {
   isLoading.value = true
 
   await useAsyncData('search', () => useSearchStore().index(params)).then(({data, error}) => {
-    
+
     if(data?.value?.products) {
       products.value = data.value.products.data || null
       meta.value = data.value.products.meta || null
     }
-    
-    if(data?.value?.categories) {
-      categories.value = data.value.categories
-    }
-    
-    if(data?.value?.brands) {
-      brands.value = data.value.brands
-    }
-
-    setAttributes()
 
   }).finally(() => {
     isLoading.value = false
@@ -152,10 +140,9 @@ await fetchSearch(search.value)
 <NuxtLayout
   name="catalog"
   :breadcrumbs="breadcrumbs"
-  :filters="attributes"
-  :filters-meta="filters"
   :products="products"
   :meta="meta"
+  no-filters
 >
   <template #title>
     <template v-if="search">
@@ -170,6 +157,7 @@ await fetchSearch(search.value)
     <div class="container">
       <simple-search
         v-model="searchInput"
+        @keyup.enter="searchHandler"
         @btn:click="searchHandler"
         class="simple-search"
       ></simple-search>

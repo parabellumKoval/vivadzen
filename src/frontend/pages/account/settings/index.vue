@@ -141,7 +141,7 @@ watch(() => useAuthStore().user, (v) => {
       >{{ t('button.save') }}</button>
     </div>
     <div class="settings-box">
-      <div class="settings-label">{{ t('label.delivery') }}</div>
+      <div class="settings-label">{{ t('title.delivery') }}</div>
       <div class="settings-grid">
         <form-text v-model="address.street" :placeholder="t('form.delivery.address')"></form-text>
         <form-text v-model="address.city" :placeholder="t('form.delivery.settlement')"></form-text>

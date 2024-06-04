@@ -1,4 +1,7 @@
 <script setup>
+import {useFilterItem} from '~/composables/product/useFilterItem.ts'
+import {useSort} from '~/composables/product/useSort.ts'
+
 const {t} = useI18n()
 
 const { scrollToAnchor } = useAnchorScroll({
@@ -34,42 +37,41 @@ const props = defineProps({
   meta: {
     type: Object,
     default: {}
+  },
+  pending: {
+    type: Boolean,
+    default: false
+  },
+  noFilters: {
+    type: Boolean,
+    default: false
+  },
+  updateFiltersCallback: {
+    default: null
+  },
+  updateOrderCallback: {
+    default: null
+  },
+  updatePageCallback: {
+    default: null
   }
 })
 
-const emit = defineEmits([
-  'update:filters',
-  'update:order',
-  'update:page'
-])
+const {modelValue} = useFilterItem()
 
-const selectedFilters = ref([])
+const {options: sortingOptions} = useSort()
 const sortSelectedIndex = ref(1)
 const sort = ref({order_by: 'created_at', order_dir: 'desc'})
 
 const router = useRouter()
 
 // COMPUTED
-const sortingOptions = computed(() => {
-  return [
-    {
-      by: 'created_at',
-      dir: 'asc',
-      caption: t('news_asc')
-    },{
-      by: 'created_at',
-      dir: 'desc',
-      caption: t('news_desc')
-    },{
-      by: 'price',
-      dir: 'asc',
-      caption: t('price_asc')
-    }, {
-      by: 'price',
-      dir: 'desc',
-      caption: t('price_desc')
-    }
-  ]
+const filtersData = computed(() => {
+  return {
+    'filters': props.filters,
+    'meta': props.filtersMeta,
+    'metaInit': props.filtersMetaInit
+  }
 })
 
 // WATCH
@@ -81,7 +83,10 @@ watch(sortSelectedIndex, (v) => {
     }
 
     scrollHandler('title')
-    emit('update:order', sort.value)
+
+    if(props.updateOrderCallback) {
+      props.updateOrderCallback(sort.value)
+    }
   }
 })
 
@@ -94,35 +99,44 @@ const scrollHandler = (item) => {
 
 const updatePageHandler = (v) => {
   scrollHandler('title')
-  emit('update:page', v)
-  // console.log('updatePageHandler', v)
+
+  if(props.updatePageCallback) {
+    props.updatePageCallback(v)
+  }
 }
 
-const updateSelectedHandler = (v) => {
+const updateSelected = (v) => {
+  let values = []
+  
+  if(v.length) {
+    // remove filters with empty values
+    values = v.filter((item) => {
+      if(item.values === undefined || !item.values)
+        return true
+      
+      if(Array.isArray(item.values)){
+        return item.values.length? true: false
+      }else {
+        return true
+      }
+    })
+  }
 
-  // remove filters with empty values
-  const values = v.filter((item) => {
-    if(item.values === undefined || !item.values)
-      return true
-    
-    if(Array.isArray(item.values)){
-      return item.values.length? true: false
-    }else {
-      return true
-    }
-  })
-
-  scrollHandler('title')
-  selectedFilters.value = values
-  emit('update:filters', values)
+  if(props.updateFiltersCallback) {
+    props.updateFiltersCallback(values)
+  }
 }
 
 // METHODS
-
+// WATCHERS
+watch(() => modelValue.value, (v) => {
+  updateSelected(v)
+}, {
+  deep: true
+})
 </script>
 
 <style src="~/assets/scss/layout-catalog.scss" lang="scss" scoped></style>
-<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <div class="page-base">
@@ -136,13 +150,9 @@ const updateSelectedHandler = (v) => {
     </div>
 
     <transition name="fade-in">
-      <div v-if="selectedFilters.length" class="selected">
+      <div v-if="modelValue?.length" class="selected">
         <div class="container">
-          <filter-selected
-            :modelValue="selectedFilters"
-            @update:modelValue="updateSelectedHandler"
-            :filters="filters"
-          ></filter-selected>
+          <filter-selected :filters="filters"></filter-selected>
         </div>
       </div>
     </transition>
@@ -155,9 +165,11 @@ const updateSelectedHandler = (v) => {
         <div v-if="meta?.total" class="header-title">
           {{ t('label.filters') }}
         </div>
+
         <div class="header-desc">
           {{ t('messages.products_found', {amount: (meta?.total || 0)}) }}
         </div>
+
         <div v-if="meta?.total" class="header-actions">
           <div class="sorting-wrapper">
             <button class="button mini light sorting-btn">
@@ -175,24 +187,23 @@ const updateSelectedHandler = (v) => {
             </select>
           </div>
         </div>
+
       </div>
     </div>
 
-    <div class="content">
+    <div :class="{'no-filters': noFilters}" class="content">
       <!-- All filters -->
       <filter-list
-        v-if="filters"
-        :modelValue="selectedFilters"
-        @update:modelValue="updateSelectedHandler"
-        :brands="brands"
+        v-if="$device.isDesktop && filters && !noFilters"
         :filters="filters"
         :meta="filtersMeta"
         :meta-init="filtersMetaInit"
+        :class="{pending: pending}"
         class="filters"
       ></filter-list> 
 
       <!-- Products list -->
-      <div class="content-grid">
+      <div :class="{pending: pending}" class="content-grid">
         <transition-group name="fade-in">
           <product-card
             v-for="(product, index) in products"
@@ -224,7 +235,11 @@ const updateSelectedHandler = (v) => {
       </div>
     </div>
 
-    <filter-mobile-buttons v-if="$device.isMobile"></filter-mobile-buttons>
+    <filter-mobile-buttons
+      v-if="$device.isMobile && filters && !noFilters"
+      :data="filtersData"
+      :update-order-callback="updateOrderCallback"
+    ></filter-mobile-buttons>
 
   </div>
 </template>

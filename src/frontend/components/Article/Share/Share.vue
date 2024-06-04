@@ -31,7 +31,9 @@ const copyHandler = () => {
   })
 }
 </script>
+
 <style src="./share.scss" lang="scss" scoped />
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <div class="share">
@@ -49,5 +51,3 @@ const copyHandler = () => {
     </div>
   </div>
 </template>
-
-<i18n src="./lang.yaml" lang="yaml"></i18n>

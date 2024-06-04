@@ -1,2 +1,13 @@
 @import './assets/scss/vars';
 @import './assets/scss/mixins';
+
+.box-wrapper {
+  padding: 15px;
+  background: $color-8;
+  border-radius: $radius;
+  
+  @include _desktop {
+    width: 50%;
+    padding: 0;
+  }
+}

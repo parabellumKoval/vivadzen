@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 
 use Backpack\Store\app\Models\Category;
-use App\Http\Resources\CategoryTinyResource;
+use App\Http\Resources\CategorySlugResource;
 
 class CategoryController extends \App\Http\Controllers\Controller
 {
@@ -18,7 +18,7 @@ class CategoryController extends \App\Http\Controllers\Controller
       ->orderBy('lft')
       ->get();
     
-    $categories = CategoryTinyResource::collection($categories);
+    $categories = CategorySlugResource::collection($categories);
 
     return $categories;
   }

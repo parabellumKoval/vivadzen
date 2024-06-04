@@ -1,5 +1,8 @@
 <script setup>
+import {useAuthStore} from '~/store/auth';
 import {useFetchReview} from '~/composables/review/useFetchReview.ts'
+
+const {t} = useI18n()
 
 const reviews = ref([])
 const feedback = ref([])
@@ -10,7 +13,7 @@ const component = resolveComponent('ReviewPersonal')
 const options = ref({
   card: {
     width: {
-      mobile: 'calc(100% - 10px)',
+      mobile: '100%',
       desktop: '100%'
     }
   }
@@ -67,6 +70,24 @@ const getShopReviewQuery = () => {
   }
 }
 
+// HANDLERS
+const moreInfoHandler = () => {
+  useModal().open(resolveComponent('ModalReviewBonus'), null, null, {width: {min: 420, max: 420}})
+}
+
+const reviewHandler = () => {
+  if(useAuthStore().auth) {
+    useModal().open(resolveComponent('ModalReviewCreate'), null, null, {width: {min: 420, max: 420}})
+  }else{
+    useNoty().setNoty({
+      content: t('noty.review.need_login'),
+      type: 'warning'
+    }, 7000)
+    
+    useModal().open(resolveComponent('ModalAuthSocial'), null, null, {width: {min: 420, max: 420}})
+  }
+}
+
 // FETCH
 await useFetchReview().getReviews(getProductReviewQuery(), true, 'product-reviews').then(({reviews: r, meta: m}) => {
   reviews.value = r
@@ -79,10 +100,11 @@ await useFetchReview().getReviews(getShopReviewQuery(), true, 'shop-reviews').th
 </script>
 
 <style src="./review.scss" lang="scss" scoped></style>
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <section class="main-section">
-    <div class="section-title">Отзывы</div>
+    <div class="section-title">{{ t('title.reviews') }}</div>
     <div class="wrapper">
       
       <div class="review">
@@ -98,7 +120,7 @@ await useFetchReview().getReviews(getShopReviewQuery(), true, 'shop-reviews').th
         <simple-snap-slider
           :values="feedback"
           :component="component"
-          :gutter="40"
+          :gutter="20"
           :options="options"
           item-data-name="item"
           @setPagination="setPaginationHandler"
@@ -113,7 +135,8 @@ await useFetchReview().getReviews(getShopReviewQuery(), true, 'shop-reviews').th
         <simple-slider-btns
           :items="pagination.total"
           :active-index="pagination.activeIndex"
-          :is-arrows="false"
+          :is-arrows="true"
+          :is-more-btn="false"
           @select="selectHandler"
           @prev="prevHandler"
           @next="nextHandler"
@@ -121,12 +144,17 @@ await useFetchReview().getReviews(getShopReviewQuery(), true, 'shop-reviews').th
         >
         </simple-slider-btns>
 
-        <div class="feedback-info">
-          <span class="feedback-info-text">🎁 Купон на -5% за верифицированный отзыв о магазине</span>
-          &nbsp;<NuxtLink :to="localePath('/')">Подробнее...</NuxtLink>
-        </div>
-
       </div>
+    </div>
+
+    <div class="feedback-info">
+      <span class="feedback-info-text">🎁 {{ t('messages.review_gift') }}</span>
+      &nbsp;<button @click="moreInfoHandler" class="more-link">{{ t('label.thorough') }}...</button>
+    </div>
+
+    <div class="footer-wrapper">
+      <NuxtLink :to="localePath('/reviews/shop')" class="button secondary">{{ t('reviews') }}</NuxtLink>
+      <button @click="reviewHandler" class="button primary">{{ t('button.leave_review') }}</button>
     </div>
   </section>
 </template>

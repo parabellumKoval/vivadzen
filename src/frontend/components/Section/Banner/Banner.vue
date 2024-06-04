@@ -1,6 +1,4 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <style src="./banner.scss" lang="scss" scoped></style>
 
@@ -14,7 +12,7 @@
         sizes = "mobile:320px tablet:768px desktop:1440px"
         format = "avif"
         fit="inside"
-        quality = "100"
+        quality = "60"
         class = "image"
       />
     </div>

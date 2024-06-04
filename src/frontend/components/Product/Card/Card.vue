@@ -23,10 +23,10 @@ const {toCartHandler} = useCart(props.item)
 
 // COMPUTEDS
 const activePhoto = computed(() => {
-  if(!isHover.value) {
+  if(!isHover.value || photos.value.length === 1) {
     return photos.value[0]
   }else {
-    return photos.value[1] || photos.value[0]
+    return photos.value[1]
   }
 })
 
@@ -51,7 +51,6 @@ const toReviewsHandler = () => {
 </script>
 
 <style src="./card.scss" lang="scss" scoped />
-<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <div v-if="item" :class="stock" class="card">

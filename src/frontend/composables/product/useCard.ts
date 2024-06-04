@@ -1,6 +1,6 @@
 export const useCard = (product: Product) => {
 
-  const { t } = useI18n()
+  const { t } = useI18n({useScope: 'global'})
 
   const photos = computed(() => {
     if(product.images?.length) {
@@ -14,11 +14,11 @@ export const useCard = (product: Product) => {
         }
       })
     }else {
-      return {
+      return [{
         alt: product.name,
         title: product.name,
         src: './images/noimage.png'
-      }
+      }]
     }
   })
 
@@ -38,7 +38,7 @@ export const useCard = (product: Product) => {
     if(product.image?.src) {
       return '/server/images/products/' + product.image.src
     } else {
-      return './images/noimage.png'
+      return '/images/noimage.png'
     }
   })
 
@@ -54,17 +54,17 @@ export const useCard = (product: Product) => {
     if(product.isTop){
       return {
         class: 'violet',
-        text: t('label.top')
+        text: t('label.product.top')
       }
     }else if(product.oldPrice - product.price >= product.price / 10){
       return {
         class: 'orange',
-        text: t('label.price')
+        text: t('label.product.price')
       }
     }else if(product.oldPrice > product.price) {
       return {
         class: 'red',
-        text: t('label.sale')
+        text: t('label.product.sale')
       }
     }else {
       return null

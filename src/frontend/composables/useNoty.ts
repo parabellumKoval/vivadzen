@@ -55,7 +55,11 @@ export const useNoty = () => {
       return null
 
     return setInterval(() => {
-      if(noties.value[key].countdown === 0) {
+      if(!noties.value[key]){
+        return
+      }
+
+      if(noties.value[key]?.countdown === 0) {
         clearInterval(noties.value[key].intervalInstance)
         removeNoty(key)
       } else {

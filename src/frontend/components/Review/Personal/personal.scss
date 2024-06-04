@@ -16,6 +16,14 @@
   border-radius: 65px;
 }
 
+.name {
+  font-weight: 500;
+}
+
+.nm {
+  height: 20px;
+}
+
 .content {
   width: 100%;
   padding: 25px;
@@ -34,6 +42,26 @@
 
     @include _desktop {
       font-size: 14px;
+    }
+  }
+}
+
+.rating {
+  width: min-content;
+  margin: 0 auto 10px auto;
+}
+
+.text {
+  &-wrapper {
+    overflow: hidden;
+    max-height: 72px;
+
+    @include _desktop {
+      max-height: 80px;
+    }
+
+    &.active {
+      max-height: initial;
     }
   }
 }

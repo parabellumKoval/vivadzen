@@ -49,18 +49,4 @@
     border-radius: $radius;
     line-height: 140%;
   }
-
-  &-title {
-    margin-bottom: 20px;
-    font-weight: 500;
-  }
-
-  &-list {
-    list-style-type: decimal;
-    padding: 0 0 0 20px;
-
-    li {
-      margin-bottom: 15px;
-    }
-  }
 }

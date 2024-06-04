@@ -11,13 +11,19 @@ const props = defineProps({
   values: {
     type: [Object, Array]
   },
+  listValue: {
+    type: String
+  },
+  listKey: {
+    type: String
+  },
+  minSymbols: {
+    type: Number,
+    default: 0
+  },
   placeholder: {
     type: String,
     required: true
-  },
-  required: {
-    type: Boolean,
-    default: false
   },
   error: {
     type: [Object, Array, String, Boolean],
@@ -31,15 +37,9 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  listValue: {
-    type: String
-  },
-  listKey: {
-    type: String
-  },
-  minSymbols: {
-    type: Number,
-    default: 0
+  required: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -77,7 +77,7 @@ const getItemValue = (index) => {
 }
 
 // HANDLERS
-const changeHandler = (value) => {
+const updateSearchValueHandler = (value) => {
   clearTimeout(inputLag.value)
   inputLag.value = setTimeout(() => {
     emit('update:searchValue', value)
@@ -118,12 +118,13 @@ watch(() => props.modelValue, (val) => {
   <div class="dropdown">
     <form-text
       :model-value="searchOrModalValue"
-      @update:modelValue="changeHandler"
+      @update:modelValue="updateSearchValueHandler"
       @focused="openHandler"
+      @blured="closeHandler"
       :placeholder="placeholder"
       :required="required"
       :error="error"
-      :is-disabled="isDisabledOrSelected"
+      :is-disabled="isDisabled"
       ref="ignoreElRef"
     >
       <template v-slot:icon-right>
@@ -144,7 +145,6 @@ watch(() => props.modelValue, (val) => {
             class="item"
             clickable
           >
-            <IconCSS name="fluent:chevron-right-48-filled" size="14px" class="icon"></IconCSS>
             <span>{{ getItemValue(index) }}</span>
           </li>
         </ul>

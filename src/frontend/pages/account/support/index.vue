@@ -23,5 +23,7 @@ definePageMeta({
 <template>
   <div>
     <div class="title-secondary">{{ t('title.account.support') }}</div>
+
+    <checkout-contacts class="box-wrapper"></checkout-contacts>
   </div>
 </template>

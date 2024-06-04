@@ -1,5 +1,5 @@
 export const useContacts = () => {
-  const {t} = useI18n()
+  const {t} = useI18n({useScope: 'global'})
 
   const phone = '+38 (099) 777-33-45'
   const phone2 = '+38 (097) 777-33-45'

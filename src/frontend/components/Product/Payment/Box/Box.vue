@@ -1,5 +1,5 @@
 <script setup>
-const {t} = useI18n()
+const {t} = useI18n({useScope: 'global'})
 
 const payments = computed(() => {
   return usePaymentVendor().all

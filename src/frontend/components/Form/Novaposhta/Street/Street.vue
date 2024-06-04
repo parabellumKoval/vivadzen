@@ -1,14 +1,11 @@
-<script setup>
-import {useNovaposhtaStore} from '~/store/novaposhta'
-const {t} = useI18n()
+<script setup lang="ts">
+import {useNp} from '~/composables/form/useNp'
+import type {Delivery} from '~/types/order';
+import type {PropType} from 'vue';
 
 const props = defineProps({
-  city: {
-    type: String,
-    default: null
-  },
   modelValue: {
-    type: String,
+    type: Object as PropType<Delivery>,
     default: null
   },
   error: {
@@ -19,82 +16,96 @@ const props = defineProps({
 
 const emit = defineEmits(['selected', 'update:modelValue', 'update:ref'])
 
-const results = ref([])
-const searchStreet = ref('')
-const isLoading = ref(false)
+const {t} = useI18n()
+
+const {getStreets, streets, isLoadingStreets, settlement, street, setStreet} = useNp()
+const search = ref('')
 
 
-const getStreets = async (city, search = '') => {
-  isLoading.value = true
-  return await useNovaposhtaStore().getStreets(city, search).then((res) => {
-    if(res.data && res.data[0] && res.data[0]['Addresses'] && res.data[0]['Addresses'].length){
-      results.value = res.data[0]['Addresses']
-    }else {
-      results.value = []
-    }
+// COMPUTEDS
+const streetString = computed(() => {
+  return props.modelValue?.street || street.value?.street || null
+})
 
-    return res.data[0]
-  }).finally(() => {
-    isLoading.value = false
+const isDisabled = computed(() => {
+  return !settlement.value.settlementRef
+})
+
+// METHODS
+const updateStreet = (value) => {
+
+  setStreet(value)
+
+  let newValue = {
+    ...props.modelValue
+  }
+
+  newValue.street = value.street
+  newValue.streetRef = value.streetRef
+
+  emit('update:modelValue', newValue)
+
+}
+
+// HANDLERS
+const updateModelValueHandler = (ref) => {
+
+  const searched = streets.value.find((item) => {
+    return item.streetRef === ref
   })
+
+  if(!searched) {
+    console.warn('Street was not fond in the streets list')
+    return
+  }
+
+
+
+  updateStreet(searched)
 }
 
 // WATCH
-watch(() => props.city, (val) => {
-  getStreets(val, searchStreet.value)
+watch(() => search.value, (val) => {
+  let settlementRef = settlement.value.settlementRef || null
+  getStreets(val, settlementRef)
 })
 
-// COMPUTED
-const streets = computed(() => {
-  return results.value && results.value.map((item) => {
-    return {
-      value: item.Present,
-      key: item.SettlementStreetRef
-    }
-  })
+// clear street if settlement was updated
+watch(() => settlement.value, (v) => {
+
+  if(!v.settlementRef) {
+    return
+  }
+
+  updateStreet({street: null, streetRef: null})
+}, {
+  deep: true,
+  immediate: true
 })
-
-// HANDLERS
-const updateSearchStreetHandler = (v) => {
-  searchStreet.value = v
-  getStreets(props.city, v)
-}
-
-const updateModelValueHandler = (ref) => {
-  const searched = results.value.find((item) => {
-    return item.SettlementStreetRef === ref
-  })
-
-  getStreets(props.city, searched.Present).then((res) => {
-    if(res && res.length === 1)
-      emit('selected', res[0])
-  })
-  
-  emit('update:modelValue', searched.Present)
-  emit('update:ref', searched.SettlementStreetRef)
-}
 
 </script>
 <style src="./street.scss" lang="scss" scoped />
 
 <template>
-  <div class="warehouse">
+  <div :class="{'disabled': isDisabled}" class="warehouse">
     <transition name="scale-x">
-      <simple-loader v-if="isLoading"></simple-loader>
+      <simple-loader v-if="isLoadingStreets"></simple-loader>
     </transition>
 
     <form-dropdown
-      :model-value = "modelValue"
+      :model-value = "modelValue.street"
       @update:modelValue="updateModelValueHandler"
-      :search-value = "searchStreet"
-      @update:searchValue = "updateSearchStreetHandler"
+      v-model:search-value = "search"
       :values = "streets"
       :placeholder="$t('form.delivery.street')"
       :error="error"
-      list-value="value"
-      list-key="key"
+      :is-disabled="isDisabled"
+      list-value="street"
+      list-key="streetRef"
       required
     >
     </form-dropdown>
+
+    <p v-if="streetString" class="value-desc">{{ streetString }}</p>
   </div>
 </template>

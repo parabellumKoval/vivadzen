@@ -132,7 +132,7 @@ const slides = computed(() => {
 // METHODS
 const setPadination = () => {
   offsetSize.value = listRef.value.offsetWidth - totalWidth.value
-  offsetItems.value = Math.ceil(Math.abs(offsetSize.value) / cardRef.value[0].offsetWidth)
+  offsetItems.value = Math.ceil(Math.abs(offsetSize.value) / cardRef.value[0]?.offsetWidth)
 
   pagination.value.isActive = offsetSize.value < 0
   pagination.value.total = offsetItems.value + 1

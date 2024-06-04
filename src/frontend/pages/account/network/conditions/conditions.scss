@@ -1,6 +1,16 @@
 @import './assets/scss/vars';
 @import './assets/scss/mixins';
 
+.cond-wrapper {
+  background: $color-8;
+  padding: 15px;
+  border-radius: $radius;
+
+  @include _desktop {
+    padding: 0;
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr;

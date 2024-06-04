@@ -167,11 +167,12 @@ img {
 // TITLE
 .title {
   &-common {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-size: 20px;
     line-height: 115%;
 
     @include _desktop {
+      margin-bottom: 30px;
       line-height: 145%;
       font-size: 24px;
     }

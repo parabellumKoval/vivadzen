@@ -31,8 +31,7 @@ const switchHandler = (item) => {
   emit('select')
 }
 
-const selectHandler = () => {
-}
+const selectHandler = () => {}
 </script>
 
 <style src="./lang-switcher.scss" lang="sass" scoped />
@@ -40,7 +39,6 @@ const selectHandler = () => {
 
 <template>
   <modal-wrapper :title="t('select_lang')">
-    <!-- <list :items="availableLocales"></list> -->
     <simple-list-icon :items="availableLocales" :active="locale" class="list"></simple-list-icon>
   </modal-wrapper>
 </template>

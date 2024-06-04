@@ -15,14 +15,14 @@ const loginModalHandler = () => {
 
 const logoutConfirmHandler = () => {
   useModal().open(resolveComponent('ModalConfirm'), {
-    title: 'Выход из аккаунта',
-    desc: 'Вы точно хотите выйти из аккаунта?',
+    title: t('title'),
+    desc: t('desc'),
     yes: {
-      title: 'Выйти',
+      title: t('button.logout'),
       callback: logoutHandler
     },
     no: {
-      title: 'Отмена',
+      title: t('button.cancel'),
       callback: null
     },
     type: 'default'

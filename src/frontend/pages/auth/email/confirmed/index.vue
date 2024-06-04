@@ -2,8 +2,6 @@
 const {t} = useI18n()
 const route = useRoute()
 
-console.log('route', route);
-
 if(route.query.error) {
   throw createError({ statusCode: route.query.error_code, message: route.query.error_description })
 }

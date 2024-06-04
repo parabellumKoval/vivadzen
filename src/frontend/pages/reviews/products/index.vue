@@ -1,10 +1,8 @@
 <script setup>
 import {useFetchReview} from '~/composables/review/useFetchReview.ts'
 
-const {t} = useI18n()
 const reviews = ref([])
 const reviewsMeta = ref({})
-const isLoading = ref(false)
 
 definePageMeta({
   tab: 1

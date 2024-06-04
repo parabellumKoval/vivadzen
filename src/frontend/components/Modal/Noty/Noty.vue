@@ -1,4 +1,5 @@
 <script setup>
+const {t} = useI18n()
 const props = defineProps({
   timeout: {
     type: Number,
@@ -36,7 +37,7 @@ const getKey = (message) => {
       >
         <div class="header">
           <div class="header-countdown">
-            {{ noty.countdown }} сек...
+            {{ noty.countdown }} {{ t('label.sec') }}...
           </div>
           <button @click="playHandler(key)" class="header-btn play-btn" type="button">
             <transition name="fade-in">

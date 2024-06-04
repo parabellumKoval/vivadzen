@@ -117,6 +117,7 @@ getProducts(query.value, true).finally(() => {
           v-for="product in products"
           :key="product.id"
           :item="product"
+          class="product-item"
         >
         </product-card>
 

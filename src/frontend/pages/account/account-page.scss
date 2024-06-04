@@ -2,5 +2,9 @@
 @import './assets/scss/mixins';
 
 .title-secondary {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+
+  @include _tablet {
+    margin-bottom: 30px;
+  }
 }

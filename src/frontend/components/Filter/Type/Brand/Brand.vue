@@ -1,18 +1,17 @@
 <script setup>
+import {useFilterItem} from '~/composables/product/useFilterItem.ts'
+
 const props = defineProps({
   filter: {
     type: Object
-  },
-
-  modelValue: {
-    type: Object,
-    default: {}
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const {
+  updateCheckboxValue,
+  isValueChecked
+} = useFilterItem(props.filter.id)
 
-// console.log('filter type brand', props.filter)
 // METHODS
 const getImageSrc = (item) => {
   if(item?.image?.src)
@@ -21,31 +20,13 @@ const getImageSrc = (item) => {
     return './images/noimage.png'
 }
 
-const checkHandler = (id) => {
-  const allFiltersCopy = {...props.modelValue}
-  const thisFilter = allFiltersCopy[props.filter.id]
-
-  // if this filter not exists inside selected yet
-  if(!allFiltersCopy[props.filter.id]) {
-    allFiltersCopy[props.filter.id] = [id]
-  // if filter already exists
-  }else {
-    const findIndex = allFiltersCopy[props.filter.id].indexOf(id)
-
-    // Add
-    if(findIndex === -1) {
-      allFiltersCopy[props.filter.id].push(id)
-    // Remove
-    }else {
-      allFiltersCopy[props.filter.id].splice(findIndex, 1)
-    }   
-  }
-  console.log('checkHandler', allFiltersCopy)
-  emit('update:modelValue', allFiltersCopy)
+const checkHandler = (valueId) => {
+  updateCheckboxValue(valueId)
 }
+
+// WATCH
 </script>
 
-<!-- <style src="checkbox2.scss" lang="scss" scoped></style> -->
 <style src="./brand.scss" lang="scss" scoped></style>
 
 <template>
@@ -54,7 +35,7 @@ const checkHandler = (id) => {
       <li
         v-for="(value, index) in filter.values"
         :key="value.id"
-        :class="[{checked: modelValue[filter.id]?.includes(value.id)}]"
+        :class="[{checked: isValueChecked(value.id)}]"
         @click="checkHandler(value.id)"
         class="brand-item"
       >

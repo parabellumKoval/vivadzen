@@ -135,7 +135,8 @@ export default defineNuxtConfig({
           '*.googleusercontent.com',
           'lh3.googleusercontent.com',
           'images.prismic.io',
-          '*.cdninstagram.com'
+          '*.cdninstagram.com',
+          '*.fbsbx.com'
         ]
       }
     }
@@ -203,7 +204,7 @@ export default defineNuxtConfig({
     enabled: true,
   },
   i18n: {
-    baseUrl: 'https://po.ua',
+    baseUrl: 'https://djini.com.ua',
     defaultLocale: 'uk',
     lazy: true,
     langDir: './lang',

@@ -13,6 +13,7 @@ const photo = computed(() => {
   return props.item.user.photo? props.item.user.photo: '/images/avatars/no.png'
 })
 </script>
+
 <style src="./card.scss" lang="scss" scoped />
 
 <template>
@@ -47,5 +48,3 @@ const photo = computed(() => {
     </template>
   </simple-table-row>
 </template>
-
-<i18n src="./lang.yaml" lang="yaml"></i18n>

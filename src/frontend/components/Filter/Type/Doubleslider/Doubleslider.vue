@@ -1,12 +1,7 @@
 <script setup>
 import {useFilterItem} from '~/composables/product/useFilterItem.ts'
-import Slider from '@vueform/slider'
 
 const props = defineProps({
-  modelValue: {
-    type: Array
-  },
-
   filter: {
     type: Object
   },
@@ -21,29 +16,47 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
-
 const limits = ref([0, 0])
 const value = ref([0, 0])
 const delay = ref(null)
+const fixValue = ref(false)
 
-const {updateRangeValue, isMetaBlocked} = useFilterItem(props.modelValue, props.filter.id)
+const {modelValue, updateRangeValue, isMetaBlocked, thisFilter} = useFilterItem(props.filter.id)
 
 // HANDLERS
 const changeHandler = (v) => {}
 
 const setHandler = (v) => {
-  const value = updateRangeValue(v)
+  fixValue.value = true
 
   delay.value = setTimeout(() => {
-    emit('update:modelValue', value)
+    updateRangeValue(v)
   }, 500)
 }
 
 // WATCHERS
+watch(() => modelValue.value, (v) => {
+  if(fixValue.value) {
+    fixValue.value = false
+    return 
+  }
+
+  if(thisFilter.value === undefined) {
+    value.value = limits.value
+  }
+}, {
+  deep: true,
+})
+
 watch(() => props.meta, (v) => {
-  if(isMetaBlocked.value || !v || v.min === undefined || v.max === undefined)
-    return
+  if(
+    isMetaBlocked.value || 
+    !v || 
+    v.min === undefined || 
+    v.max === undefined ||
+    v.min === null ||
+    v.max === null
+  ) return
   
   limits.value = [v.min, v.max]
 }, {
@@ -51,8 +64,12 @@ watch(() => props.meta, (v) => {
 })
 
 watch(() => props.metaInit, (v) => {
-  if(!v || v.min === undefined || v.max === undefined)
-    return
+  if(!v || 
+      v.min === undefined || 
+      v.max === undefined ||
+      v.min === null ||
+      v.max === null
+    ) return
 
   limits.value = [v.min, v.max]
   value.value = [v.min, v.max]
@@ -75,13 +92,12 @@ watch(() => props.metaInit, (v) => {
         <div class="input-line"></div>
         <input v-if="value[1] !== undefined" type="number" v-model="value[1]" class="input-form">
       </div>
-      <!-- <button class="slider-btn">OK</button> -->
     </div>
 
     <div class="slider-inner">
 
       <div class="slider" >
-        <Slider
+        <UiSlider
           v-model="value"
           :min="limits[0]"
           :max="limits[1]"

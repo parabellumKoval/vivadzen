@@ -7,6 +7,7 @@ const isActive = ref(false)
 
 const categories = ref([])
 const products = ref([])
+const brands = ref([])
 
 const isLoading = ref(false)
 const timeout = ref(null)
@@ -31,6 +32,15 @@ const history = computed(() => {
 })
 
 // METHODS
+const getPhoto = (item, segment) => {
+  if(item.image?.src) {
+    return '/server/images/' + segment + '/' + item.image.src
+  }else {
+    return '/images/noimage.png'
+  }
+}
+
+
 const goToSearchPage = async () => {
   closeHandler()
 
@@ -63,10 +73,10 @@ const search = async (search) => {
   isLoading.value = true
 
   await useAsyncData('livesearch', () => useSearchStore().livesearch(params)).then(({data, error}) => {
-    
     if(data?.value) {
       categories.value = data.value.categories
       products.value = data.value.products
+      brands.value = data.value.brands
     }
   }).finally(() => {
     isLoading.value = false
@@ -86,7 +96,6 @@ watch(searchInput, (v) => {
 </script>
 
 <style src="./search.scss" lang="scss" scoped />
-
 <i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
@@ -109,7 +118,7 @@ watch(searchInput, (v) => {
               v-if="isLoading"
               class="livesearch-box message-box"
             >
-              Идет поиск...
+              {{ t('searching') }}...
             </div>
           </transition>
 
@@ -124,12 +133,12 @@ watch(searchInput, (v) => {
               v-if="!timeout && !isLoading && searchInput?.length && !categories?.length && !products?.length"
               class="livesearch-box message-box"
             >
-              Поиск не дал результатов, попробуйте поменять запрос.
+              {{ t('no_res') }}
             </div>
           </transition>
 
           <div v-if="categories?.length" class="livesearch-box">
-            <div class="livesearch-label">Категории</div>
+            <div class="livesearch-label">{{ t('title.categories') }}</div>
             <ul class="livesearch-list">
               <li v-for="item in categories" :key="item.id" class="livesearch-item">
                 <NuxtLink :to="localePath('/' + item.slug)" class="livesearch-link">
@@ -139,13 +148,13 @@ watch(searchInput, (v) => {
             </ul>
           </div>
 
-          <div v-if="products?.length" class="livesearch-box">
-            <div class="livesearch-label">Товары</div>
+          <div v-if="brands?.length" class="livesearch-box">
+            <div class="livesearch-label">{{ t('title.brands') }}</div>
             <ul class="livesearch-list">
-              <li v-for="item in products" :key="item.id" class="livesearch-item">
-                <NuxtLink :to="localePath('/' + item.slug)" class="livesearch-link product-card">
+              <li v-for="item in brands" :key="item.id" class="livesearch-item">
+                <NuxtLink :to="localePath('/brands/' + item.slug)" class="livesearch-link brand-item">
                   <nuxt-img
-                    :src = "item.image.src || '/images/noimage.png'"
+                    :src = "getPhoto(item, 'brands')"
                     width="50"
                     height="60"
                     sizes = "mobile:50px tablet:50px desktop:50px"
@@ -153,7 +162,32 @@ watch(searchInput, (v) => {
                     quality = "60"
                     loading = "lazy"
                     fit="outside"
-                    class="product-image"
+                    class="item-image"
+                    placeholder="/images/noimage.png"
+                  >
+                  </nuxt-img>
+                  <span class="value">{{ item.name }}</span>
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
+
+          <div v-if="products?.length" class="livesearch-box">
+            <div class="livesearch-label">{{ t('title.products') }}</div>
+            <ul class="livesearch-list">
+              <li v-for="item in products" :key="item.id" class="livesearch-item">
+                <NuxtLink :to="localePath('/' + item.slug)" class="livesearch-link product-card">
+                  <nuxt-img
+                    :src = "getPhoto(item, 'products')"
+                    width="50"
+                    height="60"
+                    sizes = "mobile:50px tablet:50px desktop:50px"
+                    format = "webp"
+                    quality = "60"
+                    loading = "lazy"
+                    fit="outside"
+                    class="item-image"
+                    placeholder="/images/noimage.png"
                   >
                   </nuxt-img>
                   <div class="product-content">
@@ -170,7 +204,7 @@ watch(searchInput, (v) => {
           </div>
 
           <div v-if="history?.length" class="livesearch-box">
-            <div class="livesearch-label">История поиска</div>
+            <div class="livesearch-label">{{ t('search_history') }}</div>
             <ul class="livesearch-inline">
               <li v-for="item in history" :key="item" class="livesearch-item">
                 <button @click="setInput(item)" class="livesearch-link">
@@ -181,15 +215,18 @@ watch(searchInput, (v) => {
           </div>
 
 
-          <div class="livesearch-box">
+          <div v-if="products?.length" class="livesearch-box">
             <button @click="goToSearchPage" class="all-results-btn">
-              <span class="text">Все результаты поиска</span>
+              <span class="text">{{ t('all') }}</span>
               <IconCSS name="iconoir:arrow-right" class="icon"></IconCSS>
             </button>
           </div>
 
 
-          <span class="powered-by">
+          <span
+            v-if="categories?.length || products?.length || brands?.length"
+            class="powered-by"
+          >
             <span>Powered by </span>
 
             <nuxt-img

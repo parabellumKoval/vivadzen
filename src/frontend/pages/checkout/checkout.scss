@@ -1,6 +1,13 @@
 @import './assets/scss/vars';
 @import './assets/scss/mixins';
 
+.contacts-box {
+  padding: 30px;
+  border: 2px solid $color-8;
+  border-radius: $radius;
+  background: #f5f5f5;
+}
+
 .content {
   display: grid;
   grid-gap: 20px;
@@ -57,37 +64,6 @@
   margin: 0 0 30px 0;
 }
 
-.contacts {
-  &-box {
-    padding: 30px;
-    border: 2px solid $color-8;
-    border-radius: $radius;
-    background: #f5f5f5;
-  }
-
-  &-desc {
-    margin: 15px 0 20px 0;
-    color: $color-2;
-  }
-
-  &-button {
-    width: 100%;
-    border: 2px solid $color-violet;
-    background: $color-8;
-
-    &-secondary {
-      width: 100%;
-      background: $color-8;
-    }
-  }
-}
-
-.contacts {
-  display: grid;
-  grid-template-columns: 4fr 1fr;
-  grid-gap: 15px;
-}
-
 .form {
   &-grid {
     display: grid;
@@ -97,6 +73,14 @@
     @include _desktop {
       grid-template-columns: repeat(2, 1fr);
       grid-gap: 20px;
+    }
+  }
+
+  &-row {
+    margin-top: 15px;
+
+    @include _desktop {
+      margin-top: 20px;
     }
   }
 

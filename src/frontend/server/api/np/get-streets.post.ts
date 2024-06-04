@@ -1,6 +1,18 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   
+  let properties = {}
+
+  // Find by string
+  if(body.find){
+    properties['StreetName'] = body.find
+  }
+
+  // Find by settlement ref
+  if(body.settlementRef){
+    properties['SettlementRef'] = body.settlementRef
+  }
+
   return await $fetch(`https://api.novaposhta.ua/v2.0/json/`, {
     method: 'POST',
     body: {
@@ -9,9 +21,8 @@ export default defineEventHandler(async (event) => {
       "calledMethod": "searchSettlementStreets",
       "methodProperties": {
         "Page" : "1",
-        "StreetName" : body?.find,
-        "SettlementRef" : body?.city,
-        "Limit" : "50"
+        "Limit" : "50",
+        ...properties
       }
     }
   })

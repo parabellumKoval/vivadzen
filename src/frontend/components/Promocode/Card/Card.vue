@@ -23,7 +23,7 @@ const props = defineProps({
       <simple-table-column :label="t('valid_until')">
         {{ $d(promocode.valid_until, 'short') }}
       </simple-table-column>
-      <simple-table-column :label="t('status')">
+      <simple-table-column :label="t('label.status')">
         <span :class="promocode.status.status" class="status">{{ $t(`status.promocode.${promocode.status.status}`) }}</span>
       </simple-table-column>
       <simple-table-column :label="t('sale')">

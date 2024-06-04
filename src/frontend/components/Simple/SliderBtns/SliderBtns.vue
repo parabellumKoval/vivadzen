@@ -23,10 +23,20 @@ const props = defineProps({
     isArrows: {
       type: Boolean,
       default: 0
+    },
+
+    isMoreBtn: {
+      type: Boolean,
+      default: 1
     }
 })
 
 const emit = defineEmits(['prev', 'next', 'select'])
+
+// COMPUTEDS
+const moreBtn = computed(() => {
+  return props.isMoreBtn && props.link && props.title
+})
 
 // METHODS
 const selectHandler = (key) => {
@@ -46,48 +56,64 @@ const nextHandler = () => {
 
 <template>
   <div>
-    <div class="dots">
-      <template v-for="(item, key) in items" :key="key">
-        <button
-          @click="selectHandler(key)"
-          :class="{active: key === activeIndex}"
-          class="dots-item" 
-        >
-        </button>
-      </template>
+    <div v-if="moreBtn" class="dots-wrapper">
+      <div class="dots">
+        <template v-for="(item, key) in items" :key="key">
+          <button
+            @click="selectHandler(key)"
+            :class="{active: key === activeIndex}"
+            class="dots-item" 
+          >
+          </button>
+        </template>
+      </div>
     </div>
 
-    <div v-if="isArrows && link && title" class="btns-wrapper">
+    <div :class="{short: moreBtn}" class="btns-wrapper">
 
       <button
         v-if="isArrows"
         @click="prevHandler"
-        class="nav-button slider-button prev"
+        class="nav-button slider-button prev button secondary"
         type="button"
         title="prev"
         clickable
       >
-        <IconCSS name="fluent:chevron-left-48-filled" size="30px" class="icon"></IconCSS>
+        <IconCSS name="fluent:chevron-left-48-filled" size="30px"></IconCSS>
       </button>
       
-      <NuxtLink
-        :to="localePath(link)"
-        :aria-label="title"
-        class="button secondary action-button slider-button"
-        clickable
-      >
-        <span class="text">{{ title }}</span>
-      </NuxtLink>
+      <template v-if="moreBtn">
+        <NuxtLink
+          :to="localePath(link)"
+          :aria-label="title"
+          class="action-button slider-button button secondary"
+          clickable
+        >
+          <span class="text">{{ title }}</span>
+        </NuxtLink>
+      </template>
+      <template v-else>
+        <div class="dots">
+          <template v-for="(item, key) in items" :key="key">
+            <button
+              @click="selectHandler(key)"
+              :class="{active: key === activeIndex}"
+              class="dots-item" 
+            >
+            </button>
+          </template>
+        </div>
+      </template>
 
       <button
         v-if="isArrows"
         @click="nextHandler"
-        class="nav-button slider-button next"
+        class="nav-button slider-button next button secondary"
         type="button"
         title="next"
         clickable
       >
-        <IconCSS name="fluent:chevron-right-48-filled" size="30px" class="icon"></IconCSS>
+        <IconCSS name="fluent:chevron-right-48-filled" size="30px"></IconCSS>
       </button>
 
     </div>

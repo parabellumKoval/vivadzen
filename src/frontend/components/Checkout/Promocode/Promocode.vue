@@ -8,12 +8,9 @@ const props = defineProps({})
 const emit = defineEmits(['update:promocode'])
 
 const isPromocodeActive = ref(false)
-// const promocode = ref(null)
-// const code = ref(null)
 
 // COMPUTEDS
 const order = computed(() => {
-  console.log('useCartStore().order.promocode', useCartStore().order)
   return useCartStore().order
 })
 
@@ -26,7 +23,6 @@ const confirmRemovePromocodeCallback = () => {
   useCartStore().setPromocode(null)
   useCartStore().removeCode()
   isPromocodeActive.value = false
-  // code.value = null
   
   emit('update:promocode', null)
 
@@ -35,21 +31,19 @@ const confirmRemovePromocodeCallback = () => {
   }, 5000)
 }
 
-const disableRemovePromocodeCallback = () => {
-
-}
+const disableRemovePromocodeCallback = () => {}
 
 // HANDLERS
 const removePromocodeHandler = () => {
   useModal().open(resolveComponent('ModalConfirm'), {
-    title: 'Отмена промокода',
-    desc: 'Вы точно желаете отменить приминение промокод?',
+    title: t('promocode_cancel'),
+    desc: t('cancel_desc'),
     yes: {
-      title: 'Удалить',
+      title: t('button.delete'),
       callback: confirmRemovePromocodeCallback
     },
     no: {
-      title: 'Отмена',
+      title: t('button.cancel'),
       callback: disableRemovePromocodeCallback
     }
   }, null, {
@@ -64,7 +58,6 @@ const togglePromocodeHandler = () => {
 }
 
 const applyPromocodeHandler = async () => {
-  console.log('code', order.value.promocode)
   await usePromocodeStore().show(order.value.promocode).then((res) => {
     if(res) {
       useCartStore().setPromocode(res)
@@ -77,7 +70,6 @@ const applyPromocodeHandler = async () => {
       }, 5000)
     }
   }).catch((e) => {
-    console.log('e', e)
 
     useNoty().setNoty({
       content: e.message,
@@ -89,7 +81,7 @@ const applyPromocodeHandler = async () => {
 </script>
 
 <style src='./promocode.scss' lang='scss' scoped></style>
-<!-- <i18n src='' lang='yaml'></i18n> -->
+<i18n src='./lang.yaml' lang='yaml'></i18n>
 
 <template>
   <div class="promocode-wrapper">
@@ -109,7 +101,7 @@ const applyPromocodeHandler = async () => {
             icon="fluent:tag-28-regular"
             class="promocode-action">
           </simple-button-text>
-          <div class="promocode-sale">Скидка {{ promocode.value }}%</div>
+          <div class="promocode-sale">{{ t('sale') }} {{ promocode.value }}%</div>
         </div>
       </div>
       <simple-button-text

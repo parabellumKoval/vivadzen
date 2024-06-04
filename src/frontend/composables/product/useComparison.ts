@@ -2,7 +2,7 @@ import {useComparisonStore} from '~/store/comparison'
 
 export const useComparison = (productId: Number) => {
 
-  const {t} = useI18n()
+  const {t} = useI18n({useScope: 'global'})
   const id = ref(productId)
 
   const isComparison = computed(() => {

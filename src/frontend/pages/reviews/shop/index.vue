@@ -1,5 +1,4 @@
 <script setup>
-// import {useReviewFaker} from '~/composables/fakers/useReviewFaker.ts'
 import {useFetchReview} from '~/composables/review/useFetchReview.ts'
 
 definePageMeta({

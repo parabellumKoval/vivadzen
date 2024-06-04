@@ -54,12 +54,12 @@ const falseHandler = () => {
         @click="trueHandler"
         :class="[{secondary: type === 'default'}, {primary: type === 'good'}]"
         class="button  full"
-      >{{ yes.title || t('label.yes') }}</button>
+      >{{ yes.title || t('button.yes') }}</button>
       <button
         @click="falseHandler"
         :class="[{primary: type === 'default'}, {error: type === 'bad'}, {secondary: type === 'good'}]"
         class="button full"
-      >{{ no.title || t('label.no') }}</button>
+      >{{ no.title || t('button.no') }}</button>
     </div>
   </modal-wrapper>
 </template>

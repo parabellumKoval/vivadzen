@@ -31,6 +31,7 @@
     grid-template-columns: 20px 1fr 24px;
     grid-gap: 15px;
     align-items: center;
+    width: 100%;
 
     @include _desktop {
       grid-template-columns: 40px 1fr 24px;
@@ -75,12 +76,8 @@
     z-index: -1;
     padding-left: 35px;
     line-height: 165%;
-    color: $color-2;
+    color: $color-2 !important;
     transition: opacity $speed, margin $speed;
-
-    :deep(ul) {
-      padding-left: 30px;
-    }
 
     @include _desktop {
       padding-left: 60px;

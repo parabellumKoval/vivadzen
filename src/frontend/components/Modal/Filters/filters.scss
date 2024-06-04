@@ -4,6 +4,17 @@
 .filters {
   width: calc(100vw - 5px);
   margin: 0 -15px;
+  padding-bottom: 80px;
+
+
+  &.pending {
+    opacity: 0.5;
+    pointer-events: none;
+
+    :deep(*) {
+      pointer-events: none;
+    }
+  }
 }
 
 .selected-wrapper {
@@ -16,22 +27,22 @@
 }
 
 .buttons {
-  position: sticky;
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 10px;
-  align-items: center;
+  position: fixed;
   width: calc(100% + 30px);
-  bottom: -20px;
+  bottom: 0;
   left: 0;
   transform: translateX(-15px);
   border-top: 3px solid $color-6;
-  padding: 15px;
+  padding: 15px 30px;
   z-index: 100;
   background: $color-8;
   overflow: hidden;
 
   .apply-btn {
     width: 100%;
+  }
+
+  .label {
+    margin-bottom: 5px;
   }
 }

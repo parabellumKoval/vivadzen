@@ -27,10 +27,10 @@ const tabs = computed(() => {
   return [
     {
       id: 1,
-      name: `Отзывы о магазине <span class="budge green">${amounts.value.shop}</span>`
+      name: t('review_shop') + ` <span class="budge green">${amounts.value.shop}</span>`
     },{
       id: 2,
-      name: `Отзывы о товарах <span class="budge green">${amounts.value.products}</span>`
+      name: t('review_product') + ` <span class="budge green">${amounts.value.products}</span>`
     }
   ]
 })
@@ -81,13 +81,10 @@ const scrollToContent = () => {
 }
 
 // HOOK
-// if(useRoute()?.meta?.tab !== undefined) {
-//   tab.value = useRoute().meta.tab
-// }
 </script>
 
-<i18n src="./reviews/lang.yaml" lang="yaml"></i18n>
 <style src="./reviews/reviews.scss" lang="scss" scoped></style>
+<i18n src="./reviews/lang.yaml" lang="yaml"></i18n>
 
 <template>
   <div class="page-base" ref="content">
@@ -107,7 +104,7 @@ const scrollToContent = () => {
           <div class="review-form">
             <div class="review-form-title">
               {{ t('messages.leave_review') }}<br> 
-              {{ tab === 0? t('review_shop'): t('review_product') }}
+              {{ tab === 0? t('shop'): t('product') }}
             </div>
             <button @click="reviewHandler" class="button violet wide large-icon inline-icon">
               <IconCSS name="iconoir:message-text" class="icon"></IconCSS>
@@ -116,13 +113,7 @@ const scrollToContent = () => {
           </div>
 
           <div class="info-wrapper">
-            <div class="info-title">🎁 Купон на -15% за верифицированный отзыв о магазине</div>
-            <ol class="info-list">
-              <li><button class="text-link"><span>Напишите отзыв</span></button> о магазине Djini.com.ua</li>
-              <li>Прикрепите к отзыву ссылку на ваш профиль в соц. сети, чтобы другие пользователи могли убедиться, что ваш отзыв настоящий</li>
-              <li>После прохождения модерации ваш отзыв будет опубликован</li>
-              <li>Получите вознаграждение в виде <span class="violet-text">купона -5%</span> на любую продукцию</li>
-            </ol>
+            <review-bonus></review-bonus>
           </div>
 
         </div>

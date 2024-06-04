@@ -29,7 +29,6 @@ export const useOrderStore = defineStore('orderStore', {
       return await useServerApiFetch(url)
         .then(({data, error}) => {
           if(data) {
-            console.log('getOrder', data)
             return data
           }
 
@@ -45,8 +44,6 @@ export const useOrderStore = defineStore('orderStore', {
 
       return await useApiFetch(url, data, 'POST')
         .then(({data, error}) => {
-          console.log('getOrders', data)
-          
           if(data) {
             // if(refresh)
             //   this.ordersState.data = data.data

@@ -1,13 +1,15 @@
 <script setup>
 import {useComparisonStore} from '~/store/comparison.ts'
 const {t} = useI18n()
-const props = defineProps({})
 // COMPUTEDS
 const productsCount = computed(() => {
   return useComparisonStore().ids?.length
 })
 // METHODS
 // HANDLERS
+const closeModalHandler = () => {
+  useModal().close()
+}
 // WATCHERS
 </script>
 
@@ -19,10 +21,11 @@ const productsCount = computed(() => {
     <div v-if="productsCount" class="comparison-wrapper">
       <NuxtLink
         :to="localePath('/comparison')"
+        @click="closeModalHandler"
         class="button blue comparison-btn"
         clickable
       >
-        <IconCSS name="ph:scales-light" size="24"></IconCSS>
+        <IconCSS name="ph:scales-light" size="24" class="icon"></IconCSS>
         <span>{{ productsCount }} {{ t('product', productsCount) }} {{ t('comparison') }}</span>
       </NuxtLink>
     </div>

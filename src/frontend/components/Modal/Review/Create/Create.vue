@@ -32,10 +32,10 @@ const tabs = computed(() => {
   return [
     {
       id: 1,
-      name: 'О товаре'
+      name: t('tab_product')
     },{
       id: 2,
-      name: 'О магазине Djini'
+      name: t('tab_djini')
     }
   ]
 })
@@ -90,6 +90,12 @@ const sendHandler = async () => {
 }
 
 // METHODS
+const clearError = (key) => {
+  if(errors.value && errors.value[key]) {
+    errors.value[key]= null
+  }
+}
+
 const setActiveTab = () => {
   if(!product.value) {
     tab.value = 1
@@ -157,12 +163,12 @@ setActiveTab()
         </div>
 
         <div>
-          <div class="form-label">{{ t('w_review') }}</div>
+          <div class="form-label">{{ t('form.review') }}</div>
           <form-textarea
             v-model="review.text"
             :error = "errors?.text"
-            @input = "() => errors.text = null"
-            :placeholder="t('your_review')"
+            @input = "clearError('text')"
+            :placeholder="t('form.enter.review')"
           ></form-textarea>
         </div>
 
@@ -172,7 +178,7 @@ setActiveTab()
             <form-text
               v-model="review.link"
               :error = "errors?.link"
-              @input = "() => errors.link = null"
+              @input = "clearError('link')"
               :placeholder="t('link')"
             ></form-text>
 
@@ -191,7 +197,7 @@ setActiveTab()
             <form-textarea
               v-model="review.advantages"
               :error = "errors?.advantages"
-              @input = "() => errors.advantages = null"
+              @input = "clearError('advantages')"
               :placeholder="t('advantages')"
             ></form-textarea>
           </div>
@@ -203,7 +209,7 @@ setActiveTab()
             <form-textarea
               v-model="review.flaws"
               :error = "errors?.flaws"
-              @input = "() => errors.flaws = null"
+              @input = "clearError('flaws')"
               :placeholder="t('flaws')"
             ></form-textarea>
           </div>

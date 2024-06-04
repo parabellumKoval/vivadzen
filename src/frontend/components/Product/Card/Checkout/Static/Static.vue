@@ -9,7 +9,7 @@ const props = defineProps({
   }
 })
 
-const {photo, photoAlt, photoTitle, photoSize} = useCard(props.item)
+const {photo} = useCard(props.item)
 const amount = ref(1)
 
 // COMPUTED
@@ -28,9 +28,6 @@ const deleteHandler = () => {}
   <NuxtLink :to="localePath('/' + item.slug)" :aria-label="item.name" clickable class="image-wrapper">
     <nuxt-img
       :src = "photo"
-      :alt = "photoAlt"
-      :title = "photoTitle"
-      :class = "photoSize"
       width="100"
       height="100"
       sizes = "mobile:100px tablet:100px desktop:100px"
@@ -38,7 +35,7 @@ const deleteHandler = () => {}
       quality = "60"
       loading = "lazy"
       fit="outside"
-      placeholder="./images/noimage.png"
+      placeholder="/images/noimage.png"
       class="image"
     >
     </nuxt-img> 

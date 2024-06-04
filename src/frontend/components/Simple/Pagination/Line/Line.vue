@@ -66,8 +66,8 @@ watch(() => props.current, (val) => {
   safeProgress.value = 0
 })
 </script>
-<style src="./line.scss" lang="scss" scoped />
 
+<style src="./line.scss" lang="scss" scoped />
 
 <template>
   <ul class="pagination-wrapper">

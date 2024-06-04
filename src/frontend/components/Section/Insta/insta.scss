@@ -5,10 +5,12 @@
   display: grid;
   background: linear-gradient(105deg, rgba(225, 48, 108, 0.17) 15.02%, rgba(64, 93, 230, 0.17) 78.61%);
   padding: 50px 20px 0 20px;
+  overflow: hidden;
 
   @include _desktop {
     grid-template-columns: 320px minmax(min-content, 1fr);
     padding: 80px 45px;
+    width: 100%;
   }
 }
 

@@ -104,6 +104,10 @@
       background: darken($color-7, 4%);
     }
 
+    &.darker {
+      color: $color-0;
+    }
+
     &.loading {
       &:before {
         background: $color-5;

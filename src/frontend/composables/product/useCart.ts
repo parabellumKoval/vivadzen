@@ -2,7 +2,7 @@ import {useCartStore} from '~/store/cart'
 
 export const useCart = (productData: Product) => {
 
-  const {t} = useI18n()
+  const {t} = useI18n({useScope: 'global'})
 
   const toCartHandler = () => {
     const data = {

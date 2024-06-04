@@ -2,18 +2,21 @@
 @import './assets/scss/mixins';
 
 .pagination {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(30px, 40px);
   align-items: center;
   column-gap: 5px;
-  margin: 0 5px;
 
   &-wrapper {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(30px, 40px) 1fr minmax(30px, 40px);
+    column-gap: 5px;
     max-width: calc(100vw - 30px);
 
     @include _desktop {
-      max-width: calc(100vw - 70px);
+      width: max-content;
     }
   }
 }
@@ -23,10 +26,9 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 100%;
   padding: 0;
-  flex-shrink: 0;
   font-weight: 400;
   font-size: 14px;
   border-radius: 6px;
@@ -35,9 +37,8 @@
   transition: box-shadow $speed, width $speed, background $speed;
 
   @include _tablet {
-    height: 40px;
-    width: 40px;
     font-size: 16px;
+    flex-shrink: 0;
   }
 
   &.active {

@@ -2,27 +2,27 @@ ru:
   new_review: Новый отзыв
   set_rating: Оцените товар от 1 до 5
   set_rating_shop: Оцените магазин Djini в целом от 1 до 5
-  w_review: Напишите ваш отзыв
   w_advantages: Опишите достоинства товара
   w_flaws: Опишите недостатки товара
   w_link: Оставьте ссылку на Facebook или Instagram 
   link: Например https://facebook.com/my_account
   link_desc_1: Добавьте ссылку на вашу действующую страницу в Facebook или Instagram чтобы показать другим пользвателям, что ваш отзыв настоящий.
   link_desc_2: После модерации вашего отзыва со ссылкой вы получите купон со скидкой 5% для покупок в магазине Djini.com.ua.
-  your_review: Ваш отзыв
   advantages: Достоинства
   flaws: Недостатки
+  tab_product: О товаре
+  tab_djini: О магазине Djini
 uk:
-  new_review: Новый отзыв
-  set_rating: Оцените товар от 1 до 5
-  set_rating_shop: Оцените магазин Djini в целом от 1 до 5
-  w_review: Напишите ваш отзыв
-  w_advantages: Опишите достоинства товара
-  w_flaws: Опишите недостатки товара
-  w_link: Оставьте ссылку на Facebook или Instagram 
-  link: Например https://facebook.com/my_account
-  link_desc_1: Добавьте ссылку на вашу действующую страницу в Facebook или Instagram чтобы показать другим пользвателям, что ваш отзыв настоящий.
-  link_desc_2: После модерации вашего отзыва со ссылкой вы получите купон со скидкой 5% для покупок в магазине Djini.com.ua. 
-  your_review: Ваш отзыв
-  advantages: Достоинства
-  flaws: Недостатки
+  new_review: Новий відгук
+  set_rating: Оцініть товар від 1 до 5
+  set_rating_shop: Оцініть магазин Djini загалом від 1 до 5
+  w_advantages: Опишіть переваги товару
+  w_flaws: Опишіть недоліки товару
+  w_link: Залишіть посилання на Facebook або Instagram
+  link: Наприклад https://facebook.com/my_account
+  link_desc_1: Додати посилання на вашу діючу сторінку в Facebook або Instagram щоб показати іншим користувачам, що ваш відгук справжній.
+  link_desc_2: Після модерації вашого відгуку з посиланням ви отримаєте купон зі знижкою 5% для покупок у магазині Djini.com.ua.
+  advantages: Переваги
+  flaws: Недоліки
+  tab_product: Про товар
+  tab_djini: Про магазин Djini

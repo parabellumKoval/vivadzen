@@ -30,12 +30,13 @@ class SearchController extends \App\Http\Controllers\Controller
     $per_page = request('perPage', 3);
 
     $products = Product::search(request('search'))->paginate($per_page);
-    
     $categories = Category::search(request('search'))->paginate($per_page);
+    $brands = Brand::search(request('search'))->paginate($per_page);
 
     return [
       'products' => ProductSearchResource::collection($products),
-      'categories' => CategorySearchResource::collection($categories)
+      'categories' => CategorySearchResource::collection($categories),
+      'brands' => BrandSearchResource::collection($brands)
     ];
   }
   
@@ -46,7 +47,7 @@ class SearchController extends \App\Http\Controllers\Controller
    * @return void
    */
   public function index(Request $request) {
-    $per_page = request('perPage', 12);
+    $per_page = request('perPage', 20);
 
     // Categories
     // if(Cache::has('search_cats')) {
@@ -55,24 +56,28 @@ class SearchController extends \App\Http\Controllers\Controller
     //   $categories = Category::search(request('search'))->get();
     //   Cache::put('search_cats', $categories, now()->addMinutes(60));
     // }
-    $categories = Category::search(request('search'))->get();
-    $categories_tree = $categories && count($categories)? $this->getCategoryTree($categories): [];
+    // $categories = Category::search(request('search'))->get();
+    // $categories_tree = $categories && count($categories)? $this->getCategoryTree($categories): [];
 
     // Products
     $products = Product::search(request('search'))->paginate($per_page);
+    // $products = Product::search(request('search'))->orderBy('in_stock', 'DESC')->get();
 
     // Brands
-    $brands = Brand::search(request('search'))->get();
+    // $brands = Brand::search(request('search'))->get();
 
     return response()->json([
       'products' => new ProductCollection($products, [
         'resource_class' => 'App\Http\Resources\ProductSmallResource'
       ]),
-      'categories' => CategorySearchResource::collection($categories_tree),
-      'brands' => BrandSearchResource::collection($brands)
+      // 'categories' => CategorySearchResource::collection($categories_tree),
+      // 'brands' => BrandSearchResource::collection($brands)
     ]);
   }
 
+  public function collectRelations() {
+
+  }
 
   public function getCategoryTree($categories) {
     $list = $this->getCategoryList($categories); 

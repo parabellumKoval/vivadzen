@@ -84,6 +84,19 @@
   @include _desktop {
     grid-template-columns: 20% 80%;
   }
+  
+  &.no-filters {
+    @include _desktop {
+      grid-template-columns: 100%;
+    }
+
+    .content-grid {
+
+      @include _desktop {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+  }
 
   &-inner {
     display: grid;
@@ -92,9 +105,12 @@
   }
   
   &-grid {
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-row-gap: 50px;
+    grid-template-columns: repeat(2, 50%);
+    grid-row-gap: 30px;
+    width: 100vw;
+    max-width: 100vw;
 
     @include _tablet {
 
@@ -102,11 +118,25 @@
 
     @include _desktop {
       grid-template-columns: repeat(4, 1fr);
+      grid-row-gap: 50px;
+      width: 100%;
     }
 
     &-item {
       height: min-content;
       border-right: 1px solid $color-6;
+
+      &:nth-child(2n) {
+        border-right: 0;
+      }
+
+      @include _desktop {
+      
+        &:nth-child(2n) {
+          border-right: 1px solid $color-6;
+        }
+
+      }
     }
   }
 }
@@ -120,6 +150,19 @@
 }
 
 .pagination {
-  margin: 40px 0 50px 0;
-  justify-content: flex-end;
+  margin: 40px auto 50px auto;
+
+  @include _desktop {
+    margin: 40px 0 50px auto;
+  }
+}
+
+
+.pending {
+  opacity: 0.5;
+  pointer-events: none;
+
+  :deep(*) {
+    pointer-events: none;
+  }
 }

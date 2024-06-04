@@ -7,10 +7,7 @@ if(route.query.error) {
 }
 
 onMounted(() => {
-
   useModal().open(resolveComponent('ModalAuthPasswordNew'), null, null, {width: {min: 420}})
-  // navigateTo('/')
-
 })
 </script>
 

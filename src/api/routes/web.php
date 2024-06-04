@@ -27,32 +27,12 @@ Route::get('/mailable', function () {
   // $feedback = Backpack\Feedback\app\Models\Feedback::find(40);
   // return new App\Mail\Buy1ClickCreatedAdmin($feedback);
 
-  // $order = App\Models\Override\Order::find(216);
+  // $order = \Backpack\Store\app\Models\Order::find(28);
   // return new App\Mail\OrderCreatedAdmin($order);
 
-  // $order = App\Models\Override\Order::find(215);
-  // return new App\Mail\OrderCreated($order);
+  $order = \Backpack\Store\app\Models\Order::find(28);
+  return new App\Mail\OrderCreated($order);
 
-  // $user = App\Models\Override\Profile::find(24);
-  // return new App\Mail\UserRegistered($user);
-
-  // $user = App\Models\Override\Profile::find(24);
-  // return new App\Mail\ReferralRegistered($user);
-
-  // $transaction = Backpack\Transactions\app\Models\Transaction::find(1132);
-  // return new App\Mail\WithdrawalCompletedAdmin($transaction);
-
-  // $transaction = Backpack\Transactions\app\Models\Transaction::find(963);
-  // return new App\Mail\WithdrawalCompleted($transaction);
-
-  // $transaction = Backpack\Transactions\app\Models\Transaction::find(963);
-  // return new App\Mail\ReferralBonus($transaction);
-
-  // $transaction = Backpack\Transactions\app\Models\Transaction::find(963);
-  // return new App\Mail\CashbackBonus($transaction);
-
-  // $transaction = Backpack\Transactions\app\Models\Transaction::find(963);
-  // return new App\Mail\ReviewBonus($transaction);
 });
 
 Route::prefix('auth')->group(function() {

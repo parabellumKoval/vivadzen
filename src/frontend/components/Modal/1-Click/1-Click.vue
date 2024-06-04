@@ -19,14 +19,9 @@ const product = computed(() => {
 })
 
 // METHODS
-// const setProductInfo = () => {
-//   form.value.extras = {...product.value}
-// }
-
 const resetForm = () => {
   form.value.phone = null
   form.value.text = null
-  // form.value.extras = null
 }
 
 const resetErrors = () => {
@@ -75,9 +70,6 @@ const buyHandler = () => {
   })
 
 }
-
-//
-// setProductInfo()
 </script>
 
 <style src="./1-click.scss" lang="scss" scoped></style>
@@ -94,7 +86,7 @@ const buyHandler = () => {
         </div>
         
         <div>
-          <div class="form-label">{{ t('w_phone') }}</div>
+          <div class="form-label">{{ t('form.phone') }}</div>
           <form-text
             v-model="form.phone"
             :error="errors?.phone"
@@ -104,7 +96,7 @@ const buyHandler = () => {
         </div>
 
         <div>
-          <div class="form-label">{{ t('w_comment') }}</div>
+          <div class="form-label">{{ t('form.comment') }}</div>
           <form-textarea
             v-model="form.text"
             :error="errors?.text"

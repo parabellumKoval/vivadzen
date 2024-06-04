@@ -17,5 +17,9 @@
 }
 
 .content {
-  margin: 50px 0;
+  margin: 20px 0 0 0;
+
+  @include _desktop {
+    margin: 50px 0 0 0;
+  }
 }

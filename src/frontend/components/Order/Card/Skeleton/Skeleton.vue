@@ -13,7 +13,7 @@ const {t} = useI18n()
       <simple-table-column :label="t('created_at')">
         <span class="date"></span>
       </simple-table-column>
-      <simple-table-column :label="t('status')">
+      <simple-table-column :label="t('label.status')">
         <span class="status"></span>
       </simple-table-column>
       <simple-table-column :label="t('amount')">

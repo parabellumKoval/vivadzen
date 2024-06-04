@@ -38,10 +38,6 @@ const deleteHandler = () => {}
     </nuxt-img>
 
     <div class="body">
-      <!-- <span v-if="item.code" class="code label">
-        {{ t('label.product_code') }}: 
-        <span class="value">{{ item.code }}</span>
-      </span> -->
       <span class="name">{{ item.name }}</span>
       <product-price
         :price="item.price"

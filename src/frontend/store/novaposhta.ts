@@ -8,23 +8,36 @@ export const useNovaposhtaStore = defineStore('novaposhtaStore', {
   },
 
   actions: {
-    async getSettlements(find: string) {
+    async getSettlements(find: string, ref: string) {
       return await $fetch("/api/np/get-settlements", {
         method: 'POST',
         body: {
+          'find': find,
+          'ref': ref
+        }
+      })
+    },
+
+    async getWarehouses(find: string, settlementRef: string) {
+      return await $fetch("/api/np/get-warehouses", {
+        method: 'POST',
+        body: {
+          'settlementRef': settlementRef,
           'find': find
         }
       })
     },
 
-    async getWarehouses(city: string, find: string) {
-      return await $fetch("/api/np/get-warehouses", {
+
+    async getStreets(find: string, settlementRef: string) {
+      return await $fetch("/api/np/get-streets", {
         method: 'POST',
         body: {
-          'city': city,
+          'settlementRef': settlementRef,
           'find': find
         }
       })
-    },
+    }
+
   },
 })

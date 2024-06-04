@@ -20,16 +20,18 @@ export const useCategoryStore = defineStore('categoryStore', {
   },
 
   actions: {
-    async index(query: string) {
+    async index(query: Object, state = true) {
       const url = useRuntimeConfig().public.apiBase + '/category'
 
       return await useServerApiFetch(url, query).then(({data, error}) => {
 
         if(data) {
-          this.allState.data = data.data
-          this.allState.meta = data.meta
+          if(state) {
+            this.allState.data = data.data
+            this.allState.meta = data.meta
+          }
 
-          return this.allState
+          return data
         }
 
         if(error)

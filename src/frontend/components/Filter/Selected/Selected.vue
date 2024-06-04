@@ -1,16 +1,13 @@
 <script setup>
+import {useFilterItem} from "~/composables/product/useFilterItem"
+
+const {modelValue, updateModelValue} = useFilterItem()
+
 const props = defineProps({
-  modelValue: {
-    type: Object
-  },
   filters: {
     type: Array
   }
 })
-
-const emit = defineEmits([
-  'update:modelValue'
-])
 
 const {t} = useI18n()
 
@@ -18,16 +15,14 @@ const selected = computed(() => {
   const values = []
 
   // For each selected filter
-  for(const index in props.modelValue) {
-    const key = props.modelValue[index].id
-    const value = props.modelValue[index].values
+  for(const index in modelValue.value) {
+    const key = modelValue.value[index].id
+    const value = modelValue.value[index].values
 
     // Find this iterration filter by ID
     let filter = props.filters.find((filter) => {
       return filter.id == key
     })
-
-    // console.log('filter', props.modelValue[index], filter, props.filters)
 
     if(!filter)
       continue
@@ -59,30 +54,38 @@ const selected = computed(() => {
 
 
 const deleteHandler = (filter) => {
-  const modelValueCopy = {...props.modelValue}
+  const modelValueCopy = [...modelValue.value]
   const filterModel = props.filters.find(item => item.id === filter.filterId)
+  const thisModelValueIndex = modelValueCopy.findIndex((item) => {
+    if(item.id === filter.filterId) {
+      return item
+    }
+  })
+
+  if(thisModelValueIndex === undefined)
+    return
 
   // For doubleslider, number - type etc.
   if(filterModel.type === 'number') {
-    delete modelValueCopy[filter.filterId]
+    modelValueCopy.splice(thisModelValueIndex, 1)
   // For lists checkbox, radio
   }else if(filterModel.type === 'checkbox' || filterModel.type === 'radio' || filterModel.type === 'brand') {
-    const valueIndex = modelValueCopy[filter.filterId].indexOf(filter.valueId)
+    const valueIndex = modelValueCopy[thisModelValueIndex].values.indexOf(filter.valueId)
 
     if(valueIndex !== -1){
-      modelValueCopy[filter.filterId].splice(valueIndex, 1)
+      modelValueCopy[thisModelValueIndex].values.splice(valueIndex, 1)
 
       // if no values remove property at all
-      if(!modelValueCopy[filter.filterId].length)
-        delete modelValueCopy[filter.filterId]
+      if(!modelValueCopy[thisModelValueIndex].values.length)
+        modelValueCopy.splice(thisModelValueIndex, 1)
     }
   }
 
-  emit('update:modelValue', modelValueCopy)
+  updateModelValue(modelValueCopy)
 }
 
 const removeAllHandler = () => {
-  emit('update:modelValue', [])
+  updateModelValue([])
 }
 </script>
 

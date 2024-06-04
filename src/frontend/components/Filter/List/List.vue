@@ -21,12 +21,7 @@ const props = defineProps({
 
 const {t} = useI18n()
 
-const emit = defineEmits([
-  'update:modelValue'
-])
-
 const opened = ref([])
-const activeFilters = ref([])
 const search = ref({
   index: null,
   value: null
@@ -40,9 +35,12 @@ const filtersComputed = computed(() => {
 
   const filters = JSON.parse(JSON.stringify(props.filters))
   const valuesCopy = [...filters[search.value.index].values]
+  const type = filters[search.value.index].type
 
   filters[search.value.index].values = valuesCopy.filter((item) => {
-    if(item.value.toLowerCase()
+    const value = type === 'brand'? item.name: item.value
+
+    if(value.toLowerCase()
         .includes(search.value.value.toLowerCase())) {
       return item
     }
@@ -52,10 +50,6 @@ const filtersComputed = computed(() => {
 })
 
 // HANDLERS
-const updateSelectedHandler = (v) => {
-  emit('update:modelValue', v)
-}
-
 const searchHandler = (index, event) => {
   search.value.value = event
   search.value.index = index
@@ -66,7 +60,7 @@ const isSearch = (filter) => {
   if(filter.noSearch)
     return false
 
-  if(filter.type === 'checkbox' || filter.type === 'radio') {
+  if(filter.type === 'checkbox' || filter.type === 'radio' || filter.type === 'brand') {
     return true
   }else {
     return false
@@ -97,8 +91,12 @@ const getMetaInit = (id) => {
 }
 
 const setOpened = () => {
-  for(var i = 0; i < props.filters.length; i++){
-    if(props.filters[i].isOpen) {
+  if(!filtersComputed.value?.length) {
+    return
+  } 
+  
+  for(var i = 0; i < filtersComputed.value.length; i++){
+    if(filtersComputed.value[i].isOpen) {
       opened.value.push(i)
     }
   }
@@ -135,7 +133,7 @@ const filterBrand = resolveComponent('filter-type-brand')
               type="text"
               @input="(event) => searchHandler(index, event.target.value)"
               class="search-input"
-              placeholder="Поиск значений"
+              :placeholder="t('label.value_search')"
             />
           </div>
 
@@ -148,16 +146,12 @@ const filterBrand = resolveComponent('filter-type-brand')
 
           <component
             v-if="filter.type === 'number'"
-            :modelValue="modelValue"
-            @update:modelValue="updateSelectedHandler"
             :is="filterDoubleslider"
             :filter="filter"
             :meta="getMeta(filter.id)"
             :meta-init="getMetaInit(filter.id)"
           ></component>
           <component v-else-if="filter.type === 'checkbox' || filter.type === 'radio'"
-            :modelValue="modelValue"
-            @update:modelValue="updateSelectedHandler"
             :is="filterCheckbox"
             :filter="filter"
             :meta="getMeta(filter.id)"
@@ -172,8 +166,6 @@ const filterBrand = resolveComponent('filter-type-brand')
             :filter="filter"
           ></component>
           <component v-else-if="filter.type === 'brand'"
-            :modelValue="modelValue"
-            @update:modelValue="updateSelectedHandler"
             :is="filterBrand"
             :filter="filter"
           ></component>

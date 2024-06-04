@@ -1,4 +1,5 @@
 <script setup>
+  const {t} = useI18n()
   const isShow = ref(true)
 
   const close = () => {
@@ -7,6 +8,7 @@
 </script>
 
 <style src="./supheader.scss" lang="scss" scoped />
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <transition name="fade-in">
@@ -14,7 +16,7 @@
       <div class="container">
         <div class="inner">
           <div class="content">
-            <div>🪖  Зроби донат для ЗСУ у розмірі не менше 150 грн та отримай купон на знижку 15% на всі товари українського бренду All Be Ukraine. Пропозиція діє до 31.08.2023</div>
+            <div>🪖 {{ t('text') }}</div>
           </div>
           <button @click="close" class="close-btn btn">
             <IconCSS name="iconoir:cancel" size="24" class="icon"></IconCSS>

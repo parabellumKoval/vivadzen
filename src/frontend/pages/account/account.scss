@@ -41,9 +41,17 @@
 
 .content {
   order: 3;
-  padding: 15px;
-  background: $color-8;
   border-radius: $radius;
+  width: calc(100vw - 30px);
+  margin: 0 15px;
+  // overflow: hidden;
+
+  @include _tablet {
+    width: 100%;
+    padding: 15px;
+    margin: 0;
+    background: $color-8;
+  }
 
   @include _desktop {
     padding: 30px;

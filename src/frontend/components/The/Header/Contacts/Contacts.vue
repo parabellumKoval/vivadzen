@@ -11,13 +11,6 @@ const openContactsHandler = (event) => {
 <template>
   <button @click="openContactsHandler" class="contacts-btn btn" type="button" clickable>
     <IconCSS name="iconoir:phone" size="20px" class="icon"></IconCSS>
-    <span class="text">{{ t('phone') }}</span>
+    <span class="text">{{ useContacts().phone }}</span>
   </button>
 </template>
-
-<i18n lang="yaml">
-uk:
-  phone: "+38 (099) 777-33-45"
-ru:
-  phone: "+38 (099) 777-33-45"
-</i18n>

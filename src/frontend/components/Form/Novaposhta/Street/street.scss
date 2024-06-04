@@ -3,9 +3,21 @@
 
 .warehouse {
   position: relative;
+
+  &.disabled {
+    opacity: 0.6;
+  }
 }
 
 :deep(.loader) {
   left: 5px;
   top: 20px;
+}
+
+.value-desc {
+  margin: 15px 0 0 0;
+  padding: 0 15px;
+  color: $color-2;
+  line-height: 135%;
+  font-size: 14px;
 }

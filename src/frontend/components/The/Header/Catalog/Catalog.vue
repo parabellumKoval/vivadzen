@@ -11,6 +11,7 @@ const openMenuHandler = () => {
 </script>
 
 <style src="./catalog.scss" lang="scss" scoped />
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <button @click="openMenuHandler" class="catalog-btn btn" type="button" clickable>
@@ -18,10 +19,3 @@ const openMenuHandler = () => {
     <span class="text">{{ t('catalog') }}</span>
   </button>
 </template>
-
-<i18n lang="yaml">
-uk:
-  catalog: "Каталог товарів"
-ru:
-  catalog: "Каталог товаров"
-</i18n>

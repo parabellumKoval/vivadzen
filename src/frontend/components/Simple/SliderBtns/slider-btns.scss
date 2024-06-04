@@ -2,11 +2,12 @@
 @import './assets/scss/mixins';
 
 .nav-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  position: relative;
+  padding: 0;
+  width: 40px;
+
+  @include _desktop {
+    width: 50px;
+  }
 
   .icon {}
 
@@ -17,34 +18,24 @@
 }
 
 .slider-button {
-  height: 50px;
-  border-radius: $radius;
-  border: 1px solid $color-6;
-  background-color: $color-6;
-  color: $color-1;
-  transition: background $speed, color $speed;
-
-  &:hover {
-    color: $color-green;
-    background-color: $color-7;
-  }
-
-  &:active {
-    transition: transform 0s;
-    transform: scale(0.95);
-  }
 }
-
 
 .btns-wrapper {
   display: grid;
-  grid-template-columns: 50px 1fr 50px;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  justify-items: center;
   grid-gap: 10px;
   width: calc(100% - 20px);
-  margin: 0 auto;
+  margin: 20px auto;
 
   @include _desktop {
+    grid-template-columns: 50px 1fr 50px;
     width: min-content;
+    margin: 20px auto;
+  }
+
+  &.short {
   }
 
   &.hide {
@@ -60,7 +51,12 @@
   grid-auto-columns: 10px;
   grid-gap: 5px;
   width: min-content;
-  margin: 20px auto;
+
+  &-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+  }
 
   @include _desktop {
     // display: none;

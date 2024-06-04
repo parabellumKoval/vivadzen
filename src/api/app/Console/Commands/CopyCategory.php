@@ -42,13 +42,45 @@ class CopyCategory extends Command
         // $this->line('Move Categories');
         // $this->copyCategory();
 
-        $this->line('Move parent id');
-        $this->_moveParentId();
+        // $this->line('Move parent id');
+        // $this->_moveParentId();
 
-        $this->line('Update category parent');
-        $this->_updateCategoryParent();
+        // $this->line('Update category parent');
+        // $this->_updateCategoryParent();
+
+        $this->line('Move is hit property');
+        $this->moveIsHitProperty();
 
         return 0;
+    }
+
+    private function moveIsHitProperty() {
+      $old_categories = \DB::table('categories')->select('categories.*')->orderBy('id')->get();
+  
+      $bar = $this->output->createProgressBar(count($old_categories));
+      $bar->start();
+
+      foreach($old_categories as $old_category) {
+        if(!$old_category->is_hit) {
+          continue;
+        }
+
+        $category = Category::where('old_id', $old_category->id)->first();
+        
+        if(!$category) {
+          $this->line('Cant find category');
+          continue;
+        }
+
+        $category->extras = [
+          'is_hit' => 1
+        ];
+        $category->save();
+
+        $bar->advance();
+      }
+
+      $bar->finish();
     }
 
     private function _moveParentId() {

@@ -14,11 +14,6 @@ const emit = defineEmits([
   'btn:click'
 ])
 
-// const model = defineModel()
-// function update(v) {
-//   console.log('update', v)
-//   model.value = v
-// }
 
 // COMPUTEDS
 // METHODS

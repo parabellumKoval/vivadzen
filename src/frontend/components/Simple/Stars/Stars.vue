@@ -50,10 +50,10 @@
   </div>
   <div v-else-if="showSmall" class="stars-small">
     <IconCSS name="bxs:star" class="star active" />
-    <span class="amount">{{ amount }}</span>
+    <span class="amount">{{ parseFloat(amount).toFixed(1) }}</span>
   </div>
   <div v-else-if="showLarge" class="stars-large">
     <IconCSS v-for="i in 5" :key="i" name="bxs:star" :class="{active: i <= amount }" class="star" />
-    <span class="amount">{{ amount.toFixed(1) }}</span>
+    <span class="amount">{{ parseFloat(amount).toFixed(1) }}</span>
   </div>
 </template>

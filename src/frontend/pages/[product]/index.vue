@@ -1,4 +1,5 @@
 <script setup>
+import {useAuthStore} from '~/store/auth';
 import {useSchema} from '~/composables/product/useSchema.ts'
 import {useProductStore} from '~/store/product'
 import {useReviewStore} from '~/store/review'
@@ -52,15 +53,6 @@ const reviewsCount = computed(() => {
 })
 
 
-// const getReviewQuery = (productId) => {
-//   const type = String.raw`Backpack\Store\app\Models\Product`;
-
-//   return {
-//     per_page: 6,
-//     reviewable_id: productId,
-//     reviewable_type: type
-//   }
-// }
 const reviewQuery = computed(() => {
   const type = String.raw`Backpack\Store\app\Models\Product`;
 
@@ -70,11 +62,6 @@ const reviewQuery = computed(() => {
     reviewable_type: type
   }
 })
-
-// const reviewsSlice = computed(() => {
-//   return currentTab.value === 0? reviews.value.slice(0, 3): reviews.value
-// })
-
 
 const tabs = computed(() => {
   const list = [
@@ -112,7 +99,16 @@ const tabs = computed(() => {
 
 // HANDLERS
 const reviewHandler = () => {
-  useModal().open(resolveComponent('ModalReviewCreate'), productMicro.value, null, {width: {min: 420, max: 420}})
+  if(useAuthStore().auth) {
+    useModal().open(resolveComponent('ModalReviewCreate'), productMicro.value, null, {width: {min: 420, max: 420}})
+  }else {
+    useNoty().setNoty({
+      content: t('noty.review.need_login'),
+      type: 'warning'
+    }, 7000)
+    
+    useModal().open(resolveComponent('ModalAuthSocial'), null, null, {width: {min: 420, max: 420}})
+  }
 }
 
 const loadReviewsHandler = async (page) => {
@@ -169,7 +165,6 @@ const setCrumbs = () => {
 const getReviews = async (query, refresh) => {
   isReviewsLoading.value = true
   await useAsyncData('reviews', () => useReviewStore().getAll(query, refresh)).then(({data, error}) => {
-    // console.log('reviews reviews', data.value.reviews, data.value.meta)
     
     if(data?.value?.reviews) {
       reviews.value = data.value.reviews
@@ -189,7 +184,6 @@ await Promise.all([
     if(data && data.value) {
       product.value = data.value
       setCrumbs()
-      // console.log('product', product.value)
       return product
     }
 
@@ -198,7 +192,6 @@ await Promise.all([
     }
   }), 
   await useAsyncData('product_reviews', () => useReviewStore().getAll(reviewQuery.value, true)).then(({data, error}) => {
-    // console.log('data reviews', data.value)
     if(data?.value?.reviews) {
       reviews.value = data.value.reviews
     }
@@ -286,14 +279,16 @@ watch(() => route.hash, (v) => {
               <product-reviews
                 :reviews="reviews"
                 :meta="reviewsMeta"
+                :product="productMicro"
                 @update:current="loadReviewsHandler"
+                id="reviews"
               ></product-reviews>
             </template>
 
             <!-- Delivery -->
             <template v-else-if="tab === 3">
               <div class="">
-                <div class="tab-title">{{ t('label.delivery') }}</div>
+                <div class="tab-title">{{ t('title.delivery') }}</div>
                 <product-delivery-info></product-delivery-info>
               </div>
             </template>
@@ -301,7 +296,7 @@ watch(() => route.hash, (v) => {
             <!-- Payment -->
             <template v-else-if="tab === 4">
               <div class="">
-                <div class="tab-title">{{ t('label.payment') }}</div>
+                <div class="tab-title">{{ t('title.payment') }}</div>
                 <product-payment-info></product-payment-info>
               </div>
             </template>
@@ -309,7 +304,7 @@ watch(() => route.hash, (v) => {
             <!-- Guarantees -->
             <template v-else-if="tab === 5">
               <div class="">
-                <div class="tab-title">{{ t('label.guarantees') }}</div>
+                <div class="tab-title">{{ t('title.guarantees') }}</div>
                 <product-guarantees-info></product-guarantees-info>
               </div>
             </template>

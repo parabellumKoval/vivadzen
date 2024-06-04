@@ -1,6 +1,7 @@
-uk:
-  search: 'Пошук'
-  find: 'Знайти'
+
 ru:
-  search: 'Поиск'
-  find: 'Найти'
+  search: Поиск
+  find: Найти
+uk:
+  search: Пошук
+  find: Знайти

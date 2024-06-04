@@ -119,7 +119,7 @@ const filterValues = (values) => {
 
   for (const [key, value] of Object.entries(values)) {
     let list = value.filter((item) =>  {
-      return item.name.search(search.value) !== -1
+      return item.name.toLowerCase().search(search.value.toLowerCase()) !== -1
     })
 
     if(list && list.length) {
@@ -156,17 +156,17 @@ await useAsyncData('brands', () => useBrandStore().index({alpha_grouped: 1})).th
 </script>
 
 <style src='./brands.scss' lang='scss' scoped></style>
-<!-- <i18n src='' lang='yaml'></i18n> -->
+<i18n src='./lang.yaml' lang='yaml'></i18n>
 
 <template>
   <div class="page-base">
     <div class="container">
       <the-breadcrumbs :crumbs="breadcrumbs"></the-breadcrumbs>
 
-      <div class="title-common">Бренды</div>
+      <div class="title-common">{{ t('title.brands') }}</div>
 
       <div>
-        <form-text v-model="search" placeholder="Найти бренд по названию" class="search-input">
+        <form-text v-model="search" :placeholder="t('find')" class="search-input">
           <template #right>
             <button @click="scrollToAnchor('brand-box')">
               <IconCSS name="iconoir:search"></IconCSS>
@@ -194,7 +194,7 @@ await useAsyncData('brands', () => useBrandStore().index({alpha_grouped: 1})).th
       </div>
 
       <div v-if="populars?.length" class="brand-box">
-        <div class="title-secondary">Популярные бренды</div>
+        <div class="title-secondary">{{ t('popular') }}</div>
         <div class="popular">
           <NuxtLink v-for="item in populars" :key="item.id" :to="localePath('/brands/' + item.slug)" class="popular-item">
             <nuxt-img

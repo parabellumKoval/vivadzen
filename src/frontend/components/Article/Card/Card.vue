@@ -10,7 +10,6 @@ const {t} = useI18n()
 
 const photo = computed(() => {
   if(props.item.image) {
-    // return props.item.image.src
     return '/server/' + props.item.image
   } else {
     return null

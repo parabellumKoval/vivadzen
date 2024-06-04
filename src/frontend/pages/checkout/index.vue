@@ -67,6 +67,10 @@ const auth = computed(() => {
 })
 
 // METHODS
+const clearError = (key) => {
+
+}
+
 const scrollHandler = (item) => {
   nextTick(() => {
     scrollToAnchor(item)
@@ -74,6 +78,8 @@ const scrollHandler = (item) => {
 }
 
 const setUserData = () => {
+  order.value.user.firstname = !order.value.user.firstname? (user.value?.firstname || null): order.value.user.firstname
+  order.value.user.lastname = !order.value.user.lastname? (user.value?.lastname || null): order.value.user.lastname
   order.value.user.phone = !order.value.user.phone? (user.value?.phone || null): order.value.user.phone
   order.value.user.email = !order.value.user.email? (user.value?.email || null): order.value.user.email
 }
@@ -81,9 +87,6 @@ const setUserData = () => {
 // HANDLERS
 const openCatalogHandler = () => {
   useModal().open(resolveComponent('ModalCatalog'), null)
-}
-const contactsHandler = () => {
-  useModal().open(resolveComponent('ModalContacts'), null)
 }
 
 const scrollToErrorHandler = () => {
@@ -105,6 +108,7 @@ const scrollToErrorHandler = () => {
 
 // WATCH
 watch(() => order.value.delivery.city, (v) => {
+  console.log('update city', v)
   order.value.delivery.warehouse = null
   order.value.delivery.street = null
 })
@@ -115,6 +119,16 @@ watch(() => order.value.delivery.method, (v) => {
 
 watch(() => authType.value, (v) => {
   errors.value.user = {}
+})
+
+watch(() => user.value, (v) => {
+  if(v) {
+    setUserData()
+    // useCartStore().setUser(user.value)
+  }
+}, {
+  deep: true,
+  immediate: true
 })
 
 // Reset errors
@@ -160,12 +174,7 @@ setUserData()
           <!-- CUSTOMER -->
           <div :class="{error: userErrors}" id="customer-box" class="checkout-box">
             <div class="title-secondary">{{ t('label.customer') }}</div>
-            <!-- <form-tabs
-              v-model="authType"
-              :items="[{key: 'new', title: 'Я новый покупатель'}, {key: 'old', title: 'Я постоянный клиент'}]"
-              class="form-tabs"
-            ></form-tabs> -->
-            
+      
             <checkout-user class="checkout-user"></checkout-user>
 
             <div class="form-grid">
@@ -173,26 +182,26 @@ setUserData()
                 v-if="!auth"
                 v-model="order.user.firstname"
                 :error="errors?.user?.firstname"
-                @input="() => errors.user.firstname = null"
+                @input="() => errors?.user?.firstname && (errors.user.firstname = null)"
                 :placeholder="t('form.firstname')"
               ></form-text>
               <form-text
                 v-if="!auth"
                 v-model="order.user.lastname"
                 :error="errors?.user?.lastname"
-                @input="() => errors.user.lastname = null"
+                @input="() => errors?.user?.lastname && (errors.user.lastname = null)"
                 :placeholder="t('form.lastname')"
               ></form-text>
               <form-text
                 v-model="order.user.phone"
                 :error="errors?.user?.phone"
-                @input="() => errors.user.phone = null"
+                @input="() => errors?.user?.phone && (errors.user.phone = null)"
                 :placeholder="t('form.phone')"
               ></form-text>
               <form-text
                 v-model="order.user.email"
                 :error="errors?.user?.email"
-                @input="() => errors.user.email = null"
+                @input="() => errors?.user?.email && (errors.user.email = null)"
                 :placeholder="t('form.email')"
               ></form-text>
             </div>
@@ -201,59 +210,63 @@ setUserData()
 
           <!-- DELIVERY -->
           <div :class="{error: deliveryErrors}" id="delivery-box" class="checkout-box">
-            <div class="title-secondary">{{ t('label.delivery') }}</div>
+            <div class="title-secondary">{{ t('title.delivery') }}</div>
             <form-tabs
               v-model="order.delivery.method"
               :items="[
-                {key: 'warehouse', title: 'Отделение Новой Почты', image: '/images/logo/np.png'}, 
-                {key: 'address', title: 'Курьером Новой Почты', image: '/images/logo/np.png'}, 
-                {key: 'pickup', title: 'Самовывоз', image: '/images/logo/djini.png'}
+                {key: 'warehouse', title: t('delivery.warehouse'), image: '/images/logo/np.png'}, 
+                {key: 'address', title: t('delivery.address'), image: '/images/logo/np.png'}, 
+                {key: 'pickup', title: t('delivery.pickup'), image: '/images/logo/djini.png'}
               ]"
               class="form-tabs"
             ></form-tabs>
             <transition name="fade-in">
+              <!-- Warehouse delivery -->
               <div v-if="order.delivery.method === 'warehouse'" class="form-grid">
                 <form-novaposhta-settlement
-                  v-model="order.delivery.city"
-                  :error="errors?.delivery?.city"
-                  @input="() => errors.delivery.city = null"
+                  v-model="order.delivery"
+                  :error="errors?.delivery?.settlement"
+                  @input="() => errors?.delivery?.settlement && (errors.delivery.settlement = null)"
                 ></form-novaposhta-settlement>
+
                 <form-novaposhta-warehouse
-                  v-model="order.delivery.warehouse"
+                  v-model="order.delivery"
                   :error="errors?.delivery?.warehouse"
-                  @input="() => errors.delivery.warehouse = null"
+                  @input="() => errors?.delivery?.warehouse && (errors.delivery.warehouse = null)"
                 ></form-novaposhta-warehouse>
               </div>
+              <!-- Address delivery -->
               <div v-else-if="order.delivery.method === 'address'" class="form-grid">
                 <form-novaposhta-settlement
-                  v-model="order.delivery.city"
-                  :error="errors?.delivery?.city"
-                  @input="() => errors.delivery.city = null"
+                  v-model="order.delivery"
+                  :error="errors?.delivery?.settlement"
+                  @input="() => errors?.delivery?.settlement && (errors.delivery.settlement = null)"
                 ></form-novaposhta-settlement>
                 <form-novaposhta-street
-                  v-model="order.delivery.street"
+                  v-model="order.delivery"
                   :error="errors?.delivery?.street"
-                  @input="() => errors.delivery.street = null"
+                  @input="() => errors?.delivery?.street && (errors.delivery.street = null)"
                 ></form-novaposhta-street>
                 <form-text
                   v-model="order.delivery.house"
                   :error="errors?.delivery?.house"
-                  @input="() => errors.delivery.house = null"
+                  @input="() => errors?.delivery?.house && (errors.delivery.house = null)"
                   :placeholder="t('form.delivery.house')"
                 ></form-text>
                 <form-text
                   v-model="order.delivery.room"
                   :error="errors?.delivery?.room"
-                  @input="() => errors.delivery.room = null"
+                  @input="() => errors?.delivery?.room && (errors.delivery.room = null)"
                   :placeholder="t('form.delivery.room')"
                 ></form-text>
                 <form-text
                   v-model="order.delivery.zip"
                   :error="errors?.delivery?.zip"
-                  @input="() => errors.delivery.zip = null"
+                  @input="() => errors?.delivery?.zip && (errors.delivery.zip = null)"
                   :placeholder="t('form.delivery.zip')"
                 ></form-text>
               </div>
+              <!-- Pickup delivery -->
               <div v-else-if="order.delivery.method === 'pickup'" class="form-grid">
                 <div class="form-static">
                   <div class="label">{{ t('label.our_address') }}</div>
@@ -261,16 +274,26 @@ setUserData()
                 </div>
               </div>
             </transition>
+
+            <div class="form-row">
+              <form-textarea
+                v-model="order.comment"
+                :error="errors?.comment"
+                @input="() => errors?.comment && (errors.comment = null)"
+                :placeholder="t('form.comment')"
+              ></form-textarea>
+            </div>
+
           </div>
 
           <!-- PAYMENT -->
           <div :class="{error: paymentErrors}" id="payment-box" class="checkout-box">
-            <div class="title-secondary">{{ t('label.payment') }}</div>
+            <div class="title-secondary">{{ t('title.payment') }}</div>
             <form-tabs
               v-model="order.payment.method"
               :items="[
-                {key: 'online', title: 'Оплатить онлайн', image: '/images/logo/liqpay.png'}, 
-                {key: 'cash', title: 'Оплата при получении заказа', image: '/images/logo/np.png'}
+                {key: 'online', title: t('pay.online'), image: '/images/logo/liqpay.png'}, 
+                {key: 'cash', title: t('pay.cash'), image: '/images/logo/np.png'}
               ]"
               class="form-tabs"
             ></form-tabs>
@@ -284,19 +307,7 @@ setUserData()
               <checkout-sale @scrollToError="scrollToErrorHandler"></checkout-sale>
             </div>
 
-            <div class="contacts-box">
-              <div class="title-secondary">{{ t('messages.have_q') }}</div>
-              <div class="contacts-desc">Мы готовы оперативно помочь 👩‍💻</div>
-              <div class="contacts">
-                <button class="button contacts-button">
-                  <IconCSS name="iconoir:phone" class="inline-icon"></IconCSS>
-                  <span>+38 (099) 777-33-45</span>
-                </button>
-                <button @click="contactsHandler" class="button lowcase contacts-button-secondary">
-                  <span>Еще</span>
-                </button>
-              </div>
-            </div>
+            <checkout-contacts class="contacts-box"></checkout-contacts>
           </div>
         </div>
       </div>

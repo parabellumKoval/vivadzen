@@ -32,16 +32,16 @@ const link = computed(() => {
         :src = "photo"
         :alt = "item.author.name"
         :title = "item.author.name"
-        width="50"
-        height="50"
+        width = "50"
+        height = "50"
         sizes = "mobile:60px tablet:60px desktop:60px"
-        format = "webp"
+        format = "avif"
         quality = "60"
         loading = "lazy"
-        fit="outside"
-        class="author-image"
-      >
-      </nuxt-img>
+        fit = "outside"
+        class = "author-image"
+        placeholder = "/images/noimage.png"
+      />
       <div>
         <div class="author-name">{{ item.author.name }}</div>
         <review-social v-if="link" :source="link" class="author-source"></review-social>

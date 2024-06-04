@@ -1,10 +1,28 @@
 <script setup>
+import {useFilterItem} from '~/composables/product/useFilterItem.ts'
+import {useCatalog} from '~/composables/product/useCatalog.ts'
+
 const {t} = useI18n()
-const props = defineProps({})
+const {modelValue} = useFilterItem()
+const {catalogMeta, pending} = useCatalog()
 
 // COMPUTEDS
+const data = computed(() => {
+  return useModal().active.data
+})
+
+const productsLength = computed(() => {
+  return catalogMeta?.value?.total || 0 
+})
+
+const filtersLength = computed(() => {
+  return modelValue?.value?.length
+})
 // METHODS
 // HANDLERS
+const applyHandler = () => {
+  useModal().close()
+}
 // WATCHERS
 </script>
 
@@ -14,16 +32,27 @@ const props = defineProps({})
 <template>
   <modal-wrapper :title="t('label.filters')" type="full">
     <div>
-      <div class="selected-wrapper">
-        <filter-selected></filter-selected>
+      <div v-if="filtersLength" class="selected-wrapper">
+        <filter-selected :filters="data.filters" ></filter-selected>
       </div>
-      <filter-list class="filters"></filter-list>
+      
+      <filter-list
+        :filters="data.filters"
+        :meta="data.meta"
+        :meta-init="data.metaInit"
+        :class="{pending: pending}"
+        class="filters"
+      ></filter-list>
+
       <div class="buttons">
-        <button class="button blue apply-btn">
+        <div class="label">
+          {{ t('label.show') }} {{ t('label.products', {products: productsLength}) }}
+        </div>
+        <button @click="applyHandler" class="button blue apply-btn">
           {{ t('button.apply') }}
-        </button>
-        <button class="button secondary reset-btn">
-          {{ t('button.reset_all') }}
+          <template v-if="filtersLength">
+            {{ ` (${filtersLength})` }}
+          </template>
         </button>
       </div>
     </div>

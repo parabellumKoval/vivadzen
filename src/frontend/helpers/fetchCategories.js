@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+import {createResolver} from '@nuxt/kit'
 
 export default async () => {
 
@@ -9,14 +10,16 @@ export default async () => {
   }
 
   const getRoutes = async () => {
+
+    const resolver = createResolver(import.meta.url)
     const data = await getData()
 
     const categories = data.map((category) => {
       return {
         name: 'category-' + category.id,
         path: '/' + category.slug,
+        file: resolver.resolve('./../extra_pages/category/index.vue')
         // params: {category: category.slug},
-        file: '~/extra_pages/category/index.vue'
         // component: () => import('~/pages/category/index.vue').then(r => r.default || r)
       }
     })

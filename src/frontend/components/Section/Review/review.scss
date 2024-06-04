@@ -30,17 +30,48 @@
 }
 
 .feedback {
-  margin: 0 0 0 -20px;
+  margin: 0 0 0 -15px;
   padding: 0;
-  width: calc(100% + 20px);
   height: min-content;
+
+  @include _desktop {
+    width: calc(100% + 20px);
+  }
 
   &-info {
     width: 100%;
-    margin: 30px 0 0 0;
-    padding: 20px;
+    margin: 30px auto 0 auto;
     border-radius: 4px;
-    background: $color-7;
+    // background: $color-7;
     line-height: 160%;
+    text-align: center;
+
+    @include _desktop {
+      padding: 20px;
+      width: 360px;
+    }
+
+
+    .more-link {
+      color: $color-green;
+    }
+
   }
+
+  .slider {
+    width: 100vw;
+
+    @include _desktop {
+      width: 100%;
+    }
+  }
+}
+
+.footer-wrapper {
+  display: grid;
+  grid-gap: 10px;
+  grid-auto-flow: column;
+  grid-auto-columns: min-content;
+  justify-content: center;
+  margin-top: 30px;
 }

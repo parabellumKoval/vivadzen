@@ -1,9 +1,11 @@
 import {useAuthStore} from '~/store/auth'
 import {useFavoritesStore} from '~/store/favorites'
+import {useModal} from '~/composables/useModal'
+import { ModalAuthSocial } from '#components'
 
 export const useFavorite = (productId: Number) => {
 
-  const {t} = useI18n()
+  const {t} = useI18n({useScope: 'global'})
   const id = ref(productId)
 
   // COMPUTEDS
@@ -16,18 +18,18 @@ export const useFavorite = (productId: Number) => {
     return false
   })
 
-  const auth = computed(() => {
-    return useAuthStore().auth
-  })
-
   const user = computed(() => {
     return useAuthStore().user
   })
 
   
   const toFavoriteHandler = () => {
-    if(!auth.value || !user.value) {
-      useModal().open(resolveComponent('ModalAuthSocial'), null, null, {width: {min: 420, max: 420}})
+    if(!useAuthStore().auth) {
+      useNoty().setNoty({
+        content: t('noty.favorite.need_login'),
+        type: 'warning'
+      }, 7000)
+      useModal().open(ModalAuthSocial, null, null, {width: {min: 420, max: 420}})
     }else {
       useFavoritesStore().sync({
         user_id: user.value.id,

@@ -15,7 +15,11 @@ class CategoryTinyResource extends JsonResource
     {
       return [
         'id' => $this->id,
+        'name' => $this->name,
         'slug' => $this->slug,
+        'image' => $this->image,
+        'extras' => $this->extras,
+        'children' => $this->children()->count()
       ];
     }
 }

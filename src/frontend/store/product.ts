@@ -118,8 +118,6 @@ export const useProductStore = defineStore('productStore', {
       const url = `${useRuntimeConfig().public.apiBase}/product/${slug}`;
 
       return await useServerApiFetch(url).then(({data, error}) => {
-        console.log('pinia', data, error)
-
         if(data) {
           return data
         }

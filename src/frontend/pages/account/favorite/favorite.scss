@@ -4,12 +4,12 @@
 
 .products-wrapper {
   display: grid;
-  grid-template-columns: minmax(min-content, 1fr);
-  grid-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0;
   transition: filter $speed;
 
   @include _tablet {
-    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
   }
 
   @include _desktop {
@@ -22,6 +22,24 @@
 
   &.pending {
     filter: blur(3px);
+  }
+}
+
+.product-item {
+  padding: 10px 5px;
+  border-bottom: 1px solid $color-7;
+  background: $color-8;
+
+  @include _desktop {
+    border-bottom: 0;
+  }
+
+  &:nth-child(2n - 1) {
+    border-right: 1px solid $color-7;
+
+    @include _desktop {
+      border-right: 0;
+    }
   }
 }
 

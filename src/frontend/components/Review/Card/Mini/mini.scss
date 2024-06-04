@@ -35,8 +35,12 @@
     color: $color-2;
 
     &-wrapper {
-      max-height: 80px;
       overflow: hidden;
+      max-height: 72px;
+
+      @include _desktop {
+        max-height: 80px;
+      }
 
       &.active {
         max-height: initial;

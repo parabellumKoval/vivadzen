@@ -47,7 +47,9 @@ const payment = computed(() => {
 })
 
 </script>
+
 <style src="./card.scss" lang="scss" scoped />
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <simple-table-row>
@@ -56,7 +58,7 @@ const payment = computed(() => {
       <simple-table-column :label="t('created_at')">
         {{ $d(order.created_at, 'short') }}
       </simple-table-column>
-      <simple-table-column :label="t('status')">
+      <simple-table-column :label="t('label.status')">
         <span :class="order.status" class="status">{{ $t(`status.${order.status}`) }}</span>
       </simple-table-column>
       <simple-table-column :label="t('amount')">
@@ -76,11 +78,11 @@ const payment = computed(() => {
         </div>
         <div class="order-meta">
           <div v-if="delivery" class="order-meta__item">
-            <div class="label">{{ t('delivery') }}</div>
+            <div class="label">{{ t('title.delivery') }}</div>
             <div class="value">{{ delivery }}</div>
           </div>
           <div v-if="payment" class="order-meta__item">
-            <div class="label">{{ t('payment') }}</div>
+            <div class="label">{{ t('title.payment') }}</div>
             <div class="value">{{ payment }}</div>
           </div>
           <div v-if="user" class="order-meta__item">
@@ -88,7 +90,7 @@ const payment = computed(() => {
             <div class="value">{{ user }}</div>
           </div>
           <div v-if="order.comment" class="order-meta__item">
-            <div class="label">{{ t('comment') }}</div>
+            <div class="label">{{ t('form.comment') }}</div>
             <div class="value">{{ order.comment }}</div>
           </div>
         </div>
@@ -96,5 +98,3 @@ const payment = computed(() => {
     </template>
   </simple-table-row>
 </template>
-
-<i18n src="./lang.yaml" lang="yaml"></i18n>

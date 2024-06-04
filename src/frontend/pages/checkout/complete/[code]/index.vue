@@ -1,6 +1,9 @@
 <script setup>
-import {useOrderFaker} from '~/composables/fakers/useOrderFaker.ts'
 import {useOrderStore} from '~/store/order';
+
+definePageMeta({
+  bg: '#eee'
+});
 
 const {t} = useI18n() 
 
@@ -12,16 +15,12 @@ const breadcrumbs = [
     name: t('title.checkout'),
     item: useToLocalePath()('/checkout')
   },{
-    name: t('messages.checkout_complete'),
+    name: t('title.checkout_complete'),
     item: useToLocalePath()('/checkout/complete')
   }
 ]
 
-// const order = ref(null)
-
-const order = computed(() => {
-  return useOrderFaker()(1)[0]
-})
+const order = ref(null)
 
 const code = computed(() => {
   return useRoute().params.code
@@ -44,27 +43,28 @@ const products = computed(() => {
   return order.value?.products || null
 })
 
-// useAsyncData('show-order', async() => await useOrderStore().getOrder(code.value))
-//   .then(({data, error}) => {
-//     order.value = data.value
-//   })
+useAsyncData('show-order', async() => await useOrderStore().getOrder(code.value))
+  .then(({data, error}) => {
+    order.value = data.value
+  })
 </script>
 
 <style src="./complete.scss" lang="scss" scoped />
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
-  <div class="page-base">
-    <div class="container" v-if="order">
+  <div class="container">
+    <div class="page-base">
 
       <the-breadcrumbs :crumbs="breadcrumbs"></the-breadcrumbs>
 
-      <h1 class="caption">{{ t('messages.checkout_complete') }}</h1>
+      <div class="title-common">{{ t('title.checkout_complete') }}</div>
 
       <div v-if="order" class="wrapper">
         <div class="content">
-          
-          <div class="grid">
-            <div class="grid-title full-width">{{ t('common') }}</div>
+        
+          <div class="grid box">
+            <div class="title-secondary full-width">{{ t('common') }}</div>
 
             <div v-if="order.code" class="cell cell-column">
               <div class="label">{{ t('number') }}</div>
@@ -82,10 +82,9 @@ const products = computed(() => {
             </div>
           </div>
 
-
-          <div class="grid">
+          <div class="grid box">
             <div class="column">
-              <div class="grid-title">{{ t('user') }}</div>
+              <div class="title-secondary">{{ t('user') }}</div>
               <div v-if="user?.firstname" class="cell">
                 <div class="label">{{ $t('form.firstname') }}</div>
                 <div class="value">{{ user.firstname }}</div>
@@ -105,7 +104,7 @@ const products = computed(() => {
             </div>
 
             <div class="column">
-              <div class="grid-title">{{ t('delivery') }}</div>
+              <div class="title-secondary">{{ t('delivery') }}</div>
               <div v-if="order?.delivery_status" class="cell">
                 <div class="label">{{ t('status') }}</div>
                 <div :class="order.delivery_status" class="value">{{ $t(`delivery_status.${order.delivery_status}`) }}</div>
@@ -114,34 +113,34 @@ const products = computed(() => {
                 <div class="label">{{ $t('form.method') }}</div>
                 <div class="value">{{ $t(`form.delivery.${delivery.method}`) }}</div>
               </div>
-              <div v-if="delivery?.city" class="cell">
-                <div class="label">{{ $t('form.city') }}</div>
-                <div class="value">{{ delivery.city }}</div>
+              <div v-if="delivery?.settlement" class="cell">
+                <div class="label">{{ $t('form.delivery.city') }}</div>
+                <div class="value">{{ delivery.settlement }}</div>
               </div>
               <div v-if="delivery?.warehouse" class="cell">
-                <div class="label">{{ $t('form.warehouse') }}</div>
+                <div class="label">{{ $t('form.delivery.warehouse') }}</div>
                 <div class="value">{{ delivery.warehouse }}</div>
               </div>
               <div v-if="delivery?.street" class="cell">
-                <div class="label">{{ $t('form.street') }}</div>
+                <div class="label">{{ $t('form.delivery.street') }}</div>
                 <div class="value">{{ delivery.street }}</div>
               </div>
               <div v-if="delivery?.house" class="cell">
-                <div class="label">{{ $t('form.house') }}</div>
+                <div class="label">{{ $t('form.delivery.house') }}</div>
                 <div class="value">{{ delivery.house }}</div>
               </div>
               <div v-if="delivery?.room" class="cell">
-                <div class="label">{{ $t('form.room') }}</div>
+                <div class="label">{{ $t('form.delivery.room') }}</div>
                 <div class="value">{{ delivery.room }}</div>
               </div>
               <div v-if="delivery?.zip" class="cell">
-                <div class="label">{{ $t('form.zip') }}</div>
+                <div class="label">{{ $t('form.delivery.zip') }}</div>
                 <div class="value">{{ delivery.zip }}</div>
               </div>
             </div>
 
             <div class="column">
-              <div class="grid-title">{{ t('payment') }}</div>
+              <div class="title-secondary">{{ t('payment') }}</div>
               <div v-if="order?.pay_status" class="cell">
                 <div class="label">{{ t('status') }}</div>
                 <div :class="order.pay_status" class="value">{{ $t(`pay_status.${order.pay_status}`) }}</div>
@@ -162,11 +161,10 @@ const products = computed(() => {
               </div>
             </div>
           </div>
-
           
 
-          <div v-if="products" class="product-wrapper">
-            <div class="grid-title p-title">{{ t('cart') }}</div>
+          <div v-if="products" class="product-wrapper box">
+            <div class="title-secondary">{{ t('cart') }}</div>
             <div class="product-grid">
               <product-card-checkout-static
                 v-for="product in products"
@@ -177,14 +175,17 @@ const products = computed(() => {
               </product-card-checkout-static>
             </div>
           </div>
+
         </div>
-        
         <aside class="aside">
-          <checkout-thanks></checkout-thanks>
+          <div class="box">
+            <checkout-thanks></checkout-thanks>
+          </div>
+          <div class="box">
+            <checkout-contacts></checkout-contacts>
+          </div>
         </aside>
       </div>
     </div>
   </div>
 </template>
-
-<i18n src="./lang.yaml" lang="yaml"></i18n>

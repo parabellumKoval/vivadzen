@@ -14,15 +14,15 @@ const socials = computed(() => {
     <div class="contacts">
       <div>
         <div class="phones">
-          <a href="/" class="button secondary contacts-btn">
+          <a href="/" class="button color-dark contacts-btn">
             <IconCSS name="iconoir:phone" class="icon"></IconCSS>
             <span class="text">{{ useContacts().phone }}</span>
           </a>
-          <a href="/" class="button secondary contacts-btn">
+          <a href="/" class="button color-dark contacts-btn">
             <IconCSS name="iconoir:phone" class="icon"></IconCSS>
             <span class="text">{{ useContacts().phone2 }}</span>
           </a>
-          <a href="/" class="button secondary contacts-btn email-btn">
+          <a href="/" class="button color-dark contacts-btn email-btn">
             <IconCSS name="iconoir:mail-opened" class="icon"></IconCSS>
             <span class="text">{{ useContacts().email }}</span>
           </a>

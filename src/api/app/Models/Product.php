@@ -23,11 +23,14 @@ class Product extends BaseProduct
   public function toSearchableArray()
   {
       $array = [
-        'name' => $this->name
+        'name' => $this->name,
       ];
 
-      // Customize the data array...
-
       return $array;
+  }
+
+  public function shouldBeSearchable()
+  {
+      return $this->active()->inStock();
   }
 }

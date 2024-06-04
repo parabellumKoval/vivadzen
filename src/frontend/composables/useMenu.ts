@@ -1,12 +1,16 @@
 export const useMenu = () => {
-  const {t} = useI18n()
+  const {t} = useI18n({useScope: 'global'})
 
   const customer = computed(() => {
     return [
       {
         id: 1,
-        link: '/agreement',
-        title: t('title.agreement')
+        link: '/policy',
+        title: t('title.policy')
+      }, {
+        id: 9,
+        link: '/terms',
+        title: t('title.terms')
       },{
         id: 7,
         link: '/returns',
@@ -35,8 +39,8 @@ export const useMenu = () => {
     return [
       {
         id: 1,
-        link: '/o-nas',
-        title: t('title.o-nas')
+        link: '/about',
+        title: t('title.about')
       },{
         id: 2,
         link: '/news',

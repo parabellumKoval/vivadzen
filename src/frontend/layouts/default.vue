@@ -119,7 +119,7 @@ useSchemaOrg([
       
         <lazy-the-footer></lazy-the-footer>
 
-        <comparison-btn></comparison-btn>
+        <comparison-btn v-if="!$device.isMobile" class="comp-btn"></comparison-btn>
 
         <modal-transition :is-show="useModal().show" mode="out-in">
           <component :is="useModal().active.component"></component>

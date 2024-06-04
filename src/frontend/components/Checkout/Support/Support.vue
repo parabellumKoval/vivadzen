@@ -1,6 +1,6 @@
 <script setup>
 // import 'vue3-lottie/dist/style.css'
-import {Vue3Lottie} from 'vue3-lottie'
+// import {Vue3Lottie} from 'vue3-lottie'
 
 const {t} = useI18n()
 
@@ -48,6 +48,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style src="./support.scss" lang="scss" scoped />
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <div @mouseenter="playHandler" ref="ctaElement" class="support">
@@ -75,5 +76,3 @@ onBeforeUnmount(() => {
     </div>
   </div>
 </template>
-
-<i18n src="./lang.yaml" lang="yaml"></i18n>

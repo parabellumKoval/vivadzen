@@ -1,4 +1,10 @@
 ru:
-  review_shop: о магазине
-  review_product: о товаре
+  review_shop: Отзывы о магазине
+  review_product: Отзывы о товарах
+  shop: о магазине
+  product: о товаре
 uk:
+  review_shop: Відгуки про магазин
+  review_product: Відгуки про товари
+  shop: про магазин
+  product: про товар

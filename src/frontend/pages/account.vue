@@ -78,7 +78,7 @@ const menus = computed(() => {
     ],[
       {
         id: 7,
-        title: 'Поддержка',
+        title: t('title.account.support'),
         slug: 'support',
         icon: 'iconoir:headset-help',
         link: '/account/support'
@@ -90,6 +90,9 @@ const menus = computed(() => {
 // METHODS
 // HANDLERS
 const clickMenuHandler = (item) => {
+
+  isMenuOpen.value = false
+
   if(item.link){
     navigateTo(useLocalePath()(item.link))
   }else if(item.callback) {

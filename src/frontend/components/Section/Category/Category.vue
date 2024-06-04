@@ -2,11 +2,17 @@
 import { useCategoryStore } from '~/store/category'
 
 const {t} = useI18n()
-const categories = computed(() => {
-  return useCategoryStore().list
+
+const categories = ref([])
+const query = ref({
+  extras: {
+    is_hit: 1
+  },
+  is_root: 0,
+  resource: 'tiny'
 })
 
-
+//
 const getPhotoSrc = (image) => {
   if(image?.src) {
     return '/server/images/categories/' + image.src
@@ -15,7 +21,21 @@ const getPhotoSrc = (image) => {
   }
 }
 
-// console.log('categories', categories.value)
+// HANDLERS
+const catalogHandler = () => {
+  useModal().open(resolveComponent('ModalCatalog'), null, null, {width: {
+    min: 'calc(100vw - 90px)',
+    max: 'calc(100vw - 90px)'
+  }})
+}
+
+//
+await useAsyncData('main-categories-is_hit', () => useCategoryStore().index(query.value, false)).then(({data}) => {
+  if(data?.value.data) {
+    categories.value = data.value.data
+  }
+})
+
 </script>
 
 <style src="./category.scss" lang="scss" scoped></style>
@@ -53,9 +73,12 @@ const getPhotoSrc = (image) => {
         <IconCSS name="ph:caret-right-fill" class="category-icon"></IconCSS>
         <div class="category-content">
           <div class="category-name">{{ category.name }}</div>
-          <div class="category-children">{{ t('subcats') }}: {{ category.children.length }}</div>
+          <div class="category-children">{{ t('subcats') }}: {{ category.children }}</div>
         </div>
       </NuxtLink>
+    </div>
+    <div class="footer-wrapper">
+      <button @click="catalogHandler" class="button secondary">{{ t('all') }}</button>
     </div>
   </section>
 </template>

@@ -1,40 +1,43 @@
 <script setup>
+const {t} = useI18n()
+
 const advantages = computed(() => {
   return [
     {
       id: 1,
       icon: 'solar:ticket-sale-bold-duotone',
-      title: 'Купоны и промокоды',
-      desc: '<a href="/">Подпишитесь</a> на обновления и получайте еженедельные скидки на разные категории товаров'
+      title: t('adv1.title'),
+      desc: '<a href="/">' + t('sub') + '</a> ' + t('adv1.desc')
     },
     {
       id: 2,
       icon: 'solar:hand-money-bold-duotone',
-      title: 'Накопительная система',
-      desc: '<a href="/">Зарегистрируйте</a> аккаунт в нашем магазине и накапливайте бонусы и скидки '
+      title: t('adv2.title'),
+      desc: '<a href="/">' + t('reg') + '</a> ' + t('adv2.desc')
     },
     {
       id: 3,
       icon: 'solar:medal-ribbons-star-bold-duotone',
-      title: 'Оригинальная продукция',
-      desc: 'Продукция сертифицирована и только оригинальные брендовые товары'
+      title: t('adv3.title'),
+      desc: t('adv3.desc')
     },
     {
       id: 4,
       icon: 'solar:chat-square-like-bold-duotone',
-      title: '500+ реальных отзывов',
-      desc: 'В нашем магазине только настоящие отзывы. Убидитесь в этом - <a href="/">оставить отзыв</a>'
+      title: t('adv4.title'),
+      desc: t('adv4.desc') + ' - <a href="/">' + t('button.leave_review') + '</a>'
     }
   ]
 })
 </script>
 
 <style src="./adv.scss" lang="scss" scoped></style>
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <section class="main-section adv-section">
-    <div class="section-title">Здоровье на первом месте</div>
-    <div class="desc">Получите бесценные преимущества от заботы за своим здоровьем вместе с магазином <span class="selected">djini.com.ua</span> 😍</div>
+    <div class="section-title">{{ t('title') }}</div>
+    <div class="desc">{{ t('desc') }} <span class="selected">djini.com.ua</span> 😍</div>
 
     <div class="adv-wrapper">
       <div v-for="adv in advantages" :key="adv.id" class="adv-item">
@@ -44,7 +47,7 @@ const advantages = computed(() => {
       </div>
     </div>
 
-    <NuxtLink :to="useLocalePath('/')" class="button primary adv-btn">Товары для здоровья</NuxtLink>
+    <NuxtLink :to="localePath('/vitaminy_i_mineraly')" class="button primary adv-btn">{{ t('button') }}</NuxtLink>
 
     <nuxt-img
       src = "/images/apple.png"

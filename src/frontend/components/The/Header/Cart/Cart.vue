@@ -20,16 +20,9 @@ const cartLength = computed(() => {
 <template>
   <button @click="openCartHandler" class="header-btn cart-btn" type="button" clickable>
     <IconCSS name="iconoir:shopping-bag" size="30px" class="icon"></IconCSS>
-    <span class="hint">{{ t('cart') }}</span>
+    <span class="hint">{{ t('title.cart') }}</span>
     <transition name="zoom">
       <div v-if="cartLength" class="budge">{{ cartLength }}</div>
     </transition>
   </button>
 </template>
-
-<i18n lang="yaml">
-uk:
-  cart: "Кошик"
-ru:
-  cart: "Корзина"
-</i18n>

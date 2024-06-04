@@ -1,4 +1,6 @@
 export const usePaymentVendor = () => {
+  const {t} = useI18n({useScope: 'global'})
+  
   const all = [
     {
       id: 1,
@@ -43,13 +45,13 @@ export const usePaymentVendor = () => {
   const types = [
     {
       id: 1,
-      title: 'Наложенный платеж'
+      title: t('payment.type.delivery')
     },{
       id: 2,
-      title: 'Наличными'
+      title: t('payment.type.cash')
     },{
       id: 3,
-      title: 'Безналичный расчет'
+      title: t('payment.type.online')
     }
   ]
 

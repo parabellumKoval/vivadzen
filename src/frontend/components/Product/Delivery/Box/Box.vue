@@ -5,18 +5,18 @@ const methods = computed(() => {
   return [
     {
       id: 1,
-      name: 'У відділення / поштомат "Нова пошта"',
-      desc: 'За тарифами перевізника',
+      name: t('delivery_one.title'),
+      desc: t('delivery_one.desc'),
       image: '/images/logo/np-mini.png'
     },{
       id: 2,
-      name: "Кур'єр НП за вашою адресою",
-      desc: 'За тарифами перевізника',
+      name: t('delivery_two.title'),
+      desc: t('delivery_two.desc'),
       image: '/images/logo/np-mini.png'
     },{
       id: 3,
-      name: 'Самовывоз',
-      desc: 'по адресу',
+      name: t('delivery_three.title'),
+      desc: t('delivery_three.desc'),
       image: '/images/logo/np-mini.png'
     }
   ]
@@ -25,10 +25,11 @@ const methods = computed(() => {
 
 <style src="./../../box.scss" lang="scss" scoped></style>
 <style src="./box.scss" lang="scss" scoped></style>
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <div class="product-box">
-    <div class="product-box-label">Доставка в Харьков:</div>
+    <div class="product-box-label">{{ t('delivery') }}:</div>
     <div class="method">
       <div v-for="method in methods" :key="method.id" class="method-item">
         <nuxt-img
@@ -51,8 +52,8 @@ const methods = computed(() => {
     <div class="free-delivery">
       <IconCSS name="solar:gift-bold-duotone" class="free-delivery-icon"></IconCSS>
       <span class="free-delivery-name">
-        Бесплатная доставка
-        <span class="free-delivery-desc">при заказе <span class="bold">от 1000 грн.</span></span>
+        {{ t('free') }}
+        <span class="free-delivery-desc">{{ t('order') }} <span class="bold">{{ t('grn') }}</span></span>
       </span>
     </div>
   </div>

@@ -1,8 +1,10 @@
 <script setup>
 import {useCartStore} from '~/store/cart'
-import {usePromocodeStore} from '~/store/promocode'
+import {useAuthStore} from '~/store/auth';
 
 const {t} = useI18n()
+const localePath = useLocalePath()
+
 const props = defineProps({
   cart: {
     type: Object
@@ -33,12 +35,33 @@ const promocodeSale = computed(() => {
   return useCartStore().promocodeSale
 })
 
+const user = computed(() => {
+  return useAuthStore().user
+})
+
+const auth = computed(() => {
+  return useAuthStore().auth
+})
+
 // METHODS
 
 // HANDLERS
 const goCompleteHandler = () => {
-  useCartStore().createOrder(null).then((r) => {
-    console.log('r', r)
+  
+  let orderable = {
+    orderable_id: null,
+    orderable_type: null
+  }
+
+  if(auth.value && user.value) {
+    orderable.orderable_id = user.value.id
+    orderable.orderable_type = 'supabase'
+  }
+
+  useCartStore().createOrder(orderable).then((r) => {
+    if(r && r.code) {
+      navigateTo(localePath('/checkout/complete/' + r.code))
+    }
   }).catch((e) => {
     useNoty().setNoty({
       title: t('error.error'),
@@ -47,18 +70,38 @@ const goCompleteHandler = () => {
     }, 7000)
 
     emit('scrollToError')
-    console.log('e', e)
   })
 }
 
 const goPayHandler = () => {
+  
+  let orderable = {
+    orderable_id: null,
+    orderable_type: null
+  }
 
+  if(auth.value && user.value) {
+    orderable.orderable_id = user.value.id
+    orderable.orderable_type = 'supabase'
+  }
+
+
+  useCartStore().validate(orderable).then((r) => {
+    navigateTo(localePath('/checkout/payment'))
+  }).catch((e) => {
+    useNoty().setNoty({
+      title: t('error.error'),
+      content: t('error.check_fields'),
+      type: 'error'
+    }, 7000)
+
+    emit('scrollToError')
+  })
 }
 // WATCHERS
 </script>
 
 <style src='./sale.scss' lang='scss' scoped></style>
-<!-- <i18n src='' lang='yaml'></i18n> -->
 
 <template>
   <div class="sale">

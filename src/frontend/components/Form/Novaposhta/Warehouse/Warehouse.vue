@@ -1,14 +1,11 @@
-<script setup>
-import {useNovaposhtaStore} from '~/store/novaposhta'
-const {t} = useI18n()
+<script setup lang="ts">
+import {useNp} from '~/composables/form/useNp'
+import type {Delivery} from '~/types/order';
+import type {PropType} from 'vue';
 
 const props = defineProps({
-  city: {
-    type: String,
-    default: null
-  },
   modelValue: {
-    type: String,
+    type: Object as PropType<Delivery>,
     default: null
   },
   error: {
@@ -17,84 +14,100 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['selected', 'update:modelValue', 'update:ref'])
+const {t} = useI18n()
 
-const results = ref([])
-const searchWarehouse = ref('')
-const isLoading = ref(false)
+const {getWarehouses, warehouses, isLoadingWarehouses, settlement, warehouse, setWarehouse} = useNp()
+const emit = defineEmits(['selected', 'update:modelValue'])
+
+const search = ref('')
 
 
-const getWarehouses = async (city, search = '') => {
-  isLoading.value = true
-  return await useNovaposhtaStore().getWarehouses(city, search).then((res) => {
-    if(res.data && res.data.length){
-      results.value = res.data
-    }else {
-      results.value = []
-    }
+// COMPUTED
+const warehouseString = computed(() => {
+  return props.modelValue?.warehouse || warehouse.value?.warehouse || null
+})
 
-    return res.data
-  }).finally(() => {
-    isLoading.value = false
-  })
+const isDisabled = computed(() => {
+  return !settlement.value.settlementRef
+})
+
+// METHODS
+const updateWarehouse = (value) => {
+
+  setWarehouse(value)
+
+  let newValue = {
+    ...props.modelValue
+  }
+
+  newValue.warehouse = value.warehouse
+  newValue.warehouseRef = value.warehouseRef
+
+  emit('update:modelValue', newValue)
+
 }
 
 // WATCH
-watch(() => props.city, (val) => {
-  getWarehouses(val, searchWarehouse.value)
+watch(() => search.value, (val) => {
+  const settlementRef = settlement.value.settlementRef || null
+  getWarehouses(val, settlementRef)
 })
 
-// COMPUTED
-const postOffices = computed(() => {
-  return results.value && results.value.map((item) => {
-    return {
-      value: item.Description,
-      key: item.Ref
-    }
-  })
+// update warehouses if settlement was updated
+watch(() => settlement.value, (v) => {
+
+  if(!v.settlementRef) {
+    return
+  }
+
+  updateWarehouse({warehouse: null, warehouseRef: null})
+
+  setTimeout(() => {
+    // get warehouses without search by string
+    getWarehouses(null, v.settlementRef)
+  }, 1000)
+}, {
+  deep: true,
+  immediate: true
 })
 
 // HANDLERS
-const updateSearchWarehouseHandler = (v) => {
-  searchWarehouse.value = v
-  getWarehouses(props.city, v)
-}
-
 const updateModelValueHandler = (ref) => {
-  const searched = results.value.find((item) => {
-    return item.Ref === ref
+  const searched = warehouses.value.find((item) => {
+    return item.warehouseRef === ref
   })
 
-  getWarehouses(props.city, searched.Description).then((res) => {
-    if(res && res.length === 1)
-      emit('selected', res[0])
-  })
+  if(!searched) {
+    console.warn('Warehouse was not fond in the warehouses list')
+    return
+  }
 
-  emit('update:modelValue', searched.Description)
-  emit('update:ref', searched.Ref)
+  updateWarehouse(searched)
 }
 
 </script>
 <style src="./warehouse.scss" lang="scss" scoped />
 
 <template>
-  <div class="warehouse">
+  <div :class="{'disabled': isDisabled}" class="warehouse">
     <transition name="scale-x">
-      <simple-loader v-if="isLoading"></simple-loader>
+      <simple-loader v-if="isLoadingWarehouses"></simple-loader>
     </transition>
 
     <form-dropdown
-      :model-value = "modelValue"
+      :model-value = "modelValue.warehouse"
       @update:modelValue="updateModelValueHandler"
-      :search-value = "searchWarehouse"
-      @update:searchValue = "updateSearchWarehouseHandler"
-      :values = "postOffices"
+      v-model:search-value = "search"
+      :values = "warehouses"
       :placeholder="$t('form.delivery.warehouse')"
       :error="error"
-      list-value="value"
-      list-key="key"
+      :is-disabled="isDisabled"
+      list-value="warehouse"
+      list-key="warehouseRef"
       required
     >
     </form-dropdown>
+
+    <p v-if="warehouseString" class="value-desc">{{ warehouseString }}</p>
   </div>
 </template>

@@ -13,3 +13,9 @@
     width: auto;
   }
 }
+
+.comp-btn{
+  :deep('.comparison-btn') {
+    border: 2px solid $color-8;
+  }
+}

@@ -5,12 +5,18 @@ export const useCartStore = defineStore('cartStore', {
     orderState: {
       delivery: {
         method: 'warehouse',
-        city: null,
+        settlement: null,
+        settlementRef: null,
+        region: null,
+        area: null,
         street: null,
+        streetRef: null,
+        type: null,
         house: null,
         room: null,
         zip: null,
         warehouse: null,
+        warehouseRef: null,
         comment: null
       },
       payment: {
@@ -22,6 +28,7 @@ export const useCartStore = defineStore('cartStore', {
         firstname: null,
         lastname: null,
       },
+      comment: null,
       promocode: null
     },
     
@@ -141,8 +148,8 @@ export const useCartStore = defineStore('cartStore', {
     },
 
     setUser(user) {
-      const {firstname, lastname, email, phone} = user
-      this.orderState.user = {firstname, lastname, email, phone}
+      // const {firstname, lastname, email, phone} = user
+      // this.orderState.user = {firstname, lastname, email, phone}
     },
 
     async copyOrder(id: number) {
@@ -181,13 +188,55 @@ export const useCartStore = defineStore('cartStore', {
         })
     },
 
-    async validate(provider: String = 'data') {
-      const url = `${useRuntimeConfig().public.apiBase}/orders/validate`
+    normalizeDeliveryWarehouse() {
+      this.orderState.delivery.street = null
+      this.orderState.delivery.streetRef = null
+      this.orderState.delivery.house = null
+      this.orderState.delivery.room = null
+      this.orderState.delivery.zip = null
+    },
+
+    normalizeDeliveryAddress() {
+      this.orderState.delivery.warehouse = null
+      this.orderState.delivery.warehouseRef = null
+    },
+
+    normalizeDeliveryPickup() {
+      this.orderState.delivery.settlement = null
+      this.orderState.delivery.settlementRef = null
+      this.orderState.delivery.region = null
+      this.orderState.delivery.area = null
+      this.orderState.delivery.street = null
+      this.orderState.delivery.streetRef = null
+      this.orderState.delivery.type = null
+      this.orderState.delivery.house = null
+      this.orderState.delivery.room = null
+      this.orderState.delivery.zip = null
+      this.orderState.delivery.warehouse = null
+      this.orderState.delivery.warehouseRef = null
+    },
+
+    normalizedOrderState() {
+      if(this.orderState.delivery.method === 'warehouse') {
+        this.normalizeDeliveryWarehouse()
+      }else if(this.orderState.delivery.method === 'address') {
+        this.normalizeDeliveryAddress()
+      }else  if(this.orderState.delivery.method === 'pickup') {
+        this.normalizeDeliveryPickup()
+      }
+    },
+
+
+    async validate(orderable: Object) {
+      const url = `${useRuntimeConfig().public.apiBase}/order/validate`
+
+      delete this.orderState.delivery.comment
 
       const dataPost = {
+        ...orderable,
         ...this.orderState,
         products: this.serializeCart(),
-        provider: provider
+        provider: 'data'
       }
       
       return await useApiFetch(url, dataPost, 'POST')
@@ -197,38 +246,20 @@ export const useCartStore = defineStore('cartStore', {
           }
 
           if(error) {
-            this.errorsState = error
+            this.errorsState = error?.options
             throw error
           }
 
         })
     },
 
-
-    normalizedOrderState() {
-      if(this.orderState.delivery.method === 'warehouse') {
-        this.orderState.delivery.street = null
-        this.orderState.delivery.house = null
-        this.orderState.delivery.room = null
-        this.orderState.delivery.zip = null
-      }else if(this.orderState.delivery.method === 'address') {
-        this.orderState.delivery.warehouse = null
-      }else  if(this.orderState.delivery.method === 'pickup') {
-        this.orderState.delivery = {
-          method: 'pickup',
-          city: null,
-          street: null,
-          house: null,
-          room: null,
-          zip: null,
-          warehouse: null,
-          comment: null
-        }
-      }
-    },
-
     async createOrder(orderable: Object) {
       const url = `${useRuntimeConfig().public.apiBase}/order`
+
+      // delete this.orderState.delivery.city
+      // delete this.orderState.delivery.ref
+      // delete this.orderState.delivery.name
+      // delete this.orderState.delivery.comment
 
       // Normalize delivery at first
       this.normalizedOrderState()

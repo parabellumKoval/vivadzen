@@ -2,8 +2,8 @@
 
 return [
     'currency' => [
-      'value' => 'usd',
-      'symbol' => '$',
+      'value' => 'грн.',
+      'symbol' => 'UAH',
     ],
     
     // CATALOG
@@ -72,7 +72,7 @@ return [
         ],
         
         'delivery' => [
-          'rules' => 'array:city,street,house,room,zip,method,warehouse,comment',
+          'rules' => 'array:settlement,settlementRef,street,streetRef,area,region,type,house,room,zip,method,warehouse,warehouseRef',
           'store_in' => 'info',
           'method' => [
             'rules' => 'required|in:address,warehouse,pickup'
@@ -80,41 +80,44 @@ return [
           'warehouse' => [
             'rules' => 'required_if:delivery.method,warehouse|nullable|string|min:1|max:500'
           ],
-          'city' => [
-            'rules' => 'required_if:delivery.method,address,warehouse|nullable|string|min:2|max:255'
+          'warehouseRef' => [
+            'rules' => 'nullable|string|min:1|max:500'
+          ],
+          'settlement' => [
+            'rules' => 'required_if:delivery.method,address,warehouse|nullable|string|min:2|max:500'
+          ],
+          'settlementRef' => [
+            'rules' => 'nullable|string|min:1|max:500'
+          ],
+          'area' => [
+            'rules' => 'nullable|string|min:1|max:500'
+          ],
+          'region' => [
+            'rules' => 'nullable|string|min:1|max:500'
+          ],
+          'type' => [
+            'rules' => 'nullable|string|min:1|max:500'
           ],
           'street' => [
             'rules' => 'required_if:delivery.method,address|nullable|string|min:2|max:255'
           ],
+          'streetRef' => [
+            'rules' => 'nullable|string|min:2|max:255'
+          ],
           'house' => [
-            'rules' => 'required_if:delivery.method,address|nullable|string|min:2|max:50'
+            'rules' => 'required_if:delivery.method,address|nullable|string|min:1|max:50'
           ],
           'room' => [
-            'rules' => 'required_if:delivery.method,address|nullable|string|min:2|max:50'
+            'rules' => 'nullable|string|min:1|max:50'
           ],
           'zip' => [
             'rules' => 'required_if:delivery.method,address|nullable|string|min:5|max:255'
-          ],
-          'comment' => [
-            'rules' => 'nullable|string|min:1|max:1000'
-          ],
-          // 'rules' => 'array:city,address,zip,method,warehouse',
-          // 'store_in' => 'info',
-          // 'method' => [
-          //   'rules' => 'required|in:address,warehouse,pickup'
-          // ],
-          // 'warehouse' => [
-          //   'rules' => 'required_if:delivery.method,warehouse|string|min:1|max:500'
-          // ],
-          // 'city' => [
-          //   'rules' => 'required_if:delivery.method,address,warehouse|string|min:2|max:255'
-          // ],
-          // 'address' => [
-          //   'rules' => 'required_if:delivery.method,address|string|min:2|max:255'
-          // ],
-          // 'zip' => [
-          //   'rules' => 'required_if:delivery.method,address|string|min:5|max:255'
-          // ],
+          ]
+        ],
+
+        'comment' => [
+          'rules' => 'nullable|string|min:1|max:1000',
+          'store_in' => 'info'
         ],
         
         'products' => [
@@ -158,7 +161,7 @@ return [
       'per_page' => 12,
 
       'resource' => [
-        'tiny' => 'Backpack\Store\app\Http\Resources\CategoryTinyResource',
+        'tiny' => 'App\Http\Resources\CategoryTinyResource',
 
         'small' => 'App\Http\Resources\CategorySmallResource',
 

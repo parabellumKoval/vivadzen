@@ -1,5 +1,4 @@
 <script setup>
-const {t} = useI18n()
 const props = defineProps({
   items: {
     type: Array

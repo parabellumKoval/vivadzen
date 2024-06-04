@@ -3,7 +3,6 @@ import {useComparison} from '~/composables/product/useComparison.ts'
 import {useFavorite} from '~/composables/product/useFavorite.ts'
 import {useCart} from '~/composables/product/useCart.ts'
 
-const {t} = useI18n()
 const props = defineProps({
   product: {
     type: Object
@@ -46,6 +45,6 @@ const favoriteIcon = computed(() => {
       <simple-price :value="product.price" class="price-base"></simple-price>
     </div>
 
-    <button @click="toCartHandler" class="button primary buy-btn">{{ t('button.buy') }}</button>
+    <button @click="toCartHandler" class="button primary buy-btn">{{ $t('button.buy') }}</button>
   </div>
 </template>
