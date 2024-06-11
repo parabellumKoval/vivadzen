@@ -47,7 +47,7 @@ const advantages = computed(() => {
       </div>
     </div>
 
-    <NuxtLink :to="localePath('/vitaminy_i_mineraly')" class="button primary adv-btn">{{ t('button') }}</NuxtLink>
+    <NuxtLink :to="localePath('/catalog')" class="button primary adv-btn">{{ t('button') }}</NuxtLink>
 
     <nuxt-img
       src = "/images/apple.png"

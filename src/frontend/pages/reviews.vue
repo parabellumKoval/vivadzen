@@ -9,8 +9,8 @@ const breadcrumbs = [
     name: t('title.home'),
     item: '/'
   },{
-    name: t('title.catalog'),
-    item: '/catalog'
+    name: t('title.reviews'),
+    item: '/reviews'
   }
 ]
 
@@ -79,6 +79,12 @@ const scrollToContent = () => {
     behavior: "smooth"
   })
 }
+
+
+//
+onServerPrefetch(() => {
+  useSeo().setPageSeo(t('review_shop'))
+})
 
 // HOOK
 </script>

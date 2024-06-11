@@ -59,8 +59,12 @@
 }
 
 .amount {
-  color: $color-orange;
+  color: $color-5;
   font-weight: 500;
+
+  &.active {
+    color: $color-orange;
+  }
 }
 
 .star {

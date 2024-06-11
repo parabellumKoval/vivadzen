@@ -1,6 +1,6 @@
-export const useSchema = (product: Product, reviews: Review[]) => {
+export const useSchema = () => {
 
-  const setScheema = () => {
+  const setSchema = (product: Product, reviews: Review[]) => {
     const imageUrl = product.images && product.images[0]?.src? `${useRuntimeConfig().public.base}/${product.images[0]?.src}`: null
     
     const scheema = {
@@ -46,5 +46,7 @@ export const useSchema = (product: Product, reviews: Review[]) => {
   }
 
 
-  setScheema()
+  return {
+    setSchema
+  }
 }

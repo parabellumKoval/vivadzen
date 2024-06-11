@@ -158,15 +158,8 @@ const setCardSizes = () => {
 }
 
 const findAndSetActiveIndex = (x) => {
-  const v = Math.floor(x / cardSizes.value[0].width)
+  const v = Math.round(x / cardSizes.value[0].width)
   activeIndex.value = v
-
-  // const index = cardSizes.value.findIndex((item) => {
-  //   return item.startX >= x - 2 && item.startX <= x + 2
-  // })
-
-  // if(index !== -1)
-  //   activeIndex.value = index
 }
 
 const calcProgress = (x) => {
@@ -259,8 +252,6 @@ const listScrollHandler = (event) => {
   //   scrollEnd.value = true
   // }, 0)
 
-
-  // console.log('x', x)
   calcProgress(x)
 }
 

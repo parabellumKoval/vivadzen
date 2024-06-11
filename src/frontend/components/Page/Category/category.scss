@@ -1,0 +1,51 @@
+@import './assets/scss/vars';
+@import './assets/scss/mixins';
+@import './assets/scss/rich-text';
+
+.review {
+  margin: 70px 0;
+
+  &-title {
+    margin-bottom: 15px;
+
+    @include _desktop {
+      margin-bottom: 30px;
+    }
+  }
+
+  &-header {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min-content;
+    grid-gap: 35px;
+    margin-bottom: 30px;
+
+    @include _desktop {
+      margin-bottom: 50px;
+    }
+  }
+
+  &-count {
+    white-space: nowrap;
+  }
+
+  &-item {
+    margin-bottom: 30px;
+
+    @include _desktop {
+      margin-bottom: 50px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.seo-text {
+  margin: 70px 0;
+}
+
+.faq-section {
+  margin: 70px 0 0 0;
+}

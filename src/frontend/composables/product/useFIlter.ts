@@ -1,23 +1,24 @@
 import {useAttributeStore} from '~/store/attribute'
 import {useBrandStore} from '~/store/brand'
 
-export const useFilter = (query: Object) => {
+export const useFilter = () => {
   const {t} = useI18n({useScope: 'global'})
 
-  const getFilters = async (query: Object) => {
+  const getFilters = async (query: Object, useAttributes: Boolean = true) => {
     return useAsyncData('filters', async () => {
       return await Promise.all([
         getBrands(query).then((data) => {
-          // console.log('brands - ', data)
           return data || []
         }),
         getAttributes(query).then((data) => {
-          // console.log('attributes - ', data)
           return data || []
         })
       ]).then(([brands, attributes]) => {
-        // console.log('brands, attributes - ', brands, attributes)
-        return prepareFilters(attributes, brands)
+        if(useAttributes) {
+          return prepareFilters(attributes, brands)
+        }else {
+          return prepareFilters([], brands)
+        }
       })
     }).then((data) => {
       return data
@@ -37,7 +38,7 @@ export const useFilter = (query: Object) => {
   }
 
   const prepareFilters = (attributes: Object[], brands: Object[]) => {
-    const filtersCopy = [...attributes]
+    const filtersCopy = attributes?.length? [...attributes]: []
 
     filtersCopy.push({
       id: 'price',
@@ -47,7 +48,7 @@ export const useFilter = (query: Object) => {
       type: 'number'
     })
 
-    if(brands) {
+    if(brands?.length) {
       filtersCopy.unshift({
         id: 'brand',
         name: t('label.brand'),

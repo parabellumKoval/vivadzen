@@ -13,9 +13,6 @@ const {getProducts} = useCatalog()
 // Attributes
 const attributes = ref([])
 
-// Brands
-const brands = ref([])
-
 // Filters
 const filtersMeta = ref(null)
 const filtersMetaInit = ref(null)
@@ -80,6 +77,18 @@ const query = computed(() => {
 })
 
 // METHODS
+const setSeo = () => {
+  useHead({
+    title: brand.value.seo.meta_title || t('seo_title_template', {brand: brand.value.name}),
+    meta: [
+      {
+        name: 'description',
+        content: brand.value.seo.meta_description || t('seo_desc_template', {brand: brand.value.name})
+      },
+    ],
+  })
+}
+
 const setCrumbs = () => {
   breadcrumbs.value = [
     {
@@ -163,6 +172,12 @@ await useAsyncData(`brand-${slug.value}`, () => useBrandStore().show(slug.value)
     setCrumbs()
   }
 });
+
+
+onServerPrefetch(() => {
+  // setSchema(props.product, reviews.value)
+  setSeo()
+})
 </script>
 
 <style src='./brand.scss' lang='scss' scoped></style>
@@ -183,11 +198,16 @@ await useAsyncData(`brand-${slug.value}`, () => useBrandStore().show(slug.value)
     :updatePageCallback = "updatePageHandler"
   >
     <template #title>
-      {{ t('company_prod') }} {{ brand.name }}
+      <template v-if="brand.seo.h1">
+        {{ brand.seo.h1 }}
+      </template>
+      <template v-else>
+        {{ t('company_prod') }} {{ brand.name }}
+      </template>
     </template>
 
     <template #header>
-      <div class="container">
+      <div v-if="brand.content || brand.image" class="container">
         <div class="brand-content">
           <div></div>
           <catalog-brand :item="brand"></catalog-brand>

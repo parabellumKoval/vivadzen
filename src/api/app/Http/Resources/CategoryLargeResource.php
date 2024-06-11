@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use App\Http\Resources\CategoryParentResource;
+use App\Http\Resources\CategoryTinyResource;
 
 class CategoryLargeResource extends JsonResource
 {
@@ -24,7 +25,8 @@ class CategoryLargeResource extends JsonResource
         'extras' => $this->extras,
         'images' => $this->images,
         'parent' => $this->parent? new CategoryParentResource($this->parent): null,
-        'seo' => $this->seoToArray
+        'seo' => $this->seoToArray,
+        'children' => $this->children? CategoryTinyResource::collection($this->children): null
       ];
     }
 }

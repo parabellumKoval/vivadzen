@@ -66,6 +66,11 @@ const createFeedbackHandler = () => {
 }
 // HANDLERS
 // WATCHERS
+
+//
+onServerPrefetch(() => {
+  useSeo().setPageSeo(t('title.contacts'))
+})
 </script>
 
 <style src='./contacts.scss' lang='scss' scoped></style>

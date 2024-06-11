@@ -21,6 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::get('/product_or_category/{slug}', [CategoryController::class, 'productOrCategory'])->middleware('api');
+
 Route::get('/djini-category/slugs', [CategoryController::class, 'getSlugs'])->middleware('api');
 
 Route::prefix('search')->controller(SearchController::class)->group(function () {

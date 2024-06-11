@@ -160,6 +160,11 @@ return [
 
       'per_page' => 12,
 
+      'image' => [
+        'enable' => true,
+        'base_path' => '/images/categories/'
+      ],
+
       'resource' => [
         'tiny' => 'App\Http\Resources\CategoryTinyResource',
 
@@ -178,7 +183,8 @@ return [
       ],
 
       'image' => [
-        'enable' => true
+        'enable' => true,
+        'base_path' => '/images/products/'
       ],
 
       'code' => [
@@ -257,10 +263,13 @@ return [
     'brands' => [
       'enable' => true,
 
+      'image' => [
+        'enable' => true,
+        'base_path' => '/images/brands/'
+      ],
+
       'resource' => [
-
         'large' => 'Backpack\Store\app\Http\Resources\BrandLargeResource',
-
         'small' => 'Backpack\Store\app\Http\Resources\BrandSmallResource'
       ],
 

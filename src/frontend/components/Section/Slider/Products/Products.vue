@@ -8,6 +8,10 @@ const props = defineProps({
   },
   query: {
     type: Object
+  },
+  link: {
+    type: String,
+    default: ''
   }
 })
 
@@ -45,7 +49,7 @@ const productCard = resolveComponent('ProductCard')
         :gutter="0"
         :options="options"
         :title="$t('button.view_all')"
-        link="/shop"
+        :link="link"
         item-data-name="item"
       >
       </section-snap-slider>

@@ -32,7 +32,8 @@ const visibleTypes = computed(() => {
 <template>
   <div class="available">
     <div v-if="visibleTypes.includes('in_stock')" class="available-item in_stock">
-      <IconCSS name="iconoir:check" class="icon"></IconCSS> {{ t('label.available') }}
+      <!-- <IconCSS name="iconoir:check" class="icon"></IconCSS> {{ t('label.available') }} -->
+      <IconCSS name="iconoir:delivery-truck" class="icon"></IconCSS> {{ t('label.delivery_ready') }}
     </div>
     <div v-if="visibleTypes.includes('running_out')" class="available-item running_out">
       {{ t('label.running_out') }}

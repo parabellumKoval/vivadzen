@@ -36,6 +36,7 @@ const updatePageHandler = (page) => {
     emit('scroll:top')
   })
 }
+
 </script>
 
 <style src="./products.scss" lang="scss" scoped></style>

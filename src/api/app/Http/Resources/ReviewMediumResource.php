@@ -25,7 +25,7 @@ class ReviewMediumResource extends JsonResource
         'text' => $this->text,
         'author' => $this->ownerModelOrInfo,
         'extras' => $clear_extras,
-        'children' => self::collection($this->children),
+        'children' => self::collection($this->children()->moderated()->get()),
         'created_at' => $this->created_at
       ];
     }

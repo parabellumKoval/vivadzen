@@ -137,6 +137,18 @@ const getPhoto = (item) => {
     return null
 }
 
+const setSeo = () => {
+  useHead({
+    title: t('seo_title'),
+    meta: [
+      {
+        name: 'description',
+        content: t('seo_desc')
+      },
+    ],
+  })
+}
+
 // HANDLERS
 const scrollHandler = (item) => {
   search.value = null
@@ -147,11 +159,15 @@ const scrollHandler = (item) => {
 }
 
 // WATCHERS
-
 await useAsyncData('brands', () => useBrandStore().index({alpha_grouped: 1})).then(({data}) => {
   if(data.value) {
     brands_grouped.value = data.value
   }
+})
+
+//
+onServerPrefetch(() => {
+  setSeo()
 })
 </script>
 
@@ -168,7 +184,7 @@ await useAsyncData('brands', () => useBrandStore().index({alpha_grouped: 1})).th
       <div>
         <form-text v-model="search" :placeholder="t('find')" class="search-input">
           <template #right>
-            <button @click="scrollToAnchor('brand-box')">
+            <button @click="scrollToAnchor('brand-box')" class="search-btn">
               <IconCSS name="iconoir:search"></IconCSS>
             </button>
           </template>

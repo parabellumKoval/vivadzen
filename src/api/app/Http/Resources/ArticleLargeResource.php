@@ -21,7 +21,7 @@ class ArticleLargeResource extends JsonResource
 		    'content' => $this->content,
 		    'image' => '/images/blog/' . $this->image,
 		    'time' => $this->extras['time'] ?? null,
-        'seo' => $this->seo
+        'seo' => $this->seoArray
       ];
     }
 }

@@ -14,6 +14,8 @@ const props = defineProps({
   }
 })
 
+console.log('meta', props.meta)
+
 const emit = defineEmits(['update:current'])
 
 const updateCurrentHandler = (v) => {
@@ -51,6 +53,11 @@ const createReviewHandler = () => {
       <review-card-full v-for="review in reviews" :key="review.id" :item="review" class="review-card"></review-card-full>
     </div>
 
-    <simple-pagination :current="meta.current_page" :total="meta.last_page" @update:current="updateCurrentHandler"></simple-pagination>
+    <simple-pagination
+      v-if="meta.last_page > 1"
+      :current="meta.current_page"
+      :total="meta.last_page"
+      @update:current="updateCurrentHandler"
+    ></simple-pagination>
   </div>
 </template>

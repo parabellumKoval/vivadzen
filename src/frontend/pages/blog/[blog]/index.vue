@@ -56,6 +56,18 @@ const scrollHandler = (item) => {
   });
 }
 
+const setSeo = () => {
+  useHead({
+    title: article.value.seo.meta_title || t('seo_title', {title: article.value.title}),
+    meta: [
+      {
+        name: 'description',
+        content: article.value.seo.meta_description
+      },
+    ],
+  })
+}
+
 // HANDLERS
 // WATCHERS
 watch(() => html.value, (v) => {
@@ -87,11 +99,16 @@ watch(() => html.value, (v) => {
 })
 
 
-useAsyncData('get-article', () => useArticleStore().show(slug.value)).then(({data, error}) => {
+await useAsyncData('get-article', () => useArticleStore().show(slug.value)).then(({data, error}) => {
   if(data.value) {
     article.value = data.value
     setCrumbs()
   }
+})
+
+//
+onServerPrefetch(() => {
+  setSeo()
 })
 </script>
 

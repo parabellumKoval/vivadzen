@@ -1,11 +1,10 @@
 export const useFilterItem = (filterId: Number) => {
   
   const modelValue = useState('activeFilters', () => {return []})
-  // const modelValue = ref([...vModel])
 
   //WATCHERS
-  // watch(vModel, (v) => {
-  //   modelValue.value = v
+  // watch(() => modelValue.value, (v) => {
+  //   console.log('modelValue', v)
   // }, {
   //   deep: true,
   //   immediate: true
@@ -34,6 +33,32 @@ export const useFilterItem = (filterId: Number) => {
   })
 
   // METHODS
+  const setFilters = (params: Array) => {
+    if(params.selections) {
+      let selections = []
+      const selectionsAvailable = ['top_sales', 'in_stock', 'with_sales']
+
+      if(Array.isArray(params.selections)) {
+        selections = params.selections.filter(value => selectionsAvailable.includes(value))
+      }else {
+        if(selectionsAvailable.includes(params.selections)) {
+          selections.push(params.selections)
+        }
+      }
+      
+      updateModelValue([
+        {
+          id: 'selections',
+          values: [...selections]
+        }
+      ])
+
+      return selections
+    }
+
+    return []
+  }
+
   const updateModelValue = (newModelValue) => {
     modelValue.value = newModelValue
   }
@@ -94,6 +119,7 @@ export const useFilterItem = (filterId: Number) => {
     updateCheckboxValue,
     isValueChecked,
     thisFilter,
-    isMetaBlocked
+    isMetaBlocked,
+    setFilters
   }
 }

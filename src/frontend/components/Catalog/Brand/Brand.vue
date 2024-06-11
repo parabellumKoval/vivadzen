@@ -69,7 +69,7 @@ const toggleHandler = () => {
         quality='60'
         loading='lazy'
         fit='outside'
-        placeholder="./images/noimage.png"
+        placeholder="/images/noimage.png"
         class='brand-image'
       />
     </div>

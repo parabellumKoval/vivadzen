@@ -94,10 +94,12 @@
     }
 
     &-btn {
-      display: none;
+      &.disable {
+        display: none;
 
-      @include _desktop {
-        display: block;
+        @include _desktop {
+          display: inline-block;
+        }
       }
     }
   }

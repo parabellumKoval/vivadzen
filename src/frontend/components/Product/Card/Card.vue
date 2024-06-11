@@ -55,28 +55,31 @@ const toReviewsHandler = () => {
 <template>
   <div v-if="item" :class="stock" class="card">
 
-    <div v-if="label" :class="label?.class" class="label">
-      {{ label.text }}
-    </div>
+    <div class="card-sub">
+      <div v-if="label" :class="label?.class" class="label">
+        {{ label.text }}
+      </div>
+      <div v-else></div>
 
-    <div :class="{active: isComparison || isFavorite}" class="hover">
-      <button
-        @click="toComparisonHandler"
-        :class="{active: isComparison}"
-        class="hover-btn comparison-btn"
-        clickable
-      >
-        <IconCSS name="ph:scales-light" size="24"></IconCSS>
-      </button>
+      <div :class="{active: isComparison || isFavorite}" class="hover">
+        <button
+          @click="toComparisonHandler"
+          :class="{active: isComparison}"
+          class="hover-btn comparison-btn"
+          clickable
+        >
+          <IconCSS name="ph:scales-light"></IconCSS>
+        </button>
 
-      <button
-        @click="toFavoriteHandler"
-        :class="{active: isFavorite}"
-        class="hover-btn favorite-btn"
-        clickable
-      >
-        <IconCSS :name="favoriteIcon" size="24"></IconCSS>
-      </button>
+        <button
+          @click="toFavoriteHandler"
+          :class="{active: isFavorite}"
+          class="hover-btn favorite-btn"
+          clickable
+        >
+          <IconCSS :name="favoriteIcon"></IconCSS>
+        </button>
+      </div>
     </div>
 
     <NuxtLink
@@ -106,8 +109,8 @@ const toReviewsHandler = () => {
       </transition>
     </NuxtLink>
     
-    <div class="reviews">
-      <simple-stars :amount="item?.rating || 0" class="rating"></simple-stars>
+    <div :class="{between: item.rating}" class="reviews">
+      <simple-stars v-if="item?.rating" :amount="item.rating" class="rating"></simple-stars>
       
       <button v-if="reviewsCount" @click="toReviewsHandler" class="reviews-btn">
         {{ t('label.reviews', {reviews: reviewsCount}, reviewsCount) }}

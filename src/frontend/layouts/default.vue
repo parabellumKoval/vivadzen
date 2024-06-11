@@ -2,7 +2,6 @@
 import { useCategoryStore } from '~/store/category'
 import { useAuthStore } from '~~/store/auth';
 import { useAppPersistStore } from '~/store/appPersist';
-import { useFavoritesStore } from '~/store/favorites';
 
 const {t, locale} = useI18n()
 const route = useRoute()
@@ -51,23 +50,8 @@ auth.onAuthStateChange((event, session) => {
   }
 })
 
-const user = computed(() => {
-  return useAuthStore().user
-})
-
 // HANDLERS
-// const closeMenuMobileHandler = () => {
-//   useModalStore().close('menuMobile')
-// }
-
 // METHODS
-
-// const getFavoriteIds = async () => {
-//   if(!user || !user.value?.id)
-//     return
-
-//   await useAsyncData('favorites', () => useFavoritesStore().getIds({user_id: user.value.id}))
-// }
 
 // WATCHERS
 watch(locale, (v) => {
@@ -84,9 +68,6 @@ useSchemaOrg([
   }),
   defineWebPage(),
 ])
-
-// await useAsyncData('favorites', () => useFavoritesStore().getIds({user_id: user?.value?.id}))
-// await getFavoriteIds()
 </script>
 
 <style src="~/assets/scss/layout-default.scss" lang="scss" scoped />

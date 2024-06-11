@@ -39,6 +39,26 @@
   }
 }
 
+
+@mixin _scrollbar-x {
+  &::-webkit-scrollbar {
+    height: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: scale-color($color-primary, $lightness: 60%);
+
+    &:hover {
+      background: $color-primary;
+    }
+  }
+}
+
 @mixin _scrollbar-secondary {
   &::-webkit-scrollbar {
     width: 5px;

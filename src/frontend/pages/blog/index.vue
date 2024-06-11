@@ -19,6 +19,18 @@ const isLoading = ref(false)
 
 // COMPUTEDS
 // METHODS
+const setSeo = () => {
+  useHead({
+    title: t('seo_title'),
+    meta: [
+      {
+        name: 'description',
+        content: t('seo_desc')
+      },
+    ],
+  })
+}
+
 // HANDLERS
 const loadmoreHandler = async () => {
   let nextPage = articlesMeta.value.current_page + 1
@@ -43,17 +55,22 @@ const loadmoreHandler = async () => {
 }
 
 // WATCHERS
-
-useAsyncData('get-4-articles', () => useArticleStore().index({per_page: 12})).then(({data, error}) => {
+await useAsyncData('get-articles', () => useArticleStore().index({per_page: 12})).then(({data, error}) => {
   if(data.value) {
     articles.value = data.value.data
     articlesMeta.value = data.value.meta
   }
 })
+
+
+//
+onServerPrefetch(() => {
+  setSeo()
+})
 </script>
 
 <style src='./blog.scss' lang='scss' scoped></style>
-<!-- <i18n src='' lang='yaml'></i18n> -->
+<i18n src='./lang.yaml' lang='yaml'></i18n>
 
 <template>
   <div class="page-base">

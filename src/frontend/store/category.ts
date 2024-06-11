@@ -48,6 +48,6 @@ export const useCategoryStore = defineStore('categoryStore', {
           return data.data
         }
       })
-    },
+    }
   },
 })

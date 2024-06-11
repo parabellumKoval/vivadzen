@@ -14,6 +14,11 @@ const breadcrumbs = [
 // METHODS
 // HANDLERS
 // WATCHERS
+
+//
+onServerPrefetch(() => {
+  useSeo().setPageSeo(t('title.delivery'))
+})
 </script>
 
 <style src='~/assets/scss/page.scss' lang='scss' scoped></style>

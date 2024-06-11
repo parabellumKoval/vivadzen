@@ -30,8 +30,7 @@ const oneClickHandler = () => {
       <product-available :in-stock="product.inStock" type="full"></product-available>
     </div>
     
-    <div class="sale">
-
+    <div v-if="product.inStock" class="sale">
       <product-price
         :price="product.price"
         :old-price="product.oldPrice"

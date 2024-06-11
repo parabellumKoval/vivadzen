@@ -5,11 +5,6 @@
   display: inline-block;
   text-align: center;
   color: $color-green;
-  font-size: 14px;
-
-  @include _tablet {
-    font-size: 16px;
-  }
 
   .icon {
     margin: -2px 0 0px 0;
@@ -17,7 +12,8 @@
   }
 
   .in_stock {
-    color: #2CAE21;
+    // color: #2CAE21;
+    color: $color-green;
 
     & + .running_out {
       color: $color-3;

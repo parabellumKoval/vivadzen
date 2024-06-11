@@ -45,6 +45,6 @@ const favoriteIcon = computed(() => {
       <simple-price :value="product.price" class="price-base"></simple-price>
     </div>
 
-    <button @click="toCartHandler" class="button primary buy-btn">{{ $t('button.buy') }}</button>
+    <button v-if="product.inStock" @click="toCartHandler" class="button primary buy-btn">{{ $t('button.buy') }}</button>
   </div>
 </template>

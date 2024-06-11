@@ -21,6 +21,10 @@ const items = computed(() => {
 // METHODS
 // HANDLERS
 // WATCHERS
+//
+onServerPrefetch(() => {
+  useSeo().setPageSeo(t('title.qa'))
+})
 </script>
 
 <style src='~/assets/scss/page.scss' lang='scss' scoped></style>

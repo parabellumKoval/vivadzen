@@ -15,7 +15,8 @@
 }
 
 .comp-btn{
-  :deep('.comparison-btn') {
+  :deep(.comparison-btn) {
     border: 2px solid $color-8;
+    padding: 0 55px;
   }
 }

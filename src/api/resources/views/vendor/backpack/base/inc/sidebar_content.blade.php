@@ -11,7 +11,7 @@
 	  <li class='nav-item'><a class='nav-link' href='{{ backpack_url('product') }}'><i class='nav-icon las la-shopping-bag'></i> Товары</a></li>
 	  <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon las la-tags'></i> Категории</a></li>
 	  <li class='nav-item'><a class='nav-link' href='{{ backpack_url('attribute') }}'><i class='nav-icon las la-tag'></i> Атрибуты</a></li>
-<!--     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('order') }}'><i class='nav-icon las la-shopping-cart'></i> Заказы</a></li> -->
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('brand') }}'><i class='nav-icon las la-marker'></i> Бренды</a></li>
 	</ul>
 </li>
 
@@ -21,12 +21,12 @@
 	</a>
 </li>
 
-<li class='nav-item'>
+<!-- <li class='nav-item'>
 	<a class='nav-link' href='{{ backpack_url('transaction') }}'>
 		<i class='nav-icon las la-exchange-alt'></i> Транзакции
 		<span class="badge badge-{{ $transactions > 0? 'warning' : 'light' }}" style="position:initial">{{ $transactions }}</span>
 	</a>
-</li>
+</li> -->
 <!-- END SHOP -->
 
 <li class="divider"></li>
@@ -36,13 +36,13 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article') }}"><i class="nav-icon la la-newspaper-o"></i> Статьи</a></li>
 
 <!-- Pages -->
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon las la-file'></i> <span>Страницы</span></a></li>
+<!-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon las la-file'></i> <span>Страницы</span></a></li> -->
 
 <!-- Banners -->
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('banner') }}'><i class='nav-icon la la-desktop'></i> Баннеры</a></li>
+<!-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('banner') }}'><i class='nav-icon la la-desktop'></i> Баннеры</a></li> -->
 
 <!-- Users -->
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('profile') }}"><i class="nav-icon la la-user"></i> Пользователи</a></li>
+<!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('profile') }}"><i class="nav-icon la la-user"></i> Пользователи</a></li> -->
 
 
 <li class="divider"></li>

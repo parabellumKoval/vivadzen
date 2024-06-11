@@ -1,5 +1,5 @@
 import dynamicRoutes from './helpers/dynamicRoutes'
-import fetchCategories from './helpers/fetchCategories'
+// import fetchCategories from './helpers/fetchCategories'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -16,16 +16,16 @@ export default defineNuxtConfig({
       instagramToken: process.env.INSTAGRAM_TOKEN
     }
   },
-  hooks: {
-    async 'pages:extend' (pages) {
-      const routes = await fetchCategories()
+  // hooks: {
+  //   async 'pages:extend' (pages) {
+  //     const routes = await fetchCategories()
 
-      // add a route
-      routes.forEach((page) => {
-        pages.push(page)
-      })
-    }
-  },
+  //     // add a route
+  //     routes.forEach((page) => {
+  //       pages.push(page)
+  //     })
+  //   }
+  // },
   app: {
     pageTransition: { name: 'page-tr', mode: 'out-in' },
     layoutTransition: { name: 'layout-tr', mode: 'out-in' },

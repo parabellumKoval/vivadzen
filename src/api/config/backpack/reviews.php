@@ -6,7 +6,7 @@ return [
   'enable_likes' => true,
 
   // Is default review moderated
-  'is_moderated_default' => true,
+  'is_moderated_default' => false,
 
   // CATALOG
   'per_page' => 12,

@@ -157,7 +157,7 @@ setActiveTab()
         <div class="rate-wrapper">
           <div class="form-label">{{ ratingTitle }}</div>
           <div class="rate-forms">
-            <form-amount v-model="review.rating"></form-amount>
+            <form-amount v-model="review.rating" :min="1" :max="5"></form-amount>
             <simple-stars :amount="review.rating" :size="20" mobile="medium"></simple-stars>
           </div>
         </div>

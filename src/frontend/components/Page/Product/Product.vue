@@ -1,55 +1,61 @@
 <script setup>
 import {useAuthStore} from '~/store/auth';
 import {useSchema} from '~/composables/product/useSchema.ts'
-import {useProductStore} from '~/store/product'
 import {useReviewStore} from '~/store/review'
+
+const props = defineProps({
+  product: {
+    type: Object,
+    requered: true
+  }
+})
 
 const {t} = useI18n()
 const route = useRoute()
 
 const breadcrumbs = ref(null)
-const product = ref(null)
 const reviews = ref([])
 const reviewsMeta = ref({})
 const isReviewsLoading = ref(false)
 const tab = ref(0)
 
+
+const {setSchema} = useSchema()
 // Content HTML ref
 const content = ref(null)
-const isLoading = ref(false)
 
 // COMPUTEDS
 const category = computed(() => {
-  if(product.value?.categories && product.value.categories[0]){
-    return product.value.categories[0]
+  if(props.product?.categories && props.product.categories[0]){
+    return props.product.categories[0]
   }else {
     return null
   }
 })
 
 const slug = computed(() => {
-  return route.params.product
+  return route.params.slug
 })
 
 const productMicro = computed(() => {
   return {
-    id: product.value.id,
-    code: product.value.code,
-    name: product.value.name,
-    slug: product.value.slug,
-    image: product.value.images?.length? product.value.images[0]: null,
-    price: product.value.price,
-    oldPrice: product.value.oldPrice,
-    inStock: product.value.inStock,
+    id: props.product.id,
+    code: props.product.code,
+    name: props.product.name,
+    slug: props.product.slug,
+    image: props.product.images?.length? props.product.images[0]: null,
+    price: props.product.price,
+    oldPrice: props.product.oldPrice,
+    inStock: props.product.inStock,
   }
 })
 
 const ratingCount = computed(() => {
-  return product.value.reviews_rating_detailes?.rating_count || 0
+  return props.product.reviews_rating_detailes?.rating_count || 0
 })
 
 const reviewsCount = computed(() => {
-  return product.value.reviews_rating_detailes?.reviews_count || 0
+  return props.product.reviews_rating_detailes?.reviews_count || 0
 })
 
 
@@ -86,7 +92,7 @@ const tabs = computed(() => {
     }
   ]
 
-  if(!product.value.attrs.length) {
+  if(!props.product.attrs.length) {
     list[1].disabled = true
   }
 
@@ -98,6 +104,11 @@ const tabs = computed(() => {
 })
 
 // HANDLERS
+const paramsHandler = () => {
+  tab.value = 1
+  scrollToContent()
+}
+
 const reviewHandler = () => {
   if(useAuthStore().auth) {
     useModal().open(resolveComponent('ModalReviewCreate'), productMicro.value, null, {width: {min: 420, max: 420}})
@@ -137,11 +148,11 @@ const scrollToContent = () => {
 
 const setSeo = () => {
   useHead({
-    title: product.value.seo.meta_title || t('seo_title_template', {product: product.value.name}),
+    title: props.product.seo.meta_title || t('seo_title_template', {product: props.product.name}),
     meta: [
       {
         name: 'description',
-        content: product.value.seo.meta_description || t('seo_desc_template', {product: product.value.name})
+        content: props.product.seo.meta_description || t('seo_desc_template', {product: props.product.name})
       },
     ],
   })
@@ -156,8 +167,8 @@ const setCrumbs = () => {
       name: category?.value?.name,
       item: `/${category?.value?.slug}`
     },{
-      name: product.value.name,
-      item: product.value.slug
+      name: props.product.name,
+      item: props.product.slug
     }
   ]
 }
@@ -179,36 +190,31 @@ const getReviews = async (query, refresh) => {
 }
 
 // FETCH
-await Promise.all([
-  await useAsyncData(`product-${slug}`, () => useProductStore().show(slug.value)).then(({data, error}) => {
-    if(data && data.value) {
-      product.value = data.value
-      setCrumbs()
-      return product
-    }
+await useAsyncData('product_reviews', () => useReviewStore().getAll(reviewQuery.value, true)).then(({data, error}) => {
+  if(data?.value?.reviews) {
+    reviews.value = data.value.reviews
+  }
 
-    if(error.value){
-      throw createError({ statusCode: 404, message: 'Page Not Found' })
-    }
-  }), 
-  await useAsyncData('product_reviews', () => useReviewStore().getAll(reviewQuery.value, true)).then(({data, error}) => {
-    if(data?.value?.reviews) {
-      reviews.value = data.value.reviews
-    }
-
-    if(data?.value?.meta) {
-      reviewsMeta.value = data.value.meta
-    }
-  })
-]).then(([ product, reviews]) => {
-  useSchema(product.value, reviews?.value?.reviews)
-  setSeo()
+  if(data?.value?.meta) {
+    reviewsMeta.value = data.value.meta
+  }
 })
 
 // WATCHERS
+onServerPrefetch(() => {
+  setSchema(props.product, reviews.value)
+  setSeo()
+})
+
+setCrumbs()
+
 watch(() => route.hash, (v) => {
   if(v === '#reviews') {
-    tab.value = 2
+    if(reviews?.value?.length){
+      tab.value = 2
+    }else {
+      reviewHandler() 
+    }   
   }
 }, {
   immediate: true
@@ -234,12 +240,13 @@ watch(() => route.hash, (v) => {
 
         <div class="header-reviews">
           <simple-stars :amount="product.rating|| 0" desktop="large" mobile="large"></simple-stars>
-          <div class="rating-label">
+          <div v-if="product.rating" class="rating-label">
             {{ t('messages.rates_reviews', {rates: ratingCount, reviews: reviewsCount }) }}
           </div>
           <simple-button-text
             :text="t('button.leave_review')"
             :callback="reviewHandler"
+            :class="{disable: product.rating > 0}"
             class="header-reviews-btn"
           ></simple-button-text>
         </div>
@@ -328,7 +335,7 @@ watch(() => route.hash, (v) => {
 
                 <div v-if="product.attrs && product.attrs.length" class="params-mini">
                   <simple-list-params :items="product.attrs" class="params-wrapper"></simple-list-params>
-                  <button class="text-link params-mini-btn">
+                  <button @click="paramsHandler" class="text-link params-mini-btn">
                     <span>{{ t('all_attrs') }}</span>
                     <IconCSS name="iconoir:arrow-right" class="icon"></IconCSS>
                   </button>
