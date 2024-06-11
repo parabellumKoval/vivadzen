@@ -57,19 +57,16 @@ IMAGE_TAG ?= latest
 # Init variables for development environment
 all.env.dev:
 	cp .env.dev .env && \
-	cp ./src/frontend/.env.dev ./src/frontend/.env && \
 	cp ./src/api/.env.dev ./src/api/.env
 
 # Init variables for production environment
 all.env.prod:
 	cp .env.prod .env && \
-	cp ./src/frontend/.env.prod ./src/frontend/.env && \
 	cp ./src/api/.env.prod ./src/api/.env
 
 # Init variables for stage environment
 all.env.stage:
 	cp .env.stage .env && \
-	cp ./src/frontend/.env.stage ./src/frontend/.env && \
 	cp ./src/api/.env.stage ./src/api/.env
 
 
