@@ -2,7 +2,7 @@
 -include .env
 
 # Define default values for variables
-COMPOSE_FILE ?= docker-compose.dev.yml
+COMPOSE_FILE ?= docker compose.dev.yml
 BASE_IMAGE_DOCKERFILE ?= .docker/dev/base/Dockerfile
 IMAGE_REGISTRY ?= dev
 IMAGE_TAG ?= latest
@@ -15,39 +15,39 @@ IMAGE_TAG ?= latest
 
 # Enter the bash session
 %.exec:
-	docker-compose -f ${COMPOSE_FILE} exec $* /bin/sh
+	docker compose -f ${COMPOSE_FILE} exec $* /bin/sh
 
 # Build the container
 %.build:
-	docker-compose -f ${COMPOSE_FILE} build --no-cache $*
+	docker compose -f ${COMPOSE_FILE} build --no-cache $*
 
 # Up the container
 %.up:
-	docker-compose -f ${COMPOSE_FILE} up -d --no-deps $*
+	docker compose -f ${COMPOSE_FILE} up -d --no-deps $*
 
 # Build and Up the container
 %.bup:
-	docker-compose -f ${COMPOSE_FILE} up -d --no-deps --build $*
+	docker compose -f ${COMPOSE_FILE} up -d --no-deps --build $*
 
 # Stop the container
 %.stop:
-	docker-compose -f ${COMPOSE_FILE} stop $*
+	docker compose -f ${COMPOSE_FILE} stop $*
 
 # Stop and remove containers
 %.down:
-	docker-compose -f ${COMPOSE_FILE} down --remove-orphans $*
+	docker compose -f ${COMPOSE_FILE} down --remove-orphans $*
 
 # Reload service
 %.reload:
-	docker-compose -f ${COMPOSE_FILE} reload $*
+	docker compose -f ${COMPOSE_FILE} reload $*
 
 # Restart container
 %.restart:
-	docker-compose -f ${COMPOSE_FILE} restart $*
+	docker compose -f ${COMPOSE_FILE} restart $*
 
 # Show container logs
 %.logs:
-	docker-compose -f ${COMPOSE_FILE} logs $* --tail 500
+	docker compose -f ${COMPOSE_FILE} logs $* --tail 500
 
 
 #-----------------------------------------------------------
@@ -76,15 +76,15 @@ all.env.stage:
 
 # Enter the mysql container
 mysql:
-	docker-compose -f ${COMPOSE_FILE} exec mysql /bin/bash
+	docker compose -f ${COMPOSE_FILE} exec mysql /bin/bash
 
 # Dump database into file (only for development environment) (TODO: replace file name with env variable)
 mysql.dump:
-	docker-compose -f ${COMPOSE_FILE} exec mysql mysql -U ${DB_USERNAME} -d ${DB_DATABASE} > ./.docker/stage/mysql/dumps/dump.sql
+	docker compose -f ${COMPOSE_FILE} exec mysql mysql -U ${DB_USERNAME} -d ${DB_DATABASE} > ./.docker/stage/mysql/dumps/dump.sql
 
 # Import db dump
 mysql.import.%:
-	docker-compose -f ${COMPOSE_FILE} exec -T mysql mysql -uroot -p${DB_PASSWORD} app < ./.docker/$*/mysql/dumps/init.sql
+	docker compose -f ${COMPOSE_FILE} exec -T mysql mysql -uroot -p${DB_PASSWORD} app < ./.docker/$*/mysql/dumps/init.sql
 
 
 #-----------------------------------------------------------
@@ -93,7 +93,7 @@ mysql.import.%:
 
 # Enter the phpmyadmin container
 phpmyadmin:
-	docker-compose -f ${COMPOSE_FILE} exec phpmyadmin /bin/bash
+	docker compose -f ${COMPOSE_FILE} exec phpmyadmin /bin/bash
 
 #-----------------------------------------------------------
 # Frontend
@@ -117,29 +117,29 @@ env.frontend.stage:
 
 # Install yarn dependencies
 yarn.install:
-	docker-compose -f ${COMPOSE_FILE} exec frontend yarn install
+	docker compose -f ${COMPOSE_FILE} exec frontend yarn install
 
 # Alias to install yarn dependencies
 yi: yarn.install
 
 # Upgrade yarn dependencies
 yarn.upgrade:
-	docker-compose -f ${COMPOSE_FILE} exec frontend yarn upgrade
+	docker compose -f ${COMPOSE_FILE} exec frontend yarn upgrade
 
 # Alias to upgrade yarn dependencies
 yu: yarn.upgrade
 
 # Show outdated yarn dependencies
 yarn.outdated:
-	docker-compose exec -f ${COMPOSE_FILE} frontend yarn outdated
+	docker compose exec -f ${COMPOSE_FILE} frontend yarn outdated
 
 # Install yarn dependencies
 yarn.build:
-	docker-compose -f ${COMPOSE_FILE} exec frontend yarn build
+	docker compose -f ${COMPOSE_FILE} exec frontend yarn build
 
 # Install yarn dependencies
 yarn.start:
-	docker-compose -f ${COMPOSE_FILE} exec -d frontend yarn start
+	docker compose -f ${COMPOSE_FILE} exec -d frontend yarn start
 
 #-----------------------------------------------------------
 # Nginx
@@ -147,11 +147,11 @@ yarn.start:
 
 # Enter the nginx bash session
 nginx:
-	docker-compose -f ${COMPOSE_FILE} exec nginx /bin/sh
+	docker compose -f ${COMPOSE_FILE} exec nginx /bin/sh
 
 # Reload the Nginx service
 reload:
-	docker-compose -f ${COMPOSE_FILE} exec nginx nginx -s reload
+	docker compose -f ${COMPOSE_FILE} exec nginx nginx -s reload
 
 
 #-----------------------------------------------------------
@@ -164,7 +164,7 @@ reload:
 
 # Issue SSL certificates according to the environment variables
 ssl.cert:
-	docker-compose -f ${COMPOSE_FILE} run --rm --no-deps \
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps \
 		--publish 80:80 \
 		certbot \
 		certbot certonly \
@@ -176,7 +176,7 @@ ssl.cert:
 
 # Issue testing SSL certificates according to the environment variables
 ssl.cert.test:
-	docker-compose -f ${COMPOSE_FILE} run --rm --no-deps \
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps \
 		--publish 80:80 \
 		certbot \
 		certbot certonly \
@@ -189,7 +189,7 @@ ssl.cert.test:
 
 # Issue staging SSL certificates according to the environment variables
 ssl.cert.staging:
-	docker-compose -f ${COMPOSE_FILE} run --rm --no-deps \
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps \
 		--publish 80:80 \
 		certbot \
 		certbot certonly \
@@ -206,7 +206,7 @@ ssl.dh:
 
 # Show the list of registered certificates
 ssl.ls:
-	docker-compose -f ${COMPOSE_FILE} run --rm --entrypoint "certbot certificates" certbot
+	docker compose -f ${COMPOSE_FILE} run --rm --entrypoint "certbot certificates" certbot
 
 
 #-----------------------------------------------------------
@@ -215,7 +215,7 @@ ssl.ls:
 
 # Artisan optimize
 optimize.%:
-	docker-compose -f ${COMPOSE_FILE} exec $* php artisan optimize
+	docker compose -f ${COMPOSE_FILE} exec $* php artisan optimize
 
 # Copy laravel source files to container
 copy.laravel.%:
@@ -226,7 +226,7 @@ copy.uploads.%:
 	docker cp ./src/api/public/uploads/. $*:/var/www/html/public/uploads/
 
 create_dirs.%:
-	docker-compose -f ${COMPOSE_FILE} exec $* mkdir /var/www/html/storage/framework/sessions
+	docker compose -f ${COMPOSE_FILE} exec $* mkdir /var/www/html/storage/framework/sessions
 #-----------------------------------------------------------
 # Dashboard
 #-----------------------------------------------------------
@@ -251,67 +251,67 @@ env.api.stage:
 
 # Run the tinker service
 tinker:
-	docker-compose -f ${COMPOSE_FILE} exec api php artisan tinker
+	docker compose -f ${COMPOSE_FILE} exec api php artisan tinker
 
 # Clear the api cache
 cache.clear:
-	docker-compose -f ${COMPOSE_FILE} exec api php artisan cache:clear
+	docker compose -f ${COMPOSE_FILE} exec api php artisan cache:clear
 
 # Migrate the database
 db.migrate:
-	docker-compose -f ${COMPOSE_FILE} exec api php artisan migrate
+	docker compose -f ${COMPOSE_FILE} exec api php artisan migrate
 
 # Alias to migrate the database
 migrate: db.migrate
 
 # Rollback the database
 db.rollback:
-	docker-compose -f ${COMPOSE_FILE} exec api php artisan migrate:rollback
+	docker compose -f ${COMPOSE_FILE} exec api php artisan migrate:rollback
 
 # Seed the database
 db.seed:
-	docker-compose -f ${COMPOSE_FILE} exec api php artisan db:seed
+	docker compose -f ${COMPOSE_FILE} exec api php artisan db:seed
 
 # Fresh the database state
 db.fresh:
-	docker-compose -f ${COMPOSE_FILE} exec api php artisan migrate:fresh
+	docker compose -f ${COMPOSE_FILE} exec api php artisan migrate:fresh
 
 # Refresh the database
 db.refresh: db.fresh db.seed
 
 # Install composer dependencies
 composer.install:
-	docker-compose -f ${COMPOSE_FILE} exec api composer install
+	docker compose -f ${COMPOSE_FILE} exec api composer install
 
 # Install composer dependencies from stopped containers
 r.composer.install:
-	docker-compose -f ${COMPOSE_FILE} run --rm --no-deps api composer install
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps api composer install
 
 # Alias to install composer dependencies
 ci: composer.install
 
 # Update composer dependencies
 composer.update:
-	docker-compose -f ${COMPOSE_FILE} exec api composer update
+	docker compose -f ${COMPOSE_FILE} exec api composer update
 
 # Update composer dependencies from stopped containers
 r.composer.update:
-	docker-compose -f ${COMPOSE_FILE} run --rm --no-deps api composer update
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps api composer update
 
 # Alias to update composer dependencies
 cu: composer.update
 
 # Show outdated composer dependencies
 composer.outdated:
-	docker-compose -f ${COMPOSE_FILE} exec api composer outdated
+	docker compose -f ${COMPOSE_FILE} exec api composer outdated
 
 # PHP composer autoload command
 composer.autoload:
-	docker-compose -f ${COMPOSE_FILE} exec api composer dump-autoload
+	docker compose -f ${COMPOSE_FILE} exec api composer dump-autoload
 
 # Generate a symlink to the storage directory
 storage.link:
-	docker-compose -f ${COMPOSE_FILE} exec api php artisan storage:link --relative
+	docker compose -f ${COMPOSE_FILE} exec api php artisan storage:link --relative
 
 # Clear temps
 remove.temps: 
@@ -350,7 +350,7 @@ own.me:
 
 # Reload the Octane workers
 octane.reload:
-	docker-compose -f ${COMPOSE_FILE} exec api php artisan octane:reload
+	docker compose -f ${COMPOSE_FILE} exec api php artisan octane:reload
 
 # Alias to reload the Octane workers
 or: octane.reload
@@ -362,7 +362,7 @@ or: octane.reload
 
 # Restart the queue process
 queue.restart:
-	docker-compose -f ${COMPOSE_FILE} exec queue php artisan queue:restart
+	docker compose -f ${COMPOSE_FILE} exec queue php artisan queue:restart
 
 #-----------------------------------------------------------
 # Testing (only for development environment)
@@ -370,22 +370,22 @@ queue.restart:
 
 # Run phpunit tests (requires 'phpunit/phpunit' composer package)
 test:
-	docker-compose -f ${COMPOSE_FILE} exec api ./vendor/bin/phpunit --order-by=defects --stop-on-defect
+	docker compose -f ${COMPOSE_FILE} exec api ./vendor/bin/phpunit --order-by=defects --stop-on-defect
 
 # Alias to run phpunit tests
 t: test
 
 # Run phpunit tests with the coverage mode (TODO: install PCOV or other lib)
 coverage:
-	docker-compose -f ${COMPOSE_FILE} exec api ./vendor/bin/phpunit --coverage-html ./.coverage
+	docker compose -f ${COMPOSE_FILE} exec api ./vendor/bin/phpunit --coverage-html ./.coverage
 
 # Run dusk tests (requires 'laravel/dusk' composer package)
 dusk:
-	docker-compose -f ${COMPOSE_FILE} exec api php artisan dusk
+	docker compose -f ${COMPOSE_FILE} exec api php artisan dusk
 
 # Generate code metrics (requires 'phpmetrics/phpmetrics' composer package)
 metrics:
-	docker-compose -f ${COMPOSE_FILE} exec api ./vendor/bin/phpmetrics --report-html=./.metrics api/app
+	docker compose -f ${COMPOSE_FILE} exec api ./vendor/bin/phpmetrics --report-html=./.metrics api/app
 
 #-----------------------------------------------------------
 # Redis
@@ -393,11 +393,11 @@ metrics:
 
 # Enter the redis container
 redis:
-	docker-compose -f ${COMPOSE_FILE} exec redis redis-cli
+	docker compose -f ${COMPOSE_FILE} exec redis redis-cli
 
 # Flush the redis state
 redis.flush:
-	docker-compose -f ${COMPOSE_FILE} exec redis redis-cli FLUSHALL
+	docker compose -f ${COMPOSE_FILE} exec redis redis-cli FLUSHALL
 
 #-----------------------------------------------------------
 # Swarm
@@ -453,15 +453,15 @@ bup: build.all up
 
 # Start containers
 up:
-	docker-compose -f ${COMPOSE_FILE} up -d
+	docker compose -f ${COMPOSE_FILE} up -d
 
 # Stop containers
 down:
-	docker-compose -f ${COMPOSE_FILE} down --remove-orphans
+	docker compose -f ${COMPOSE_FILE} down --remove-orphans
 
 # Build containers
 build:
-	docker-compose -f ${COMPOSE_FILE} build
+	docker compose -f ${COMPOSE_FILE} build
 
 # Build all containers
 build.all: build.base build
@@ -472,22 +472,22 @@ build.base:
 
 # Show list of running containers
 ps:
-	docker-compose -f ${COMPOSE_FILE} ps
+	docker compose -f ${COMPOSE_FILE} ps
 
 # Restart containers
 restart:
-	docker-compose -f ${COMPOSE_FILE} restart
+	docker compose -f ${COMPOSE_FILE} restart
 
 # Reboot containers
 reboot: down up
 
 # View output logs from containers
 logs:
-	docker-compose -f ${COMPOSE_FILE} logs --tail 500
+	docker compose -f ${COMPOSE_FILE} logs --tail 500
 
 # Follow output logs from containers
 logs.f:
-	docker-compose -f ${COMPOSE_FILE} logs --tail 500 -f
+	docker compose -f ${COMPOSE_FILE} logs --tail 500 -f
 
 #-----------------------------------------------------------
 # Danger zone
