@@ -1,6 +1,6 @@
 <script setup>
-import {useFilter} from './../../../composables/product/useFilter'
-import {useCatalog} from './../../../composables/product/useCatalog'
+import {useFilter} from './../../../composables/product/useFilter.ts'
+import {useCatalog} from './../../../composables/product/useCatalog.ts'
 import {useBrandStore} from './../../../store/brand'
 
 const {t} = useI18n()
