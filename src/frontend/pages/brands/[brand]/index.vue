@@ -2,9 +2,9 @@
 // import {useFilter} from './../../../composables/product/useFilter'
 // import {useCatalog} from './../../../composables/product/useCatalog'
 // import {useBrandStore} from './../../../store/brand'
-import {useFilter} from '~/composables/product/useFilter'
-import {useCatalog} from '~/composables/product/useCatalog'
-import {useBrandStore} from '~/store/brand'
+import {useFilter} from '~~/composables/product/useFilter'
+import {useCatalog} from '~~/composables/product/useCatalog'
+import {useBrandStore} from '~~/store/brand'
 
 const {t} = useI18n()
 const props = defineProps({})
