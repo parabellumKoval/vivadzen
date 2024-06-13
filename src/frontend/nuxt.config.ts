@@ -3,6 +3,14 @@ import dynamicRoutes from './helpers/dynamicRoutes'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // alias: {
+  //   "~": "/<srcDir>",
+  //   "@": "/<srcDir>",
+  //   "~~": "/<rootDir>",
+  //   "~/assets": "/<srcDir>/assets",
+  // },
+  srcDir: process.env.SRC_DIR || '',
+  rootDir: process.env.ROOT_DIR || '',
   devtools: { enabled: false },
   // Debug
   debug: false,
