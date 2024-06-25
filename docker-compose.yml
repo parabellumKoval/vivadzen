@@ -12,7 +12,7 @@ services:
       # ACME challenge folder (shared with certbot service)
       - .docker/prod/nginx/acme:/var/www/acme:ro
       # Uploads
-      - /mnt/images:/var/www/html/public/images
+      - /mnt/uploads:/var/www/html/public/uploads
     ports:
       - "443:443"
       - "80:80"
@@ -68,7 +68,7 @@ services:
       - ./src/api/.env  
     volumes:
       - ./storage_dashboard:/var/www/html/storage
-      - /mnt/images:/var/www/html/public/images
+      - /mnt/uploads:/var/www/html/public/uploads
       # - mysql:/var/www/html/certs
       # - mysql/client-key.pem:/var/lib/mysql/client-key.pem
       # - mysql/client-cert.pem:/var/lib/mysql/client-cert.pem
@@ -91,7 +91,7 @@ services:
         IMAGE_TAG: ${IMAGE_TAG}
     volumes:
       - ./storage_api:/var/www/html/storage
-      - /mnt/images:/var/www/html/public/images
+      - /mnt/uploads:/var/www/html/public/uploads
     container_name: api_host
     hostname: api_host
     env_file:
