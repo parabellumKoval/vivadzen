@@ -19,7 +19,7 @@ class ArticleLargeResource extends JsonResource
 		    'title' => $this->title,
 		    'slug' => $this->slug,
 		    'content' => $this->content,
-		    'image' => '/images/blog/' . $this->image,
+		    'image' => $this->image,
 		    'time' => $this->extras['time'] ?? null,
         'seo' => $this->seoArray
       ];

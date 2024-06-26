@@ -18,7 +18,7 @@ class ArticleSmallResource extends JsonResource
 		    'id' => $this->id,
 		    'title' => $this->title,
 		    'slug' => $this->slug,
-		    'image' => '/images/blog/' . $this->image,
+		    'image' => $this->image,
 		    'time' => $this->extras['time'] ?? null,
       ];
     }
