@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\MigrateDbController;
+use App\Http\Controllers\ImportController;
+use App\Http\Controllers\TranslateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,8 @@ use App\Http\Controllers\MigrateDbController;
 */
 
 Route::redirect('/', '/admin', 301);
+
+Route::get('/import_attrs', [ImportController::class, 'import']);
 
 Route::get('/html', function(){
   Artisan::call('db-copy:normalize-product-content');

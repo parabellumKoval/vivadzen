@@ -48,9 +48,15 @@ return [
     */
 
     'channels' => [
+        'xml' => [
+          'driver' => 'daily',
+          'path' => storage_path('logs/xml/xml.log'),
+          'days' => 7,
+        ],
+
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily'],
             'ignore_exceptions' => false,
         ],
 

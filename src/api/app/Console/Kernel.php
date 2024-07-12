@@ -16,6 +16,16 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        
+        $schedule->command('proteinplus:update')->hourly();
+        
+        $schedule->command('prom:productsUpdate')->daily();
+        
+        $schedule->command('dobavkiua:update')->hourly();
+        
+        $schedule->command('belokua:update')->hourly();
+        
+				$schedule->command('brands:update')->hourly();
     }
 
     /**

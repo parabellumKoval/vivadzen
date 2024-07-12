@@ -16,6 +16,7 @@
     "backpack/permissionmanager": "^6.0",
     "ckhandla94/backpack-import": "^1.0",
     "cviebrock/eloquent-sluggable": "^8.0",
+    "deeplcom/deepl-php": "^1.8",
     "fruitcake/laravel-cors": "^2.0",
     "guzzlehttp/guzzle": "^7.0.1",
     "laravel/framework": "^8.75",
@@ -24,6 +25,7 @@
     "laravel/scout": "^9.8",
     "laravel/socialite": "^5.6",
     "laravel/tinker": "^2.5",
+    "maatwebsite/excel": "^3.1",
     "parabellumkoval/backpack-articles": "0.1.1.x-dev",
     "parabellumkoval/backpack-banners": "dev-main",
     "parabellumkoval/backpack-feedback": "dev-main",
@@ -34,6 +36,7 @@
     "parabellumkoval/backpack-store": "0.2.x-dev",
     "parabellumkoval/backpack-transactions": "0.1.x-dev",
     "parabellumkoval/backpack-vercel": "0.1.x-dev",
+    "rap2hpoutre/fast-excel": "^5.4",
     "spatie/laravel-translatable": "5.1.0"
   },
   "require-dev": {
@@ -87,7 +90,10 @@
       "sort-packages": true,
       "platform": {
           "php": "8.0.8"
-      }
+      },
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
