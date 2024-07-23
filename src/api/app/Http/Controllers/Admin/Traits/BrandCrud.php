@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers\Admin\Traits;
 
-trait ArticleCrud {
-  
-  public function listOperation() {}
-  public function updateOperation() {}
+trait BrandCrud {
+    
+  /**
+   * listOperation
+   *
+   * @return void
+   */
+  public function listOperation() {
+  }
 
-  // Extends of SetupCreateOperation
+  /**
+   * createOperation
+   *
+   * @return void
+   */
   public function createOperation() {
-  
-    $this->crud->addField([
-      'name'  => 'time',
-      'label' => 'Время чтения',
-      'type'  => 'number',
-      'store_in' => 'extras',
-      'fake' => true,
-      'tab' => 'Основное'
-    ]);
-
 
     $this->crud->removeField('images');
 
@@ -33,7 +32,7 @@ trait ArticleCrud {
           'label' => 'Изображение',
           'type' => 'image',
           'crop' => false, // set to true to allow cropping, false to disable
-          'prefix' =>  config('backpack.articles.image.base_path', '/')
+          'prefix' =>  config('backpack.store.brands.image.base_path', '/')
         ],
         [
           'name' => 'alt',
@@ -41,8 +40,7 @@ trait ArticleCrud {
         ],
         [
           'name' => 'title',
-          'label' => 'title',
-          'type' => 'text'
+          'label' => 'title'
         ],
         [
           'name' => 'size',
@@ -60,7 +58,7 @@ trait ArticleCrud {
       'default' => [],
       'tab' => 'Изображения'
     ]);
-
+  
   }
 
 }

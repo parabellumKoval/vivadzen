@@ -13,7 +13,7 @@ class CopyCategory extends Command
      *
      * @var string
      */
-    protected $signature = 'db-copy:category';
+    protected $signature = 'db:copy-categories';
 
     /**
      * The console command description.
@@ -46,10 +46,10 @@ class CopyCategory extends Command
         // $this->_moveParentId();
 
         // $this->line('Update category parent');
-        // $this->_updateCategoryParent();
+        $this->_updateCategoryParent();
 
-        $this->line('Move is hit property');
-        $this->moveIsHitProperty();
+        // $this->line('Move is hit property');
+        // $this->moveIsHitProperty();
 
         return 0;
     }
@@ -91,7 +91,7 @@ class CopyCategory extends Command
       $bar->start();
 
       foreach($new_cats as $new_cat) {
-        $newParent = Category::where('old_id', $new_cat->old_parent_id)->first();
+        $newParent = Category::where('old_id2', $new_cat->old_parent_id)->first();
 
         if(!$newParent) {
           continue;
@@ -113,12 +113,19 @@ class CopyCategory extends Command
       $bar->start();
 
       foreach($category_child as $item) {
-        $category = Category::where('old_id', $item->category_id)->first();
-        $childCategory = Category::where('old_id', $item->child_id)->first();
+        $category = Category::where('old_id2', $item->category_id)->first();
+        $childCategory = Category::where('old_id2', $item->child_id)->first();
         
         if(!$category || !$childCategory)
           continue;
   
+        if($childCategory->parent_id) {
+          $this->error('Parent id already exists ' . $childCategory->id);
+          continue;
+        }else {
+          $this->info('Parent id new ' . $childCategory->id);
+        }
+
         $childCategory->parent_id = $category->id;
         $childCategory->save();
 

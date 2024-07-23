@@ -123,7 +123,11 @@ class BelokUaUpdate extends Command
       		
         	if($is_new_product) {
 	        	// SET DEFAULT CATEGORY
-	        	$product->categories()->attach(config('console.xml.default_category_id'));
+            $default_category_id = config('console.xml.default_category_id', 0);
+
+            if($default_category_id) {
+              $product->categories()->attach($default_category_id);
+            }
 	        	
 	      		// UPDATE BRAND OF NEW PRODUCT
 	      		// $product = $this->updateProductBrand($product);

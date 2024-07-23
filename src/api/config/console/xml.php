@@ -1,7 +1,8 @@
 <?php
 
 return [
-  'default_category_id' => 476,
+  // 'default_category_id' => 476,
+  'default_category_id' => null,
   'belok' => [
     'link' => 'https://belok.ua/prices/StlPrice.xml',
     'brands' => [

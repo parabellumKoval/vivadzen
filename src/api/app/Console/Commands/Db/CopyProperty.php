@@ -17,7 +17,7 @@ class CopyProperty extends Command
      *
      * @var string
      */
-    protected $signature = 'db-copy:property';
+    protected $signature = 'db:copy-properties';
 
     /**
      * The console command description.
@@ -43,25 +43,70 @@ class CopyProperty extends Command
      */
     public function handle()
     {
+
+        // $this->removeEmpty();
+        // $this->findSmallProperties();
+        // $this->findMultipleValues();
+
         // $this->line('Copy properties');
-        // $this->copyProperties();
+        $this->copyProperties();
 
         // $this->line('Copy property values');
-        // $this->copyPropertyValues();
+        $this->copyPropertyValues();
 
         // $this->line('Attach property to categories');
-        // $this->attachPropertyToCategories();
+        $this->attachPropertyToCategories();
 
         // $this->line('Attach property to products');
-        // $this->attachPropertyToProducts();
-
-        $this->line('Remove dublicates');
-        $this->removePropertuDublicates();
+        $this->attachPropertyToProducts();
 
         return 0;
     }
+        
+    /**
+     * removeEmpty
+     *
+     * @return void
+     */
+    private function removeEmpty () {
+      $attributes = Attribute::all();
 
-    private function removePropertuDublicates() {
+      foreach($attributes as $attribute) {
+        $aps_count = AttributeProduct::where('attribute_id', $attribute->id)->count();
+        
+        if(!$aps_count) {
+          $attribute->delete();
+        }
+      }
+    }
+
+    
+    /**
+     * findSmallProperties
+     *
+     * @return void
+     */
+    private function findSmallProperties() {
+      $attributes = Attribute::all();
+
+      foreach($attributes as $attribute) {
+        $aps_count = AttributeProduct::where('attribute_id', $attribute->id)->count();
+        $avs_count = AttributeValue::where('attribute_id', $attribute->id)->count();
+
+        if($aps_count < 20 || $avs_count < 20) {
+          $this->error($attribute->name . ' products = ' . $aps_count . ' values = ' . $avs_count);
+        }else {
+          $this->info($attribute->name . ' products = ' . $aps_count . ' values = ' . $avs_count);
+        }
+      }
+    }
+
+    /**
+     * findMultipleValues
+     *
+     * @return void
+     */
+    private function findMultipleValues() {
       $aps = AttributeProduct::all();
 
       $bar = $this->output->createProgressBar($aps->count());
@@ -69,16 +114,16 @@ class CopyProperty extends Command
 
       foreach($aps as $ap){
         $dublicates = AttributeProduct::
-        // where('id', '!=', $ap->id)
+          // where('id', '!=', $ap->id)
           where('product_id', $ap->product_id)
           ->where('attribute_id', $ap->attribute_id)
-          // ->where('attribute_value_id', $ap->attribute_value_id)
-          ->orderBy('id')
           ->get();
 
         if($dublicates->count() > 1) {
-          $correct = $dublicates->splice(-1, 1);
-          AttributeProduct::destroy($dublicates->pluck('id'));
+          $this->info("\nproduct_id " . $ap->product_id . ' attribute_id = ' . $ap->attribute_id . ' - ' . $ap->attribute->name . ' values = ' . $dublicates->count() . "\n");
+          foreach ($dublicates as $dub) {
+            $this->info($dub->attribute_value->value . ' ');
+          }
         }
         
         $bar->advance();
@@ -87,6 +132,12 @@ class CopyProperty extends Command
       $bar->finish();
     }
 
+    
+    /**
+     * attachPropertyToProducts
+     *
+     * @return void
+     */
     private function attachPropertyToProducts() {
 
       $pps = \DB::table('product_property')->select('product_property.*')->get();
@@ -112,7 +163,8 @@ class CopyProperty extends Command
 
         // Try find exists value
         $attr_value = AttributeValue::where('attribute_id', $attr->id)
-                        ->where(\DB::raw('lower(old_value)'), 'like', '%' . strtolower($pp->value) . '%')
+                        // ->where(\DB::raw('lower(old_value)'), 'like', '%' . strtolower($pp->value) . '%')
+                        ->where(\DB::raw('lower(old_value)'), mb_strtolower($pp->value))
                         ->first();
         
         // Or Create new record
@@ -125,7 +177,8 @@ class CopyProperty extends Command
         }
 
         // Check if combination already exists
-        $ap = AttributeProduct::where('product_id', $product->id)
+        $ap = AttributeProduct::
+            where('product_id', $product->id)
           ->where('attribute_id', $attr->id)
           ->where('attribute_value_id', $attr_value->id)
           ->first();
@@ -145,7 +198,12 @@ class CopyProperty extends Command
 
       $bar->finish();
     }
-
+    
+    /**
+     * attachPropertyToCategories
+     *
+     * @return void
+     */
     private function attachPropertyToCategories() {
 
       $cps = \DB::table('category_property')->select('category_property.*')->get();
@@ -156,8 +214,9 @@ class CopyProperty extends Command
       foreach($cps as $cp){
         
         // find new category analogue
-        $category = Category::where('old_id', $cp->category_id)->first();
+        $category = Category::where('old_id2', $cp->category_id)->first();
       
+        // skipping not existed categories in new DB
         if(!$category) {
           continue;
         }
@@ -165,6 +224,7 @@ class CopyProperty extends Command
         // find new attribute analogue
         $attr = Attribute::whereJsonContains('extras->ids', $cp->property_id)->first();
 
+        // skipping not existed attributes
         if(!$attr) {
           continue;
         }
@@ -177,7 +237,12 @@ class CopyProperty extends Command
 
       $bar->finish();
     }
-
+    
+    /**
+     * copyPropertyValues
+     *
+     * @return void
+     */
     private function copyPropertyValues() {
 
       $values = \DB::table('category_property_values')->select('category_property_values.*')->get();
@@ -187,15 +252,17 @@ class CopyProperty extends Command
 
       foreach($values as $value){
 
-        // find new attribute analogue
+        // find new attribute analogue that this value attached
         $attr = Attribute::whereJsonContains('extras->ids', $value->property_id)->first();
 
+        // if not found attribute skip
         if(!$attr) {
           continue;
         }
 
+        // Try to find already exists value
         $attr_value = AttributeValue::where('attribute_id', $attr->id)
-                        ->where(\DB::raw('lower(old_value)'), 'like', '%' . strtolower($value->value) . '%')
+                        ->where(\DB::raw('lower(old_value)'), mb_strtolower($value->value))
                         ->first();
         
         // Skip If same value/attribute already exists
@@ -215,7 +282,12 @@ class CopyProperty extends Command
 
       $bar->finish();
     }
-
+    
+    /**
+     * copyProperties
+     *
+     * @return void
+     */
     private function copyProperties() {
 
       $properties = \DB::table('properties')->select('properties.*')->get();
@@ -226,7 +298,10 @@ class CopyProperty extends Command
       foreach($properties as $prop) {
 
         // Try to find isset attribute by name
-        $attr = Attribute::where(\DB::raw('lower(old_name)'), 'like', '%' . strtolower($prop->name) . '%')->first();
+        $attr = Attribute::
+          // where(\DB::raw('lower(old_name)'), 'like', '%' . strtolower($prop->name) . '%')
+          where(\DB::raw('lower(old_name)'), mb_strtolower($prop->name))
+          ->first();
         
         if(!$attr) {
           $attr = new Attribute();

@@ -31,6 +31,7 @@ class ProductLargeResource extends BaseResource
           CategoryParentResource::collection($this->categories):
             null,
         'attrs' => $this->properties,
+        'specs' => $this->specs,
         'seo' => $this->seoArray,
         'brand' => $this->brand? new BrandProductResource($this->brand): null
       ];

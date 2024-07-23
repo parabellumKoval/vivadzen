@@ -156,13 +156,15 @@ return [
 
     // CATEGORIES
     'category' => [
+      'class' => 'App\Models\Category',
+
       'depth_level' => 3,
 
       'per_page' => 12,
 
       'image' => [
         'enable' => true,
-        'base_path' => '/images/categories/'
+        'base_path' => 'https://djini.b-cdn.net/categories/',
       ],
 
       'resource' => [
@@ -177,6 +179,7 @@ return [
     // PROPUCT
     'product' => [
       'class' => 'App\Models\Product',
+      'class_admin' => 'App\Models\Admin\Product',
 
       'seo' => [
         'enable' => true
@@ -184,7 +187,7 @@ return [
 
       'image' => [
         'enable' => true,
-        'base_path' => '/images/products/'
+        'base_path' => 'https://djini.b-cdn.net/products/',
       ],
 
       'code' => [
@@ -261,11 +264,13 @@ return [
 
     // BRAND
     'brands' => [
+      'class' => 'App\Models\Brand',
+
       'enable' => true,
 
       'image' => [
         'enable' => true,
-        'base_path' => '/images/brands/'
+        'base_path' => 'https://djini.b-cdn.net/brands/',
       ],
 
       'resource' => [

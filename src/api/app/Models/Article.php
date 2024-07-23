@@ -5,13 +5,15 @@ namespace App\Models;
 use Laravel\Scout\Searchable;
 use App\Models\Bunny;
 
-use Backpack\Store\app\Models\Brand as BaseBrand;
+use Backpack\Articles\app\Models\Article as ArticleBrand;
 
-class Brand extends BaseBrand
+class Article extends ArticleBrand
 {
-  use Searchable;
 
   private $bunny = null;
+
+  // protected $fakeColumns = ['meta_description', 'meta_title', 'extras_trans', 'seo', 'extras'];
+  // protected $translatable = ['excerpt', 'content', 'extras_trans', 'seo'];
   
   /**
    * __construct
@@ -20,21 +22,7 @@ class Brand extends BaseBrand
    */
   public function __construct() {
     parent::__construct();
-    $this->bunny = new Bunny('brands');  
-  }
-  
-  /**
-   * toSearchableArray
-   *
-   * @return void
-   */
-  public function toSearchableArray()
-  {
-      $array = [
-        'name' => $this->name
-      ];
-
-      return $array;
+    $this->bunny = new Bunny('blog');  
   }
 
 

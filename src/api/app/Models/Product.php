@@ -38,15 +38,18 @@ class Product extends BaseProduct
   | ACCESSORS
   |--------------------------------------------------------------------------
   */
+    
+  public function getSpecsAttribute() {
+    return $this->extras['specs'] ?? null;
+  }
 
-  /**
-   * getImageSrcAttribute
-   *
-   * Get src url address from getImageAttribute method
-   * 
-   * @return string|null string is image src url
-   */
   public function getImageSrcAttribute() {
-    return '/public/images/products/' . $this->image['src'] ?? null;
+    $base_path = config('backpack.store.product.image.base_path', '/');
+
+    if(isset($this->image['src'])) {
+      return $base_path . $this->image['src'] . "?width=50&height=50";
+    }else {
+      return null;
+    }
   }
 }

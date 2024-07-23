@@ -10,6 +10,18 @@ use Illuminate\Support\Facades\Event;
 use \Backpack\Store\app\Models\Order;
 use \App\Observers\OrderObserver;
 
+use App\Models\Admin\Product;
+use \App\Observers\ProductObserver;
+
+use App\Models\Category;
+use \App\Observers\CategoryObserver;
+
+use App\Models\Brand;
+use \App\Observers\BrandObserver;
+
+use App\Models\Article;
+use \App\Observers\ArticleObserver;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -30,6 +42,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+      Article::observe(ArticleObserver::class);
+      Category::observe(CategoryObserver::class);
+      Brand::observe(BrandObserver::class);
+      Product::observe(ProductObserver::class);
       Order::observe(OrderObserver::class);
     }
 }

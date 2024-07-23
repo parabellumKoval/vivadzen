@@ -13,7 +13,7 @@ class CopyProductImages extends Command
      *
      * @var string
      */
-    protected $signature = 'db-copy:product-images';
+    protected $signature = 'db:copy-product-images';
 
     /**
      * The console command description.

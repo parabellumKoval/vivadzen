@@ -57,20 +57,6 @@ class PromAttrs extends Command
      */
     public function handle()
     {
-      // $attrs = Attribute::whereJsonContains('extras_trans->ru->si', null)->get();
-      // foreach($attrs as $attr) {
-      //   $attr->setTranslation('extras_trans', 'ru', [
-      //     'si' => '%'
-      //   ]);
-      //   $attr->save();
-      // }
-
-      // dd($this->getClearSi('ms.%'));
-
-      //
-      // $attrs = $this->getAttrsFromFile('prom_attrs_si.json');
-      // \Log::info(print_r($attrs, true));
-
       $this->clearAllFromProm();
       $this->storeAttributes();
     }
@@ -87,17 +73,6 @@ class PromAttrs extends Command
       AttributeValue::where('source', 'prom')->delete();
 
       \DB::table('ak_attribute_category')->where('source', 'prom')->delete();
-    }
-
-    /**
-     * productsGenerator
-     *
-     * @return void
-     */
-    private function productsGenerator() {
-      foreach (Product::cursor() as $user) {
-          yield $user;
-      }
     }
   
 
@@ -452,5 +427,18 @@ class PromAttrs extends Command
 
       // dd($this->total, $this->find, $this->not_find);
       
+    }
+
+
+
+    /**
+     * productsGenerator
+     *
+     * @return void
+     */
+    private function productsGenerator() {
+      foreach (Product::cursor() as $user) {
+          yield $user;
+      }
     }
 }

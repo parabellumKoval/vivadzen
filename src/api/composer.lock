@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0d7a9de0badc09f20dfc170880f45d9",
+    "content-hash": "c933cf4431aca5752e960a417a04cb4c",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -797,6 +797,54 @@
                 }
             ],
             "time": "2023-01-15T23:15:59+00:00"
+        },
+        {
+            "name": "bunnycdn/storage",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BunnyWay/BunnyCDN.PHP.Storage.git",
+                "reference": "4f57caf033bca2255c1d75d369061902e2a32da5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BunnyWay/BunnyCDN.PHP.Storage/zipball/4f57caf033bca2255c1d75d369061902e2a32da5",
+                "reference": "4f57caf033bca2255c1d75d369061902e2a32da5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bunny\\Storage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dejan Grofelnik Pelzel",
+                    "email": "dejan@bunnycdn.com"
+                }
+            ],
+            "description": "PHP library to interact with the BunnyCDN Storage API.",
+            "homepage": "https://bunny.net/storage/",
+            "keywords": [
+                "Bunny.net",
+                "bunnyCDN",
+                "media",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/BunnyWay/BunnyCDN.PHP.Storage/issues",
+                "source": "https://github.com/BunnyWay/BunnyCDN.PHP.Storage/tree/2.0.0"
+            },
+            "time": "2023-12-14T13:40:23+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -4719,16 +4767,16 @@
         },
         {
             "name": "parabellumkoval/backpack-articles",
-            "version": "0.1.1.x-dev",
+            "version": "0.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-articles.git",
-                "reference": "b4373398491be8ff972c9e96c1955e2e5dec94ab"
+                "reference": "28c643efabb640742d23e05813c99f4a8ae4b475"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/b4373398491be8ff972c9e96c1955e2e5dec94ab",
-                "reference": "b4373398491be8ff972c9e96c1955e2e5dec94ab",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/28c643efabb640742d23e05813c99f4a8ae4b475",
+                "reference": "28c643efabb640742d23e05813c99f4a8ae4b475",
                 "shasum": ""
             },
             "require": {
@@ -4784,9 +4832,9 @@
             ],
             "support": {
                 "issues": "https://github.com/parabellumKoval/backpack-articles/issues",
-                "source": "https://github.com/parabellumKoval/backpack-articles/tree/0.1.1"
+                "source": "https://github.com/parabellumKoval/backpack-articles/tree/0.2"
             },
-            "time": "2024-06-09T11:08:52+00:00"
+            "time": "2024-07-21T12:33:48+00:00"
         },
         {
             "name": "parabellumkoval/backpack-banners",
@@ -5191,12 +5239,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "4078983c2eaf95f25a8fbad04323909138698b01"
+                "reference": "fbfcae270a3ec9355690860dfa150cc5ecc0b824"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/4078983c2eaf95f25a8fbad04323909138698b01",
-                "reference": "4078983c2eaf95f25a8fbad04323909138698b01",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/fbfcae270a3ec9355690860dfa150cc5ecc0b824",
+                "reference": "fbfcae270a3ec9355690860dfa150cc5ecc0b824",
                 "shasum": ""
             },
             "require": {
@@ -5254,7 +5302,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/0.2"
             },
-            "time": "2024-07-10T16:53:02+00:00"
+            "time": "2024-07-21T10:20:46+00:00"
         },
         {
             "name": "parabellumkoval/backpack-transactions",
