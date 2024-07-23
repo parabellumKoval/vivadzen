@@ -184,7 +184,9 @@ services:
         IMAGE_REGISTRY: ${IMAGE_REGISTRY}
         IMAGE_TAG: ${IMAGE_TAG}
     volumes:
-      - ./src/api:/var/www/html
+      # - ./src/api:/var/www/html
+      - ./storage_api:/var/www/html/storage
+      - /mnt/uploads:/var/www/html/public/uploads
     depends_on:
       - redis
       - mysql
