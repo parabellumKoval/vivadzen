@@ -19,8 +19,9 @@ trait ProductCrud {
    */
   public function createOperation() {
 
-    // Extends of SetupCreateOperation  
-    $this->entry = $this->crud->getEntry(\Route::current()->parameter('id'));
+    // Extends of SetupCreateOperation
+    $entry_id = \Route::current()->parameter('id');
+    $this->entry = !empty($entry_id)? $this->crud->getEntry($entry_id): null;
 
     $this->crud->addField([
       'name' => 'specs',

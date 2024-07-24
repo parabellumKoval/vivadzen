@@ -5,7 +5,7 @@
     //in case entity is superNews we want the url friendly super-news
     $entityWithoutAttribute = '';
     $routeEntity = Str::kebab($entityWithoutAttribute);
-    $connected_entity = new $field['model'];
+    $connected_entity = new $field['model2'];
     $connected_entity_key_name = $connected_entity->getKeyName();
 
     // make sure the $field['value'] takes the proper value
