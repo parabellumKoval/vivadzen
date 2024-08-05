@@ -17,15 +17,15 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         
-        $schedule->command('proteinplus:update')->hourly();
+        $schedule->command('catalog:xml:proteinplus')->hourly();
         
-        $schedule->command('prom:productsUpdate')->daily();
+        // $schedule->command('prom:productsUpdate')->daily();
         
-        $schedule->command('dobavkiua:update')->hourly();
+        $schedule->command('catalog:xml:dobavkiua')->hourly();
         
-        $schedule->command('belokua:update')->hourly();
+        $schedule->command('catalog:xml:belokua')->hourly();
         
-				$schedule->command('brands:update')->hourly();
+				// $schedule->command('brands:update')->hourly();
     }
 
     /**
