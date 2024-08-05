@@ -175,7 +175,7 @@ class Product extends BaseProduct implements Feedable
       // ->whereJsonContains('images[0].src', null)
       // ->where('images->0->src', 'not like', 'null')
       ->where('is_active', 1)
-      ->limit(4000)
+      ->limit(1000)
       ->get();
 
     // \Log::info('Items - ' . $items->count() . "\n" );
