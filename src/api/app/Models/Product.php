@@ -175,19 +175,33 @@ class Product extends BaseProduct implements Feedable
       // ->whereJsonContains('images[0].src', null)
       // ->where('images->0->src', 'not like', 'null')
       ->where('is_active', 1)
+      ->limit(4000)
       ->get();
 
-    \Log::info('Items - ' . $items->count() . "\n" );
-    self::echoMemoryUsage();
+    // \Log::info('Items - ' . $items->count() . "\n" );
+    // self::echoMemoryUsage();
 
     return $items;
-    // return $items->filter(function($item) {
-    //   if($item->image['src']) {
-    //     return $item;
-    //   }
-    // }); 
-		//return self::whereIn('parsed_from', ['dobavki.ua', 'belok.ua'])->whereNotNull('image_large')->get();
-	   //return self::where('amount', '>=', 5)->where('parsed_from', 'dobavki.ua')->get();
+	}    
+
+	public static function getPromFeedItems2()
+	{
+
+		// supplier_id 22,10 - iHerb и Склад
+		$items = self::whereIn('parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
+      ->whereNotIn('supplier_id', [22, 10])
+      ->where('images', '!=', null)
+      // ->whereJsonContains('images[0].src', null)
+      // ->where('images->0->src', 'not like', 'null')
+      ->where('is_active', 1)
+      ->skip(4000)
+      ->limit(4000)
+      ->get();
+
+    // \Log::info('Items - ' . $items->count() . "\n" );
+    // self::echoMemoryUsage();
+
+    return $items;
 	}    
 	
 }

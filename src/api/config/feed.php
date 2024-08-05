@@ -48,11 +48,17 @@ return [
           'view' => 'feed::prom',
           'type' => 'application/atom+xml',
           'format' => 'atom',
-
-          /*
-            * The content type for the feed response.  Set to an empty string to automatically
-            * determine the correct value.
-            */
+          'contentType' => '',
+      ],
+      'prom2' => [
+          'items' => 'App\Models\Product@getPromFeedItems2',
+          'url' => '/prom_feed_2',
+          'title' => 'фид для Prom.ua',
+          'description' => 'GMC feed',
+          'language' => 'ru-RU',
+          'view' => 'feed::prom',
+          'type' => 'application/atom+xml',
+          'format' => 'atom',
           'contentType' => '',
       ],
       // 'main' => [
