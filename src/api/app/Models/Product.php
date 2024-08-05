@@ -135,18 +135,52 @@ class Product extends BaseProduct implements Feedable
 	} 
 */ 
     
+  private static function pretty_bytes($bytes, $precision = 2){
+    $units = array('B', 'KB', 'MB', 'GB', 'TB'); 
+   
+    $bytes = max($bytes, 0); 
+    $pow = floor(($bytes ? log($bytes) : 0) / log(1024)); 
+    $pow = min($pow, count($units) - 1); 
+   
+    // Uncomment one of the following alternatives
+    $bytes /= pow(1024, $pow);
+    // $bytes /= (1 << (10 * $pow)); 
+   
+    return round($bytes, $precision) . $units[$pow]; 
+  }
+
+  private static function echoMemoryUsage() {
+
+    $text = '';
+    $text .= "Memory usage: " . self::pretty_bytes(memory_get_usage()) . PHP_EOL . "\n";
+    $text .= "Peak memory usage: " . self::pretty_bytes(memory_get_peak_usage()) . PHP_EOL . "\n";
+    $text .= "'Actual' memory usage: " . self::pretty_bytes(memory_get_usage(true)) . PHP_EOL . "\n";
+    $text .= "'Actual' peak memory usage: " . self::pretty_bytes(memory_get_peak_usage(true)) . PHP_EOL . "\n";
+    
+    $ps_output = exec("ps --pid " . getmypid() . " --no-headers -o rss");
+    
+    $text .= "'Memory usage according to ps: " . self::pretty_bytes(intval($ps_output) * 1000) . "\n";
+
+    \Log::info($text);
+
+  }
+
 	public static function getPromFeedItems()
 	{
+
 		// supplier_id 22,10 - iHerb и Склад
-		return self::whereIn('parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
+		$items = self::whereIn('parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
       ->whereNotIn('supplier_id', [22, 10])
       ->where('images', '!=', null)
       // ->whereJsonContains('images[0].src', null)
       // ->where('images->0->src', 'not like', 'null')
       ->where('is_active', 1)
-      ->limit(10000)
       ->get();
 
+    \Log::info('Items - ' . $items->count() . "\n" );
+    self::echoMemoryUsage();
+
+    return $items;
     // return $items->filter(function($item) {
     //   if($item->image['src']) {
     //     return $item;
