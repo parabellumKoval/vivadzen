@@ -50,17 +50,6 @@ return [
           'format' => 'atom',
           'contentType' => '',
       ],
-      'prom2' => [
-          'items' => 'App\Models\Product@getPromFeedItems2',
-          'url' => '/prom_feed_2',
-          'title' => 'фид для Prom.ua',
-          'description' => 'GMC feed',
-          'language' => 'ru-RU',
-          'view' => 'feed::prom',
-          'type' => 'application/atom+xml',
-          'format' => 'atom',
-          'contentType' => '',
-      ],
       // 'main' => [
       //     /*
       //      * Here you can specify which class and method will return

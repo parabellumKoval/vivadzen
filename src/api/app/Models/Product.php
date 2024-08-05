@@ -168,24 +168,8 @@ class Product extends BaseProduct implements Feedable
 	public static function getPromFeedItems()
 	{
 
-		// supplier_id 22,10 - iHerb и Склад
-		$items = self::whereIn('parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
-      ->whereNotIn('supplier_id', [22, 10])
-      ->where('images', '!=', null)
-      // ->whereJsonContains('images[0].src', null)
-      // ->where('images->0->src', 'not like', 'null')
-      ->where('is_active', 1)
-      ->limit(1000)
-      ->get();
-
-    // \Log::info('Items - ' . $items->count() . "\n" );
-    // self::echoMemoryUsage();
-
-    return $items;
-	}    
-
-	public static function getPromFeedItems2()
-	{
+    $limit = \Request::get('limit');
+    $skip = \Request::get('skip', 0);
 
 		// supplier_id 22,10 - iHerb и Склад
 		$items = self::whereIn('parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
@@ -194,14 +178,14 @@ class Product extends BaseProduct implements Feedable
       // ->whereJsonContains('images[0].src', null)
       // ->where('images->0->src', 'not like', 'null')
       ->where('is_active', 1)
-      ->skip(4000)
-      ->limit(4000)
+      ->limit($limit)
+      ->skip($skip)
       ->get();
 
     // \Log::info('Items - ' . $items->count() . "\n" );
     // self::echoMemoryUsage();
 
     return $items;
-	}    
+	}  
 	
 }
