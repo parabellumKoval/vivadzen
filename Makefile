@@ -324,8 +324,10 @@ remove.temps:
 permissions: 
 	chown -R www-data:www-data ./public
 	chown -R www-data:www-data ./storage
+	chown -R www-data:www-data ./storage_dashboard
 	chmod -R 755 ./public
 	chmod -R 755 ./storage	
+	chmod -R 755 ./storage_dashboard
 
 # Give permissions of the storage folder to the www-data
 storage.public:
