@@ -16,7 +16,7 @@ class NormalizePromAttributes extends Command
      *
      * @var string
      */
-    protected $signature = 'db:normalize-prom-attributes';
+    protected $signature = 'db:normalize-prom-attributes {method?}';
 
     /**
      * The console command description.
@@ -42,41 +42,47 @@ class NormalizePromAttributes extends Command
      */
     public function handle()
     {
-      // // 1) Delete unnecessary attributes
-      // $this->info('1) Delete unnecessary attributes');
-      $this->removeWrongAttributes();
-      
-      // // 2) Switch small checkbox attributes to string type 
-      // $this->info('2) Switch small checkbox attributes to string type');
-      // $this->moveSmallAttrs();
+      $method = $this->argument('method');
 
-      // // 3) Switch long checkbox attribute to string type
-      // $this->info('3) Switch long checkbox attribute to string type');
-      // $this->moveLongCheckboxValues();
+      if($method) {
+        $this->{$method}();
+      }else {
+        // 1) Delete unnecessary attributes
+        $this->info('1) Delete unnecessary attributes');
+        $this->removeWrongAttributes();
+        
+        // 2) Switch small checkbox attributes to string type 
+        $this->info('2) Switch small checkbox attributes to string type');
+        $this->moveSmallAttrs();
 
-      // // 4) Merge simular PROM attributes to single attr
-      // $this->info('4) Merge simular PROM attributes to single attr');
-      // $this->mergePromAttrs();
+        // 3) Switch long checkbox attribute to string type
+        $this->info('3) Switch long checkbox attribute to string type');
+        $this->moveLongCheckboxValues();
 
-      // // 5) Join PROM attribute to existed SITE attribute
-      // $this->info('5) Join PROM attribute to existed SITE attribute');
-      // $this->joinAttrsAuto();
+        // 4) Merge simular PROM attributes to single attr
+        $this->info('4) Merge simular PROM attributes to single attr');
+        $this->mergePromAttrs();
 
-      // // 6) Move site Volume attribute to multiple PROM attributes
-      // $this->info('6) Move site Volume attribute to multiple PROM attributes');
-      // $this->attrVolume();
+        // 5) Join PROM attribute to existed SITE attribute
+        $this->info('5) Join PROM attribute to existed SITE attribute');
+        $this->joinAttrsAuto();
 
-      // // 7) mergeDublicateCheckboxValues
-      // $this->info('7) mergeDublicateCheckboxValues');
-      // $this->mergeDublicateCheckboxValues();
+        // 6) Move site Volume attribute to multiple PROM attributes
+        $this->info('6) Move site Volume attribute to multiple PROM attributes');
+        $this->attrVolume();
 
-      // 8) Remove dublicated rows from relations table AttributeProduct 
-      // $this->info('8) Remove dublicated rows from relations table AttributeProduct');   
-      // $this->removeDublicatesRelations();
+        // 7) mergeDublicateCheckboxValues
+        $this->info('7) mergeDublicateCheckboxValues');
+        $this->mergeDublicateCheckboxValues();
 
-      // 9) Move not popular attributes with small products amount from filters
-      // $this->info('9) Move not popular attributes with small products amount from filters');  
-      // $this->moveNotPopularFromFilters();
+        // 8) Remove dublicated rows from relations table AttributeProduct 
+        $this->info('8) Remove dublicated rows from relations table AttributeProduct');   
+        $this->removeDublicatesRelations();
+
+        // 9) Move not popular attributes with small products amount from filters
+        $this->info('9) Move not popular attributes with small products amount from filters');  
+        $this->moveNotPopularFromFilters();
+      }
 
       return 0;
     }

@@ -39,6 +39,8 @@ Route::get('/mailable', function () {
 
 });
 
+Route::feeds();
+
 Route::prefix('auth')->group(function() {
 	Route::middleware('web')->any('/{provider}', 'App\Http\Controllers\Auth\OAuthController@redirect')->where('provider', 'google|facebook');
 	Route::middleware('web')->get('/{provider}/callback', 'App\Http\Controllers\Auth\OAuthController@callback')->where('provider', 'google|facebook');

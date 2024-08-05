@@ -23,6 +23,16 @@ trait ProductCrud {
     $entry_id = \Route::current()->parameter('id');
     $this->entry = !empty($entry_id)? $this->crud->getEntry($entry_id): null;
 
+
+    // CUSTOM PROPERTIES
+    $this->crud->addField([
+      'name' => 'delim_0',
+      'type' => 'custom_html',
+      'value' => '<h3>Особенности</h3>
+        <p class="help-block">Выводится в виде тегов с иконками на странице товара.</p>',
+      'tab' => 'Характеристики'
+    ])->beforeField('delim');
+
     $this->crud->addField([
       'name' => 'specs',
       'type' => 'hidden',
@@ -38,8 +48,8 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Основное'
-    ]);
+      'tab' => 'Характеристики'
+    ])->beforeField('delim');
 
     $this->crud->addField([
       'name' => 'specs[vegetarian]',
@@ -49,8 +59,8 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Основное'
-    ]);
+      'tab' => 'Характеристики'
+    ])->beforeField('delim');
 
     $this->crud->addField([
       'name' => 'specs[lactose]',
@@ -60,8 +70,8 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Основное'
-    ]);
+      'tab' => 'Характеристики'
+    ])->beforeField('delim');
 
     $this->crud->addField([
       'name' => 'specs[gluten]',
@@ -71,8 +81,8 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Основное'
-    ]);
+      'tab' => 'Характеристики'
+    ])->beforeField('delim');
 
     $this->crud->addField([
       'name' => 'specs[gmo]',
@@ -82,8 +92,8 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Основное'
-    ]);
+      'tab' => 'Характеристики'
+    ])->beforeField('delim');
 
     $this->crud->addField([
       'name' => 'specs[milk]',
@@ -93,9 +103,10 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Основное'
-    ]);
+      'tab' => 'Характеристики'
+    ])->beforeField('delim');
 
+    // 
     $this->crud->removeField('images');
 
     // IMAGES

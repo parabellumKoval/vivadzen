@@ -18,8 +18,11 @@
 
   
   if(isset($info['delivery'])) {
+    //dd($info['delivery']);
     if(is_array($info['delivery'])) {
+      $keys = array("zip", "area", "room", "type", "house", "method", "region", "street", "warehouse", "settlement");
       $delivery_items = array_filter($info['delivery']);
+      $delivery_items = array_intersect_key($delivery_items, array_flip($keys));
       $delivery = implode(', ', $delivery_items);
     }else {
       $delivery = $info['delivery'];
@@ -55,16 +58,23 @@
   @foreach($products as $product)
     <div>
       @if(isset($product['image']['src']))
-        <p><img src="{{ url('/images/products/' . $product['image']['src']) }}" width="100" height="100" /></p>
+        <p>
+          <img src="{{ config('backpack.store.product.image.base_path') . $product['image']['src'] }}" width="auto" height="100" />
+        </p>
       @endif
 
-      <p><strong>{{ $product['name'] ?? '' }}</strong> {{ $product['short_name'] ?? '' }}</p>
+      <a href="{{ config('app.client_url') . '/' . $product['slug'] }}" target="_blank">
+        <strong>{{ $product['name'] ?? '' }}</strong> {{ $product['short_name'] ?? '' }}
+      </a>
+      <a href="{{ url('/admin/product/' . $product['id'] . '/edit') }}" target="_blank">
+        (Редактировать)
+      </a>
       @if($product['old_price'])
-      <p>Старая цена: <s>{{ config('backpack.store.currency.symbol') . $product['old_price'] }}</s></p>
+      <p>Старая цена: <s>{{ config('backpack.store.currency.symbol') . ' ' . $product['old_price'] }}</s></p>
       @endif
-      <p>Цена: {{ config('backpack.store.currency.symbol') . $product['price'] }}</p>
+      <p>Цена: {{ config('backpack.store.currency.symbol') . ' ' . $product['price'] }}</p>
       <p>Количество: {{ $product['amount'] }} шт</p>
-      <p>Сумма: <strong>{{ config('backpack.store.currency.symbol') . ($product['price'] * $product['amount']) }}</strong></p>
+      <p>Сумма: <strong>{{ config('backpack.store.currency.symbol') . ' ' . ($product['price'] * $product['amount']) }}</strong></p>
     </div>
     <br>
   @endforeach

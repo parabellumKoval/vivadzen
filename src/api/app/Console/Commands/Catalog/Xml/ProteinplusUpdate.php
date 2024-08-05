@@ -26,6 +26,8 @@ class ProteinplusUpdate extends Command
     protected $totalNew = 0;
     protected $totalUpdated = 0;
 
+		protected $bannedBrandsList = null;
+
 		private const BASE_OVERPRICE = 1.33;
 		
     /**
@@ -45,6 +47,8 @@ class ProteinplusUpdate extends Command
         parent::__construct();
 
         $this->url = config('console.xml.proteinplus.link');
+        $this->bannedBrandsList = config('console.xml.proteinplus.banned_brands');
+
         $this->logger = new \App\Logging\xmlLogger('proteinplus');
     }
 
@@ -73,12 +77,16 @@ class ProteinplusUpdate extends Command
 	        
         	$xml_product = [
 		        'name' => $xml->item[$i]->name->__toString(),
+		        'brand' => $xml->item[$i]->vendor->__toString(),
 	        	'available' => $xml->item[$i]->available->__toString(),
 		        'articul' => $xml->item[$i]->vendorCode->__toString(),
 	        	'price' => $xml->item[$i]->price->__toString(),
             'count' => 0
         	];
 
+        	// SKIP BANNED BRANDS
+        	if(in_array($xml_product['brand'], $this->bannedBrandsList, true))
+            continue;
 
       		if($xml_product['available'] === 'true')
             $xml_product['count'] = 1000;

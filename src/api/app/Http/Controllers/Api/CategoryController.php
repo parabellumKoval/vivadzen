@@ -15,14 +15,14 @@ class CategoryController extends \App\Http\Controllers\Controller
     self::resources_init();
 
     $this->product_class = config('backpack.store.product.class', 'Backpack\Store\app\Models\Product');
-    $product = $this->product_class::where('slug', $slug)->first();
+    $product = $this->product_class::where('slug', $slug)->where('is_active', 1)->first();
 
     if($product) {
       $product_resource = new self::$resources['product']['large']($product);
       return response()->json($product_resource);
     }
 
-    $category = Category::where('slug', $slug)->firstOrFail();
+    $category = Category::where('slug', $slug)->where('is_active', 1)->firstOrFail();
     $category_resource = new self::$resources['category']['large']($category);
     return response()->json($category_resource);
   }

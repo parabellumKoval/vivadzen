@@ -2,7 +2,7 @@
   @foreach($products as $key => $product)
     <tr class="product">
       <td class="product-cell-image">
-        <img src="{{ url('/images/products/' . $product['image']['src']) }}" class="product-image" />
+        <img src="{{ config('backpack.store.product.image.base_path') . $product['image']['src'] }}" class="product-image" />
       </td>
       <td class="product-cell-value">
         {{ $product['name'] }}

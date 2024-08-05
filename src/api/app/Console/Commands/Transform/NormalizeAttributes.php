@@ -18,7 +18,7 @@ class NormalizeAttributes extends Command
      *
      * @var string
      */
-    protected $signature = 'db:normalize-attributes';
+    protected $signature = 'db:normalize-attributes {method?}';
 
     /**
      * The console command description.
@@ -44,23 +44,29 @@ class NormalizeAttributes extends Command
      */
     public function handle()
     {
-      // 1) Remove bad (small, unused) site attributes
-      // $this->attrsToRemove();
+      $method = $this->argument('method');
 
-      // 2) Join two simular site COUNTRY attribute
-      // $this->joinSiteCountryAttribute();
-      
-      //
-      // $this->restoreDublicateCheckboxValues();
+      if($method) {
+        $this->{$method}();
+      }else {
+        // // 1) Remove bad (small, unused) site attributes
+        // $this->attrsToRemove();
+
+        // // 2) Join two simular site COUNTRY attribute
+        // $this->joinSiteCountryAttribute();
+        
+        // //
+        // $this->restoreDublicateCheckboxValues();
 
 
-      // Remove attributes that not attached to any product
-      // $this->removeUnnecessaryValues();
+        // // Remove attributes that not attached to any product
+        // $this->removeUnnecessaryValues();
 
-      // Attach attributes to categories
-      // $this->attachAttributesToCategories();
+        // // Attach attributes to categories
+        // $this->attachAttributesToCategories();
 
-      $this->deleteAllNeeded();
+        // $this->deleteAllNeeded();
+      }
       
       return 0;
     }

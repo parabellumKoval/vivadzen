@@ -38,6 +38,7 @@
     "parabellumkoval/backpack-transactions": "0.1.x-dev",
     "parabellumkoval/backpack-vercel": "0.1.x-dev",
     "rap2hpoutre/fast-excel": "^5.4",
+    "spatie/laravel-feed": "^4.2",
     "spatie/laravel-translatable": "5.1.0"
   },
   "require-dev": {

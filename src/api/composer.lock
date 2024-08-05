@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c933cf4431aca5752e960a417a04cb4c",
+    "content-hash": "ae1ef2df05dce884e5ac856675bff459",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -5103,12 +5103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-reviews.git",
-                "reference": "7886a4ae11f0c7c28744c797f05394626c8aa4e4"
+                "reference": "074f6dc856c49fddcf97d2f9ad5611b424574cd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/7886a4ae11f0c7c28744c797f05394626c8aa4e4",
-                "reference": "7886a4ae11f0c7c28744c797f05394626c8aa4e4",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/074f6dc856c49fddcf97d2f9ad5611b424574cd0",
+                "reference": "074f6dc856c49fddcf97d2f9ad5611b424574cd0",
                 "shasum": ""
             },
             "require": {
@@ -5161,7 +5161,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-reviews/issues",
                 "source": "https://github.com/parabellumKoval/backpack-reviews/tree/0.2"
             },
-            "time": "2024-06-10T09:36:54+00:00"
+            "time": "2024-08-01T10:50:47+00:00"
         },
         {
             "name": "parabellumkoval/backpack-settings",
@@ -5239,12 +5239,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "fbfcae270a3ec9355690860dfa150cc5ecc0b824"
+                "reference": "61264e42dc319b53b45de28162721fc097eaa793"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/fbfcae270a3ec9355690860dfa150cc5ecc0b824",
-                "reference": "fbfcae270a3ec9355690860dfa150cc5ecc0b824",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/61264e42dc319b53b45de28162721fc097eaa793",
+                "reference": "61264e42dc319b53b45de28162721fc097eaa793",
                 "shasum": ""
             },
             "require": {
@@ -5302,7 +5302,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/0.2"
             },
-            "time": "2024-07-21T10:20:46+00:00"
+            "time": "2024-08-02T13:28:49+00:00"
         },
         {
             "name": "parabellumkoval/backpack-transactions",
@@ -6868,6 +6868,99 @@
                 }
             ],
             "time": "2021-09-12T10:04:18+00:00"
+        },
+        {
+            "name": "spatie/laravel-feed",
+            "version": "4.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-feed.git",
+                "reference": "0b9b7df3f716c6067b082cd6a985126c2189a6c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-feed/zipball/0b9b7df3f716c6067b082cd6a985126c2189a6c4",
+                "reference": "0b9b7df3f716c6067b082cd6a985126c2189a6c4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.0|^9.0|^10.0",
+                "illuminate/http": "^8.0|^9.0|^10.0",
+                "illuminate/support": "^8.0|^9.0|^10.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.23|^7.0|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5",
+                "spatie/pest-plugin-snapshots": "^1.1",
+                "spatie/test-time": "^1.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Feed\\FeedServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Feed\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jolita Grazyte",
+                    "email": "jolita@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Patrick Organ",
+                    "homepage": "https://github.com/patinthehat",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generate rss feeds",
+            "homepage": "https://github.com/spatie/laravel-feed",
+            "keywords": [
+                "laravel",
+                "laravel-feed",
+                "rss",
+                "spatie"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/laravel-feed/tree/4.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-25T09:39:38+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
