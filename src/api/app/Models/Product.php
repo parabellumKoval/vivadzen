@@ -107,15 +107,15 @@ class Product extends BaseProduct implements Feedable
       'vendorCode' => $this->code,
       'price' => $this->price,
       'sale_price' => $this->price,
-      'image' => $this->image['src'] ?? '',
+      'image' => '',
       'second_image' => 'second_image',
-      'brand' => $this->brand->name ?? null,
+      'brand' => $this->brand ?? null,
       'condition' => 'новый',
       'mpn' => '4234', //код товара для тех у которых нет кода GTIN
       'gtin' => '1234', //для всех товаров, у которых есть код GTIN
       'base_measure' => 'ct', //единица, за которую рассчитывается цена товара
       'google_product_category' => 525, //категория товара в соответствии с классификацией гугл
-      'categoryName' => $this->category->name ?? null,
+      // 'categoryName' => $this->category->name ?? null,
       'updated' => $this->updated_at,
     ]);
   }
@@ -172,20 +172,62 @@ class Product extends BaseProduct implements Feedable
     $skip = \Request::get('skip', 0);
 
 		// supplier_id 22,10 - iHerb и Склад
-		$items = self::whereIn('parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
-      ->whereNotIn('supplier_id', [22, 10])
-      ->where('images', '!=', null)
-      // ->whereJsonContains('images[0].src', null)
-      // ->where('images->0->src', 'not like', 'null')
-      ->where('is_active', 1)
-      ->limit($limit)
-      ->skip($skip)
+		// $items = self::whereIn('parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
+    //   ->whereNotIn('supplier_id', [22, 10])
+    //   ->where('images', '!=', null)
+    //   ->where('is_active', 1)
+    //   ->limit($limit)
+    //   ->skip($skip)
+    //   ->get();
+
+    $items = \DB::table('ak_products as p')
+      ->select(['p.id', 'p.name->ru as name', 'p.slug', 'p.code', 'p.content->ru as content', 'p.images', 'p.in_stock', 'p.price', 'p.updated_at', 'b.name->ru as brand'])
+      ->join('ak_brands as b', 'p.brand_id', '=', 'b.id')
+      ->whereIn('p.parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
+      ->whereNotIn('p.supplier_id', [22, 10])
+      ->where('p.images', '!=', null)
+      ->where('p.is_active', 1)
       ->get();
 
     // \Log::info('Items - ' . $items->count() . "\n" );
     // self::echoMemoryUsage();
 
-    return $items;
+    $array = $items->map(function($item) {
+
+      $description = $item->content;
+      $short_desc = strlen($description) > 10? 
+          strip_tags( substr($description, strpos($description, "<p"), strpos($description, "</p>")+4) ): '';
+  
+      $images_array = json_decode($item->images, true);
+      $image = isset($images_array[0]['src']) && !empty($images_array[0]['src'])? config('backpack.store.product.image.base_path').$images_array[0]['src']: '';
+  
+      return new FeedItem([
+        'id' => $item->id,
+        'title' => $item->name,
+        'summary' => mb_convert_encoding( $short_desc, 'UTF-8', 'UTF-8' ),
+        'description' => $description,
+        'authorName' => 'author',
+        'quantity_in_stock' => $item->in_stock,
+        'presence' => $item->in_stock > 0?  'true': 'false',
+        'availability' => $item->in_stock > 0? 'in stock': '0',
+        'link' => url($item->slug),
+        'vendorCode' => $item->code,
+        'price' => $item->price,
+        'sale_price' => $item->price,
+        'image' => $image,
+        'second_image' => 'second_image',
+        'brand' => $item->brand ?? null,
+        'condition' => 'новый',
+        'mpn' => '4234', //код товара для тех у которых нет кода GTIN
+        'gtin' => '1234', //для всех товаров, у которых есть код GTIN
+        'base_measure' => 'ct', //единица, за которую рассчитывается цена товара
+        'google_product_category' => 525, //категория товара в соответствии с классификацией гугл
+        'updated' => new \Carbon\Carbon($item->updated_at),
+      ]);
+    }, $items);
+
+    // dd($array);
+    return $array;
 	}  
 	
 }

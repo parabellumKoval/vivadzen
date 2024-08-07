@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\SitemapController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('sitemap')->controller(SitemapController::class)->group(function () {
+  Route::get('/categories', 'getCategories')->middleware('api');
+  Route::get('/products', 'getProducts')->middleware('api');
+  Route::get('/brands', 'getBrands')->middleware('api');
+  Route::get('/articles', 'getArticles')->middleware('api');
+});
 
 Route::get('/product_or_category/{slug}', [CategoryController::class, 'productOrCategory'])->middleware('api');
 
