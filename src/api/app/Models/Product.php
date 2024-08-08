@@ -181,7 +181,7 @@ class Product extends BaseProduct implements Feedable
     //   ->get();
 
     $items = \DB::table('ak_products as p')
-      ->select(['p.id', 'p.name->ru as name', 'p.slug', 'p.code', 'p.content->ru as content', 'p.images', 'p.in_stock', 'p.price', 'p.updated_at', 'b.name->ru as brand'])
+      ->select(['p.id', 'p.old_id', 'p.name->ru as name', 'p.slug', 'p.code', 'p.content->ru as content', 'p.images', 'p.in_stock', 'p.price', 'p.updated_at', 'b.name->ru as brand'])
       ->join('ak_brands as b', 'p.brand_id', '=', 'b.id')
       ->whereIn('p.parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
       ->whereNotIn('p.supplier_id', [22, 10])
@@ -202,7 +202,7 @@ class Product extends BaseProduct implements Feedable
       $image = isset($images_array[0]['src']) && !empty($images_array[0]['src'])? config('backpack.store.product.image.base_path').$images_array[0]['src']: '';
   
       return new FeedItem([
-        'id' => $item->id,
+        'id' => $item->old_id? $item->old_id: $item->id,
         'title' => $item->name,
         'summary' => mb_convert_encoding( $short_desc, 'UTF-8', 'UTF-8' ),
         'description' => $description,
