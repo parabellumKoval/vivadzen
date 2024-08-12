@@ -14,22 +14,22 @@ use App\Http\Resources\ReviewCollection;
 
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
+//\Backpack\Reviews\app\Http\Controllers\Api\ReviewController
 class ReviewController extends \Backpack\Reviews\app\Http\Controllers\Api\ReviewController
 {
 
   public function index(Request $request) {
-    
-    $reviewable_id = request('reviewable_id');
-    $reviewable_type = request('reviewable_type', 'not_exist');
-    $is_moderated = request('is_moderated', 1);
+    $reviewable_id = $request->input('reviewable_id');
+    $reviewable_type = $request->input('reviewable_type', 'not_exist');
+    $is_moderated = $request->input('is_moderated', 1);
+    $with_text = $request->input('with_text', null);
 
-    if(request('reviewable_slug') && request('reviewable_type')) {
-      $reviewable = request('reviewable_type')::where('slug', request('reviewable_slug'))->first();
+    if($request->input('reviewable_slug') && $request->input('reviewable_type')) {
+      $reviewable = $request->input('reviewable_type')::where('slug', $request->input('reviewable_slug'))->first();
       $reviewable_id = $reviewable? $reviewable->id: null;
     }
 
-    $node_ids = Category::getCategoryNodeIdList(request('category_slug'), request('category_id'));
+    $node_ids = Category::getCategoryNodeIdList($request->input('category_slug'), $request->input('category_id'));
 
     $reviews = $this->review_model::query()
       ->root()
@@ -39,6 +39,13 @@ class ReviewController extends \Backpack\Reviews\app\Http\Controllers\Api\Review
       })
       ->when($reviewable_id, function($query) use($reviewable_id){
         $query->where('ak_reviews.reviewable_id', $reviewable_id);
+      })
+      ->when($with_text !== null, function($query) use($with_text){
+        if($with_text) {
+          $query->where('ak_reviews.text', '!=', null)->where('ak_reviews.text', '!=', '');
+        }else {
+          $query->where('ak_reviews.text', '=', null)->orWhere('ak_reviews.text', '=', '');
+        }
       })
       ->when($reviewable_type !== 'not_exist', function($query) use ($reviewable_type){
         if($reviewable_type === 'null') {
@@ -62,7 +69,7 @@ class ReviewController extends \Backpack\Reviews\app\Http\Controllers\Api\Review
       ->distinct('ak_reviews.id');
 
     // if "count" return only total items amount 
-    if(request('count', 0)) {
+    if($request->input('count', 0)) {
       return [
         "meta" => [
           "total" => $reviews->count()
@@ -71,13 +78,13 @@ class ReviewController extends \Backpack\Reviews\app\Http\Controllers\Api\Review
       ];
     }
 
-    $per_page = request('per_page')? request('per_page'): config('backpack.reviews.per_page', 12);
+    $per_page = $request->input('per_page')? $request->input('per_page'): config('backpack.reviews.per_page', 12);
     $reviews = $reviews->paginate($per_page);
 
     $resource = config('backpack.reviews.resource.medium');
 
-    if(request('resource')) {
-      if(request('resource') === 'large') {
+    if($request->input('resource')) {
+      if($request->input('resource') === 'large') {
         $resource = config('backpack.reviews.resource.large');
       }
     } 

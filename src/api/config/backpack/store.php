@@ -203,7 +203,7 @@ return [
       ],
       
       'modifications' => [
-        'enable' => false
+        'enable' => true
       ],
 
       'in_stock' => [

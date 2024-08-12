@@ -14,6 +14,7 @@ class Product extends BaseAdminProduct
 {
  
   private $bunny = null;
+  public $modificationsToSave = [];
 
   protected $fillable = [
     'code',
@@ -33,6 +34,7 @@ class Product extends BaseAdminProduct
     'extras',
     'extras_trans',
     'specs',
+    'modifications',
     'props',
   ];
 
@@ -115,5 +117,14 @@ class Product extends BaseAdminProduct
       $images_array = $this->bunny->storeImages($values, $this->images);
       $this->attributes['images'] = json_encode($images_array);
     }
-
+    
+    /**
+     * setModificationsAttribute
+     *
+     * @param  mixed $value
+     * @return void
+     */
+    public function setModificationsAttribute($value) {
+      $this->modificationsToSave = $value;
+    }
 }

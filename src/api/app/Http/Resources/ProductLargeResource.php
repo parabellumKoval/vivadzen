@@ -18,6 +18,7 @@ class ProductLargeResource extends BaseResource
       return [
         'id' => $this->id,
         'name' => $this->name,
+        'short_name' => $this->short_name,
         'slug' => $this->slug,
         'price' => $this->price,
         'code' => $this->code,
@@ -29,6 +30,9 @@ class ProductLargeResource extends BaseResource
         'inStock' => $this->in_stock,
         'categories' => $this->categories && $this->categories->count()?
           CategoryParentResource::collection($this->categories):
+            null,
+        'modifications' => $this->modifications && $this->modifications->count()? 
+          self::$resources['product']['tiny']::collection($this->modifications): 
             null,
         'attrs' => $this->properties,
         'specs' => $this->specs,
