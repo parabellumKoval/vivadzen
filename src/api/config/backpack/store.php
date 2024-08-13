@@ -164,7 +164,7 @@ return [
 
       'image' => [
         'enable' => true,
-        'base_path' => 'https://djini.b-cdn.net/categories/',
+        'base_path' => 'https://djini-v2.b-cdn.net/categories/',
       ],
 
       'resource' => [
@@ -187,7 +187,7 @@ return [
 
       'image' => [
         'enable' => true,
-        'base_path' => 'https://djini.b-cdn.net/products/',
+        'base_path' => 'https://djini-v2.b-cdn.net/products/',
       ],
 
       'code' => [
@@ -270,7 +270,7 @@ return [
 
       'image' => [
         'enable' => true,
-        'base_path' => 'https://djini.b-cdn.net/brands/',
+        'base_path' => 'https://djini-v2.b-cdn.net/brands/',
       ],
 
       'resource' => [

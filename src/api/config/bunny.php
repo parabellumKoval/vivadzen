@@ -1,5 +1,5 @@
 <?php
 return [
-  'key' => 'bbde5747-31c8-4945-b6a306926417-3533-4cc9',
-  'zone' => 'djini-images'
+  'key' => 'aa642488-8cba-4ae3-9a7d349d2c50-5a5f-477b',
+  'zone' => 'djini-v2-images'
 ];

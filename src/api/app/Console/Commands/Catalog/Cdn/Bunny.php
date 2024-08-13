@@ -78,8 +78,13 @@ class Bunny extends Command
             continue;
           }
     
-          $uploads_result = $this->client->upload($image_url, $remote_path);
-          $results = json_decode($uploads_result, true);
+          try {
+            $uploads_result = $this->client->upload($image_url, $remote_path);
+            $results = json_decode($uploads_result, true);
+          }catch(\Exception $e) {
+            $this->error($e->getMessage() . "\n");
+            continue;
+          }
   
           if($results['HttpCode'] === 201) {
             // $this->info($results['Message']);

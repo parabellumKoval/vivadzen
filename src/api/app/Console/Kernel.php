@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('catalog:xml:belokua')->hourly();
         
 				// $schedule->command('brands:update')->hourly();
+
+        // CACHE CATALOG CATEGORIES PAGE 1
+        $schedule->command('cache:catalog')->everyThirtyMinutes();
     }
 
     /**
