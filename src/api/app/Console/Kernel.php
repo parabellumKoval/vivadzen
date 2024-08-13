@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
 				// $schedule->command('brands:update')->hourly();
 
         // CACHE CATALOG CATEGORIES PAGE 1
-        $schedule->command('cache:catalog')->everyThirtyMinutes();
+        $schedule->command('cache:catalog')->everyFiveMinutes();
     }
 
     /**
