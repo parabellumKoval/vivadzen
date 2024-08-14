@@ -34,10 +34,9 @@ trait ProductCrud {
     ])->beforeField('delim');
 
     $this->crud->addField([
-      'name' => 'specs',
+      'name' => 'specsvirtual',
       'type' => 'hidden',
-      'value' => 1,
-      'default' => 1
+      'value' => 'specs'
     ]);
 
     $this->crud->addField([

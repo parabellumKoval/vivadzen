@@ -2,6 +2,9 @@
 
 namespace App\Models\Admin;
 
+// use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
+
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
@@ -34,6 +37,7 @@ class Product extends BaseAdminProduct
     'extras',
     'extras_trans',
     'specs',
+    'specsvirtual',
     'modifications',
     'props',
   ];
@@ -99,12 +103,25 @@ class Product extends BaseAdminProduct
      * @param  mixed $value
      * @return void
      */
-    public function setSpecsAttribute($value) {
-      $old_extras = $this->extras ?? [];
-      $old_extras['specs'] = $value;
-      $this->extras = $old_extras;
+    // public function setSpecsAttribute($value) {
+    //   $old_extras = $this->extras ?? [];
+    //   $old_extras['specs'] = $value;
+    //   $this->extras = $old_extras;
+    // }
 
-      // dd($extras);
+
+    /**
+     * setSpecsAttribute
+     *
+     * @param  mixed $value
+     * @return void
+     */
+    public function setSpecsvirtualAttribute($value) {
+      // dd($this->attributes, $this->specs, Request::input('specs'));
+
+      $old_extras = $this->extras ?? [];
+      $old_extras['specs'] = Request::input('specs', []);
+      $this->extras = $old_extras;
     }
 
     /**
