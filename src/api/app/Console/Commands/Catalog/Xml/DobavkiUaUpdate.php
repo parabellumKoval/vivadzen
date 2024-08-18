@@ -30,7 +30,7 @@ class DobavkiUaUpdate extends Command
 		protected $brandsOverprice32 = null;
 		protected $brandsOverprice50 = null;
 		
-		private const BASE_OVERPRICE = 1.4;
+		private const BASE_OVERPRICE = 1.3;
 		private const ALT_OVERPRICE = 1.5;
 		
 		private $updated_product_ids = [];
