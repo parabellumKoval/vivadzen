@@ -17,9 +17,9 @@ class ProductTinyResource extends \Backpack\Store\app\Http\Resources\BaseResourc
         'name' => $this->name,
         'short_name' => $this->short_name,
         'slug' => $this->slug,
-        'price' => $this->price,
-        'oldPrice' => $this->old_price,
-        'inStock' => $this->in_stock
+        'price' => $this->simplePrice,
+        'oldPrice' => $this->simpleOldPrice,
+        'inStock' => $this->simpleInStock,
       ];
     }
 }

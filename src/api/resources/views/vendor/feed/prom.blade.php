@@ -20,13 +20,19 @@
             <pubDate>{{ $item->updated->toRssString() }}</pubDate>
 						<presence>{{ $item->presence }}</presence>
 						<available>{{ $item->presence }}</available>
-						<quantity_in_stock>{{ $item->quantity_in_stock }}</quantity_in_stock>
-						<description><![CDATA[{!! $item->description !!}]]></description>
+						<quantity_in_stock>{{ $item->inStock }}</quantity_in_stock>
+						<description><![CDATA[{!! $item->summary !!}]]></description>
 						<vendorCode><![CDATA[{!! $item->vendorCode !!}]]></vendorCode>
-						<vendor><![CDATA[{!! $item->brand !!}]]></vendor>
-						<image><![CDATA[{{ $item->image }}]]></image>
+						<vendor><![CDATA[{!! $item->vendor !!}]]></vendor>
+            @foreach($item->images as $image)
+              <image><![CDATA[{{ $image }}]]></image>
+            @endforeach
 						<price>{{ $item->price }}</price>
+            <oldprice>{{ $item->oldprice }}</oldprice>
 						<mpn><![CDATA[{{ $item->mpn }}]]></mpn>
+            @foreach($item->attributes as $attr)
+              <param name="{{ $attr['name'] }}" unit="{{ $attr['si'] }}">{{ $attr['value'] }}</param>
+            @endforeach
           </item>
         @endforeach
         </items>

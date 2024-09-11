@@ -43,11 +43,21 @@ class Product extends BaseProduct implements Feedable
   | ACCESSORS
   |--------------------------------------------------------------------------
   */
-    
+      
+  /**
+   * getSpecsAttribute
+   *
+   * @return void
+   */
   public function getSpecsAttribute() {
     return $this->extras['specs'] ?? null;
   }
-
+  
+  /**
+   * getImageSrcAttribute
+   *
+   * @return void
+   */
   public function getImageSrcAttribute() {
     $base_path = config('backpack.store.product.image.base_path', '/');
 
@@ -119,7 +129,12 @@ class Product extends BaseProduct implements Feedable
       'updated' => $this->updated_at,
     ]);
   }
-    
+    	
+	/**
+	 * getFeedItems
+	 *
+	 * @return void
+	 */
 	public static function getFeedItems() {
 	   return self::where('in_stock', '>', 0)
         ->whereNotIn('old_id', [960,957,563,924,571,958,341,966,578,570,814,575,954,959,584,561,572,499,508,731,343,919,953,923,581,830,985,707,918])
@@ -148,7 +163,12 @@ class Product extends BaseProduct implements Feedable
    
     return round($bytes, $precision) . $units[$pow]; 
   }
-
+  
+  /**
+   * echoMemoryUsage
+   *
+   * @return void
+   */
   private static function echoMemoryUsage() {
 
     $text = '';
@@ -164,70 +184,153 @@ class Product extends BaseProduct implements Feedable
     \Log::info($text);
 
   }
+	
+  private static function mergeProductData($groups) {
+    $groups = $groups->values()->toArray();
 
+    $products = collect();
+    for($i = 0; $i < count($groups); $i++){
+      $product = array_reduce($groups[$i], function($carry, $item){
+        
+        if(empty($carry)) {
+          $image_names_array = !empty($item->images)? json_decode($item->images): [];
+  
+          $image_urls = array_map(function($filename){
+            return config('backpack.store.product.image.base_path') . $filename->src;
+          }, $image_names_array);
+
+          $product = new FeedItem([
+            'id' => $item->old_id? $item->old_id: $item->id,
+            'title' => $item->name,
+            'link' => $item->slug,
+            'vendorCode' => $item->code, // code, barcode
+            'summary' => !empty($item->content)? $item->content: '',
+            'images' => $image_urls,
+            'updated' => new \Carbon\Carbon($item->updated_at),
+            'vendor' => $item->brand, // brand
+            'inStock' => $item->simpleInStock,
+            'price' => $item->simplePrice,
+            'oldprice' => $item->simpleOldPrice,
+            'attributes' => [],
+            //
+            'presence' => $item->simpleInStock > 0?  'true': 'false',
+            'mpn' => '4234',
+            'authorName' => 'djini'
+          ]);
+        }else {
+          $product = $carry;
+        }
+
+        // Fill params
+        if(isset($product->attributes[$item->a_id])) {
+          $product->attributes[$item->a_id]['value'] = $product->attributes[$item->a_id]['value'] . '|' . $item->av_value;
+        }else {
+          $product->attributes[$item->a_id] = [
+            'name' => $item->a_name,
+            'si' => $item->a_si,
+            'value' => $item->av_value,
+          ];
+        }
+ 
+        return $product;
+      }, []);
+
+      $products->push($product);
+    }
+
+    return $products;
+  }
+
+	/**
+	 * getPromFeedItems
+	 *
+	 * @return void
+	 */
 	public static function getPromFeedItems()
 	{
 
-    $limit = \Request::get('limit');
-    $skip = \Request::get('skip', 0);
-
-		// supplier_id 22,10 - iHerb и Склад
-		// $items = self::whereIn('parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
-    //   ->whereNotIn('supplier_id', [22, 10])
-    //   ->where('images', '!=', null)
-    //   ->where('is_active', 1)
-    //   ->limit($limit)
-    //   ->skip($skip)
-    //   ->get();
+    $sps = \DB::table('ak_supplier_product as sp')
+              ->select('sp.id', 'sp.price', 'sp.old_price', 'sp.in_stock', 'sp.code', 'sp.barcode', 'sp.product_id')
+              ->where('sp.in_stock', '>', 0)
+              ->orderByRaw('IF(sp.in_stock > ?, ?, ?) DESC', [0, 1, 0])
+              ->orderBy('sp.price');
 
     $items = \DB::table('ak_products as p')
-      ->select(['p.id', 'p.old_id', 'p.name->ru as name', 'p.slug', 'p.code', 'p.content->ru as content', 'p.images', 'p.in_stock', 'p.price', 'p.updated_at', 'b.name->ru as brand'])
+      ->select([
+        'sp.id as spId',
+        'p.id',
+        'p.old_id',
+        'p.name->ru as name',
+        'p.slug',
+        'p.code',
+        'p.content->ru as content',
+        'p.images',
+        'sp.in_stock as simpleInStock',
+        'sp.price as simplePrice',
+        'sp.old_price as simpleOldPrice',
+        'sp.code as simpleCode',
+        'sp.barcode as simpleBarcode',
+        'p.updated_at',
+        'b.name->ru as brand',
+        'a.id as a_id',
+        'a.name->ru as a_name',
+        'a.extras_trans->ru->si as a_si',
+        'av.value->ru as av_value',
+        'ap.value as ap_value',
+        'ap.value_trans->ru as ap_value_trans',
+      ])
       ->join('ak_brands as b', 'p.brand_id', '=', 'b.id')
-      ->whereIn('p.parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
-      ->whereNotIn('p.supplier_id', [22, 10])
+      ->joinSub($sps, 'sp', function ($join) {
+        $join->on('p.id', '=', 'sp.product_id');
+      })
+      ->join('ak_attribute_product as ap', 'p.id', '=', 'ap.product_id')
+      ->join('ak_attributes as a', 'a.id', '=', 'ap.attribute_id')
+      ->join('ak_attribute_values as av', 'av.id', '=', 'ap.attribute_value_id')
+      // ->whereIn('p.parsed_from', ['dobavki.ua', 'belok.ua', 'proteinplus.pro'])
+      // ->whereNotIn('p.supplier_id', [22, 10])
       ->where('p.images', '!=', null)
       ->where('p.is_active', 1)
-      ->get();
+      ->groupBy('sp.id', 'a.id', 'av.id', 'ap.id')
+      ->get()
+      ->groupBy('id');
 
-    // \Log::info('Items - ' . $items->count() . "\n" );
-    // self::echoMemoryUsage();
-
-    $array = $items->map(function($item) {
-
-      $description = $item->content;
-      $short_desc = strlen($description) > 10? 
-          strip_tags( substr($description, strpos($description, "<p"), strpos($description, "</p>")+4) ): '';
+    $products = self::mergeProductData($items);
   
-      $images_array = json_decode($item->images, true);
-      $image = isset($images_array[0]['src']) && !empty($images_array[0]['src'])? config('backpack.store.product.image.base_path').$images_array[0]['src']: '';
+    // $array = $products->map(function($item) {
+
+    //   $description = $item->content;
+    //   $short_desc = strlen($description) > 10? 
+    //       strip_tags( substr($description, strpos($description, "<p"), strpos($description, "</p>")+4) ): '';
   
-      return new FeedItem([
-        'id' => $item->old_id? $item->old_id: $item->id,
-        'title' => $item->name,
-        'summary' => mb_convert_encoding( $short_desc, 'UTF-8', 'UTF-8' ),
-        'description' => $description,
-        'authorName' => 'author',
-        'quantity_in_stock' => $item->in_stock,
-        'presence' => $item->in_stock > 0?  'true': 'false',
-        'availability' => $item->in_stock > 0? 'in stock': '0',
-        'link' => url($item->slug),
-        'vendorCode' => $item->code,
-        'price' => $item->price,
-        'sale_price' => $item->price,
-        'image' => $image,
-        'second_image' => 'second_image',
-        'brand' => $item->brand ?? null,
-        'condition' => 'новый',
-        'mpn' => '4234', //код товара для тех у которых нет кода GTIN
-        'gtin' => '1234', //для всех товаров, у которых есть код GTIN
-        'base_measure' => 'ct', //единица, за которую рассчитывается цена товара
-        'google_product_category' => 525, //категория товара в соответствии с классификацией гугл
-        'updated' => new \Carbon\Carbon($item->updated_at),
-      ]);
-    }, $items);
+    //   $images_array = json_decode($item->images, true);
+    //   $image = isset($images_array[0]['src']) && !empty($images_array[0]['src'])? config('backpack.store.product.image.base_path').$images_array[0]['src']: '';
+  
+    //   return new FeedItem([
+    //     'id' => $item->old_id? $item->old_id: $item->id,
+    //     'title' => $item->name,
+    //     'summary' => mb_convert_encoding( $short_desc, 'UTF-8', 'UTF-8' ),
+    //     'description' => $description,
+    //     'authorName' => 'author',
+    //     'quantity_in_stock' => $item->simpleInStock,
+    //     'presence' => $item->simpleInStock > 0?  'true': 'false',
+    //     'link' => url($item->slug),
+    //     'vendorCode' => $item->code ?? $item->simpleCode ?? $item->simpleBarcode,
+    //     'price' => $item->simplePrice,
+    //     'oldprice' => $item->simpleOldPrice,
+    //     'image' => $image,
+    //     'brand' => $item->brand ?? null,
+    //     'condition' => 'новый',
+    //     'attributes' => $item->attributes,
+    //     'mpn' => '4234',
+    //     'gtin' => '1234',
+    //     'base_measure' => 'ct', //единица, за которую рассчитывается цена товара
+    //     'google_product_category' => 525, //категория товара в соответствии с классификацией гугл
+    //     'updated' => new \Carbon\Carbon($item->updated_at),
+    //   ]);
+    // }, $items);
 
     // dd($array);
-    return $array;
+    return $products;
 	}  
 	
 }

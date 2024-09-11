@@ -39,6 +39,8 @@ class Product extends BaseAdminProduct
     'specs',
     'specsvirtual',
     'modifications',
+    'duplicate_of',
+    'duplicate',
     'props',
   ];
 
@@ -71,6 +73,17 @@ class Product extends BaseAdminProduct
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    /**
+     * duplicate
+     *
+     * Return duplicate
+     * 
+     * @return Product
+     */
+    public function duplicate()
+    {
+      return $this->belongsTo(self::class, 'duplicate_of');
+    }
 
 
     /*

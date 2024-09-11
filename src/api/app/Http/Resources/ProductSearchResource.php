@@ -17,8 +17,8 @@ class ProductSearchResource extends JsonResource
         'id' => $this->id,
         'name' => $this->name,
         'slug' => $this->slug,
-        'price' => $this->price,
-        'oldPrice' => $this->old_price,
+        'price' => $this->simplePrice,
+        'oldPrice' => $this->simpleOldPrice,
         'image' => $this->image
       ];
     }

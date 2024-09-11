@@ -207,8 +207,7 @@ return [
       ],
 
       'in_stock' => [
-        'enable' => true,
-        'fixed' => false
+        'enable' => true
       ],
 
 
@@ -285,5 +284,19 @@ return [
           '/[A-Za-z]/u',
         ]
       ]
+    ],
+
+    // SUPPLIER
+    'supplier' => [
+      'enable' => true,
+      'class' => 'Backpack\Store\app\Models\Supplier',
+    ],
+
+    // XML SOURCE
+    'source' => [
+      'enable' => true,
+      'class' => 'Backpack\Store\app\Models\Source',
+      'admin_class' => 'Backpack\Store\app\Models\Admin\Source',
+      'upload_class' => 'Backpack\Store\app\Models\UploadHistory',
     ]
 ];

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d081fde7475974adb565e8ca3cceb9a",
+    "content-hash": "55a27051eca7e3f63d4138dd389fcd42",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -3399,6 +3399,75 @@
             "time": "2024-01-04T16:10:04+00:00"
         },
         {
+            "name": "laravie/parser",
+            "version": "v2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravie/parser.git",
+                "reference": "39ccc5a9b43f282be949c73643fe0f1c0c7929d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravie/parser/zipball/39ccc5a9b43f282be949c73643fe0f1c0c7929d6",
+                "reference": "39ccc5a9b43f282be949c73643fe0f1c0c7929d6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "illuminate/collections": "^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4.2",
+                "phpstan/phpstan": "^1.9.14",
+                "phpunit/phpunit": "^9.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Laravie\\Parser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com",
+                    "homepage": "https://github.com/crynobone"
+                }
+            ],
+            "description": "XML Document Parser for PHP",
+            "keywords": [
+                "parser",
+                "xml"
+            ],
+            "support": {
+                "source": "https://github.com/laravie/parser/tree/v2.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/crynobone",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/crynobone",
+                    "type": "liberapay"
+                }
+            ],
+            "time": "2024-03-26T14:57:22+00:00"
+        },
+        {
             "name": "league/commonmark",
             "version": "2.4.2",
             "source": {
@@ -3585,6 +3654,94 @@
                 }
             ],
             "time": "2022-12-11T20:36:23+00:00"
+        },
+        {
+            "name": "league/csv",
+            "version": "9.16.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/csv.git",
+                "reference": "998280c6c34bd67d8125fdc8b45bae28d761b440"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/998280c6c34bd67d8125fdc8b45bae28d761b440",
+                "reference": "998280c6c34bd67d8125fdc8b45bae28d761b440",
+                "shasum": ""
+            },
+            "require": {
+                "ext-filter": "*",
+                "php": "^8.1.2"
+            },
+            "require-dev": {
+                "doctrine/collections": "^2.2.2",
+                "ext-dom": "*",
+                "ext-xdebug": "*",
+                "friendsofphp/php-cs-fixer": "^3.57.1",
+                "phpbench/phpbench": "^1.2.15",
+                "phpstan/phpstan": "^1.11.1",
+                "phpstan/phpstan-deprecation-rules": "^1.2.0",
+                "phpstan/phpstan-phpunit": "^1.4.0",
+                "phpstan/phpstan-strict-rules": "^1.6.0",
+                "phpunit/phpunit": "^10.5.16 || ^11.1.3",
+                "symfony/var-dumper": "^6.4.6 || ^7.0.7"
+            },
+            "suggest": {
+                "ext-dom": "Required to use the XMLConverter and the HTMLConverter classes",
+                "ext-iconv": "Needed to ease transcoding CSV using iconv stream filters",
+                "ext-mbstring": "Needed to ease transcoding CSV using mb stream filters"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "9.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions_include.php"
+                ],
+                "psr-4": {
+                    "League\\Csv\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://github.com/nyamsprod/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CSV data manipulation made easy in PHP",
+            "homepage": "https://csv.thephpleague.com",
+            "keywords": [
+                "convert",
+                "csv",
+                "export",
+                "filter",
+                "import",
+                "read",
+                "transform",
+                "write"
+            ],
+            "support": {
+                "docs": "https://csv.thephpleague.com",
+                "issues": "https://github.com/thephpleague/csv/issues",
+                "rss": "https://github.com/thephpleague/csv/releases.atom",
+                "source": "https://github.com/thephpleague/csv"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/nyamsprod",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-05-24T11:04:54+00:00"
         },
         {
             "name": "league/flysystem",
@@ -4766,6 +4923,79 @@
             "time": "2022-01-27T09:35:39+00:00"
         },
         {
+            "name": "orchestra/parser",
+            "version": "v6.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orchestral/parser.git",
+                "reference": "6aa0c0034e4c3f6e3f9913a1b682a92186990be7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orchestral/parser/zipball/6aa0c0034e4c3f6e3f9913a1b682a92186990be7",
+                "reference": "6aa0c0034e4c3f6e3f9913a1b682a92186990be7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": "^8.0",
+                "laravie/parser": "^2.1.2",
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.19"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Orchestra\\Parser\\XmlServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Orchestra\\Parser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com",
+                    "homepage": "https://github.com/crynobone"
+                }
+            ],
+            "description": "XML Document Parser for Laravel and PHP",
+            "keywords": [
+                "laravel",
+                "orchestra-platform",
+                "orchestral",
+                "parser",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/orchestral/parser/issues",
+                "source": "https://github.com/orchestral/parser/tree/v6.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/crynobone",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://liberapay.com/crynobone",
+                    "type": "liberapay"
+                }
+            ],
+            "time": "2021-04-17T17:50:06+00:00"
+        },
+        {
             "name": "parabellumkoval/backpack-articles",
             "version": "0.2.x-dev",
             "source": {
@@ -5239,12 +5469,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "328d0e11d300cac0424271835683ef6810ce799d"
+                "reference": "78e4a8a6c4183f553fa91adce187fbed19b52fdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/328d0e11d300cac0424271835683ef6810ce799d",
-                "reference": "328d0e11d300cac0424271835683ef6810ce799d",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/78e4a8a6c4183f553fa91adce187fbed19b52fdc",
+                "reference": "78e4a8a6c4183f553fa91adce187fbed19b52fdc",
                 "shasum": ""
             },
             "require": {
@@ -5302,7 +5532,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/0.3"
             },
-            "time": "2024-08-15T11:15:46+00:00"
+            "time": "2024-09-10T13:24:02+00:00"
         },
         {
             "name": "parabellumkoval/backpack-transactions",
@@ -12494,7 +12724,7 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "8.0.8"
+        "php": "8.1.11"
     },
     "plugin-api-version": "2.3.0"
 }

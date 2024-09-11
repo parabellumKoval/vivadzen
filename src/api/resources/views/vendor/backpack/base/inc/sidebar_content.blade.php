@@ -15,6 +15,15 @@
 	</ul>
 </li>
 
+<li class="nav-item nav-dropdown">
+	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-warehouse"></i> Склад</a>
+	<ul class="nav-dropdown-items">
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('supplier') }}'><i class="nav-icon las la-boxes"></i> Поставщики</a></li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('source') }}'><i class='nav-icon las la-link'></i> XML-источники</a></li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('upload') }}'><i class='nav-icon las la-history'></i> История выгрузок</a></li>
+	</ul>
+</li>
+
 <li class='nav-item'>
 	<a class='nav-link' href='{{ backpack_url('promocode') }}'>
 		<i class='nav-icon las la-percentage'></i> Купоны

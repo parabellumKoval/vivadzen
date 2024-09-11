@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin\Traits;
+use Backpack\Store\app\Traits\Exchange;
 
 trait SourceCrud {
+  use Exchange;
   
   // Extends of SetupOperation
   public function setupOperation() {}
@@ -18,29 +20,7 @@ trait SourceCrud {
    *
    * @return void
    */
-  // private function getExchangeRate() {
-  //   try 
-  //   {
-  //     $privat_rates = file_get_contents('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5');
-  //   }
-  //   catch(\Exception $e)
-  //   {
-  //     $message = "Can't get exchange rates: " . $e->getMessage();
-      
-  //     Log::channel('xml')->error($message);
-  //     throw new \Exception($message);
-  //   }
-    
-  //   $exchange_coff = 1.0157;
-  //   $exchange_rates = json_decode($privat_rates);
-    
-  //   $usd = array_filter($exchange_rates, function($item) {
-  //     return $item->ccy === "USD";
-  //   });
-    
-  //   $usd = reset($usd);
-    
-    
-  //   return (float)$usd->sale * $exchange_coff;	    
-  // }
+  private function getExchangeRate() {
+    return $this->getRate();   
+  }
 }

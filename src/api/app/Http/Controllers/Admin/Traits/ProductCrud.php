@@ -146,6 +146,38 @@ trait ProductCrud {
       'tab' => 'Изображения'
     ]);
   
+
+
+    $this->crud->addField([
+      'name' => 'delim_duplic',
+      'type' => 'custom_html',
+      'value' => '<h3>Дубликаты</h3>
+        <p class="help-block">В данном разделе можно "сшивать" несколько товаров в один. Для того чтобы это сделать:</p>
+        <ol>
+          <li>В поле ниже выберите основной товар, то есть тот товар дубликатом которого явялется товар, который вы сейчас редактируете.</li>
+          <li>В течении 1 часа этот товар автоматически будет объединен с указанным в поле ниже.</li>
+          <li>Этот товар будет полностью удален, а информация о складе (поставщик, артикул, наличие, цена...) будет перенесена в карточку основного товара.</li>
+        </ol>
+      ',
+      'tab' => 'Дубликаты'
+    ])->afterField('images');
+
+    $this->crud->addField([
+      'name' => 'duplicate_of',
+      'label' => 'Выберите товар',
+      'type'    => 'relationship',
+      'model'     => 'Backpack\Store\app\Models\Product',
+      'attribute' => 'name',
+      'ajax' => true,
+      'multiple' => false,
+      // 'entity' => Backpack\Store\app\Models\Product::class,
+      'entity' => 'duplicate',
+      'data_source' => url("/admin/api/product"),
+      'placeholder' => "Поиск по названию товара",
+      'minimum_input_length' => 0,
+      'hint' => 'Выберите товар дубликатом которого является данный товар.',
+      'tab' => 'Дубликаты'
+    ]);
   }
 
 }

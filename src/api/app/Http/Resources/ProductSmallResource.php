@@ -16,12 +16,12 @@ class ProductSmallResource extends \Backpack\Store\app\Http\Resources\BaseResour
         'id' => $this->id,
         'name' => $this->name,
         'slug' => $this->slug,
-        'price' => $this->price,
-        'oldPrice' => $this->old_price,
+        'price' => $this->simplePrice,
+        'oldPrice' => $this->simpleOldPrice,
         'rating' => $this->rating,
         'reviews_rating_detailes' => $this->reviewsRatingDetailes,
         'images' => $this->getImages(2),
-        'inStock' => $this->in_stock,
+        'inStock' => $this->simpleInStock,
       ];
     }
 }

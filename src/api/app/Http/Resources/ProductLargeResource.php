@@ -20,14 +20,14 @@ class ProductLargeResource extends BaseResource
         'name' => $this->name,
         'short_name' => $this->short_name,
         'slug' => $this->slug,
-        'price' => $this->price,
-        'code' => $this->code,
-        'oldPrice' => $this->old_price,
+        'code' => $this->simpleCode,
+        'price' => $this->simplePrice,
+        'oldPrice' => $this->simpleOldPrice,
+        'inStock' => $this->simpleInStock,
         'rating' => $this->rating,
         'reviews_rating_detailes' => $this->reviewsRatingDetailes,
         'images' => $this->images,
         'content' => $this->content,
-        'inStock' => $this->in_stock,
         'categories' => $this->categories && $this->categories->count()?
           CategoryParentResource::collection($this->categories):
             null,

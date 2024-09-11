@@ -20,8 +20,7 @@ class JoinProductModifications extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
-
+    protected $description = 'An attempt to find modifications of the same product and combine them into groups';
 
     private $prosecced_ids = [];
     /**
@@ -46,7 +45,12 @@ class JoinProductModifications extends Command
 
       return 0;
     }
-
+    
+    /**
+     * joinModifications
+     *
+     * @return void
+     */
     public function joinModifications() {
       $products = Product::where('is_active', 1)->where('parent_id', null)->where('short_name', null);
       $products_cursor = $products->cursor();
