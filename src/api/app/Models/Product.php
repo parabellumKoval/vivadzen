@@ -195,9 +195,13 @@ class Product extends BaseProduct implements Feedable
         if(empty($carry)) {
           $image_names_array = !empty($item->images)? json_decode($item->images): [];
   
-          $image_urls = array_map(function($filename){
-            return config('backpack.store.product.image.base_path') . $filename->src;
-          }, $image_names_array);
+          if(!empty($image_names_array)) {
+            $image_urls = array_map(function($filename){
+              return config('backpack.store.product.image.base_path') . $filename->src;
+            }, $image_names_array);
+          }else {
+            $image_urls = [];
+          }
 
           $product = new FeedItem([
             'id' => $item->old_id? $item->old_id: $item->id,
