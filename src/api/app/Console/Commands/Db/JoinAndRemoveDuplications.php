@@ -76,12 +76,16 @@ class JoinAndRemoveDuplications extends Command
           }else {
             // else switch old product id for new 
             $sp->product_id = $base_product->id;
-            $sp->save();
+            // $sp->save();
           }
         }
         
         // Delete duplication product
-        $product->delete();
+        $has_own_dupls = Product::where('duplicate_of', $product->id)->count();
+        if($has_own_dupls) {
+          $this->info('Product id = ' . $product->id . ' has own dupls = ' . $has_own_dupls);
+        }
+        // $product->delete();
         
         $bar->advance();
       }
