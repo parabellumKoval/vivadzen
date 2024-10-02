@@ -24,7 +24,7 @@ class Catalog extends Command
      *
      * @var string
      */
-    protected $description = 'Update products from belok.ua pricelist (XML)';
+    protected $description = 'Update catalog cache';
 
 
     public $client = null;
