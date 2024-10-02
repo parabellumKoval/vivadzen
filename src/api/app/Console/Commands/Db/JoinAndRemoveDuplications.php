@@ -76,7 +76,7 @@ class JoinAndRemoveDuplications extends Command
           }else {
             // else switch old product id for new 
             $sp->product_id = $base_product->id;
-            // $sp->save();
+            $sp->save();
           }
         }
         
@@ -85,7 +85,7 @@ class JoinAndRemoveDuplications extends Command
         if($has_own_dupls) {
           $this->info('Product id = ' . $product->id . ' has own dupls = ' . $has_own_dupls);
         }
-        // $product->delete();
+        $product->delete();
         
         $bar->advance();
       }

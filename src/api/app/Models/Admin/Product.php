@@ -41,7 +41,10 @@ class Product extends BaseAdminProduct
     'modifications',
     'duplicate_of',
     'duplicate',
+    'suppliersData',
     'props',
+    'defaultSupplier',
+    'defaultSupplierVirtual'
   ];
 
   protected $casts = [

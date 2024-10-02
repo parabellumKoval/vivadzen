@@ -29,10 +29,11 @@ trait ProductProcessing {
 
       return $filled_fileds;
     });
-    
-    $main_sp = $sorted->splice(0, 1)->first();
-    $other_sps = $sorted;
+    $sorted_unique = $sorted->unique('product_id');
+    $main_sp = $sorted_unique->splice(0, 1)->first();
+    $other_sps = $sorted_unique;
 
+    // dd($main_sp->id, $other_sps->pluck('id'));
     foreach($other_sps as $sp) {
       // We mark the product as a duplicate of another, so that we can then combine the SupplierProduct duplicates together 
       // and delete the duplicate product cards

@@ -49,7 +49,7 @@ class JoinProductDublicates extends Command
     {
 
       // Find duplications by code and barcode and join
-      $this->joinDublicatesByCode();
+      // $this->joinDublicatesByCode();
 
       // Find duplications by name and join
       $this->processed_ids = [];
@@ -83,8 +83,11 @@ class JoinProductDublicates extends Command
         $dublicates_by_name = Product::
             where('id', '!=', $product->id)
           ->where(function($query) use($product) {
-            $query->where('name->ru', 'LIKE', '%' . $product->name . '%')
-                  ->orWhere('name->uk', 'LIKE', '%' . $product->name . '%');
+            $query->whereRaw('LOWER(JSON_EXTRACT(name, "$.ru")) LIKE ? ',['"' . trim(strtolower($product->name)) . '"'])
+                  ->orWhereRaw('LOWER(JSON_EXTRACT(name, "$.uk")) LIKE ? ',['"' . trim(strtolower($product->name)) . '"']);
+
+            // $query->where('name->ru', 'LIKE', '%' . $product->name . '%')
+            //       ->orWhere('name->uk', 'LIKE', '%' . $product->name . '%');
           })
           ->get();
 
@@ -126,7 +129,16 @@ class JoinProductDublicates extends Command
      * @return void
      */
     private function joinDublicatesByCode() {
-      $sps = SupplierProduct::where('supplier_id', '!=', 44);
+      $sps = SupplierProduct::
+        where(function($query) {
+          $query->whereNotNull('code')
+                ->where('code', '!=', '');
+        })
+        ->orWhere(function($query) {
+          $query->whereNotNull('barcode')
+                ->where('barcode', '!=', '');
+        });
+
       $sps_cursor = $sps->cursor();
       $sps_count = $sps->count();
 
@@ -136,46 +148,55 @@ class JoinProductDublicates extends Command
       foreach($sps_cursor as $sp) {
         $bar->advance();
 
+        // $prose = implode(', ', $this->processed_ids);
+        // $this->info('procesed ' . $prose);
+
         if(in_array($sp->id, $this->processed_ids)) {
+          $this->error('skip ' . $sp->id);
           continue;
         }
 
-        $dubls = SupplierProduct::
-            where('id', '!=', $sp->id)
-          ->where('supplier_id', '!=', 44);
-        
+        // if($sp->id === 1596 || $sp->id === 1595 || $sp->id === 2223) {
+        //   $this->info($sp->id);
+        // }
+
         $this->processed_ids[] = $sp->id;
+
+        $dupls = SupplierProduct::
+            where('id', '!=', $sp->id)
+          // ->where('supplier_id', '!=', 44)
+          // Thats means that it is another product (not other supplier of same product)
+          ->where('product_id', '!=', $sp->product_id);
 
         // CODE
         if(!empty($sp->code)){ 
-          $dubls_by_code = $dubls
+          $dupls = $dupls
+              // ->where('barcode', $sp->code)->get();
               ->where(function($query) use($sp) {
-                $query->where('code', $sp->code);
-                $query->orWhere('barcode', $sp->code);
-              })
-              ->get();
-        
-          if($dubls_by_code->count()) {
-            $this->mergeSupplierProductsTrait($dubls_by_code->push($sp));
-            $this->processed_ids = $this->processed_ids + $dubls_by_code->pluck('product_id')->toArray();
-            $this->dublicates_count += $dubls_by_code->count();
-          }
+                $query->where('code', $sp->code)
+                      ->orWhere('barcode', $sp->code);
+              })->get();
+        }else if(!empty($sp->barcode)){ 
+          $dupls = $dupls
+            // ->where('code', $sp->barcode)->get();
+              ->where(function($query) use($sp) {
+                $query->where('code', $sp->barcode)
+                      ->orWhere('barcode', $sp->barcode);
+              })->get();
+        }else {
+          continue;
         }
 
-        // BARCODE
-        if(!empty($sp->barcode)){ 
-          $dubls_by_barcode = $dubls
-              ->where(function($query) use($sp) {
-                $query->where('code', $sp->barcode);
-                $query->orWhere('barcode', $sp->barcode);
-              })
-              ->get();
-          
-            if($dubls_by_barcode->count()) {
-              $this->mergeSupplierProductsTrait($dubls_by_barcode->push($sp));
-              $this->processed_ids = $this->processed_ids + $dubls_by_barcode->pluck('product_id')->toArray();
-              $this->dublicates_count += $dubls_by_barcode->count();
-            }
+        // dd($dupls->toSql());
+        // if($dupls->count() !== $dupls->unique('product_id')->count()) {
+        //   dd($dupls);
+        // }
+        
+        if($dupls->count()) {
+          $this->processed_ids = $this->processed_ids + $dupls->pluck('id')->toArray();
+          $this->dublicates_count += $dupls->count();
+
+          $this->mergeSupplierProductsTrait($dupls->push($sp));
         }
       }
 
