@@ -16,12 +16,14 @@
           <item id="{{ $item->id }}">
           	<categoryId><![CDATA[{{ 110341818 }}]]></categoryId>
             <name><![CDATA[{{ $item->title }}]]></name>
+            <name_ua><![CDATA[{{ $item->title_uk }}]]></name_ua>
             <link>{{ $item->link }}</link>
             <pubDate>{{ $item->updated->toRssString() }}</pubDate>
 						<presence>{{ $item->presence }}</presence>
 						<available>{{ $item->presence }}</available>
 						<quantity_in_stock>{{ $item->inStock }}</quantity_in_stock>
 						<description><![CDATA[{!! $item->summary !!}]]></description>
+						<description_ua><![CDATA[{!! $item->summary_uk !!}]]></description_ua>
 						<vendorCode><![CDATA[{!! $item->vendorCode !!}]]></vendorCode>
 						<vendor><![CDATA[{!! $item->vendor !!}]]></vendor>
             @foreach($item->images as $image)

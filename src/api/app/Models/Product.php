@@ -205,10 +205,12 @@ class Product extends BaseProduct implements Feedable
 
           $product = new FeedItem([
             'id' => $item->old_id? $item->old_id: $item->id,
-            'title' => $item->name,
+            'title' => $item->name_ru,
+            'title_uk' => $item->name_uk,
             'link' => $item->slug,
-            'vendorCode' => $item->code, // code, barcode
-            'summary' => !empty($item->content)? $item->content: '',
+            'vendorCode' => $item->simpleCode ?? $item->simpleBarcode ?? $item->code, // code, barcode
+            'summary' => !empty($item->content_ru)? $item->content_ru: '',
+            'summary_uk' => !empty($item->content_uk)? $item->content_uk: '',
             'images' => $image_urls,
             'updated' => new \Carbon\Carbon($item->updated_at),
             'vendor' => $item->brand, // brand
@@ -264,10 +266,12 @@ class Product extends BaseProduct implements Feedable
         'sp.id as spId',
         'p.id',
         'p.old_id',
-        'p.name->ru as name',
+        'p.name->ru as name_ru',
+        'p.name->uk as name_uk',
         'p.slug',
         'p.code',
-        'p.content->ru as content',
+        'p.content->ru as content_ru',
+        'p.content->uk as content_uk',
         'p.images',
         'sp.in_stock as simpleInStock',
         'sp.price as simplePrice',
