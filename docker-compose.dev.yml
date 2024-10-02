@@ -129,15 +129,15 @@ services:
     depends_on:
       - mysql
   
-  # redis:
-  #   build:
-  #     dockerfile: .docker/dev/redis/Dockerfile
-  #   volumes:
-  #     - redis:/data
-  #   ports:
-  #     - "6379:6379"
-  #   networks:
-  #     - api
+  redis:
+    build:
+      dockerfile: .docker/dev/redis/Dockerfile
+    volumes:
+      - redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - api
 
   # queue:
   #   build:
