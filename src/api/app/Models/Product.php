@@ -7,6 +7,8 @@ use Laravel\Scout\Searchable;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 
+use App\Models\CategoryFeed;
+
 use Backpack\Store\app\Models\Product as BaseProduct;
 
 // REVIEWS
@@ -186,13 +188,21 @@ class Product extends BaseProduct implements Feedable
   }
 	
   private static function mergeProductData($groups) {
+
+    // Get prom groups keied by site category id
+    $prom_groups = CategoryFeed::whereHas('feed', function($query) {
+      $query->where('key', 'prom');
+    })->get()->keyBy('category_id');
+
+    // Get values
     $groups = $groups->values()->toArray();
 
     $products = collect();
     for($i = 0; $i < count($groups); $i++){
-      $product = array_reduce($groups[$i], function($carry, $item){
+      $product = array_reduce($groups[$i], function($carry, $item) use ($prom_groups){
         
         if(empty($carry)) {
+          // Get Images Array
           $image_names_array = !empty($item->images)? json_decode($item->images): [];
   
           if(!empty($image_names_array)) {
@@ -202,6 +212,9 @@ class Product extends BaseProduct implements Feedable
           }else {
             $image_urls = [];
           }
+
+          // Get prom category
+          $promCategoryId = $prom_groups[(int)$item->categoryId]->prom_id ?? null;
 
           $product = new FeedItem([
             'id' => $item->old_id? $item->old_id: $item->id,
@@ -218,6 +231,9 @@ class Product extends BaseProduct implements Feedable
             'price' => $item->simplePrice,
             'oldprice' => $item->simpleOldPrice,
             'attributes' => [],
+            'promCategoryId' => $promCategoryId,
+            // 'category_name' => $item->promCategoryName ?? null,
+            // 'category_id' => $item->promCategoryId ?? null,
             //
             'presence' => $item->simpleInStock > 0?  'true': 'false',
             'mpn' => '4234',
@@ -261,6 +277,11 @@ class Product extends BaseProduct implements Feedable
               ->orderByRaw('IF(sp.in_stock > ?, ?, ?) DESC', [0, 1, 0])
               ->orderBy('sp.price');
 
+
+    $cfs = \DB::table('category_feed as cf')
+              ->select('cf.id', 'cf.category_id', 'cf.feed_id', 'cf.prom_name', 'cf.prom_id')
+              ->where('cf.feed_id', 1);
+
     $items = \DB::table('ak_products as p')
       ->select([
         'sp.id as spId',
@@ -286,11 +307,17 @@ class Product extends BaseProduct implements Feedable
         'av.value->ru as av_value',
         'ap.value as ap_value',
         'ap.value_trans->ru as ap_value_trans',
+        'cp.category_id as categoryId',
       ])
+      ->join('ak_category_product as cp', 'cp.product_id', '=', 'p.id')
+      // ->join('category_feed as cf', 'cf.category_id', '=', 'cp.category_id')
       ->join('ak_brands as b', 'p.brand_id', '=', 'b.id')
       ->joinSub($sps, 'sp', function ($join) {
         $join->on('p.id', '=', 'sp.product_id');
       })
+      // ->leftJoinSub($cfs, 'cf', function ($join) {
+      //   $join->on('cp.category_id', '=', 'cf.category_id');
+      // })
       ->join('ak_attribute_product as ap', 'p.id', '=', 'ap.product_id')
       ->join('ak_attributes as a', 'a.id', '=', 'ap.attribute_id')
       ->join('ak_attribute_values as av', 'av.id', '=', 'ap.attribute_value_id')
@@ -298,46 +325,18 @@ class Product extends BaseProduct implements Feedable
       // ->whereNotIn('p.supplier_id', [22, 10])
       ->where('p.images', '!=', null)
       ->where('p.is_active', 1)
-      ->groupBy('sp.id', 'a.id', 'av.id', 'ap.id')
+      // ->whereIn('p.id', [558, 574, 575, 579])
+      ->groupBy('sp.id', 'a.id', 'av.id', 'ap.id', 'cp.id')
       ->get()
       ->groupBy('id');
 
+
+    // <categoryId><![CDATA[{{ 110341818 }}]]></categoryId>
+    // <categoryId>72879515</categoryId>
+    // <categoryName>БАДы</categoryName>
+
     $products = self::mergeProductData($items);
   
-    // $array = $products->map(function($item) {
-
-    //   $description = $item->content;
-    //   $short_desc = strlen($description) > 10? 
-    //       strip_tags( substr($description, strpos($description, "<p"), strpos($description, "</p>")+4) ): '';
-  
-    //   $images_array = json_decode($item->images, true);
-    //   $image = isset($images_array[0]['src']) && !empty($images_array[0]['src'])? config('backpack.store.product.image.base_path').$images_array[0]['src']: '';
-  
-    //   return new FeedItem([
-    //     'id' => $item->old_id? $item->old_id: $item->id,
-    //     'title' => $item->name,
-    //     'summary' => mb_convert_encoding( $short_desc, 'UTF-8', 'UTF-8' ),
-    //     'description' => $description,
-    //     'authorName' => 'author',
-    //     'quantity_in_stock' => $item->simpleInStock,
-    //     'presence' => $item->simpleInStock > 0?  'true': 'false',
-    //     'link' => url($item->slug),
-    //     'vendorCode' => $item->code ?? $item->simpleCode ?? $item->simpleBarcode,
-    //     'price' => $item->simplePrice,
-    //     'oldprice' => $item->simpleOldPrice,
-    //     'image' => $image,
-    //     'brand' => $item->brand ?? null,
-    //     'condition' => 'новый',
-    //     'attributes' => $item->attributes,
-    //     'mpn' => '4234',
-    //     'gtin' => '1234',
-    //     'base_measure' => 'ct', //единица, за которую рассчитывается цена товара
-    //     'google_product_category' => 525, //категория товара в соответствии с классификацией гугл
-    //     'updated' => new \Carbon\Carbon($item->updated_at),
-    //   ]);
-    // }, $items);
-
-    // dd($array);
     return $products;
 	}  
 	

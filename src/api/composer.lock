@@ -4,82 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55a27051eca7e3f63d4138dd389fcd42",
+    "content-hash": "f4c01daa392ac47e5cf4b0f96a94c474",
     "packages": [
-        {
-            "name": "algolia/algoliasearch-client-php",
-            "version": "3.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/algolia/algoliasearch-client-php.git",
-                "reference": "cf87b649f745479c0800299481d91dc303e23cea"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/algolia/algoliasearch-client-php/zipball/cf87b649f745479c0800299481d91dc303e23cea",
-                "reference": "cf87b649f745479c0800299481d91dc303e23cea",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "php": "^7.3 || ^8.0",
-                "psr/http-message": "^1.1 || ^2.0",
-                "psr/log": "^1.0 || ^2.0 || ^3.0",
-                "psr/simple-cache": "^1.0 || ^2.0 || ^3.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "fzaninotto/faker": "^1.8",
-                "phpunit/phpunit": "^8.0 || ^9.0",
-                "symfony/yaml": "^2.0 || ^4.0"
-            },
-            "suggest": {
-                "guzzlehttp/guzzle": "If you prefer to use Guzzle HTTP client instead of the Http Client implementation provided by the package"
-            },
-            "bin": [
-                "bin/algolia-doctor"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-2.0": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/Http/Psr7/functions.php",
-                    "src/functions.php"
-                ],
-                "psr-4": {
-                    "Algolia\\AlgoliaSearch\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Algolia Team",
-                    "email": "contact@algolia.com"
-                }
-            ],
-            "description": "Algolia Search API Client for PHP",
-            "keywords": [
-                "algolia",
-                "api",
-                "client",
-                "php",
-                "search"
-            ],
-            "support": {
-                "issues": "https://github.com/algolia/algoliasearch-client-php/issues",
-                "source": "https://github.com/algolia/algoliasearch-client-php/tree/3.4.1"
-            },
-            "time": "2023-08-28T14:34:04+00:00"
-        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.2.0",
@@ -1185,6 +1111,48 @@
                 }
             ],
             "time": "2023-08-31T09:50:34+00:00"
+        },
+        {
+            "name": "corbpie/bunny-cdn-api",
+            "version": "v1.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cp6/BunnyCDN-API.git",
+                "reference": "afedc3dfa1a8720726d7ac98e21d8852a780131f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cp6/BunnyCDN-API/zipball/afedc3dfa1a8720726d7ac98e21d8852a780131f",
+                "reference": "afedc3dfa1a8720726d7ac98e21d8852a780131f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-ftp": "*",
+                "php": ">=8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Corbpie\\BunnyCdn\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "corbpie",
+                    "email": "contact@corbpie.com"
+                }
+            ],
+            "description": "Bunny net CDN API class for handling pull zones, storage zones, video streaming and DNS.",
+            "support": {
+                "issues": "https://github.com/cp6/BunnyCDN-API/issues",
+                "source": "https://github.com/cp6/BunnyCDN-API/tree/v1.9.2"
+            },
+            "time": "2023-02-16T00:34:01+00:00"
         },
         {
             "name": "creativeorange/gravatar",
@@ -5469,12 +5437,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "d039412a993c4c40f35b44ceaec3d83ba1465296"
+                "reference": "590f384df7cb8ddf5874bce3917b1b25260f8563"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/d039412a993c4c40f35b44ceaec3d83ba1465296",
-                "reference": "d039412a993c4c40f35b44ceaec3d83ba1465296",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/590f384df7cb8ddf5874bce3917b1b25260f8563",
+                "reference": "590f384df7cb8ddf5874bce3917b1b25260f8563",
                 "shasum": ""
             },
             "require": {
@@ -5532,7 +5500,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/0.3"
             },
-            "time": "2024-09-26T10:45:02+00:00"
+            "time": "2024-10-08T13:03:34+00:00"
         },
         {
             "name": "parabellumkoval/backpack-transactions",

@@ -14,7 +14,7 @@
 				<items>
         @foreach($items as $item)
           <item id="{{ $item->id }}">
-          	<categoryId><![CDATA[{{ 110341818 }}]]></categoryId>
+          	<categoryId>{{ $item->promCategoryId }}</categoryId>
             <name><![CDATA[{{ $item->title }}]]></name>
             <name_ua><![CDATA[{{ $item->title_uk }}]]></name_ua>
             <link>{{ $item->link }}</link>

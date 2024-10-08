@@ -61,7 +61,7 @@ class JoinAndRemoveDuplications extends Command
         $base_product = $product->duplicate;
 
         if(!$base_product) {
-          $this->error('Skip product (id = ' . $product->id . ') because base product (id = ' . $product->duplicate_of . ') not isset');
+          $this->error('Skip product (id = ' . $product->id . ') because base product (id = ' . $product->duplicate_of . ') not exists');
           continue;
         }
 

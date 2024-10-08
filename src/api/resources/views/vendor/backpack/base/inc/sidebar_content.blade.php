@@ -25,6 +25,12 @@
 </li>
 
 <li class='nav-item'>
+	<a class='nav-link' href='{{ backpack_url('feed') }}'>
+		<i class='nav-icon las la-cloud-download-alt'></i> Выгрузки
+	</a>
+</li>
+
+<li class='nav-item'>
 	<a class='nav-link' href='{{ backpack_url('promocode') }}'>
 		<i class='nav-icon las la-percentage'></i> Купоны
 	</a>

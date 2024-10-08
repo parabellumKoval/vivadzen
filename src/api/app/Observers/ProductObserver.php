@@ -37,12 +37,12 @@ class ProductObserver
      * @return void
      */
     public function deleting(Product $product) {
-      if(empty($product->images)) {
-        return;
-      }
+      // if(empty($product->images)) {
+      //   return;
+      // }
       
-      $bunny = new Bunny('products');
-      $bunny->removeAllImages($product->images);
+      // $bunny = new Bunny('products');
+      // $bunny->removeAllImages($product->images);
     }
 
     /**
