@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 use App\Models\Admin\Product;
 use Backpack\Store\app\Models\SupplierProduct;
+use Backpack\Store\app\Models\OrderProduct;
 
 class JoinAndRemoveDuplications extends Command
 {
@@ -85,11 +86,37 @@ class JoinAndRemoveDuplications extends Command
         if($has_own_dupls) {
           $this->info('Product id = ' . $product->id . ' has own dupls = ' . $has_own_dupls);
         }
+        
+        $this->switchOrderProductToBase($product, $base_product);
+
         $product->delete();
         
         $bar->advance();
       }
 
       $bar->finish();
+    }
+
+    
+    /**
+     * switchOrderProductToBase
+     *
+     * @param  mixed $product
+     * @param  mixed $base_product
+     * @return void
+     */
+    public function switchOrderProductToBase($product, $base_product) {
+      $ops = OrderProduct::where('product_id', $product->id)->get();
+      
+      if(!$ops) {
+        return;
+      }
+
+      foreach($ops as $op) {
+        $op->update([
+          'product_id' => $base_product->id
+        ]);
+      }
+
     }
 }
