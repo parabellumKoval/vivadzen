@@ -15,18 +15,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-        
-        // $schedule->command('catalog:xml:proteinplus')->hourly();
-        
-        // $schedule->command('prom:productsUpdate')->daily();
-        
-        // $schedule->command('catalog:xml:dobavkiua')->hourly();
-        
-        // $schedule->command('catalog:xml:belokua')->hourly();
-        
-				// $schedule->command('brands:update')->hourly();
-
         // CACHE CATALOG CATEGORIES PAGE 1
         $schedule->command('cache:catalog')->everyFiveMinutes();
 
@@ -34,7 +22,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('xml:source')->everyFiveMinutes();
 
         // Remove product duplications, merge products 
-        $schedule->command('db:join-and-remove-duplications')->hourly();
+        $schedule->command('db:join-and-remove-duplications')->everyTenMinutes();
         
     }
 
