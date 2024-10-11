@@ -49,9 +49,57 @@ class PromCategories extends Command
      */
     public function handle()
     {
-			$xml = $this->getXML();
+      // Part 1
+			// $xml = $this->getXML();
+
+      // Part 2
+      $this->fillCategories();
     }
-    
+        
+    /**
+     * fillCategories
+     *
+     * @return void
+     */
+    private function fillCategories() {
+      $content = file_get_contents(url('/uploads/prom_categories_2.csv'));
+
+      $reader = Reader::createFromString($content);
+      $reader->setDelimiter(';');
+      $records = $reader->getRecords();
+
+      // Get prom feed
+      $feed = Feed::where('key', 'prom')->first();
+
+      foreach($records as $index => $record) {
+        if($index === 0) {
+          continue;
+        }
+
+        if(CategoryFeed::where('prom_id', (int)$record[0])->first()) {
+          $this->line('skip category allready isset ' . $record[1]);
+          continue;
+        }
+
+        $this->info('index ' . $index);
+        
+        $cat = $site_category = Category::
+                          where('name->ru', $record[1])
+                          ->orWhere('name->uk', $record[1])
+                          ->first();
+
+        if($cat) {
+          $this->info('Find site category ' . $cat->name);
+        }
+
+        CategoryFeed::create([
+          'category_id' => $cat->id ?? null,
+          'feed_id' => $feed->id,
+          'prom_name' => $record[1],
+          'prom_id' => (int)$record[0],
+        ]);
+      }      
+    }
         
     /**
      * getXML
