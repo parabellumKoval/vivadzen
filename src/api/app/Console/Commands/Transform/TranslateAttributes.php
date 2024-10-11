@@ -173,14 +173,24 @@ class TranslateAttributes extends Command
 
         $cp_uk = [];
         foreach($product->customProperties as $cp) {
-          $result = $this->translator->translateText([
-            ($cp['name'] ?? ''), ($cp['value'] ?? '')
-          ], 'ru', 'uk', ['tag_handling' => 'html']);
+          $name_string = isset($cp['name']) && !empty($cp['name'])? (string)$cp['name']: '';
+          $value_string = isset($cp['value']) && !empty($cp['value'])? (string)$cp['value']: '';
 
-          $cp_uk[] = [
-            'name' => $result[0]->text,
-            'value' => $result[1]->text
-          ];
+          // if(gettype($name_string) !== 'string' || gettype($value_string) !== 'string') {
+          //   dd('no String', $name_string, $value_string);
+          // }
+          try {
+            $result = $this->translator->translateText([
+              $name_string, $value_string
+            ], 'ru', 'uk', ['tag_handling' => 'html']);
+
+            $cp_uk[] = [
+              'name' => $result[0]->text,
+              'value' => $result[1]->text
+            ];
+          }catch(\Exception $e) {
+            $this->error('cant translate $product id ' . $product->id);
+          }
         }
 
         $product->setTranslation('extras_trans', 'uk', [
