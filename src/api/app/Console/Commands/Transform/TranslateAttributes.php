@@ -174,7 +174,7 @@ class TranslateAttributes extends Command
         $cp_uk = [];
         foreach($product->customProperties as $cp) {
           $result = $this->translator->translateText([
-            $cp['name'], $cp['value'] 
+            ($cp['name'] ?? ''), ($cp['value'] ?? '')
           ], 'ru', 'uk', ['tag_handling' => 'html']);
 
           $cp_uk[] = [
