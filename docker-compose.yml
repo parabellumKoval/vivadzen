@@ -69,6 +69,7 @@ services:
     volumes:
       - ./storage_dashboard:/var/www/html/storage
       - /mnt/uploads:/var/www/html/public/uploads
+      - /mnt/backups:/var/www/html/public/backups
       # - mysql:/var/www/html/certs
       # - mysql/client-key.pem:/var/lib/mysql/client-key.pem
       # - mysql/client-cert.pem:/var/lib/mysql/client-cert.pem
