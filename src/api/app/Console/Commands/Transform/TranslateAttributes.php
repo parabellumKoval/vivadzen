@@ -54,15 +54,15 @@ class TranslateAttributes extends Command
     {
 
       $this->info("Translate Attributes \n");
-      $this->translateAttributes();
+      // $this->translateAttributes();
 
 
       $this->info("Translate AttributeValues \n");
-      $this->translateAttributeValues();
+      // $this->translateAttributeValues();
 
 
       $this->info("Translate AttributeProduct \n");
-      $this->translateAttributeProduct();
+      // $this->translateAttributeProduct();
 
       $this->info("Translate Product CustomProperties \n");
       $this->translateProductCustomProperties();
@@ -158,13 +158,14 @@ class TranslateAttributes extends Command
      */
     private function translateProductCustomProperties(){
       $products = Product::whereNotNull('extras_trans')
-                            ->where('extras_trans', '!=', '')
-                            ->get();
+                            ->where('extras_trans', '!=', '');
+      
+      $products_cursor = $products->cursor();
       
       $bar = $this->output->createProgressBar($products->count());
       $bar->start();
 
-      foreach($products as $product) {
+      foreach($products_cursor as $product) {
 
         if(!$product->customProperties) {
           continue;
