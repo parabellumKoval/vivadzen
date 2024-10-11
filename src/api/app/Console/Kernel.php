@@ -23,7 +23,12 @@ class Kernel extends ConsoleKernel
 
         // Remove product duplications, merge products 
         $schedule->command('db:join-and-remove-duplications')->everyTenMinutes();
+
+        // Clear old backups
+        $schedule->command('backup:clean')->daily()->at('04:00');
         
+        // Make new backup
+        $schedule->command('backup:run')->daily()->at('05:00');
     }
 
     /**

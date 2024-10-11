@@ -36,6 +36,12 @@ return [
         'url' => public_path('temp'),
       ],
 
+      'backups' => [
+        'driver' => 'local',
+        'root' => public_path('backups'),
+        'url' => public_path('backups'),
+      ],
+
       'uploads' => [
         'driver' => 'local',
         'root' => public_path('uploads'),
