@@ -218,7 +218,7 @@ class Product extends BaseProduct implements Feedable
 
           $product = new FeedItem([
             'id' => $item->old_id? $item->old_id: $item->id,
-            'title' => $item->name_ru,
+            'title' => !empty($item->name_ru)? $item->name_ru: '',
             'title_uk' => $item->name_uk,
             'link' => $item->slug,
             'vendorCode' => $item->simpleCode ?? $item->simpleBarcode ?? $item->code, // code, barcode
