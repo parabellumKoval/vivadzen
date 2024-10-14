@@ -29,6 +29,9 @@ class Kernel extends ConsoleKernel
         
         // Make new backup
         $schedule->command('backup:run')->daily()->at('05:00');
+
+        // Translate attributes
+        $schedule->command('translate:attributes')->daily()->at('06:00');
     }
 
     /**

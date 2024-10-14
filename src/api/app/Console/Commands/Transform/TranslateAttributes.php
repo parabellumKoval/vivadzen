@@ -52,17 +52,14 @@ class TranslateAttributes extends Command
      */
     public function handle()
     {
-
       $this->info("Translate Attributes \n");
-      // $this->translateAttributes();
-
+      $this->translateAttributes();
 
       $this->info("Translate AttributeValues \n");
-      // $this->translateAttributeValues();
-
+      $this->translateAttributeValues();
 
       $this->info("Translate AttributeProduct \n");
-      // $this->translateAttributeProduct();
+      $this->translateAttributeProduct();
 
       $this->info("Translate Product CustomProperties \n");
       $this->translateProductCustomProperties();
@@ -82,11 +79,25 @@ class TranslateAttributes extends Command
       $bar->start();
 
       foreach($attributes as $attribute) {
-        $ru_name = $attribute->getTranslation('name', 'ru');
+        $ru_name = $attribute->getTranslation('name', 'ru', false);
+        $uk_name = $attribute->getTranslation('name', 'uk', false);
 
-        $result = $this->translator->translateText($ru_name, 'ru', 'uk', ['tag_handling' => 'html']);
+        // Skip if both translations exists
+        if(!empty($ru_name) && !empty($uk_name)) {
+          $this->line('skip attribute id ' .$attribute->id . ' - ' . $attribute->name . ' (both translations exists)');
+          continue;
+        }
 
-        $attribute->setTranslation('name', 'uk', $result->text);
+        if(!empty($ru_name)) {
+          $this->info('translate attribute id ' . $attribute->id . ' - ' . $attribute->name . ' from RU to UK');
+          $result = $this->translator->translateText($ru_name, 'ru', 'uk', ['tag_handling' => 'html']);
+          $attribute->setTranslation('name', 'uk', $result->text);
+        }elseif(!empty($uk_name)) {
+          $this->info('translate attribute id ' . $attribute->id . ' - ' . $attribute->name . ' from UK to RU');
+          $result = $this->translator->translateText($uk_name, 'uk', 'ru', ['tag_handling' => 'html']);
+          $attribute->setTranslation('name', 'ru', $result->text);
+        }
+
         $attribute->save();
 
         $bar->advance();
@@ -108,11 +119,24 @@ class TranslateAttributes extends Command
       $bar->start();
 
       foreach($avs as $av) {
-        $ru_value = $av->getTranslation('value', 'ru');
+        $ru_value = $av->getTranslation('value', 'ru', false);
+        $uk_value = $av->getTranslation('value', 'uk', false);
 
-        $result = $this->translator->translateText($ru_value, 'ru', 'uk', ['tag_handling' => 'html']);
+        // Skip if both translations exists
+        if(!empty($ru_value) && !empty($uk_value)) {
+          $this->line('ru - ' . $ru_value . ' / uk - ' . $uk_value);
+          $this->line('skip attribute value id ' . $av->id . ' - ' . $av->value . ' (both translations exists)');
+          continue;
+        }
 
-        $av->setTranslation('value', 'uk', $result->text);
+        if(!empty($ru_value)) {
+          $result = $this->translator->translateText($ru_value, 'ru', 'uk', ['tag_handling' => 'html']);
+          $av->setTranslation('value', 'uk', $result->text);
+        }elseif(!empty($uk_value)) {
+          $result = $this->translator->translateText($uk_value, 'uk', 'ru', ['tag_handling' => 'html']);
+          $av->setTranslation('value', 'ru', $result->text);
+        }
+
         $av->save();
 
         $bar->advance();
@@ -136,12 +160,24 @@ class TranslateAttributes extends Command
       $bar->start();
 
       foreach($aps as $ap) {
+        $ru_value = $ap->getTranslation('value_trans', 'ru', false);
+        $uk_value = $ap->getTranslation('value_trans', 'uk', false);
 
-        $ru_value = $ap->getTranslation('value_trans', 'ru');
+        // Skip if both translations exists
+        if(!empty($ru_value) && !empty($uk_value)) {
+          $this->line('ru - ' . $ru_value . ' / uk - ' . $uk_value);
+          $this->line('skip attribute product id ' . $ap->id . ' - ' . $ap->value_trans . ' (both translations exists)');
+          continue;
+        }
 
-        $result = $this->translator->translateText($ru_value, 'ru', 'uk', ['tag_handling' => 'html']);
+        if(!empty($ru_value)) {
+          $result = $this->translator->translateText($ru_value, 'ru', 'uk', ['tag_handling' => 'html']);
+          $ap->setTranslation('value_trans', 'uk', $result->text);
+        }elseif(!empty($uk_value)) {
+          $result = $this->translator->translateText($uk_value, 'uk', 'ru', ['tag_handling' => 'html']);
+          $ap->setTranslation('value_trans', 'ru', $result->text);
+        }
 
-        $ap->setTranslation('value_trans', 'uk', $result->text);
         $ap->save();
 
         $bar->advance();
@@ -167,35 +203,62 @@ class TranslateAttributes extends Command
 
       foreach($products_cursor as $product) {
 
-        if(!$product->customProperties) {
+        $ru_value = $product->getTranslation('extras_trans', 'ru', false);
+        $uk_value = $product->getTranslation('extras_trans', 'uk', false);
+
+        $ru_custom_props = isset($ru_value['custom_attrs']) && !empty($ru_value['custom_attrs'])? $ru_value['custom_attrs']: null;
+        $uk_custom_props = isset($uk_value['custom_attrs']) && !empty($uk_value['custom_attrs'])? $uk_value['custom_attrs']: null;
+
+
+        if(!empty($ru_custom_props) && !empty($uk_custom_props) || empty($ru_custom_props) && empty($uk_custom_props)) {
+          $this->info('skip product id ' . $product->id);
           continue;
         }
 
-        $cp_uk = [];
-        foreach($product->customProperties as $cp) {
-          $name_string = isset($cp['name']) && !empty($cp['name'])? (string)$cp['name']: '';
-          $value_string = isset($cp['value']) && !empty($cp['value'])? (string)$cp['value']: '';
 
-          // if(gettype($name_string) !== 'string' || gettype($value_string) !== 'string') {
-          //   dd('no String', $name_string, $value_string);
-          // }
-          try {
-            $result = $this->translator->translateText([
-              $name_string, $value_string
-            ], 'ru', 'uk', ['tag_handling' => 'html']);
+        if(!empty($ru_custom_props)) {
+          $cp_uk = [];
+          foreach($ru_custom_props as $cp) {
+            $name_string = isset($cp['name']) && !empty($cp['name'])? (string)$cp['name']: '';
+            $value_string = isset($cp['value']) && !empty($cp['value'])? (string)$cp['value']: '';
 
-            $cp_uk[] = [
-              'name' => $result[0]->text,
-              'value' => $result[1]->text
-            ];
-          }catch(\Exception $e) {
-            $this->error('cant translate $product id ' . $product->id);
+            try {
+              $result = $this->translator->translateText([
+                $name_string, $value_string
+              ], 'ru', 'uk', ['tag_handling' => 'html']);
+
+              $cp_uk[] = [
+                'name' => $result[0]->text,
+                'value' => $result[1]->text
+              ];
+            }catch(\Exception $e) {
+              $this->error('cant translate $product id ' . $product->id);
+            }
           }
-        }
 
-        $product->setTranslation('extras_trans', 'uk', [
-          'custom_attrs' => $cp_uk
-        ]);
+          $product->setTranslation('extras_trans', 'uk', ['custom_attrs' => $cp_uk]);
+        }else if(!empty($uk_custom_props)) {
+          $cp_ru = [];
+          foreach($uk_custom_props as $cp) {
+            $name_string = isset($cp['name']) && !empty($cp['name'])? (string)$cp['name']: '';
+            $value_string = isset($cp['value']) && !empty($cp['value'])? (string)$cp['value']: '';
+
+            try {
+              $result = $this->translator->translateText([
+                $name_string, $value_string
+              ], 'uk', 'ru', ['tag_handling' => 'html']);
+
+              $cp_ru[] = [
+                'name' => $result[0]->text,
+                'value' => $result[1]->text
+              ];
+            }catch(\Exception $e) {
+              $this->error('cant translate $product id ' . $product->id);
+            }
+          }
+
+          $product->setTranslation('extras_trans', 'ru', ['custom_attrs' => $cp_ru]);
+        }
 
         $product->save();
 
