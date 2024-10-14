@@ -241,15 +241,15 @@ class Product extends BaseProduct implements Feedable
         }
 
         // Fill params
-        // if(isset($product->attributes[$item->a_id])) {
-        //   $product->attributes[$item->a_id]['value'] = $product->attributes[$item->a_id]['value'] . '|' . $item->av_value;
-        // }else {
-        //   $product->attributes[$item->a_id] = [
-        //     'name' => $item->a_name,
-        //     'si' => $item->a_si,
-        //     'value' => $item->av_value,
-        //   ];
-        // }
+        if(isset($product->attributes[$item->a_id])) {
+          $product->attributes[$item->a_id]['value'] = $product->attributes[$item->a_id]['value'] . '|' . $item->av_value;
+        }else {
+          $product->attributes[$item->a_id] = [
+            'name' => $item->a_name,
+            'si' => $item->a_si,
+            'value' => $item->av_value,
+          ];
+        }
  
         return $product;
       }, []);
@@ -294,12 +294,12 @@ class Product extends BaseProduct implements Feedable
         'sp.barcode as simpleBarcode',
         'p.updated_at',
         'b.name->ru as brand',
-        // 'a.id as a_id',
-        // 'a.name->ru as a_name',
-        // 'a.extras_trans->ru->si as a_si',
-        // 'av.value->ru as av_value',
-        // 'ap.value as ap_value',
-        // 'ap.value_trans->ru as ap_value_trans',
+        'a.id as a_id',
+        'a.name->ru as a_name',
+        'a.extras_trans->ru->si as a_si',
+        'av.value->ru as av_value',
+        'ap.value as ap_value',
+        'ap.value_trans->ru as ap_value_trans',
         'cp.category_id as categoryId',
       ])
       ->join('ak_category_product as cp', 'cp.product_id', '=', 'p.id')
@@ -308,12 +308,12 @@ class Product extends BaseProduct implements Feedable
       ->joinSub($sps, 'sp', function ($join) {
         $join->on('p.id', '=', 'sp.product_id');
       })
-      // ->join('ak_attribute_product as ap', 'p.id', '=', 'ap.product_id')
-      // ->join('ak_attributes as a', 'a.id', '=', 'ap.attribute_id')
-      // ->join('ak_attribute_values as av', 'av.id', '=', 'ap.attribute_value_id')
+      ->join('ak_attribute_product as ap', 'p.id', '=', 'ap.product_id')
+      ->join('ak_attributes as a', 'a.id', '=', 'ap.attribute_id')
+      ->join('ak_attribute_values as av', 'av.id', '=', 'ap.attribute_value_id')
       ->where('p.images', '!=', null)
       ->where('p.is_active', 1)
-      ->groupBy('sp.id', 'cp.id') //'a.id', 'av.id', 'ap.id',
+      ->groupBy('sp.id', 'a.id', 'av.id', 'ap.id', 'cp.id')
       ->get()
       ->groupBy('id');
 
