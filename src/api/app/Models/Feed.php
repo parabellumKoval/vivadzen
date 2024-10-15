@@ -114,7 +114,7 @@ class Feed extends Model
         'feed_id' => $this->id,
         'prom_name' => $item['prom_name'],
         'prom_id' => $item['prom_id'],
-        'prom_parent_id' => $item['prom_parent_id']
+        'prom_parent_id' => !empty($item['prom_parent_id'])? $item['prom_parent_id']: null
       ]);
     } 
   }

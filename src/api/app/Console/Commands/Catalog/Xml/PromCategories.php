@@ -56,9 +56,21 @@ class PromCategories extends Command
       // $this->fillCategories();
 
       // Part 3
-      $this->fillParentId();
+      // $this->fillParentId();
+
+      //
+      $this->fix0Parent();
     }
             
+
+    private function fix0Parent() {
+      $cfs = CategoryFeed::where('prom_parent_id', 0)->get();
+
+      foreach($cfs as $cf) {
+        $cf->update(['prom_parent_id' => null]);
+      }
+    }
+
     /**
      * fillParentId
      *
@@ -99,7 +111,7 @@ class PromCategories extends Command
     private function createCategoryFeed($record, $feed_id) {
 
       $this->line('create category');
-      
+
       $cat = Category::
         where('name->ru', $record[1])
         ->orWhere('name->uk', $record[1])
