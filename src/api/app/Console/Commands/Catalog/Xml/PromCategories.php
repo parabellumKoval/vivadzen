@@ -82,8 +82,10 @@ class PromCategories extends Command
         $category_feed = CategoryFeed::where('prom_id', (int)$record[0])->first();
 
         if(!$category_feed) {
-          $this->line('skip category no exists ' . $record[0] . ' - ' . $record[1]);
-          continue;
+          $this->line('Category no exists ' . $record[0] . ' - ' . $record[1]);
+          $category_feed = $this->createCategoryFeed($record, $feed->id);
+          // $this->line('skip category no exists ' . $record[0] . ' - ' . $record[1]);
+          // continue;
         }
 
         $this->info('index ' . $index);
@@ -94,6 +96,26 @@ class PromCategories extends Command
       }    
     }
     
+    private function createCategoryFeed($record, $feed_id) {
+
+      $this->line('create category');
+      
+      $cat = Category::
+        where('name->ru', $record[1])
+        ->orWhere('name->uk', $record[1])
+        ->first();
+
+      $category_feed = CategoryFeed::create([
+        'category_id' => $cat->id ?? null,
+        'feed_id' => $feed_id,
+        'prom_name' => $record[1],
+        'prom_id' => (int)$record[0],
+        'prom_parent_id' => (int)$record[4],
+      ]);
+
+      return $category_feed;
+    }
+
     /**
      * fillCategories
      *
@@ -121,7 +143,7 @@ class PromCategories extends Command
 
         $this->info('index ' . $index);
         
-        $cat = $site_category = Category::
+        $cat = Category::
                           where('name->ru', $record[1])
                           ->orWhere('name->uk', $record[1])
                           ->first();
@@ -161,7 +183,7 @@ class PromCategories extends Command
 
         $this->info('index ' . $index);
         
-        $cat = $site_category = Category::where('name->ru', $record[1])->first();
+        $cat = Category::where('name->ru', $record[1])->first();
 
         if($cat) {
           $this->info('Find site category ' . $cat->name);
