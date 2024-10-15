@@ -53,9 +53,47 @@ class PromCategories extends Command
 			// $xml = $this->getXML();
 
       // Part 2
-      $this->fillCategories();
+      // $this->fillCategories();
+
+      // Part 3
+      $this->fillParentId();
     }
-        
+            
+    /**
+     * fillParentId
+     *
+     * @return void
+     */
+    private function fillParentId() {
+      $content = file_get_contents(url('/uploads/prom-categories-full.csv'));
+
+      $reader = Reader::createFromString($content);
+      $reader->setDelimiter(';');
+      $records = $reader->getRecords();
+
+      // Get prom feed
+      $feed = Feed::where('key', 'prom')->first();
+
+      foreach($records as $index => $record) {
+        if($index === 0) {
+          continue;
+        }
+
+        $category_feed = CategoryFeed::where('prom_id', (int)$record[0])->first();
+
+        if(!$category_feed) {
+          $this->line('skip category no exists ' . $record[0] . ' - ' . $record[1]);
+          continue;
+        }
+
+        $this->info('index ' . $index);
+
+        $category_feed->update([
+          'prom_parent_id' => (int)$record[4]
+        ]);
+      }    
+    }
+    
     /**
      * fillCategories
      *

@@ -77,6 +77,7 @@ class Feed extends Model
       $arr[] = [
         'prom_name' => $cf->prom_name,
         'prom_id' => $cf->prom_id,
+        'prom_parent_id' => $cf->prom_parent_id,
         'category_id' => $cf->category_id,
       ];
     }
@@ -112,7 +113,8 @@ class Feed extends Model
         'category_id' => $item['category_id'] ?? null,
         'feed_id' => $this->id,
         'prom_name' => $item['prom_name'],
-        'prom_id' => $item['prom_id']
+        'prom_id' => $item['prom_id'],
+        'prom_parent_id' => $item['prom_parent_id']
       ]);
     } 
   }

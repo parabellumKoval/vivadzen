@@ -99,7 +99,14 @@ class FeedCrudController extends CrudController
             'label' => 'ID (PROM)',
             'type' => 'text',
             'wrapper'   => [ 
-              'class' => 'form-group col-md-6'
+              'class' => 'form-group col-md-3'
+            ],
+          ],[
+            'name' => 'prom_parent_id',
+            'label' => 'ID род. категории',
+            'type' => 'text',
+            'wrapper'   => [ 
+              'class' => 'form-group col-md-3'
             ],
           ],[
             'label'  => "Категория на сайте",
