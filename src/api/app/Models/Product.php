@@ -187,12 +187,7 @@ class Product extends BaseProduct implements Feedable
 
   }
 	
-  private static function mergeProductData($groups) {
-
-    // Get prom groups keied by site category id
-    $prom_groups = CategoryFeed::whereHas('feed', function($query) {
-      $query->where('key', 'prom');
-    })->get()->keyBy('category_id');
+  private static function mergeProductData($groups, $prom_groups) {
 
     // Get values
     $groups = $groups->values()->toArray();
@@ -225,7 +220,6 @@ class Product extends BaseProduct implements Feedable
             'summary' => !empty($item->content_ru)? $item->content_ru: '',
             'summary_uk' => !empty($item->content_uk)? $item->content_uk: '',
             'images' => $image_urls,
-            'updated' => new \Carbon\Carbon($item->updated_at),
             'vendor' => $item->brand, // brand
             'inStock' => $item->simpleInStock,
             'price' => $item->simplePrice,
@@ -234,7 +228,8 @@ class Product extends BaseProduct implements Feedable
             'promCategoryId' => $promCategoryId,
             'presence' => $item->simpleInStock > 0?  'true': 'false',
             'mpn' => '4234',
-            'authorName' => 'djini'
+            'updated' => \Carbon\Carbon::parse($item->updated_at),
+            'authorName' => 'Djini'
           ]);
         }else {
           $product = $carry;
@@ -322,9 +317,49 @@ class Product extends BaseProduct implements Feedable
     // <categoryId>72879515</categoryId>
     // <categoryName>БАДы</categoryName>
 
-    $products = self::mergeProductData($items);
+    $categories = self::getPromCategories();
+    $products = self::mergeProductData($items, $categories);
+
+    $collection = collect([
+      'products' => self::getFakeFeedItem($products),
+      'categories' => self::getFakeFeedItem($categories)
+    ]);
+
+    return $collection;
+	}
   
-    return $products;
-	}  
+  /**
+   * getPromCategories
+   *
+   * @param  mixed $items
+   * @return FeedItem
+   */
+  public static function getPromCategories() {
+
+    // Get prom groups keied by site category id
+    $prom_groups = CategoryFeed::whereHas('feed', function($query) {
+      $query->where('key', 'prom');
+    })->get()->keyBy('category_id');
+    
+    return $prom_groups;
+  }
+  
+  /**
+   * getFakeFeedItem
+   *
+   * @param  mixed $items
+   * @return FeedItem
+   */
+  public static function getFakeFeedItem($items): FeedItem {
+    return FeedItem::create([
+      'id' => 1,
+      'title' => 'fake',
+      'summary' => 'fake',
+      'link' => 'fake',
+      'items' => $items->all(),
+      'updated' => \Carbon\Carbon::now(),
+      'authorName' => ''
+    ]);
+  }
 	
 }

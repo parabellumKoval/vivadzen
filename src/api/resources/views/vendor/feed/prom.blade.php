@@ -1,4 +1,3 @@
-
 <?=
 /* Using an echo tag here so the `<? ... ?>` won't get parsed as short tags */
 '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL
@@ -11,8 +10,14 @@
         <language>{{ $meta['language'] }}</language>
         <pubDate>{{ $meta['updated'] }}</pubDate>
 
+        <categories>
+        @foreach($items['categories']->items as $category)
+          <category id="{{ $category->prom_id }}">{{ $category->prom_name }}</category>
+        @endforeach
+        </categories>
+
 				<items>
-        @foreach($items as $item)
+        @foreach($items['products']->items as $item)
           <item id="{{ $item->id }}">
           	<categoryId>{{ $item->promCategoryId }}</categoryId>
             <name><![CDATA[{{ $item->title }}]]></name>
