@@ -12,7 +12,7 @@
 
         <categories>
         @foreach($items['categories']->items as $category)
-          <category id="{{ $category->prom_id }}">{{ $category->prom_name }}</category>
+          <category id="{{ $category->prom_id }}" parentId="{{ $category->prom_parent_id }}">{{ $category->prom_name }}</category>
         @endforeach
         </categories>
 
