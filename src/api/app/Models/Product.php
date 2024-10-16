@@ -303,12 +303,12 @@ class Product extends BaseProduct implements Feedable
       ->joinSub($sps, 'sp', function ($join) {
         $join->on('p.id', '=', 'sp.product_id');
       })
-      // ->join('ak_attribute_product as ap', 'p.id', '=', 'ap.product_id')
-      // ->join('ak_attributes as a', 'a.id', '=', 'ap.attribute_id')
-      // ->join('ak_attribute_values as av', 'av.id', '=', 'ap.attribute_value_id')
+      ->join('ak_attribute_product as ap', 'p.id', '=', 'ap.product_id')
+      ->join('ak_attributes as a', 'a.id', '=', 'ap.attribute_id')
+      ->join('ak_attribute_values as av', 'av.id', '=', 'ap.attribute_value_id')
       ->where('p.images', '!=', null)
       ->where('p.is_active', 1)
-      ->groupBy('sp.id',  'cp.id') //'a.id', 'av.id', 'ap.id',
+      ->groupBy('sp.id', 'a.id', 'av.id', 'ap.id', 'cp.id')
       ->get()
       ->groupBy('id');
 
