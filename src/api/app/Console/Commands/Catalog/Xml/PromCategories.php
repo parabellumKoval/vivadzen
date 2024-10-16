@@ -59,10 +59,69 @@ class PromCategories extends Command
       // $this->fillParentId();
 
       //
-      $this->fix0Parent();
-    }
-            
+      // $this->fix0Parent();
 
+      // Restore base category parent id
+      $this->restoreParentId();
+    }
+              
+    /**
+     * restoreParentId
+     *
+     * @return void
+     */
+    private function restoreParentId(){
+      $old_base_ids = [
+        // БАДы
+        [
+          'old' => 72879515,
+          'new' => 136052335
+        ],
+        // Продукты
+        [
+          'old' => 72879517,
+          'new' => 136054110
+        ],
+        // Косметика
+        [
+          'old' => 72879518,
+          'new' => 136052440
+        ],
+        // Товары для дома
+        [
+          'old' => 72879523,
+          'new' => 136061701
+        ],
+        // Спортивное питание 
+        [
+          'old' => 113578441,
+          'new' => 136052686
+        ],
+        // АППЛИКАТОР КУЗНЕЦОВА
+        [
+          'old' => 113404584,
+          'new' => 136053821
+        ],
+        // ТЕРМОБЕЛЬЕ
+        // [
+        //   'old' => 0,
+        //   'new' => 136054312
+        // ]
+      ];
+
+      foreach($old_base_ids as $ids){
+        $cf = CategoryFeed::where('id', $ids['new'])->first();
+        
+        $cfs = CategoryFeed::where('prom_parent_id', $ids['new'])->get();
+      }
+
+    }
+    
+    /**
+     * fix0Parent
+     *
+     * @return void
+     */
     private function fix0Parent() {
       $cfs = CategoryFeed::where('prom_parent_id', 0)->get();
 

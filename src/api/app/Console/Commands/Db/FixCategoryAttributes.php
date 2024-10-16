@@ -56,37 +56,57 @@ class FixCategoryAttributes extends Command
      */
     private function fixDb () {
 
-      $acs = \DB::table('ak_attribute_category')->select('*')->get();
+      $acs = \DB::table('ak_attribute_category')->select('*');
 
-      $bar = $this->output->createProgressBar(count($acs));
+      $acs_cursor = $acs->cursor();
+      $acs_count = $acs->count();
+
+      $bar = $this->output->createProgressBar($acs_count);
       $bar->start();
 
-      foreach($acs as $ac) {
-        if(isset($processed[$ac->attribute_id][$ac->category_id])) {
-          $this->info('Duplication ' . $ac->attribute_id . ' - ' . $ac->category_id);
-          \DB::table('ak_attribute_category')->where('id', $ac->id)->delete();
+      foreach($acs_cursor as $ac) {
+        // if this combination of attribute/category already processed
+        if(isset($this->processed[$ac->attribute_id]) &&  array_search($ac->category_id, $this->processed[$ac->attribute_id])) {
+          $this->error('Duplication. Already processed ' . $ac->attribute_id . ' - ' . $ac->category_id);
           continue;
         }
 
-        $processed[$ac->attribute_id][] = $ac->category_id;
+        // Set as processed
+        // This attribute has this category
+        $this->processed[(string)$ac->attribute_id][] = (string)$ac->category_id;
 
-        //
+        // Try find attribute
         $attribute = Attribute::find($ac->attribute_id);
 
+        // if attributes is not exist
         if(!$attribute) {
-          $this->error('Attribute ' . $ac->attribute_id . ' was not found. Delete recond.');
-          \DB::table('ak_attribute_category')->where('id', $ac->id)->delete();
+          $this->error('Attribute ' . $ac->attribute_id . ' was not found. Delete record.');
+          // remove all records with this attribute_id
+          \DB::table('ak_attribute_category')->where('attribute_id', $ac->attribute_id)->delete();
           continue;
         }
 
-        //
+        // Try find category
         $category = Category::find($ac->category_id);
 
+        // if category is not exist
         if(!$category) {
           $this->error('Category ' . $ac->category_id . ' was not found. Delete category.');
-          \DB::table('ak_attribute_category')->where('id', $ac->id)->delete();
+          // remove all records with this category_id
+          \DB::table('ak_attribute_category')->where('category_id', $ac->category_id)->delete();
           continue;
         }
+
+        // Duplications
+        $duplications = \DB::table('ak_attribute_category')
+              ->where('category_id', $ac->category_id)
+              ->where('attribute_id', $ac->attribute_id)
+              ->where('id', '!=', $ac->id)
+              ->delete();
+
+        // if($duplications->count()) {
+        //   $duplications->delete();
+        // }
 
         $bar->advance();
       }
