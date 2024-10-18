@@ -27,7 +27,7 @@ IMAGE_TAG ?= latest
 
 # Build and Up the container
 %.bup:
-	docker-compose -f ${COMPOSE_FILE} up -d --no-deps --build $*
+	docker compose -f ${COMPOSE_FILE} up -d --no-deps --build $*
 
 # Stop the container
 %.stop:
