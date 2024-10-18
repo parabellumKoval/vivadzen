@@ -6,6 +6,7 @@
   "license": "MIT",
   "require": {
     "php": "^7.3|^8.0",
+    "algolia/algoliasearch-client-php": "^3.4",
     "atk14/csv-reader": "^1.1",
     "backpack/backupmanager": "3.0.1",
     "backpack/crud": "4.1.*",
