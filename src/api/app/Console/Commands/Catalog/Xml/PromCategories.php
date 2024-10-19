@@ -56,13 +56,14 @@ class PromCategories extends Command
       // $this->fillCategories();
 
       // Part 3
-      // $this->fillParentId();
+      CategoryFeed::truncate();
+      $this->fillParentId();
 
       //
       // $this->fix0Parent();
 
       // Restore base category parent id
-      $this->restoreParentId();
+      // $this->restoreParentId();
     }
               
     /**
@@ -136,7 +137,7 @@ class PromCategories extends Command
      * @return void
      */
     private function fillParentId() {
-      $content = file_get_contents(url('/uploads/prom-categories-full.csv'));
+      $content = file_get_contents(url('/uploads/prom_categories_17.csv'));
 
       $reader = Reader::createFromString($content);
       $reader->setDelimiter(';');

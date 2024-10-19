@@ -312,6 +312,7 @@ class Product extends BaseProduct implements Feedable
       ->get()
       ->groupBy('id');
 
+    dd($items->count());
 
     // <categoryId><![CDATA[{{ 110341818 }}]]></categoryId>
     // <categoryId>72879515</categoryId>
