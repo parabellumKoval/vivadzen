@@ -236,15 +236,15 @@ class Product extends BaseProduct implements Feedable
         }
 
         // Fill params
-        // if(isset($product->attributes[$item->a_id])) {
-        //   $product->attributes[$item->a_id]['value'] = $product->attributes[$item->a_id]['value'] . '|' . $item->av_value;
-        // }else {
-        //   $product->attributes[$item->a_id] = [
-        //     'name' => $item->a_name ?? '',
-        //     'si' => $item->a_si ?? '',
-        //     'value' => $item->av_value ?? '',
-        //   ];
-        // }
+        if(isset($product->attributes[$item->a_id])) {
+          $product->attributes[$item->a_id]['value'] = $product->attributes[$item->a_id]['value'] . '|' . $item->av_value;
+        }else {
+          $product->attributes[$item->a_id] = [
+            'name' => $item->a_name ?? '',
+            'si' => $item->a_si ?? '',
+            'value' => $item->av_value ?? '',
+          ];
+        }
  
         return $product;
       }, []);
@@ -289,12 +289,12 @@ class Product extends BaseProduct implements Feedable
         'sp.barcode as simpleBarcode',
         'p.updated_at',
         'b.name->ru as brand',
-        // 'a.id as a_id',
-        // 'a.name->ru as a_name',
-        // 'a.extras_trans->ru->si as a_si',
-        // 'av.value->ru as av_value',
-        // 'ap.value as ap_value',
-        // 'ap.value_trans->ru as ap_value_trans',
+        'a.id as a_id',
+        'a.name->ru as a_name',
+        'a.extras_trans->ru->si as a_si',
+        'av.value->ru as av_value',
+        'ap.value as ap_value',
+        'ap.value_trans->ru as ap_value_trans',
         'cp.category_id as categoryId',
       ])
       ->join('ak_category_product as cp', 'cp.product_id', '=', 'p.id')
@@ -311,8 +311,6 @@ class Product extends BaseProduct implements Feedable
       ->groupBy('sp.id', 'a.id', 'av.id', 'ap.id', 'cp.id')
       ->get()
       ->groupBy('id');
-
-    dd($items->count());
 
     // <categoryId><![CDATA[{{ 110341818 }}]]></categoryId>
     // <categoryId>72879515</categoryId>
