@@ -137,7 +137,7 @@ class PromCategories extends Command
      * @return void
      */
     private function fillParentId() {
-      $content = file_get_contents(url('/uploads/prom_categories_17.csv'));
+      $content = file_get_contents(url('/uploads/prom-cats.csv'));
 
       $reader = Reader::createFromString($content);
       $reader->setDelimiter(';');
