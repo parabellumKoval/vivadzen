@@ -32,6 +32,9 @@ class Kernel extends ConsoleKernel
 
         // Translate attributes
         $schedule->command('translate:attributes')->daily()->at('06:00');
+
+        // Translate products
+        $schedule->command('translate:products')->daily()->at('03:00');
     }
 
     /**

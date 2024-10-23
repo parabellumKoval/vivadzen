@@ -317,7 +317,7 @@ class Product extends BaseProduct implements Feedable
     // <categoryName>БАДы</categoryName>
 
     $categories = self::getPromCategories();
-    $products = self::mergeProductData($items, $categories);
+    $products = self::mergeProductData($items, $categories->keyBy('category_id'));
 
     $collection = collect([
       'products' => self::getFakeFeedItem($products),
@@ -338,7 +338,7 @@ class Product extends BaseProduct implements Feedable
     // Get prom groups keied by site category id
     $prom_groups = CategoryFeed::whereHas('feed', function($query) {
       $query->where('key', 'prom');
-    })->get()->keyBy('category_id');
+    })->get();
     
     return $prom_groups;
   }
