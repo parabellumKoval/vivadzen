@@ -70,200 +70,215 @@ class Product extends BaseProduct implements Feedable
     }
   }
 
-  
+
   /**
-   * toFeedItem
+   * getImageSrcsAttribute
    *
    * @return void
    */
-  public function toFeedItem(): FeedItem {
-    $properties = [];
-    $properties_string = '';
+  public function getImageSrcsAttribute() {
+    $base_path = config('backpack.store.product.image.base_path', '/');
+    $data = [];
 
-    // if($this->properties) {
-    //   foreach($this->properties as $property){
-    //     $value_object = $property['value'];
-    //     $value = null;
+    if(!$this->images) {
+      return [];
+    }
 
-    //     if(is_array($value_object)) {
-    //       $values = [];
-    //       foreach($value_object as $vo) {
-    //         $values[] = $vo->value;
-    //       }
-    //       $value = implode(', ', $values);
-    //     }else {
-    //       $value = $value_object;
-    //     }
-
-    //     $properties[] = $property['name'] . ': ' . $value;
-    //   }
-
-    //   $properties_string = implode('; ', $properties);
-    // }
+    foreach($this->images as $image) {
+      if(isset($image['src']) && !empty($image['src'])) {
+        $data[] = $base_path . $image['src'];
+      }
+    }
     
-    //
-    $description = $this->content;
-    $short_desc = strlen($description) > 10? 
-        strip_tags( substr($description, strpos($description, "<p"), strpos($description, "</p>")+4) ): '';
-    
-    return FeedItem::create([
-      'id' => $this->id,
-      'title' => $this->name,
-      'summary' => mb_convert_encoding( $short_desc, 'UTF-8', 'UTF-8' ),
-      'description' => $description,
-      'authorName' => 'author',
-      'quantity_in_stock' => $this->in_stock,
-      'presence' => $this->in_stock > 0?  'true': 'false',
-      'availability' => $this->in_stock > 0? 'in stock': '0',
-      'link' => url($this->slug),
-      'vendorCode' => $this->code,
-      'price' => $this->price,
-      'sale_price' => $this->price,
-      'image' => '',
-      'second_image' => 'second_image',
-      'brand' => $this->brand ?? null,
-      'condition' => 'новый',
-      'mpn' => '4234', //код товара для тех у которых нет кода GTIN
-      'gtin' => '1234', //для всех товаров, у которых есть код GTIN
-      'base_measure' => 'ct', //единица, за которую рассчитывается цена товара
-      'google_product_category' => 525, //категория товара в соответствии с классификацией гугл
-      // 'categoryName' => $this->category->name ?? null,
-      'updated' => $this->updated_at,
-    ]);
+    return $data;
   }
-    	
+  
+	
 	/**
-	 * getFeedItems
+	 * getAllAttributesAttribute
 	 *
 	 * @return void
 	 */
-	public static function getFeedItems() {
-	   return self::where('in_stock', '>', 0)
-        ->whereNotIn('old_id', [960,957,563,924,571,958,341,966,578,570,814,575,954,959,584,561,572,499,508,731,343,919,953,923,581,830,985,707,918])
-        ->get();
-	}
-	
-	
-    
-/*
-	public static function getPromBelokFeedItems()
-	{	
-		return self::where('parsed_from', 'belok.ua')->whereNotNull('image_large')->get();
-	} 
-*/ 
-    
-  private static function pretty_bytes($bytes, $precision = 2){
-    $units = array('B', 'KB', 'MB', 'GB', 'TB'); 
-   
-    $bytes = max($bytes, 0); 
-    $pow = floor(($bytes ? log($bytes) : 0) / log(1024)); 
-    $pow = min($pow, count($units) - 1); 
-   
-    // Uncomment one of the following alternatives
-    $bytes /= pow(1024, $pow);
-    // $bytes /= (1 << (10 * $pow)); 
-   
-    return round($bytes, $precision) . $units[$pow]; 
-  }
-  
-  /**
-   * echoMemoryUsage
-   *
-   * @return void
-   */
-  private static function echoMemoryUsage() {
+	public function getAllAttributesAttribute() {
+    $data = [];
 
-    $text = '';
-    $text .= "Memory usage: " . self::pretty_bytes(memory_get_usage()) . PHP_EOL . "\n";
-    $text .= "Peak memory usage: " . self::pretty_bytes(memory_get_peak_usage()) . PHP_EOL . "\n";
-    $text .= "'Actual' memory usage: " . self::pretty_bytes(memory_get_usage(true)) . PHP_EOL . "\n";
-    $text .= "'Actual' peak memory usage: " . self::pretty_bytes(memory_get_peak_usage(true)) . PHP_EOL . "\n";
-    
-    $ps_output = exec("ps --pid " . getmypid() . " --no-headers -o rss");
-    
-    $text .= "'Memory usage according to ps: " . self::pretty_bytes(intval($ps_output) * 1000) . "\n";
 
-    \Log::info($text);
+    if($this->properties) {
+      foreach($this->properties as $property) {
+        $value = !empty($property['value'])? $property['value']: null;
 
-  }
-	
-  private static function mergeProductData($groups, $prom_groups) {
 
-    // Get values
-    $groups = $groups->values()->toArray();
+        if(is_array($property['value'])) {
+          $raw_values = array_filter($property['value']);
 
-    $products = collect();
-    for($i = 0; $i < count($groups); $i++){
-      $product = array_reduce($groups[$i], function($carry, $item) use ($prom_groups){
-        
-        if(empty($carry)) {
-          // Get Images Array
-          $image_names_array = !empty($item->images)? json_decode($item->images): [];
-  
-          if(!empty($image_names_array)) {
-            $image_urls = array_map(function($filename){
-              return config('backpack.store.product.image.base_path') . $filename->src;
-            }, $image_names_array);
+          if($raw_values) {
+            $values = [];
+
+            foreach($raw_values as $value) {
+              $values[] = $value['value'];
+            }
+
+            $result_value = implode(' | ', $values);
           }else {
-            $image_urls = [];
+            $result_value = null;
           }
-
-          // Get prom category
-          $promCategoryId = $prom_groups[(int)$item->categoryId]->prom_id ?? null;
-
-           // code, barcode
-          if(!empty($item->simpleCode)) {
-            $code = $item->simpleCode;
-          }else if(!empty($item->simpleBarcode)) {
-            $code = $item->simpleBarcode;
-          }else {
-            $code = null;
-          }
-
-          $product = new FeedItem([
-            'id' => $item->old_id? $item->old_id: $item->id,
-            'title' => !empty($item->name_ru)? $item->name_ru: '',
-            'title_uk' => $item->name_uk,
-            'link' => $item->slug,
-            'vendorCode' => $code,
-            'summary' => !empty($item->content_ru)? $item->content_ru: '',
-            'summary_uk' => !empty($item->content_uk)? $item->content_uk: '',
-            'images' => $image_urls,
-            'vendor' => $item->brand, // brand
-            'inStock' => $item->simpleInStock,
-            'price' => $item->simplePrice,
-            'oldprice' => $item->simpleOldPrice,
-            'attributes' => [],
-            'promCategoryId' => $promCategoryId,
-            'presence' => $item->simpleInStock > 0?  'true': 'false',
-            'mpn' => '4234',
-            'updated' => \Carbon\Carbon::parse($item->updated_at),
-            'authorName' => 'Djini'
-          ]);
         }else {
-          $product = $carry;
+          $result_value = $value;
         }
 
-        // Fill params
-        if(isset($product->attributes[$item->a_id])) {
-          $product->attributes[$item->a_id]['value'] = $product->attributes[$item->a_id]['value'] . '|' . $item->av_value;
-        }else {
-          $product->attributes[$item->a_id] = [
-            'name' => $item->a_name ?? '',
-            'si' => $item->a_si ?? '',
-            'value' => $item->av_value ?? '',
+        if(!empty($result_value)) {
+          $data[] = [
+            'name' => $property['name'],
+            'si' => $property['si'],
+            'value' => $result_value,
           ];
         }
- 
-        return $product;
-      }, []);
-
-      $products->push($product);
+      }
     }
 
-    return $products;
-  }
 
+    if($this->customProperties) {
+      foreach($this->customProperties as $cp) {
+        $data[] = $cp;
+      }
+    }
+
+    return $data;
+  }
+	
+
+  // public function getPromCategoryAttribute() {
+
+  // }
+  /**
+   * mergeProductData
+   *
+   * @param  mixed $groups
+   * @param  mixed $prom_groups
+   * @return void
+   */
+  // private static function mergeProductData($groups, $prom_groups) {
+
+  //   // Get values
+  //   $groups = $groups->values()->toArray();
+
+  //   $products = collect();
+  //   for($i = 0; $i < count($groups); $i++){
+  //     $product = array_reduce($groups[$i], function($carry, $item) use ($prom_groups){
+        
+  //       if(empty($carry)) {
+  //         // Get Images Array
+  //         $image_names_array = !empty($item->images)? json_decode($item->images): [];
+  
+  //         if(!empty($image_names_array)) {
+  //           $image_urls = array_map(function($filename){
+  //             return config('backpack.store.product.image.base_path') . $filename->src;
+  //           }, $image_names_array);
+  //         }else {
+  //           $image_urls = [];
+  //         }
+
+  //         // Get prom category
+  //         $promCategoryId = $prom_groups[(int)$item->categoryId]->prom_id ?? null;
+
+  //          // code, barcode
+  //         if(!empty($item->simpleCode)) {
+  //           $code = $item->simpleCode;
+  //         }else if(!empty($item->simpleBarcode)) {
+  //           $code = $item->simpleBarcode;
+  //         }else {
+  //           $code = null;
+  //         }
+
+  //         $product = new FeedItem([
+  //           'id' => $item->old_id? $item->old_id: $item->id,
+  //           'title' => !empty($item->name_ru)? $item->name_ru: '',
+  //           'title_uk' => $item->name_uk,
+  //           'link' => $item->slug,
+  //           'vendorCode' => $code,
+  //           'summary' => !empty($item->content_ru)? $item->content_ru: '',
+  //           'summary_uk' => !empty($item->content_uk)? $item->content_uk: '',
+  //           'images' => $image_urls,
+  //           'vendor' => $item->brand, // brand
+  //           'inStock' => $item->simpleInStock,
+  //           'price' => $item->simplePrice,
+  //           'oldprice' => $item->simpleOldPrice,
+  //           'attributes' => [],
+  //           'promCategoryId' => $promCategoryId,
+  //           'presence' => $item->simpleInStock > 0?  'true': 'false',
+  //           'mpn' => '4234',
+  //           'updated' => \Carbon\Carbon::parse($item->updated_at),
+  //           'authorName' => 'Djini'
+  //         ]);
+  //       }else {
+  //         $product = $carry;
+  //       }
+
+  //       // Fill params
+  //       if(isset($product->attributes[$item->a_id])) {
+  //         $product->attributes[$item->a_id]['value'] = $product->attributes[$item->a_id]['value'] . '|' . $item->av_value;
+  //       }else {
+  //         $product->attributes[$item->a_id] = [
+  //           'name' => $item->a_name ?? '',
+  //           'si' => $item->a_si ?? '',
+  //           'value' => $item->av_value ?? '',
+  //         ];
+  //       }
+ 
+  //       return $product;
+  //     }, []);
+
+  //     $products->push($product);
+  //   }
+
+  //   return $products;
+  // }
+  
+  /**
+   * getPromProducts
+   *
+   * @param  mixed $products
+   * @param  mixed $prom_categories
+   * @return void
+   */
+  public static function getPromProducts($products, $prom_groups) {
+    $output_data = collect();
+
+    foreach($products as $product) {
+      // Get prom category
+      if($product->category) {
+        $promCategoryId = $prom_groups[(int)$product->category->id]->prom_id ?? null;
+      }else {
+        $promCategoryId = null;
+      }
+  
+      $product = new FeedItem([
+        'id' => $product->old_id? $product->old_id: $product->id,
+        'title' => $product->getTranslation('name', 'ru', false),
+        'title_uk' => $product->getTranslation('name', 'uk', false),
+        'link' => $product->slug,
+        'vendorCode' => $product->simpleCode,
+        'summary' => $product->getTranslation('content', 'ru', false),
+        'summary_uk' => $product->getTranslation('content', 'uk', false),
+        'images' => $product->imageSrcs,
+        'vendor' => $product->brand? $product->brand->name: null,
+        'inStock' => $product->simpleInStock,
+        'price' => $product->simplePrice,
+        'oldprice' => $product->simpleOldPrice,
+        'attributes' => $product->allAttributes,
+        'promCategoryId' => $promCategoryId,
+        'presence' => $product->simpleInStock > 0?  'true': 'false',
+        'mpn' => '4234',
+        'updated' => $product->updated_at,
+        'authorName' => 'Djini'
+      ]);
+
+      $output_data->push($product);
+    }
+
+    return $output_data;
+  }
+	
 	/**
 	 * getPromFeedItems
 	 *
@@ -271,62 +286,20 @@ class Product extends BaseProduct implements Feedable
 	 */
 	public static function getPromFeedItems()
 	{
-
-    $sps = \DB::table('ak_supplier_product as sp')
-              ->select('sp.id', 'sp.price', 'sp.old_price', 'sp.in_stock', 'sp.code', 'sp.barcode', 'sp.product_id')
-              ->where('sp.in_stock', '>', 0)
-              ->orderByRaw('IF(sp.in_stock > ?, ?, ?) DESC', [0, 1, 0])
-              ->orderBy('sp.price');
-
-
-    $items = \DB::table('ak_products as p')
-      ->select([
-        'sp.id as spId',
-        'p.id',
-        'p.old_id',
-        'p.name->ru as name_ru',
-        'p.name->uk as name_uk',
-        'p.slug',
-        'p.code',
-        'p.content->ru as content_ru',
-        'p.content->uk as content_uk',
-        'p.images',
-        'sp.in_stock as simpleInStock',
-        'sp.price as simplePrice',
-        'sp.old_price as simpleOldPrice',
-        'sp.code as simpleCode',
-        'sp.barcode as simpleBarcode',
-        'p.updated_at',
-        'b.name->ru as brand',
-        'a.id as a_id',
-        'a.name->ru as a_name',
-        'a.extras_trans->ru->si as a_si',
-        'av.value->ru as av_value',
-        'ap.value as ap_value',
-        'ap.value_trans->ru as ap_value_trans',
-        'cp.category_id as categoryId',
-      ])
-      ->join('ak_category_product as cp', 'cp.product_id', '=', 'p.id')
-      // ->join('category_feed as cf', 'cf.category_id', '=', 'cp.category_id')
-      ->join('ak_brands as b', 'p.brand_id', '=', 'b.id')
-      ->joinSub($sps, 'sp', function ($join) {
-        $join->on('p.id', '=', 'sp.product_id');
-      })
-      ->join('ak_attribute_product as ap', 'p.id', '=', 'ap.product_id')
-      ->join('ak_attributes as a', 'a.id', '=', 'ap.attribute_id')
-      ->join('ak_attribute_values as av', 'av.id', '=', 'ap.attribute_value_id')
-      ->where('p.images', '!=', null)
-      ->where('p.is_active', 1)
-      ->groupBy('sp.id', 'a.id', 'av.id', 'ap.id', 'cp.id')
-      ->get()
-      ->groupBy('id');
-
-    // <categoryId><![CDATA[{{ 110341818 }}]]></categoryId>
-    // <categoryId>72879515</categoryId>
-    // <categoryName>БАДы</categoryName>
+  
+    $items = self::
+        without(['orders', 'children', 'parent', 'suppliers'])
+        ->whereHas('sp', function($query){
+          $query->where('in_stock', '>', 0);
+        })
+        ->where('is_active', 1)
+        ->where('images', '!=', null)
+        // ->whereIn('id', [4478])
+        // ->limit(100)
+        ->cursor();
 
     $categories = self::getPromCategories();
-    $products = self::mergeProductData($items, $categories->keyBy('category_id'));
+    $products = self::getPromProducts($items, $categories->keyBy('category_id'));
 
     $collection = collect([
       'products' => self::getFakeFeedItem($products),
@@ -334,8 +307,89 @@ class Product extends BaseProduct implements Feedable
     ]);
 
     return $collection;
-	}
+  }
+
+	/**
+	 * getPromFeedItems
+	 *
+	 * @return void
+	 */
+	// public static function getPromFeedItems()
+	// {
+
+  //   $sps = \DB::table('ak_supplier_product as sp')
+  //             ->select('sp.id', 'sp.price', 'sp.old_price', 'sp.in_stock', 'sp.code', 'sp.barcode', 'sp.product_id')
+  //             ->where('sp.in_stock', '>', 0)
+  //             ->orderByRaw('IF(sp.in_stock > ?, ?, ?) DESC', [0, 1, 0])
+  //             ->orderBy('sp.price');
+
+
+  //   $items = \DB::table('ak_products as p')
+  //     ->select([
+  //       'sp.id as spId',
+  //       'p.id',
+  //       'p.old_id',
+  //       'p.name->ru as name_ru',
+  //       'p.name->uk as name_uk',
+  //       'p.slug',
+  //       'p.code',
+  //       'p.content->ru as content_ru',
+  //       'p.content->uk as content_uk',
+  //       'p.images',
+  //       'sp.in_stock as simpleInStock',
+  //       'sp.price as simplePrice',
+  //       'sp.old_price as simpleOldPrice',
+  //       'sp.code as simpleCode',
+  //       'sp.barcode as simpleBarcode',
+  //       'p.updated_at',
+  //       'b.name->ru as brand',
+  //       'a.id as a_id',
+  //       'a.name->ru as a_name',
+  //       'a.extras_trans->ru->si as a_si',
+  //       'av.value->ru as av_value',
+  //       'ap.value as ap_value',
+  //       'ap.value_trans->ru as ap_value_trans',
+  //       'cp.category_id as categoryId',
+  //     ])
+  //     ->join('ak_category_product as cp', 'cp.product_id', '=', 'p.id')
+  //     // ->join('category_feed as cf', 'cf.category_id', '=', 'cp.category_id')
+  //     ->join('ak_brands as b', 'p.brand_id', '=', 'b.id')
+  //     ->joinSub($sps, 'sp', function ($join) {
+  //       $join->on('p.id', '=', 'sp.product_id');
+  //     })
+  //     ->join('ak_attribute_product as ap', 'p.id', '=', 'ap.product_id')
+  //     ->join('ak_attributes as a', 'a.id', '=', 'ap.attribute_id')
+  //     ->join('ak_attribute_values as av', 'av.id', '=', 'ap.attribute_value_id')
+  //     ->where('p.images', '!=', null)
+  //     ->where('p.is_active', 1)
+  //     ->groupBy('sp.id', 'a.id', 'av.id', 'ap.id', 'cp.id')
+  //     ->limit(100)
+  //     ->get()
+  //     ->groupBy('id');
+
+  //   // <categoryId><![CDATA[{{ 110341818 }}]]></categoryId>
+  //   // <categoryId>72879515</categoryId>
+  //   // <categoryName>БАДы</categoryName>
+
+  //   $categories = self::getPromCategories();
+  //   $products = self::mergeProductData($items, $categories->keyBy('category_id'));
+
+  //   $collection = collect([
+  //     'products' => self::getFakeFeedItem($products),
+  //     'categories' => self::getFakeFeedItem($categories)
+  //   ]);
+
+  //   return $collection;
+	// }
   
+  public function toFeedItem(): FeedItem {
+    return [];
+  }
+
+  public static function getFeedItems() {
+    return [];
+  }
+
   /**
    * getPromCategories
    *

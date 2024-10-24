@@ -2,43 +2,43 @@
 
 return [
     'feeds' => [
-      'main' => [
-        /*
-          * Here you can specify which class and method will return
-          * the items that should appear in the feed. For example:
-          * 'App\Model@getAllFeedItems'
-          *
-          * You can also pass an argument to that method:
-          * ['App\Model@getAllFeedItems', 'argument']
-          */
-        'items' => 'App\Models\Product@getFeedItems',
+      // 'main' => [
+      //   /*
+      //     * Here you can specify which class and method will return
+      //     * the items that should appear in the feed. For example:
+      //     * 'App\Model@getAllFeedItems'
+      //     *
+      //     * You can also pass an argument to that method:
+      //     * ['App\Model@getAllFeedItems', 'argument']
+      //     */
+      //   'items' => 'App\Models\Product@getFeedItems',
 
-        /*
-          * The feed will be available on this url.
-          */
-        'url' => '/rss_feed',
+      //   /*
+      //     * The feed will be available on this url.
+      //     */
+      //   'url' => '/rss_feed',
 
-        'title' => 'фид для MC Джини',
-        'description' => 'GMC feed',
-        'language' => 'ru-RU',
+      //   'title' => 'фид для MC Джини',
+      //   'description' => 'GMC feed',
+      //   'language' => 'ru-RU',
 
-        /*
-          * The view that will render the feed.
-          */
-        'view' => 'feed::rss',
+      //   /*
+      //     * The view that will render the feed.
+      //     */
+      //   'view' => 'feed::rss',
   
-        /*
-          * The type to be used in the <link> tag
-          */
-        'type' => 'application/atom+xml',
-        'format' => 'atom',
+      //   /*
+      //     * The type to be used in the <link> tag
+      //     */
+      //   'type' => 'application/atom+xml',
+      //   'format' => 'atom',
 
-        /*
-          * The content type for the feed response.  Set to an empty string to automatically
-          * determine the correct value.
-          */
-        'contentType' => '',
-      ],
+      //   /*
+      //     * The content type for the feed response.  Set to an empty string to automatically
+      //     * determine the correct value.
+      //     */
+      //   'contentType' => '',
+      // ],
       'prom' => [
           'items' => 'App\Models\Product@getPromFeedItems',
           'url' => '/prom_feed',

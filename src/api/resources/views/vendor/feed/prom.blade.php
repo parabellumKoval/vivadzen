@@ -38,7 +38,10 @@
             <oldprice>{{ $item->oldprice }}</oldprice>
 						<mpn><![CDATA[{{ $item->mpn }}]]></mpn>
             @foreach($item->attributes as $attr)
-              <param name="{{ $attr['name'] }}" unit="{{ $attr['si'] }}">{{ $attr['value'] }}</param>
+              <param
+                name="{{ $attr['name'] ?? '' }}" 
+                {!! isset($attr['si']) && !empty($attr['si'])? 'unit="' .  $attr['si'] .'"': '' !!}
+              >{{ $attr['value'] ?? '' }}</param>
             @endforeach
           </item>
         @endforeach
