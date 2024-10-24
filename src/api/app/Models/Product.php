@@ -211,12 +211,21 @@ class Product extends BaseProduct implements Feedable
           // Get prom category
           $promCategoryId = $prom_groups[(int)$item->categoryId]->prom_id ?? null;
 
+           // code, barcode
+          if(!empty($item->simpleCode)) {
+            $code = $item->simpleCode;
+          }else if(!empty($item->simpleBarcode)) {
+            $code = $item->simpleBarcode;
+          }else {
+            $code = null;
+          }
+
           $product = new FeedItem([
             'id' => $item->old_id? $item->old_id: $item->id,
             'title' => !empty($item->name_ru)? $item->name_ru: '',
             'title_uk' => $item->name_uk,
             'link' => $item->slug,
-            'vendorCode' => $item->simpleCode ?? $item->simpleBarcode ?? $item->code, // code, barcode
+            'vendorCode' => $code,
             'summary' => !empty($item->content_ru)? $item->content_ru: '',
             'summary_uk' => !empty($item->content_uk)? $item->content_uk: '',
             'images' => $image_urls,

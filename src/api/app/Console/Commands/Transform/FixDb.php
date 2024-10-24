@@ -235,16 +235,27 @@ class FixDb extends Command
       if($method) {
         $this->{$method}();
       }else {
-        $this->fixMelatonin();
+        // $this->fixMelatonin();
 
-        $this->removeProductByBrands();
+        // $this->removeProductByBrands();
 
-        $this->disableProductNoImages();
+        // $this->disableProductNoImages();
       }
 
       return 0;
     }
-    
+        
+    /**
+     * clearProductCode
+     *
+     * @return void
+     */
+    private function clearProductCode() {
+      Product::query()->update([
+        'code' => null
+      ]);
+    }
+
     /**
      * fixMelatonin
      *

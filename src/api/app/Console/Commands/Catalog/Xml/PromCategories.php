@@ -167,7 +167,14 @@ class PromCategories extends Command
         ]);
       }    
     }
-    
+        
+    /**
+     * createCategoryFeed
+     *
+     * @param  mixed $record
+     * @param  mixed $feed_id
+     * @return void
+     */
     private function createCategoryFeed($record, $feed_id) {
 
       $this->line('create category');
