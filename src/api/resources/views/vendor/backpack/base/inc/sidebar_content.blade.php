@@ -15,6 +15,7 @@
 	</ul>
 </li>
 
+
 <li class="nav-item nav-dropdown">
 	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-warehouse"></i> Склад</a>
 	<ul class="nav-dropdown-items">
@@ -46,6 +47,9 @@
 
 <li class="divider"></li>
 <li class="nav-title">Сайт</li>
+
+<!-- Tags -->
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('tag') }}'><i class='nav-icon las la-tags'></i> Теги</a></li>
 
 <!-- Guidebook -->
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article') }}"><i class="nav-icon la la-newspaper-o"></i> Статьи</a></li>

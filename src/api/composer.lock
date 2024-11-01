@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f6328242393d9226b9a154c188d5a2c",
+    "content-hash": "fdff85d5a89f651c5419574aadf876a3",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -5511,12 +5511,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "cb620a9ea70ff1265ef82cca156bcb7a45058295"
+                "reference": "876b8ca49196d9e473bed8faf2e90d58478bb710"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/cb620a9ea70ff1265ef82cca156bcb7a45058295",
-                "reference": "cb620a9ea70ff1265ef82cca156bcb7a45058295",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/876b8ca49196d9e473bed8faf2e90d58478bb710",
+                "reference": "876b8ca49196d9e473bed8faf2e90d58478bb710",
                 "shasum": ""
             },
             "require": {
@@ -5574,7 +5574,74 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/0.3"
             },
-            "time": "2024-10-24T15:08:07+00:00"
+            "time": "2024-10-28T17:54:52+00:00"
+        },
+        {
+            "name": "parabellumkoval/backpack-tag",
+            "version": "0.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-tag.git",
+                "reference": "4daebb1b44715c8c3fdaeba664667d58d2a8a223"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-tag/zipball/4daebb1b44715c8c3fdaeba664667d58d2a8a223",
+                "reference": "4daebb1b44715c8c3fdaeba664667d58d2a8a223",
+                "shasum": ""
+            },
+            "require": {
+                "backpack/crud": "4.1.*",
+                "laravel/framework": "^8.75",
+                "parabellumkoval/request-data": "0.1.x-dev",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Backpack\\Tag\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Tag": "Backpack\\Tag\\Facades\\Tag"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backpack\\Tag\\": "src",
+                    "Backpack\\Tag\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "parabellumKoval",
+                    "email": "parabellum.koval@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Implement Tags API & MYSQL for backpack",
+            "homepage": "https://github.com/parabellumkoval/backpack-tag",
+            "keywords": [
+                "backpack",
+                "laravel",
+                "parabellumKoval",
+                "tag"
+            ],
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-tag/issues",
+                "source": "https://github.com/parabellumKoval/backpack-tag/tree/0.1"
+            },
+            "time": "2024-11-01T15:12:04+00:00"
         },
         {
             "name": "parabellumkoval/backpack-transactions",
@@ -12756,6 +12823,7 @@
         "parabellumkoval/backpack-reviews": 20,
         "parabellumkoval/backpack-settings": 20,
         "parabellumkoval/backpack-store": 20,
+        "parabellumkoval/backpack-tag": 20,
         "parabellumkoval/backpack-transactions": 20,
         "parabellumkoval/backpack-vercel": 20
     },

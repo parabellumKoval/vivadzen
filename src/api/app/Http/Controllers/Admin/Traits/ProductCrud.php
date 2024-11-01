@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Traits;
 
 trait ProductCrud {
+
+  use \Backpack\Tag\app\Traits\TagFields;
     
   /**
    * listOperation
@@ -10,6 +12,9 @@ trait ProductCrud {
    * @return void
    */
   public function listOperation() {
+
+    $this->setupFilers();
+    $this->setupTagColumns();
   }
 
   /**
@@ -23,6 +28,8 @@ trait ProductCrud {
     $entry_id = \Route::current()->parameter('id');
     $this->entry = !empty($entry_id)? $this->crud->getEntry($entry_id): null;
 
+    // Tags
+    $this->setupTagFields();
 
     // CUSTOM PROPERTIES
     $this->crud->addField([

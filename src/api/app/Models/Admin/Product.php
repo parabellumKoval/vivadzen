@@ -11,10 +11,13 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Support\Facades\Log;
 use App\Models\Bunny;
 
+use Backpack\Tag\app\Traits\Taggable;
+
 use Backpack\Store\app\Models\Admin\Product as BaseAdminProduct;
 
 class Product extends BaseAdminProduct
 {
+  use Taggable;
  
   private $bunny = null;
   public $modificationsToSave = [];
@@ -58,6 +61,7 @@ class Product extends BaseAdminProduct
     parent::__construct();
     $this->bunny = new Bunny('products');  
   }
+  
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -69,7 +73,11 @@ class Product extends BaseAdminProduct
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-          
+         
+    public function getMorphClass()
+    {
+        return 'Backpack\Store\app\Models\Admin\Product';
+    } 
 
     /*
     |--------------------------------------------------------------------------
