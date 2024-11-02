@@ -35,6 +35,9 @@ class Kernel extends ConsoleKernel
 
         // Translate products
         $schedule->command('translate:products')->daily()->at('03:00');
+
+        // Transform attributes (merge, split)
+        $schedule->command('ak_store:attributes-transform')->everyTenMinutes();
     }
 
     /**
