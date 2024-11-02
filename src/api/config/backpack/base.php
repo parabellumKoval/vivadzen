@@ -60,7 +60,7 @@ return [
 
         // Example (load font-awesome instead of line-awesome):
         // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css',
-        'tags/css/tag.css'
+        'packages/backpack/tag/css/tag.css'
     ],
 
     // CSS files that are loaded in all pages, using Laravel's mix() helper
@@ -137,7 +137,7 @@ return [
         // 'https://unpkg.com/vue@2.4.4/dist/vue.min.js',
         // 'https://unpkg.com/react@16/umd/react.production.min.js',
         // 'https://unpkg.com/react-dom@16/umd/react-dom.production.min.js',
-        'tags/js/tag.js'
+        'packages/backpack/tag/js/tag.js'
     ],
 
     // JS files that are loaded in all pages, using Laravel's mix() helper
