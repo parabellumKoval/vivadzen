@@ -3,12 +3,12 @@
     $value = data_get($entry, $column['name']);
 @endphp
 
-<div class="ak-tag-wrapper">
+<div class="ak-tag-wrapper" data-target="ak-tags" data-inline-remove-route="{{ url('/admin/tag/inline/remove') }}">
   @foreach($value as $item)
-    <span class="ak-tag" style="background: {{ $item->color }};">
+    <div class="ak-tag" style="background: {{ $item->color }};">
       {{ $item->text }} 
       <button class="ak-tag-remove-btn" data-target="remove-tag-btn" data-id="{{ $item->pivot->id }}">X</button>
-    </span>
+    </div>
   @endforeach
 
   <button

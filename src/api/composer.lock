@@ -5582,12 +5582,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-tag.git",
-                "reference": "f3a7ee816baa141c1d8c5af804a2a461e68703bc"
+                "reference": "2240d25c808ccb48df40b15500eb6cd0edfa9fd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-tag/zipball/f3a7ee816baa141c1d8c5af804a2a461e68703bc",
-                "reference": "f3a7ee816baa141c1d8c5af804a2a461e68703bc",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-tag/zipball/2240d25c808ccb48df40b15500eb6cd0edfa9fd3",
+                "reference": "2240d25c808ccb48df40b15500eb6cd0edfa9fd3",
                 "shasum": ""
             },
             "require": {
@@ -5641,7 +5641,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-tag/issues",
                 "source": "https://github.com/parabellumKoval/backpack-tag/tree/0.1"
             },
-            "time": "2024-11-02T12:21:10+00:00"
+            "time": "2024-11-02T14:21:51+00:00"
         },
         {
             "name": "parabellumkoval/backpack-transactions",
