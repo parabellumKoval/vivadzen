@@ -38,6 +38,9 @@ class Kernel extends ConsoleKernel
 
         // Transform attributes (merge, split)
         $schedule->command('ak_store:attributes-transform')->everyTenMinutes();
+
+        // 
+        $schedule->command('xml:correct-in-stock')->hourly();
     }
 
     /**
