@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Bunny;
 
 use Backpack\Tag\app\Traits\Taggable;
+use App\Models\CategoryFeed;
 
 use Backpack\Store\app\Models\Admin\Product as BaseAdminProduct;
 
@@ -47,7 +48,8 @@ class Product extends BaseAdminProduct
     'suppliersData',
     'props',
     'defaultSupplier',
-    'defaultSupplierVirtual'
+    'defaultSupplierVirtual',
+    'category_feed_id'
   ];
 
   protected $casts = [
@@ -96,6 +98,15 @@ class Product extends BaseAdminProduct
       return $this->belongsTo(self::class, 'duplicate_of');
     }
 
+    /**
+     * categories
+     *
+     * @return void
+     */
+    public function prom_category()
+    {
+      return $this->belongsTo(CategoryFeed::class, 'category_feed_id');
+    }
 
     /*
     |--------------------------------------------------------------------------

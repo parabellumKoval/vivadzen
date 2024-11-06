@@ -28,6 +28,18 @@ trait ProductCrud {
     $entry_id = \Route::current()->parameter('id');
     $this->entry = !empty($entry_id)? $this->crud->getEntry($entry_id): null;
 
+    // PROM CATEGORY
+    $this->crud->addField([
+      'name' => 'category_feed_id',
+      'label' => 'Категория на PROM',
+      'type' => 'select2',
+      'entity' => 'prom_category',
+      'attribute' => 'prom_name',
+      'model' => 'App\Models\CategoryFeed',
+      'tab' => 'Основное',
+      'hint' => 'Укажите если необходимо однозначно привязать товар к категории на PROM (иначе будут применены общие правила)',
+    ])->afterField('categories');
+
     // Tags
     $this->setupTagFields();
 

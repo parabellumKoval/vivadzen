@@ -42,6 +42,22 @@ class Product extends BaseProduct implements Feedable
 
   /*
   |--------------------------------------------------------------------------
+  | RELATIONS
+  |--------------------------------------------------------------------------
+  */
+
+  /**
+   * categories
+   *
+   * @return void
+   */
+  public function prom_category()
+  {
+    return $this->belongsTo(CategoryFeed::class, 'category_feed_id');
+  }
+
+  /*
+  |--------------------------------------------------------------------------
   | ACCESSORS
   |--------------------------------------------------------------------------
   */
@@ -246,10 +262,16 @@ class Product extends BaseProduct implements Feedable
 
     foreach($products as $product) {
       // Get prom category
-      if($product->category) {
-        $promCategoryId = $prom_groups[(int)$product->category->id]->prom_id ?? null;
-      }else {
-        $promCategoryId = null;
+      if($product->prom_category) {
+        $promCategoryId = $product->prom_category->prom_id;
+      }
+
+      if(empty($promCategoryId)) {
+        if($product->category) {
+          $promCategoryId = $prom_groups[(int)$product->category->id]->prom_id ?? null;
+        }else {
+          $promCategoryId = null;
+        }
       }
   
       $product = new FeedItem([
