@@ -21,6 +21,17 @@ trait CategoryCrud {
 
     $this->crud->removeField('images');
 
+    $this->crud->addField([
+      'name' => 'no_medicine',
+      'label' => 'Не является лекарственным средством',
+      'type' => 'checkbox',
+      'default' => 1,
+      'fake' => true,
+      'store_in' => 'extras',
+      'hint' => 'Выводить сообщение во всех товарах этой категории?',
+      'tab' => 'Дополнительно'
+    ]);
+
     // IMAGES
     $this->crud->addField([
       'name'  => 'images',

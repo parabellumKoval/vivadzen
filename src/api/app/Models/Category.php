@@ -51,7 +51,15 @@ class Category extends BaseCategory
       return $array;
   }
 
-
+  
+  /**
+   * getNoMedicineAttribute
+   *
+   * @return void
+   */
+  public function getNoMedicineAttribute() {
+    return $this->extras['no_medicine'] ?? 1;
+  }
 
   /*
   |--------------------------------------------------------------------------

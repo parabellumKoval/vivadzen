@@ -7,6 +7,7 @@ use Laravel\Scout\Searchable;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 
+use App\Models\Category;
 use App\Models\CategoryFeed;
 
 use Backpack\Store\app\Models\Product as BaseProduct;
@@ -45,9 +46,19 @@ class Product extends BaseProduct implements Feedable
   | RELATIONS
   |--------------------------------------------------------------------------
   */
-
+   
   /**
    * categories
+   *
+   * @return void
+   */
+  public function categories()
+  {
+    return $this->belongsToMany(Category::class, 'ak_category_product');
+  }
+
+  /**
+   * prom categories
    *
    * @return void
    */

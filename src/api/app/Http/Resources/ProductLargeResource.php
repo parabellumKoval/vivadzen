@@ -31,6 +31,7 @@ class ProductLargeResource extends BaseResource
         'categories' => $this->categories && $this->categories->count()?
           CategoryParentResource::collection($this->categories):
             null,
+        'no_medicine' => $this->category? $this->category->noMedicine: 1,
         'modifications' => $this->modifications && $this->modifications->count()? 
           self::$resources['product']['tiny']::collection($this->modifications): 
             null,
