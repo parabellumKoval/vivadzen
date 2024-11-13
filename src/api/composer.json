@@ -28,6 +28,7 @@
     "laravel/tinker": "^2.5",
     "league/csv": "^9.16.0",
     "maatwebsite/excel": "^3.1",
+    "openai-php/client": "^0.10.1",
     "orchestra/parser": "^6.1",
     "parabellumkoval/backpack-articles": "0.2.x-dev",
     "parabellumkoval/backpack-banners": "dev-main",
@@ -40,6 +41,7 @@
     "parabellumkoval/backpack-tag": "0.1.x-dev",
     "parabellumkoval/backpack-transactions": "0.1.x-dev",
     "parabellumkoval/backpack-vercel": "0.1.x-dev",
+    "plakidan/monobank-pay": "^0.2.1",
     "rap2hpoutre/fast-excel": "^5.4",
     "spatie/laravel-feed": "^4.2",
     "spatie/laravel-translatable": "5.1.0"

@@ -37,12 +37,11 @@
 	</a>
 </li>
 
-<!-- <li class='nav-item'>
-	<a class='nav-link' href='{{ backpack_url('transaction') }}'>
-		<i class='nav-icon las la-exchange-alt'></i> Транзакции
-		<span class="badge badge-{{ $transactions > 0? 'warning' : 'light' }}" style="position:initial">{{ $transactions }}</span>
+<li class='nav-item'>
+	<a class='nav-link' href='{{ backpack_url('payment') }}'>
+		<i class='nav-icon las la-credit-card'></i> Платежи
 	</a>
-</li> -->
+</li>
 <!-- END SHOP -->
 
 <li class="divider"></li>

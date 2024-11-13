@@ -9,6 +9,10 @@ return [
   ],
 
   "pay_status" => [
+    "success" => 'Успешно',
+    "processing" => 'В процессе',
+    "created" => 'Создан',
+    "failure" => "Ошибка",
     "waiting" => "Ожидает оплаты",
     "failed" => "Ошибка",
     "paied" => "Оплачен"

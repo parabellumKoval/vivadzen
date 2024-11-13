@@ -54,6 +54,12 @@ return [
           'days' => 7,
         ],
 
+        'mono' => [
+          'driver' => 'daily',
+          'path' => storage_path('logs/mono/mono.log'),
+          'days' => 7,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['daily'],
