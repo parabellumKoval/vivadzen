@@ -127,4 +127,33 @@ class SitemapController extends \App\Http\Controllers\Controller
       ...$categories_links_ru
     ];
   }
+
+  /**
+   * getRegions
+   *
+   * @param  mixed $request
+   * @return void
+   */
+  public function getRegions(Request $request) {
+    
+    $regions = \DB::table('regions')
+      ->select('regions.slug')
+      ->where('is_active', 1)
+      ->get();
+
+    $regions_array = $regions->all();
+
+    $regions_links = array_map(function($item) {
+      return '/' . $item->slug;
+    }, $regions_array);
+
+    $regions_links_ru = array_map(function($item) {
+      return '/ru/' . $item->slug;
+    }, $regions_array);
+
+    return [
+      ...$regions_links,
+      ...$regions_links_ru
+    ];
+  }
 }

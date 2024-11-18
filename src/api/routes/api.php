@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('sitemap')->controller(SitemapController::class)->group(function () {
   Route::get('/categories', 'getCategories')->middleware('api');
+  Route::get('/regions', 'getRegions')->middleware('api');
   Route::get('/products', 'getProducts')->middleware('api');
   Route::get('/brands', 'getBrands')->middleware('api');
   Route::get('/articles', 'getArticles')->middleware('api');
