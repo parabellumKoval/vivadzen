@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 
+
+use App\Models\Region;
 use Backpack\Store\app\Models\Category;
 use App\Http\Resources\CategorySlugResource;
 
@@ -25,11 +27,10 @@ class CategoryController extends \App\Http\Controllers\Controller
    * @return void
    */
   public function productOrCategory(Request $request, $slug) {
-
     $page = $request->input('page', null);
 
     // Cache::forget('category-data-'.$slug);
-    // Try get cashed catalog data
+    // 1) TRY GET CASHED CATALOG DATA
     if(Cache::has('category-data-' . $slug)) {
       $cached_data = Cache::get('category-data-' . $slug);
 
@@ -40,26 +41,47 @@ class CategoryController extends \App\Http\Controllers\Controller
       return response()->json($cached_data);
     }
 
-    // Then try find product
+    // 2) THEN TRY FIND PRODUCT
+    $product = $this->getProduct($slug);
+    if($product) return response()->json($product);
+
+    // 3) If Not product then try get category and return catalog data (same 1 step)
+    $category = Category::where('slug', $slug)->where('is_active', 1)->first();
+   
+    // if no category found try found in Regions
+    if(!$category) {
+      // Region is category analogue but by location
+      $region = Region::where('slug', $slug)->where('is_active', 1)->first();
+    }else {
+      $region = null;
+    }
+
+    if(!empty($category) || !empty($region)) {
+      $all_data = $this->catalogData($request, $category, $region);
+      Cache::put('category-data-' . $slug, $all_data);
+      return response()->json($all_data);
+    }
+  }
+    
+  /**
+   * getProduct
+   *
+   * @param  mixed $slug
+   * @return void
+   */
+  public function getProduct($slug) {
     $this->product_class = config('backpack.store.product.class', 'Backpack\Store\app\Models\Product');
     $product = $this->product_class::where('slug', $slug)->where('is_active', 1)->first();
 
     // --- return the product
     if($product) {
       $product_resource = new self::$resources['product']['large']($product);
-      return response()->json($product_resource);
-    }
-
-    // If Not product then try get category and return catalog data (same 1 step)
-    $category = Category::where('slug', $slug)->where('is_active', 1)->first();
-    
-    if($category) {
-      $all_data = $this->catalogData($request, $category, $slug);
-      Cache::put('category-data-' . $slug, $all_data);
-      return response()->json($all_data);
+      return $product_resource;
+    }else {
+      return null;
     }
   }
-    
+  
   /**
    * getSlugs
    *
@@ -89,6 +111,12 @@ class CategoryController extends \App\Http\Controllers\Controller
    * @return void
    */
   private function updateProductsData(Request $request = null, $data, $slug = null) {
+    if(get_class($data['category']) === 'App\Http\Resources\RegionLargeResource') {
+      $slug = $data['category']->category->slug;
+    }else {
+      $slug = $data['category']->slug;
+    }
+
     $slug = $slug? $slug: $request->input('category_slug');
 
     $fake_request = new \Illuminate\Http\Request();
@@ -114,8 +142,15 @@ class CategoryController extends \App\Http\Controllers\Controller
    * @param  mixed $slug
    * @return void
    */
-  public function catalogData(Request $request = null, $category = null, $slug = null) {
-    $slug = $slug? $slug: $request->input('category_slug');
+  public function catalogData(Request $request = null, $category = null, $region = null) {
+    // $slug = $slug? $slug: $request->input('category_slug');
+    if($category) {
+      $slug = $category->slug;
+    }else if($region) {
+      $slug = $region->category->slug;
+    }else {
+      $slug = $request->input('category_slug');
+    }
 
     $fake_request = new \Illuminate\Http\Request();
     $fake_request->replace([
@@ -135,13 +170,24 @@ class CategoryController extends \App\Http\Controllers\Controller
     $brand_controller = new \Backpack\Store\app\Http\Controllers\Api\ProductController();
     $brands = $brand_controller->brands($fake_request, false);
 
+
     // Category
-    if(!$category) {
-      $category_controller = new \Backpack\Store\app\Http\Controllers\Api\CategoryController;
-      $category_data = $category_controller->show($fake_request, $slug);
-    }else {
+    if($category) {
       $category_data = new self::$resources['category']['large']($category);
     }
+    // else {
+    //   $category_controller = new \Backpack\Store\app\Http\Controllers\Api\CategoryController;
+    //   $category_data = $category_controller->show($fake_request, $slug);
+    // }
+
+    // Region
+    if($region) {
+      $category_data = new \App\Http\Resources\RegionLargeResource($region);
+    }
+    // else {
+    //   $category_controller = new \App\Http\Controllers\Api\RegionController;
+    //   $category_data = $category_controller->show($fake_request, $slug);
+    // }
 
     // Attributes
     $attributes_controller = new \Backpack\Store\app\Http\Controllers\Api\AttributeController;

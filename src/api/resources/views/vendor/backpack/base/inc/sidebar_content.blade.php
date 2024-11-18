@@ -9,9 +9,21 @@
 	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-store"></i> Магазин</a>
 	<ul class="nav-dropdown-items">
 	  <li class='nav-item'><a class='nav-link' href='{{ backpack_url('product') }}'><i class='nav-icon las la-shopping-bag'></i> Товары</a></li>
-	  <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon las la-tags'></i> Категории</a></li>
 	  <li class='nav-item'><a class='nav-link' href='{{ backpack_url('attribute') }}'><i class='nav-icon las la-tag'></i> Атрибуты</a></li>
-    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('brand') }}'><i class='nav-icon las la-marker'></i> Бренды</a></li>
+    <li class='nav-item'>
+      <a class='nav-link' href='{{ backpack_url('promocode') }}'>
+        <i class='nav-icon las la-percentage'></i> Купоны
+      </a>
+    </li>
+	</ul>
+</li>
+
+<li class="nav-item nav-dropdown">
+	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-list-ul"></i> Каталоги</a>
+	<ul class="nav-dropdown-items">
+	  <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon las la-tags'></i> Категории</a></li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('region') }}'><i class='nav-icon las la-map-marker-alt'></i> Регионы</a></li>
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('brand') }}'><i class='nav-icon las la-copyright'></i> Бренды</a></li>
 	</ul>
 </li>
 
@@ -28,12 +40,6 @@
 <li class='nav-item'>
 	<a class='nav-link' href='{{ backpack_url('feed') }}'>
 		<i class='nav-icon las la-cloud-download-alt'></i> Выгрузки
-	</a>
-</li>
-
-<li class='nav-item'>
-	<a class='nav-link' href='{{ backpack_url('promocode') }}'>
-		<i class='nav-icon las la-percentage'></i> Купоны
 	</a>
 </li>
 

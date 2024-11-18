@@ -5,6 +5,7 @@ namespace App\Models;
 use Laravel\Scout\Searchable;
 use App\Models\Bunny;
 
+use App\Models\Region;
 use Backpack\Store\app\Models\Category as BaseCategory;
 
 class Category extends BaseCategory
@@ -59,6 +60,16 @@ class Category extends BaseCategory
    */
   public function getNoMedicineAttribute() {
     return $this->extras['no_medicine'] ?? 1;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | RELATIONS
+  |--------------------------------------------------------------------------
+  */
+  public function regions()
+  {
+    return $this->hasMany(Region::class, 'category_id');
   }
 
   /*

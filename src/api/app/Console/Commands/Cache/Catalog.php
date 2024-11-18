@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 
 use App\Models\Category;
+use App\Models\Region;
 
 ini_set('memory_limit', '500M');
 
@@ -46,21 +47,41 @@ class Catalog extends Command
     public function handle()
     {
 	    $categories = Category::where('is_active', 1);
-      $categories_cursor = $categories->cursor();
-      $categories_count = $categories->count();
+      $this->cacheData($categories, 'category');
 
-      $bar = $this->output->createProgressBar($categories_count);
+	    $regions = Region::where('is_active', 1);
+      $this->cacheData($regions, 'region');
+    }
+        
+    /**
+     * cacheData
+     *
+     * @param  mixed $query
+     * @param  mixed $type
+     * @return void
+     */
+    protected function cacheData($query, $type) {
+	    $categories = Category::where('is_active', 1);
+
+      $data_cursor = $query->cursor();
+      $data_count = $query->count();
+
+      $bar = $this->output->createProgressBar($data_count);
       $bar->start();
 
       $category_controller = new \App\Http\Controllers\Api\CategoryController;
 
-      foreach($categories_cursor as $category) {
-        $all_data = $category_controller->catalogData(null, $category, $category->slug);
-        Cache::put('category-data-' . $category->slug, $all_data);
+      foreach($data_cursor as $item) {
+        if($type === 'region') {
+          $all_data = $category_controller->catalogData(null, null, $item);
+        }elseif($type === 'category') {
+          $all_data = $category_controller->catalogData(null, $item);
+        }
+
+        Cache::put('category-data-' . $item->slug, $all_data);
         $bar->advance();
       }
 
       $bar->finish();
     }
-    
 }
