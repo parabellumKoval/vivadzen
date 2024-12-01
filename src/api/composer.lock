@@ -5611,12 +5611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "32f3d979e75de04e60c0d2f528ea286df00f4500"
+                "reference": "9c3cf291c0817b85c64e165faa5be7e4606b4a89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/32f3d979e75de04e60c0d2f528ea286df00f4500",
-                "reference": "32f3d979e75de04e60c0d2f528ea286df00f4500",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/9c3cf291c0817b85c64e165faa5be7e4606b4a89",
+                "reference": "9c3cf291c0817b85c64e165faa5be7e4606b4a89",
                 "shasum": ""
             },
             "require": {
@@ -5634,14 +5634,14 @@
             "type": "library",
             "extra": {
                 "laravel": {
+                    "aliases": {
+                        "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade",
+                        "Product": "Backpack\\Store\\Facades\\Store"
+                    },
                     "providers": [
                         "Backpack\\CRUD\\BackpackServiceProvider",
                         "Backpack\\Store\\ServiceProvider"
-                    ],
-                    "aliases": {
-                        "Product": "Backpack\\Store\\Facades\\Store",
-                        "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade"
-                    }
+                    ]
                 }
             },
             "autoload": {
@@ -5674,7 +5674,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/0.3"
             },
-            "time": "2024-11-25T11:05:02+00:00"
+            "time": "2024-12-01T19:15:54+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",
