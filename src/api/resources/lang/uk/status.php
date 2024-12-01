@@ -2,27 +2,27 @@
 
 return [
   "status" => [
-    "new" => "Новый",
-    "canceled" => "Отменен",
-    "failed" => "Ошибка",
-    "completed" => "Выполнен",
+    "new" => "Новий",
+    "canceled" => "Скасовано",
+    "failed" => "Помилка",
+    "completed" => "Виконаний",
   ],
 
   "pay_status" => [
-    "success" => 'Успешно',
-    "processing" => 'В процессе',
-    "created" => 'Создан',
-    "failure" => "Ошибка",
-    "waiting" => "Ожидает оплаты",
-    "failed" => "Ошибка",
-    "paied" => "Оплачен"
+    "success" => 'Успішно',
+    "processing" => 'У процесі',
+    "created" => 'Створено',
+    "failure" => "Помилка",
+    "waiting" => "Чекає оплати",
+    "failed" => "Помилка",
+    "paied" => "Оплачено"
   ],
 
   "delivery_status" => [
-    "waiting" => "Ожидает отправки",
-    "sent" => "Отправлен",
-    "failed" => "Ошибка",
-    "delivered" => "Доставлен",
-    "pickedup" => "Забран"
+    "waiting" => "Чекає відправки",
+    "sent" => "Відправлено",
+    "failed" => "Помилка",
+    "delivered" => "Доставлено",
+    "pickedup" => "Забраний"
   ]
 ];

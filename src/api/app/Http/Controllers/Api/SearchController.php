@@ -29,9 +29,9 @@ class SearchController extends \App\Http\Controllers\Controller
     
     $per_page = request('perPage', 3);
 
-    $products = Product::search(request('search'))->paginate($per_page);
-    $categories = Category::search(request('search'))->paginate($per_page);
-    $brands = Brand::search(request('search'))->paginate($per_page);
+    $products = Product::search(request('search'))->paginate(6);
+    $categories = Category::search(request('search'))->paginate(20);
+    $brands = Brand::search(request('search'))->paginate(20);
 
     return [
       'products' => ProductSearchResource::collection($products),
@@ -48,6 +48,8 @@ class SearchController extends \App\Http\Controllers\Controller
    */
   public function index(Request $request) {
     $per_page = request('perPage', 20);
+    $order_by = request('order_by', null);
+    $order_dir = request('order_dir', null);
 
     // Categories
     // if(Cache::has('search_cats')) {
@@ -60,7 +62,20 @@ class SearchController extends \App\Http\Controllers\Controller
     // $categories_tree = $categories && count($categories)? $this->getCategoryTree($categories): [];
 
     // Products
-    $products = Product::search(request('search'))->paginate($per_page);
+    if($order_by === 'price' && $order_dir === 'asc') {
+      $products = Product::search(request('search'))
+                    ->within('ak_product_price_asc')
+                    ->paginate($per_page);
+    }else if($order_by === 'price' && $order_dir === 'desc') {
+      $products = Product::search(request('search'))
+                    ->within('ak_product_price_desc')
+                    ->paginate($per_page);
+    }else {
+      $products = Product::search(request('search'))
+                    ->paginate($per_page);
+    }
+
+    // dd($products);
     // $products = Product::search(request('search'))->orderBy('in_stock', 'DESC')->get();
 
     // Brands
@@ -78,7 +93,13 @@ class SearchController extends \App\Http\Controllers\Controller
   public function collectRelations() {
 
   }
-
+  
+  /**
+   * getCategoryTree
+   *
+   * @param  mixed $categories
+   * @return void
+   */
   public function getCategoryTree($categories) {
     $list = $this->getCategoryList($categories); 
 
@@ -89,7 +110,13 @@ class SearchController extends \App\Http\Controllers\Controller
     // dd($grouped[0]->children[0]->children);
     return $grouped;    
   }
-
+  
+  /**
+   * groupTree
+   *
+   * @param  mixed $categories
+   * @return void
+   */
   public function groupTree($categories) {
     $arr = [];
     
@@ -117,7 +144,13 @@ class SearchController extends \App\Http\Controllers\Controller
 
     return $arr;
   }
-
+  
+  /**
+   * getCategoryList
+   *
+   * @param  mixed $categories
+   * @return void
+   */
   public function getCategoryList($categories) {
     $category_list = collect();
     $cats_clone = clone $categories;
@@ -149,7 +182,13 @@ class SearchController extends \App\Http\Controllers\Controller
     // dd($cats_clone->pluck('id'));
     return $category_list;
   }
-
+  
+  /**
+   * getFamily
+   *
+   * @param  mixed $category
+   * @return void
+   */
   public function getFamily($category) {
     $parent = $category->parent;
 
@@ -161,111 +200,5 @@ class SearchController extends \App\Http\Controllers\Controller
     }
   }
 
-  // public function getFamily($category) {
-  //   if($category->parent) {
-  //     $parent = $this->getFamily($category->parent);
-  //     $parent = $this->setDeepestChildren($parent, $category);
-  //     return $parent;
-  //   }else {
-  //     $category->setRelation('children', null);
-  //     return $category;
-  //   }
-  // }
-
-  public function setDeepestChildren($category, $children) {
-    if($category->children && $category->children->first()) {
-      echo 'setDeepestChildren - ' . $category->children->first()->id . ' - ' . $children->id;
-      echo '<br>';
-      $this->setDeepestChildren($category->children->first(), $children);
-    }else {
-      // $childrens = $categories->where('parent_id', $category->id)->all();
-      // $searched_keys = array_keys($childrens);
-
-      // foreach($searched_keys as $k){
-      //   $categories->forget($k);
-      // }
-
-      // $node = collect(array_values($childrens))->push($children);
-      // $category->setRelation('children', $node);
-      // if($children->id) {
-      //   echo 'category - ';
-      // }else {
-      //   echo 'collection - ';
-      // }
-
-      $category->setRelation('children', $children);
-    }
-
-    return $category;
-  }
-
-  // public function createTree($categories) {
-  //   $tree = [];
-
-  //   $category_array = $categories->splice(1, 1);
-  //   $category = $category_array->first();
-
-  //   [$children, $not_children] = $this->intersectChildren($category, $categories);
-
-  //   if($children) {
-  //     $category->setRelation('children', $children);
-  //     dd($category);
-  //   }
-    
-  //   if($not_children) {
-  //     $this->createTree($not_children);
-  //   }
-  // }
-
-  // public function intersectChildren($category, $list) {
-  //   $children = [];
-  //   $not_children = [];
-
-  //   for($i = 0; $i < count($list); $i++) {
-  //     if($list[$i]->parent_id === $category->id){
-  //       $children[] = $list[$i];
-  //     }else {
-  //       $not_children[] = $list[$i];
-  //     }
-  //   }
-
-  //   return [
-  //     $children,
-  //     $not_children
-  //   ];
-  // }
-
-  // public function getCategoryList($categories) {
-  //   $category_list = collect();
-
-  //   for($i = 0; $i < count($categories); $i++) {
-  //     $category = $categories[$i];
-
-  //     $parent = $category->parent;
-      
-  //     if($parent) {
-  //       $family = $this->getFamily($category);
-  //       $category_list = $category_list->concat($family);
-  //     }else {
-  //       $category_list->push($category);
-  //     }
-  //   }
-
-  //   return $category_list->unique('id')->values();
-  // }
-
-  // public function getFamily($category, $family = null) {
-  //   if(!$family) {
-  //     $family = collect();
-  //   }
-
-  //   $family->push($category);
-
-  //   if($category->parent) {
-  //     return $this->getFamily($category->parent, $family);
-  //   }
-
-  //   return $family;
-  // }
   
 }

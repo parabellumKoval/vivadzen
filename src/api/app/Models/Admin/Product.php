@@ -10,6 +10,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 use Illuminate\Support\Facades\Log;
 use App\Models\Bunny;
+use Laravel\Scout\Searchable;
 
 use Backpack\Tag\app\Traits\Taggable;
 use App\Models\CategoryFeed;
@@ -18,6 +19,7 @@ use Backpack\Store\app\Models\Admin\Product as BaseAdminProduct;
 
 class Product extends BaseAdminProduct
 {
+  // use Searchable;
   use Taggable;
  
   private $bunny = null;
@@ -80,7 +82,63 @@ class Product extends BaseAdminProduct
     {
         return 'Backpack\Store\app\Models\Admin\Product';
     } 
+    
+    /**
+     * toSearchableArray
+     *
+     * @return void
+     */
+    public function toSearchableArray()
+    {
+        $array = [
+          'code' => $this->simpleCode,
+          'brand' => $this->brand? $this->brand->name: null,
+          'price' => $this->simplePrice,
+          'ru' => [
+            'name' => $this->getTranslation('name', 'ru', false),
+            'category' => null,
+          ],
+          'uk' => [
+            'name' => $this->getTranslation('name', 'uk', false),
+            'category' => null,
+          ]
+        ];
+  
+        // add category
+        if($this->category) {
+          $array['ru']['category'] = $this->category->getTranslation('name', 'ru', false);
+          $array['uk']['category'] = $this->category->getTranslation('name', 'uk', false);
+        }
+  
+        return $array;
+    }
 
+    /**
+     * Modify the query used to retrieve models when making all of the models searchable.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function makeAllSearchableUsing($query)
+    {
+        return $query->with('sp');
+    }
+
+    /**
+     * shouldBeSearchable
+     *
+     * @return void
+     */
+    public function shouldBeSearchable()
+    {
+      // return $this->active()->whereHas('sp', function($query)  {
+      //   return $query->where('in_stock', '>', 0);
+      // });
+
+      // dd($this->simpleInStock);
+      // return $this->active();
+      return $this->is_active && $this->simpleInStock;
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

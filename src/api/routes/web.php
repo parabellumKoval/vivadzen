@@ -27,14 +27,14 @@ Route::get('/html', function(){
 
 Route::get('/migr', [MigrateDbController::class, 'all']);
 
-Route::get('/mailable', function () {
+Route::get('/mailable/order/{id}', function ($id) {
   // $feedback = Backpack\Feedback\app\Models\Feedback::find(40);
   // return new App\Mail\Buy1ClickCreatedAdmin($feedback);
 
   // $order = \Backpack\Store\app\Models\Order::find(28);
   // return new App\Mail\OrderCreatedAdmin($order);
 
-  $order = \Backpack\Store\app\Models\Order::find(28);
+  $order = \Backpack\Store\app\Models\Order::find($id);
   return new App\Mail\OrderCreated($order);
 
 });

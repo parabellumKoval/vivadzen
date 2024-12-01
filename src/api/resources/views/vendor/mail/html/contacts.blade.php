@@ -42,22 +42,22 @@
             <tr>
               <td colspan="2" class="">
                 <a href="{{ __('contacts.facebook') }}" class="social-btn facebook">
-                  <img src="{{ url('/images/social/facebook.png') }}" class="icon"/>
+                  <img src="{{ url('/uploads/images/social/facebook.png') }}" class="icon"/>
                 </a>
                 <a href="{{ __('contacts.instagram') }}" class="social-btn instagram">
-                  <img src="{{ url('/images/social/instagram.png') }}" class="icon"/>
+                  <img src="{{ url('/uploads/images/social/instagram.png') }}" class="icon"/>
                 </a>
                 <a href="{{ __('contacts.tiktok') }}" class="social-btn tiktok">
-                  <img src="{{ url('/images/social/tiktok.png') }}" class="icon"/>
+                  <img src="{{ url('/uploads/images/social/tiktok.png') }}" class="icon"/>
                 </a>
                 <a href="{{ __('contacts.whatsapp') }}" class="social-btn whatsapp">
-                  <img src="{{ url('/images/social/whatsapp.png') }}" class="icon"/>
+                  <img src="{{ url('/uploads/images/social/whatsapp.png') }}" class="icon"/>
                 </a>
                 <a href="{{ __('contacts.viber') }}" class="social-btn viber">
-                  <img src="{{ url('/images/social/viber.png') }}" class="icon"/>
+                  <img src="{{ url('/uploads/images/social/viber.png') }}" class="icon"/>
                 </a>
                 <a href="{{ __('contacts.telegram') }}" class="social-btn telegram">
-                  <img src="{{ url('/images/social/telegram.png') }}" class="icon"/>
+                  <img src="{{ url('/uploads/images/social/telegram.png') }}" class="icon"/>
                 </a>
               </td>
             </tr>

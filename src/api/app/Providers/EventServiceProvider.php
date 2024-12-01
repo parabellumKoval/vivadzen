@@ -13,6 +13,9 @@ use \App\Observers\OrderObserver;
 use App\Models\Admin\Product;
 use \App\Observers\ProductObserver;
 
+use Backpack\Store\app\Models\SupplierProduct;
+use \App\Observers\SpObserver;
+
 use App\Models\Category;
 use \App\Observers\CategoryObserver;
 
@@ -24,6 +27,12 @@ use \App\Observers\ArticleObserver;
 
 use App\Events\RegionSaving;
 use App\Listeners\RegionSavingListener;
+
+use Backpack\Store\app\Events\SupplierProductSynced;
+use App\Listeners\SupplierProductSyncedListener;
+
+use Backpack\Store\app\Events\SupplierProductSaved;
+use App\Listeners\SupplierProductSavedListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -39,6 +48,12 @@ class EventServiceProvider extends ServiceProvider
         RegionSaving::class => [
           RegionSavingListener::class,
         ],
+        SupplierProductSynced::class => [
+          SupplierProductSyncedListener::class,
+        ],
+        SupplierProductSaved::class => [
+          SupplierProductSavedListener::class,
+        ],
     ];
 
     /**
@@ -53,5 +68,6 @@ class EventServiceProvider extends ServiceProvider
       Brand::observe(BrandObserver::class);
       Product::observe(ProductObserver::class);
       Order::observe(OrderObserver::class);
+      SupplierProduct::observe(SpObserver::class);
     }
 }

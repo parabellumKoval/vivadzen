@@ -30,15 +30,41 @@ class Product extends BaseProduct implements Feedable
   public function toSearchableArray()
   {
       $array = [
-        'name' => $this->name,
+        'code' => $this->simpleCode,
+        'brand' => $this->brand? $this->brand->name: null,
+        'price' => $this->simplePrice,
+        'ru' => [
+          'name' => $this->getTranslation('name', 'ru', false),
+          'category' => null,
+        ],
+        'uk' => [
+          'name' => $this->getTranslation('name', 'uk', false),
+          'category' => null,
+        ]
       ];
+
+      // add category
+      if($this->category) {
+        $array['ru']['category'] = $this->category->getTranslation('name', 'ru', false);
+        $array['uk']['category'] = $this->category->getTranslation('name', 'uk', false);
+      }
 
       return $array;
   }
-
+  
+  /**
+   * shouldBeSearchable
+   *
+   * @return void
+   */
   public function shouldBeSearchable()
   {
-      return $this->active()->inStock();
+    // return $this->active()->whereHas('sp', function($query)  {
+    //   return $query->where('in_stock', '>', 0);
+    // });
+
+    // return $this->active();
+    return $this->is_active && $this->simpleInStock;
   }
 
   /*
