@@ -8,9 +8,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 use App\Models\Product;
-use Backpack\Store\app\Events\ProductSupplierSynced;
+use Backpack\Store\app\Events\SupplierProductSynced;
 
-class ProductSupplierSyncedListener
+class SupplierProductSyncedListener
 {
     /**
      * Create the event listener.
@@ -28,7 +28,7 @@ class ProductSupplierSyncedListener
      * @param  object  $event
      * @return void
      */
-    public function handle(ProductSupplierSynced $event)
+    public function handle(SupplierProductSynced $event)
     {
       if($event->product->shouldBeSearchable()) {
         Product::where('id', $event->product->id)->searchable();
