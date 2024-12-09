@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 
 use App\Models\Category;
+use App\Models\Product;
 
 use OpenAI;
 
@@ -28,6 +29,10 @@ class FillProducts extends Command
 
     protected $client = null;
 
+    private $available_languages = [];
+
+    private $langs_list = [];
+
     /**
      * Create a new command instance.
      *
@@ -37,6 +42,10 @@ class FillProducts extends Command
     {
       parent::__construct();
       $this->setClient();
+
+      // available languages
+      $this->available_languages = config('backpack.crud.locales');
+      $this->langs_list = array_keys($this->available_languages);
     }
 
     /**
@@ -58,7 +67,7 @@ class FillProducts extends Command
       $yourApiKey = config('openai.key');
       $this->client = OpenAI::client($yourApiKey);
     }
-    
+
     /**
      * fillProducts
      *
@@ -66,39 +75,97 @@ class FillProducts extends Command
      */
     private function fillProducts() {
 
+      // $this->createThread();
+
       // $this->openaiCall();
-      $this->getModelsList();
+      // $this->getModelsList();
 
-	    // $products = Product::where('is_active', 1);
-      // $products_count = $products->count();
-      // $products_cursor = $products->cursor();
+      $langs_list = $this->langs_list;
 
-      // $bar = $this->output->createProgressBar($products_count);
-      // $bar->start();
+	    $products = Product::whereHas('sp', function($query){
+        $query->where('in_stock', '>', 0);
+      })->where(function($query) use($langs_list) {
+        foreach($langs_list as $lang_key) {
+          $query->whereRaw('LENGTH(JSON_EXTRACT(content, "$.' . $lang_key . '")) < ? ', 150);
+        }
 
-      // foreach($products_cursor as $product) {
-      //   $bar->advance();
-      // }
+        $query->orWhere('content', null);
+      })->take(10);
+      
+      $products_count = $products->count();
+      $products_cursor = $products->cursor();
 
-      // $bar->finish();
+      $bar = $this->output->createProgressBar($products_count);
+      $bar->start();
+
+      foreach($products_cursor as $product) {
+        $content = $this->getProductContent($product->name);
+
+        if(!$content) {
+          continue;
+        }
+
+        $product->setTranslation('content', 'uk', $content);
+        $product->save();
+
+        $this->info('Product ' . $product->id . ' - https://djini.com.ua/' . $product->slug  . ' processed');
+        $bar->advance();
+      }
+
+      $bar->finish();
     }
-
+    
+    /**
+     * messageToThread
+     *
+     * @return void
+     */
+    private function messageToThread() {
+      $response = $client->threads()->messages()->create('thread_mPmn2V8CMqiw361uiV06OsMz', [
+        'role' => 'user',
+        'content' => 'Детокс очищение организма DETOX 7+Ionic Form для начала похудения/программа на 25 дней, Garo Nutrition',
+     ]);
+    }
+        
+    /**
+     * createThread
+     *
+     * @return void
+     */
+    private function createThread() {
+      $response = $this->client->threads()->create([]);
+      dd($response->toArray());
+      // thread_mPmn2V8CMqiw361uiV06OsMz
+    }
     
     /**
      * openaiCall
      *
      * @return void
      */
-    private function openaiCall() {
+    private function getProductContent($name = null) {
+
+      if(!$name) {
+        return null;
+      }
 
       $result = $this->client->chat()->create([
-          'model' => 'gpt-4',
-          'messages' => [
-              ['role' => 'user', 'content' => 'Привет, поможешь создать описание товара?'],
+        'model' => 'gpt-4o',
+        'messages' => [
+          [
+            'role' => 'system', 
+            'content' => config('openai.system')
           ],
+          [
+            'role' => 'user', 
+            'content' => $name
+          ],
+        ],
       ]);
 
-      dd($result->choices[0]->message->content, $result);
+      // dd($result->choices[0]->message->content, $result);
+
+      return $result->choices[0]->message->content ?? null;
     }
 
     
