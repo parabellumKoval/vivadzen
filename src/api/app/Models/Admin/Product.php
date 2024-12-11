@@ -51,7 +51,8 @@ class Product extends BaseAdminProduct
     'props',
     'defaultSupplier',
     'defaultSupplierVirtual',
-    'category_feed_id'
+    'category_feed_id',
+    'is_ai_content'
   ];
 
   protected $casts = [
@@ -59,7 +60,7 @@ class Product extends BaseAdminProduct
     'images' => 'array',
   ];
 
-  protected $fakeColumns = ['meta_description', 'meta_title', 'seo', 'extras_trans', 'extras', 'images'];
+  protected $fakeColumns = ['meta_description', 'meta_title', 'seo', 'extras_trans', 'extras', 'images', 'is_ai_content'];
 
   public function __construct() {
     parent::__construct();
@@ -90,27 +91,27 @@ class Product extends BaseAdminProduct
      */
     public function toSearchableArray()
     {
-        $array = [
-          'code' => $this->simpleCode,
-          'brand' => $this->brand? $this->brand->name: null,
-          'price' => $this->simplePrice,
-          'ru' => [
-            'name' => $this->getTranslation('name', 'ru', false),
-            'category' => null,
-          ],
-          'uk' => [
-            'name' => $this->getTranslation('name', 'uk', false),
-            'category' => null,
-          ]
-        ];
-  
-        // add category
-        if($this->category) {
-          $array['ru']['category'] = $this->category->getTranslation('name', 'ru', false);
-          $array['uk']['category'] = $this->category->getTranslation('name', 'uk', false);
-        }
-  
-        return $array;
+      $array = [
+        'code' => $this->simpleCode,
+        'brand' => $this->brand? $this->brand->name: null,
+        'price' => $this->simplePrice,
+        'ru' => [
+          'name' => $this->getTranslation('name', 'ru', false),
+          'category' => null,
+        ],
+        'uk' => [
+          'name' => $this->getTranslation('name', 'uk', false),
+          'category' => null,
+        ]
+      ];
+
+      // add category
+      if($this->category) {
+        $array['ru']['category'] = $this->category->getTranslation('name', 'ru', false);
+        $array['uk']['category'] = $this->category->getTranslation('name', 'uk', false);
+      }
+
+      return $array;
     }
 
     /**

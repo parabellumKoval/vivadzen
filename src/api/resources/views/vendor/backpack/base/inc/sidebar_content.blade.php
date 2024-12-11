@@ -59,6 +59,9 @@
 <!-- Guidebook -->
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article') }}"><i class="nav-icon la la-newspaper-o"></i> Статьи</a></li>
 
+<!-- Prompts -->
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('prompt') }}'><i class='nav-icon las la-brain'></i> AI Prompts</a></li>
+
 <!-- Pages -->
 <!-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon las la-file'></i> <span>Страницы</span></a></li> -->
 

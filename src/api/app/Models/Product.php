@@ -482,5 +482,26 @@ class Product extends BaseProduct implements Feedable
       'authorName' => ''
     ]);
   }
+    
+  /**
+   * getIsAiContentAttribute
+   *
+   * @return void
+   */
+  public function getIsAiContentAttribute() {
+    return $this->extras['is_ai_content'] ?? null;
+  }
+
+  /**
+   * setIsAiContentAttribute
+   *
+   * @param  mixed $value
+   * @return void
+   */
+  public function setIsAiContentAttribute($value) {
+    $extras = $this->extras;
+    $extras['is_ai_content'] = $value;
+    $this->extras = $extras;
+  }
 	
 }

@@ -28,6 +28,18 @@ trait ProductCrud {
     $entry_id = \Route::current()->parameter('id');
     $this->entry = !empty($entry_id)? $this->crud->getEntry($entry_id): null;
 
+
+    // Ai Content
+    $this->crud->addField([
+      'name' => 'is_ai_content',
+      'label' => 'Сгенерирован ИИ',
+      'type' => 'checkbox',
+      'fake' => true, 
+      'store_in' => 'extras',
+      'tab' => 'Основное',
+      'hint' => 'Был ли контент сгенерирован ИИ (раздел в админке AI Prompts)',
+    ])->afterField('content');
+
     // PROM CATEGORY
     $this->crud->addField([
       'name' => 'category_feed_id',

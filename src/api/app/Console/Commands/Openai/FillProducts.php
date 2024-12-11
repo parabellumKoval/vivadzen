@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Prompt;
 
 use OpenAI;
 
@@ -55,7 +56,15 @@ class FillProducts extends Command
      */
     public function handle()
     {
-      $this->fillProducts();
+      $prompts = Prompt::where('is_active', 1)->get();
+
+      foreach($prompts as $prompt) {
+        if($prompt->categories) {
+          foreach($prompt->categories as $category) {
+            $this->fillProducts($prompt->content, $category->nodeIds);
+          }
+        }
+      }
     }
         
     /**
@@ -73,12 +82,7 @@ class FillProducts extends Command
      *
      * @return void
      */
-    private function fillProducts() {
-
-      // $this->createThread();
-
-      // $this->openaiCall();
-      // $this->getModelsList();
+    private function fillProducts($prompt, $categoryIds) {
 
       $langs_list = $this->langs_list;
 
@@ -90,7 +94,9 @@ class FillProducts extends Command
         }
 
         $query->orWhere('content', null);
-      })->take(10);
+      })->whereHas('categories', function($query) use($categoryIds) {
+        $query->whereIn('category_id', $categoryIds);
+      });
       
       $products_count = $products->count();
       $products_cursor = $products->cursor();
@@ -99,13 +105,14 @@ class FillProducts extends Command
       $bar->start();
 
       foreach($products_cursor as $product) {
-        $content = $this->getProductContent($product->name);
+        $content = $this->getProductContent($product->name, $prompt);
 
         if(!$content) {
           continue;
         }
 
         $product->setTranslation('content', 'uk', $content);
+        $product->is_ai_content = 1;
         $product->save();
 
         $this->info('Product ' . $product->id . ' - https://djini.com.ua/' . $product->slug  . ' processed');
@@ -143,9 +150,9 @@ class FillProducts extends Command
      *
      * @return void
      */
-    private function getProductContent($name = null) {
+    private function getProductContent($name = null, $prompt = null) {
 
-      if(!$name) {
+      if(!$name || !$prompt) {
         return null;
       }
 
@@ -154,7 +161,7 @@ class FillProducts extends Command
         'messages' => [
           [
             'role' => 'system', 
-            'content' => config('openai.system')
+            'content' => $prompt
           ],
           [
             'role' => 'user', 

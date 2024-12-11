@@ -41,6 +41,9 @@ class Kernel extends ConsoleKernel
 
         // 
         $schedule->command('xml:correct-in-stock')->hourly();
+
+        // OpenAI Product Content generation
+        $schedule->command('xml:correct-in-stock')->hourly();
     }
 
     /**
