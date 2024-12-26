@@ -492,6 +492,16 @@ class Product extends BaseProduct implements Feedable
     return $this->extras['is_ai_content'] ?? null;
   }
 
+  
+  /**
+   * getIsImagesGeneratedAttribute
+   *
+   * @return void
+   */
+  public function getIsImagesGeneratedAttribute() {
+    return $this->extras['is_images_generated'] ?? null;
+  }
+
   /**
    * setIsAiContentAttribute
    *
@@ -504,4 +514,16 @@ class Product extends BaseProduct implements Feedable
     $this->extras = $extras;
   }
 	
+
+  /**
+   * setIsAiContentAttribute
+   *
+   * @param  mixed $value
+   * @return void
+   */
+  public function setIsImagesGeneratedAttribute($value) {
+    $extras = $this->extras;
+    $extras['is_images_generated'] = $value;
+    $this->extras = $extras;
+  }
 }

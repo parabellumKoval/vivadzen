@@ -141,6 +141,15 @@ trait ProductCrud {
 
     // IMAGES
     $this->crud->addField([
+      'name'  => 'is_images_generated',
+      'label' => 'Изображения были заполнены автоматически',
+      'type' => 'checkbox',
+      'fake' => true, 
+      'store_in' => 'extras',
+      'tab' => 'Изображения'
+    ]);
+
+    $this->crud->addField([
       'name'  => 'images',
       'label' => 'Изображения',
       'type'  => 'repeatable',

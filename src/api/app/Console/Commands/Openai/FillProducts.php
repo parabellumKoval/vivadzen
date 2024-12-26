@@ -66,7 +66,7 @@ class FillProducts extends Command
         }
       }
     }
-        
+
     /**
      * setClient
      *
@@ -97,7 +97,7 @@ class FillProducts extends Command
       })->whereHas('categories', function($query) use($categoryIds) {
         $query->whereIn('category_id', $categoryIds);
       });
-      
+
       $products_count = $products->count();
       $products_cursor = $products->cursor();
 
@@ -121,19 +121,19 @@ class FillProducts extends Command
 
       $bar->finish();
     }
-    
+
     /**
      * messageToThread
      *
      * @return void
      */
     private function messageToThread() {
-      $response = $client->threads()->messages()->create('thread_mPmn2V8CMqiw361uiV06OsMz', [
+      $response = $this->client->threads()->messages()->create('thread_mPmn2V8CMqiw361uiV06OsMz', [
         'role' => 'user',
         'content' => 'Детокс очищение организма DETOX 7+Ionic Form для начала похудения/программа на 25 дней, Garo Nutrition',
      ]);
     }
-        
+
     /**
      * createThread
      *
@@ -144,7 +144,7 @@ class FillProducts extends Command
       dd($response->toArray());
       // thread_mPmn2V8CMqiw361uiV06OsMz
     }
-    
+
     /**
      * openaiCall
      *
@@ -160,11 +160,11 @@ class FillProducts extends Command
         'model' => 'gpt-4o',
         'messages' => [
           [
-            'role' => 'system', 
+            'role' => 'system',
             'content' => $prompt
           ],
           [
-            'role' => 'user', 
+            'role' => 'user',
             'content' => $name
           ],
         ],
@@ -175,7 +175,7 @@ class FillProducts extends Command
       return $result->choices[0]->message->content ?? null;
     }
 
-    
+
     /**
      * createAssistant
      *
@@ -193,7 +193,7 @@ class FillProducts extends Command
           'model' => 'gpt-4',
       ]);
     }
-    
+
     /**
      * getModelsList
      *
