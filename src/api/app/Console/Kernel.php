@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('ak_store:attributes-transform')->everyTenMinutes();
 
         // 
-        // $schedule->command('xml:correct-in-stock')->hourly();
+        $schedule->command('xml:correct-in-stock')->hourly();
 
         // OpenAI Product Content generation
         $schedule->command('openai:fill-products')->daily()->at('01:00');
