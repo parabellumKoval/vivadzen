@@ -205,6 +205,7 @@ services:
         IMAGE_TAG: ${IMAGE_TAG}
     volumes:
       - ./storage:/var/www/html/storage
+      - /mnt/backups:/var/www/html/public/backups
     links:
       - mysql
       - redis

@@ -31,11 +31,9 @@ trait ProductCrud {
 
     // Ai Content
     $this->crud->addField([
-      'name' => 'is_ai_content',
+      'name' => 'is_ai_content_virtual',
       'label' => 'Сгенерирован ИИ',
       'type' => 'checkbox',
-      'fake' => true, 
-      'store_in' => 'extras',
       'tab' => 'Основное',
       'hint' => 'Был ли контент сгенерирован ИИ (раздел в админке AI Prompts)',
     ])->afterField('content');
@@ -67,7 +65,7 @@ trait ProductCrud {
     $this->crud->addField([
       'name' => 'specsvirtual',
       'type' => 'hidden',
-      'value' => 'specs'
+      'value' => 'specs',
     ]);
 
     $this->crud->addField([
@@ -141,11 +139,11 @@ trait ProductCrud {
 
     // IMAGES
     $this->crud->addField([
-      'name'  => 'is_images_generated',
+      'name'  => 'is_images_generated_virtual',
       'label' => 'Изображения были заполнены автоматически',
       'type' => 'checkbox',
-      'fake' => true, 
-      'store_in' => 'extras',
+      // 'fake' => true, 
+      // 'store_in' => 'extras',
       'tab' => 'Изображения'
     ]);
 

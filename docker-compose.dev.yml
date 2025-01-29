@@ -91,12 +91,11 @@ services:
   mysql:
     build:
       dockerfile: .docker/dev/mysql/Dockerfile
-    platform: linux/amd64
     container_name: djini_mysql
     hostname: mysql
     tty: true
     ports: 
-        - "3306:3306"
+        - "3307:3306"
     volumes: 
         - mysql:/var/lib/mysql
         # - ./.docker/dev/mysql/dumps/init.sql:/docker-entrypoint-initdb.d/init.sql

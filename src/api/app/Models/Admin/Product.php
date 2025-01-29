@@ -52,7 +52,8 @@ class Product extends BaseAdminProduct
     'defaultSupplier',
     'defaultSupplierVirtual',
     'category_feed_id',
-    'is_ai_content'
+    'is_images_generated_virtual',
+    'is_ai_content_virtual'
   ];
 
   protected $casts = [
@@ -60,7 +61,7 @@ class Product extends BaseAdminProduct
     'images' => 'array',
   ];
 
-  protected $fakeColumns = ['meta_description', 'meta_title', 'seo', 'extras_trans', 'extras', 'images', 'is_ai_content'];
+  protected $fakeColumns = ['meta_description', 'meta_title', 'seo', 'extras_trans', 'extras', 'images'];
 
   public function __construct() {
     parent::__construct();
@@ -184,6 +185,13 @@ class Product extends BaseAdminProduct
       return $this->extras['specs'] ?? null;
     }
 
+    public function getIsAiContentVirtualAttribute() {
+      return $this->extras['is_ai_content'] ?? null;
+    }
+
+    public function getIsImagesGeneratedVirtualAttribute() {
+      return $this->extras['is_images_generated'] ?? null;
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
@@ -212,6 +220,8 @@ class Product extends BaseAdminProduct
      */
     public function setSpecsvirtualAttribute($value) {
       // dd($this->attributes, $this->specs, Request::input('specs'));
+      // $specs = Request::input('specs', []);
+      // dd($specs);
 
       $old_extras = $this->extras ?? [];
       $old_extras['specs'] = Request::input('specs', []);
@@ -229,6 +239,18 @@ class Product extends BaseAdminProduct
       $this->attributes['images'] = json_encode($images_array);
     }
     
+    public function setIsAiContentVirtualAttribute($value) {
+      $old_extras = $this->extras ?? [];
+      $old_extras['is_ai_content'] = $value;
+      $this->extras = $old_extras;
+    }
+
+    public function setIsImagesGeneratedVirtualAttribute($value) {
+      $old_extras = $this->extras ?? [];
+      $old_extras['is_images_generated'] = $value;
+      $this->extras = $old_extras;
+    }
+
     /**
      * setModificationsAttribute
      *
