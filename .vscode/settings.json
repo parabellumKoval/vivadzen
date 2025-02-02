@@ -1,3 +1,6 @@
 {
-  "nuxt.isNuxtApp": false
+  "nuxt.isNuxtApp": false,
+  "docwriter.progress.trackFunctions": false,
+  "docwriter.progress.trackMethods": false,
+  "docwriter.progress.trackClasses": false
 }
