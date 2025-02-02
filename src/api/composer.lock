@@ -5611,12 +5611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "6cd9a20c2321909e362ebaa025fba100c67a4197"
+                "reference": "4d804d69fb93770dd9ca2ae02caf3aba3a358711"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/6cd9a20c2321909e362ebaa025fba100c67a4197",
-                "reference": "6cd9a20c2321909e362ebaa025fba100c67a4197",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/4d804d69fb93770dd9ca2ae02caf3aba3a358711",
+                "reference": "4d804d69fb93770dd9ca2ae02caf3aba3a358711",
                 "shasum": ""
             },
             "require": {
@@ -5674,7 +5674,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/0.3"
             },
-            "time": "2024-12-26T19:01:16+00:00"
+            "time": "2025-02-01T19:04:27+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",
@@ -5682,12 +5682,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-tag.git",
-                "reference": "2240d25c808ccb48df40b15500eb6cd0edfa9fd3"
+                "reference": "a892cb788ed68d209b03c9954895897d4ba7c9bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-tag/zipball/2240d25c808ccb48df40b15500eb6cd0edfa9fd3",
-                "reference": "2240d25c808ccb48df40b15500eb6cd0edfa9fd3",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-tag/zipball/a892cb788ed68d209b03c9954895897d4ba7c9bd",
+                "reference": "a892cb788ed68d209b03c9954895897d4ba7c9bd",
                 "shasum": ""
             },
             "require": {
@@ -5704,12 +5704,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Backpack\\Tag\\ServiceProvider"
-                    ],
                     "aliases": {
                         "Tag": "Backpack\\Tag\\Facades\\Tag"
-                    }
+                    },
+                    "providers": [
+                        "Backpack\\Tag\\ServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -5741,7 +5741,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-tag/issues",
                 "source": "https://github.com/parabellumKoval/backpack-tag/tree/0.1"
             },
-            "time": "2024-11-02T14:21:51+00:00"
+            "time": "2025-01-29T17:42:09+00:00"
         },
         {
             "name": "parabellumkoval/backpack-transactions",
@@ -13092,9 +13092,9 @@
     "platform": {
         "php": "^7.3|^8.0"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.1.11"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

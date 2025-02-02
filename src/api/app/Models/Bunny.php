@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Http;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -56,9 +58,10 @@ class Bunny
    * @return void
    */
   public function store($local_path, $remote_path) {
-
+    
     if(!File::exists($local_path)) {
       throw new \Exception('File not exists: ' . $local_path);
+      \Log::error('File not exists: ' . $local_path);
       return;
     }
 
@@ -153,9 +156,10 @@ class Bunny
       
       $disk = 'temp';
 
-      // if a base64 was sent, store it in the db
-      if (Str::startsWith($value, 'data:image'))
+      // if a base64 was sent or if this is remote image, store it in the db
+      if (Str::startsWith($value, 'data:image') || (Str::startsWith($value, 'http') && $this->checkRemoteFile($value)))
       {
+
         // 0. Make the image
         $image = \Image::make($value)->encode('jpg');
 
@@ -200,22 +204,38 @@ class Bunny
     }
     
     /**
-     * setImagesAttribute
-     *
-     * @param  mixed $value
-     * @return void
+     * The function `storeImages` stores new images while handling existing images in an array,
+     * filtering out empty image sources and transforming objects to arrays.
+     * 
+     * @param values The `storeImages` function you provided seems to handle storing images based on
+     * the input values. The `values` parameter is expected to be an array of objects representing
+     * images, where each object has properties like `src`, `alt`, and `title`.
+     * @param old_images The `storeImages` function you provided seems to handle storing images based
+     * on the input values and old images. The `old_images` parameter is used to pass in any existing
+     * images that need to be considered during the image storage process.
+     * 
+     * @return The `storeImages` function returns an array of new images with their `src`, `alt`, and
+     * `title` values after processing the input values.
      */
-    public function storeImages($values, $old_images) {
+    public function storeImages($values, $old_images = null) {
 
       $this->images = $old_images;
 
       $new_images_array = [];
 
+      // Filter items with empty image src
       $images = array_filter($values, function($item) {
-        if(!empty($item->src)) {
+        $item_array = (array)$item;
+        if(!empty($item_array['src'])) {
           return $item;
         }
       });
+
+      // Transform object to array deep
+      $images = array_map(function($item) {
+        return (array)$item;
+      }, $images);
+
 
       if(!empty($this->images)) {
         if(empty($images)) {
@@ -226,16 +246,36 @@ class Bunny
         }
       }
 
-
       foreach($images as $image) {
-        $src = $this->storeImage($image->src);
+        $src = $this->storeImage($image['src']);
         $new_images_array[] = [
           'src' => $src,
-          'alt' => $image->alt,
-          'title' => $image->title
+          'alt' => $image['alt'] ?? null,
+          'title' => $image['title'] ?? null
         ];
       }
 
       return $new_images_array;
+    }
+
+    /**
+     * The function `checkRemoteFile` checks if a remote file exists by sending an HTTP GET request to the
+     * specified URL.
+     * 
+     * @param url The `checkRemoteFile` function is designed to check if a remote file exists by making an
+     * HTTP GET request to the provided URL. If the response is successful (status code 2xx), it returns
+     * `true`, indicating that the file exists. Otherwise, it returns `false`.
+     * 
+     * @return The function `checkRemoteFile()` returns a boolean value. It returns `true` if the HTTP
+     * response from the given URL is successful (status code 2xx), and `false` otherwise.
+     */
+    public function checkRemoteFile($url) {
+      $response = Http::get($url);
+
+      if($response->ok()) {
+        return true;
+      }else {
+        return false;
+      }
     }
 }

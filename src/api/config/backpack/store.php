@@ -299,5 +299,9 @@ return [
       'class' => 'Backpack\Store\app\Models\Source',
       'admin_class' => 'Backpack\Store\app\Models\Admin\Source',
       'upload_class' => 'Backpack\Store\app\Models\UploadHistory',
+      'test' => [
+        'enable' => env('STORE_SOURCE_TEST', false),
+        'items' => env('STORE_SOURCE_TEST_ITEMS', 1)
+      ]
     ]
 ];

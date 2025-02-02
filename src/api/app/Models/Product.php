@@ -10,6 +10,8 @@ use Spatie\Feed\FeedItem;
 use App\Models\Category;
 use App\Models\CategoryFeed;
 
+use App\Models\Bunny;
+
 use Backpack\Store\app\Models\Product as BaseProduct;
 
 // REVIEWS
@@ -526,4 +528,30 @@ class Product extends BaseProduct implements Feedable
     $extras['is_images_generated'] = $value;
     $this->extras = $extras;
   }
+
+
+    /**
+     * setImagesAttribute
+     *
+     * @param  mixed $value
+     * @return void
+     */
+    public function setImagesAttribute($values) {
+      // $images_array = $this->bunny->storeImages($values, $this->images);
+      // $this->attributes['images'] = json_encode($images_array);
+      // $enter_images = json_decode($values);
+      // \Log::info(print_r($enter_images, true));
+      // dd($enter_images);
+
+      if(empty($values)) {
+        $this->attributes['images'] = $values;
+        return;
+      }
+      
+
+      $bunny = new Bunny('products');
+
+      $images_array = $bunny->storeImages($values);
+      $this->attributes['images'] = json_encode($images_array);
+    }
 }
