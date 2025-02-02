@@ -1,0 +1,12 @@
+/storage
+/storage_api
+/storage_dashboard
+/public
+.env
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
