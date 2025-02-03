@@ -103,12 +103,12 @@ class Bunny
 
         // Try find in new images array
         foreach($new_images as $new_image) {
-          if(Str::startsWith($new_image->src, 'data:image')) {
+          if(Str::startsWith($new_image['src'], 'data:image')) {
             continue;
           }
 
           // set to is_exists - true if find
-          if($image_src === basename($new_image->src)) {
+          if($image_src === basename($new_image['src'])) {
             $is_exists = true;
           }
         }
