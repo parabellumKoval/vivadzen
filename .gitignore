@@ -2,6 +2,7 @@
 /storage_api
 /storage_dashboard
 /public
+/mysql
 .env
 docker-compose.override.yml
 Homestead.json
