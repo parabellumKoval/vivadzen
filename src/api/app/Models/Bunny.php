@@ -203,6 +203,14 @@ class Bunny
       $this->store($local_image, $remote_path);
     }
     
+    public function normalizeArray(?array $items): array {
+      if (!is_array($items)) {
+        return [];
+      }
+
+      return array_map(fn($item) => basename($item['src']), $items);
+    }
+
     /**
      * The function `storeImages` stores new images while handling existing images in an array,
      * filtering out empty image sources and transforming objects to arrays.
@@ -233,9 +241,11 @@ class Bunny
 
       // Transform object to array deep
       $images = array_map(function($item) {
-        return (array)$item;
+        $array = (array)$item;
+        return $array;
       }, $images);
 
+      // dd($this->normalizeArray($this->images) === $this->normalizeArray($images));
 
       if(!empty($this->images)) {
         if(empty($images)) {
@@ -244,6 +254,10 @@ class Bunny
         }else {
           $this->removeSomeImages($images);
         }
+      }
+
+      if($this->normalizeArray($this->images) === $this->normalizeArray($images)) {
+        return -1;
       }
 
       foreach($images as $image) {
