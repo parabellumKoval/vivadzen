@@ -245,7 +245,7 @@ class Bunny
         return $array;
       }, $images);
 
-      // dd($this->normalizeArray($this->images) === $this->normalizeArray($images));
+      dd($this->images, $images);
 
       if(!empty($this->images)) {
         if(empty($images)) {

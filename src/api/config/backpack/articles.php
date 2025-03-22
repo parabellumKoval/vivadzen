@@ -7,7 +7,7 @@ return [
 
   'image' => [
     'enable' => true,
-    'base_path' => 'https://djini.b-cdn.net/blog/',
+    'base_path' => 'https://djini-v2.b-cdn.net/blog/',
   ],
 
   'resource' => [
