@@ -245,8 +245,6 @@ class Bunny
         return $array;
       }, $images);
 
-      dd($this->images, $images);
-
       if(!empty($this->images)) {
         if(empty($images)) {
           $this->removeAllImages();
