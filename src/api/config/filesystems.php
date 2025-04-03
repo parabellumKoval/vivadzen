@@ -36,6 +36,13 @@ return [
         'url' => public_path('temp'),
       ],
 
+      'excel' => [
+        'driver' => 'local',
+        'root' => storage_path('app/public/excel'),
+        'url' => env('APP_URL').'/storage',
+        'visibility' => 'public',
+      ],
+
       'backups' => [
         'driver' => 'local',
         'root' => public_path('backups'),

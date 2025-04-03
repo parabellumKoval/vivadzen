@@ -552,6 +552,9 @@ class Product extends BaseProduct implements Feedable
       $bunny = new Bunny('products');
 
       $images_array = $bunny->storeImages($values);
-      $this->attributes['images'] = json_encode($images_array);
+
+      if($images_array !== -1) {
+        $this->attributes['images'] = json_encode($images_array);
+      }
     }
 }
