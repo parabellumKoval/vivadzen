@@ -68,7 +68,7 @@ services:
       - ./src/api/.env  
     volumes:
       - ./storage_dashboard:/var/www/html/storage
-      - /storage_excel:/var/www/html/storage/app/public/excel
+      - ./storage_excel:/var/www/html/storage/app/public/excel
       - /mnt/uploads:/var/www/html/public/uploads
       - /mnt/backups:/var/www/html/public/backups
       # - mysql:/var/www/html/certs
@@ -206,7 +206,7 @@ services:
         IMAGE_TAG: ${IMAGE_TAG}
     volumes:
       - ./storage_schedule:/var/www/html/storage
-      - /storage_excel:/var/www/html/storage/app/public/excel
+      - ./storage_excel:/var/www/html/storage/app/public/excel
       - /mnt/backups:/var/www/html/public/backups
     links:
       - mysql
