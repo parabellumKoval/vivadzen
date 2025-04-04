@@ -15,6 +15,24 @@ trait ProductCrud {
 
     $this->setupFilers();
     $this->setupTagColumns();
+
+    $this->crud->addFilter([
+      'name' => 'is_ai_content',
+      'label' => 'AI-контент',
+      'type' => 'simple',
+    ], false,
+     function(){
+      $this->crud->query->where('extras->is_ai_content', 1);
+    });
+
+    $this->crud->addFilter([
+      'name' => 'is_images_generated',
+      'label' => 'Генерация изображений',
+      'type' => 'simple',
+    ], false,
+     function(){
+      $this->crud->query->where('extras->is_images_generated', 1);
+    });
   }
 
   /**

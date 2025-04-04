@@ -107,6 +107,7 @@ class FillProducts extends Command
       foreach($products_cursor as $product) {
         $content = $this->getProductContent($product->name, $prompt);
 
+        dd($content);
         if(!$content) {
           continue;
         }

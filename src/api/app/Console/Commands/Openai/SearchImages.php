@@ -18,7 +18,7 @@ class SearchImages extends Command
      *
      * @var string
      */
-    protected $signature = 'images:search';
+    protected $signature = 'images:search {--limit=0}';
 
     /**
      * The console command description.
@@ -61,6 +61,8 @@ class SearchImages extends Command
     public function handle()
     {
 
+      $limit = (int)$this->option('limit');
+
 	    $products = Product::whereHas('sp', function($query){
         $query->where('in_stock', '>', 0);
       })->where(function($query) {
@@ -74,7 +76,9 @@ class SearchImages extends Command
       $bar = $this->output->createProgressBar($products_count);
       $bar->start();
 
-      foreach($products_cursor as $product) {
+      foreach($products_cursor as $index => $product) {
+        if ($index >= $limit) break;
+
         $images = $this->findImages($product->name);
 
         if(!$images) {
