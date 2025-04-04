@@ -259,7 +259,14 @@ class Bunny
       }
 
       foreach($images as $image) {
-        $src = $this->storeImage($image['src']);
+        try {
+          $src = $this->storeImage($image['src']);
+        }catch(\Exception $e) {
+          \Alert::add('error', 'Сохранить картинку не удалось. Попробуйте другой формат изображения (jpeg, jpg, png).');
+          \Log::error($e);
+          continue;
+        }
+        
         $new_images_array[] = [
           'src' => $src,
           'alt' => $image['alt'] ?? null,
