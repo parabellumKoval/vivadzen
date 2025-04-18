@@ -1,6 +1,12 @@
 <?php
 
 return [
+  "common" => [
+    "pending" => "В обработке",
+    "error" => "Ошибка",
+    "done" => "Успешно",
+  ],
+
   "status" => [
     "new" => "Новый",
     "canceled" => "Отменен",

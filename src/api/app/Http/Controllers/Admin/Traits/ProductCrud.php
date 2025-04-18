@@ -13,12 +13,15 @@ trait ProductCrud {
    */
   public function listOperation() {
 
+    $this->available_languages = config('backpack.crud.locales');
+    $this->langs_list = array_keys($this->available_languages);
+
     $this->setupFilers();
     $this->setupTagColumns();
 
     $this->crud->addFilter([
       'name' => 'is_ai_content',
-      'label' => 'AI-контент',
+      'label' => 'OpenAi контент',
       'type' => 'simple',
     ], false,
      function(){
@@ -27,12 +30,114 @@ trait ProductCrud {
 
     $this->crud->addFilter([
       'name' => 'is_images_generated',
-      'label' => 'Генерация изображений',
+      'label' => 'Serper изображения',
       'type' => 'simple',
     ], false,
      function(){
       $this->crud->query->where('extras->is_images_generated', 1);
     });
+
+
+    // $this->crud->addFilter([
+    //   'name' => 'is_images_generated',
+    //   'label' => 'Serper изображения',
+    //   'type' => 'simple',
+    // ], false,
+    //  function(){
+    //   $this->crud->query->where('extras->is_images_generated', 1);
+    // });
+
+
+    $this->crud->addFilter([
+      'name' => 'is_trans',
+      'label' => 'Переведено DeepL',
+      'type' => 'simple',
+    ], false,
+     function(){
+      $this->crud->query->where('is_trans', 1);
+    });
+
+
+    $this->crud->addFilter([
+      'name' => 'need_moderation',
+      'label' => 'Требует модерации',
+      'type' => 'simple',
+    ], false,
+     function(){
+      $this->crud->query
+        ->where(function($query) {
+          $query->where('extras->is_ai_content', 1)
+                  ->where(function ($subQuery) {
+                    $subQuery->where('extras->ai_content_moderated', '!=', 1)
+                            ->where('extras->ai_content_moderated', '!=', 'on')
+                            ->orWhereNull('extras->ai_content_moderated');
+                });
+          })
+        ->orWhere(function($query) {
+          $query->where('extras->is_images_generated', 1)
+                  ->where(function ($subQuery) {
+                    $subQuery->where('extras->images_moderated', '!=', 1)
+                            ->where('extras->images_moderated', '!=', 'on')
+                            ->orWhereNull('extras->images_moderated');
+                });
+          })
+        ->orWhere(function($query) {
+          $query->where('extras->brand_ai_generated', 1)
+                  ->where(function ($subQuery) {
+                    $subQuery->where('extras->brand_ai_generated_moderated', '!=', 1)
+                            ->where('extras->brand_ai_generated_moderated', '!=', 'on')
+                            ->orWhereNull('extras->brand_ai_generated_moderated');
+                });
+          })
+        ->orWhere(function($query) {
+          $query->where('extras->category_ai_generated', 1)
+                  ->where(function ($subQuery) {
+                    $subQuery->where('extras->category_ai_generated_moderated', '!=', 1)
+                            ->where('extras->category_ai_generated_moderated', '!=', 'on')
+                            ->orWhereNull('extras->category_ai_generated_moderated');
+                });
+          })
+        ->orWhere(function($query) {
+          $query->where('extras->attributes_ai_generated', 1)
+                  ->where(function ($subQuery) {
+                    $subQuery->where('extras->attributes_ai_moderated', '!=', 1)
+                            ->where('extras->attributes_ai_moderated', '!=', 'on')
+                            ->orWhereNull('extras->attributes_ai_moderated');
+                });
+          });
+    });
+
+    // 
+    $this->crud->removeColumn('name');
+
+    //
+    $this->crud->removeColumn('categories');
+
+    $this->crud->addColumn([
+      'name' => 'adminName',
+      'label' => 'Название',
+      'type' => 'textarea',
+      'limit' => 100,
+      'priority' => 1,
+      'searchLogic' => function ($query, $column, $searchTerm) {
+        $query->orWhere(function($query) use ($searchTerm){
+          foreach($this->langs_list as $index => $lang_key) {
+            $function_name = $index === 0? 'whereRaw': 'orWhereRaw';
+            $query->{$function_name}('LOWER(JSON_EXTRACT(name, "$.' . $lang_key . '")) LIKE ? ', ['%'.trim(mb_strtolower($searchTerm)).'%']);
+          }
+        });
+      },
+    ])->afterColumn('is_active');
+
+
+
+    $this->crud->addColumn([
+      'name' => 'adminProps',
+      'label' => '🎚',
+      'type' => 'textarea',
+      'limit' => 100,
+      'priority' => 1,
+    ])->afterColumn('adminName');
   }
 
   /**
@@ -46,27 +151,78 @@ trait ProductCrud {
     $entry_id = \Route::current()->parameter('id');
     $this->entry = !empty($entry_id)? $this->crud->getEntry($entry_id): null;
 
-
     // Ai Content
     $this->crud->addField([
-      'name' => 'is_ai_content_virtual',
-      'label' => 'Сгенерирован ИИ',
+      'name' => 'is_ai_content',
+      'label' => 'Сгенерирован AI',
       'type' => 'checkbox',
       'tab' => 'Основное',
-      'hint' => 'Был ли контент сгенерирован ИИ (раздел в админке AI Prompts)',
+      'fake' => true, 
+      'store_in' => 'extras',
+      'hint' => 'Был ли контент сгенерирован AI (раздел в админке AI Prompts)',
     ])->afterField('content');
 
-    // PROM CATEGORY
+
     $this->crud->addField([
-      'name' => 'category_feed_id',
-      'label' => 'Категория на PROM',
-      'type' => 'select2',
-      'entity' => 'prom_category',
-      'attribute' => 'prom_name',
-      'model' => 'App\Models\CategoryFeed',
+      'name' => 'ai_content_moderated',
+      'label' => 'Проверен',
+      'type' => 'moderation',
       'tab' => 'Основное',
-      'hint' => 'Укажите если необходимо однозначно привязать товар к категории на PROM (иначе будут применены общие правила)',
+      'wrap_items' => ['content', 'is_ai_content'],
+      'wrapper_class' => 'wrapper',
+      'switch_class' => 'box-warning',
+      'enabled_when' => 'is_ai_content',
+      'fake' => true, 
+      'store_in' => 'extras',
+    ]);
+
+    // BRAND
+    $this->crud->addField([
+      'name' => 'brand_ai_generated',
+      'label' => 'Бренд заполнен автоматически AI',
+      'type' => 'checkbox',
+      'tab' => 'Основное',
+      'hint' => 'Был ли бренд заполнен автоматически AI',
+      'fake' => true, 
+      'store_in' => 'extras',
+    ])->afterField('category_feed_id');
+
+    $this->crud->addField([
+      'name' => 'brand_ai_generated_moderated',
+      'label' => 'Проверено',
+      'type' => 'moderation',
+      'tab' => 'Основное',
+      'wrap_items' => ['brand', 'brand_ai_generated'],
+      'wrapper_class' => 'wrapper',
+      'switch_class' => 'box-warning',
+      'enabled_when' => 'brand_ai_generated',
+      'fake' => true, 
+      'store_in' => 'extras',
+    ]);
+
+    // CATEGORY
+    $this->crud->addField([
+      'name' => 'category_ai_generated',
+      'label' => 'Категория заполнена автоматически AI',
+      'type' => 'checkbox',
+      'tab' => 'Основное',
+      'hint' => 'Была ли категория заполнена автоматически AI',
+      'fake' => true, 
+      'store_in' => 'extras',
     ])->afterField('categories');
+
+    $this->crud->addField([
+      'name' => 'category_ai_generated_moderated',
+      'label' => 'Проверено',
+      'type' => 'moderation',
+      'tab' => 'Основное',
+      'wrap_items' => ['categories', 'category_ai_generated'],
+      'wrapper_class' => 'wrapper',
+      'switch_class' => 'box-warning',
+      'enabled_when' => 'category_ai_generated',
+      'fake' => true, 
+      'store_in' => 'extras',
+    ]);
 
     // Tags
     $this->setupTagFields();
@@ -81,10 +237,13 @@ trait ProductCrud {
     ])->beforeField('delim');
 
     $this->crud->addField([
-      'name' => 'specsvirtual',
-      'type' => 'hidden',
-      'value' => 'specs',
-    ]);
+      'name' => 'specs',
+      'type' => 'hidden_fake_array',
+      'value' => null,
+      'fake' => true,
+      'store_in' => 'extras',
+      'tab' => 'Характеристики'
+    ])->beforeField('delim');
 
     $this->crud->addField([
       'name' => 'specs[natural]',
@@ -152,16 +311,17 @@ trait ProductCrud {
       'tab' => 'Характеристики'
     ])->beforeField('delim');
 
-    // 
+    //
     $this->crud->removeField('images');
 
     // IMAGES
     $this->crud->addField([
-      'name'  => 'is_images_generated_virtual',
-      'label' => 'Изображения были заполнены автоматически',
+      'name'  => 'is_images_generated',
+      'label' => 'Изображения заполнены AI',
       'type' => 'checkbox',
-      // 'fake' => true, 
-      // 'store_in' => 'extras',
+      'fake' => true, 
+      'store_in' => 'extras',
+      'hint' => 'Были ли изображения заполнены автоматически AI',
       'tab' => 'Изображения'
     ]);
 
@@ -202,23 +362,46 @@ trait ProductCrud {
       'hint' => 'При добавлении новых изображений, сохранение товара будет происходить дольше, так как картинку загружаются в удаленное облако.',
       'tab' => 'Изображения'
     ]);
+
+    $this->crud->addField([
+      'name' => 'images_moderated',
+      'label' => 'Проверено',
+      'type' => 'moderation',
+      'tab' => 'Изображения',
+      'wrap_items' => ['is_images_generated', 'images'],
+      'wrapper_class' => 'wrapper',
+      'switch_class' => 'box-warning',
+      'enabled_when' => 'is_images_generated',
+      'fake' => true, 
+      'store_in' => 'extras',
+    ]);
   
+    // Attributes
+    $this->crud->addField([
+      'name'  => 'attributes_ai_generated',
+      'label' => 'Атрибуты заполнены автоматически AI',
+      'type' => 'checkbox',
+      'fake' => true, 
+      'store_in' => 'extras',
+      'hint' => 'Были ли атрибуты заполнены автоматически AI',
+      'tab' => 'Характеристики'
+    ])->afterField('delim_2');
 
 
     $this->crud->addField([
-      'name' => 'delim_duplic',
-      'type' => 'custom_html',
-      'value' => '<h3>Дубликаты</h3>
-        <p class="help-block">В данном разделе можно "сшивать" несколько товаров в один. Для того чтобы это сделать:</p>
-        <ol>
-          <li>В поле ниже выберите основной товар, то есть тот товар дубликатом которого явялется товар, который вы сейчас редактируете.</li>
-          <li>В течении 1 часа этот товар автоматически будет объединен с указанным в поле ниже.</li>
-          <li>Этот товар будет полностью удален, а информация о складе (поставщик, артикул, наличие, цена...) будет перенесена в карточку основного товара.</li>
-        </ol>
-      ',
-      'tab' => 'Дубликаты'
-    ])->afterField('images');
+      'name' => 'attributes_ai_moderated',
+      'label' => 'Проверено',
+      'type' => 'moderation',
+      'tab' => 'Характеристики',
+      'wrap_items' => ['attributes_ai_generated', 'props'],
+      'wrapper_class' => 'wrapper',
+      'switch_class' => 'box-warning',
+      'enabled_when' => 'attributes_ai_generated',
+      'fake' => true, 
+      'store_in' => 'extras',
+    ]);
 
+    // Duplicates
     $this->crud->addField([
       'name' => 'duplicate_of',
       'label' => 'Выберите товар',
@@ -233,7 +416,34 @@ trait ProductCrud {
       'placeholder' => "Поиск по названию товара",
       'minimum_input_length' => 0,
       'hint' => 'Выберите товар дубликатом которого является данный товар.',
-      'tab' => 'Дубликаты'
+      'tab' => 'Управление'
+    ]);
+
+    $this->crud->addField([
+      'name' => 'delim_duplic',
+      'type' => 'custom_html',
+      'value' => '<h3>Дубликаты</h3>
+        <p class="help-block">В данном разделе можно "сшивать" несколько товаров в один. Для того чтобы это сделать:</p>
+        <ol>
+          <li>В поле ниже выберите основной товар, то есть тот товар дубликатом которого является товар, который вы сейчас редактируете.</li>
+          <li>В течении 1 часа этот товар автоматически будет объединен с указанным в поле ниже.</li>
+          <li>Этот товар будет полностью удален, а информация о складе (поставщик, артикул, наличие, цена...) будет перенесена в карточку основного товара.</li>
+        </ol>
+      ',
+      'tab' => 'Управление'
+    ]);
+
+
+    // PROM CATEGORY
+    $this->crud->addField([
+      'name' => 'category_feed_id',
+      'label' => 'Категория на PROM',
+      'type' => 'select2',
+      'entity' => 'prom_category',
+      'attribute' => 'prom_name',
+      'model' => 'App\Models\CategoryFeed',
+      'tab' => 'Управление',
+      'hint' => 'Укажите если необходимо однозначно привязать товар к категории на PROM (иначе будут применены общие правила)',
     ]);
   }
 

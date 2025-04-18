@@ -1,0 +1,67 @@
+@include('crud::fields.inc.wrapper_start')
+    @include('crud::fields.inc.translatable_icon')
+    <div class="custom-control custom-switch">
+        <input type="hidden" name="{{ $field['name'] }}" value="{{ old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? 0 }}">
+        <input type="checkbox"
+            class="custom-control-input"
+            data-init-function="bpFieldInitCheckbox"
+            @if (old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? false)
+                checked="checked"
+            @endif
+            @if (isset($field['attributes']))
+                @foreach ($field['attributes'] as $attribute => $value)
+                    {{ $attribute }}="{{ $value }}"
+                @endforeach
+            @endif
+        >
+        <label class="custom-control-label">{!! $field['label'] !!}</label>
+
+        {{-- HINT --}}
+        @if (isset($field['hint']))
+            <small class="form-text text-muted">{!! $field['hint'] !!}</small>
+        @endif
+    </div>
+@include('crud::fields.inc.wrapper_end')
+
+{{-- ########################################## --}}
+{{-- Extra CSS and JS for this particular field --}}
+{{-- If a field type is shown multiple times on a form, the CSS and JS will only be loaded once --}}
+@if ($crud->fieldTypeNotLoaded($field))
+    @php
+        $crud->markFieldTypeAsLoaded($field);
+    @endphp
+    {{-- FIELD JS - will be loaded in the after_scripts section --}}
+    @push('crud_fields_scripts')
+        <script>
+            function bpFieldInitCheckbox(element) {
+                var hidden_element = element.siblings('input[type=hidden]');
+                var id = 'switch_'+Math.floor(Math.random() * 1000000);
+
+                // make sure the value is a boolean (so it will pass validation)
+                if (hidden_element.val() === '') hidden_element.val(0);
+
+                // set unique IDs so that labels are correlated with inputs
+                element.attr('id', id);
+                element.siblings('label').attr('for', id);
+
+                // set the default checked/unchecked state
+                if (hidden_element.val() != 0) {
+                    element.prop('checked', 'checked');
+                } else {
+                    element.prop('checked', false);
+                }
+
+                // when the switch is clicked set the correct value on the hidden input
+                element.change(function() {
+                    if (element.is(":checked")) {
+                        hidden_element.val(1);
+                    } else {
+                        hidden_element.val(0);
+                    }
+                })
+            }
+        </script>
+    @endpush
+@endif
+{{-- End of Extra CSS and JS --}}
+{{-- ########################################## --}}

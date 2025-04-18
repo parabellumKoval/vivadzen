@@ -9,6 +9,14 @@ jQuery(function($){
     'use strict';
 
     var table = new DataTable('#crudTable');
+
+    // var table = new DataTable('#crudTable', {
+    //     drawCallback: function(settings) {
+    //         $('[data-toggle="tooltip"]').tooltip({
+    //             container: 'body'
+    //         });
+    //     }
+    // });
  
     $('#datatable-go-to-page-btn').on('click', function () {
         var to_page = +$('#datatable-page-input').val()

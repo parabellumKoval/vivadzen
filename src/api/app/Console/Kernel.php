@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('xml:correct-in-stock')->hourly();
 
         // OpenAI Product Content generation
-        $schedule->command('openai:fill-products')->daily()->at('01:00');
+        // $schedule->command('openai:fill-products')->daily()->at('01:00');
     }
 
     /**

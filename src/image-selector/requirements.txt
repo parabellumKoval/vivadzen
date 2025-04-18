@@ -1,0 +1,11 @@
+fastapi==0.95.1
+uvicorn==0.21.1
+pillow==9.5.0
+imagehash==4.3.1
+torch==2.0.0
+numpy==1.24.3
+python-multipart==0.0.9
+requests==2.31.0
+pytesseract==0.3.10
+scipy==1.13.0  # Обновлено
+git+https://github.com/openai/CLIP.git

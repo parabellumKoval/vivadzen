@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'libretranslate' => [
+        'url' => env('LIBRETRANSLATE_URL', 'http://libretranslate:5000/translate'),
+        'api_key' => env('LIBRETRANSLATE_API_KEY', ''),
+    ],
+
 ];

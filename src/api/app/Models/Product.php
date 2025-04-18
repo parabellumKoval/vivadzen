@@ -13,6 +13,10 @@ use App\Models\CategoryFeed;
 use App\Models\Bunny;
 
 use Backpack\Store\app\Models\Product as BaseProduct;
+use Backpack\Store\app\Models\Attribute;
+use Backpack\Store\app\Models\AttributeValue;
+use Backpack\Store\app\Models\AttributeProduct;
+
 
 // REVIEWS
 use Backpack\Reviews\app\Traits\Reviewable;
@@ -201,7 +205,83 @@ class Product extends BaseProduct implements Feedable
     return $data;
   }
 	
+  
+  /**
+   * Method getAvailablePropertiesArray
+   *
+   * @return void
+   */
+  public function getAvailablePropertiesArray($lang = 'ru') {
+    $props = $this->getAvailableProperties();
 
+    if(!$props) {
+      return [];
+    }
+
+    $data = [];
+
+    foreach($props as $prop) {
+      $data[] = [
+        'id' => $prop->id,
+        'name' => $prop->getTranslation('name', $lang),
+        'type' => $prop->type,
+        'si' => $prop->si,
+        'value' => $prop->values->map(function ($item) use ($lang) {
+          return $item->getTranslation('value', $lang);
+        })->toArray()
+      ];
+    }
+
+    return $data;
+  }
+  
+  /**
+   * Method getAvailableProperties
+   *
+   * @return void
+   */
+  public function getAvailableProperties() {
+    // create empty collection
+    $attrs = collect();
+
+    // if categories have not been set go out
+    if(!$this->categories || !$this->categories->count())
+      return;
+    
+    // 
+    foreach($this->categories as $category) {
+      
+      $category_parent_node = $category->getParentNode();
+
+      foreach($category_parent_node as $category) {
+        // Take all active attributes for this category 
+        $cat_attrs = $category->attributes()->active()->get();
+
+        // If isset active attributes for this category merge with common list
+        if($cat_attrs && $cat_attrs->count()) {
+          $attrs = $attrs->merge($cat_attrs);
+        }
+      }
+    }
+
+    return $attrs;
+  }
+  
+  /**
+   * Method getCountAvailablePropertiesAttribute
+   *
+   * @return void
+   */
+  public function getCountAvailablePropertiesAttribute() {
+    $props = $this->getAvailableProperties();
+
+    if(!$props) {
+      return 0;
+    }
+
+    return $props->count();
+  }
+  
   // public function getPromCategoryAttribute() {
 
   // }
@@ -494,6 +574,23 @@ class Product extends BaseProduct implements Feedable
     return $this->extras['is_ai_content'] ?? null;
   }
 
+  /**
+   * getBrandAiGeneratedAttribute
+   *
+   * @return void
+   */
+  public function getBrandAiGeneratedAttribute() {
+    return $this->extras['brand_ai_generated'] ?? null;
+  }
+
+  /**
+   * getCategoryAiGeneratedAttribute
+   *
+   * @return void
+   */
+  public function getCategoryAiGeneratedAttribute() {
+    return $this->extras['category_ai_generated'] ?? null;
+  }
   
   /**
    * getIsImagesGeneratedAttribute
@@ -502,6 +599,256 @@ class Product extends BaseProduct implements Feedable
    */
   public function getIsImagesGeneratedAttribute() {
     return $this->extras['is_images_generated'] ?? null;
+  }
+  
+  /**
+   * getIsAttributesGeneratedAttribute
+   *
+   * @return void
+   */
+  public function getIsAttributesGeneratedAttribute() {
+    return $this->extras['attributes_ai_generated'] ?? null;
+  }
+
+  /**
+   * Method setAttributeToProduct
+   *
+   * @param $attribute_id $attribute_id [explicite description]
+   * @param $value $value [explicite description]
+   * @param $lang $lang [explicite description]
+   *
+   * @return void
+   */
+  public function setAttributeToProduct($attribute_id, $value, $lang = 'ru') {
+    $attribute = Attribute::findOrFail($attribute_id);
+
+    if($attribute->type === 'checkbox') {
+      $values = explode(';', $value);
+
+      foreach($values as $value) {
+        $this->createAttributeProductSelect($attribute, $value, $lang);
+      }
+    }else if($attribute->type === 'radio') {
+      $this->createAttributeProductSelect($attribute, $value, $lang);
+    }else if($attribute->type === 'string') {
+      $this->createAttributeProductString($attribute, $value, $lang);
+    }else if($attribute->type === 'number') {
+      $this->createAttributeProductNumber($attribute, $value);
+    }
+  }
+    
+  /**
+   * Method createAttributeProductNumber
+   *
+   * @param $attribute $attribute [explicite description]
+   * @param $value $value [explicite description]
+   *
+   * @return void
+   */
+  public function createAttributeProductNumber($attribute, $value){
+
+    $ap = AttributeProduct::firstOrCreate([
+      'product_id' => $this->id,
+      'attribute_id' => $attribute->id,
+      'value' => $value
+    ]);
+
+    return $ap;
+  }
+  
+  /**
+   * Method createAttributeProductString
+   *
+   * @param $attribute $attribute [explicite description]
+   * @param $value $value [explicite description]
+   * @param $lang $lang [explicite description]
+   *
+   * @return void
+   */
+  public function createAttributeProductString($attribute, $value, $lang){
+
+    $ap = AttributeProduct::firstOrNew([
+      'product_id' => $this->id,
+      'attribute_id' => $attribute->id
+    ]);
+
+    $ap->setTranslation('value_trans', $lang, $value);
+    $ap->save();
+
+    return $ap;
+  }
+
+  /**
+   * Method createAttributeProductSelect
+   *
+   * @param $attribute $attribute [explicite description]
+   * @param $value $value [explicite description]
+   * @param $lang $lang [explicite description]
+   *
+   * @return void
+   */
+  public function createAttributeProductSelect($attribute, $value, $lang){
+
+    $attribute_value = AttributeValue::firstOrCreate([
+      'attribute_id' => $attribute->id,
+      'value->' . $lang => $value
+    ]);
+
+    $ap = AttributeProduct::firstOrCreate([
+      'product_id' => $this->id,
+      'attribute_id' => $attribute->id,
+      'attribute_value_id' => $attribute_value->id
+    ]);
+
+    return $ap;
+  }
+
+  
+  /**
+   * Method setAllPropertiesAi
+   *
+   * @param array $props [explicite description]
+   * @param string $lang [explicite description]
+   *
+   * @return void
+   */
+  public function setAllPropertiesAi(array $props, string $lang = 'ru') {
+    if(empty($props)) {
+      return;
+    }
+
+    // Fill specs
+    if(isset($props['specs']) && is_array($props['specs']) && !empty($props['specs'])) {
+      $this->setSpecs($props['specs']);
+      $this->save();
+    }
+
+    // Fill custom properties
+    if(isset($props['custom_attr']) && is_array($props['custom_attr']) && !empty($props['custom_attr'])) {
+      $this->setCustomProperties($props['custom_attr'], $lang);
+      $this->save();
+    }
+
+    // Fill attributes
+    if(isset($props['attrs']) && is_array($props['attrs']) && !empty($props['attrs'])) {
+      $this->setFilterAttributes($props['attrs'], $lang);
+    }
+  }
+  
+  /**
+   * Method setFilterAttributes
+   *
+   * @param array $attrs [explicite description]
+   *
+   * @return void
+   */
+  public function setFilterAttributes(array $attrs = null, string $lang = 'ru') {
+    if(empty($attrs)) {
+      \Log::error("Error setting attributes: empty attributes");
+      return;
+    }
+
+    foreach($attrs as $attr) {
+      // Check if the property is valid
+      try {
+        $this->checkProperty($attr);
+      }catch (\Exception $e) {
+        \Log::error("Error attribute validation {$attr['id']}: " . $e->getMessage());
+        continue;
+      }
+
+      try {
+        $this->setAttributeToProduct($attr['id'], $attr['value'], $lang);
+      }catch (\Exception $e) {
+        \Log::error("Error setting attribute {$prop['id']}: " . $e->getMessage());
+        continue;
+      }
+    }
+  }
+
+
+  /**
+   * Method setCustomProperties
+   *
+   * @param array $props [explicite description]
+   *
+   * @return void
+   */
+  public function setCustomProperties(array $props, string $lang = 'ru') {
+    $valid_props = [];
+
+    foreach($props as $prop) {
+      if(!isset($prop['name']) || !isset($prop['value'])) {
+        \Log::error("Invalid custom property: 'name' and 'value' are required.");
+        continue;
+      }
+
+      if(!is_string($prop['name'])) {
+        \Log::error("Invalid custom property: 'name' must be strings.");
+        continue;
+      }
+
+      if(!is_string($prop['value']) && !is_numeric($prop['value'])) {
+        \Log::error("Invalid custom property: 'value' must be a string or number.");
+        continue;
+      }
+
+      $valid_props[] = [
+        'name' => mb_trim($prop['name']),
+        'value' => mb_trim($prop['value']),
+      ];
+    }
+
+    $extras_trans = isset($this->extras_trans) && !empty($this->extras_trans)? $this->getTranslation('extras_trans', $lang): [];
+    $extras_trans['custom_attrs'] = $valid_props;
+    // $this->extras_trans = json_encode($extras_trans);
+    $this->setTranslation('extras_trans', $lang, $extras_trans);
+  }
+  
+
+  /**
+   * Method setSpecs
+   *
+   * @param array $specs [explicite description]
+   *
+   * @return void
+   */
+  public function setSpecs(array $specs) {
+    $allowed_keys = ["natural", "vegetarian", "lactose", "gluten", "gmo", "milk"];
+    
+    $specs = array_filter($specs, function($key) use ($allowed_keys) {
+      return in_array($key, $allowed_keys);
+    }, ARRAY_FILTER_USE_KEY);
+    
+    $specs = array_map(function($value) {
+      return (bool)$value;
+    }, $specs);
+
+    $extras = $this->extras ?? [];
+    $extras['specs'] = $specs;
+    $this->extras = $extras;
+    // $this->attributes['extras'] = json_encode($extras);
+  }
+  
+  /**
+   * Method checkProperty
+   *
+   * @param $prop $prop [explicite description]
+   *
+   * @return void
+   */
+  private function checkProperty($prop) {
+    if (!is_array($prop)) {
+        throw new \InvalidArgumentException("Invalid property at index {$index}: must be an array.");
+    }
+
+    if (!isset($prop['id']) || !is_int($prop['id'])) {
+      throw new \InvalidArgumentException("Invalid property at index {$index}: 'id' must be an integer.");
+    }
+
+    if (!isset($prop['value']) || is_null($prop['value'])) {
+        throw new \InvalidArgumentException("Invalid property at index {$index}: 'value' is required.");
+    }
   }
 
   /**
@@ -515,7 +862,32 @@ class Product extends BaseProduct implements Feedable
     $extras['is_ai_content'] = $value;
     $this->extras = $extras;
   }
-	
+	  
+  /**
+   * Method setBrandAiGeneratedAttribute
+   *
+   * @param $value $value [explicite description]
+   *
+   * @return void
+   */
+  public function setBrandAiGeneratedAttribute($value) {
+    $extras = $this->extras;
+    $extras['brand_ai_generated'] = $value;
+    $this->extras = $extras;
+  }
+
+  /**
+   * Method setCategoryAiGeneratedAttribute
+   *
+   * @param $value $value [explicite description]
+   *
+   * @return void
+   */
+  public function setCategoryAiGeneratedAttribute($value) {
+    $extras = $this->extras;
+    $extras['category_ai_generated'] = $value;
+    $this->extras = $extras;
+  }
 
   /**
    * setIsAiContentAttribute
@@ -529,32 +901,43 @@ class Product extends BaseProduct implements Feedable
     $this->extras = $extras;
   }
 
+  /**
+   * setAttributesAiGeneratedAttribute
+   *
+   * @param  mixed $value
+   * @return void
+   */
+  public function setAttributesAiGeneratedAttribute($value) {
+    $extras = $this->extras;
+    $extras['attributes_ai_generated'] = $value;
+    $this->extras = $extras;
+  }
 
-    /**
-     * setImagesAttribute
-     *
-     * @param  mixed $value
-     * @return void
-     */
-    public function setImagesAttribute($values) {
-      // $images_array = $this->bunny->storeImages($values, $this->images);
-      // $this->attributes['images'] = json_encode($images_array);
-      // $enter_images = json_decode($values);
-      // \Log::info(print_r($enter_images, true));
-      // dd($enter_images);
+  /**
+   * setImagesAttribute
+   *
+   * @param  mixed $value
+   * @return void
+   */
+  public function setImagesAttribute($values) {
+    // $images_array = $this->bunny->storeImages($values, $this->images);
+    // $this->attributes['images'] = json_encode($images_array);
+    // $enter_images = json_decode($values);
+    // \Log::info(print_r($enter_images, true));
+    // dd($enter_images);
 
-      if(empty($values)) {
-        $this->attributes['images'] = $values;
-        return;
-      }
-      
-
-      $bunny = new Bunny('products');
-
-      $images_array = $bunny->storeImages($values);
-
-      if($images_array !== -1) {
-        $this->attributes['images'] = json_encode($images_array);
-      }
+    if(empty($values)) {
+      $this->attributes['images'] = $values;
+      return;
     }
+    
+
+    $bunny = new Bunny('products');
+
+    $images_array = $bunny->storeImages($values);
+
+    if($images_array !== -1) {
+      $this->attributes['images'] = json_encode($images_array);
+    }
+  }
 }

@@ -51,7 +51,29 @@ class Category extends BaseCategory
 
       return $array;
   }
+  
+  /**
+   * Method getAvailableCategoriesArray
+   *
+   * @param $lang $lang [explicite description]
+   *
+   * @return array
+   */
+  static function getAvailableCategoriesArray($lang = 'ru'): array {
+    $categories = self::where('is_active', 1)->get();
+    $result = [];
 
+    foreach ($categories as $category) {
+        $result[] = [
+            'id' => $category->id,
+            'name' => $category->getTranslation('name', $lang, false),
+            'parent_id' => $category->parent_id,
+        ];
+    }
+
+    return $result;
+
+  }
   
   /**
    * getNoMedicineAttribute
@@ -72,12 +94,63 @@ class Category extends BaseCategory
     return $this->hasMany(Region::class, 'category_id');
   }
 
+
+  /*
+  |--------------------------------------------------------------------------
+  | ACCESSORS
+  |--------------------------------------------------------------------------
+  */
+  
+  /**
+   * getIsAiContentAttribute
+   *
+   * @return void
+   */
+  public function getIsAiContentAttribute() {
+    return $this->extras['is_ai_content'] ?? null;
+  }
+
+  
+  /**
+   * getIsImagesGeneratedAttribute
+   *
+   * @return void
+   */
+  public function getIsImagesGeneratedAttribute() {
+    return $this->extras['is_images_generated'] ?? null;
+  }
+
   /*
   |--------------------------------------------------------------------------
   | MUTATORS
   |--------------------------------------------------------------------------
   */
-  
+
+  /**
+   * setIsAiContentAttribute
+   *
+   * @param  mixed $value
+   * @return void
+   */
+  public function setIsAiContentAttribute($value) {
+    $extras = $this->extras;
+    $extras['is_ai_content'] = $value;
+    $this->extras = $extras;
+  }
+	
+
+  /**
+   * setIsAiContentAttribute
+   *
+   * @param  mixed $value
+   * @return void
+   */
+  public function setIsImagesGeneratedAttribute($value) {
+    $extras = $this->extras;
+    $extras['is_images_generated'] = $value;
+    $this->extras = $extras;
+  }
+
   /**
    * setImagesAttribute
    *

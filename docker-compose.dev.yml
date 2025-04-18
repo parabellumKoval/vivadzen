@@ -23,6 +23,28 @@ services:
       # - api
       - dashboard
 
+  image-selector:
+      build:
+        dockerfile: .docker/dev/image-selector/Dockerfile
+      volumes:
+      - ./src/image-selector:/app
+      ports:
+        - "8888:8000"
+      networks:
+        - api
+  libretranslate:
+    image: libretranslate/libretranslate
+    container_name: libretranslate
+    # ports:
+    #   - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - LT_LOAD_ONLY=ru,en,uk
+    volumes:
+      - libretranslate_models:/home/libretranslate/.local
+    networks:
+      - api
+
   dashboard:
     build:
       dockerfile: .docker/dev/dashboard/Dockerfile
@@ -201,6 +223,9 @@ volumes:
     driver: local
 
   redis:
+    driver: local
+  
+  libretranslate_models:
     driver: local
 
 networks:

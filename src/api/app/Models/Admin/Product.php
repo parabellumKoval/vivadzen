@@ -52,8 +52,12 @@ class Product extends BaseAdminProduct
     'defaultSupplier',
     'defaultSupplierVirtual',
     'category_feed_id',
-    'is_images_generated_virtual',
-    'is_ai_content_virtual'
+    // 'is_images_generated_virtual',
+    // 'is_ai_content_virtual',
+    'brand_ai_generated',
+    'brand_ai_generated_moderated',
+    'category_ai_generated_moderated',
+    'category_ai_generated',
   ];
 
   protected $casts = [
@@ -141,6 +145,25 @@ class Product extends BaseAdminProduct
       // return $this->active();
       return $this->is_active && $this->simpleInStock;
     }
+
+    public function getCategoryLinksAdminAttribute() {
+      if(!$this->categories || !$this->categories->count())
+        return '-';
+        
+      $cat_links = $this->categories->map(function($item) {
+        return "<a href='/admin/product?category={$item->id}'>{$item->name}</a>";
+      });
+
+      return implode(', ', $cat_links->toArray());
+    }
+
+
+    public function getBrandLinkAdminAttribute() {
+      if(!$this->brand)
+        return '-';
+        
+        return "<a href='/admin/product?brand={$this->brand->id}'>{$this->brand->name}</a>";
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -181,17 +204,132 @@ class Product extends BaseAdminProduct
     |--------------------------------------------------------------------------
     */
     
+    
+    /**
+     * getIsAiContentAttribute
+     *
+     * @return void
+     */
+    public function getIsAiContentAttribute() {
+      return $this->extras['is_ai_content'] ?? null;
+    }
+
+    /**
+     * getBrandAiGeneratedAttribute
+     *
+     * @return void
+     */
+    public function getBrandAiGeneratedAttribute() {
+      return $this->extras['brand_ai_generated'] ?? null;
+    }
+
+    /**
+     * getCategoryAiGeneratedAttribute
+     *
+     * @return void
+     */
+    public function getCategoryAiGeneratedAttribute() {
+      return $this->extras['category_ai_generated'] ?? null;
+    }
+    
+    /**
+     * getIsImagesGeneratedAttribute
+     *
+     * @return void
+     */
+    public function getIsImagesGeneratedAttribute() {
+      return $this->extras['is_images_generated'] ?? null;
+    }
+    
+    /**
+     * getIsAttributesGeneratedAttribute
+     *
+     * @return void
+     */
+    public function getIsAttributesGeneratedAttribute() {
+      return $this->extras['attributes_ai_generated'] ?? null;
+    }
+    
+    /**
+     * Method getSpecsAttribute
+     *
+     * @return void
+     */
     public function getSpecsAttribute() {
       return $this->extras['specs'] ?? null;
     }
 
-    public function getIsAiContentVirtualAttribute() {
-      return $this->extras['is_ai_content'] ?? null;
+    public function getIsAnyAiAttribute() {
+      return $this->isAiContent || $this->isImagesGenerated || $this->isAttributesGenerated || $this->brandAiGenerated || $this->categoryAiGenerated;
     }
 
-    public function getIsImagesGeneratedVirtualAttribute() {
-      return $this->extras['is_images_generated'] ?? null;
+    // public function getIsImagesGeneratedVirtualAttribute() {
+    //   return $this->extras['is_images_generated'] ?? null;
+    // }
+    
+
+    
+    /**
+     * Method getAdminPropsAttribute
+     *
+     * @return void
+     */
+    public function getAdminPropsAttribute() {
+        return view('admin.product.props', [
+            'specs' => $this->specs,
+            'customProperties' => $this->customProperties,
+            'properties' => $this->properties,
+            'countAvailableProperties' => $this->countAvailableProperties
+        ])->render();
     }
+
+    /**
+     * Method getAdminNameAttribute
+     *
+     * @return void
+     */
+    public function getAdminNameAttribute() {
+        return view('admin.product.name', [
+            'needModeration' => $this->needModeration,
+            // moderated
+            // 'aiContentModerated' => $this->aiContentModerated,
+            // 'aiAttributesModerated' => $this->aiAttributesModerated,
+            // 'aiBrandModerated' => $this->aiBrandModerated,
+            // 'aiCategoryModerated' => $this->aiCategoryModerated,
+            // 'aiImagesModerated' => $this->aiImagesModerated,
+            // common
+            'isTrans' => $this->is_trans,
+            'isAnyAi' => $this->isAnyAi,
+            'isImagesGenerated' => $this->isImagesGenerated,
+            // product
+            'name' => $this->name,
+            'brand' => $this->brand,
+            'category' => $this->category,
+            'brandLinkAdmin' => $this->brandLinkAdmin,
+            'categoryLinksAdmin' => $this->categoryLinksAdmin
+        ])->render();
+    }
+
+    public function getNeedModerationAttribute() {
+      return !$this->aiBrandModerated || !$this->aiCategoryModerated || !$this->aiContentModerated || !$this->aiImagesModerated || !$this->aiAttributesModerated;
+    }
+
+    public function getAiBrandModeratedAttribute() {
+      return $this->brandAiGenerated? ($this->extras['brand_ai_generated_moderated'] ?? false): true;
+    }
+    public function getAiCategoryModeratedAttribute() {
+      return $this->categoryAiGenerated? ($this->extras['category_ai_generated_moderated'] ?? false): true;
+    }
+    public function getAiContentModeratedAttribute() {
+      return $this->isAiContent? ($this->extras['ai_content_moderated'] ?? false): true;
+    }
+    public function getAiImagesModeratedAttribute() {
+      return $this->isImagesGenerated? ($this->extras['images_moderated'] ?? false): true;
+    }
+    public function getAiAttributesModeratedAttribute() {
+      return $this->isAttributesGenerated? ($this->extras['attributes_ai_moderated'] ?? false): true;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
@@ -199,6 +337,7 @@ class Product extends BaseAdminProduct
     */
     
     
+
     /**
      * setSpecsAttribute
      *
@@ -208,25 +347,9 @@ class Product extends BaseAdminProduct
     // public function setSpecsAttribute($value) {
     //   $old_extras = $this->extras ?? [];
     //   $old_extras['specs'] = $value;
+    //   // $old_extras['specs'] = Request::input('specs', []);
     //   $this->extras = $old_extras;
     // }
-
-
-    /**
-     * setSpecsAttribute
-     *
-     * @param  mixed $value
-     * @return void
-     */
-    public function setSpecsvirtualAttribute($value) {
-      // dd($this->attributes, $this->specs, Request::input('specs'));
-      // $specs = Request::input('specs', []);
-      // dd($specs);
-
-      $old_extras = $this->extras ?? [];
-      $old_extras['specs'] = Request::input('specs', []);
-      $this->extras = $old_extras;
-    }
 
     /**
      * setImagesAttribute
@@ -241,18 +364,32 @@ class Product extends BaseAdminProduct
         $this->attributes['images'] = json_encode($images_array);
       }
     }
+        
+    /**
+     * Method setIsAiContentVirtualAttribute
+     *
+     * @param $value $value [explicite description]
+     *
+     * @return void
+     */
+    // public function setIsAiContentVirtualAttribute($value) {
+    //   $old_extras = $this->extras ?? [];
+    //   $old_extras['is_ai_content'] = $value;
+    //   $this->extras = $old_extras;
+    // }
     
-    public function setIsAiContentVirtualAttribute($value) {
-      $old_extras = $this->extras ?? [];
-      $old_extras['is_ai_content'] = $value;
-      $this->extras = $old_extras;
-    }
-
-    public function setIsImagesGeneratedVirtualAttribute($value) {
-      $old_extras = $this->extras ?? [];
-      $old_extras['is_images_generated'] = $value;
-      $this->extras = $old_extras;
-    }
+    /**
+     * Method setIsImagesGeneratedVirtualAttribute
+     *
+     * @param $value $value [explicite description]
+     *
+     * @return void
+     */
+    // public function setIsImagesGeneratedVirtualAttribute($value) {
+    //   $old_extras = $this->extras ?? [];
+    //   $old_extras['is_images_generated'] = $value;
+    //   $this->extras = $old_extras;
+    // }
 
     /**
      * setModificationsAttribute

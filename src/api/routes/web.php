@@ -46,3 +46,5 @@ Route::prefix('auth')->group(function() {
 	Route::middleware('web')->get('/{provider}/callback', 'App\Http\Controllers\Auth\OAuthController@callback')->where('provider', 'google|facebook');
 	Route::middleware('web')->get('/loginByToken', 'App\Http\Controllers\Auth\OAuthController@loginByToken');
 });
+
+Route::post('/translate', [TranslationController::class, 'translate']);
