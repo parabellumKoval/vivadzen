@@ -799,9 +799,12 @@ class Product extends BaseProduct implements Feedable
       ];
     }
 
-    $extras_trans = isset($this->extras_trans) && !empty($this->extras_trans)? $this->getTranslation('extras_trans', $lang): [];
+    $extras_trans = $this->getTranslation('extras_trans', $lang, false);
+    if (!is_array($extras_trans)) {
+        $extras_trans = [];
+    }
+    
     $extras_trans['custom_attrs'] = $valid_props;
-    // $this->extras_trans = json_encode($extras_trans);
     $this->setTranslation('extras_trans', $lang, $extras_trans);
   }
   
