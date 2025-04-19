@@ -54,7 +54,6 @@ class FillProducts extends Command
     {
       parent::__construct();
       $this->setClient();
-      $this->loadSettings();
 
       // available languages
       $this->available_languages = config('backpack.crud.locales');
@@ -68,34 +67,36 @@ class FillProducts extends Command
      */
     public function handle()
     {
-        if (!isset($this->settings['auto_generation_enabled']) || !$this->settings['auto_generation_enabled']) {
-            $this->info('AI generation is disabled in settings');
-            return;
-        }
+      $this->loadSettings();
 
-        if ($this->settings['generate_description'] ?? false) {
-            // Fill content
-            $prompts = Prompt::where('is_active', 1)->get();
-            foreach($prompts as $prompt) {
-                if($prompt->categories) {
-                    foreach($prompt->categories as $category) {
-                        $this->fillProductsContent($prompt->content, $category->nodeIds);
-                    }
-                }
-            }
-        }
+      if (!isset($this->settings['auto_generation_enabled']) || !$this->settings['auto_generation_enabled']) {
+          $this->info('AI generation is disabled in settings');
+          return;
+      }
 
-        if ($this->settings['fill_characteristics'] ?? false) {
-            $this->fillProductProperties();
-        }
+      if ($this->settings['generate_description'] ?? false) {
+          // Fill content
+          $prompts = Prompt::where('is_active', 1)->get();
+          foreach($prompts as $prompt) {
+              if($prompt->categories) {
+                  foreach($prompt->categories as $category) {
+                      $this->fillProductsContent($prompt->content, $category->nodeIds);
+                  }
+              }
+          }
+      }
 
-        if ($this->settings['detect_category'] ?? false) {
-            $this->fillProductCategory();
-        }
+      if ($this->settings['fill_characteristics'] ?? false) {
+          $this->fillProductProperties();
+      }
 
-        if ($this->settings['detect_brand'] ?? false) {
-            $this->fillProductBrands();
-        }
+      if ($this->settings['detect_category'] ?? false) {
+          $this->fillProductCategory();
+      }
+
+      if ($this->settings['detect_brand'] ?? false) {
+          $this->fillProductBrands();
+      }
     }
     
     /**

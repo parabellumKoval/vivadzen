@@ -48,15 +48,6 @@ class TranslateProducts extends Command
       $this->authKey = config('deepl.key');
       $this->translator = new \DeepL\Translator($this->authKey);
 
-      $this->settings = Settings::where('key', 'deep_l_translations')->first();
-
-      if (!$this->settings) {
-          $this->error('DeepL translation settings not found.');
-          return 1;
-      }else {
-        $this->opts = $this->settings->extras;
-      }
-
       parent::__construct();
     }
 
@@ -67,6 +58,16 @@ class TranslateProducts extends Command
      */
     public function handle()
     {
+
+      $this->settings = Settings::where('key', 'deep_l_translations')->first();
+
+      if (!$this->settings) {
+          $this->error('DeepL translation settings not found.');
+          return 1;
+      }else {
+        $this->opts = $this->settings->extras;
+      }
+      
       //Check if auto translate is enabled
       if (!isset($this->opts['auto_translate_enabled']) || !$this->opts['auto_translate_enabled']) {
           $this->info('Auto translation is disabled in settings. Exiting.');

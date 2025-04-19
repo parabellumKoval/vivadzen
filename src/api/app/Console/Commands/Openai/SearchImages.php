@@ -71,15 +71,6 @@ class SearchImages extends Command
       // serper api
       $this->api_key = config('serper.api_key');
 
-      // Settings
-      $this->settings = Settings::where('key', 'image_generation_settings')->first();
-
-      if (!$this->settings) {
-          $this->error('DeepL translation settings not found.');
-          return 1;
-      }else {
-        $this->opts = $this->settings->extras;
-      }
     }
 
 
@@ -152,6 +143,15 @@ class SearchImages extends Command
      */
     public function handle()
     {
+      // Settings
+      $this->settings = Settings::where('key', 'image_generation_settings')->first();
+
+      if (!$this->settings) {
+          $this->error('DeepL translation settings not found.');
+          return 1;
+      }else {
+        $this->opts = $this->settings->extras;
+      }
 
       // $this->product_items_limit = (int)$this->option('limit');
       // $this->category_items_limit = (int)$this->option('limit');
