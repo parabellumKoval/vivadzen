@@ -99,6 +99,11 @@ class Product extends BaseProduct implements Feedable
     return $this->belongsTo(CategoryFeed::class, 'category_feed_id');
   }
 
+  public function aiGenerationHistory()
+  {
+      return $this->morphMany(AiGenerationHistory::class, 'generatable');
+  }
+
   /*
   |--------------------------------------------------------------------------
   | ACCESSORS

@@ -38,11 +38,18 @@ class FillProducts extends Command
 
     private $langs_list = [];
 
-    const BRAND_CHUNK_SIZE = 100;
-    const CATEGORY_CHUNK_SIZE = 100;
+    const BRAND_CHUNK_SIZE = 50;
+    // const BRAND_DEFAULT_MODEL = 'gpt-4o';
 
-    const TEST_CHUNK_LIMITS = 2;
-    const TEST_LIMITS = 100;
+    const CATEGORY_CHUNK_SIZE = 100;
+    // const CATEGORY_DEFAULT_MODEL = 'gpt-4o';
+
+    // const PRODUCT_DEFAULT_MODEL = 'gpt-4.1';
+
+    const TEST_CHUNK_LIMITS = null;
+    const TEST_LIMITS = null;
+
+    const REQUEST_ATTEMPTS = 4;
     
 
     /**
@@ -98,34 +105,6 @@ class FillProducts extends Command
           $this->fillProductBrands();
       }
     }
-    
-    /**
-     * Method getFilteredProductsQuery
-     *
-     * @return void
-     */
-    private function getFilteredProductsQuery()
-    {
-        $query = Product::query();
-
-        if ($this->settings['active_products_only'] ?? false) {
-            $query->where('is_active', 1);
-        }
-
-        if ($this->settings['in_stock_products_only'] ?? false) {
-            $query->whereHas('sp', function($q) {
-                $q->where('in_stock', '>', 0);
-            });
-        }
-
-        if (isset($this->settings['min_price']) && $this->settings['min_price'] > 0) {
-            $query->whereHas('sp', function($q) {
-                $q->where('price', '>=', $this->settings['min_price']);
-            });
-        }
-
-        return $query;
-    }
 
     /**
      * setClient
@@ -148,6 +127,17 @@ class FillProducts extends Command
         $this->settings = $settings ? $settings->extras : [];
     }
 
+
+    // private function checkAttempts($product, $type, $attempts = 1) {
+    //     $product = Product::find($product->id);
+    //     $history_count = $product->aiGenerationHistory->where('extras->field', $type)->count();
+
+    //     // $history_count = AiGenerationHistory::where('product_id', $product->id)
+    //     //     ->where('extras->field', $type)
+    //     //     ->count();
+
+    //     return $history_count < $attempts;
+    // }
     
     /**
      * Method updateProductBrands
@@ -227,6 +217,12 @@ class FillProducts extends Command
         $products = $this->getFilteredProductsQuery();
         $products->with('brand')
             ->has('brand', '=', 0)
+            ->where(function($query) {
+              $query->whereDoesntHave('aiGenerationHistory')
+                    ->orWhereHas('aiGenerationHistory', function ($q) {
+                              $q->where('extras->field', 'brand');
+                          }, '<=', self::REQUEST_ATTEMPTS);
+            })
             ->select('id', 'name');
 
         $chunks = $products->cursor()->chunk(self::BRAND_CHUNK_SIZE);
@@ -272,6 +268,12 @@ class FillProducts extends Command
         $products = $this->getFilteredProductsQuery();
         $products->with('brand')
             ->has('categories', '=', 0)
+            ->where(function($query) {
+              $query->whereDoesntHave('aiGenerationHistory')
+                    ->orWhereHas('aiGenerationHistory', function ($q) {
+                              $q->where('extras->field', 'category');
+                          }, '<=', self::REQUEST_ATTEMPTS);
+            })
             ->select('id', 'name', 'brand_id');
 
         $chunks = $products->cursor()->chunk(self::CATEGORY_CHUNK_SIZE);
@@ -371,8 +373,8 @@ class FillProducts extends Command
         $user_data_json = json_encode($user_data, JSON_UNESCAPED_UNICODE);
 
         $response = $this->client->chat()->create([
-            'model' => 'gpt-4o',
-            'temperature' => 0.2,
+            'model' => 'gpt-4.1',
+            'temperature' => 0.4,
             'messages' => [
                 [
                     'role' => 'system',
@@ -433,7 +435,13 @@ class FillProducts extends Command
         // Start with filtered query based on settings
         $products = $this->getFilteredProductsQuery();
         $products = $products->whereHas('brand')
-                              ->has('ap', '=', 0);
+                              ->has('ap', '=', 0)
+                              ->where(function($query) {
+                                $query->whereDoesntHave('aiGenerationHistory')
+                                      ->orWhereHas('aiGenerationHistory', function ($q) {
+                                                $q->where('extras->field', 'properties');
+                                            }, '<=', self::REQUEST_ATTEMPTS);
+                              });
 
         $products_count = $products->count();
         $products_cursor = $products->cursor();
@@ -674,24 +682,7 @@ class FillProducts extends Command
         }
         return file_get_contents($path);
     }
-
-    /**
-     * createAssistant
-     *
-     * @return void
-     */
-    private function createAssistant() {
-      $response = $this->client->assistants()->create([
-          'instructions' => 'You are a personal math tutor. When asked a question, write and run Python code to answer the question.',
-          'name' => 'Math Tutor',
-          'tools' => [
-              [
-                  'type' => 'code_interpreter',
-              ],
-          ],
-          'model' => 'gpt-4',
-      ]);
-    }
+    
 
     /**
      * getModelsList
@@ -709,27 +700,32 @@ class FillProducts extends Command
       $names = collect($models)->pluck('id');
       return $names;
     }
-
+    
     /**
-     * messageToThread
+     * Method getFilteredProductsQuery
      *
      * @return void
      */
-    private function messageToThread() {
-      $response = $this->client->threads()->messages()->create('thread_mPmn2V8CMqiw361uiV06OsMz', [
-        'role' => 'user',
-        'content' => 'Детокс очищение организма DETOX 7+Ionic Form для начала похудения/программа на 25 дней, Garo Nutrition',
-     ]);
-    }
+    private function getFilteredProductsQuery()
+    {
+        $query = Product::query();
 
-    /**
-     * createThread
-     *
-     * @return void
-     */
-    private function createThread() {
-      $response = $this->client->threads()->create([]);
-      dd($response->toArray());
-      // thread_mPmn2V8CMqiw361uiV06OsMz
+        if ($this->settings['active_products_only'] ?? false) {
+            $query->where('is_active', 1);
+        }
+
+        if ($this->settings['in_stock_products_only'] ?? false) {
+            $query->whereHas('sp', function($q) {
+                $q->where('in_stock', '>', 0);
+            });
+        }
+
+        if (isset($this->settings['min_price']) && $this->settings['min_price'] > 0) {
+            $query->whereHas('sp', function($q) {
+                $q->where('price', '>=', $this->settings['min_price']);
+            });
+        }
+
+        return $query;
     }
 }

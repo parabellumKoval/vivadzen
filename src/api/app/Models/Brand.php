@@ -88,7 +88,10 @@ class Brand extends BaseBrand
    */
   public function setImagesAttribute($values) {
     $images_array = $this->bunny->storeImages($values, $this->images);
-    $this->attributes['images'] = json_encode($images_array);
+
+    if($images_array !== -1) {
+      $this->attributes['images'] = json_encode($images_array);
+    }
   }
   
   /**
