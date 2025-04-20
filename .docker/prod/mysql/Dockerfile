@@ -1,8 +1,8 @@
 # Image
-FROM mysql:5.7.22
+FROM mysql
 
 # Add mysql configurations
-COPY .docker/prod/mysql/my.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
+COPY .docker/prod/mysql/configs/my.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 RUN chmod 644 /etc/mysql/mysql.conf.d/mysqld.cnf
 RUN chown mysql:mysql /etc/mysql/mysql.conf.d/mysqld.cnf
 
