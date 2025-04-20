@@ -143,6 +143,7 @@ services:
     container_name: mysql
     volumes: 
         - mysql:/var/lib/mysql
+        - ./mysql/logs:/var/log/mysql
         # - ./.docker/prod/mysql/dumps:/tmp
     environment: 
         MYSQL_DATABASE: ${DB_DATABASE}
