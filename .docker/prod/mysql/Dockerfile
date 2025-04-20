@@ -1,5 +1,5 @@
 # Image
-FROM mysql
+FROM mysql:5.7.22
 
 # Add mysql configurations
 COPY .docker/prod/mysql/configs/my.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
