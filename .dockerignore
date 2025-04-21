@@ -9,6 +9,8 @@
 /storage/logs/*
 /tests
 /vendor
+/redis
+/mysql
 .dockerignore
 .editorconfig
 .env.*

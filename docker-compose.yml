@@ -71,10 +71,6 @@ services:
       - ./storage_excel:/var/www/html/storage/app/public/excel
       - /mnt/uploads:/var/www/html/public/uploads
       - /mnt/backups:/var/www/html/public/backups
-      # - mysql:/var/www/html/certs
-      # - mysql/client-key.pem:/var/lib/mysql/client-key.pem
-      # - mysql/client-cert.pem:/var/lib/mysql/client-cert.pem
-      # - mysql/ca.pem:/var/lib/mysql/ca.pem
     container_name: dashboard
     hostname: dashboard
     extra_hosts:
@@ -104,47 +100,15 @@ services:
     depends_on:
       - mysql
     working_dir: /var/www/html
-    # deploy:
-    #   resources:
-    #     limits:
-    #       cpus: "1.00"
-    #       memory: 512M
-    #     reservations:
-    #       cpus: "0.1"
-    #       memory: 256M
-
-  # frontend:
-  #   build:
-  #     dockerfile: .docker/prod/frontend/Dockerfile
-  #   volumes:
-  #     - /var/www/html/node_modules
-  #   container_name: frontend
-  #   networks:
-  #     - api
-  #   tty: true
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - api
-  #   working_dir: /var/www/html
-  #   command: yarn start
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         cpus: "1.00"
-  #         memory: 512M
-  #       reservations:
-  #         cpus: "0.1"
-  #         memory: 256M
 
   mysql:
     build:
       dockerfile: .docker/prod/mysql/Dockerfile
-    platform: linux/amd64
     container_name: mysql
     volumes: 
-        - mysql:/var/lib/mysql
+        # - mysql:/var/lib/mysql
+        - ./mysql/lib:/var/lib/mysql
         - ./mysql/logs:/var/log/mysql
-        # - ./.docker/prod/mysql/dumps:/tmp
     environment: 
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_USER: ${DB_USERNAME}
@@ -177,7 +141,7 @@ services:
     build:
       dockerfile: .docker/prod/redis/Dockerfile
     volumes:
-      - redis:/data
+      - ./redis:/data
     networks:
       - api
     restart: unless-stopped
@@ -216,16 +180,17 @@ services:
       - api
     restart: unless-stopped
 
-volumes:
-  mysql:
-    driver: local
+# volumes:
+#   mysql:
+#     driver: local
 
-  redis:
-    driver: local
+#   redis:
+#     driver: local
 
 networks:
   api:
     name: api
+    driver: bridge
 
   nginx:
     name: nginx

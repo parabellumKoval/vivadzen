@@ -3,6 +3,7 @@
 /storage_dashboard
 /public
 /mysql
+/redis
 .env
 docker-compose.override.yml
 Homestead.json
