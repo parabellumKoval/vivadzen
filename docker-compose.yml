@@ -109,6 +109,7 @@ services:
         # - mysql:/var/lib/mysql
         - ./mysql/lib:/var/lib/mysql
         - ./mysql/logs:/var/log/mysql
+        - ./mysql/dumps:/var/dumps
     environment: 
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_USER: ${DB_USERNAME}
