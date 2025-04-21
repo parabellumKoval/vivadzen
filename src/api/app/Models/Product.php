@@ -847,15 +847,15 @@ class Product extends BaseProduct implements Feedable
    */
   private function checkProperty($prop) {
     if (!is_array($prop)) {
-        throw new \InvalidArgumentException("Invalid property at index {$index}: must be an array.");
+        throw new \InvalidArgumentException("Invalid property: must be an array.");
     }
 
     if (!isset($prop['id']) || !is_int($prop['id'])) {
-      throw new \InvalidArgumentException("Invalid property at index {$index}: 'id' must be an integer.");
+      throw new \InvalidArgumentException("Invalid property: 'id' must be an integer.");
     }
 
     if (!isset($prop['value']) || is_null($prop['value'])) {
-        throw new \InvalidArgumentException("Invalid property at index {$index}: 'value' is required.");
+        throw new \InvalidArgumentException("Invalid property: 'value' is required.");
     }
   }
 
