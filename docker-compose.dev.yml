@@ -110,6 +110,23 @@ services:
   #   #   - api
   #   command: npm run dev
 
+
+  proxy:
+    build:
+      dockerfile: .docker/dev/proxy/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+    deploy:
+      replicas: 1
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - api
+
   mysql:
     build:
       dockerfile: .docker/dev/mysql/Dockerfile

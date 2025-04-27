@@ -53,11 +53,11 @@ class Bunny
   }
     
   /**
-   * store
+   * storeToBunny
    *
    * @return void
    */
-  public function store($local_path, $remote_path) {
+  public function storeToBunny($local_path, $remote_path) {
     
     if(!File::exists($local_path)) {
       throw new \Exception('File not exists: ' . $local_path);
@@ -69,10 +69,9 @@ class Bunny
     $results = json_decode($uploads_result, true);
 
     if($results['HttpCode'] === 201) {
-      // $this->info($results['Message']);
       return true;
     }else {
-      // $this->error($results['Message'] . "\n");
+      throw new \Exception('Fail to upload file to Bunny remote: ' . $results['Message']);
       return false;
     }
   }
@@ -157,24 +156,43 @@ class Bunny
       $disk = 'temp';
 
       // if a base64 was sent or if this is remote image, store it in the db
-      if (Str::startsWith($value, 'data:image') || (Str::startsWith($value, 'http') && $this->checkRemoteFile($value)))
+      if (Str::startsWith($value, 'data:image') || Str::startsWith($value, 'http'))
       {
 
-        // 0. Make the image
-        $image = \Image::make($value)->encode('jpg');
+        if(Str::startsWith($value, 'http')) {
+          $response = $this->getRemoteFileWithProxy($value);
 
-        // 1. Generate a filename.
-        $filename = md5($value.time()).'.jpg';
+          if($response === null) {
+            throw new \Exception('Error in getRemoteFileWithProxy.');
+          }
 
-        // 2. Store the image on disk.
-        \Storage::disk($disk)->put($this->folder . '/' . $filename, $image->stream());
+          $value = $response;
+        }
 
 
-        $image_path = \Storage::disk($disk)->path($this->folder . '/' . $filename);
-      
-        // dd($image_path);
-        $response = $this->storeBunny($image_path, $filename);
-        $this->tempImageDelete($image_path);
+        try {
+          // 0. Make the image
+          $image = \Image::make($value)->encode('jpg');
+
+          // 1. Generate a filename.
+          $filename = md5($value.time()).'.jpg';
+
+          // 2. Store the image on disk.
+          \Storage::disk($disk)->put($this->folder . '/' . $filename, $image->stream());
+
+          $image_path = \Storage::disk($disk)->path($this->folder . '/' . $filename);
+        }catch(\Exception $e) {
+          throw new \Exception('Error in store image to local temp folder: ' . $e->getMessage());
+        }
+
+        // 3. Store the image to remote cloud
+        try {
+          $response = $this->storeToCloud($image_path, $filename);
+        }catch(\Exception $e) {
+          throw new \Exception('Error store to cloud: ' . $e->getMessage());
+        }finally {
+          $this->tempImageDelete($image_path);
+        }
 
         return $filename;
       }else {
@@ -193,14 +211,14 @@ class Bunny
     }
 
     /**
-     * storeBunny
+     * storeToCloud
      *
      * @return void
      */
-    public function storeBunny($local_image, $filename) {
+    public function storeToCloud($local_image, $filename) {
 
       $remote_path = $this->folder . '/' . $filename;
-      $this->store($local_image, $remote_path);
+      $this->storeToBunny($local_image, $remote_path);
     }
     
     public function normalizeArray(?array $items): array {
@@ -258,12 +276,14 @@ class Bunny
         return -1;
       }
 
+
       foreach($images as $image) {
+
         try {
           $src = $this->storeImage($image['src']);
         }catch(\Exception $e) {
           \Alert::add('error', 'Сохранить картинку не удалось. Попробуйте другой формат изображения (jpeg, jpg, png).');
-          \Log::error($e);
+          \Log::error("Skip image src: {$image['src']}. Error message: {$e->getMessage()}");
           continue;
         }
         
@@ -288,13 +308,37 @@ class Bunny
      * @return The function `checkRemoteFile()` returns a boolean value. It returns `true` if the HTTP
      * response from the given URL is successful (status code 2xx), and `false` otherwise.
      */
-    public function checkRemoteFile($url) {
-      $response = Http::get($url);
+    // public function checkRemoteFile($url) {
+    //   $response = Http::get($url);
 
-      if($response->ok()) {
-        return true;
-      }else {
-        return false;
+    //   if($response->ok()) {
+    //     return true;
+    //   }else {
+    //     \Log::info('Response: ' . json_encode($response));
+    //     \Log::info('Remote Image not exists or broken: ' . $url);
+    //     return false;
+    //   }
+    // }
+
+
+    public function getRemoteFileWithProxy($url) {
+      try {
+        $response = Http::baseUrl('proxy:3000')
+          ->timeout(60)
+          ->post('/fetch', [
+              'url' => $url
+          ]);
+
+         if($response->successful()) {
+            return $response->body();
+         } else {
+            \Log::error("Error downloading image. Status code: " . $response->status());
+            return null;
+         }
+      } catch (RequestException $e) {
+          // $this->error("Error downloading image: " . $e->getMessage());
+          \Log::error("Error downloading image: " . $e->getMessage());
+          return null;
       }
     }
 }

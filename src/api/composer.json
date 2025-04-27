@@ -20,6 +20,8 @@
     "cviebrock/eloquent-sluggable": "^8.0",
     "deeplcom/deepl-php": "^1.8",
     "fruitcake/laravel-cors": "^2.0",
+    "google-gemini-php/client": "^1.0",
+    "grok-php/client": "^1.1",
     "jenssegers/imagehash": "^0.9.0",
     "laravel/framework": "^8.75",
     "laravel/octane": "^1.5",

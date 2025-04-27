@@ -92,14 +92,29 @@ services:
       - /mnt/uploads:/var/www/html/public/uploads
     container_name: api_host
     hostname: api_host
-    env_file:
-      - ./src/api/.env
+    # env_file:
+    #   - ./src/api/.env
     networks:
       - api
     restart: unless-stopped
     depends_on:
       - mysql
     working_dir: /var/www/html
+
+
+  proxy:
+    build:
+      dockerfile: .docker/prod/proxy/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+    deploy:
+      replicas: 1
+    volumes:
+      - ./proxy_logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - api
 
   mysql:
     build:

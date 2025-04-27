@@ -13,6 +13,15 @@ use App\Models\Prompt;
 use App\Models\AiGenerationHistory;
 use App\Exceptions\HistoryException;
 
+use Gemini;
+use Gemini\Data\GenerationConfig;
+
+use GrokPHP\Client\Clients\GrokClient;
+use GrokPHP\Client\Config\GrokConfig;
+use GrokPHP\Client\Config\ChatOptions;
+use GrokPHP\Client\Enums\Model;
+use GrokPHP\Client\Enums\DefaultConfig;
+
 use OpenAI;
 
 class FillProducts extends Command
@@ -49,7 +58,7 @@ class FillProducts extends Command
     const TEST_CHUNK_LIMITS = null;
     const TEST_LIMITS = null;
 
-    const REQUEST_ATTEMPTS = 4;
+    const REQUEST_ATTEMPTS = 10;
     
 
     /**
@@ -187,8 +196,8 @@ class FillProducts extends Command
             continue;
           }
         }else {
-          $this->error('Brand not present in response');
-          $gh->updateStatus('error', 'Brand not present in response');
+          $this->error("Brand not present in response for product {$product->id}. Response: " . json_encode($item));
+          $gh->updateStatus('error', "Brand not present in response");
           continue;
         }
         
@@ -237,13 +246,20 @@ class FillProducts extends Command
           }
 
             $productData = $chunk->map(function ($product) {
+                $supplier = $product->suppliers()->first();
                 return [
                     'id' => $product->id,
-                    'name' => $product->name
+                    'name' => $product->name,
+                    'supplier' => $supplier ? $supplier->name : null,
+                    'price' => $supplier ? ($supplier->pivot->price ?? null) : null,
+                    'barcode' => $supplier ? ($supplier->pivot->barcode ?? null) : null,
                 ];
             })->toArray();
             
-            $response = $this->getProductBrands($productData);
+            // $response = $this->getProductBrands($productData);
+            // $response = $this->getProductBrandsGemini($productData);
+            $this->getProductBrandsGrok($productData);
+            // $this->getImage();
 
             if(!$response) {
               $this->error('No response from OpenAI');
@@ -257,6 +273,139 @@ class FillProducts extends Command
         $bar->finish();
     }
 
+    
+    /**
+     * Method getProductBrands
+     *
+     * @param $productData $productData [explicite description]
+     *
+     * @return void
+     */
+    private function getProductBrands($productData) {
+        $prompt = $this->loadPromptFromFile('brands.txt');
+        $user_data = [
+            "products" => $productData,
+            "brands" => Brand::getAvailableBrandsArray()
+        ];
+
+        $user_data_json = json_encode($user_data, JSON_UNESCAPED_UNICODE);
+
+        $response = $this->client->chat()->create([
+            'model' => 'gpt-4.1',
+            'temperature' => 0.6,
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => $prompt
+                ],
+                [
+                    'role' => 'user',
+                    'content' => $user_data_json
+                ],
+            ],
+        ]);
+
+        return $this->extractJsonFromOpenAiResponse($response);
+    }
+
+
+    private function getProductBrandsGrok($productData) {
+      $prompt = $this->loadPromptFromFile('brands.txt');
+
+      $user_data = [
+          "products" => $productData,
+          "brands" => Brand::getAvailableBrandsArray()
+      ];
+
+      $user_data_json = json_encode($user_data, JSON_UNESCAPED_UNICODE);
+
+
+      // Initialize the client
+      $config = new GrokConfig('xai-akWRPwtXID02V8cZO8p7Nm7znuloHqVlh79BQ0IxgT7dDGgstaQukJ9asIN3MMtf3q8m5Dk4HQPy5ZMC', null);
+      $client = new GrokClient($config);
+
+      // Define messages
+      $messages = [
+          ['role' => 'system', 'content' => $prompt],
+          ['role' => 'user', 'content' => $user_data_json]
+      ];
+
+      // Call API
+      $options = new ChatOptions(model: Model::GROK_2, temperature: 0.4, stream: false);
+      $response = $client->chat($messages, $options);
+
+      dd($response['choices'][0]['message']['content']);
+    }
+
+    private function getProductBrandsGemini($products) {
+        $prompt = $this->loadPromptFromFile('brands.txt');
+        $brands = Brand::getAvailableBrandsArray();
+
+        // Формируем часть промпта с товарами
+        $productsPart = "";
+        foreach ($products as $product) {
+            $productsPart .= "- id: {$product['id']}, name: {$product['name']}, supplier: {$product['supplier']}, price: {$product['price']} грн, barcode: {$product['barcode']}\n";
+        }
+
+        // Формируем часть промпта с брендами
+        $brandsPart = "";
+        foreach ($brands as $brand) {
+            $brandsPart .= "- id: {$brand['id']}, name: {$brand['name']}\n";
+        }
+
+
+        $combinedPrompt = $prompt . "\n\n" .
+            "Products:\n" . $productsPart . "\n\n" .
+            "Brands:\n" . $brandsPart;
+
+        // dd($combinedPrompt);
+
+        $gemini = Gemini::client('AIzaSyDWhLqQaeIcJysvgaHsKJuGs1SRb11cHng');
+
+        $generationConfig = new GenerationConfig(
+          temperature: 0,
+        );
+
+        $result = $gemini
+                    // ->geminiPro()
+                    ->geminiFlash()
+                    ->withGenerationConfig($generationConfig)
+                    ->generateContent($combinedPrompt);
+
+        $response = $result->text();
+
+        dd($response);
+
+        return $this->extractJsonFromOpenAiResponse($response);
+    }
+
+
+
+    private function getImage() {
+
+      $prompt = "Найди в интернете изображение для товара: OstroVit-Шейкер Shaker OstroVit 700 мл Жовтий.
+      Ищи 1-2 картинки в хорошем качестве и разрешением не менее 500x500 пикселей.
+      Идеальный набор изображений:
+      - 1 картинка фнонтальное изображение товара
+      - 2 картинки изображение товара сзади
+      Но если не можешь найти такие, то просто найди 1 картинку.
+      Ответ должен быть только в JSON-формате без текста и комментариев. Пришли только масив ссылок на изображения.
+      Пример ответа: 
+      [
+        'https://example.com/image1.jpg',
+        'https://example.com/image2.jpg'
+      ]";
+
+      $gemini = Gemini::client('AIzaSyDWhLqQaeIcJysvgaHsKJuGs1SRb11cHng');
+
+      $result = $gemini
+      ->geminiFlash()
+      ->generateContent($prompt);
+
+      $response = $result->text();
+
+      dd($response);
+    }
 
     /**
      * Method fillProductCategory
@@ -354,40 +503,6 @@ class FillProducts extends Command
                 $this->error($e->getMessage());
             }
         }
-    }
-    
-    /**
-     * Method getProductBrands
-     *
-     * @param $productData $productData [explicite description]
-     *
-     * @return void
-     */
-    private function getProductBrands($productData) {
-        $prompt = $this->loadPromptFromFile('brands.txt');
-        $user_data = [
-            "products" => $productData,
-            "brands" => Brand::getAvailableBrandsArray()
-        ];
-
-        $user_data_json = json_encode($user_data, JSON_UNESCAPED_UNICODE);
-
-        $response = $this->client->chat()->create([
-            'model' => 'gpt-4.1',
-            'temperature' => 0.4,
-            'messages' => [
-                [
-                    'role' => 'system',
-                    'content' => $prompt
-                ],
-                [
-                    'role' => 'user',
-                    'content' => $user_data_json
-                ],
-            ],
-        ]);
-
-        return $this->extractJsonFromOpenAiResponse($response);
     }
 
 

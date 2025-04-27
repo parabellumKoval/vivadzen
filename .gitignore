@@ -4,6 +4,7 @@
 /public
 /mysql
 /redis
+/proxy_logs
 .env
 docker-compose.override.yml
 Homestead.json

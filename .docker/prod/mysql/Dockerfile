@@ -1,5 +1,4 @@
 # Image
-# FROM mysql:5.7.22
 FROM mysql
 
 # Add mysql configurations

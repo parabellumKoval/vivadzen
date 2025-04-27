@@ -156,7 +156,7 @@ trait ProductCrud {
       'name' => 'is_ai_content',
       'label' => 'Сгенерирован AI',
       'type' => 'checkbox',
-      'tab' => 'Основное',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
       'fake' => true, 
       'store_in' => 'extras',
       'hint' => 'Был ли контент сгенерирован AI (раздел в админке AI Prompts)',
@@ -167,7 +167,7 @@ trait ProductCrud {
       'name' => 'ai_content_moderated',
       'label' => 'Проверен',
       'type' => 'moderation',
-      'tab' => 'Основное',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
       'wrap_items' => ['content', 'is_ai_content'],
       'wrapper_class' => 'wrapper',
       'switch_class' => 'box-warning',
@@ -181,7 +181,7 @@ trait ProductCrud {
       'name' => 'brand_ai_generated',
       'label' => 'Бренд заполнен автоматически AI',
       'type' => 'checkbox',
-      'tab' => 'Основное',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
       'hint' => 'Был ли бренд заполнен автоматически AI',
       'fake' => true, 
       'store_in' => 'extras',
@@ -191,7 +191,7 @@ trait ProductCrud {
       'name' => 'brand_ai_generated_moderated',
       'label' => 'Проверено',
       'type' => 'moderation',
-      'tab' => 'Основное',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
       'wrap_items' => ['brand', 'brand_ai_generated'],
       'wrapper_class' => 'wrapper',
       'switch_class' => 'box-warning',
@@ -205,7 +205,7 @@ trait ProductCrud {
       'name' => 'category_ai_generated',
       'label' => 'Категория заполнена автоматически AI',
       'type' => 'checkbox',
-      'tab' => 'Основное',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
       'hint' => 'Была ли категория заполнена автоматически AI',
       'fake' => true, 
       'store_in' => 'extras',
@@ -215,7 +215,7 @@ trait ProductCrud {
       'name' => 'category_ai_generated_moderated',
       'label' => 'Проверено',
       'type' => 'moderation',
-      'tab' => 'Основное',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
       'wrap_items' => ['categories', 'category_ai_generated'],
       'wrapper_class' => 'wrapper',
       'switch_class' => 'box-warning',
@@ -233,7 +233,7 @@ trait ProductCrud {
       'type' => 'custom_html',
       'value' => '<h3>Особенности</h3>
         <p class="help-block">Выводится в виде тегов с иконками на странице товара.</p>',
-      'tab' => 'Характеристики'
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->beforeField('delim');
 
     $this->crud->addField([
@@ -242,7 +242,7 @@ trait ProductCrud {
       'value' => null,
       'fake' => true,
       'store_in' => 'extras',
-      'tab' => 'Характеристики'
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->beforeField('delim');
 
     $this->crud->addField([
@@ -253,7 +253,7 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Характеристики'
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->beforeField('delim');
 
     $this->crud->addField([
@@ -264,7 +264,7 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Характеристики'
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->beforeField('delim');
 
     $this->crud->addField([
@@ -275,7 +275,7 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Характеристики'
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->beforeField('delim');
 
     $this->crud->addField([
@@ -286,7 +286,7 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Характеристики'
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->beforeField('delim');
 
     $this->crud->addField([
@@ -297,7 +297,7 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Характеристики'
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->beforeField('delim');
 
     $this->crud->addField([
@@ -308,7 +308,7 @@ trait ProductCrud {
       'wrapper'   => [ 
         'class' => 'form-group col-md-6'
       ],
-      'tab' => 'Характеристики'
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->beforeField('delim');
 
     //
@@ -322,7 +322,7 @@ trait ProductCrud {
       'fake' => true, 
       'store_in' => 'extras',
       'hint' => 'Были ли изображения заполнены автоматически AI',
-      'tab' => 'Изображения'
+      'tab' => trans('backpack-store::product-field.tabs.images')
     ]);
 
     $this->crud->addField([
@@ -360,14 +360,14 @@ trait ProductCrud {
       'init_rows' => 1,
       'default' => [],
       'hint' => 'При добавлении новых изображений, сохранение товара будет происходить дольше, так как картинку загружаются в удаленное облако.',
-      'tab' => 'Изображения'
+      'tab' => trans('backpack-store::product-field.tabs.images')
     ]);
 
     $this->crud->addField([
       'name' => 'images_moderated',
       'label' => 'Проверено',
       'type' => 'moderation',
-      'tab' => 'Изображения',
+      'tab' => trans('backpack-store::product-field.tabs.images'),
       'wrap_items' => ['is_images_generated', 'images'],
       'wrapper_class' => 'wrapper',
       'switch_class' => 'box-warning',
@@ -384,7 +384,7 @@ trait ProductCrud {
       'fake' => true, 
       'store_in' => 'extras',
       'hint' => 'Были ли атрибуты заполнены автоматически AI',
-      'tab' => 'Характеристики'
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->afterField('delim_2');
 
 
@@ -392,7 +392,7 @@ trait ProductCrud {
       'name' => 'attributes_ai_moderated',
       'label' => 'Проверено',
       'type' => 'moderation',
-      'tab' => 'Характеристики',
+      'tab' => trans('backpack-store::product-field.tabs.characteristics'),
       'wrap_items' => ['attributes_ai_generated', 'props'],
       'wrapper_class' => 'wrapper',
       'switch_class' => 'box-warning',
@@ -416,7 +416,7 @@ trait ProductCrud {
       'placeholder' => "Поиск по названию товара",
       'minimum_input_length' => 0,
       'hint' => 'Выберите товар дубликатом которого является данный товар.',
-      'tab' => 'Управление'
+      'tab' => trans('backpack-store::product-field.tabs.management')
     ]);
 
     $this->crud->addField([
@@ -430,7 +430,7 @@ trait ProductCrud {
           <li>Этот товар будет полностью удален, а информация о складе (поставщик, артикул, наличие, цена...) будет перенесена в карточку основного товара.</li>
         </ol>
       ',
-      'tab' => 'Управление'
+      'tab' => trans('backpack-store::product-field.tabs.management')
     ]);
 
 
@@ -442,7 +442,7 @@ trait ProductCrud {
       'entity' => 'prom_category',
       'attribute' => 'prom_name',
       'model' => 'App\Models\CategoryFeed',
-      'tab' => 'Управление',
+      'tab' => trans('backpack-store::product-field.tabs.management'),
       'hint' => 'Укажите если необходимо однозначно привязать товар к категории на PROM (иначе будут применены общие правила)',
     ]);
   }

@@ -13,6 +13,12 @@ RUN apt-get update \
 # Clean up the apt cache
     && rm -rf /var/lib/apt/lists/*
 
+
+
+COPY ./src/api/.env.prod ./.env
+
+RUN php artisan optimize
+
 # Set up the working directory
 WORKDIR /var/www/html
 
