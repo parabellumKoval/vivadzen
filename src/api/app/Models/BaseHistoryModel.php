@@ -220,6 +220,10 @@ abstract class BaseHistoryModel extends Model
         $morphType = $this->{$morphField . '_type'};
         $target = $this->{$morphField};
         
+        if(!$target) {
+            return 'Удалено';
+        }
+        
         $slug = self::SLUGS[$morphType] ?? null;
         $identifiableAttribute = is_array($slug) && isset($slug['identifiableAttribute']) ? $slug['identifiableAttribute'] : $target->identifiableAttribute();
         $title = $target->{$identifiableAttribute} ?? "id: {$target->id}";
