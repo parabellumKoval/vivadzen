@@ -21,12 +21,16 @@ use Backpack\Store\app\Models\AttributeProduct;
 // REVIEWS
 use Backpack\Reviews\app\Traits\Reviewable;
 
+// Traits
+use App\Traits\ProductGoogleMerchantsTrait;
+
 ini_set('memory_limit', '2024M');
 
 class Product extends BaseProduct implements Feedable
 {
   use Searchable;
   use Reviewable;
+  use ProductGoogleMerchantsTrait;
 
   public function getMorphClass()
   {
@@ -287,93 +291,6 @@ class Product extends BaseProduct implements Feedable
     return $props->count();
   }
   
-  // public function getPromCategoryAttribute() {
-
-  // }
-  /**
-   * mergeProductData
-   *
-   * @param  mixed $groups
-   * @param  mixed $prom_groups
-   * @return void
-   */
-  // private static function mergeProductData($groups, $prom_groups) {
-
-  //   // Get values
-  //   $groups = $groups->values()->toArray();
-
-  //   $products = collect();
-  //   for($i = 0; $i < count($groups); $i++){
-  //     $product = array_reduce($groups[$i], function($carry, $item) use ($prom_groups){
-        
-  //       if(empty($carry)) {
-  //         // Get Images Array
-  //         $image_names_array = !empty($item->images)? json_decode($item->images): [];
-  
-  //         if(!empty($image_names_array)) {
-  //           $image_urls = array_map(function($filename){
-  //             return config('backpack.store.product.image.base_path') . $filename->src;
-  //           }, $image_names_array);
-  //         }else {
-  //           $image_urls = [];
-  //         }
-
-  //         // Get prom category
-  //         $promCategoryId = $prom_groups[(int)$item->categoryId]->prom_id ?? null;
-
-  //          // code, barcode
-  //         if(!empty($item->simpleCode)) {
-  //           $code = $item->simpleCode;
-  //         }else if(!empty($item->simpleBarcode)) {
-  //           $code = $item->simpleBarcode;
-  //         }else {
-  //           $code = null;
-  //         }
-
-  //         $product = new FeedItem([
-  //           'id' => $item->old_id? $item->old_id: $item->id,
-  //           'title' => !empty($item->name_ru)? $item->name_ru: '',
-  //           'title_uk' => $item->name_uk,
-  //           'link' => $item->slug,
-  //           'vendorCode' => $code,
-  //           'summary' => !empty($item->content_ru)? $item->content_ru: '',
-  //           'summary_uk' => !empty($item->content_uk)? $item->content_uk: '',
-  //           'images' => $image_urls,
-  //           'vendor' => $item->brand, // brand
-  //           'inStock' => $item->simpleInStock,
-  //           'price' => $item->simplePrice,
-  //           'oldprice' => $item->simpleOldPrice,
-  //           'attributes' => [],
-  //           'promCategoryId' => $promCategoryId,
-  //           'presence' => $item->simpleInStock > 0?  'true': 'false',
-  //           'mpn' => '4234',
-  //           'updated' => \Carbon\Carbon::parse($item->updated_at),
-  //           'authorName' => 'Djini'
-  //         ]);
-  //       }else {
-  //         $product = $carry;
-  //       }
-
-  //       // Fill params
-  //       if(isset($product->attributes[$item->a_id])) {
-  //         $product->attributes[$item->a_id]['value'] = $product->attributes[$item->a_id]['value'] . '|' . $item->av_value;
-  //       }else {
-  //         $product->attributes[$item->a_id] = [
-  //           'name' => $item->a_name ?? '',
-  //           'si' => $item->a_si ?? '',
-  //           'value' => $item->av_value ?? '',
-  //         ];
-  //       }
- 
-  //       return $product;
-  //     }, []);
-
-  //     $products->push($product);
-  //   }
-
-  //   return $products;
-  // }
-  
   /**
    * getPromProducts
    *
@@ -455,78 +372,6 @@ class Product extends BaseProduct implements Feedable
     return $collection;
   }
 
-	/**
-	 * getPromFeedItems
-	 *
-	 * @return void
-	 */
-	// public static function getPromFeedItems()
-	// {
-
-  //   $sps = \DB::table('ak_supplier_product as sp')
-  //             ->select('sp.id', 'sp.price', 'sp.old_price', 'sp.in_stock', 'sp.code', 'sp.barcode', 'sp.product_id')
-  //             ->where('sp.in_stock', '>', 0)
-  //             ->orderByRaw('IF(sp.in_stock > ?, ?, ?) DESC', [0, 1, 0])
-  //             ->orderBy('sp.price');
-
-
-  //   $items = \DB::table('ak_products as p')
-  //     ->select([
-  //       'sp.id as spId',
-  //       'p.id',
-  //       'p.old_id',
-  //       'p.name->ru as name_ru',
-  //       'p.name->uk as name_uk',
-  //       'p.slug',
-  //       'p.code',
-  //       'p.content->ru as content_ru',
-  //       'p.content->uk as content_uk',
-  //       'p.images',
-  //       'sp.in_stock as simpleInStock',
-  //       'sp.price as simplePrice',
-  //       'sp.old_price as simpleOldPrice',
-  //       'sp.code as simpleCode',
-  //       'sp.barcode as simpleBarcode',
-  //       'p.updated_at',
-  //       'b.name->ru as brand',
-  //       'a.id as a_id',
-  //       'a.name->ru as a_name',
-  //       'a.extras_trans->ru->si as a_si',
-  //       'av.value->ru as av_value',
-  //       'ap.value as ap_value',
-  //       'ap.value_trans->ru as ap_value_trans',
-  //       'cp.category_id as categoryId',
-  //     ])
-  //     ->join('ak_category_product as cp', 'cp.product_id', '=', 'p.id')
-  //     // ->join('category_feed as cf', 'cf.category_id', '=', 'cp.category_id')
-  //     ->join('ak_brands as b', 'p.brand_id', '=', 'b.id')
-  //     ->joinSub($sps, 'sp', function ($join) {
-  //       $join->on('p.id', '=', 'sp.product_id');
-  //     })
-  //     ->join('ak_attribute_product as ap', 'p.id', '=', 'ap.product_id')
-  //     ->join('ak_attributes as a', 'a.id', '=', 'ap.attribute_id')
-  //     ->join('ak_attribute_values as av', 'av.id', '=', 'ap.attribute_value_id')
-  //     ->where('p.images', '!=', null)
-  //     ->where('p.is_active', 1)
-  //     ->groupBy('sp.id', 'a.id', 'av.id', 'ap.id', 'cp.id')
-  //     ->limit(100)
-  //     ->get()
-  //     ->groupBy('id');
-
-  //   // <categoryId><![CDATA[{{ 110341818 }}]]></categoryId>
-  //   // <categoryId>72879515</categoryId>
-  //   // <categoryName>БАДы</categoryName>
-
-  //   $categories = self::getPromCategories();
-  //   $products = self::mergeProductData($items, $categories->keyBy('category_id'));
-
-  //   $collection = collect([
-  //     'products' => self::getFakeFeedItem($products),
-  //     'categories' => self::getFakeFeedItem($categories)
-  //   ]);
-
-  //   return $collection;
-	// }
   
   public function toFeedItem(): FeedItem {
     return [];
@@ -569,7 +414,9 @@ class Product extends BaseProduct implements Feedable
       'authorName' => ''
     ]);
   }
-    
+
+
+
   /**
    * getIsAiContentAttribute
    *
@@ -871,6 +718,18 @@ class Product extends BaseProduct implements Feedable
     $this->extras = $extras;
   }
 	  
+  /**
+   * setIsAiMerchantContentAttribute
+   *
+   * @param  mixed $value
+   * @return void
+   */
+  public function setIsAiMerchantContentAttribute($value) {
+    $extras = $this->extras;
+    $extras['is_ai_merchant_content'] = $value;
+    $this->extras = $extras;
+  }
+
   /**
    * Method setBrandAiGeneratedAttribute
    *

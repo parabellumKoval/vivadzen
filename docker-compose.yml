@@ -101,6 +101,16 @@ services:
       - mysql
     working_dir: /var/www/html
 
+  libretranslate:
+    image: libretranslate/libretranslate
+    container_name: libretranslate
+    restart: unless-stopped
+    environment:
+      - LT_LOAD_ONLY=ru,en,uk
+    volumes:
+      - libretranslate_models:/home/libretranslate/.local
+    networks:
+      - api
 
   proxy:
     build:
@@ -196,7 +206,9 @@ services:
       - api
     restart: unless-stopped
 
-# volumes:
+volumes:
+  libretranslate_models:
+    driver: local
 #   mysql:
 #     driver: local
 

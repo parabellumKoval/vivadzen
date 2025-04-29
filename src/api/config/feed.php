@@ -50,6 +50,17 @@ return [
           'format' => 'atom',
           'contentType' => '',
       ],
+      'merchants' => [
+          'items' => 'App\Models\Product@getMerchantsFeedItems',
+          'url' => '/merchants-feed',
+          'title' => 'фид для Google Merchants',
+          'description' => 'GMC feed',
+          'language' => 'uk-UA',
+          'view' => 'feed::merchants',
+          'type' => 'application/atom+xml',
+          'format' => 'atom',
+          'contentType' => '',
+      ],
       // 'main' => [
       //     /*
       //      * Here you can specify which class and method will return

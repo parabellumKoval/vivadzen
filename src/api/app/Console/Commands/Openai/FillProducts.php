@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Openai;
 
-use Illuminate\Console\Command;
+// use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 
@@ -24,7 +24,7 @@ use GrokPHP\Client\Enums\DefaultConfig;
 
 use OpenAI;
 
-class FillProducts extends Command
+class FillProducts extends BaseAi
 {
     /**
      * The name and signature of the console command.
@@ -69,11 +69,18 @@ class FillProducts extends Command
     public function __construct()
     {
       parent::__construct();
-      $this->setClient();
+    }
 
-      // available languages
-      $this->available_languages = config('backpack.crud.locales');
-      $this->langs_list = array_keys($this->available_languages);
+        
+    /**
+     * Method loadSettings
+     *
+     * @return void
+     */
+    private function loadSettings()
+    {
+        $settings = \Backpack\Settings\app\Models\Settings::where('key', 'ai_generation_settings')->first();
+        $this->settings = $settings ? $settings->extras : [];
     }
 
     /**
@@ -113,27 +120,6 @@ class FillProducts extends Command
       if ($this->settings['detect_brand'] ?? false) {
           $this->fillProductBrands();
       }
-    }
-
-    /**
-     * setClient
-     *
-     * @return void
-     */
-    private function setClient() {
-      $yourApiKey = config('openai.key');
-      $this->client = OpenAI::client($yourApiKey);
-    }
-        
-    /**
-     * Method loadSettings
-     *
-     * @return void
-     */
-    private function loadSettings()
-    {
-        $settings = \Backpack\Settings\app\Models\Settings::where('key', 'ai_generation_settings')->first();
-        $this->settings = $settings ? $settings->extras : [];
     }
 
 
@@ -309,103 +295,103 @@ class FillProducts extends Command
     }
 
 
-    private function getProductBrandsGrok($productData) {
-      $prompt = $this->loadPromptFromFile('brands.txt');
+    // private function getProductBrandsGrok($productData) {
+    //   $prompt = $this->loadPromptFromFile('brands.txt');
 
-      $user_data = [
-          "products" => $productData,
-          "brands" => Brand::getAvailableBrandsArray()
-      ];
+    //   $user_data = [
+    //       "products" => $productData,
+    //       "brands" => Brand::getAvailableBrandsArray()
+    //   ];
 
-      $user_data_json = json_encode($user_data, JSON_UNESCAPED_UNICODE);
-
-
-      // Initialize the client
-      $config = new GrokConfig('xai-akWRPwtXID02V8cZO8p7Nm7znuloHqVlh79BQ0IxgT7dDGgstaQukJ9asIN3MMtf3q8m5Dk4HQPy5ZMC', null);
-      $client = new GrokClient($config);
-
-      // Define messages
-      $messages = [
-          ['role' => 'system', 'content' => $prompt],
-          ['role' => 'user', 'content' => $user_data_json]
-      ];
-
-      // Call API
-      $options = new ChatOptions(model: Model::GROK_2, temperature: 0.4, stream: false);
-      $response = $client->chat($messages, $options);
-
-      dd($response['choices'][0]['message']['content']);
-    }
-
-    private function getProductBrandsGemini($products) {
-        $prompt = $this->loadPromptFromFile('brands.txt');
-        $brands = Brand::getAvailableBrandsArray();
-
-        // Формируем часть промпта с товарами
-        $productsPart = "";
-        foreach ($products as $product) {
-            $productsPart .= "- id: {$product['id']}, name: {$product['name']}, supplier: {$product['supplier']}, price: {$product['price']} грн, barcode: {$product['barcode']}\n";
-        }
-
-        // Формируем часть промпта с брендами
-        $brandsPart = "";
-        foreach ($brands as $brand) {
-            $brandsPart .= "- id: {$brand['id']}, name: {$brand['name']}\n";
-        }
+    //   $user_data_json = json_encode($user_data, JSON_UNESCAPED_UNICODE);
 
 
-        $combinedPrompt = $prompt . "\n\n" .
-            "Products:\n" . $productsPart . "\n\n" .
-            "Brands:\n" . $brandsPart;
+    //   // Initialize the client
+    //   $config = new GrokConfig('xai-akWRPwtXID02V8cZO8p7Nm7znuloHqVlh79BQ0IxgT7dDGgstaQukJ9asIN3MMtf3q8m5Dk4HQPy5ZMC', null);
+    //   $client = new GrokClient($config);
 
-        // dd($combinedPrompt);
+    //   // Define messages
+    //   $messages = [
+    //       ['role' => 'system', 'content' => $prompt],
+    //       ['role' => 'user', 'content' => $user_data_json]
+    //   ];
 
-        $gemini = Gemini::client('AIzaSyDWhLqQaeIcJysvgaHsKJuGs1SRb11cHng');
+    //   // Call API
+    //   $options = new ChatOptions(model: Model::GROK_2, temperature: 0.4, stream: false);
+    //   $response = $client->chat($messages, $options);
 
-        $generationConfig = new GenerationConfig(
-          temperature: 0,
-        );
+    //   dd($response['choices'][0]['message']['content']);
+    // }
 
-        $result = $gemini
-                    // ->geminiPro()
-                    ->geminiFlash()
-                    ->withGenerationConfig($generationConfig)
-                    ->generateContent($combinedPrompt);
+    // private function getProductBrandsGemini($products) {
+    //     $prompt = $this->loadPromptFromFile('brands.txt');
+    //     $brands = Brand::getAvailableBrandsArray();
 
-        $response = $result->text();
+    //     // Формируем часть промпта с товарами
+    //     $productsPart = "";
+    //     foreach ($products as $product) {
+    //         $productsPart .= "- id: {$product['id']}, name: {$product['name']}, supplier: {$product['supplier']}, price: {$product['price']} грн, barcode: {$product['barcode']}\n";
+    //     }
 
-        dd($response);
+    //     // Формируем часть промпта с брендами
+    //     $brandsPart = "";
+    //     foreach ($brands as $brand) {
+    //         $brandsPart .= "- id: {$brand['id']}, name: {$brand['name']}\n";
+    //     }
 
-        return $this->extractJsonFromOpenAiResponse($response);
-    }
+
+    //     $combinedPrompt = $prompt . "\n\n" .
+    //         "Products:\n" . $productsPart . "\n\n" .
+    //         "Brands:\n" . $brandsPart;
+
+    //     // dd($combinedPrompt);
+
+    //     $gemini = Gemini::client('AIzaSyDWhLqQaeIcJysvgaHsKJuGs1SRb11cHng');
+
+    //     $generationConfig = new GenerationConfig(
+    //       temperature: 0,
+    //     );
+
+    //     $result = $gemini
+    //                 // ->geminiPro()
+    //                 ->geminiFlash()
+    //                 ->withGenerationConfig($generationConfig)
+    //                 ->generateContent($combinedPrompt);
+
+    //     $response = $result->text();
+
+    //     dd($response);
+
+    //     return $this->extractJsonFromOpenAiResponse($response);
+    // }
 
 
 
-    private function getImage() {
+    // private function getImage() {
 
-      $prompt = "Найди в интернете изображение для товара: OstroVit-Шейкер Shaker OstroVit 700 мл Жовтий.
-      Ищи 1-2 картинки в хорошем качестве и разрешением не менее 500x500 пикселей.
-      Идеальный набор изображений:
-      - 1 картинка фнонтальное изображение товара
-      - 2 картинки изображение товара сзади
-      Но если не можешь найти такие, то просто найди 1 картинку.
-      Ответ должен быть только в JSON-формате без текста и комментариев. Пришли только масив ссылок на изображения.
-      Пример ответа: 
-      [
-        'https://example.com/image1.jpg',
-        'https://example.com/image2.jpg'
-      ]";
+    //   $prompt = "Найди в интернете изображение для товара: OstroVit-Шейкер Shaker OstroVit 700 мл Жовтий.
+    //   Ищи 1-2 картинки в хорошем качестве и разрешением не менее 500x500 пикселей.
+    //   Идеальный набор изображений:
+    //   - 1 картинка фнонтальное изображение товара
+    //   - 2 картинки изображение товара сзади
+    //   Но если не можешь найти такие, то просто найди 1 картинку.
+    //   Ответ должен быть только в JSON-формате без текста и комментариев. Пришли только масив ссылок на изображения.
+    //   Пример ответа: 
+    //   [
+    //     'https://example.com/image1.jpg',
+    //     'https://example.com/image2.jpg'
+    //   ]";
 
-      $gemini = Gemini::client('AIzaSyDWhLqQaeIcJysvgaHsKJuGs1SRb11cHng');
+    //   $gemini = Gemini::client('AIzaSyDWhLqQaeIcJysvgaHsKJuGs1SRb11cHng');
 
-      $result = $gemini
-      ->geminiFlash()
-      ->generateContent($prompt);
+    //   $result = $gemini
+    //   ->geminiFlash()
+    //   ->generateContent($prompt);
 
-      $response = $result->text();
+    //   $response = $result->text();
 
-      dd($response);
-    }
+    //   dd($response);
+    // }
 
     /**
      * Method fillProductCategory
@@ -738,82 +724,6 @@ class FillProducts extends Command
         }
 
         return $result;
-    }
-    
-    /**
-     * Method extractJsonFromOpenAiResponse
-     *
-     * @param $response $response [explicite description]
-     *
-     * @return array
-     */
-    public function extractJsonFromOpenAiResponse($response): ?array
-    {
-        if (!isset($response->choices[0]->message->content)) {
-            return null;
-        }
-
-        $content = trim($response->choices[0]->message->content);
-
-        // Попробуем сразу декодировать
-        $data = json_decode($content, true);
-        if (json_last_error() === JSON_ERROR_NONE && is_array($data)) {
-            return $data;
-        }
-
-        // Если не получилось — попытаемся вытащить JSON из текста
-        if (preg_match('/\[\s*\{.*\}\s*\]/s', $content, $matches)) {
-            $json = $matches[0];
-            $data = json_decode($json, true);
-            if (json_last_error() === JSON_ERROR_NONE && is_array($data)) {
-                return $data;
-            }
-        }
-
-        // Альтернативно — если массив без скобок (реже, но вдруг)
-        if (preg_match('/\{\s*"id"\s*:\s*\d+.*?\}/s', $content, $matches)) {
-            $json = '[' . $matches[0] . ']';
-            $data = json_decode($json, true);
-            if (json_last_error() === JSON_ERROR_NONE && is_array($data)) {
-                return $data;
-            }
-        }
-
-        // Вернуть null, если не удалось декодировать
-        return null;
-    }
-    
-    /**
-     * Method loadPromptFromFile
-     *
-     * @param string $filename
-     * @return string
-     */
-    private function loadPromptFromFile($filename)
-    {
-        $path = __DIR__ . '/prompts/' . $filename;
-        if (!file_exists($path)) {
-            throw new \RuntimeException("Prompt file not found: {$filename}");
-        }
-        return file_get_contents($path);
-    }
-    
-
-    /**
-     * getModelsList
-     *
-     * @return void
-     */
-    private function getModelsList() {
-      try {
-        $response = $this->client->models()->list();
-        $models = $response->data;
-      }catch(\Exception $e) {
-        return $e->getMessage();
-      }
-
-      $names = collect($models)->pluck('id');
-      return $names;
     }
     
     /**

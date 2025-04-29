@@ -19,8 +19,10 @@ trait CategoryCrud {
    */
   public function createOperation() {
 
-    $this->crud->removeField('images');
+    // $this->crud->removeField('merchant_id');
 
+    $this->crud->removeField('images');
+    //
     $this->crud->addField([
       'name' => 'no_medicine',
       'label' => 'Не является лекарственным средством',
@@ -42,7 +44,7 @@ trait CategoryCrud {
           'name' => 'src',
           'label' => 'Изображение',
           'type' => 'image',
-          'crop' => false, // set to true to allow cropping, false to disable
+          'crop' => false,
           'prefix' =>  config('backpack.store.category.image.base_path', '/')
         ],
         [
@@ -69,7 +71,9 @@ trait CategoryCrud {
       'default' => [],
       'tab' => 'Изображения'
     ]);
-  
+
+    //
+    
   }
 
 }

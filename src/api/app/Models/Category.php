@@ -75,6 +75,30 @@ class Category extends BaseCategory
 
   }
   
+
+  /**
+   * Method getHasNotMerchantCategoriesArray
+   *
+   * @param $lang $lang [explicite description]
+   *
+   * @return array
+   */
+  static function getHasNotMerchantCategoriesArray($lang = 'ru'): array {
+    $categories = self::where('is_active', 1)->where('merchant_id', null)->get();
+    $result = [];
+
+    foreach ($categories as $category) {
+        $result[] = [
+            'id' => $category->id,
+            'name' => $category->getTranslation('name', $lang, false),
+            'parent_id' => $category->parent_id,
+        ];
+    }
+
+    return $result;
+
+  }
+
   /**
    * getNoMedicineAttribute
    *
