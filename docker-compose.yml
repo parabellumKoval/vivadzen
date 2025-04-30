@@ -199,6 +199,7 @@ services:
       - ./storage_schedule:/var/www/html/storage
       - ./storage_excel:/var/www/html/storage/app/public/excel
       - /mnt/backups:/var/www/html/public/backups
+      - /mnt/uploads:/var/www/html/public/uploads
     links:
       - mysql
       - redis
