@@ -7,7 +7,7 @@ use Spatie\Feed\FeedItem;
 trait ProductGoogleMerchantsTrait {
 
   public static function getMerchantsFeedItems() {
-    $products = self::where('is_active', 1);
+    $products = self::with('brand', 'categories', 'sp')->where('is_active', 1);
     $products_cursore = $products->cursor();
 
     $feed_products = collect();
@@ -27,7 +27,6 @@ trait ProductGoogleMerchantsTrait {
         'brand' => $product->merchantsBrand,
         'google_product_category' => $product->merchantsGoogleProductCategory,
         'product_type' => $product->merchantsCategory,
-        // 'shipping' => $product->merchantsShipping,
         'gtin' => $product->merchantsGtin,
         'mpn' => $product->merchantsMpn,
         'authorName' => 'djini.com.ua'

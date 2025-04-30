@@ -44,6 +44,9 @@ class Kernel extends ConsoleKernel
 
         // OpenAI Product Content generation
         $schedule->command('openai:fill-products')->daily()->at('01:00');
+
+        // Create merchants-feed.xml file in uploads dir
+        $schedule->command('fetch:merchants-feed')->everyTenMinutes();
     }
 
     /**

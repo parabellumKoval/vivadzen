@@ -26,7 +26,7 @@ class FillProductsMerchant extends BaseAi
      *
      * @var string
      */
-    protected $description = 'Update catalog cache';
+    protected $description = '';
 
     const TEST_CHUNK_LIMITS = null;
     const PRODUCT_CHUNK_SIZE = 150;
@@ -48,9 +48,9 @@ class FillProductsMerchant extends BaseAi
     private function fillProductsMerchant() {
         // Start with filtered query based on settings
         $products = Product::where('is_active', 1)
-                                ->whereHas('sp', function($q) {
-                                    $q->where('in_stock', '>', 0);
-                                })
+                                // ->whereHas('sp', function($q) {
+                                //     $q->where('in_stock', '>', 0);
+                                // })
                                 ->has('brand')
                                 ->where('merchant_content', null);
 
