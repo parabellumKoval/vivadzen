@@ -29,7 +29,7 @@ class FillProductsMerchant extends BaseAi
     protected $description = 'Update catalog cache';
 
     const TEST_CHUNK_LIMITS = null;
-    const PRODUCT_CHUNK_SIZE = 30;
+    const PRODUCT_CHUNK_SIZE = 150;
 
     /**
      * Execute the console command.
@@ -51,7 +51,8 @@ class FillProductsMerchant extends BaseAi
                                 ->whereHas('sp', function($q) {
                                     $q->where('in_stock', '>', 0);
                                 })
-                                ->has('brand');
+                                ->has('brand')
+                                ->where('merchant_content', null);
 
         $chunks = $products->cursor()->chunk(self::PRODUCT_CHUNK_SIZE);
         $chunks_count = $chunks->count();
