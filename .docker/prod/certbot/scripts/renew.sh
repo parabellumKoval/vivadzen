@@ -5,4 +5,4 @@ certbot renew \
     --webroot \
     --webroot-path /var/www/acme \
     --post-hook /scripts/nginx-reload.sh \
-    --no-random-sleep-on-renew \
+    --no-random-sleep-on-renew
