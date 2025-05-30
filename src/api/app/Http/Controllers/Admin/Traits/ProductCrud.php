@@ -104,6 +104,22 @@ trait ProductCrud {
                             ->where('extras->attributes_ai_moderated', '!=', 'on')
                             ->orWhereNull('extras->attributes_ai_moderated');
                 });
+          })
+        ->orWhere(function($query) {
+          $query->where('extras->name_ai_generated', 1)
+                  ->where(function ($subQuery) {
+                    $subQuery->where('extras->name_ai_moderated', '!=', 1)
+                            ->where('extras->name_ai_moderated', '!=', 'on')
+                            ->orWhereNull('extras->name_ai_moderated');
+                });
+          })
+        ->orWhere(function($query) {
+          $query->where('extras->is_ai_merchant_content', 1)
+                  ->where(function ($subQuery) {
+                    $subQuery->where('extras->ai_merchant_content_moderated', '!=', 1)
+                            ->where('extras->ai_merchant_content_moderated', '!=', 'on')
+                            ->orWhereNull('extras->ai_merchant_content_moderated');
+                });
           });
     });
 
@@ -150,6 +166,56 @@ trait ProductCrud {
     // Extends of SetupCreateOperation
     $entry_id = \Route::current()->parameter('id');
     $this->entry = !empty($entry_id)? $this->crud->getEntry($entry_id): null;
+
+    // Ai Names
+    $this->crud->addField([
+      'name' => 'name_ai_generated',
+      'label' => 'Название сгенерировано AI',
+      'type' => 'checkbox',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
+      'fake' => true, 
+      'store_in' => 'extras',
+      'hint' => 'Было ли название сгенерировано AI',
+    ])->afterField('name');
+
+
+    $this->crud->addField([
+      'name' => 'name_ai_moderated',
+      'label' => 'Проверен',
+      'type' => 'moderation',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
+      'wrap_items' => ['name', 'name_ai_generated'],
+      'wrapper_class' => 'wrapper',
+      'switch_class' => 'box-warning',
+      'enabled_when' => 'name_ai_generated',
+      'fake' => true, 
+      'store_in' => 'extras',
+    ]);
+
+    // Ai Merchant content
+    $this->crud->addField([
+      'name' => 'is_ai_merchant_content',
+      'label' => 'Описание для Google Merchant сгенерировано AI',
+      'type' => 'checkbox',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
+      'fake' => true, 
+      'store_in' => 'extras',
+      'hint' => 'Было ли описание Google Merchant сгенерировано AI',
+    ])->afterField('merchant_content');
+
+
+    $this->crud->addField([
+      'name' => 'ai_merchant_content_moderated',
+      'label' => 'Проверен',
+      'type' => 'moderation',
+      'tab' => trans('backpack-store::product-field.tabs.main'),
+      'wrap_items' => ['merchant_content', 'is_ai_merchant_content'],
+      'wrapper_class' => 'wrapper',
+      'switch_class' => 'box-warning',
+      'enabled_when' => 'is_ai_merchant_content',
+      'fake' => true, 
+      'store_in' => 'extras',
+    ]);
 
     // Ai Content
     $this->crud->addField([

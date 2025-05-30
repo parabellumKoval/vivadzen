@@ -24,6 +24,10 @@ return [
     'detect_category_hint' => 'AI will try to determine the appropriate category for the product',
     'fill_characteristics' => 'Fill characteristics',
     'fill_characteristics_hint' => 'AI will analyze the product and fill in its characteristics',
+    'format_names' => 'Format product names',
+    'format_names_hint' => 'AI will format and standardize product names',
+    'generate_merchant' => 'Generate Google Merchant description',
+    'generate_merchant_hint' => 'AI will generate optimized descriptions for Google Merchant',
     
     // Category settings
     'categories_title' => 'Categories',

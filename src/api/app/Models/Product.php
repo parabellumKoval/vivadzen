@@ -426,6 +426,25 @@ class Product extends BaseProduct implements Feedable
     return $this->extras['is_ai_content'] ?? null;
   }
 
+
+  /**
+   * getNameAiGeneratedAttribute
+   *
+   * @return void
+   */
+  public function getNameAiGeneratedAttribute() {
+    return $this->extras['name_ai_generated'] ?? null;
+  }
+
+  /**
+   * getMerchantAiGeneratedAttribute
+   *
+   * @return void
+   */
+  public function getMerchantAiGeneratedAttribute() {
+    return $this->extras['is_ai_merchant_content'] ?? null;
+  }
+
   /**
    * getBrandAiGeneratedAttribute
    *
@@ -706,6 +725,13 @@ class Product extends BaseProduct implements Feedable
     }
   }
 
+
+  // public function setOldNameAttribute($value) {
+  //   $extras_trans = $this->extras_trans;
+  //   $extras_trans['o'] = $value;
+  //   $this->extras_trans = $extras_trans;
+  // }
+
   /**
    * setIsAiContentAttribute
    *
@@ -740,6 +766,19 @@ class Product extends BaseProduct implements Feedable
   public function setBrandAiGeneratedAttribute($value) {
     $extras = $this->extras;
     $extras['brand_ai_generated'] = $value;
+    $this->extras = $extras;
+  }
+  
+  /**
+   * Method setNameAiGeneratedAttribute
+   *
+   * @param $value $value [explicite description]
+   *
+   * @return void
+   */
+  public function setNameAiGeneratedAttribute($value) {
+    $extras = $this->extras;
+    $extras['name_ai_generated'] = $value;
     $this->extras = $extras;
   }
 

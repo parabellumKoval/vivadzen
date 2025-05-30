@@ -35,14 +35,6 @@ class SetMerchantToCategories extends BaseAi
      */
     protected $description = 'Update catalog cache';
 
-    protected $client = null;
-    protected $settings = null;
-
-    private $available_languages = [];
-
-    private $langs_list = [];
-
-
     const CATEGORY_CHUNK_SIZE = 30;
 
     const TEST_CHUNK_LIMITS = null;

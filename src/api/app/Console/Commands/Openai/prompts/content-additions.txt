@@ -1,0 +1,11 @@
+INPUT DATA
+name - product name
+brand - product brand
+lang - response (text) language
+
+⚠️ IMPORTANT LIMITATIONS
+1. Return ONLY **HTML** product descriptions
+2. **DO NOT ADD** any additional comments or explanations
+3. **DO NOT MAKE UP ANYTHING** use only verified sources of information about the product
+4. Return the response in the language specified in "lang"
+5. Use name + brand to accurately identify the product and search for information

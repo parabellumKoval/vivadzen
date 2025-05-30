@@ -24,6 +24,10 @@ return [
     'detect_category_hint' => 'ИИ будет пытаться определить подходящую категорию для товара',
     'fill_characteristics' => 'Заполнять характеристики',
     'fill_characteristics_hint' => 'ИИ будет анализировать товар и заполнять его характеристики',
+    'format_names' => 'Форматировать названия товаров',
+    'format_names_hint' => 'ИИ будет форматировать и стандартизировать названия товаров',
+    'generate_merchant' => 'Генерировать описание для Google Merchant',
+    'generate_merchant_hint' => 'ИИ будет генерировать оптимизированные описания для Google Merchant',
     
     // Category settings
     'categories_title' => 'Категории',

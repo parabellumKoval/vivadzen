@@ -35,8 +35,8 @@ services:
   libretranslate:
     image: libretranslate/libretranslate
     container_name: libretranslate
-    # ports:
-    #   - "5000:5000"
+    ports:
+      - "5001:5000"
     restart: unless-stopped
     environment:
       - LT_LOAD_ONLY=ru,en,uk
@@ -90,6 +90,19 @@ services:
     depends_on:
       - mysql
     working_dir: /var/www/html
+
+
+  stable-diffusion-webui:
+    image: ghcr.io/ai-dock/stable-diffusion-webui:v2-cpu-22.04-v1.10.1
+    container_name: sd-webui
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./data:/data
+      - ./models:/stable-diffusion-webui/models
+    environment:
+      - CLI_ARGS=--xformers --listen --api
+    restart: unless-stopped
 
   # frontend:
   #   build:
@@ -193,6 +206,24 @@ services:
       - api
     restart: always
 
+  opensearch:
+    image: opensearchproject/opensearch:2.11.1
+    container_name: opensearch
+    environment:
+      - discovery.type=single-node
+      - plugins.security.disabled=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - api
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    ports:
+      - 9200:9200
+    restart: unless-stopped
+
 # DAILY
   # backup_daily:
   #   build:
@@ -228,6 +259,9 @@ services:
   #     FTP_PATH: ${BACKUP_FTP_ROOT}
       
 volumes:
+  opensearch-data:
+    driver: local
+
   backups:
     driver: local
     

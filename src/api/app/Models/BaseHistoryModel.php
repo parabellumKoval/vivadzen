@@ -54,6 +54,7 @@ abstract class BaseHistoryModel extends Model
         ],
         'properties' => 'Атрибуты / Индивидуальные характеристики / Особенности',
         'content' => 'Описание',
+        'name' => 'Название',
     ];
 
     /**
@@ -94,16 +95,22 @@ abstract class BaseHistoryModel extends Model
      * Method updateStatus
      *
      * @param string $status
-     * @param string|null $message
+     * @param string|array|null $message
      * @return bool
      */
-    public function updateStatus($status, $message = null) {
+    public function updateStatus($status, string|array $message = null) {
         try {
             $this->status = $status;
             
             if ($message !== null) {
-                $old_extras = $this->extras;
-                $old_extras['message'] = $message;
+                $old_extras = $this->extras ?? [];
+
+                if(is_array($message)) {
+                    $old_extras = array_merge($old_extras, $message);
+                }else if (is_string($message)) {
+                    $old_extras['message'] = $message;
+                }
+
                 $this->extras = $old_extras;
             }
 

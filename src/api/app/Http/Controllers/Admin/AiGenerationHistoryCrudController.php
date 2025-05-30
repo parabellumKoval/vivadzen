@@ -125,6 +125,12 @@ class AiGenerationHistoryCrudController extends CrudController
                 'generate_description' => $autoGenEnabled
                     ? ($request->has('generate_description') ? (bool)$request->input('generate_description') : false)
                     : ($currentExtras['generate_description'] ?? false),
+                'format_names' => $autoGenEnabled
+                    ? ($request->has('format_names') ? (bool)$request->input('format_names') : false)
+                    : ($currentExtras['format_names'] ?? false),
+                'generate_merchant' => $autoGenEnabled
+                    ? ($request->has('generate_merchant') ? (bool)$request->input('generate_merchant') : false)
+                    : ($currentExtras['generate_merchant'] ?? false),
                 'detect_brand' => $autoGenEnabled
                     ? ($request->has('detect_brand') ? (bool)$request->input('detect_brand') : false)
                     : ($currentExtras['detect_brand'] ?? false),

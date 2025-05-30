@@ -206,6 +206,24 @@ class Product extends BaseAdminProduct
     
     
     /**
+     * getNameAiGeneratedAttribute
+     *
+     * @return void
+     */
+    public function getNameAiGeneratedAttribute() {
+      return $this->extras['name_ai_generated'] ?? null;
+    }
+
+    /**
+     * getMerchantAiGeneratedAttribute
+     *
+     * @return void
+     */
+    public function getMerchantAiGeneratedAttribute() {
+      return $this->extras['is_ai_merchant_content'] ?? null;
+    }
+
+    /**
      * getIsAiContentAttribute
      *
      * @return void
@@ -260,7 +278,13 @@ class Product extends BaseAdminProduct
     }
 
     public function getIsAnyAiAttribute() {
-      return $this->isAiContent || $this->isImagesGenerated || $this->isAttributesGenerated || $this->brandAiGenerated || $this->categoryAiGenerated;
+      return $this->isAiContent 
+        || $this->isImagesGenerated 
+        || $this->isAttributesGenerated 
+        || $this->brandAiGenerated 
+        || $this->categoryAiGenerated
+        || $this->nameAiGenerated
+        || $this->merchantAiGenerated;
     }
 
     // public function getIsImagesGeneratedVirtualAttribute() {
@@ -311,9 +335,21 @@ class Product extends BaseAdminProduct
     }
 
     public function getNeedModerationAttribute() {
-      return !$this->aiBrandModerated || !$this->aiCategoryModerated || !$this->aiContentModerated || !$this->aiImagesModerated || !$this->aiAttributesModerated;
+      return !$this->aiBrandModerated 
+        || !$this->aiCategoryModerated 
+        || !$this->aiContentModerated 
+        || !$this->aiImagesModerated 
+        || !$this->aiAttributesModerated 
+        || !$this->aiNameModerated 
+        || !$this->aiMerchantModerated;
     }
 
+    public function getAiNameModeratedAttribute() {
+      return $this->nameAiGenerated? ($this->extras['name_ai_moderated'] ?? false): true;
+    }
+    public function getAiMerchantModeratedAttribute() {
+      return $this->merchantAiGenerated? ($this->extras['ai_merchant_content_moderated'] ?? false): true;
+    }
     public function getAiBrandModeratedAttribute() {
       return $this->brandAiGenerated? ($this->extras['brand_ai_generated_moderated'] ?? false): true;
     }

@@ -41,7 +41,8 @@ class TestUnit extends Command
      */
     public function handle()
     {
-      $this->testBunny();
+      // $this->testBunny();
+      $this->testProductSave();
     }
 
 
@@ -55,6 +56,29 @@ class TestUnit extends Command
         ]
       ]);
       
+    }
+
+    private function testProductSave() {
+      $product = Product::find(9999);
+
+
+      $old_uk_name = $product->getTranslation('name', 'uk', false);
+      $old_ru_name = $product->getTranslation('name', 'ru', false);
+
+      $extras_trans_uk = $product->getTranslation('extras_trans', 'uk', false);
+      $extras_trans_ru = $product->getTranslation('extras_trans', 'ru', false);
+
+      $new_extras_trans_uk = array_merge($extras_trans_uk, ['old_name' => $old_uk_name]);
+      $new_extras_trans_ru = array_merge($extras_trans_ru, ['old_name' => $old_ru_name]);
+      
+      dd($new_extras_trans_ru, $new_extras_trans_uk);
+      
+      $product->setTranslation('extras_trans', 'ru', $new_extras_trans_ru);
+      $product->setTranslation('extras_trans', 'uk', $new_extras_trans_uk);
+
+      $product->save();
+
+      // dd($product);
     }
 
     private function getRemote() {

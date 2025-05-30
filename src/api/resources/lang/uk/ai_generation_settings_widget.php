@@ -24,6 +24,10 @@ return [
     'detect_category_hint' => 'AI буде намагатися визначити підходящу категорію для товару',
     'fill_characteristics' => 'Заповнювати характеристики',
     'fill_characteristics_hint' => 'AI буде аналізувати товар та заповнювати його характеристики',
+    'format_names' => 'Форматувати назви товарів',
+    'format_names_hint' => 'AI буде форматувати та стандартизувати назви товарів',
+    'generate_merchant' => 'Генерувати опис для Google Merchant',
+    'generate_merchant_hint' => 'AI буде генерувати оптимізовані описи для Google Merchant',
     
     // Category settings
     'categories_title' => 'Категорії',

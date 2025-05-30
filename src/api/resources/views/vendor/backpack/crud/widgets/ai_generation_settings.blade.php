@@ -33,6 +33,20 @@
                         <small class="form-text text-muted mb-3">{{ __('ai_generation_settings_widget.generate_description_hint') }}</small>
                     </div>
 
+                    <div class="custom-control custom-switch">
+                        <input name="format_names" type="checkbox" class="custom-control-input" id="formatNames"
+                               @if(isset($widget['data']['format_names']) && $widget['data']['format_names']) checked @endif>
+                        <label class="custom-control-label" for="formatNames">{{ __('ai_generation_settings_widget.format_names') }}</label>
+                        <small class="form-text text-muted mb-3">{{ __('ai_generation_settings_widget.format_names_hint') }}</small>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input name="generate_merchant" type="checkbox" class="custom-control-input" id="generateMerchant"
+                               @if(isset($widget['data']['generate_merchant']) && $widget['data']['generate_merchant']) checked @endif>
+                        <label class="custom-control-label" for="generateMerchant">{{ __('ai_generation_settings_widget.generate_merchant') }}</label>
+                        <small class="form-text text-muted mb-3">{{ __('ai_generation_settings_widget.generate_merchant_hint') }}</small>
+                    </div>
+
                     <div class="custom-control custom-switch mb-3">
                         <input name="detect_brand" type="checkbox" class="custom-control-input" id="detectBrand"
                                @if(isset($widget['data']['detect_brand']) && $widget['data']['detect_brand']) checked @endif>
@@ -137,6 +151,8 @@
         const generateForCategories = $('#generateForCategories');
         
         // Product generation checkboxes
+        const formatNames = $('#formatNames');
+        const generateMerchant = $('#generateMerchant');
         const detectBrand = $('#detectBrand');
         const detectCategory = $('#detectCategory');
         const fillCharacteristics = $('#fillCharacteristics');
@@ -187,6 +203,8 @@
             if (autoGenerationEnabled.is(':checked')) {
                 const anyCheckboxEnabled = 
                     generateForProducts.is(':checked') || 
+                    formatNames.is(':checked') ||
+                    generateMerchant.is(':checked') ||
                     detectBrand.is(':checked') || 
                     detectCategory.is(':checked') || 
                     fillCharacteristics.is(':checked');
@@ -226,6 +244,8 @@
             }
         });
         
+        formatNames.on('change', updateProductFilterInputs);
+        generateMerchant.on('change', updateProductFilterInputs);
         detectBrand.on('change', updateProductFilterInputs);
         detectCategory.on('change', updateProductFilterInputs);
         fillCharacteristics.on('change', updateProductFilterInputs);

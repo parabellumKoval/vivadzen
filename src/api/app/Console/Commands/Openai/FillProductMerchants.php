@@ -12,14 +12,14 @@ use App\Exceptions\HistoryException;
 
 use OpenAI;
 
-class FillProductsMerchant extends BaseAi
+class FillProductMerchants extends BaseAi
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'openai:fill-products-merchants';
+    protected $signature = 'openai:fill-product-merchants {ai?} {model?} {temperature?} {chunk_limit?} {chunk_size?}';
 
     /**
      * The console command description.
@@ -29,7 +29,21 @@ class FillProductsMerchant extends BaseAi
     protected $description = '';
 
     const TEST_CHUNK_LIMITS = null;
-    const PRODUCT_CHUNK_SIZE = 150;
+    const CHUNK_SIZE = 150;
+    const REQUEST_ATTEMPTS = 2;
+
+
+    const DEFAULT_AI = 'gpt';
+    const DEFAULT_MODEL = 'gpt-4.1';
+    const DEFAULT_TEMP = 0.7;
+    
+
+    private $ai = null;
+    private $model = null;
+    private $temperature = null;
+
+    private $chunk_size = null;
+    private $chunk_limit = null;
 
     /**
      * Execute the console command.
@@ -38,23 +52,37 @@ class FillProductsMerchant extends BaseAi
      */
     public function handle()
     {
-        $this->fillProductsMerchant();
+        $this->ai = $this->argument('ai') ?? self::DEFAULT_AI;
+        $this->model = $this->argument('model') ?? self::DEFAULT_MODEL;
+        $this->temperature = $this->argument('temperature') ?? self::DEFAULT_TEMP;
+  
+        $this->chunk_size = $this->argument('chunk_size') ?? self::CHUNK_SIZE;
+        $this->chunk_limit = $this->argument('chunk_limit') ?? self::TEST_CHUNK_LIMITS;
+
+        $this->fillMerchant();
     }
+
+
     /**
-     * fillProductsContent
+     * fillMerchant
      *
      * @return void
      */
-    private function fillProductsMerchant() {
+    private function fillMerchant() {
         // Start with filtered query based on settings
-        $products = Product::where('is_active', 1)
-                                // ->whereHas('sp', function($q) {
-                                //     $q->where('in_stock', '>', 0);
-                                // })
-                                ->has('brand')
-                                ->where('merchant_content', null);
+        $products = $this->getFilteredProductsQuery();
 
-        $chunks = $products->cursor()->chunk(self::PRODUCT_CHUNK_SIZE);
+        $products->has('brand')
+                ->where('merchant_content', null)
+                ->where(function($query) {
+                    $query->whereDoesntHave('aiGenerationHistory')
+                          ->orWhereHas('aiGenerationHistory', function ($q) {
+                                    $q->where('extras->field', 'merchant')
+                                        ->whereIn('status', ['error', 'pending']);
+                                }, '<=', self::REQUEST_ATTEMPTS);
+                  });
+
+        $chunks = $products->cursor()->chunk($this->chunk_size);
         $chunks_count = $chunks->count();
 
         $bar = $this->output->createProgressBar($chunks_count);
@@ -62,7 +90,7 @@ class FillProductsMerchant extends BaseAi
 
         foreach($chunks as $index => $chunk) {
 
-            if(self::TEST_CHUNK_LIMITS && $index >= self::TEST_CHUNK_LIMITS) {
+            if($this->chunk_limit && $index >= $this->chunk_limit) {
                 break;
             }
 
@@ -73,15 +101,16 @@ class FillProductsMerchant extends BaseAi
                     'brand' => $product->brand ? $product->brand->name : null
                 ];
             })->toArray();
-            // $gh = AiGenerationHistory::createItem($product, ['field' => 'content']);
+
+            $gh = AiGenerationHistory::createItem($product, ['field' => 'merchant', 'ai' => $this->ai, 'model' => $this->model, 'temperature' => $this->temperature]);
             
             try {
                 $responce = $this->getProductMerchantContent($productData, 'uk');
                 $this->updateProductsMerchantContent($responce);
 
-                // $gh->updateStatus('done', '');
+                $gh->updateStatus('done', '');
             } catch(\Exception $e) {
-                // $gh->updateStatus('error', $e->getMessage());
+                $gh->updateStatus('error', $e->getMessage());
                 $this->error($e->getMessage());
                 continue;
             }
@@ -146,8 +175,8 @@ class FillProductsMerchant extends BaseAi
         $user_data_json = json_encode($user_data, JSON_UNESCAPED_UNICODE);
 
         $response = $this->client->chat()->create([
-            'temperature' => 0.7,
-            'model' => 'gpt-4.1',
+            'temperature' => $this->temperature,
+            'model' => $this->model,
             'messages' => [
                     [
                         'role' => 'system',

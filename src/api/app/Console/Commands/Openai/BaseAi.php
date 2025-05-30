@@ -27,9 +27,9 @@ class BaseAi extends Command
     protected $client = null;
     protected $settings = null;
 
-    private $available_languages = [];
+    protected $available_languages = [];
 
-    private $langs_list = [];
+    protected $langs_list = [];
 
 
     const CATEGORY_CHUNK_SIZE = 100;
