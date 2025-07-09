@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Cache;
 
 use App\Models\Region;
 use Backpack\Store\app\Models\Category;
 use App\Http\Resources\CategorySlugResource;
 
-use Illuminate\Support\Facades\Cache;
+// use Backpack\Store\app\Services\ProductFilterService;
+use Backpack\Store\app\Services\ProductQueryService;
 
 class CategoryController extends \App\Http\Controllers\Controller
 {
@@ -19,6 +20,39 @@ class CategoryController extends \App\Http\Controllers\Controller
     self::resources_init();
   }
 
+
+  /**
+   * categoryCached
+   *
+   * @param  mixed $request
+   * @param  mixed $slug
+   * @return void
+   */
+  public function categoryCached(Request $request, $slug) {
+    // Cache::forget('category-data-'.$slug);
+    // 1) TRY GET CASHED CATALOG DATA
+    if(Cache::has('category-data-' . $slug)) {
+      $cached_data = Cache::get('category-data-' . $slug);
+      return response()->json($cached_data);
+    }
+
+    $category = Category::where('slug', $slug)->where('is_active', 1)->first();
+   
+    // if no category found try found in Regions
+    if(!$category) {
+      // Region is category analogue but by location
+      $region = Region::where('slug', $slug)->where('is_active', 1)->first();
+    }else {
+      $region = null;
+    }
+
+    if(!empty($category) || !empty($region)) {
+      $all_data = $this->categoryData($request, $category, $region);
+      Cache::put('category-data-' . $slug, $all_data);
+      return response()->json($all_data);
+    }
+  }
+  
   /**
    * productOrCategory
    *
@@ -101,7 +135,25 @@ class CategoryController extends \App\Http\Controllers\Controller
 
     return $categories;
   }
+  
+
+  /**
+   * getSlugsSimple
+   *
+   * @param  mixed $request
+   * @return void
+   */
+  public function getSlugsSimple(Request $request) {
     
+    $slugs = Category::query()
+      ->select('ak_product_categories.*')
+      ->distinct('ak_product_categories.id')
+      ->active()
+      ->pluck('slug');
+    
+    return $slugs;
+  }
+
   /**
    * updateProductsData
    *
@@ -133,6 +185,86 @@ class CategoryController extends \App\Http\Controllers\Controller
     $data['products'] = $products['products'];
 
     return $data;
+  }
+
+
+  /**
+   * categoryData
+   *
+   * @param  mixed $request
+   * @param  mixed $slug
+   * @return void
+   */
+  public function categoryData(Request $request = null, $category = null, $region = null) {
+    // $slug = $slug? $slug: $request->input('category_slug');
+    if($category) {
+      $slug = $category->slug;
+    }else if($region) {
+      $slug = $region->category->slug;
+    }else {
+      $slug = $request->input('category_slug');
+    }
+
+    $fake_request = new \Illuminate\Http\Request();
+    
+    // Category
+    if($category) {
+      $category_data = new self::$resources['category']['large']($category);
+    }
+
+    // Region
+    if($region) {
+      $category_data = new \App\Http\Resources\RegionLargeResource($region);
+    }
+
+    // Reviews
+    $fake_request->replace([
+      'category_slug' => $slug,
+      'per_page' => 6,
+      'resource' => 'large',
+      'with_text' => 1
+    ]);
+
+    $review_controller = new \App\Http\Controllers\Api\ReviewController;
+    $reviews = $review_controller->index($fake_request);
+
+    $product_controller = new \Backpack\Store\app\Http\Controllers\Api\ProductController();
+    $productService = app(ProductQueryService::class);
+
+    //CHIP Products
+    // category_id=3&price[0]=5&price[1]=100000000&order_by=price&order_dir=ASC&selections[0]=in_stock&per_page=5&with_filters=0
+    $fake_request->replace([
+      'category_slug' => $slug,
+      'price' => [5, 100000000],
+      'order_by' => 'price',
+      'order_dir' => 'ASC',
+      'selections' => ['in_stock'],
+      'per_page' => 5,
+      'with_filters' => 0
+    ]);
+
+    $chip_products = $product_controller->index($fake_request, $productService);
+
+    //POPULAR Products
+    //category_id=3&order_by=sales&order_dir=DESC&selections[0]=in_stock&per_page=5&with_filters=0
+    $fake_request->replace([
+      'category_slug' => $slug,
+      'price' => [5, 100000000],
+      'order_by' => 'sales',
+      'order_dir' => 'DESC',
+      'selections' => ['in_stock'],
+      'per_page' => 5,
+      'with_filters' => 0
+    ]);
+
+    $popular_products = $product_controller->index($fake_request, $productService);
+
+    return [
+      'category' => $category_data,
+      'reviews' => $reviews ?? null,
+      'chip_products' => $chip_products ?? null,
+      'popular_products' => $popular_products ?? null
+    ];
   }
 
   /**

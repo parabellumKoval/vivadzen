@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c01991dfd6454701f6f7af756dd8476a",
+    "content-hash": "de5575bfbf114fd17e07f380150b7834",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -6245,16 +6245,16 @@
         },
         {
             "name": "parabellumkoval/backpack-store",
-            "version": "0.3.x-dev",
+            "version": "0.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "ad969f232c21bf9db1dbfe7e01a04c60519924f8"
+                "reference": "2fce05c4e8ed5655015ff4821e98e06ddd381593"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/ad969f232c21bf9db1dbfe7e01a04c60519924f8",
-                "reference": "ad969f232c21bf9db1dbfe7e01a04c60519924f8",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/2fce05c4e8ed5655015ff4821e98e06ddd381593",
+                "reference": "2fce05c4e8ed5655015ff4821e98e06ddd381593",
                 "shasum": ""
             },
             "require": {
@@ -6310,9 +6310,9 @@
             ],
             "support": {
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
-                "source": "https://github.com/parabellumKoval/backpack-store/tree/0.3"
+                "source": "https://github.com/parabellumKoval/backpack-store/tree/0.4"
             },
-            "time": "2025-05-04T10:37:38+00:00"
+            "time": "2025-07-07T10:51:24+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",

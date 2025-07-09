@@ -19,7 +19,7 @@ class ProductMediumResource extends \Backpack\Store\app\Http\Resources\BaseResou
         'price' => $this->simplePrice,
         'oldPrice' => $this->simpleOldPrice,
         'image' => $this->image,
-        'content' => $this->content,
+        // 'content' => $this->content,
         'inStock' => $this->simpleInStock,
         'category' => $this->category,
       ];

@@ -4,7 +4,23 @@ namespace App\Traits;
 // use App\Models\Product;
 use Spatie\Feed\FeedItem;
 
+use Illuminate\Support\Facades\App;
+
 trait ProductGoogleMerchantsTrait {
+
+
+  public static function getMerchantsFeedItemsRu() {
+    App::setLocale('ru');
+
+    return self::getMerchantsFeedItems();
+  }
+
+
+  public static function getMerchantsFeedItemsUk() {
+    App::setLocale('uk');
+
+    return self::getMerchantsFeedItems();
+  }
 
   public static function getMerchantsFeedItems() {
     $products = self::with('brand', 'categories', 'sp')->where('is_active', 1);
@@ -89,10 +105,12 @@ trait ProductGoogleMerchantsTrait {
   }
 
   public function getMerchantsDescriptionAttribute() {
-    $content = $this->getTranslation('merchant_content', 'uk', false);
+    $locale = App::getLocale();
+
+    $content = $this->getTranslation('merchant_content', $locale, false);
     
     if(empty($content)) {
-      $content = $this->getTranslation('content', 'uk', false);
+      $content = $this->getTranslation('content', $locale, false);
     }
 
     if(empty($content)) {
@@ -121,6 +139,8 @@ trait ProductGoogleMerchantsTrait {
   }
 
   public function getWebLinkAttribute() {
-    return "https://djini.com.ua/{$this->slug}";
+    $locale = App::getLocale();
+    $prefix = $locale === 'uk'? '': $locale . '/'; 
+    return "https://djini.com.ua/{$prefix}{$this->slug}";
   }
 }

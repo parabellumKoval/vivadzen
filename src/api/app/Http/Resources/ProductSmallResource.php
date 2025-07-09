@@ -22,6 +22,10 @@ class ProductSmallResource extends \Backpack\Store\app\Http\Resources\BaseResour
         'reviews_rating_detailes' => $this->reviewsRatingDetailes,
         'images' => $this->getImages(2),
         'inStock' => $this->simpleInStock,
+        'categories' => $this->categories && $this->categories->count()?
+          CategoryParentResource::collection($this->categories):
+            null,
+        'brand' => $this->brand? new BrandProductResource($this->brand): null
       ];
     }
 }

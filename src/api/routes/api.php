@@ -29,10 +29,12 @@ Route::prefix('sitemap')->controller(SitemapController::class)->group(function (
   Route::get('/articles', 'getArticles')->middleware('api');
 });
 
+Route::get('/category_cached/{slug}', [CategoryController::class, 'categoryCached'])->middleware('api');
 Route::get('/product_or_category/{slug}', [CategoryController::class, 'productOrCategory'])->middleware('api');
 Route::get('/catalog_data', [CategoryController::class, 'catalogData'])->middleware('api');
 
 Route::get('/djini-category/slugs', [CategoryController::class, 'getSlugs'])->middleware('api');
+Route::get('/djini-category/slugs-simple', [CategoryController::class, 'getSlugsSimple'])->middleware('api');
 
 Route::prefix('search')->controller(SearchController::class)->group(function () {
   Route::get('', 'index')->middleware('api');

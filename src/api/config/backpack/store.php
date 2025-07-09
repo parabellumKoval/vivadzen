@@ -148,7 +148,7 @@ return [
             'rules' => 'required_if:provider,data|string|min:2|max:80'
           ],
           'email' => [
-            'rules' => 'required_if:provider,data|email|min:2|max:150'
+            'rules' => 'nullable|email|min:2|max:150'
           ],
         ]
       ]
