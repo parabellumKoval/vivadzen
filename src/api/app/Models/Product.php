@@ -17,6 +17,7 @@ use Backpack\Store\app\Models\Attribute;
 use Backpack\Store\app\Models\AttributeValue;
 use Backpack\Store\app\Models\AttributeProduct;
 
+use Backpack\Store\app\Models\Brand;
 
 // REVIEWS
 use Backpack\Reviews\app\Traits\Reviewable;
@@ -846,4 +847,22 @@ class Product extends BaseProduct implements Feedable
       $this->attributes['images'] = json_encode($images_array);
     }
   }
+
+
+  public static function getCategoryCacheItemsQuery() {
+      $category_query = Category::where('is_active', 1)->get()->map(function ($category) {
+          return ['category_slug' => $category->slug];
+      });
+
+      return $category_query;
+  }
+
+  public static function getBrandCacheItemsQuery() {
+      $brand_query = Brand::where('is_active', 1)->get()->map(function ($category) {
+          return ['brand_slug' => $category->slug];
+      });
+      
+      return $brand_query;
+  }
+
 }

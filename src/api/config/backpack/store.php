@@ -303,5 +303,61 @@ return [
         'enable' => env('STORE_SOURCE_TEST', false),
         'items' => env('STORE_SOURCE_TEST_ITEMS', 1)
       ]
+    ],
+
+
+
+    // CACHE
+    'cache' => [
+      'enable' => true,
+      'cases' => [
+        [
+          'params' =>  [
+            'selections' => [
+              'with_sales',
+              'in_stock'
+            ],
+            'with_products' => 1
+          ],
+          'keys' => ['selections']
+        ],[
+          'params' =>  [
+            'selections' => [
+              'top_sales',
+              'in_stock'
+            ],
+            'with_products' => 1
+          ],
+          'keys' => ['selections']
+        ],[
+          'query' => 'App\Models\Product@getCategoryCacheItemsQuery',
+          'params' =>  [
+            'with_filter' => [
+              'attributes',
+              'brands',
+              'price',
+              'selections',
+            ],
+            'with_filter_count' => [
+              'attributes',
+              'brands',
+              'price',
+              'selections',
+            ]
+          ],
+        ],[
+          'query' => 'App\Models\Product@getBrandCacheItemsQuery',
+          'params' =>  [
+            'with_filter' => [
+              'price',
+              'selections',
+            ],
+            'with_filter_count' => [
+              'price',
+              'selections',
+            ]
+          ],
+        ]
+      ]
     ]
 ];

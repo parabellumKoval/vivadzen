@@ -18,6 +18,9 @@ class Kernel extends ConsoleKernel
         // CACHE CATALOG CATEGORIES PAGE 1
         $schedule->command('cache:catalog')->everyFiveMinutes();
 
+        //cache:catalog-update
+        $schedule->command('cache:catalog-update')->everyFiveMinutes();
+
         // Get product updates FROM Xml-links
         $schedule->command('xml:source')->everyFiveMinutes();
 
