@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\App;
 
 trait ProductGoogleMerchantsTrait {
 
+  
+  public $category_groups = [
+    0 => [],
+    1 => [],
+    2 => [],
+    3 => [],
+    4 => [],
+  ];
 
   public static function getMerchantsFeedItemsRu() {
     App::setLocale('ru');
@@ -43,7 +51,11 @@ trait ProductGoogleMerchantsTrait {
         'brand' => $product->merchantsBrand,
         'google_product_category' => $product->merchantsGoogleProductCategory,
         'product_type' => $product->merchantsCategory,
-        'last_category' => $product->merchantsLastCategory,
+        'category_0' => $product->getMerchantsCategory(0),
+        'category_1' => $product->getMerchantsCategory(1),
+        'category_2' => $product->getMerchantsCategory(2),
+        'category_3' => $product->getMerchantsCategory(3),
+        'category_4' => $product->getMerchantsCategory(4),
         'gtin' => $product->merchantsGtin,
         'mpn' => $product->merchantsMpn,
         'authorName' => 'djini.com.ua'
@@ -86,6 +98,41 @@ trait ProductGoogleMerchantsTrait {
     return $this->category->merchant? $this->category->merchant->key: 469;
   }
 
+  public function findGroupIndex(int $value): int
+  {
+      foreach ($this->category_groups as $groupIndex => $group) {
+          if (in_array($value, $group)) {
+              return $groupIndex;
+          }
+      }
+
+      return -1;
+  }
+
+  public function getMerchantsCategory($index) {
+      if (empty($this->categories)) {
+          return '';
+      }
+
+      $categories = [];
+      foreach ($this->categories as $category) {
+          $group_index = $this->findGroupIndex($category->id);
+
+          // Если категория не входит ни в одну группу, просто добавляем
+          if ($group_index === -1) {
+              $categories[] = $category->name;
+          } else {
+              // Если категория входит в группу, добавляем только если индекс совпадает
+              if ($index === $group_index) {
+                  $categories[] = $category->name;
+              }
+          }
+      }
+
+      // Вернуть категорию по индексу, если она есть
+      return $categories[$index] ?? '';
+  } 
+
   public function getMerchantsLastCategoryAttribute() {
     if (!$this->category) {
         return '';
@@ -97,7 +144,6 @@ trait ProductGoogleMerchantsTrait {
         return '';
     }
 
-    // Возвращаем последнюю категорию
     return $items_array[0] ?? '';
   }
 
