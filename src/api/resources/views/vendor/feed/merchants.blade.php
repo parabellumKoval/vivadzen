@@ -24,6 +24,7 @@
             <g:brand><![CDATA[{{ $item->brand }}]]></g:brand>
             <g:google_product_category>{{ $item->google_product_category }}</g:google_product_category>
             <g:product_type>{{ $item->product_type }}</g:product_type>
+            <g:custom_label_0>{{ $item->last_category }}</g:custom_label_0>
             <g:mpn>{{ $item->mpn }}</g:mpn>
             <g:gtin>{{ $item->gtin }}</g:gtin>
             <g:shipping>

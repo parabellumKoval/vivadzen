@@ -43,6 +43,7 @@ trait ProductGoogleMerchantsTrait {
         'brand' => $product->merchantsBrand,
         'google_product_category' => $product->merchantsGoogleProductCategory,
         'product_type' => $product->merchantsCategory,
+        'last_category' => $product->merchantsLastCategory,
         'gtin' => $product->merchantsGtin,
         'mpn' => $product->merchantsMpn,
         'authorName' => 'djini.com.ua'
@@ -83,6 +84,21 @@ trait ProductGoogleMerchantsTrait {
     }
 
     return $this->category->merchant? $this->category->merchant->key: 469;
+  }
+
+  public function getMerchantsLastCategoryAttribute() {
+    if (!$this->category) {
+        return '';
+    }
+
+    $items_array = $this->category->getParentNode()->pluck('name')->toArray();
+
+    if (empty($items_array)) {
+        return '';
+    }
+
+    // Возвращаем последнюю категорию
+    return $items_array[0] ?? '';
   }
 
   public function getMerchantsCategoryAttribute() {
