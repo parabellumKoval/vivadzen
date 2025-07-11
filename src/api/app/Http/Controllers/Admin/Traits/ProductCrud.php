@@ -293,6 +293,52 @@ trait ProductCrud {
     // Tags
     $this->setupTagFields();
 
+
+    // Duplicates
+    $this->crud->addField([
+      'name' => 'duplicate_of',
+      'label' => 'Выберите товар',
+      'type'    => 'relationship',
+      'model'     => 'Backpack\Store\app\Models\Product',
+      'attribute' => 'name',
+      'ajax' => true,
+      'multiple' => false,
+      // 'entity' => Backpack\Store\app\Models\Product::class,
+      'entity' => 'duplicate',
+      'data_source' => url("/admin/api/product"),
+      'placeholder' => "Поиск по названию товара",
+      'minimum_input_length' => 0,
+      'hint' => 'Выберите товар дубликатом которого является данный товар.',
+      'tab' => trans('backpack-store::product-field.tabs.management')
+    ]);
+
+    $this->crud->addField([
+      'name' => 'delim_duplic',
+      'type' => 'custom_html',
+      'value' => '<h3>Дубликаты</h3>
+        <p class="help-block">В данном разделе можно "сшивать" несколько товаров в один. Для того чтобы это сделать:</p>
+        <ol>
+          <li>В поле ниже выберите основной товар, то есть тот товар дубликатом которого является товар, который вы сейчас редактируете.</li>
+          <li>В течении 1 часа этот товар автоматически будет объединен с указанным в поле ниже.</li>
+          <li>Этот товар будет полностью удален, а информация о складе (поставщик, артикул, наличие, цена...) будет перенесена в карточку основного товара.</li>
+        </ol>
+      ',
+      'tab' => trans('backpack-store::product-field.tabs.management')
+    ]);
+
+
+    // PROM CATEGORY
+    $this->crud->addField([
+      'name' => 'category_feed_id',
+      'label' => 'Категория на PROM',
+      'type' => 'select2',
+      'entity' => 'prom_category',
+      'attribute' => 'prom_name',
+      'model' => 'App\Models\CategoryFeed',
+      'tab' => trans('backpack-store::product-field.tabs.management'),
+      'hint' => 'Укажите если необходимо однозначно привязать товар к категории на PROM (иначе будут применены общие правила)',
+    ]);
+
     // CUSTOM PROPERTIES
     $this->crud->addField([
       'name' => 'delim_0',
@@ -377,6 +423,33 @@ trait ProductCrud {
       'tab' => trans('backpack-store::product-field.tabs.characteristics')
     ])->beforeField('delim');
 
+    // Attributes
+    $this->crud->addField([
+      'name'  => 'attributes_ai_generated',
+      'label' => 'Атрибуты заполнены автоматически AI',
+      'type' => 'checkbox',
+      'fake' => true, 
+      'store_in' => 'extras',
+      'hint' => 'Были ли атрибуты заполнены автоматически AI',
+      'tab' => trans('backpack-store::product-field.tabs.characteristics')
+    ])->afterField('delim_2');
+
+
+    $this->crud->addField([
+      'name' => 'attributes_ai_moderated',
+      'label' => 'Проверено',
+      'type' => 'moderation',
+      'tab' => trans('backpack-store::product-field.tabs.characteristics'),
+      'wrap_items' => ['attributes_ai_generated', 'props'],
+      'wrapper_class' => 'wrapper',
+      'switch_class' => 'box-warning',
+      'enabled_when' => 'attributes_ai_generated',
+      'fake' => true, 
+      'store_in' => 'extras',
+    ]);
+
+
+
     //
     $this->crud->removeField('images');
 
@@ -389,7 +462,7 @@ trait ProductCrud {
       'store_in' => 'extras',
       'hint' => 'Были ли изображения заполнены автоматически AI',
       'tab' => trans('backpack-store::product-field.tabs.images')
-    ]);
+    ])->beforeField('suppliersData') ;
 
     $this->crud->addField([
       'name'  => 'images',
@@ -427,7 +500,7 @@ trait ProductCrud {
       'default' => [],
       'hint' => 'При добавлении новых изображений, сохранение товара будет происходить дольше, так как картинку загружаются в удаленное облако.',
       'tab' => trans('backpack-store::product-field.tabs.images')
-    ]);
+    ])->beforeField('suppliersData');
 
     $this->crud->addField([
       'name' => 'images_moderated',
@@ -440,77 +513,7 @@ trait ProductCrud {
       'enabled_when' => 'is_images_generated',
       'fake' => true, 
       'store_in' => 'extras',
-    ]);
-  
-    // Attributes
-    $this->crud->addField([
-      'name'  => 'attributes_ai_generated',
-      'label' => 'Атрибуты заполнены автоматически AI',
-      'type' => 'checkbox',
-      'fake' => true, 
-      'store_in' => 'extras',
-      'hint' => 'Были ли атрибуты заполнены автоматически AI',
-      'tab' => trans('backpack-store::product-field.tabs.characteristics')
-    ])->afterField('delim_2');
-
-
-    $this->crud->addField([
-      'name' => 'attributes_ai_moderated',
-      'label' => 'Проверено',
-      'type' => 'moderation',
-      'tab' => trans('backpack-store::product-field.tabs.characteristics'),
-      'wrap_items' => ['attributes_ai_generated', 'props'],
-      'wrapper_class' => 'wrapper',
-      'switch_class' => 'box-warning',
-      'enabled_when' => 'attributes_ai_generated',
-      'fake' => true, 
-      'store_in' => 'extras',
-    ]);
-
-    // Duplicates
-    $this->crud->addField([
-      'name' => 'duplicate_of',
-      'label' => 'Выберите товар',
-      'type'    => 'relationship',
-      'model'     => 'Backpack\Store\app\Models\Product',
-      'attribute' => 'name',
-      'ajax' => true,
-      'multiple' => false,
-      // 'entity' => Backpack\Store\app\Models\Product::class,
-      'entity' => 'duplicate',
-      'data_source' => url("/admin/api/product"),
-      'placeholder' => "Поиск по названию товара",
-      'minimum_input_length' => 0,
-      'hint' => 'Выберите товар дубликатом которого является данный товар.',
-      'tab' => trans('backpack-store::product-field.tabs.management')
-    ]);
-
-    $this->crud->addField([
-      'name' => 'delim_duplic',
-      'type' => 'custom_html',
-      'value' => '<h3>Дубликаты</h3>
-        <p class="help-block">В данном разделе можно "сшивать" несколько товаров в один. Для того чтобы это сделать:</p>
-        <ol>
-          <li>В поле ниже выберите основной товар, то есть тот товар дубликатом которого является товар, который вы сейчас редактируете.</li>
-          <li>В течении 1 часа этот товар автоматически будет объединен с указанным в поле ниже.</li>
-          <li>Этот товар будет полностью удален, а информация о складе (поставщик, артикул, наличие, цена...) будет перенесена в карточку основного товара.</li>
-        </ol>
-      ',
-      'tab' => trans('backpack-store::product-field.tabs.management')
-    ]);
-
-
-    // PROM CATEGORY
-    $this->crud->addField([
-      'name' => 'category_feed_id',
-      'label' => 'Категория на PROM',
-      'type' => 'select2',
-      'entity' => 'prom_category',
-      'attribute' => 'prom_name',
-      'model' => 'App\Models\CategoryFeed',
-      'tab' => trans('backpack-store::product-field.tabs.management'),
-      'hint' => 'Укажите если необходимо однозначно привязать товар к категории на PROM (иначе будут применены общие правила)',
-    ]);
+    ])->beforeField('suppliersData');
   }
 
 }
