@@ -50,23 +50,37 @@ return [
           'format' => 'atom',
           'contentType' => '',
       ],
-      'merchants-uk' => [
-          'items' => 'App\Models\Product@getMerchantsFeedItemsUk',
-          'url' => '/merchants-feed',
-          'title' => 'фид для Google Merchants',
+
+      'facebook-uk' => [
+          'items' => 'App\Models\Product@getFacebookFeedItemsUk',
+          'url' => '/facebook-feed',
+          'title' => 'фид для Facebook',
           'description' => 'GMC feed',
           'language' => 'uk-UA',
-          'view' => 'feed::merchants',
+          'view' => 'feed::facebook',
           'type' => 'application/atom+xml',
           'format' => 'atom',
           'contentType' => '',
       ],
+
       'merchants-ru' => [
           'items' => 'App\Models\Product@getMerchantsFeedItemsRu',
           'url' => '/merchants-feed-ru',
           'title' => 'фид для Google Merchants',
           'description' => 'GMC feed',
           'language' => 'ru-RU',
+          'view' => 'feed::merchants',
+          'type' => 'application/atom+xml',
+          'format' => 'atom',
+          'contentType' => '',
+      ],
+      
+      'merchants-uk' => [
+          'items' => 'App\Models\Product@getMerchantsFeedItemsUk',
+          'url' => '/merchants-feed',
+          'title' => 'фид для Google Merchants',
+          'description' => 'GMC feed',
+          'language' => 'uk-UA',
           'view' => 'feed::merchants',
           'type' => 'application/atom+xml',
           'format' => 'atom',

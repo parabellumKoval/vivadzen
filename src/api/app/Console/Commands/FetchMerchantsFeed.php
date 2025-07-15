@@ -12,21 +12,27 @@ class FetchMerchantsFeed extends Command
     
     protected $description = 'Fetches XML from /merchants-feed route and saves it to public directory';
 
-    protected $langs = ['ru', 'uk'];
+    protected $google_langs = ['ru', 'uk'];
+    protected $facebook_langs = ['uk'];
 
     public function handle()
     {
-        foreach($this->langs as $lang) {
+        foreach($this->google_langs as $lang) {
             $postfix = $lang === 'uk'? null: $lang;
-            $this->createFeedXml($postfix);
+            $this->createFeedXml($postfix, 'merchants-feed');
+        }
+
+        foreach($this->facebook_langs as $lang) {
+            $postfix = $lang === 'uk'? null: $lang;
+            $this->createFeedXml($postfix, 'facebook-feed');
         }
     }
 
-    private function createFeedXml($postfix = null) {
-        $base_url = config('app.url') . '/merchants-feed';
+    private function createFeedXml($postfix = null, $feed_url = '') {
+        $base_url = config('app.url') . '/' . $feed_url;
         $full_url = $postfix? $base_url . '-' . $postfix: $base_url;
 
-        $filename = 'merchants-feed';
+        $filename = $feed_url;
         $file_ext = '.xml';
         
         // Путь для сохранения файла в public

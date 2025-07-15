@@ -205,4 +205,55 @@ trait ProductGoogleMerchantsTrait {
     $prefix = $locale === 'uk'? '': $locale . '/'; 
     return "https://djini.com.ua/{$prefix}{$this->slug}";
   }
+
+
+  // FACEBOOK
+  public static function getFacebookFeedItemsUk() {
+    App::setLocale('uk');
+    return self::getFacebookFeedItems();
+  }
+
+  public static function getFacebookFeedItems() {
+    $products = self::with('brand', 'categories', 'sp')->where('is_active', 1);
+    $products_cursore = $products->cursor();
+
+    $feed_products = collect();
+
+    foreach($products_cursore as $product) {
+      $feed_item = new FeedItem([ 
+        'id' => $product->id,
+        'title' => $product->name? $product->name: '–',
+        'link' => $product->webLink,
+        'availability' => $product->facebookAvailability,
+        'condition' => 'new',
+        'summary' => $product->merchantsDescription,
+        'price' => $product->merchantsPrice,
+        'sale_price' => $product->merchantsSalePrice,
+        'image' => $product->merchantsImage,
+        'second_image' => $product->merchantsSecondImage,
+        'gtin' => $product->merchantsGtin,
+        'mpn' => $product->merchantsMpn,
+        'brand' => $product->merchantsBrand,
+        'google_product_category' => $product->merchantsGoogleProductCategory,
+        'category_0' => $product->getMerchantsCategory(0),
+        'category_1' => $product->getMerchantsCategory(1),
+        'category_2' => $product->getMerchantsCategory(2),
+        'category_3' => $product->getMerchantsCategory(3),
+        'category_4' => $product->getMerchantsCategory(4),
+        'updated' => $product->updated_at,
+        'authorName' => 'abu.com.ua'
+      ]);
+      $feed_products->push($feed_item);
+    }
+
+    return $feed_products;
+  }
+
+  public function getFacebookAvailabilityAttribute() {
+    if($this->in_stock > 0) {
+      return 'in stock';
+    }else {
+      return 'out of stock';
+    }
+  }
 }
