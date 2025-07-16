@@ -23,11 +23,11 @@
         <price>{{ $item->price }}</price>
         <sale_price>{{ $item->sale_price }}</sale_price>
         <brand><![CDATA[{{ $item->brand }}]]></brand>
-        <g:custom_label_0>{{ $item->category_0 }}</g:custom_label_0>
-        <g:custom_label_1>{{ $item->category_1 }}</g:custom_label_1>
-        <g:custom_label_2>{{ $item->category_2 }}</g:custom_label_2>
-        <g:custom_label_3>{{ $item->category_3 }}</g:custom_label_3>
-        <g:custom_label_4>{{ $item->category_4 }}</g:custom_label_4>
+        <custom_label_0>{{ $item->category_0 }}</custom_label_0>
+        <custom_label_1>{{ $item->category_1 }}</custom_label_1>
+        <custom_label_2>{{ $item->category_2 }}</custom_label_2>
+        <custom_label_3>{{ $item->category_3 }}</custom_label_3>
+        <custom_label_4>{{ $item->category_4 }}</custom_label_4>
         <google_product_category>{{ $item->google_product_category }}</google_product_category>
         <mpn>{{ $item->mpn }}</mpn>
         <gtin>{{ $item->gtin }}</gtin>
