@@ -4,12 +4,9 @@
 ?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
   <channel>
-    <title><![CDATA[{{ $meta['title'] }}]]></title>
-    <link><![CDATA[{{ url($meta['link']) }}]]></link>
-    <description><![CDATA[{{ $meta['description'] }}]]></description>
-    <language>{{ $meta['language'] }}</language>
-    <pubDate>{{ $meta['updated'] }}</pubDate>
-
+    <title>{{ $meta['title'] }}</title>
+    <link>{{ url($meta['link']) }}</link>
+    <description>{{ $meta['description'] }}</description>
     @foreach($items as $item)
       <item>
         <g:id>{{ $item->id }}</g:id>
