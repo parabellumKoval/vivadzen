@@ -185,11 +185,11 @@ trait ProductGoogleMerchantsTrait {
   }
 
   public function getMerchantsSalePriceAttribute() {
-    return $this->simpleOldPrice? $this->simpleOldPrice . ' UAH': '';
+    return !empty($this->simpleOldPrice)? $this->simplePrice . ' UAH': null;
   }
 
   public function getMerchantsPriceAttribute() {
-    return $this->simplePrice . ' UAH';
+    return !empty($this->simpleOldPrice)? $this->simpleOldPrice . ' UAH' : $this->simplePrice . ' UAH';
   }
 
   public function getMerchantsAvailabilityAttribute() {
