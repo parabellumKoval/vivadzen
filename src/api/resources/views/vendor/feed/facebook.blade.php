@@ -2,7 +2,7 @@
 /* Using an echo tag here so the `<? ... ?>` won't get parsed as short tags */
 '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL
 ?>
-<rss version="2.0">
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
   <channel>
     <title><![CDATA[{{ $meta['title'] }}]]></title>
     <link><![CDATA[{{ url($meta['link']) }}]]></link>
@@ -12,31 +12,30 @@
 
     @foreach($items as $item)
       <item>
-        <id>{{ $item->id }}</id>
-        <title><![CDATA[{{ $item->title }}]]></title>
-        <description><![CDATA[{{ $item->summary }}]]></description>
-        <link>{{ $item->link }}</link>
-        <availability>{{ $item->availability }}</availability>
-        <condition>{{ $item->condition }}</condition>
-        <image_link>{{ $item->image }}</image_link>
-        <additional_image_link>{{ $item->second_image }}</additional_image_link>
-        <price>{{ $item->price }}</price>
-        <sale_price>{{ $item->sale_price }}</sale_price>
-        <brand><![CDATA[{{ $item->brand }}]]></brand>
-        <custom_label_0>{{ $item->category_0 }}</custom_label_0>
-        <custom_label_1>{{ $item->category_1 }}</custom_label_1>
-        <custom_label_2>{{ $item->category_2 }}</custom_label_2>
-        <custom_label_3>{{ $item->category_3 }}</custom_label_3>
-        <custom_label_4>{{ $item->category_4 }}</custom_label_4>
-        <google_product_category>{{ $item->google_product_category }}</google_product_category>
-        <mpn>{{ $item->mpn }}</mpn>
-        <gtin>{{ $item->gtin }}</gtin>
-        <shipping>
-          <country>UA</country>
-          <service>Нова Пошта</service>
-          <price>60.00 UAH</price>
-        </shipping>
-        <pubDate>{{ $item->updated->toRssString() }}</pubDate>
+        <g:id>{{ $item->id }}</g:id>
+        <g:title><![CDATA[{{ $item->title }}]]></g:title>
+        <g:description><![CDATA[{{ $item->summary }}]]></g:description>
+        <g:link>{{ $item->link }}</g:link>
+        <g:availability>{{ $item->availability }}</g:availability>
+        <g:condition>{{ $item->condition }}</g:condition>
+        <g:image_link>{{ $item->image }}</g:image_link>
+        <g:additional_image_link>{{ $item->second_image }}</g:additional_image_link>
+        <g:price>{{ $item->price }}</g:price>
+        <g:sale_price>{{ $item->sale_price }}</g:sale_price>
+        <g:brand><![CDATA[{{ $item->brand }}]]></g:brand>
+        <g:custom_label_0>{{ $item->category_0 }}</g:custom_label_0>
+        <g:custom_label_1>{{ $item->category_1 }}</g:custom_label_1>
+        <g:custom_label_2>{{ $item->category_2 }}</g:custom_label_2>
+        <g:custom_label_3>{{ $item->category_3 }}</g:custom_label_3>
+        <g:custom_label_4>{{ $item->category_4 }}</g:custom_label_4>
+        <g:google_product_category>{{ $item->google_product_category }}</g:google_product_category>
+        <g:mpn>{{ $item->mpn }}</g:mpn>
+        <g:gtin>{{ $item->gtin }}</g:gtin>
+        <g:shipping>
+          <g:country>UA</g:country>
+          <g:service>Нова Пошта</g:service>
+          <g:price>60.00 UAH</g:price>
+        </g:shipping>
       </item>
     @endforeach
   </channel>
