@@ -4,6 +4,11 @@
 <li class="divider"></li>
 <li class="nav-title">{{ trans('backpack_menu.commerce') }}</li>
 
+
+<li class="nav-item d-block d-lg-none"><a class="nav-link" href="{{ backpack_url('order') }}"><i class="nav-icon las la-shopping-cart"></i> <span>{{ trans('backpack_menu.orders') }}</span> <span class="badge badge-{{ $orders > 0? 'warning' : 'light' }}" style="position:initial">{{ $orders }}</span></a></li>
+<li class="nav-item d-block d-lg-none"><a class="nav-link" href="{{ backpack_url('feedback') }}"><i class="nav-icon las la-envelope-open-text"></i> <span>{{ trans('backpack_menu.feedback') }}</span> <span class="badge badge-{{ $feedback > 0? 'warning' : 'light' }}" style="position:initial">{{ $feedback }}</span></a></li>
+<li class="nav-item d-block d-lg-none"><a class="nav-link" href="{{ backpack_url('review') }}"><i class="nav-icon las la-comments"></i> <span>{{ trans('backpack_menu.reviews') }}</span> <span class="badge badge-{{ $reviews > 0? 'warning' : 'light' }}" style="position:initial">{{ $reviews }}</span></a></li>
+
 <!-- START SHOP -->
 <li class="nav-item nav-dropdown">
 	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-store"></i> {{ trans('backpack_menu.shop') }}</a>

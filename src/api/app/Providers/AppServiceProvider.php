@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
       //     'Backpack\Store\app\Models\Product' => 'App\Models\Override\Product',
       // ]);
 
-      \View::composer('backpack::inc.topbar_left_content', function ($view) {
+      \View::composer(['backpack::inc.topbar_left_content', 'backpack::inc.sidebar_content'], function ($view) {
 		    $orders = Order::where('status','new')->count();
 		    $reviews = Review::where('is_moderated', 0)->count();
 		    $feedback = Feedback::where('status', 'new')->count();

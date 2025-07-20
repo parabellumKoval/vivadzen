@@ -1,6 +1,7 @@
 <!-- =================================================== -->
 <!-- ========== Top menu items (ordered left) ========== -->
 <!-- =================================================== -->
+ <!--  d-md-down-none -->
 <ul class="nav navbar-nav d-md-down-none">
 
     @if (backpack_auth()->check())

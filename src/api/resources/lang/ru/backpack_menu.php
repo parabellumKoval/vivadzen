@@ -35,4 +35,7 @@ return [
     'ai_generation_history' => 'Генераций контента',
     'ai_generation' => 'OpenAI',
     'image_generation_history' => 'Генерация изображений',
+    'orders' => 'Заказы',
+    'feedback' => 'Обратная связь',
+    'reviews' => 'Отзывы',
 ];
