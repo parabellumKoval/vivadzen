@@ -75,17 +75,6 @@ Options = UnsafeLegacyRenegotiation/' /etc/ssl/openssl.cnf
 
 
 ARG MY_USER=www-data
-# ARG MY_UID=1000
-# ARG MY_GROUP=staff
-
-# Create system user to run Composer and Artisan Commands
-# RUN useradd -G www-data,root -u ${MY_UID} -d /home/${MY_USER} ${MY_USER}
-# RUN mkdir -p /home/${MY_USER}/.composer && \
-#     chown -R ${MY_USER}:${MY_USER} /home/${MY_USER}
-
-# USER ${MY_USER}
-
-# COPY ./../src/api/storage /var/www/html/storage
 
 RUN chown -R ${MY_USER}:${MY_USER} /var/www/html && \
     chmod -R 755 /var/www/html/storage && \

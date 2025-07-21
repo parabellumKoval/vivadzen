@@ -77,13 +77,15 @@ class FillBrandWebsite extends Command
 
       $langs_list = $this->langs_list;
 
-	    $brands = Brand::all();
+	    $brands = Brand::whereNull('extras->website')
+               ->orWhere('extras->website', '=', '')
+               ->get();
 
       $bar = $this->output->createProgressBar($brands->count());
       $bar->start();
 
       foreach($brands as $index => $brand) {
-        if ( $index >= 2) break;
+        // if ( $index >= 2) break;
 
         $response = $this->getWebsite($brand);
         $url = $this->extractAndConvertLink($response);

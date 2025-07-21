@@ -17,9 +17,12 @@ use App\Models\Libretranslate;
 use Backpack\Settings\app\Models\Settings;
 
 use OpenAI;
+use App\Console\Commands\Openai\Traits\CategoryImage;
 
 class SearchImages extends Command
 {
+    use CategoryImage;
+
     /**
      * The name and signature of the console command.
      *
@@ -46,7 +49,6 @@ class SearchImages extends Command
 
     protected $opts = null;
 
-    public $category_items_limit = 2;
     public $product_items_limit = 2;
 
     const MIN_PRODUCT_IMAGE_WIDTH = 500;
@@ -147,7 +149,7 @@ class SearchImages extends Command
       $this->settings = Settings::where('key', 'image_generation_settings')->first();
 
       if (!$this->settings) {
-          $this->error('DeepL translation settings not found.');
+          $this->error('Image generation settings not found.');
           return 1;
       }else {
         $this->opts = $this->settings->extras;
@@ -174,6 +176,87 @@ class SearchImages extends Command
       // }
 
     }
+
+    /**
+     * Method autoloadProductImages
+     *
+     * @return void
+     */
+    private function autoloadProductImages() {
+
+      $images_limit = isset($this->opts['product_images_count']) && $this->opts['product_images_count'] > 0? $this->opts['product_images_count']: 0;
+
+      if(!$images_limit) {
+        $this->info('Product images limit is not set in settings or equal to 0. Exiting.');
+        return;
+      }
+
+      $is_only_active = $this->opts['active_products_only'] ?? true;
+      $is_only_in_stock = $this->opts['in_stock_products_only'] ?? true;
+      $min_price = $this->opts['min_price'] ?? 0;
+
+	    $products = Product::where(function($query) {
+        $query->where('images', null);
+        $query->orWhereRaw('JSON_LENGTH(images) = ? ', 0);
+      })
+      ->when($is_only_active, function($query) {
+        $query->where('is_active', 1);
+      })
+      ->when($is_only_in_stock, function($query) {
+        $query->whereHas('sp', function($query) {
+          $query->where('in_stock', '>', 0);
+        });
+      })
+      ->when($min_price, function($query) use ($min_price) {
+        $query->whereHas('sp', function($query) use ($min_price) {
+          $query->where('price', '>=', $min_price);
+        });
+      });
+
+      $products_count = $products->count();
+      $products_cursor = $products->cursor();
+
+      $bar = $this->output->createProgressBar($products_count);
+      $bar->start();
+
+      foreach($products_cursor as $index => $product) {
+        if ($this->product_items_limit !== null && $index >= $this->product_items_limit) break;
+
+        $query = $this->getProductSearchQuery($product);
+        
+        dd($query);
+        if(!$query) {
+          continue;
+        }
+
+        $images = $this->findImages($query, $images_limit, self::MIN_PRODUCT_IMAGE_WIDTH, self::MIN_PRODUCT_IMAGE_HEIGHT);
+
+        if(!$images) {
+          continue;
+        }
+
+        $images_array = [];
+
+        foreach($images as $image) {
+          $images_array[] = [
+            'src' => $image['imageUrl'],
+            'alt' => null,
+            'title' => null,
+          ];
+        }
+
+        $product->images = $images_array;
+        $product->is_images_generated = 1;
+        $product->save();
+
+        $this->info('Product ' . $product->id . ' - https://djini.com.ua/' . $product->slug  . ' processed');
+        $bar->advance();
+      }
+
+      $bar->finish();
+    }
+
+       
         
     /**
      * Method getProductSearchQuery
@@ -247,201 +330,6 @@ class SearchImages extends Command
         ];
     }
 
-    /**
-     * Method getCategorySearchQuery
-     *
-     * @param $category $category [explicite description]
-     *
-     * @return void
-     */
-    private function getCategorySearchQuery($category) {
-      
-      $category_ru_name = $category->getTranslation('name', 'ru');
-      $category_uk_name = $category->getTranslation('name', 'uk');
-
-      if(!empty($category_ru_name)) {
-        $response = Libretranslate::translate($category_ru_name, 'ru', 'en');
-      }elseif(!empty($category_uk_name)) {
-        $response = Libretranslate::translate($category_uk_name, 'uk', 'en');
-      }else {
-        $this->info('Category ' . $category->id . ' - https://djini.com.ua/' . $category->slug  . ' has no name in ru or uk. Skipping.');
-        return null;
-      }
-
-      if($response['success'] !== true) {
-        \Log::error('Libretranslate error: ' . $response['error']);
-        return null;
-      }
-
-      $query = "{$response['translated']} stock image free";
-      return $query;
-    }
-
-
-    /**
-     * Method autoloadCategoryImages
-     *
-     * @return void
-     */
-    private function autoloadCategoryImages() {
-      $images_limit = isset($this->opts['category_images_count']) && $this->opts['category_images_count'] > 0? $this->opts['category_images_count']: 0;
-
-      if(!$images_limit) {
-        $this->info('Category images limit is not set in settings or equal to 0. Exiting.');
-        return;
-      }
-
-      $is_only_active = $this->opts['active_categories_only'] ?? true;
-      $is_only_with_products = $this->opts['categories_with_products_only'] ?? true;
-
-      $categories = Category::where(function($query) {
-        $query->whereNull('images')
-              ->orWhereRaw('JSON_LENGTH(images) = 0')
-              ->orWhere(function ($q) {
-                  $q->whereRaw("
-                      JSON_TYPE(images) = 'array' AND 
-                      JSON_CONTAINS(
-                          JSON_EXTRACT(images, '$'),
-                          JSON_OBJECT('src', CAST(NULL AS JSON))
-                      )
-                  ");
-              })
-              ->orWhere(function ($q) {
-                  $q->whereRaw("
-                      JSON_TYPE(images) = 'array' AND 
-                      JSON_CONTAINS(
-                          JSON_EXTRACT(images, '$'),
-                          JSON_OBJECT('src', '')
-                      )
-                  ");
-              });
-      })
-      ->when($is_only_active, function($query) {
-        $query->where('is_active', 1);
-      })
-      ->when($is_only_with_products, function($query) {
-        $query->whereHas('products');
-      });
-
-      $categories_count = $categories->count();
-      $categories_cursor = $categories->cursor();
-
-      $bar = $this->output->createProgressBar($categories_count);
-      $bar->start();
-
-      foreach($categories_cursor as $index => $category) {
-        if ($this->category_items_limit !== null && $index >= $this->category_items_limit) break;
-
-        $query = $this->getCategorySearchQuery($category);
-        
-        if(!$query) {
-          continue;
-        }
-
-        $images = $this->findImages($query, $images_limit, self::MIN_CATEGORY_IMAGE_WIDTH, self::MIN_CATEGORY_IMAGE_HEIGHT);
-
-        if(!$images) {
-          continue;
-        }
-
-        $images_array = [];
-        foreach($images as $image) {
-          $images_array[] = [
-            'src' => $image['imageUrl'],
-            'alt' => null,
-            'title' => null,
-          ];
-        }
-
-        $category->images = $images_array;
-        $category->is_images_generated = 1;
-        $category->save();
-
-        $this->info('Category ' . $category->id . ' - ' . $category->slug  . ' processed');
-        $bar->advance();
-      }
-      $bar->finish();
-    }
-
-    /**
-     * Method autoloadProductImages
-     *
-     * @return void
-     */
-    private function autoloadProductImages() {
-
-      $images_limit = isset($this->opts['product_images_count']) && $this->opts['product_images_count'] > 0? $this->opts['product_images_count']: 0;
-
-      if(!$images_limit) {
-        $this->info('Product images limit is not set in settings or equal to 0. Exiting.');
-        return;
-      }
-
-      $is_only_active = $this->opts['active_products_only'] ?? true;
-      $is_only_in_stock = $this->opts['in_stock_products_only'] ?? true;
-      $min_price = $this->opts['min_price'] ?? 0;
-
-	    $products = Product::where(function($query) {
-        $query->where('images', null);
-        $query->orWhereRaw('JSON_LENGTH(images) = ? ', 0);
-      })
-      ->when($is_only_active, function($query) {
-        $query->where('is_active', 1);
-      })
-      ->when($is_only_in_stock, function($query) {
-        $query->whereHas('sp', function($query) {
-          $query->where('in_stock', '>', 0);
-        });
-      })
-      ->when($min_price, function($query) use ($min_price) {
-        $query->whereHas('sp', function($query) use ($min_price) {
-          $query->where('price', '>=', $min_price);
-        });
-      });
-
-      $products_count = $products->count();
-      $products_cursor = $products->cursor();
-
-      $bar = $this->output->createProgressBar($products_count);
-      $bar->start();
-
-      foreach($products_cursor as $index => $product) {
-        if ($this->product_items_limit !== null && $index >= $this->product_items_limit) break;
-
-        $query = $this->getProductSearchQuery($product);
-        
-        if(!$query) {
-          continue;
-        }
-
-        $images = $this->findImages($query, $images_limit, self::MIN_PRODUCT_IMAGE_WIDTH, self::MIN_PRODUCT_IMAGE_HEIGHT);
-
-        if(!$images) {
-          continue;
-        }
-
-        $images_array = [];
-
-        foreach($images as $image) {
-          $images_array[] = [
-            'src' => $image['imageUrl'],
-            'alt' => null,
-            'title' => null,
-          ];
-        }
-
-        $product->images = $images_array;
-        $product->is_images_generated = 1;
-        $product->save();
-
-        $this->info('Product ' . $product->id . ' - https://djini.com.ua/' . $product->slug  . ' processed');
-        $bar->advance();
-      }
-
-      $bar->finish();
-    }
-
-       
     /**
      * Method findImages
      *
