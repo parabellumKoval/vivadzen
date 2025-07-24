@@ -22,6 +22,7 @@
     "elasticsearch/elasticsearch": "^8.18",
     "fruitcake/laravel-cors": "^2.0",
     "google-gemini-php/client": "^1.0",
+    "google/cloud-vision": "^1.10",
     "grok-php/client": "^1.1",
     "jenssegers/imagehash": "^0.9.0",
     "laravel/framework": "^8.75",

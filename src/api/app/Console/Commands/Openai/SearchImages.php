@@ -49,7 +49,7 @@ class SearchImages extends Command
 
     protected $opts = null;
 
-    public $product_items_limit = 2;
+    public $product_items_limit = 50;
 
     const MIN_PRODUCT_IMAGE_WIDTH = 500;
     const MIN_PRODUCT_IMAGE_HEIGHT = 500;
@@ -199,6 +199,9 @@ class SearchImages extends Command
         $query->where('images', null);
         $query->orWhereRaw('JSON_LENGTH(images) = ? ', 0);
       })
+      ->whereHas('brand', function($query) {
+          $query->whereNotNull('extras->website')->where('extras->website', '!=', '');
+      })
       ->when($is_only_active, function($query) {
         $query->where('is_active', 1);
       })
@@ -224,10 +227,12 @@ class SearchImages extends Command
 
         $query = $this->getProductSearchQuery($product);
         
-        dd($query);
         if(!$query) {
           continue;
         }
+
+        $this->info($query);
+        continue;
 
         $images = $this->findImages($query, $images_limit, self::MIN_PRODUCT_IMAGE_WIDTH, self::MIN_PRODUCT_IMAGE_HEIGHT);
 

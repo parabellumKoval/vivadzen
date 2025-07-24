@@ -25,14 +25,14 @@ class FillProducts extends BaseAi
     protected $description = 'Update catalog cache';
 
 
-    const TEST_LIMITS = 1;
+    const TEST_LIMITS = null;
     const DEFAULT_BRANDS_CHUNK_SIZE = 10;
     const DEFAULT_CATEGORIES_CHUNK_SIZE = 10;
     const DEFAULT_NAMES_CHUNK_SIZE = 10;
     const DEFAULT_MERCHANTS_CHUNK_SIZE = 10;
     
     private $test_limits = null;
-    private $chunk_limit = 1;
+    private $chunk_limit = null;
 
     private $lang = 'uk';
     

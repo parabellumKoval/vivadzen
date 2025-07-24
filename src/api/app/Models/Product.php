@@ -17,7 +17,8 @@ use Backpack\Store\app\Models\Attribute;
 use Backpack\Store\app\Models\AttributeValue;
 use Backpack\Store\app\Models\AttributeProduct;
 
-use Backpack\Store\app\Models\Brand;
+// use Backpack\Store\app\Models\Brand;
+use App\Models\Brand;
 
 // REVIEWS
 use Backpack\Reviews\app\Traits\Reviewable;
@@ -92,6 +93,16 @@ class Product extends BaseProduct implements Feedable
   public function categories()
   {
     return $this->belongsToMany(Category::class, 'ak_category_product');
+  }
+
+  /**
+   * brand
+   *
+   * @return void
+   */
+  public function brand()
+  {
+    return $this->belongsTo(Brand::class, 'brand_id');
   }
 
   /**
