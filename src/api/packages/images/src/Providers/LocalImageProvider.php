@@ -1,25 +1,35 @@
 <?php
 
-namespace App\Services\ImageUploader;
+namespace ParabellumKoval\BackpackImages\Providers;
 
 use Illuminate\Support\Facades\Storage;
+use ParabellumKoval\BackpackImages\Contracts\ConfigurableImageProvider;
+use ParabellumKoval\BackpackImages\Contracts\ImageStorageProvider;
 
-class LocalStorageProvider implements StorageProviderInterface
+class LocalImageProvider implements ImageStorageProvider, ConfigurableImageProvider
 {
     protected string $disk;
+
     protected string $urlPrefix;
 
     public function __construct(string $disk, string $urlPrefix)
     {
         $this->disk = $disk;
-        // Убираем завершающий слэш для корректной конкатенации URL
         $this->urlPrefix = rtrim($urlPrefix, '/');
+    }
+
+    public static function fromConfig(array $config): static
+    {
+        return new static(
+            $config['disk'] ?? 'public',
+            $config['url_prefix'] ?? ''
+        );
     }
 
     public function upload(string $content, string $path): string
     {
-        // Сохраняем контент файла на указанный диск по заданному пути
         Storage::disk($this->disk)->put($path, $content);
+
         return $path;
     }
 
@@ -35,7 +45,12 @@ class LocalStorageProvider implements StorageProviderInterface
 
     public function getUrl(string $path): string
     {
-        // Формируем публичный URL на основе префикса и относительного пути
-        return $this->urlPrefix . '/' . ltrim($path, '/');
+        $prefix = $this->urlPrefix;
+
+        if ($prefix === '') {
+            return ltrim($path, '/');
+        }
+
+        return $prefix . '/' . ltrim($path, '/');
     }
 }

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-use App\Services\ImageUploader\Facades\ImageUploader;
+use ParabellumKoval\BackpackImages\Facades\ImageUploader;
 
 use App\Models\Category;
 use App\Models\StoreProduct;
