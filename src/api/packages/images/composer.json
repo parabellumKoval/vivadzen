@@ -1,0 +1,28 @@
+{
+    "name": "parabellumkoval/backpack-images",
+    "description": "Reusable image uploader and Backpack helpers for Laravel 12.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "bunnycdn/storage": "^3.4",
+        "illuminate/support": "^12.0",
+        "illuminate/filesystem": "^12.0",
+        "illuminate/http": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ParabellumKoval\\BackpackImages\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ParabellumKoval\\BackpackImages\\BackpackImagesServiceProvider"
+            ],
+            "aliases": {
+                "ImageUploader": "ParabellumKoval\\BackpackImages\\Facades\\ImageUploader"
+            }
+        }
+    }
+}

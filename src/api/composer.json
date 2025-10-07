@@ -20,6 +20,7 @@
         "parabellumkoval/backpack-profile": "dev-main",
         "parabellumkoval/backpack-reviews": "dev-main",
         "parabellumkoval/backpack-settings": "v2.x-dev",
+        "parabellumkoval/backpack-images": "dev-main",
         "parabellumkoval/backpack-store": "dev-multistore",
         "parabellumkoval/backpack-tag": "dev-main",
         "parabellumkoval/crud": "*",

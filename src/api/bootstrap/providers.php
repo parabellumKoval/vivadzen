@@ -5,5 +5,5 @@ return [
     App\Providers\RouteServiceProvider::class,
 
     // App
-    App\Services\ImageUploader\ImageUploaderServiceProvider::class
+    ParabellumKoval\BackpackImages\BackpackImagesServiceProvider::class
 ];

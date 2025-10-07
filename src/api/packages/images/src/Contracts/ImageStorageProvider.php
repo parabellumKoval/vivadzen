@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Services\ImageUploader;
+namespace ParabellumKoval\BackpackImages\Contracts;
 
-interface StorageProviderInterface
+interface ImageStorageProvider
 {
     public function upload(string $content, string $path): string;
+
     public function exists(string $path): bool;
+
     public function delete(string $path): bool;
+
     public function getUrl(string $path): string;
 }
