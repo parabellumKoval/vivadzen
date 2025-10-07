@@ -8,17 +8,20 @@ return [
   // Is default review moderated
   'is_moderated_default' => false,
 
+  'can_moderate' => fn () => backpack_auth()->check(),
+
   // CATALOG
   'per_page' => 12,
 
   // OWNER
-  'owner_model' => null,
+  'owner_model' => 'App\Models\User',
 
   //GUARD
   'auth_guard' => 'profile',
 
+
   // Seed batabase
-  'reviewable_model' => 'Backpack\Store\app\Models\Product',
+  'reviewable_model' => null,
 
   'rating_type' => 'detailed', // 'detailed' - allow multiple rating params, 'simple' - allow only single digit  
 
@@ -32,19 +35,27 @@ return [
 
   // Override
   'review_model' => 'Backpack\Reviews\app\Models\Review',
-  'review_controller_api' => 'App\Http\Controllers\Api\ReviewController',
+  'review_controller_api' => 'Backpack\Reviews\app\Http\Controllers\Api\ReviewController',
 
   // Resources
   'resource' => [
     'small' => 'Backpack\Reviews\app\Http\Resources\ReviewSmallResource',
-    'medium' => 'App\Http\Resources\ReviewMediumResource',
-    'large' => 'App\Http\Resources\ReviewLargeResource'
+    'medium' => 'Backpack\Reviews\app\Http\Resources\ReviewMediumResource',
+    'large' => 'Backpack\Reviews\app\Http\Resources\ReviewLargeResource'
   ],
   
   // Reviewable
   'reviewable_types_list' => [
-    'Backpack\Store\app\Models\Product' => 'Товар',
-    'Backpack\Articles\app\Models\Article' => 'Статья'
+    'product' => [
+      'model' => 'Backpack\Store\app\Models\Product',
+      'name' => 'Товар',
+      'name_plur' => 'Товары',
+    ],
+    'article' => [
+      'model' => 'Backpack\Articles\app\Models\Article',
+      'name' => 'Статья',
+      'name_plur' => 'Статьи',
+    ]
   ],
 
   // Validation fields
@@ -82,26 +93,10 @@ return [
     ],
     'provider' => [
       'rules' => 'required|string|in:id,data,auth',
-      'hidden' => true
+      'hidden' => true,
     ],
     'extras' => [
       'rules' => 'nullable|array'
-    ],
-    'link' => [
-      'rules' => 'nullable|string|min:2|max:255',
-      'store_in' => 'extras',
-    ],
-    'advantages' => [
-      'rules' => 'nullable|string|min:2|max:255',
-      'store_in' => 'extras',
-    ],
-    'flaws' => [
-      'rules' => 'nullable|string|min:2|max:255',
-      'store_in' => 'extras',
-    ],
-    'verified_purchase' => [
-      'rules' => 'nullable|boolean',
-      'store_in' => 'extras',
     ]
   ]
 ];

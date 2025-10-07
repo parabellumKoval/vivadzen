@@ -42,7 +42,7 @@ return [
             // How many items should be shown by default by the Datatable?
             // This value can be overwritten on a specific CRUD by calling
             // $this->crud->setDefaultPageLength(50);
-            'defaultPageLength' => 25,
+            'defaultPageLength' => 10,
 
             // A 1D array of options which will be used for both the displayed option and the value, or
             // A 2D array in which the first array is used to define the value options and the second array the displayed options
@@ -247,7 +247,7 @@ return [
         // "hr_HR" => "Croatian (Croatia)",
         // "hr" => "Croatian",
         // "cs_CZ" => "Czech (Czech Republic)",
-        // "cs" => "Czech",
+        "cs" => "Czech",
         // "da_DK" => "Danish (Denmark)",
         // "da" => "Danish",
         // "nl_BE" => "Dutch (Belgium)",
@@ -282,7 +282,7 @@ return [
         // "en_GB" => "English (United Kingdom)",
         // "en_US" => "English (United States)",
         // "en_ZW" => "English (Zimbabwe)",
-        // 'en' => 'English',
+        'en' => 'English',
         // "eo" => "Esperanto",
         // "et_EE" => "Estonian (Estonia)",
         // "et" => "Estonian",
@@ -341,7 +341,7 @@ return [
         // "de_LI" => "German (Liechtenstein)",
         // "de_LU" => "German (Luxembourg)",
         // "de_CH" => "German (Switzerland)",
-        // "de" => "German",
+        "de" => "German",
         // "el_CY" => "Greek (Cyprus)",
         // "el_GR" => "Greek (Greece)",
         // "el" => "Greek",
@@ -542,7 +542,7 @@ return [
         // "es_US" => "Spanish (United States)",
         // "es_UY" => "Spanish (Uruguay)",
         // "es_VE" => "Spanish (Venezuela)",
-        // "es" => "Spanish",
+        "es" => "Spanish",
         // "sw_KE" => "Swahili (Kenya)",
         // "sw_TZ" => "Swahili (Tanzania)",
         // "sw" => "Swahili",

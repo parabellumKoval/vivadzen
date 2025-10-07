@@ -24,7 +24,7 @@ return [
     // ----
 
     // Project name. Shown in the window title.
-    'project_name' => 'DJINI.com.ua',
+    'project_name' => 'Backpack Admin Panel',
 
     // When clicking on the admin panel's top-left logo/name,
     // where should the user be redirected?
@@ -60,9 +60,6 @@ return [
 
         // Example (load font-awesome instead of line-awesome):
         // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css',
-        'packages/backpack/tag/css/tag.css',
-        'css/admin/props.css',
-        'css/admin/name.css',
     ],
 
     // CSS files that are loaded in all pages, using Laravel's mix() helper
@@ -75,7 +72,7 @@ return [
     // ------
 
     // Menu logo. You can replace this with an <img> tag if you have a logo.
-    'project_logo'   => '<b>DJINI</b>com.ua',
+    'project_logo'   => '<b>Back</b>pack',
 
     // Show / hide breadcrumbs on admin panel pages.
     'breadcrumbs' => true,
@@ -109,13 +106,13 @@ return [
     // change background color with bg-dark, bg-primary, bg-secondary, bg-danger, bg-warning, bg-success, bg-info, bg-blue, bg-light-blue, bg-indigo, bg-purple, bg-pink, bg-red, bg-orange, bg-yellow, bg-green, bg-teal, bg-cyan, bg-white
 
     // Developer or company name. Shown in footer.
-    'developer_name' => 'Andrej Koval',
+    'developer_name' => 'Cristian Tabacitu',
 
     // Developer website. Link in footer. Type false if you want to hide it.
-    'developer_link' => 'http://andrej-koval.com',
+    'developer_link' => 'http://tabacitu.ro',
 
     // Show powered by Laravel Backpack in the footer? true/false
-    'show_powered_by' => false,
+    'show_powered_by' => true,
 
     // -------
     // SCRIPTS
@@ -139,10 +136,6 @@ return [
         // 'https://unpkg.com/vue@2.4.4/dist/vue.min.js',
         // 'https://unpkg.com/react@16/umd/react.production.min.js',
         // 'https://unpkg.com/react-dom@16/umd/react-dom.production.min.js',
-        'packages/backpack/tag/js/tag.js',
-
-        // Initialize Bootstrap tooltips
-        'js/tooltips.js',
     ],
 
     // JS files that are loaded in all pages, using Laravel's mix() helper
@@ -157,7 +150,10 @@ return [
     // All JS and CSS assets defined above have this string appended as query string (?v=string).
     // If you want to manually trigger cachebusting for all styles and scripts,
     // append or prepend something to the string below, so that it's different.
-    'cachebusting_string' => \PackageVersions\Versions::getVersion('backpack/crud'),
+    'cachebusting_string' => (class_exists(\Composer\InstalledVersions::class) 
+        && \Composer\InstalledVersions::isInstalled('backpack/crud'))
+    ? \Composer\InstalledVersions::getPrettyVersion('backpack/crud')
+    : (env('BACKPACK_CACHEBUST', 'dev')),
 
     /*
     |--------------------------------------------------------------------------
@@ -242,7 +238,7 @@ return [
     */
 
     // Fully qualified namespace of the User model
-    'user_model_fqn' => config('auth.providers.users.model'),
+    'user_model_fqn' => App\Models\Admin::class,
     // 'user_model_fqn' => App\User::class, // works on Laravel <= 7
     // 'user_model_fqn' => App\Models\User::class, // works on Laravel >= 8
 

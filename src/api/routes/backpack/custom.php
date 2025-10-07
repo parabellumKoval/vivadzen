@@ -16,20 +16,4 @@ Route::group([
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
-  Route::crud('prompt', 'PromptCrudController');
-  Route::crud('region', 'RegionCrudController');
-  Route::crud('feed', 'FeedCrudController');
-  Route::crud('payment', 'PaymentCrudController');
-
-  // 
-  Route::crud('translation-history', 'TranslationHistoryCrudController');
-  Route::post('translation-history/settings', 'TranslationHistoryCrudController@saveSettings');
-
-  //
-  Route::crud('ai-generation-history', 'AiGenerationHistoryCrudController');
-  Route::post('ai-generation-history/settings', 'AiGenerationHistoryCrudController@saveAiGenerationSettings');
-
-  //
-  Route::crud('image-generation-history', 'ImageGenerationHistoryCrudController');
-  Route::post('image-generation-history/settings', 'ImageGenerationHistoryCrudController@saveImageGenerationSettings');
 }); // this should be the absolute last line of this file

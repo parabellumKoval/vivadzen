@@ -1,15 +1,17 @@
 # Image
-FROM php:8.1-cli
+FROM php:8.2-cli
 
 # Update dependencies
 RUN apt-get update \
+# WebP
+    && apt-get install -y libwebp-dev \
 # Install Zip
     && apt-get install -y libzip-dev zip \
     && docker-php-ext-install zip \
 # Install Git
     && apt-get install -y git \
 # Install Curl
-    && apt-get install -y libcurl3-dev curl \
+    && apt-get install -y libcurl4-openssl-dev curl \
     && docker-php-ext-install curl \
 # Install procps (required by Octane)
     && apt-get install -y procps \
@@ -17,7 +19,7 @@ RUN apt-get update \
     && docker-php-ext-install exif \
 # Install GD
     && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-    && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ \
+    && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ --with-webp \
     && docker-php-ext-install gd \
 # Install MySql
     && docker-php-ext-install mysqli pdo pdo_mysql \

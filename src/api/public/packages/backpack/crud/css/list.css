@@ -78,13 +78,7 @@
 	#crudTable td {
 		outline: none;
 		vertical-align: middle;
-    padding: 6px 14px 6px 2px;
 	}
-
-
-	#crudTable td:first-child {
-    padding-left: 14px;
-  }
 
 	#crudTable td > span {
 		vertical-align: middle;
@@ -225,8 +219,8 @@
 		}
 	}
 
-	#crudTable thead>tr>th, #crudTable tfoot>tr>th, table.dataTable thead>tr>th {
-    padding: 12px 20px 12px 2px;
+	#crudTable thead>tr>th, table.dataTable thead>tr>th {
+		padding-right: 30px;
 	}
 
 	#crudTable_wrapper .dt-buttons .dt-button-collection,

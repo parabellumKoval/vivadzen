@@ -1,6 +1,6 @@
 version: '0.1'
 
-name: djini
+name: vivadzen
 
 services:
   nginx:
@@ -10,10 +10,8 @@ services:
     volumes:
       - ./src/api/public:/var/www/html/public:ro
       - .docker/dev/nginx/sites-enabled:/etc/nginx/sites-enabled:ro
-      # - .docker/dev/nginx/snippets:/etc/nginx/snippets:ro
       - .docker/dev/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      # - .docker/dev/nginx/ssl:/etc/nginx/ssl:ro
-    container_name: djini_nginx
+    container_name: vivadzen_nginx
     hostname: nginx
     ports:
       - "9001:9000"
@@ -55,11 +53,7 @@ services:
         MY_UID: ${MY_UID}
     volumes:
       - ./src/api:/var/www/html
-      # - mysql:/var/www/html/certs
-      # - mysql/client-key.pem:/var/lib/mysql/client-key.pem
-      # - mysql/client-cert.pem:/var/lib/mysql/client-cert.pem
-      # - mysql/ca.pem:/var/lib/mysql/ca.pem
-    container_name: djini_dashboard
+    container_name: vivadzen_dashboard
     hostname: dashboard
     ports:
       - "9000:9000"
@@ -80,7 +74,7 @@ services:
         MY_UID: ${MY_UID}
     volumes:
       - ./src/api:/var/www/html
-    container_name: djini_api
+    container_name: vivadzen_api
     hostname: api.local
     ports:
       - "8000:8000"
@@ -90,38 +84,6 @@ services:
     depends_on:
       - mysql
     working_dir: /var/www/html
-
-
-  stable-diffusion-webui:
-    image: ghcr.io/ai-dock/stable-diffusion-webui:v2-cpu-22.04-v1.10.1
-    container_name: sd-webui
-    ports:
-      - "7860:7860"
-    volumes:
-      - ./data:/data
-      - ./models:/stable-diffusion-webui/models
-    environment:
-      - CLI_ARGS=--xformers --listen --api
-    restart: unless-stopped
-
-  # frontend:
-  #   build:
-  #     dockerfile: .docker/dev/frontend/Dockerfile
-  #   volumes:
-  #     - ./src/frontend:/var/www/html
-  #     - /var/www/html/node_modules
-  #   hostname: frontend
-  #   container_name: frontend
-  #   tty: true
-  #   ports:
-  #     - "3000:3000"
-  #     - "24678:24678"
-  #   networks:
-  #     - api
-  #   restart: unless-stopped
-  #   # depends_on:
-  #   #   - api
-  #   command: npm run dev
 
 
   proxy:
@@ -143,14 +105,12 @@ services:
   mysql:
     build:
       dockerfile: .docker/dev/mysql/Dockerfile
-    container_name: djini_mysql
+    container_name: vivadzen_mysql
     hostname: mysql
     tty: true
     ports: 
         - "3307:3306"
     volumes: 
-        # - mysql:/var/lib/mysql
-        # - ./mysql/logs:/var/log/mysql
         - ./mysql/lib:/var/lib/mysql
         - ./mysql/logs:/var/log/mysql
         - ./mysql/dumps:/var/dumps
@@ -169,7 +129,7 @@ services:
     build:
       dockerfile: .docker/dev/phpmyadmin/Dockerfile
     restart: always
-    container_name: djini_phpmyadmin
+    container_name: vivadzen_phpmyadmin
     hostname: phpmyadmin
     ports:
       - 8080:80
@@ -224,41 +184,18 @@ services:
       - 9200:9200
     restart: unless-stopped
 
-# DAILY
-  # backup_daily:
-  #   build:
-  #     dockerfile: .docker/dev/backup/Dockerfile
-  #   depends_on:
-  #     - mysql  
-  #   networks:
-  #     - api
-  #   environment:
-  #     LOCAL_PATH: /var/www/html/public
-  #     DB_USER: ${DB_USERNAME}
-  #     DB_HOST: ${DB_HOST}
-  #     DB_PASS: ${DB_PASSWORD}
-  #     DB_NAME: ${DB_DATABASE}
-  #     FTP_PROTO: ftp
-  #     FTP_PORT: ${BACKUP_FTP_PORT}
-  #     FTP_HOST: ${BACKUP_FTP_HOST}
-  #     FTP_USER: ${BACKUP_FTP_USERNAME}
-  #     FTP_PASS: ${BACKUP_FTP_PASSWORD}
-  #     REMOTE_PATH: ${BACKUP_FTP_ROOT}
-  #   volumes:
-  #     - ./src/api/public:/var/www/html/public:ro
+  meilisearch:
+    image: getmeili/meilisearch:v1.11
+    environment:
+      MEILI_ENV: "development"
+    ports: ["7700:7700"]
+    volumes:
+      - meili_data:/meili_data
 
-  # backup_cleanup_daily:
-  #   image: ambroisemaupate/ftp-cleanup
-  #   environment:
-  #     FTP_PROTO: ftp
-  #     FTP_PORT: ${BACKUP_FTP_PORT}
-  #     FTP_HOST: ${BACKUP_FTP_HOST}
-  #     FTP_USER: ${BACKUP_FTP_USERNAME}
-  #     FTP_PASS: ${BACKUP_FTP_PASSWORD}
-  #     STORE_DAYS: 7
-  #     FTP_PATH: ${BACKUP_FTP_ROOT}
       
 volumes:
+  meili_data:
+
   opensearch-data:
     driver: local
 

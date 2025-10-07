@@ -1,16 +1,28 @@
 <?php
 
 return [
+    'catalog_table_cache' => true,
+    'slug_map_ttl' => env('BP_STORE_SLUG_MAP_TTL', 3600),
+    
+
+    'base_currency' => 'USD',
+    
     'currency' => [
-      'value' => 'грн.',
-      'symbol' => 'UAH',
+      'value' => 'usd',
+      'symbol' => '$',
     ],
     
+    'path' => [
+      'image' => [
+        'placeholder' => '/public/images/noimage.png'
+      ]
+    ],
+
     // CATALOG
     'per_page' => 12,
 
     // GUARD
-    'auth_guard' => null,
+    'auth_guard' => 'profile',
     
     // USER
     'user_model' => 'Backpack\Profile\app\Models\Profile',
@@ -67,57 +79,28 @@ return [
           'rules' => 'array:method,status',
           'store_in' => 'info',
           'method' => [
-            'rules' => 'required|in:online,cash'
+            'rules' => 'required|in:liqpay,cash'
           ]
         ],
         
         'delivery' => [
-          'rules' => 'array:settlement,settlementRef,street,streetRef,area,region,type,house,room,zip,method,warehouse,warehouseRef',
+          'rules' => 'array:city,address,zip,method,warehouse',
           'store_in' => 'info',
           'method' => [
             'rules' => 'required|in:address,warehouse,pickup'
           ],
           'warehouse' => [
-            'rules' => 'required_if:delivery.method,warehouse|nullable|string|min:1|max:500'
+            'rules' => 'required_if:delivery.method,warehouse|string|min:1|max:500'
           ],
-          'warehouseRef' => [
-            'rules' => 'nullable|string|min:1|max:500'
+          'city' => [
+            'rules' => 'required_if:delivery.method,address,warehouse|string|min:2|max:255'
           ],
-          'settlement' => [
-            'rules' => 'required_if:delivery.method,address,warehouse|nullable|string|min:2|max:500'
-          ],
-          'settlementRef' => [
-            'rules' => 'nullable|string|min:1|max:500'
-          ],
-          'area' => [
-            'rules' => 'nullable|string|min:1|max:500'
-          ],
-          'region' => [
-            'rules' => 'nullable|string|min:1|max:500'
-          ],
-          'type' => [
-            'rules' => 'nullable|string|min:1|max:500'
-          ],
-          'street' => [
-            'rules' => 'required_if:delivery.method,address|nullable|string|min:2|max:255'
-          ],
-          'streetRef' => [
-            'rules' => 'nullable|string|min:2|max:255'
-          ],
-          'house' => [
-            'rules' => 'required_if:delivery.method,address|nullable|string|min:1|max:50'
-          ],
-          'room' => [
-            'rules' => 'nullable|string|min:1|max:50'
+          'address' => [
+            'rules' => 'required_if:delivery.method,address|string|min:2|max:255'
           ],
           'zip' => [
-            'rules' => 'required_if:delivery.method,address|nullable|string|min:5|max:255'
-          ]
-        ],
-
-        'comment' => [
-          'rules' => 'nullable|string|min:1|max:1000',
-          'store_in' => 'info'
+            'rules' => 'required_if:delivery.method,address|string|min:5|max:255'
+          ],
         ],
         
         'products' => [
@@ -148,7 +131,7 @@ return [
             'rules' => 'required_if:provider,data|string|min:2|max:80'
           ],
           'email' => [
-            'rules' => 'nullable|email|min:2|max:150'
+            'rules' => 'required_if:provider,data|email|min:2|max:150'
           ],
         ]
       ]
@@ -156,30 +139,25 @@ return [
 
     // CATEGORIES
     'category' => [
-      'class' => 'App\Models\Category',
-
       'depth_level' => 3,
 
       'per_page' => 12,
 
       'image' => [
-        'enable' => true,
-        'base_path' => 'https://djini-v2.b-cdn.net/categories/',
+        'base_path' => '/public/images/categories/'
       ],
 
       'resource' => [
-        'tiny' => 'App\Http\Resources\CategoryTinyResource',
-
-        'small' => 'App\Http\Resources\CategorySmallResource',
-
-        'large' => 'App\Http\Resources\CategoryLargeResource',
+        'tiny' => 'Backpack\Store\app\Http\Resources\CategoryTinyResource',
+        'small' => 'Backpack\Store\app\Http\Resources\CategorySmallResource',
+        'large' => 'Backpack\Store\app\Http\Resources\CategoryLargeResource',
       ]
     ],
 
     // PROPUCT
     'product' => [
-      'class' => 'App\Models\Product',
-      'class_admin' => 'App\Models\Admin\Product',
+      'class' => 'Backpack\Store\app\Models\Product',
+      'class_admin' => 'Backpack\Store\app\Models\Admin\Product',
 
       'seo' => [
         'enable' => true
@@ -187,7 +165,7 @@ return [
 
       'image' => [
         'enable' => true,
-        'base_path' => 'https://djini-v2.b-cdn.net/products/',
+        'base_path' => '/public/images/products'
       ],
 
       'code' => [
@@ -203,24 +181,24 @@ return [
       ],
       
       'modifications' => [
-        'enable' => true
+        'enable' => false
       ],
 
       'in_stock' => [
-        'enable' => true
+        'enable' => true,
       ],
 
 
       'resource' => [
         // PRODUCT -> resources
-        'tiny' => 'App\Http\Resources\ProductTinyResource',
+        'tiny' => 'Backpack\Store\app\Http\Resources\ProductTinyResource',
         
         // Small product resource used for catalog pages (index route)
-        'small' => 'App\Http\Resources\ProductSmallResource',
-        'medium' => 'App\Http\Resources\ProductMediumResource',
+        'small' => 'Backpack\Store\app\Http\Resources\ProductSmallResource',
+        'medium' => 'Backpack\Store\app\Http\Resources\ProductMediumResource',
         
         // Large product resource used for product page (show route)
-        'large' => 'App\Http\Resources\ProductLargeResource',
+        'large' => 'Backpack\Store\app\Http\Resources\ProductLargeResource',
     
         // Cart product resource used for order
         'cart' => 'Backpack\Store\app\Http\Resources\ProductCartResource',
@@ -237,44 +215,37 @@ return [
       'enable_icon' => false,
 
       'resource' => [
-
         'product' => 'Backpack\Store\app\Http\Resources\AttributeProductResource',
-
         'large' => 'Backpack\Store\app\Http\Resources\AttributeLargeResource',
-
         'small' => 'Backpack\Store\app\Http\Resources\AttributeSmallResource'
       ]
     ],
-
 
     // PROMOCODE
     'promocodes' => [
       'enable' => true,
 
       'resource' => [
-
         'large' => 'Backpack\Store\app\Http\Resources\PromocodeLargeResource',
-
         'small' => 'Backpack\Store\app\Http\Resources\PromocodeSmallResource'
       ],
 
     ],
-    
 
     // BRAND
     'brands' => [
-      'class' => 'App\Models\Brand',
-
       'enable' => true,
 
       'image' => [
-        'enable' => true,
-        'base_path' => 'https://djini-v2.b-cdn.net/brands/',
+        'base_path' => '/public/images/brands'
       ],
 
       'resource' => [
         'large' => 'Backpack\Store\app\Http\Resources\BrandLargeResource',
-        'small' => 'Backpack\Store\app\Http\Resources\BrandSmallResource'
+        'small' => 'Backpack\Store\app\Http\Resources\BrandSmallResource',
+        'product' => 'Backpack\Store\app\Http\Resources\BrandProductResource',
+        'filter' => 'Backpack\Store\app\Http\Resources\BrandFilterResource',
+        'filter_tiny' => 'Backpack\Store\app\Http\Resources\BrandFilterTinyResource'
       ],
 
       'alpha_groups' => [
@@ -305,59 +276,8 @@ return [
       ]
     ],
 
-
-
     // CACHE
     'cache' => [
-      'enable' => true,
-      'cases' => [
-        [
-          'params' =>  [
-            'selections' => [
-              'with_sales',
-              'in_stock'
-            ],
-            'with_products' => 1
-          ],
-          'keys' => ['selections']
-        ],[
-          'params' =>  [
-            'selections' => [
-              'top_sales',
-              'in_stock'
-            ],
-            'with_products' => 1
-          ],
-          'keys' => ['selections']
-        ],[
-          'query' => 'App\Models\Product@getCategoryCacheItemsQuery',
-          'params' =>  [
-            'with_filter' => [
-              'attributes',
-              'brands',
-              'price',
-              'selections',
-            ],
-            'with_filter_count' => [
-              'attributes',
-              'brands',
-              'price',
-              'selections',
-            ]
-          ],
-        ],[
-          'query' => 'App\Models\Product@getBrandCacheItemsQuery',
-          'params' =>  [
-            'with_filter' => [
-              'price',
-              'selections',
-            ],
-            'with_filter_count' => [
-              'price',
-              'selections',
-            ]
-          ],
-        ]
-      ]
-    ]
+      'enable' => true
+    ],
 ];

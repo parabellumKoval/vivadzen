@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Laravel\Scout\Searchable;
+// use Laravel\Scout\Searchable;
 use App\Models\Bunny;
 
 use Backpack\Store\app\Models\Brand as BaseBrand;
 
 class Brand extends BaseBrand
 {
-  use Searchable;
+  // use Searchable;
 
   private $bunny = null;
   

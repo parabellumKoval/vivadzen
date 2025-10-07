@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Laravel\Scout\Searchable;
+// use Laravel\Scout\Searchable;
 use App\Models\Bunny;
 
 use App\Models\Region;
@@ -10,7 +10,7 @@ use Backpack\Store\app\Models\Category as BaseCategory;
 
 class Category extends BaseCategory
 {
-  use Searchable;
+  // use Searchable;
 
   public $children_list = [];
   private $bunny = null;
@@ -52,6 +52,34 @@ class Category extends BaseCategory
       return $array;
   }
   
+public static function createOrUpdateCategoryChain(array $chain, string $locale)
+{
+    $parentId = null;
+    $category = null;
+
+    foreach ($chain as $categoryName) {
+        // ищем по JSON ключу name->locale
+        $category = self::where('parent_id', $parentId)
+            ->where("name->{$locale}", $categoryName)
+            ->first();
+
+        if (!$category) {
+            $category = new self();
+            $category->parent_id = $parentId;
+            $category->setTranslation('name', $locale, $categoryName);
+            $category->save();
+        } else {
+            if (!$category->hasTranslation('name', $locale)) {
+                $category->setTranslation('name', $locale, $categoryName);
+                $category->save();
+            }
+        }
+        $parentId = $category->id;
+    }
+
+    return $category;
+}
+
   /**
    * Method getAvailableCategoriesArray
    *

@@ -1,0 +1,32 @@
+<?php
+
+return [
+  'model' => 'Backpack\Store\app\Models\Product',
+
+  'model_admin' => 'Backpack\Store\app\Models\Admin\Product',
+
+  'image' => [
+    'enable' => true,
+    // 'base_path' => '/public/images/products'
+    'base_path' => '/'
+  ],
+  
+  'modifications' => [
+    'enable' => false
+  ],
+
+  'resource' => [
+    // PRODUCT -> resources
+    'tiny' => 'Backpack\Store\app\Http\Resources\ProductTinyResource',
+    
+    // Small product resource used for catalog pages (index route)
+    'small' => 'Backpack\Store\app\Http\Resources\ProductSmallResource',
+    'medium' => 'Backpack\Store\app\Http\Resources\ProductMediumResource',
+    
+    // Large product resource used for product page (show route)
+    'large' => 'Backpack\Store\app\Http\Resources\ProductLargeResource',
+
+    // Cart product resource used for order
+    'cart' => 'Backpack\Store\app\Http\Resources\ProductCartResource',
+  ]
+];

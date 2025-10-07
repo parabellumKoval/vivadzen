@@ -1,115 +1,96 @@
 {
-  "name": "laravel/laravel",
-  "type": "project",
-  "description": "The Laravel Framework.",
-  "keywords": ["framework", "laravel"],
-  "license": "MIT",
-  "require": {
-    "php": "^7.3|^8.0",
-    "algolia/algoliasearch-client-php": "^3.4",
-    "atk14/csv-reader": "^1.1",
-    "backpack/backupmanager": "3.0.1",
-    "backpack/crud": "4.1.*",
-    "backpack/filemanager": "1.1.7",
-    "backpack/langfilemanager": "^4.1",
-    "backpack/logmanager": "^4.0",
-    "backpack/permissionmanager": "^6.0",
-    "bunnycdn/storage": "^2.0",
-    "ckhandla94/backpack-import": "^1.0",
-    "corbpie/bunny-cdn-api": "^1.9",
-    "cviebrock/eloquent-sluggable": "^8.0",
-    "deeplcom/deepl-php": "^1.8",
-    "elasticsearch/elasticsearch": "^8.18",
-    "fruitcake/laravel-cors": "^2.0",
-    "google-gemini-php/client": "^1.0",
-    "google/cloud-vision": "^1.10",
-    "grok-php/client": "^1.1",
-    "jenssegers/imagehash": "^0.9.0",
-    "laravel/framework": "^8.75",
-    "laravel/octane": "^1.5",
-    "laravel/sanctum": "^2.15.1",
-    "laravel/scout": "^9.8",
-    "laravel/socialite": "^5.6",
-    "laravel/tinker": "^2.5",
-    "league/csv": "^9.16.0",
-    "maatwebsite/excel": "^3.1",
-    "openai-php/client": "^0.10.1",
-    "opensearch-project/opensearch-php": "^2.3",
-    "orchestra/parser": "^6.1",
-    "parabellumkoval/backpack-articles": "0.2.x-dev",
-    "parabellumkoval/backpack-banners": "dev-main",
-    "parabellumkoval/backpack-feedback": "dev-main",
-    "parabellumkoval/backpack-pages": "0.1.x-dev",
-    "parabellumkoval/backpack-profile": "dev-main",
-    "parabellumkoval/backpack-reviews": "0.2.x-dev",
-    "parabellumkoval/backpack-settings": "0.2.x-dev",
-    "parabellumkoval/backpack-store": "0.4.x-dev",
-    "parabellumkoval/backpack-tag": "0.1.x-dev",
-    "parabellumkoval/backpack-transactions": "0.1.x-dev",
-    "parabellumkoval/backpack-vercel": "0.1.x-dev",
-    "plakidan/monobank-pay": "^0.2.1",
-    "rap2hpoutre/fast-excel": "^5.4",
-    "sapientpro/image-comparator": "^1.2",
-    "spatie/laravel-feed": "^4.2",
-    "spatie/laravel-translatable": "5.1.0"
-  },
-  "require-dev": {
-    "backpack/generators": "^3.1",
-    "facade/ignition": "^2.5",
-    "fakerphp/faker": "^1.9.1",
-    "laracasts/generators": "^2.0",
-    "laravel/sail": "^1.0.1",
-    "mockery/mockery": "^1.4.4",
-    "nunomaduro/collision": "^5.10",
-    "phpunit/phpunit": "^9.5.10",
-    "symfony/filesystem": "*"
-  },
-  "autoload": {
-      "psr-4": {
-          "App\\": "app/",
-          "Database\\Factories\\": "database/factories/",
-          "Database\\Seeders\\": "database/seeders/"
-      }
-  },
-  "autoload-dev": {
-      "psr-4": {
-          "Tests\\": "tests/"
-      }
-  },
-  "scripts": {
-      "post-autoload-dump": [
-          "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-          "@php artisan package:discover --ansi"
-      ],
-      "post-update-cmd": [
-          "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-      ],
-      "post-root-package-install": [
-          "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-      ],
-      "post-create-project-cmd": [
-          "@php artisan key:generate --ansi"
-      ]
-  },
-  "extra": {
-      "laravel": {
-          "dont-discover": [
-            "backpack/permissionmanager"
-          ]
-      }
-  },
-  "config": {
-      "optimize-autoloader": true,
-      "preferred-install": "dist",
-      "sort-packages": true,
-      "platform": {
-          "php": "8.1.11"
-      },
-    "allow-plugins": {
-      "php-http/discovery": true
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "repositories": []
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": ["laravel", "framework"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "bunnycdn/storage": "^3.4",
+        "laravel/framework": "^12.0",
+        "laravel/octane": "^2.12",
+        "laravel/sanctum": "^4.2",
+        "laravel/tinker": "^2.10.1",
+        "maatwebsite/excel": "^3.1",
+        "parabellumkoval/backpack-articles": "dev-main",
+        "parabellumkoval/backpack-banners": "dev-main",
+        "parabellumkoval/backpack-feedback": "dev-main",
+        "parabellumkoval/backpack-helpers": "dev-main",
+        "parabellumkoval/backpack-profile": "dev-main",
+        "parabellumkoval/backpack-reviews": "dev-main",
+        "parabellumkoval/backpack-settings": "v2.x-dev",
+        "parabellumkoval/backpack-store": "dev-multistore",
+        "parabellumkoval/backpack-tag": "dev-main",
+        "parabellumkoval/crud": "*",
+        "spatie/laravel-feed": "^4.4"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "laravel/pail": "^1.2.2",
+        "laravel/pint": "^1.24",
+        "laravel/sail": "^1.41",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^11.5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite --kill-others"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/*"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

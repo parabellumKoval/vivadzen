@@ -14,13 +14,6 @@ trait ReviewCrud {
   public function createOperation() {
 
     $this->crud->addField([
-      'name' => 'link',
-      'label' => 'Ссылка на страницу автора',
-      'fake' => true,
-      'store_in' => 'extras'
-    ])->afterField('owner');
-
-    $this->crud->addField([
       'name' => 'advantages',
       'label' => 'Достоинства',
       'type' => 'textarea',

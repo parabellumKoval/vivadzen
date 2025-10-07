@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Admin\Traits;
 
 trait ArticleCrud {
   
-  public function listOperation() {}
-  public function updateOperation() {}
-
   // Extends of SetupCreateOperation
   public function createOperation() {
-  
+     
     $this->crud->addField([
       'name'  => 'time',
       'label' => 'Время чтения',
@@ -60,7 +57,10 @@ trait ArticleCrud {
       'default' => [],
       'tab' => 'Изображения'
     ]);
-
   }
 
+
+  public function listOperation() {}
+
+  public function updateOperation() {}
 }

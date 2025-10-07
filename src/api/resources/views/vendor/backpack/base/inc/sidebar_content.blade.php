@@ -27,7 +27,7 @@
 	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-list-ul"></i> {{ trans('backpack_menu.catalogs') }}</a>
 	<ul class="nav-dropdown-items">
 	  <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon las la-tags'></i> {{ trans('backpack_menu.categories') }}</a></li>
-    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('region') }}'><i class='nav-icon las la-map-marker-alt'></i> {{ trans('backpack_menu.regions') }}</a></li>
+    <!-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('region') }}'><i class='nav-icon las la-map-marker-alt'></i> {{ trans('backpack_menu.regions') }}</a></li> -->
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('brand') }}'><i class='nav-icon las la-copyright'></i> {{ trans('backpack_menu.brands') }}</a></li>
 	</ul>
 </li>
@@ -37,16 +37,16 @@
 	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-warehouse"></i> {{ trans('backpack_menu.warehouse') }}</a>
 	<ul class="nav-dropdown-items">
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('supplier') }}'><i class="nav-icon las la-boxes"></i> {{ trans('backpack_menu.suppliers') }}</a></li>
-    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('source') }}'><i class='nav-icon las la-link'></i> {{ trans('backpack_menu.data_sources') }}</a></li>
-    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('upload') }}'><i class='nav-icon las la-history'></i> {{ trans('backpack_menu.upload_history') }}</a></li>
+    <!-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('source') }}'><i class='nav-icon las la-link'></i> {{ trans('backpack_menu.data_sources') }}</a></li> -->
+    <!-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('upload') }}'><i class='nav-icon las la-history'></i> {{ trans('backpack_menu.upload_history') }}</a></li> -->
 	</ul>
 </li>
 
-<li class='nav-item'>
+<!-- <li class='nav-item'>
 	<a class='nav-link' href='{{ backpack_url('feed') }}'>
 		<i class='nav-icon las la-cloud-download-alt'></i> {{ trans('backpack_menu.downloads') }}
 	</a>
-</li>
+</li> -->
 
 <li class='nav-item'>
 	<a class='nav-link' href='{{ backpack_url('payment') }}'>
@@ -69,23 +69,6 @@
 <li class="divider"></li>
 <li class="nav-title">Автоматизация</li>
 
-<!-- Prompts -->
-<li class="nav-item nav-dropdown">
-	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon las la-brain"></i> {{ trans('backpack_menu.ai_generation') }}</a>
-	<ul class="nav-dropdown-items">
-		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('prompt') }}'><i class='nav-icon las la-lightbulb'></i> {{ trans('backpack_menu.ai_prompts') }}</a></li>
-		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('ai-generation-history') }}'><i class='nav-icon las la-history'></i> {{ trans('backpack_menu.ai_generation_history') }}</a></li>
-	</ul>
-</li>
-
-<!-- Image Generation -->
-<li class='nav-item'>
-	<a class='nav-link' href='{{ backpack_url('image-generation-history') }}'>
-		<i class='nav-icon las la-image'></i>
-		{{ trans('backpack_menu.image_generation_history') }}
-	</a>
-</li>
-
 <!-- DeepL -->
 <li class='nav-item'>
 	<a class='nav-link' href='{{ backpack_url('translation-history') }}'>
@@ -106,7 +89,45 @@
 
 
 <li class="divider"></li>
+
 <li class="nav-title">{{ trans('backpack_menu.management') }}</li>
+
+<li class="nav-item nav-dropdown">
+	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-gear"></i> Настройки</a>
+	<ul class="nav-dropdown-items">
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/common') }}"><i class="nav-icon la la-user"></i> <span>Общие</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/store') }}"><i class="nav-icon la la-user"></i> <span>Магазин</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/store-modules') }}"><i class="nav-icon la la-user"></i> <span>Модули</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/search') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('product-list') }}"><i class="nav-icon la la-search"></i> <span>Списки</span></a></li>
+	</ul>
+</li>
+
+
+<li class="nav-item nav-dropdown">
+	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-cubes"></i> Сервисы</a>
+	<ul class="nav-dropdown-items">
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('seo-page') }}"><i class="nav-icon la la-search"></i> <span>Посадочные страницы</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('search-queries') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('currency-rates') }}"><i class="nav-icon la la-exchange"></i> <span>Курсы валют</span></a></li>
+	</ul>
+</li>
+
+<li class="nav-item nav-dropdown">
+	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-group"></i> Пользователи</a>
+	<ul class="nav-dropdown-items">
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('profile-dashboard') }}"><i class="nav-icon la la-columns"></i> <span>Дашбоард</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('profile') }}"><i class="nav-icon la la-user-circle"></i> <span>Профили</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('referrals') }}"><i class="nav-icon la la-user-plus"></i> <span>Реферальная сеть</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/profile') }}"><i class="nav-icon la la-user-edit"></i> <span>Настройки</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('withdrawals') }}"><i class="nav-icon la la-money-bill-wave"></i> <span>Вывод средств</span></a></li>
+
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('reward-events') }}"><i class="nav-icon la la-hand-holding-usd"></i> <span>События</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('rewards') }}"><i class="nav-icon la la-clipboard-list"></i> <span>Вознаграждения</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('wallet-ledger') }}"><i class="nav-icon la la-exchange-alt"></i> <span>Транзакции</span></a></li>
+	</ul>
+</li>
+
 <!-- Users, Roles, Permissions -->
 <li class="nav-item nav-dropdown">
 	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-group"></i> {{ trans('backpack_menu.administration') }}</a>
@@ -116,8 +137,6 @@
 	  <li class="nav-item"><a class="nav-link" href="{{ backpack_url('permission') }}"><i class="nav-icon la la-key"></i> <span>{{ trans('backpack_menu.permissions') }}</span></a></li>
 	</ul>
 </li>
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('settings') }}'><i class='nav-icon la la-cog'></i> {{ trans('backpack_menu.settings') }}</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('vercel') }}'><i class='nav-icon las la-code-branch'></i> {{ trans('backpack_menu.vercel') }}</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('backup') }}'><i class='nav-icon la la-hdd-o'></i> {{ trans('backpack_menu.backups') }}</a></li>
