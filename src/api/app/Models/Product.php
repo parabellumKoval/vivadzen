@@ -14,4 +14,11 @@ class Product extends BaseProduct
 {
     use Reviewable;
     use Taggable;
+
+    // protected $morphClass = 'Backpack\Store\app\Models\Product';
+
+    // public function getMorphClass()
+    // {
+    //     return 'Backpack\Store\app\Models\Product';
+    // }
 }

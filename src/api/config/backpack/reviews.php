@@ -8,7 +8,7 @@ return [
   // Is default review moderated
   'is_moderated_default' => false,
 
-  'can_moderate' => fn () => backpack_auth()->check(),
+  'can_moderate' => true,
 
   // CATALOG
   'per_page' => 12,
@@ -40,14 +40,14 @@ return [
   // Resources
   'resource' => [
     'small' => 'Backpack\Reviews\app\Http\Resources\ReviewSmallResource',
-    'medium' => 'Backpack\Reviews\app\Http\Resources\ReviewMediumResource',
-    'large' => 'Backpack\Reviews\app\Http\Resources\ReviewLargeResource'
+    'medium' => 'App\Http\Resources\ReviewMediumResource',
+    'large' => 'App\Http\Resources\ReviewLargeResource'
   ],
   
   // Reviewable
   'reviewable_types_list' => [
     'product' => [
-      'model' => 'Backpack\Store\app\Models\Product',
+      'model' => 'App\Models\Product',
       'name' => 'Товар',
       'name_plur' => 'Товары',
     ],
@@ -55,6 +55,16 @@ return [
       'model' => 'Backpack\Articles\app\Models\Article',
       'name' => 'Статья',
       'name_plur' => 'Статьи',
+    ]
+  ],
+
+  'global_country_code' => 'zz',
+  
+  'morph_aliases' => [
+    'App\Models\Product' => [
+      'model' => 'Backpack\Store\app\Models\Catalog',
+      'key' => 'group_id',
+      'country_field' => 'country_code'
     ]
   ],
 
@@ -93,10 +103,26 @@ return [
     ],
     'provider' => [
       'rules' => 'required|string|in:id,data,auth',
-      'hidden' => true,
+      'hidden' => true
     ],
     'extras' => [
       'rules' => 'nullable|array'
+    ],
+    'link' => [
+      'rules' => 'nullable|string|min:2|max:255',
+      'store_in' => 'extras',
+    ],
+    'advantages' => [
+      'rules' => 'nullable|string|min:2|max:255',
+      'store_in' => 'extras',
+    ],
+    'flaws' => [
+      'rules' => 'nullable|string|min:2|max:255',
+      'store_in' => 'extras',
+    ],
+    'verified_purchase' => [
+      'rules' => 'nullable|boolean',
+      'store_in' => 'extras',
     ]
   ]
 ];

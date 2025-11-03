@@ -1,9 +1,9 @@
 <?php
 
 return [
-  'address' => 'Дніпропетровська область, Дніпро, вулиця Троїцька, 3А',
-  'phone' => '+38 (099) 777 33 45',
-  'email' => 'djini.in.ua@gmail.com',
+  'address' => 'Vivadzen S.R.O. ID – 14396238 VAT ID – CZ14396238 Address: Freyova 82/27, 190 00 Prague',
+  'phone' => '+420 605 00 47 47',
+  'email' => 'info@vivadzen.com',
   'facebook' => 'https://facebook.com',
   'instagram' => 'https://www.instagram.com/djini.shop?igsh=Zzh6ZWo5azNhZnNw',
   'tiktok' => 'https://tiktok.com',

@@ -29,7 +29,11 @@ class ReviewController extends \Backpack\Reviews\app\Http\Controllers\Api\Review
       $reviewable_id = $reviewable? $reviewable->id: null;
     }
 
-    $node_ids = Category::getCategoryNodeIdList($request->input('category_slug'), $request->input('category_id'));
+    $node_ids = Category::getCategoryNodeIdList(
+      $request->input('category_slug'),
+      $request->input('category_id'),
+      $request->input('country') ?? \Store::country()
+    );
 
     $reviews = $this->review_model::query()
       ->root()

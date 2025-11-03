@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1b62eda666cd6d5319576a50498c2ed",
+    "content-hash": "a5d18ed4727d027dd34ae8f5b0fdca50",
     "packages": [
+        {
+            "name": "bacon/bacon-qr-code",
+            "version": "2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Bacon/BaconQrCode.git",
+                "reference": "8674e51bb65af933a5ffaf1c308a660387c35c22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Bacon/BaconQrCode/zipball/8674e51bb65af933a5ffaf1c308a660387c35c22",
+                "reference": "8674e51bb65af933a5ffaf1c308a660387c35c22",
+                "shasum": ""
+            },
+            "require": {
+                "dasprid/enum": "^1.0.3",
+                "ext-iconv": "*",
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "phly/keep-a-changelog": "^2.1",
+                "phpunit/phpunit": "^7 | ^8 | ^9",
+                "spatie/phpunit-snapshot-assertions": "^4.2.9",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "suggest": {
+                "ext-imagick": "to generate QR code images"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BaconQrCode\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Scholzen 'DASPRiD'",
+                    "email": "mail@dasprids.de",
+                    "homepage": "https://dasprids.de/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "BaconQrCode is a QR code generator for PHP.",
+            "homepage": "https://github.com/Bacon/BaconQrCode",
+            "support": {
+                "issues": "https://github.com/Bacon/BaconQrCode/issues",
+                "source": "https://github.com/Bacon/BaconQrCode/tree/2.0.8"
+            },
+            "time": "2022-12-07T17:46:57+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.13.1",
@@ -552,6 +606,56 @@
             "time": "2025-02-26T22:53:32+00:00"
         },
         {
+            "name": "dasprid/enum",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DASPRiD/Enum.git",
+                "reference": "b5874fa9ed0043116c72162ec7f4fb50e02e7cce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DASPRiD/Enum/zipball/b5874fa9ed0043116c72162ec7f4fb50e02e7cce",
+                "reference": "b5874fa9ed0043116c72162ec7f4fb50e02e7cce",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1 <9.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7 || ^8 || ^9 || ^10 || ^11",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DASPRiD\\Enum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Scholzen 'DASPRiD'",
+                    "email": "mail@dasprids.de",
+                    "homepage": "https://dasprids.de/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP 7.1 enum implementation",
+            "keywords": [
+                "enum",
+                "map"
+            ],
+            "support": {
+                "issues": "https://github.com/DASPRiD/Enum/issues",
+                "source": "https://github.com/DASPRiD/Enum/tree/1.0.7"
+            },
+            "time": "2025-09-16T12:23:56+00:00"
+        },
+        {
             "name": "dflydev/dot-access-data",
             "version": "v3.0.3",
             "source": {
@@ -1045,6 +1149,68 @@
                 }
             ],
             "time": "2024-02-05T11:56:58+00:00"
+        },
+        {
+            "name": "dompdf/dompdf",
+            "version": "v2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/dompdf.git",
+                "reference": "c20247574601700e1f7c8dab39310fca1964dc52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/c20247574601700e1f7c8dab39310fca1964dc52",
+                "reference": "c20247574601700e1f7c8dab39310fca1964dc52",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "masterminds/html5": "^2.0",
+                "phenx/php-font-lib": ">=0.5.4 <1.0.0",
+                "phenx/php-svg-lib": ">=0.5.2 <1.0.0",
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "ext-zip": "*",
+                "mockery/mockery": "^1.3",
+                "phpunit/phpunit": "^7.5 || ^8 || ^9",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "suggest": {
+                "ext-gd": "Needed to process images",
+                "ext-gmagick": "Improves image processing performance",
+                "ext-imagick": "Improves image processing performance",
+                "ext-zlib": "Needed for pdf stream compression"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dompdf\\": "src/"
+                },
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "The Dompdf Community",
+                    "homepage": "https://github.com/dompdf/dompdf/blob/master/AUTHORS.md"
+                }
+            ],
+            "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
+            "homepage": "https://github.com/dompdf/dompdf",
+            "support": {
+                "issues": "https://github.com/dompdf/dompdf/issues",
+                "source": "https://github.com/dompdf/dompdf/tree/v2.0.8"
+            },
+            "time": "2024-04-29T13:06:17+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
@@ -3538,6 +3704,73 @@
             "time": "2022-12-02T22:17:43+00:00"
         },
         {
+            "name": "masterminds/html5",
+            "version": "2.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Masterminds/html5-php.git",
+                "reference": "fcf91eb64359852f00d921887b219479b4f21251"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Masterminds/html5-php/zipball/fcf91eb64359852f00d921887b219479b4f21251",
+                "reference": "fcf91eb64359852f00d921887b219479b4f21251",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35 || ^5.7.21 || ^6 || ^7 || ^8 || ^9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Masterminds\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Butcher",
+                    "email": "technosophos@gmail.com"
+                },
+                {
+                    "name": "Matt Farina",
+                    "email": "matt@mattfarina.com"
+                },
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                }
+            ],
+            "description": "An HTML5 parser and serializer.",
+            "homepage": "http://masterminds.github.io/html5-php",
+            "keywords": [
+                "HTML5",
+                "dom",
+                "html",
+                "parser",
+                "querypath",
+                "serializer",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/Masterminds/html5-php/issues",
+                "source": "https://github.com/Masterminds/html5-php/tree/2.10.0"
+            },
+            "time": "2025-07-25T09:04:22+00:00"
+        },
+        {
             "name": "meilisearch/meilisearch-php",
             "version": "v1.16.1",
             "source": {
@@ -4124,20 +4357,15 @@
         {
             "name": "parabellumkoval/backpack-articles",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-articles.git",
-                "reference": "7c785dabada84fc974d01c310fae921c86edcb4c"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/7c785dabada84fc974d01c310fae921c86edcb4c",
-                "reference": "7c785dabada84fc974d01c310fae921c86edcb4c",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/articles",
+                "reference": "7c785dabada84fc974d01c310fae921c86edcb4c"
             },
             "require": {
                 "cviebrock/eloquent-sluggable": "^12.0",
                 "laravel/framework": "^12.0",
+                "parabellumkoval/backpack-images": "@dev",
                 "php": "^8.2",
                 "spatie/laravel-translatable": "^6.0.0"
             },
@@ -4145,16 +4373,15 @@
                 "orchestra/testbench": "^6.0",
                 "phpunit/phpunit": "*"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "Product": "Backpack\\Articles\\Facades\\Article"
-                    },
                     "providers": [
                         "Backpack\\Articles\\ServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "Product": "Backpack\\Articles\\Facades\\Article"
+                    }
                 }
             },
             "autoload": {
@@ -4163,7 +4390,28 @@
                     "Backpack\\Articles\\Database\\Factories\\": "database/factories"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Backpack\\Articles\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php ./vendor/bin/testbench package:discover --ansi"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -4182,11 +4430,9 @@
                 "laravel",
                 "parabellumKoval"
             ],
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-articles/issues",
-                "source": "https://github.com/parabellumKoval/backpack-articles/tree/main"
-            },
-            "time": "2025-10-04T13:26:59+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-banners",
@@ -4322,22 +4568,15 @@
         {
             "name": "parabellumkoval/backpack-helpers",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-helpers.git",
-                "reference": "f66fe35f0e03ea502223d52fd547876357d4718f"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-helpers/zipball/f66fe35f0e03ea502223d52fd547876357d4718f",
-                "reference": "f66fe35f0e03ea502223d52fd547876357d4718f",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/helpers",
+                "reference": "f66fe35f0e03ea502223d52fd547876357d4718f"
             },
             "require": {
                 "laravel/framework": "^12.0",
                 "php": "^8.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -4351,7 +4590,6 @@
                     "Backpack\\Helpers\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4363,25 +4601,56 @@
             ],
             "description": "Helpers for Laravel Backpack 4.1 - extra columns, fields, traits and services.",
             "homepage": "https://github.com/parabellumkoval/backpack-helpers",
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-helpers/issues",
-                "source": "https://github.com/parabellumKoval/backpack-helpers/tree/main"
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "parabellumkoval/backpack-images",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/images",
+                "reference": "c2a0c0b2784a4844b0968b93367f93f69fd8bf2c"
             },
-            "time": "2025-10-04T13:28:40+00:00"
+            "require": {
+                "bunnycdn/storage": "^3.4",
+                "illuminate/filesystem": "^12.0",
+                "illuminate/http": "^12.0",
+                "illuminate/support": "^12.0",
+                "php": "^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ParabellumKoval\\BackpackImages\\BackpackImagesServiceProvider"
+                    ],
+                    "aliases": {
+                        "ImageUploader": "ParabellumKoval\\BackpackImages\\Facades\\ImageUploader"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ParabellumKoval\\BackpackImages\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Reusable image uploader and Backpack helpers for Laravel 12.",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-profile",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-profile.git",
-                "reference": "42867105560b2cd15dde97a5b7636a5c3834171d"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/42867105560b2cd15dde97a5b7636a5c3834171d",
-                "reference": "42867105560b2cd15dde97a5b7636a5c3834171d",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/profile",
+                "reference": "ed723db5973310bb97fbf05d32254cd803d8a05a"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -4389,7 +4658,6 @@
                 "laravel/socialite": "^5.23.0",
                 "php": "^8.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -4399,15 +4667,36 @@
                 }
             },
             "autoload": {
-                "files": [
-                    "src/app/helpers.php"
-                ],
                 "psr-4": {
                     "Backpack\\Profile\\": "src/",
                     "Backpack\\Profile\\Database\\Factories\\": "database/factories"
+                },
+                "files": [
+                    "src/app/helpers.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Backpack\\Profile\\Tests\\": "tests"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php ./vendor/bin/testbench package:discover --ansi"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -4428,25 +4717,17 @@
                 "profile",
                 "user"
             ],
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-profile/issues",
-                "source": "https://github.com/parabellumKoval/backpack-profile/tree/main"
-            },
-            "time": "2025-10-04T13:29:40+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-reviews",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-reviews.git",
-                "reference": "f33fca9b43b52119cc7d38ac8c1c18a859f925be"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/f33fca9b43b52119cc7d38ac8c1c18a859f925be",
-                "reference": "f33fca9b43b52119cc7d38ac8c1c18a859f925be",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/reviews",
+                "reference": "f33fca9b43b52119cc7d38ac8c1c18a859f925be"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -4457,16 +4738,15 @@
                 "orchestra/testbench": "^6.0",
                 "phpunit/phpunit": "*"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "Reviews": "Backpack\\Reviews\\Facades\\Reviews"
-                    },
                     "providers": [
                         "Backpack\\Reviews\\ServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "Reviews": "Backpack\\Reviews\\Facades\\Reviews"
+                    }
                 }
             },
             "autoload": {
@@ -4475,7 +4755,29 @@
                     "Backpack\\Reviews\\Database\\Factories\\": "database/factories"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "App\\": "src/app/",
+                    "Backpack\\Reviews\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php ./vendor/bin/testbench package:discover --ansi"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -4494,25 +4796,17 @@
                 "parabellumKoval",
                 "review"
             ],
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-reviews/issues",
-                "source": "https://github.com/parabellumKoval/backpack-reviews/tree/0.2"
-            },
-            "time": "2025-10-04T13:34:40+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-settings",
-            "version": "v2.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-settings.git",
-                "reference": "daf71078058015803d0c1a8f05a86051e446e24d"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-settings/zipball/daf71078058015803d0c1a8f05a86051e446e24d",
-                "reference": "daf71078058015803d0c1a8f05a86051e446e24d",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/settings",
+                "reference": "efe43960d4998605e034e7abfda5ee51effc3fab"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -4531,7 +4825,6 @@
                     "Backpack\\Settings\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4546,11 +4839,9 @@
                 }
             ],
             "description": "Settings UI & Service for Laravel 8 + Backpack 4.1 (config/DB drivers, tabs, registry, aliases).",
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-settings/issues",
-                "source": "https://github.com/parabellumKoval/backpack-settings/tree/v2"
-            },
-            "time": "2025-10-04T13:35:39+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-store",
@@ -4561,17 +4852,19 @@
                 "reference": "349029d05e3950d9e0a892a6f58f5feeb03b2259"
             },
             "require": {
-                "cviebrock/eloquent-sluggable": "^12.0",
-                "laravel/framework": "^12.0",
-                "laravel/scout": "^10.0",
+                "bacon/bacon-qr-code": "^2.0",
+                "cviebrock/eloquent-sluggable": "^8.0 || ^12.0",
+                "dompdf/dompdf": "^2.0",
+                "laravel/framework": "^8.75 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "laravel/scout": "^9.0 || ^10.0",
                 "meilisearch/meilisearch-php": "^1.15",
                 "parabellumkoval/request-data": "0.1.x-dev",
                 "php": "^8.2",
-                "spatie/laravel-translatable": "^6.0.0"
+                "spatie/laravel-translatable": "^5.1 || ^6.0"
             },
             "require-dev": {
-                "pestphp/pest": "^3.0",
-                "phpunit/phpunit": "^11.0"
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.6 || ^11.0"
             },
             "type": "library",
             "extra": {
@@ -4644,16 +4937,10 @@
         {
             "name": "parabellumkoval/backpack-tag",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-tag.git",
-                "reference": "51f851b4ddd57c296a8ca6be45995c467b4489f0"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-tag/zipball/51f851b4ddd57c296a8ca6be45995c467b4489f0",
-                "reference": "51f851b4ddd57c296a8ca6be45995c467b4489f0",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/tag",
+                "reference": "1d9967bdc6b59f45ac59dcffd888c5be2a749a29"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -4667,12 +4954,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "Tag": "Backpack\\Tag\\Facades\\Tag"
-                    },
                     "providers": [
                         "Backpack\\Tag\\ServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "Tag": "Backpack\\Tag\\Facades\\Tag"
+                    }
                 }
             },
             "autoload": {
@@ -4681,7 +4968,29 @@
                     "Backpack\\Tag\\Database\\Factories\\": "database/factories"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "App\\": "src/app/",
+                    "Backpack\\Tag\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php ./vendor/bin/testbench package:discover --ansi"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -4700,11 +5009,9 @@
                 "parabellumKoval",
                 "tag"
             ],
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-tag/issues",
-                "source": "https://github.com/parabellumKoval/backpack-tag/tree/main"
-            },
-            "time": "2025-10-04T13:43:21+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/crud",
@@ -4712,12 +5019,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/CRUD.git",
-                "reference": "daefb3a0544548577bf43863d804499e947d00af"
+                "reference": "3b48a458604d97ac9dae15268af6f810c2a4a146"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/CRUD/zipball/daefb3a0544548577bf43863d804499e947d00af",
-                "reference": "daefb3a0544548577bf43863d804499e947d00af",
+                "url": "https://api.github.com/repos/parabellumKoval/CRUD/zipball/3b48a458604d97ac9dae15268af6f810c2a4a146",
+                "reference": "3b48a458604d97ac9dae15268af6f810c2a4a146",
                 "shasum": ""
             },
             "require": {
@@ -4788,7 +5095,7 @@
             "support": {
                 "source": "https://github.com/parabellumKoval/CRUD/tree/main"
             },
-            "time": "2025-10-04T12:32:38+00:00"
+            "time": "2025-11-02T11:36:54+00:00"
         },
         {
             "name": "parabellumkoval/request-data",
@@ -4858,24 +5165,26 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v3.0.0",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "df1e7fde177501eee2037dd159cf04f5f301a512"
+                "reference": "d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/df1e7fde177501eee2037dd159cf04f5f301a512",
-                "reference": "df1e7fde177501eee2037dd159cf04f5f301a512",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77",
+                "reference": "d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77",
                 "shasum": ""
             },
             "require": {
                 "php": "^8"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9",
-                "vimeo/psalm": "^4|^5"
+                "infection/infection": "^0",
+                "nikic/php-fuzzer": "^0",
+                "phpunit/phpunit": "^9|^10|^11",
+                "vimeo/psalm": "^4|^5|^6"
             },
             "type": "library",
             "autoload": {
@@ -4921,7 +5230,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2024-05-08T12:36:18+00:00"
+            "time": "2025-09-24T15:06:41+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -4972,6 +5281,96 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "phenx/php-font-lib",
+            "version": "0.5.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/php-font-lib.git",
+                "reference": "a1681e9793040740a405ac5b189275059e2a9863"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/php-font-lib/zipball/a1681e9793040740a405ac5b189275059e2a9863",
+                "reference": "a1681e9793040740a405ac5b189275059e2a9863",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3 || ^4 || ^5 || ^6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FontLib\\": "src/FontLib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Ménager",
+                    "email": "fabien.menager@gmail.com"
+                }
+            ],
+            "description": "A library to read, parse, export and make subsets of different types of font files.",
+            "homepage": "https://github.com/PhenX/php-font-lib",
+            "support": {
+                "issues": "https://github.com/dompdf/php-font-lib/issues",
+                "source": "https://github.com/dompdf/php-font-lib/tree/0.5.6"
+            },
+            "time": "2024-01-29T14:45:26+00:00"
+        },
+        {
+            "name": "phenx/php-svg-lib",
+            "version": "0.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dompdf/php-svg-lib.git",
+                "reference": "46b25da81613a9cf43c83b2a8c2c1bdab27df691"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dompdf/php-svg-lib/zipball/46b25da81613a9cf43c83b2a8c2c1bdab27df691",
+                "reference": "46b25da81613a9cf43c83b2a8c2c1bdab27df691",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.1 || ^8.0",
+                "sabberworm/php-css-parser": "^8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Svg\\": "src/Svg"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Ménager",
+                    "email": "fabien.menager@gmail.com"
+                }
+            ],
+            "description": "A library to read, parse and export to PDF SVG files.",
+            "homepage": "https://github.com/PhenX/php-svg-lib",
+            "support": {
+                "issues": "https://github.com/dompdf/php-svg-lib/issues",
+                "source": "https://github.com/dompdf/php-svg-lib/tree/0.5.4"
+            },
+            "time": "2024-04-08T12:52:34+00:00"
         },
         {
             "name": "php-http/discovery",
@@ -5235,16 +5634,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.46",
+            "version": "3.0.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "56483a7de62a6c2a6635e42e93b8a9e25d4f0ec6"
+                "reference": "9d6ca36a6c2dd434765b1071b2644a1c683b385d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/56483a7de62a6c2a6635e42e93b8a9e25d4f0ec6",
-                "reference": "56483a7de62a6c2a6635e42e93b8a9e25d4f0ec6",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/9d6ca36a6c2dd434765b1071b2644a1c683b385d",
+                "reference": "9d6ca36a6c2dd434765b1071b2644a1c683b385d",
                 "shasum": ""
             },
             "require": {
@@ -5325,7 +5724,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.46"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.47"
             },
             "funding": [
                 {
@@ -5341,7 +5740,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-26T16:29:55+00:00"
+            "time": "2025-10-06T01:07:24+00:00"
         },
         {
             "name": "prologue/alerts",
@@ -6148,6 +6547,72 @@
                 "source": "https://github.com/ramsey/uuid/tree/4.9.0"
             },
             "time": "2025-06-25T14:20:11+00:00"
+        },
+        {
+            "name": "sabberworm/php-css-parser",
+            "version": "v8.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MyIntervals/PHP-CSS-Parser.git",
+                "reference": "d8e916507b88e389e26d4ab03c904a082aa66bb9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MyIntervals/PHP-CSS-Parser/zipball/d8e916507b88e389e26d4ab03c904a082aa66bb9",
+                "reference": "d8e916507b88e389e26d4ab03c904a082aa66bb9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "php": "^5.6.20 || ^7.0.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.7.27 || 6.5.14 || 7.5.20 || 8.5.41",
+                "rawr/cross-data-providers": "^2.0.0"
+            },
+            "suggest": {
+                "ext-mbstring": "for parsing UTF-8 CSS"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "9.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sabberworm\\CSS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raphael Schweikert"
+                },
+                {
+                    "name": "Oliver Klee",
+                    "email": "github@oliverklee.de"
+                },
+                {
+                    "name": "Jake Hotson",
+                    "email": "jake.github@qzdesign.co.uk"
+                }
+            ],
+            "description": "Parser for CSS Files written in PHP",
+            "homepage": "https://www.sabberworm.com/blog/2010/6/10/php-css-parser",
+            "keywords": [
+                "css",
+                "parser",
+                "stylesheet"
+            ],
+            "support": {
+                "issues": "https://github.com/MyIntervals/PHP-CSS-Parser/issues",
+                "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.9.0"
+            },
+            "time": "2025-07-11T13:20:48+00:00"
         },
         {
             "name": "spatie/laravel-feed",
@@ -11659,6 +12124,7 @@
         "parabellumkoval/backpack-banners": 20,
         "parabellumkoval/backpack-feedback": 20,
         "parabellumkoval/backpack-helpers": 20,
+        "parabellumkoval/backpack-images": 20,
         "parabellumkoval/backpack-profile": 20,
         "parabellumkoval/backpack-reviews": 20,
         "parabellumkoval/backpack-settings": 20,

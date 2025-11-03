@@ -83,6 +83,60 @@ $article->images = array_merge($article->getAllImages(), [[
 $article->save();
 ```
 
+### Несколько коллекций изображений
+
+Одной модели можно назначить несколько независимых "коллекций" изображений. Для этого переопределите метод `imageCollections()` и добавьте дополнительные ключи — каждый ключ соответствует отдельному атрибуту и наследует дефолтные настройки:
+
+```php
+use ParabellumKoval\BackpackImages\Traits\HasImages;
+
+class Review extends Model
+{
+    use HasImages;
+
+    public static function imageCollections(): array
+    {
+        return array_replace_recursive(
+            static::defaultImageCollections(),
+            [
+                'video_poster' => [
+                    'folder' => 'reviews/video-posters',
+                    'label' => 'Постер видео',
+                    'field' => [
+                        'label' => 'Постер видео',
+                        'tab' => null,
+                        'max_rows' => 1,
+                        'fields' => [
+                            [
+                                'label' => 'Постер',
+                                'aspect_ratio' => 16 / 9,
+                            ],
+                        ],
+                    ],
+                    'column' => [
+                        'label' => 'Постер видео',
+                    ],
+                ],
+            ]
+        );
+    }
+}
+```
+
+После этого в CRUD можно добавить поле/колонку с именем коллекции:
+
+```php
+$this->addImagesField(['name' => 'video_poster']);
+$this->addImagesColumn(['name' => 'video_poster']);
+```
+
+Все вспомогательные методы (`getAllImages`, `getFirstImage`, `getImagePaths` и др.) принимают необязательный параметр атрибута:
+
+```php
+$poster = $review->getFirstImage('video_poster');
+$posterUrl = $review->getFirstImageForApi('video_poster');
+```
+
 ## Компоненты для Backpack CRUD
 
 Для контроллеров Backpack предусмотрен трейт `HasImagesCrudComponents`:

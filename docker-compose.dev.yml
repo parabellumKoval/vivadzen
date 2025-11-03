@@ -191,6 +191,8 @@ services:
     ports: ["7700:7700"]
     volumes:
       - meili_data:/meili_data
+    networks:
+      - api
 
       
 volumes:

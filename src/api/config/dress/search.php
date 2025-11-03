@@ -18,7 +18,7 @@ return [
     ],
 
     'meilisearch' => [
-        'host' => env('MEILISEARCH_HOST', 'http://meilisearch:7700'),
+        'host' => env('MEILISEARCH_HOST', 'meilisearch:7700'),
         'key'  => env('MEILISEARCH_KEY', null),
 
         // дефолтные настройки индекса (могут быть перекрыты из \Settings)

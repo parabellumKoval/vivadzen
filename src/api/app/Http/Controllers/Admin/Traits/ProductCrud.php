@@ -8,8 +8,8 @@ trait ProductCrud {
   
   public function listOperation(){
 
-    // $this->setupFilers();
-    // $this->setupTagColumns();
+    $this->setupFilers();
+    $this->setupTagColumns();
 
     $this->crud->removeColumn('categories');
 
@@ -25,50 +25,52 @@ trait ProductCrud {
   // Extends of SetupCreateOperation
   public function createOperation() {
 
-    // Tags
-    // $this->setupTagFields();
+    $this->setupTagFields();
+    $this->crud->modifyField('tags', [
+      'tab' => trans('backpack-store::product-field.tabs.main')
+    ]);
 
     //
-    $this->crud->removeField('images');
+    // $this->crud->removeField('images');
 
     // IMAGES
-    $this->crud->addField([
-      'name'  => 'images',
-      'label' => 'Изображения',
-      'type'  => 'repeatable',
-      'fields' => [
-        [
-          'name' => 'src',
-          'label' => 'Изображение',
-          'type' => 'image',
-          'crop' => false, // set to true to allow cropping, false to disable
-          'prefix' =>  config('dress.store.product.image.base_path', '/')
-        ],
-        [
-          'name' => 'alt',
-          'label' => 'alt'
-        ],
-        [
-          'name' => 'title',
-          'label' => 'title'
-        ],
-        [
-          'name' => 'size',
-          'type' => 'radio',
-          'label' => 'Размер',
-          'options' => [
-            'cover' => 'Cover',
-            'contain' => 'Contain'
-          ],
-          'inline' => true
-        ]
-      ],
-      'new_item_label'  => 'Добавить изобрежение',
-      'init_rows' => 1,
-      'default' => [],
-      'hint' => 'При добавлении новых изображений, сохранение товара будет происходить дольше, так как картинку загружаются в удаленное облако.',
-      'tab' => trans('backpack-store::product-field.tabs.images')
-    ])->beforeField('suppliersData');
+    // $this->crud->addField([
+    //   'name'  => 'images',
+    //   'label' => 'Изображения',
+    //   'type'  => 'repeatable',
+    //   'fields' => [
+    //     [
+    //       'name' => 'src',
+    //       'label' => 'Изображение',
+    //       'type' => 'image',
+    //       'crop' => false, // set to true to allow cropping, false to disable
+    //       'prefix' =>  config('dress.store.product.image.base_path', '/')
+    //     ],
+    //     [
+    //       'name' => 'alt',
+    //       'label' => 'alt'
+    //     ],
+    //     [
+    //       'name' => 'title',
+    //       'label' => 'title'
+    //     ],
+    //     [
+    //       'name' => 'size',
+    //       'type' => 'radio',
+    //       'label' => 'Размер',
+    //       'options' => [
+    //         'cover' => 'Cover',
+    //         'contain' => 'Contain'
+    //       ],
+    //       'inline' => true
+    //     ]
+    //   ],
+    //   'new_item_label'  => 'Добавить изобрежение',
+    //   'init_rows' => 1,
+    //   'default' => [],
+    //   'hint' => 'При добавлении новых изображений, сохранение товара будет происходить дольше, так как картинку загружаются в удаленное облако.',
+    //   'tab' => trans('backpack-store::product-field.tabs.images')
+    // ])->beforeField('suppliersData');
 
   }
 

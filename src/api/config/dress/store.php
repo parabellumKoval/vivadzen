@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'catalog_table_cache' => false,
+    'catalog_table_cache' => true,
     'slug_map_ttl' => env('BP_STORE_SLUG_MAP_TTL', 3600),
     
     'global_region_code' => 'zz',
@@ -23,7 +23,8 @@ return [
     'per_page' => 12,
 
     // GUARD
-    'auth_guard' => 'profile',
+    // 'auth_guard' => 'profile',
+    'auth_guard' => 'sanctum',
     
     // USER
     'user_model' => 'Backpack\Profile\app\Models\Profile',

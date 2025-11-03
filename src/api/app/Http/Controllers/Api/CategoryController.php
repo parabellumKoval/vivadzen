@@ -9,9 +9,6 @@ use App\Models\Region;
 use Backpack\Store\app\Models\Category;
 use App\Http\Resources\CategorySlugResource;
 
-// use Backpack\Store\app\Services\ProductFilterService;
-use Backpack\Store\app\Services\ProductQueryService;
-
 class CategoryController extends \App\Http\Controllers\Controller
 {
   use \Backpack\Store\app\Traits\Resources;
@@ -29,12 +26,12 @@ class CategoryController extends \App\Http\Controllers\Controller
    * @return void
    */
   public function categoryCached(Request $request, $slug) {
-    // Cache::forget('category-data-'.$slug);
+    Cache::forget('category-data-'.$slug);
     // 1) TRY GET CASHED CATALOG DATA
-    if(Cache::has('category-data-' . $slug)) {
-      $cached_data = Cache::get('category-data-' . $slug);
-      return response()->json($cached_data);
-    }
+    // if(Cache::has('category-data-' . $slug)) {
+    //   $cached_data = Cache::get('category-data-' . $slug);
+    //   return response()->json($cached_data);
+    // }
 
     $category = Category::where('slug', $slug)->where('is_active', 1)->first();
    
@@ -195,12 +192,11 @@ class CategoryController extends \App\Http\Controllers\Controller
    * @param  mixed $slug
    * @return void
    */
-  public function categoryData(Request $request = null, $category = null, $region = null) {
-    // $slug = $slug? $slug: $request->input('category_slug');
+  public function categoryData(Request $request = null, $category = null) {
+    $country = $request->input('country', 'zz');
+
     if($category) {
       $slug = $category->slug;
-    }else if($region) {
-      $slug = $region->category->slug;
     }else {
       $slug = $request->input('category_slug');
     }
@@ -212,52 +208,47 @@ class CategoryController extends \App\Http\Controllers\Controller
       $category_data = new self::$resources['category']['large']($category);
     }
 
-    // Region
-    if($region) {
-      $category_data = new \App\Http\Resources\RegionLargeResource($region);
-    }
-
     // Reviews
     $fake_request->replace([
-      'category_slug' => $slug,
+      'country' => $country,
+      'category_id' => $category->id,
       'per_page' => 6,
-      'resource' => 'large',
       'with_text' => 1
     ]);
 
     $review_controller = new \App\Http\Controllers\Api\ReviewController;
-    $reviews = $review_controller->index($fake_request);
+    $collection = \App\Http\Resources\ReviewCollection::class;
+    $reviews = $review_controller->indexRelation($fake_request, $collection);
 
-    $product_controller = new \Backpack\Store\app\Http\Controllers\Api\ProductController();
-    $productService = app(ProductQueryService::class);
+    $catalog_controller = new \Backpack\Store\app\Http\Controllers\Api\CatalogController();
 
     //CHIP Products
-    // category_id=3&price[0]=5&price[1]=100000000&order_by=price&order_dir=ASC&selections[0]=in_stock&per_page=5&with_filters=0
     $fake_request->replace([
+      'country' => $country,
       'category_slug' => $slug,
       'price' => [5, 100000000],
       'order_by' => 'price',
       'order_dir' => 'ASC',
       'selections' => ['in_stock'],
       'per_page' => 5,
-      'with_filters' => 0
+      'with_products' => 1
     ]);
 
-    $chip_products = $product_controller->index($fake_request, $productService);
+    $chip_products = $catalog_controller->catalogProducts($fake_request);
 
     //POPULAR Products
-    //category_id=3&order_by=sales&order_dir=DESC&selections[0]=in_stock&per_page=5&with_filters=0
     $fake_request->replace([
+      'country' => $country,
       'category_slug' => $slug,
       'price' => [5, 100000000],
       'order_by' => 'sales',
       'order_dir' => 'DESC',
       'selections' => ['in_stock'],
       'per_page' => 5,
-      'with_filters' => 0
+      'with_filters' => 1
     ]);
 
-    $popular_products = $product_controller->index($fake_request, $productService);
+    $popular_products = $catalog_controller->catalogProducts($fake_request);
 
     return [
       'category' => $category_data,
@@ -334,7 +325,7 @@ class CategoryController extends \App\Http\Controllers\Controller
     ]);
 
     $review_controller = new \App\Http\Controllers\Api\ReviewController;
-    $reviews = $review_controller->index($fake_request);
+    $reviews = $review_controller->indexFast($fake_request);
     // dd($reviews);
 
     //CHIP Products

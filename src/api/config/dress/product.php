@@ -1,7 +1,7 @@
 <?php
 
 return [
-  'model' => 'Backpack\Store\app\Models\Product',
+  'model' => 'App\Models\Product',
 
   'model_admin' => 'Backpack\Store\app\Models\Admin\Product',
 
@@ -20,7 +20,7 @@ return [
     'tiny' => 'Backpack\Store\app\Http\Resources\ProductTinyResource',
     
     // Small product resource used for catalog pages (index route)
-    'small' => 'Backpack\Store\app\Http\Resources\ProductSmallResource',
+    'small' => 'App\Http\Resources\ProductSmallResource',
     'medium' => 'Backpack\Store\app\Http\Resources\ProductMediumResource',
     
     // Large product resource used for product page (show route)

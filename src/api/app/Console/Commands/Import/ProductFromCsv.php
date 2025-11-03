@@ -212,6 +212,9 @@ class ProductFromCsv extends Command
         $images_urls = [];
       }
 
+      $price = $data['old_price'] ? $data['old_price'] : $data['price'];
+      $old_price = $data['old_price'] ? $data['price'] : null;
+
       $product = new StoreProduct;
       $product->name = $data['name'];
       $product->short_name = $data['property_1_value'];
@@ -224,7 +227,7 @@ class ProductFromCsv extends Command
       $product->save();
 
       // Attach supplier
-      $product->setProductSupplier($supplier_id = 1, $in_stock = $data['in_stock'], $price = $data['price'], $old_price = $data['old_price'], $code = $data['code']);
+      $product->setProductSupplier($supplier_id = 1, $in_stock = $data['in_stock'], $price, $old_price, $code = $data['code']);
 
       return $product;
     }

@@ -1,0 +1,1 @@
+{{ isset($slot) && strip_tags($slot)}}

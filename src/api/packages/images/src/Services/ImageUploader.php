@@ -3,6 +3,7 @@
 namespace ParabellumKoval\BackpackImages\Services;
 
 use Exception;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use ParabellumKoval\BackpackImages\Contracts\ImageStorageProvider;
@@ -11,6 +12,7 @@ use ParabellumKoval\BackpackImages\Exceptions\ImageUploadException;
 use ParabellumKoval\BackpackImages\Support\FileNameGenerator;
 use ParabellumKoval\BackpackImages\Support\ImageProviderRegistry;
 use ParabellumKoval\BackpackImages\Support\ImageUploadOptions;
+use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 use finfo;
 
 class ImageUploader
@@ -67,6 +69,99 @@ class ImageUploader
 
             return false;
         }
+    }
+
+    public function uploadFromBase64(string $dataUri, ?ImageUploadOptions $options = null): StoredImage
+    {
+        $options = $this->resolveOptions($options);
+        $provider = $this->resolveProvider($options->provider);
+        $logChannel = $options->logChannel ?? $this->defaultLogChannel();
+
+        Log::channel($logChannel)->info(sprintf('Starting image upload from base64 using provider: %s', $options->provider));
+
+        $decoded = $this->decodeBase64Image($dataUri, $logChannel);
+        $targetPath = $this->fileNameGenerator->generate(
+            $decoded['originalName'],
+            $decoded['extension'],
+            $provider,
+            $options->resolvedFolder($this->config['default_folder'] ?? ''),
+            $options->preserveOriginalName ?? false,
+            $options->generateUniqueName ?? true
+        );
+
+        try {
+            $provider->upload($decoded['content'], $targetPath);
+        } catch (Exception $exception) {
+            Log::channel($logChannel)->error(sprintf('Upload failed for %s via %s: %s', $targetPath, $options->provider, $exception->getMessage()));
+
+            throw new ImageUploadException($exception->getMessage(), (int) $exception->getCode(), $exception);
+        }
+
+        Log::channel($logChannel)->info(sprintf('Image uploaded to %s via %s', $targetPath, $options->provider));
+
+        return new StoredImage(
+            $provider->getUrl($targetPath),
+            $targetPath,
+            basename($targetPath),
+            $decoded['extension']
+        );
+    }
+
+    public function uploadFromFile(SymfonyFile $file, ?ImageUploadOptions $options = null): StoredImage
+    {
+        $options = $this->resolveOptions($options);
+        $provider = $this->resolveProvider($options->provider);
+        $logChannel = $options->logChannel ?? $this->defaultLogChannel();
+
+        $fileName = $file->getFilename();
+        Log::channel($logChannel)->info(sprintf('Starting image upload from file %s using provider: %s', $fileName, $options->provider));
+
+        $originalName = $file instanceof UploadedFile
+            ? (string) $file->getClientOriginalName()
+            : (string) $fileName;
+
+        $extension = $file instanceof UploadedFile
+            ? (string) $file->getClientOriginalExtension()
+            : ((string) $file->guessExtension());
+
+        $realPath = $file->getRealPath();
+        $content = $realPath ? @file_get_contents($realPath) : false;
+
+        if ($content === false) {
+            Log::channel($logChannel)->error(sprintf('Failed to read file contents for %s', $fileName));
+
+            throw new ImageUploadException('Unable to read uploaded file contents.');
+        }
+
+        if ($extension === '' || $extension === null) {
+            $extension = $this->detectExtension($content, (string) $file->getMimeType());
+        }
+
+        $targetPath = $this->fileNameGenerator->generate(
+            $originalName,
+            $extension,
+            $provider,
+            $options->resolvedFolder($this->config['default_folder'] ?? ''),
+            $options->preserveOriginalName ?? false,
+            $options->generateUniqueName ?? true
+        );
+
+        try {
+            $provider->upload($content, $targetPath);
+        } catch (Exception $exception) {
+            Log::channel($logChannel)->error(sprintf('Upload failed for %s via %s: %s', $targetPath, $options->provider, $exception->getMessage()));
+
+            throw new ImageUploadException($exception->getMessage(), (int) $exception->getCode(), $exception);
+        }
+
+        Log::channel($logChannel)->info(sprintf('Image uploaded to %s via %s', $targetPath, $options->provider));
+
+        return new StoredImage(
+            $provider->getUrl($targetPath),
+            $targetPath,
+            basename($targetPath),
+            $extension
+        );
     }
 
     public function upload(string $url, ?ImageUploadOptions $options = null): StoredImage
@@ -200,6 +295,33 @@ class ImageUploader
         }
 
         return $extension ?: 'jpg';
+    }
+
+    protected function decodeBase64Image(string $dataUri, string $logChannel): array
+    {
+        if (!preg_match('#^data:(?P<mime>[^;]+);base64,(?P<data>.+)$#si', $dataUri, $matches)) {
+            Log::channel($logChannel)->error('Invalid base64 image data provided.');
+
+            throw new ImageUploadException('Invalid base64 image data.');
+        }
+
+        $encoded = preg_replace('/\s+/', '', $matches['data']);
+        $content = base64_decode($encoded, true);
+
+        if ($content === false) {
+            Log::channel($logChannel)->error('Failed to decode base64 image content.');
+
+            throw new ImageUploadException('Failed to decode base64 image content.');
+        }
+
+        $mime = (string) ($matches['mime'] ?? '');
+        $extension = $this->detectExtension($content, $mime);
+
+        return [
+            'content' => $content,
+            'extension' => $extension,
+            'originalName' => '',
+        ];
     }
 
     protected function extensionFromMime(string $mime): string

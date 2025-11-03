@@ -8,34 +8,60 @@ trait HasImagesCrudComponents
 {
     protected function addImagesField(array $overrides = []): void
     {
-        $this->crud->addField($this->resolveImagesFieldDefinition($overrides));
+        $attribute = $overrides['name'] ?? null;
+        $definition = $this->resolveImagesFieldDefinition($attribute, $overrides);
+
+        $this->crud->addField($definition);
     }
 
     protected function addImagesColumn(array $overrides = []): void
     {
-        $this->crud->addColumn($this->resolveImagesColumnDefinition($overrides));
+        $attribute = $overrides['name'] ?? null;
+        $definition = $this->resolveImagesColumnDefinition($attribute, $overrides);
+
+        $this->crud->addColumn($definition);
     }
 
-    protected function resolveImagesFieldDefinition(array $overrides = []): array
+    protected function resolveImagesFieldDefinition(?string $attribute, array $overrides = []): array
     {
         $modelClass = $this->resolveCrudModelClass();
 
-        if (!method_exists($modelClass, 'defaultImagesFieldDefinition')) {
+        if (!method_exists($modelClass, 'imageFieldDefinition')) {
             throw new RuntimeException('Model must use the HasImages trait to provide field definitions.');
         }
 
-        return array_replace_recursive($modelClass::defaultImagesFieldDefinition(), $overrides);
+        if ($attribute === null && isset($overrides['name'])) {
+            $attribute = (string) $overrides['name'];
+        }
+
+        $definition = $modelClass::imageFieldDefinition($attribute);
+        unset($overrides['name']);
+
+        $definition = array_replace_recursive($definition, $overrides);
+        $definition['name'] = $attribute ?? $definition['name'];
+
+        return $definition;
     }
 
-    protected function resolveImagesColumnDefinition(array $overrides = []): array
+    protected function resolveImagesColumnDefinition(?string $attribute, array $overrides = []): array
     {
         $modelClass = $this->resolveCrudModelClass();
 
-        if (!method_exists($modelClass, 'defaultImagesColumnDefinition')) {
+        if (!method_exists($modelClass, 'imageColumnDefinition')) {
             throw new RuntimeException('Model must use the HasImages trait to provide column definitions.');
         }
 
-        return array_replace_recursive($modelClass::defaultImagesColumnDefinition(), $overrides);
+        if ($attribute === null && isset($overrides['name'])) {
+            $attribute = (string) $overrides['name'];
+        }
+
+        $definition = $modelClass::imageColumnDefinition($attribute);
+        unset($overrides['name']);
+
+        $definition = array_replace_recursive($definition, $overrides);
+        $definition['name'] = $attribute ?? $definition['name'];
+
+        return $definition;
     }
 
     protected function resolveCrudModelClass(): string

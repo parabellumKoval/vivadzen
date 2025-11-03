@@ -17,9 +17,13 @@ return [
     // Registrars: list of classes implementing SettingsRegistrarInterface
     'registrars' => [
         // Example: \Vendor\Package\Settings\StoreSettingsRegistrar::class,
+        \App\Settings\SiteSettingsRegistrar::class,
         \Backpack\Store\app\Settings\StoreSettingsRegistrar::class,
         \Backpack\Store\app\Settings\ModulesSettingsRegistrar::class,
         \Backpack\Store\app\Settings\SearchSettingsRegistrar::class,
+        \Backpack\Store\app\Settings\DeliverySettingsRegistrar::class,
+        \Backpack\Store\app\Settings\PaymentSettingsRegistrar::class,
+        \Backpack\Store\app\Settings\InvoicesSettingsRegistrar::class,
         \Backpack\Reviews\app\Settings\ReviewsSettingsRegistrar::class,
         \Backpack\Profile\app\Settings\ProfileSettingsRegistrar::class
     ],
@@ -39,6 +43,27 @@ return [
         'default_page'  => 'General',
     ],
 
+
+     // Context-aware settings -------------------------------------------------
+
+    // Automatically attempt to resolve locale from the current application locale
+    // when no explicit locale was provided to Settings::get()
+    'auto_locale' => true,
+
+    // Explicit list of locales for translatable fields (null => pull keys from backpack.crud.locales)
+    'available_locales' => null,
+
+    // List of available regions for regionable fields (code => human readable label)
+    'available_regions' => [
+        'ua' => 'Ukraine',
+        'de' => 'Germany',
+        'es' => 'Spain',
+        'cz' => 'Czech',
+    ],
+
+    // Query parameter names for resolving context from requests (admin UI & API)
+    'region_query_parameter' => 'country',
+    'locale_query_parameter' => 'locale',
 
     // Алиасы в формате: канон => [алиасы...]
     'aliases' => [

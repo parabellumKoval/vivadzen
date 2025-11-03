@@ -29,7 +29,7 @@ trait ArticleCrud {
           'name' => 'src',
           'label' => 'Изображение',
           'type' => 'image',
-          'crop' => false, // set to true to allow cropping, false to disable
+          'crop' => false,
           'prefix' =>  config('backpack.articles.image.base_path', '/')
         ],
         [

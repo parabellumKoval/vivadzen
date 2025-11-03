@@ -7,7 +7,7 @@ return [
   
   'default_country' => 'zz',
   
-  'default_currency' => 'USD',
+  'default_currency' => 'CZK',
 
   'currencies' => [
     [
@@ -29,11 +29,11 @@ return [
   ],
 
   'countries' => [
-    'uk' => [
+    'ua' => [
       'enabled' => true,
       'country' => 'Ukraine',
       'locale' => 'uk',
-      'code' => 'uk',
+      'code' => 'ua',
       'currency' => 'UAH',
       'delivery' => [],
       'payment' => []
@@ -59,7 +59,7 @@ return [
     'cz' => [
       'enabled' => true,
       'country' => 'Czech',
-      'locale' => 'cz',
+      'locale' => 'cs',
       'code' => 'cz',
       'currency' => 'CZK',
       'delivery' => [],

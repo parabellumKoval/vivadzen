@@ -5,7 +5,7 @@ return [
 
   'mode' => 'vertical', // vertical|horizontal
 
-  'parent_listable' => false, // вертикально: скрываем родителя из каталога/сейла
+  'parent_listable' => true, // вертикально: скрываем родителя из каталога/сейла
 
   'inherit' => [
     'brand' => true,
