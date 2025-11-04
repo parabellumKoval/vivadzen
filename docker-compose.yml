@@ -64,8 +64,8 @@ services:
       PHP_FPM_PM_START_SERVERS: ${PHP_FPM_PM_START_SERVERS:-2}
       PHP_FPM_PM_MIN_SPARE_SERVERS: ${PHP_FPM_PM_MIN_SPARE_SERVERS:-1}
       PHP_FPM_PM_MAX_SPARE_SERVERS: ${PHP_FPM_PM_MAX_SPARE_SERVERS:-3}  
-    env_file:
-      - ./src/api/.env  
+    # env_file:
+    #   - ./src/api/.env  
     volumes:
       - ./storage_dashboard:/var/www/html/storage
       - ./storage_excel:/var/www/html/storage/app/public/excel
