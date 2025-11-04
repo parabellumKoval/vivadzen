@@ -13,6 +13,8 @@ services:
       - .docker/prod/nginx/acme:/var/www/acme:ro
       # Uploads
       - /mnt/uploads:/var/www/html/public/uploads
+      - /mnt/images:/var/www/html/public/images
+      - /mnt/invoices:/var/www/html/public/invoices
     ports:
       - "443:443"
       - "80:80"
@@ -70,6 +72,8 @@ services:
       - ./storage_dashboard:/var/www/html/storage
       - ./storage_excel:/var/www/html/storage/app/public/excel
       - /mnt/uploads:/var/www/html/public/uploads
+      - /mnt/images:/var/www/html/public/images
+      - /mnt/invoices:/var/www/html/public/invoices
       - /mnt/backups:/var/www/html/public/backups
     container_name: dashboard
     hostname: dashboard
@@ -90,6 +94,8 @@ services:
     volumes:
       - ./storage_api:/var/www/html/storage
       - /mnt/uploads:/var/www/html/public/uploads
+      - /mnt/images:/var/www/html/public/images
+      - /mnt/invoices:/var/www/html/public/invoices
     container_name: api_host
     hostname: api_host
     # env_file:
@@ -182,6 +188,8 @@ services:
       # - ./src/api:/var/www/html
       - ./storage_queue:/var/www/html/storage
       - /mnt/uploads:/var/www/html/public/uploads
+      - /mnt/images:/var/www/html/public/images
+      - /mnt/invoices:/var/www/html/public/invoices
     depends_on:
       - redis
       - mysql
@@ -200,6 +208,8 @@ services:
       - ./storage_excel:/var/www/html/storage/app/public/excel
       - /mnt/backups:/var/www/html/public/backups
       - /mnt/uploads:/var/www/html/public/uploads
+      - /mnt/images:/var/www/html/public/images
+      - /mnt/invoices:/var/www/html/public/invoices
     links:
       - mysql
       - redis
