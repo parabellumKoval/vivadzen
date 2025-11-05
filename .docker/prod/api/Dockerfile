@@ -27,7 +27,7 @@ COPY ./src/api/.env.prod ./.env
 # Set up the working directory
 WORKDIR /var/www/html
 
-COPY ./entrypoint.sh /entrypoint.sh
+COPY ./.docker/prod/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
