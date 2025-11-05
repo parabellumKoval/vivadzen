@@ -24,7 +24,7 @@ COPY ./src/api/.env.prod ./.env
 # RUN php artisan optimize \
 #     && php artisan storage:link
 
-COPY ./.docker/prod/entrypoint.sh /entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
