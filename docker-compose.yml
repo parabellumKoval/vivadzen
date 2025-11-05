@@ -226,8 +226,10 @@ services:
       - meili_data:/meili_data
     networks:
       - api
-      
+
 volumes:
+  meili_data:
+  
   libretranslate_models:
     driver: local
 #   mysql:
