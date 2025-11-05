@@ -73,12 +73,16 @@ CipherString = DEFAULT:@SECLEVEL=1\n\
 Options = UnsafeLegacyRenegotiation/' /etc/ssl/openssl.cnf
 
 
-
 ARG MY_USER=www-data
 
 RUN chown -R ${MY_USER}:${MY_USER} /var/www/html && \
     chmod -R 755 /var/www/html/storage && \
     chmod -R 755 /var/www/html/public
+
+
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
