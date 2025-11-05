@@ -22,7 +22,7 @@ COPY ./src/api ./
 RUN cp ./.env.prod ./.env
 
 # Dump composer autoload
-RUN composer dump-autoload --optimize
+# RUN composer dump-autoload --optimize
 
 # Serving image
 FROM php:8.2-cli
@@ -102,12 +102,5 @@ RUN chmod -R 755 /var/www/html/storage && \
 
 # Optimizing configuration loading
 RUN php artisan config:cache \
-# Optimizing route loading
-    # && php artisan route:cache \
-# Optimizing view loading
-    # && php artisan view:cache \
-# Optimizing event loading
-    # && php artisan event:cache \
     && php artisan optimize \
-# Generate storage symlink
     && php artisan storage:link

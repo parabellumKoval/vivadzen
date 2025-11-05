@@ -17,7 +17,12 @@ RUN apt-get update \
 
 COPY ./src/api/.env.prod ./.env
 
-RUN php artisan optimize
+# Dump composer autoload
+RUN composer dump-autoload --optimize
+
+# RUN php artisan optimize
+RUN php artisan optimize \
+    && php artisan storage:link
 
 # Set up the working directory
 WORKDIR /var/www/html
