@@ -21,11 +21,15 @@ COPY ./src/api/.env.prod ./.env
 # RUN composer dump-autoload --optimize
 
 # RUN php artisan optimize
-RUN php artisan optimize \
-    && php artisan storage:link
+# RUN php artisan optimize \
+#     && php artisan storage:link
 
 # Set up the working directory
 WORKDIR /var/www/html
+
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Export Octane port
 EXPOSE 8000
