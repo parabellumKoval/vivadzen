@@ -24,12 +24,12 @@ COPY ./src/api/.env.prod ./.env
 # RUN php artisan optimize \
 #     && php artisan storage:link
 
-# Set up the working directory
-WORKDIR /var/www/html
-
 COPY ./.docker/prod/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
+
+# Set up the working directory
+WORKDIR /var/www/html
 
 # Export Octane port
 EXPOSE 8000
