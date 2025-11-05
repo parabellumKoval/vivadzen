@@ -6,7 +6,7 @@ ARG IMAGE_TAG=latest
 FROM ${IMAGE_REGISTRY}/api-base:${IMAGE_TAG} as base
 
 # Serving image
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # Update dependencies
 RUN apt-get update \
