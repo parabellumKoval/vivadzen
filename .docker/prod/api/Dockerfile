@@ -18,7 +18,7 @@ RUN apt-get update \
 COPY ./src/api/.env.prod ./.env
 
 # Dump composer autoload
-RUN composer dump-autoload --optimize
+# RUN composer dump-autoload --optimize
 
 # RUN php artisan optimize
 RUN php artisan optimize \
