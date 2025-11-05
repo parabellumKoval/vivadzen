@@ -6,6 +6,8 @@
 /redis
 /proxy_logs
 .env
+.env.prod
+.env.dev
 docker-compose.override.yml
 Homestead.json
 Homestead.yaml
