@@ -101,6 +101,6 @@ RUN chmod -R 755 /var/www/html/storage && \
     chmod -R 755 /var/www/html/public
 
 # Optimizing configuration loading
-RUN php artisan config:cache \
-    && php artisan optimize \
-    && php artisan storage:link
+# RUN php artisan config:cache \
+#     && php artisan optimize \
+#     && php artisan storage:link
