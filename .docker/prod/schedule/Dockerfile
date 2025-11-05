@@ -35,15 +35,9 @@ MinProtocol = TLSv1\n\
 CipherString = DEFAULT:@SECLEVEL=1\n\
 Options = UnsafeLegacyRenegotiation/' /etc/ssl/openssl.cnf
 
-# Optimizing configuration loading
-RUN php artisan config:cache \
-# Optimizing route loading
-    # && php artisan route:cache \
-# Optimizing view loading
-    # && php artisan view:cache \
-# Optimizing event loading
-    # && php artisan event:cache \
-    && php artisan optimize
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Run the cron service
 CMD ["cron", "-f"]

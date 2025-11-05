@@ -217,6 +217,16 @@ services:
       - api
     restart: unless-stopped
 
+  meilisearch:
+    image: getmeili/meilisearch:v1.11
+    environment:
+      MEILI_ENV: "development"
+    ports: ["7700:7700"]
+    volumes:
+      - meili_data:/meili_data
+    networks:
+      - api
+      
 volumes:
   libretranslate_models:
     driver: local
