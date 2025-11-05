@@ -24,9 +24,10 @@ class ProductFromCsv extends Command
     protected $signature = 'import:products-from-csv {url?} {output?}';
     protected $description = 'Fetch an image from a URL using proxy server and save it locally';
 
-    const FILE_PATH = 'vivadzen-products.csv';
+    // const FILE_PATH = 'vivadzen-products.csv';
+    const FILE_PATH = 'cz.csv';
     // Mode updateOrCreateItem, updateIsActive, updateCategory
-    const MODE = 'updateCategory';
+    const MODE = 'updateOrCreateItem';
 
     private $totalRecords = 0;
     private $fieldLetters = [
@@ -86,6 +87,11 @@ class ProductFromCsv extends Command
       foreach ($sheet->getRowIterator() as $row) {
 
         $rowIndex = $row->getRowIndex();
+
+        // if ($rowIndex > 40) {
+        //     $this->info('Skip ' . $rowIndex);
+        //     continue;
+        // }
 
         if($rowIndex > $this->totalRecords) {
           return;
@@ -316,10 +322,29 @@ class ProductFromCsv extends Command
     private function getExcelDataFromFile($file_path) {
       $path = Storage::disk('excel')->path($file_path);
 
+      // Если это CSV файл, используем специальный CSV reader
+      if (pathinfo($file_path, PATHINFO_EXTENSION) === 'csv') {
+          return $this->loadCsvAsSpreadsheet($path);
+      }
+
       $spreadsheet = IOFactory::load($path);
       $sheet = $spreadsheet->getActiveSheet();
 
       return $sheet;
+    }
+
+    /**
+     * Load CSV file as spreadsheet with proper handling of complex CSV structures
+     */
+    private function loadCsvAsSpreadsheet($filePath) {
+        $reader = IOFactory::createReader('Csv');
+        $reader->setDelimiter(',');
+        $reader->setEnclosure('"');
+        $reader->setEscapeCharacter('\\');
+        $reader->setSheetIndex(0);
+        
+        $spreadsheet = $reader->load($filePath);
+        return $spreadsheet->getActiveSheet();
     }
         
 
