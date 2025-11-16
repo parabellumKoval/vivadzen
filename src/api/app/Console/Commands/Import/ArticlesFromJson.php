@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Import;
 
 use Backpack\Articles\app\Models\Article;
+use Backpack\Tag\app\Models\Tag;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
@@ -18,6 +19,7 @@ class ArticlesFromJson extends Command
 {
     protected $signature = 'import:articles-from-json {path=public/blog.json : Relative path to the WordPress JSON export}'
         . ' {--lang=cs : Language code that will be stored on imported articles}'
+        . ' {--countries= : Comma-separated list of country codes (e.g., cz,ua,de)}'
         . ' {--dry-run : Parse the file without writing changes to the database}';
 
     protected $description = 'Import blog articles that were exported from WordPress as JSON';
@@ -61,6 +63,7 @@ class ArticlesFromJson extends Command
 
         $lang = (string) ($this->option('lang') ?? 'cs');
         $dryRun = (bool) $this->option('dry-run');
+        $countries = $this->parseCountries((string) $this->option('countries'));
 
         if ($dryRun) {
             $this->warn('Dry run mode enabled — database will remain unchanged.');
@@ -78,7 +81,7 @@ class ArticlesFromJson extends Command
         $progress->start();
 
         foreach ($posts as $payload) {
-            $result = $this->processArticle($payload, $lang, $dryRun);
+            $result = $this->processArticle($payload, $lang, $countries, $dryRun);
 
             $stats[$result['status']] = ($stats[$result['status']] ?? 0) + 1;
 
@@ -117,7 +120,7 @@ class ArticlesFromJson extends Command
     /**
      * @return array{status: string, message: string|null}
      */
-    private function processArticle(array $payload, string $lang, bool $dryRun): array
+    private function processArticle(array $payload, string $lang, array $countries, bool $dryRun): array
     {
         $title = $this->extractTitle($payload);
         $slug = $this->extractSlug($payload, $title);
@@ -135,12 +138,26 @@ class ArticlesFromJson extends Command
         $contentResult = $this->sanitizeContentHtml($payload, $title, $dryRun, $uploadCache, $warnings);
         $content = $contentResult['html'];
         $contentImages = $contentResult['images'];
+        $readingTimeMinutes = $this->estimateReadingTimeMinutes($content);
 
         $excerpt = $this->sanitizeExcerpt(Arr::get($payload, 'excerpt.rendered'));
         $seo = $this->extractSeo($payload);
         $metaImages = $this->extractImages($payload, $title, $dryRun, $uploadCache, $warnings);
-        $images = $this->mergeImages($contentImages, $metaImages);
+        
+        // Only save the first image (featured image) to the images field
+        $images = !empty($contentImages) ? [reset($contentImages)] : (!empty($metaImages) ? [reset($metaImages)] : []);
+        
         $extras = $this->extractExtras($payload);
+        if ($readingTimeMinutes !== null) {
+            $extras['reading_time_minutes'] = $readingTimeMinutes;
+        }
+        
+        // Add countries to extras if provided
+        if ($countries !== []) {
+            $extras['countries'] = $countries;
+        }
+        $tagTexts = $this->extractTagTexts($payload);
+
         $publishedAt = $this->extractPublishedAt($payload);
         $status = $this->mapStatus(Arr::get($payload, 'status'));
 
@@ -209,11 +226,34 @@ class ArticlesFromJson extends Command
         $article = $existing ?? new Article();
         $article->fill($attributes);
         $article->save();
+        $this->syncArticleTags($article, $tagTexts, $lang, $warnings);
 
         return [
             'status' => $existing ? 'updated' : 'created',
             'message' => $warnings !== [] ? implode(' | ', $warnings) : null,
         ];
+    }
+
+    private function estimateReadingTimeMinutes(string $html): ?int
+    {
+        $text = strip_tags($html);
+        $text = preg_replace('/\s+/u', ' ', (string) $text);
+        $text = trim((string) $text);
+
+        if ($text === '') {
+            return null;
+        }
+
+        $words = preg_split('/\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY);
+        $wordCount = is_array($words) ? count($words) : 0;
+
+        if ($wordCount === 0) {
+            return null;
+        }
+
+        $minutes = (int) ceil($wordCount / 200);
+
+        return max($minutes, 1);
     }
 
     private function extractTitle(array $payload): string
@@ -357,8 +397,14 @@ class ArticlesFromJson extends Command
 
         $this->removeCommentsFromDocument($document);
 
+        $removedGrids = $this->removeImprezaGrids($document);
+        if ($removedGrids > 0) {
+            $warnings[] = sprintf('Removed %d Impreza/UpSolution grid(s) from body.', $removedGrids);
+        }
+
         $allowedTags = $this->allowedHtmlTags();
-        $imageRecords = [];
+        $featuredImageRecord = null;
+        $isFirstImage = true;
 
         $elements = [];
 
@@ -384,15 +430,25 @@ class ArticlesFromJson extends Command
             }
 
             if ($tag === 'img') {
-                $record = $this->sanitizeImageElement($element, $payload, $title, $dryRun, $uploadCache, $warnings);
-
-                if ($record === null) {
+                if ($isFirstImage) {
+                    // First image: upload via ImageUploader and extract from content
+                    $record = $this->sanitizeFeaturedImageElement($element, $payload, $title, $dryRun, $uploadCache, $warnings);
+                    
+                    if ($record !== null) {
+                        $featuredImageRecord = $record;
+                        $isFirstImage = false;
+                    }
+                    
+                    // Remove first image from content
                     $this->removeNode($element);
-
-                    continue;
+                } else {
+                    // Other images: upload to public/uploads
+                    $uploaded = $this->sanitizeContentImageElement($element, $payload, $title, $dryRun, $warnings);
+                    
+                    if ($uploaded === false) {
+                        $this->removeNode($element);
+                    }
                 }
-
-                $imageRecords[] = $record;
             }
         }
 
@@ -400,8 +456,77 @@ class ArticlesFromJson extends Command
 
         return [
             'html' => trim($html),
-            'images' => $imageRecords,
+            'images' => $featuredImageRecord !== null ? [$featuredImageRecord] : [],
         ];
+    }
+
+    /**
+     * Удаляет импортизированные из WP «слайдеры/карусели» от Impreza/UpSolution:
+     *  - любые контейнеры с классом w-grid (в т.ч. prod-slider)
+     *  - любые контейнеры с id, начинающимся на us_grid_
+     * Возвращает количество удалённых контейнеров.
+     */
+    private function removeImprezaGrids(DOMDocument $document): int
+    {
+        $xpath = new DOMXPath($document);
+
+        // Находим все контейнеры грида. Берём union двух критериев:
+        // 1) .w-grid (импрезовский грид)
+        // 2) id="us_grid_*" (их же айдишники)
+        $nodes = $xpath->query(
+            '//*[contains(concat(" ", normalize-space(@class), " "), " w-grid ")]' .
+            ' | ' .
+            '//*[starts-with(@id, "us_grid_")]'
+        );
+
+        if (! $nodes || $nodes->length === 0) {
+            return 0;
+        }
+
+        // Сначала запомним id, чтобы подчистить <style> с такими селекторами (на всякий случай)
+        $gridIds = [];
+        foreach ($nodes as $el) {
+            /** @var DOMElement $el */
+            if ($el->hasAttribute('id')) {
+                $gridIds[] = $el->getAttribute('id');
+            }
+        }
+
+        // Удаляем сами контейнеры целиком (со всем содержимым)
+        $removed = 0;
+        // Важно: NodeList «живой», поэтому удаляем в обратном порядке через массив-копию
+        $toDelete = [];
+        foreach ($nodes as $n) { $toDelete[] = $n; }
+        foreach ($toDelete as $n) {
+            if ($n->parentNode) {
+                $n->parentNode->removeChild($n);
+                $removed++;
+            }
+        }
+
+        // Подчистим любые <style>, в которых встречается #us_grid_X
+        if ($gridIds !== []) {
+            $styleNodes = $xpath->query('//style');
+            if ($styleNodes && $styleNodes->length) {
+                $toDeleteStyles = [];
+                foreach ($styleNodes as $style) {
+                    $css = $style->nodeValue ?? '';
+                    foreach ($gridIds as $id) {
+                        if ($css !== '' && strpos($css, '#'.$id) !== false) {
+                            $toDeleteStyles[] = $style;
+                            break;
+                        }
+                    }
+                }
+                foreach ($toDeleteStyles as $style) {
+                    if ($style->parentNode) {
+                        $style->parentNode->removeChild($style);
+                    }
+                }
+            }
+        }
+
+        return $removed;
     }
 
     private function extractSeo(array $payload): array
@@ -552,6 +677,146 @@ class ArticlesFromJson extends Command
         }
 
         return $record['record'];
+    }
+
+    /**
+     * Process first image (featured) - upload via ImageUploader
+     */
+    private function sanitizeFeaturedImageElement(
+        DOMElement $element,
+        array $payload,
+        string $fallbackAlt,
+        bool $dryRun,
+        array &$uploadCache,
+        array &$warnings
+    ): ?array {
+        $src = $element->getAttribute('src');
+        $resolved = $this->resolveImageUrl($src, $payload);
+
+        if ($resolved === null) {
+            if ($src !== '') {
+                $warnings[] = sprintf('Skipped featured image with unsupported src "%s".', $src);
+            }
+
+            return null;
+        }
+
+        $altAttribute = $element->getAttribute('alt');
+        $alt = $altAttribute !== '' ? $altAttribute : $fallbackAlt;
+
+        $record = $this->storeImageFromUrl($resolved, $alt, $dryRun, $uploadCache, $warnings);
+
+        if ($record === null) {
+            return null;
+        }
+
+        return $record['record'];
+    }
+
+    /**
+     * Process content images (non-featured) - upload to public/uploads directly
+     * 
+     * @return bool True if processed successfully, false if should be removed
+     */
+    private function sanitizeContentImageElement(
+        DOMElement $element,
+        array $payload,
+        string $fallbackAlt,
+        bool $dryRun,
+        array &$warnings
+    ): bool {
+        $src = $element->getAttribute('src');
+        $resolved = $this->resolveImageUrl($src, $payload);
+
+        if ($resolved === null) {
+            if ($src !== '') {
+                $warnings[] = sprintf('Skipped content image with unsupported src "%s".', $src);
+            }
+
+            return false;
+        }
+
+        $altAttribute = $element->getAttribute('alt');
+        $alt = $altAttribute !== '' ? $altAttribute : $fallbackAlt;
+
+        $uploaded = $this->uploadContentImage($resolved, $alt, $dryRun, $warnings);
+
+        if ($uploaded === null) {
+            return false;
+        }
+
+        $element->setAttribute('src', $uploaded['url']);
+
+        if ($uploaded['alt'] !== null) {
+            $element->setAttribute('alt', $uploaded['alt']);
+            $element->setAttribute('title', $uploaded['alt']);
+        } else {
+            $element->removeAttribute('alt');
+            $element->removeAttribute('title');
+        }
+
+        return true;
+    }
+
+    /**
+     * Upload content image directly to public/uploads
+     * 
+     * @return array{url: string, alt: string|null}|null
+     */
+    private function uploadContentImage(string $url, ?string $alt, bool $dryRun, array &$warnings): ?array
+    {
+        $normalizedUrl = trim($url);
+
+        if ($normalizedUrl === '') {
+            return null;
+        }
+
+        if ($dryRun) {
+            return [
+                'url' => $normalizedUrl,
+                'alt' => $this->normalizeAltText($alt),
+            ];
+        }
+
+        try {
+            // Download image
+            $imageContent = @file_get_contents($normalizedUrl);
+            
+            if ($imageContent === false) {
+                $warnings[] = sprintf('Failed to download content image: %s', $normalizedUrl);
+                return null;
+            }
+
+            // Generate filename
+            $extension = pathinfo(parse_url($normalizedUrl, PHP_URL_PATH), PATHINFO_EXTENSION);
+            if ($extension === '' || strlen($extension) > 5) {
+                $extension = 'jpg';
+            }
+            
+            $filename = md5($normalizedUrl . time()) . '.' . $extension;
+            $uploadDir = public_path('uploads');
+            
+            // Create directory if not exists
+            if (!File::isDirectory($uploadDir)) {
+                File::makeDirectory($uploadDir, 0755, true);
+            }
+            
+            $filePath = $uploadDir . '/' . $filename;
+            
+            // Save file
+            if (file_put_contents($filePath, $imageContent) === false) {
+                $warnings[] = sprintf('Failed to save content image: %s', $normalizedUrl);
+                return null;
+            }
+
+            return [
+                'url' => '/uploads/' . $filename,
+                'alt' => $this->normalizeAltText($alt),
+            ];
+        } catch (\Throwable $exception) {
+            $warnings[] = sprintf('Failed to upload content image %s: %s', $normalizedUrl, $exception->getMessage());
+            return null;
+        }
     }
 
     /**
@@ -881,6 +1146,201 @@ class ArticlesFromJson extends Command
         return $collapsed === '' ? null : Str::limit($collapsed, 160);
     }
 
+    /**
+     * @return array<int, string>
+     */
+    private function extractTagTexts(array $payload): array
+    {
+        $candidates = [];
+
+        $directSections = Arr::get($payload, 'yoast_head_json.articleSection');
+        if ($directSections !== null) {
+            $candidates[] = $directSections;
+        }
+
+        $schema = Arr::get($payload, 'yoast_head_json.schema');
+        if (is_array($schema)) {
+            if (array_key_exists('articleSection', $schema)) {
+                $candidates[] = $schema['articleSection'];
+            }
+
+            $graphNodes = Arr::get($schema, '@graph', []);
+            if (is_array($graphNodes)) {
+                foreach ($graphNodes as $node) {
+                    if (is_array($node) && array_key_exists('articleSection', $node)) {
+                        $candidates[] = $node['articleSection'];
+                    }
+                }
+            }
+        }
+
+        $tags = [];
+
+        foreach ($candidates as $candidate) {
+            foreach ($this->normalizeTagCandidate($candidate) as $tag) {
+                $tags[$tag] = true;
+            }
+        }
+
+        return array_keys($tags);
+    }
+
+    /**
+     * @param mixed $candidate
+     * @return array<int, string>
+     */
+    private function normalizeTagCandidate($candidate): array
+    {
+        if ($candidate === null) {
+            return [];
+        }
+
+        if (is_string($candidate)) {
+            $candidate = [$candidate];
+        }
+
+        if (! is_array($candidate)) {
+            return [];
+        }
+
+        $normalized = [];
+
+        foreach ($candidate as $value) {
+            if ($value === null || $value === '') {
+                continue;
+            }
+
+            if (is_array($value)) {
+                foreach ($this->normalizeTagCandidate($value) as $nested) {
+                    $normalized[$nested] = true;
+                }
+
+                continue;
+            }
+
+            if (! is_scalar($value)) {
+                continue;
+            }
+
+            $fragments = preg_split('/[,;]+/u', (string) $value, -1, PREG_SPLIT_NO_EMPTY);
+            if ($fragments === false || $fragments === []) {
+                $fragments = [(string) $value];
+            }
+
+            foreach ($fragments as $fragment) {
+                $label = Str::lower(trim((string) $fragment));
+
+                if ($label === '') {
+                    continue;
+                }
+
+                $normalized[$label] = true;
+            }
+        }
+
+        return array_keys($normalized);
+    }
+
+    private function syncArticleTags(Article $article, array $tagTexts, string $lang, array &$warnings): void
+    {
+        $normalizedTags = [];
+
+        foreach ($tagTexts as $tagText) {
+            $label = Str::lower(trim($tagText));
+
+            if ($label === '') {
+                continue;
+            }
+
+            $value = $this->generateTagValue($label);
+
+            if (! array_key_exists($value, $normalizedTags)) {
+                $normalizedTags[$value] = [
+                    'value' => $value,
+                    'label' => $label,
+                ];
+            }
+        }
+
+        if ($normalizedTags === []) {
+            $article->tags()->sync([]);
+
+            return;
+        }
+
+        $tagIds = [];
+
+        foreach ($normalizedTags as $tagData) {
+            try {
+                $tag = Tag::query()->where('value', $tagData['value'])->first();
+
+                if ($tag === null) {
+                    $tag = new Tag();
+                    $tag->value = $tagData['value'];
+                    $tag->color = $this->generateTagColor($tagData['label']);
+                    $tag->setTranslations('label', [$lang => $tagData['label']]);
+                    $tag->save();
+                } else {
+                    $currentTranslation = $tag->getTranslation('label', $lang, false);
+
+                    if ($currentTranslation === null || $currentTranslation === '') {
+                        $tag->setTranslation('label', $lang, $tagData['label']);
+                        $tag->save();
+                    }
+                }
+
+                $tagIds[] = $tag->id;
+            } catch (\Throwable $exception) {
+                $warnings[] = sprintf(
+                    'Failed to ensure tag "%s": %s',
+                    $tagData['label'],
+                    $exception->getMessage()
+                );
+            }
+        }
+
+        if ($tagIds === []) {
+            return;
+        }
+
+        $article->tags()->sync($tagIds);
+    }
+
+    private function generateTagValue(string $label): string
+    {
+        $value = Str::slug($label);
+
+        if ($value === '') {
+            $value = Str::slug(Str::ascii($label));
+        }
+
+        if ($value === '') {
+            $value = substr(md5($label), 0, 12);
+        }
+
+        return $value;
+    }
+
+    private function generateTagColor(string $tagText): string
+    {
+        $hash = md5($tagText);
+        $primary = substr($hash, 0, 6);
+        $primary = str_pad($primary, 6, '0');
+        $components = str_split($primary, 2);
+
+        if (count($components) < 3) {
+            $components = array_pad($components, 3, '00');
+        }
+
+        $adjusted = array_map(static function (string $component): int {
+            $value = hexdec($component);
+
+            return max(70, $value);
+        }, array_slice($components, 0, 3));
+
+        return sprintf('#%02x%02x%02x', $adjusted[0], $adjusted[1], $adjusted[2]);
+    }
+
 
     private function extractExtras(array $payload): array
     {
@@ -983,5 +1443,24 @@ class ArticlesFromJson extends Command
 
             return $value !== null && $value !== '';
         });
+    }
+
+    /**
+     * Parse comma-separated country codes and return as lowercase array
+     *
+     * @param string $input
+     * @return array
+     */
+    private function parseCountries(string $input): array
+    {
+        if ($input === '') {
+            return [];
+        }
+
+        $codes = array_map('trim', explode(',', $input));
+        $codes = array_map('strtolower', $codes);
+        $codes = array_filter($codes, fn($code) => $code !== '');
+
+        return array_values(array_unique($codes));
     }
 }
