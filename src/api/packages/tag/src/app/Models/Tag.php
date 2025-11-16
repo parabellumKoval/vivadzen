@@ -6,6 +6,9 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
+// TRANSLATIONS
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+
 // FACTORY
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Backpack\Reviews\database\factories\ReviewFactory;
@@ -16,6 +19,7 @@ class Tag extends Model
 {
     use CrudTrait;
     use HasFactory;
+    use HasTranslations;
     
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +32,8 @@ class Tag extends Model
     // public $timestamps = false;
     protected $guarded = ['id'];
     protected $fillable = [
-      'text',
+      'value',
+      'label',
       'color',
       'extras'
     ];
@@ -41,6 +46,8 @@ class Tag extends Model
     protected $casts = [
       'extras' => 'array',
     ];
+
+    protected $translatable = ['label'];
 	
     /*
     |--------------------------------------------------------------------------
@@ -62,7 +69,8 @@ class Tag extends Model
     {
       return [
         "id" => $this->id,
-        "text" => $this->text,
+        "value" => $this->value,
+        "label" => $this->label,
         "color" => $this->color,
         "extras" => $this->extras,
         "created_at" => $this->created_at
@@ -75,23 +83,12 @@ class Tag extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function articles(): MorphToMany
+    /**
+     * Get models of a specific type that are tagged with this tag.
+     */
+    public function getTaggedModels(string $modelClass)
     {
-        return $this->morphedByMany(\Backpack\Articles\app\Models\Article::class, 'taggable', 'ak_taggables')
-            ->withPivot('id')
-            ->withTimestamps();
-    }
-
-    public function categories(): MorphToMany
-    {
-        return $this->morphedByMany(\Backpack\Store\app\Models\Category::class, 'taggable', 'ak_taggables')
-            ->withPivot('id')
-            ->withTimestamps();
-    }
-
-    public function products(): MorphToMany
-    {
-        return $this->morphedByMany(\Backpack\Store\app\Models\Product::class, 'taggable', 'ak_taggables')
+        return $this->morphedByMany($modelClass, 'taggable', 'ak_taggables')
             ->withPivot('id')
             ->withTimestamps();
     }

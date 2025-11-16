@@ -8,8 +8,14 @@ use App\Models\Bunny;
 use App\Models\Region;
 use Backpack\Store\app\Models\Category as BaseCategory;
 
-class Category extends BaseCategory
+use Illuminate\Database\Eloquent\Builder;
+
+use Dress\Translator\app\Interfaces\TranslatableInterface;
+use Dress\Translator\app\Traits\TranslatableTrait;
+
+class Category extends BaseCategory implements TranslatableInterface
 {
+  use TranslatableTrait;
   // use Searchable;
 
   public $children_list = [];
@@ -216,4 +222,67 @@ public static function createOrUpdateCategoryChain(array $chain, string $locale)
       $this->attributes['images'] = json_encode($images_array);
     }
   }
+
+
+
+  // TRANSLATOR
+
+  public static function setupTranslatableSettings(): void
+  {
+      static::addCommonSettings([
+          'title' => 'Категории',
+          'key' => 'category',
+          'identifier' => 'name',
+          'backpack_title' => 'Категории',
+          'backpack_settings' => [
+              [
+                  'type' => 'checkbox',
+                  'name' => 'is_active_only',
+                  'label' => 'Только активные категории',
+                  'hint' => ''
+              ]
+          ],
+          // 'translation_type' => 'auto',
+          // 'languages' => ['ru', 'uk']
+      ]);
+
+      static::addTranslatableCase([
+          'fields' => [
+              'name' => 'Название категории'
+          ],
+          'driver' => 'deepl',
+          // 'scopeName' => 'namesQuery'
+      ]);
+  }
+
+
+  public function scopeTranslatableQuery(Builder $query, $settings) {
+    $is_active_only = isset($settings['query']['is_active_only']) 
+        ? (bool)$settings['query']['is_active_only'] 
+        : false;
+
+    $query->when($is_active_only, function ($query) {
+        $query->where('is_active', 1);
+    });
+  }
+
+
+  public function getBackpackEditLinkAttribute(): string 
+  {
+      return backpack_url('category/' . $this->id . '/edit');
+  }
+
+  // public function scopeNamesQuery(Builder $query, $settings) {
+  //     $from_langs = $settings['from_languages'];
+  //     $min_symbols = 10;
+      
+  //     $query->where(function ($query) use ($from_langs, $min_symbols) {
+  //         $conditions = [];
+  //         foreach ($from_langs as $lang_key) {
+  //             $json_key = str_replace('.', '\\.', $lang_key);
+  //             $conditions[] = '(COALESCE(CHAR_LENGTH(JSON_UNQUOTE(JSON_EXTRACT(name, "$.' . $json_key . '"))) >= ' . $min_symbols . ', 0))';
+  //         }
+  //         $query->whereRaw('(' . implode(' + ', $conditions) . ') = 1');
+  //     });
+  // }
 }

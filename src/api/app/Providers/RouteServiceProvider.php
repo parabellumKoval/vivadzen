@@ -64,6 +64,11 @@ class RouteServiceProvider extends ServiceProvider
               ->namespace($this->namespace)
               ->group(base_path('routes/api/favorites.php'));
 
+            // Admin routes for frontend cache refresh
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/admin/frontend_cache_refresh.php'));
+
         });
     }
 

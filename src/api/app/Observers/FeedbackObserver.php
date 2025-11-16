@@ -18,7 +18,7 @@ class FeedbackObserver
      */
     public function created(Feedback $feedback)
     {
-      Mail::to(env('ADMIN_MAIL', 'info@kratomhelper.com'))->queue(new Buy1ClickCreatedAdmin($feedback));
+      Mail::to(env('ADMIN_MAIL', 'info@vivadzen.com'))->queue(new Buy1ClickCreatedAdmin($feedback));
     }
 
 }

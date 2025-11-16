@@ -8,6 +8,9 @@ WORKDIR /var/www/html
 COPY ./src/api/composer.json ./composer.json
 COPY ./src/api/composer.lock ./composer.lock
 
+# Copy local packages folder (needed for path repositories in composer.json)
+COPY ./src/api/packages ./packages
+
 # Install composer dependencies
 RUN composer install \
     --no-interaction \

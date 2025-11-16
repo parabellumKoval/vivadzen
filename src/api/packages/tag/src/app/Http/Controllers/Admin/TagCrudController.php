@@ -40,7 +40,7 @@ class TagCrudController extends CrudController
 
 
       $this->opr = $this->crud->getCurrentOperation();
-      $this->tags = Tag::all()->pluck('text', 'id')->toArray();
+      $this->tags = Tag::all()->pluck('label', 'id')->toArray();
     }
 
     protected function setupShowOperation()
@@ -50,8 +50,13 @@ class TagCrudController extends CrudController
     protected function setupListOperation()
     {          
       $this->crud->addColumn([
-        'name' => 'text',
+        'name' => 'label',
         'label' => 'Название',
+      ]);
+
+      $this->crud->addColumn([
+        'name' => 'value',
+        'label' => 'Значение (slug)',
       ]);
 
       $this->crud->addColumn([
@@ -68,9 +73,17 @@ class TagCrudController extends CrudController
     {
        $this->crud->setValidation(TagRequest::class);
           
-       $field_text = [
-        'name' => 'text',
-        'label' => 'Название'
+       $field_label = [
+        'name' => 'label',
+        'label' => 'Название',
+        'type' => 'text',
+       ];
+
+       $field_value = [
+        'name' => 'value',
+        'label' => 'Значение (slug)',
+        'type' => 'text',
+        'hint' => 'Уникальный идентификатор тега (латиница, цифры, дефисы)',
        ];
 
        $field_color = [
@@ -80,7 +93,7 @@ class TagCrudController extends CrudController
        ];
 
        if($this->opr === 'InlineCreate') {
-        $field_text['tab'] = $field_color['tab'] = 'Создать новый тег';
+        $field_label['tab'] = $field_value['tab'] = $field_color['tab'] = 'Создать новый тег';
        }
 
 
@@ -94,8 +107,8 @@ class TagCrudController extends CrudController
         ]);
       }
 
-      $this->crud->addField($field_text);
-    
+      $this->crud->addField($field_label);
+      $this->crud->addField($field_value);
       $this->crud->addField($field_color);
     }
 
@@ -126,11 +139,13 @@ class TagCrudController extends CrudController
 
       // create
       if(empty($tag_id)) {
-        $data_text = $request->input('text');
+        $data_label = $request->input('label');
+        $data_value = $request->input('value');
         $data_color = $request->input('color');
         
         $tag = Tag::create([
-          'text' => $data_text,
+          'label' => $data_label,
+          'value' => $data_value,
           'color' => $data_color
         ]);
 

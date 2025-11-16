@@ -78,9 +78,11 @@ services:
     hostname: api.local
     ports:
       - "8000:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - api
-    restart: unless-stopped
+    # restart: unless-stopped
     depends_on:
       - mysql
     working_dir: /var/www/html

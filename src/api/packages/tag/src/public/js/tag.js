@@ -162,7 +162,7 @@ jQuery(function($){
     function addTagToStack(element, data) {
       // $(element).insertBefore()
       var removeBtnHtml = '<button class="ak-tag-remove-btn" data-id="' + data.taggable.id + '" data-target="remove-tag-btn">X</button>';
-      $('<span class="ak-tag" style="background: ' + data.tag.color + ';">' + data.tag.text + removeBtnHtml +'</span>')
+      $('<span class="ak-tag" style="background: ' + data.tag.color + ';">' + data.tag.label + removeBtnHtml +'</span>')
       .insertBefore(element)
 
       var removeBtnFromDom = $('button[data-id="' + data.taggable.id + '"]')[0]

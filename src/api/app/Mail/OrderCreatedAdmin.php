@@ -16,7 +16,7 @@ class OrderCreatedAdmin extends Order
     {
       $this->prepareData();
 
-      return $this->subject(__('mail.new_order_admin') . ' / DJINI')
+      return $this->subject(__('mail.new_order_admin') . ' / Vivadzen')
                   ->markdown('mail.order_created_admin')
                   ->with([
                     'order' => $this->order,

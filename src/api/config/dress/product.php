@@ -27,6 +27,6 @@ return [
     'large' => 'Backpack\Store\app\Http\Resources\ProductLargeResource',
 
     // Cart product resource used for order
-    'cart' => 'Backpack\Store\app\Http\Resources\ProductCartResource',
+    'cart' => 'App\Http\Resources\ProductCartResource',
   ]
 ];

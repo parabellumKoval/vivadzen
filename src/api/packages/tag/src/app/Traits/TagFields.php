@@ -14,7 +14,7 @@ trait TagFields {
       'label' => 'Теги',
       'type' => 'select2',
     ], function(){
-      $tags = Tag::query()->orderBy('text')->pluck('text', 'id')->toArray();
+      $tags = Tag::query()->orderBy('value')->pluck('label', 'id')->toArray();
       $tags['no'] = 'Без тега';
 
       return $tags;
@@ -23,7 +23,7 @@ trait TagFields {
         $this->crud->query->has('tags', '=', 0);
       }else {
         $this->crud->query->whereHas('tags', function ($query) use ($id) {
-          $query->where('tag_id', $id);
+          $query->where('ak_tags.id', $id);
         });
       }
     });

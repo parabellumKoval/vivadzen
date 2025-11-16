@@ -6,7 +6,7 @@ ARG IMAGE_TAG=latest
 FROM ${IMAGE_REGISTRY}/api-base:${IMAGE_TAG} as base
 
 # Serving image
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # Update dependencies
 RUN apt-get update \
@@ -83,7 +83,7 @@ Options = UnsafeLegacyRenegotiation/' /etc/ssl/openssl.cnf
 # RUN chown -R ${MY_USER}:${MY_USER} /var/www/html && \
 #     chmod -R 755 /var/www/html/storage
 
-# Expose port 9000 and start php-fpm server
+# Expose port 9000 and start php built-in server
 EXPOSE 9000
 
-CMD ["php-fpm"]
+CMD ["php", "-S", "0.0.0.0:9000", "-t", "/var/www/html/public"]

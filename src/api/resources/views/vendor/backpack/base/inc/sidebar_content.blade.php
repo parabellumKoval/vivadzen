@@ -62,12 +62,21 @@
 <li class="nav-title">Автоматизация</li>
 
 <!-- DeepL -->
-<li class='nav-item'>
+<!-- <li class='nav-item'>
 	<a class='nav-link' href='{{ backpack_url('translation-history') }}'>
-		<!-- <img class="nav-icon" src="/deepl-blue-logo_24x24.svg" width="20" height="20" alt="DeepL" />   -->
+		<img class="nav-icon" src="/deepl-blue-logo_24x24.svg" width="20" height="20" alt="DeepL" />
 		<i class='nav-icon las la-language'></i>
 		{{ trans('backpack_menu.deepl_translations') }}
 	</a>
+</li> -->
+
+<li class="nav-item nav-dropdown">
+	<a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-language"></i> Переводы</a>
+	<ul class="nav-dropdown-items">
+		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('translator/settings') }}'><i class='nav-icon las la-cog'></i> Настройки</a></li>
+		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('translator/item-translations-history') }}'><i class='nav-icon las la-archive'></i> Объекты</a></li>
+		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('translator/translations-history') }}'><i class='nav-icon las la-history'></i> Операции</a></li>
+	</ul>
 </li>
 
 <!-- Pages -->

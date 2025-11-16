@@ -62,6 +62,46 @@ class StoreProduct extends BaseProduct
   |--------------------------------------------------------------------------
   */
 
+  /**
+   * Найти товар по коду из SupplierProduct
+   *
+   * @param  string $code
+   * @param  int|null $supplier_id (опционально, для уточнения поиска по конкретному поставщику)
+   * @return StoreProduct|null
+   */
+  public static function findBySupplierCode(string $code, ?int $supplier_id = null): ?StoreProduct
+  {
+    $query = static::whereHas('suppliers', function ($q) use ($code, $supplier_id) {
+      $q->where('ak_supplier_product.code', $code);
+      
+      if ($supplier_id) {
+        $q->where('ak_supplier_product.supplier_id', $supplier_id);
+      }
+    });
+
+    return $query->first();
+  }
+
+  /**
+   * Найти все товары по коду из SupplierProduct
+   *
+   * @param  string $code
+   * @param  int|null $supplier_id (опционально, для уточнения поиска по конкретному поставщику)
+   * @return \Illuminate\Database\Eloquent\Collection
+   */
+  public static function findAllBySupplierCode(string $code, ?int $supplier_id = null)
+  {
+    $query = static::whereHas('suppliers', function ($q) use ($code, $supplier_id) {
+      $q->where('ak_supplier_product.code', $code);
+      
+      if ($supplier_id) {
+        $q->where('ak_supplier_product.supplier_id', $supplier_id);
+      }
+    });
+
+    return $query->get();
+  }
+
   public function setProductSupplier($supplier_id, $in_stock = 0, $price = null, $old_price = null, $code = null, $barcode = null, ) {
     
     $pivotData[$supplier_id] = [
@@ -97,6 +137,31 @@ class StoreProduct extends BaseProduct
     }, $values);
  
   }
+  /*
+  |--------------------------------------------------------------------------
+  | SCOPES
+  |--------------------------------------------------------------------------
+  */
+
+  /**
+   * Scope для поиска товаров по коду поставщика
+   *
+   * @param  \Illuminate\Database\Eloquent\Builder $query
+   * @param  string $code
+   * @param  int|null $supplier_id
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeBySupplierCode($query, string $code, ?int $supplier_id = null)
+  {
+    return $query->whereHas('suppliers', function ($q) use ($code, $supplier_id) {
+      $q->where('ak_supplier_product.code', $code);
+      
+      if ($supplier_id) {
+        $q->where('ak_supplier_product.supplier_id', $supplier_id);
+      }
+    });
+  }
+
   /*
   |--------------------------------------------------------------------------
   | ACCESSORS

@@ -16,7 +16,7 @@ class OrderCreated extends Order
       
       $this->prepareData();
       
-      return $this->subject(__('mail.new_order') . ' / DJINI')
+      return $this->subject(__('mail.new_order') . ' / Vivadzen')
                   ->markdown('mail.order_created')
                   ->with([
                     'order' => $this->order,

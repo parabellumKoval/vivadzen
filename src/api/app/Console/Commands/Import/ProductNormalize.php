@@ -33,7 +33,8 @@ class ProductNormalize extends Command
     {
         // $this->inheritBrand();
         // $this->clearChildContent();
-        $this->normalizeAll();
+        $this->inheritCategory();
+        // $this->normalizeAll();
     }
 
     public function inheritBrand() {
@@ -106,7 +107,8 @@ class ProductNormalize extends Command
     }
 
     public function normalizeAll() {
-        $products = StoreProduct::whereNotNull('content')->cursor();
+        // $products = StoreProduct::whereNotNull('content')->cursor();
+        $products = StoreProduct::cursor();
         $languages_array = config('backpack.crud.locales', []);
         $languages = array_keys($languages_array);
 
@@ -115,34 +117,40 @@ class ProductNormalize extends Command
             
             foreach($languages as $lang) {
                 // Process name
-                // $name = $product->getTranslation('name', $lang, false);
-                // if($name) {
-                //     // Remove HTML
-                //     $name = strip_tags($name);
-                //     // Remove double quotes
-                //     $name = str_replace('"', '', $name);
-                //     $translations['name'][$lang] = $name;
-                // }
+                $name = $product->getTranslation('name', $lang, false);
+                if($name) {
+                    // Remove HTML
+                    $name = strip_tags($name);
+                    // Remove double quotes
+                    $name = str_replace('"', '', $name);
+                    $translations['name'][$lang] = $name;
+                }
 
                 // Process short_name
-                // $shortName = $product->getTranslation('short_name', $lang, false);
-                // if($shortName) {
-                //     // Remove quotes from start and end
-                //     $shortName = trim($shortName, '"');
-                //     $translations['short_name'][$lang] = $shortName;
-                // }
+                $shortName = $product->getTranslation('short_name', $lang, false);
+                if($shortName) {
+                    // Remove quotes from start and end
+                    $shortName = trim($shortName, '"');
+                    $translations['short_name'][$lang] = $shortName;
+                }
 
                 // Process content
                 $content = $product->getTranslation('content', $lang, false);
                 if($content) {
+                    // First remove all \n characters
+                    $content = str_replace('\n', '', $content);
+
                     // Remove multiple newlines and special characters
                     $content = preg_replace('/\s+/', ' ', $content);
-                    // Remove any remaining special characters except basic punctuation
-                    // $content = preg_replace('/[^\p{L}\p{N}\s\.,!?-]/u', '', $content);
+                    
+                    // Remove all attributes from HTML tags using regex
+                    $content = preg_replace('/<([a-zA-Z0-9]+)\s[^>]*>/', '<$1>', $content);
+
                     $content = trim($content);
                     $translations['content'][$lang] = $content;
                 }
             }
+            
 
             // Update translations
             foreach($translations as $field => $values) {

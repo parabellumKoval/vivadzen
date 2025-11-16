@@ -475,6 +475,12 @@ trait HasImages
         return $this->getImagesCollection($attribute)->first();
     }
 
+    public function getFirstImageSrc(?string $attribute = null): ?string
+    {
+        $firstImage = $this->getFirstImage($attribute);
+        return $firstImage['src'] ?? null;
+    }
+
     public function getImagesLimited(int $limit, ?string $attribute = null): array
     {
         return $this->getImagesCollection($attribute)->take($limit)->values()->all();

@@ -118,6 +118,22 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'translator_history' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/translator.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 14,
+            'replace_placeholders' => true,
+        ],
+
+        // 'translator_history' => [
+        //     'driver' => 'translator_history',
+        // ],
+        
+        // 'translator' => [
+        //     'driver' => 'translator',
+        // ],
+
         'null' => [
             'driver' => 'monolog',
             'handler' => NullHandler::class,
