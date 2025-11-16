@@ -17,6 +17,7 @@
 /public/hot
 /public/storage
 /public/images
+/public/uploads
 /public/invoices
 /storage/*.key
 /storage/pail

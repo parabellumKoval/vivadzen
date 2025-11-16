@@ -7,7 +7,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "backpack/filemanager": "^3.0",
         "bacon/bacon-qr-code": "^2.0",
         "bunnycdn/storage": "^3.4",
         "dompdf/dompdf": "^2.0",
@@ -28,7 +27,8 @@
         "parabellumkoval/backpack-settings": "dev-main",
         "parabellumkoval/backpack-store": "dev-multistore",
         "parabellumkoval/backpack-tag": "dev-main",
-        "parabellumkoval/crud": "*",
+        "parabellumkoval/crud": "dev-main",
+        "parabellumkoval/crud-filemanager": "dev-main",
         "spatie/laravel-feed": "^4.4"
     },
     "require-dev": {

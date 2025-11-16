@@ -152,10 +152,7 @@ class ArticlesFromJson extends Command
             $extras['reading_time_minutes'] = $readingTimeMinutes;
         }
         
-        // Add countries to extras if provided
-        if ($countries !== []) {
-            $extras['countries'] = $countries;
-        }
+        $countriesForArticle = $countries !== [] ? array_values($countries) : null;
         $tagTexts = $this->extractTagTexts($payload);
 
         $publishedAt = $this->extractPublishedAt($payload);
@@ -172,6 +169,7 @@ class ArticlesFromJson extends Command
             'seo' => $seo,
             'images' => $images,
             'extras' => $extras,
+            'countries' => $countriesForArticle,
         ];
 
         $sourceHash = $this->computeSourceHash($attributes);
@@ -206,6 +204,10 @@ class ArticlesFromJson extends Command
                 (array) $existing->extras,
                 $attributes['extras']
             );
+
+            if ($countries === []) {
+                $attributes['countries'] = $existing->countries;
+            }
         }
 
         if ($dryRun) {
@@ -1416,6 +1418,7 @@ class ArticlesFromJson extends Command
                 : $attributes['published_at'],
             'seo' => $attributes['seo'],
             'images' => $attributes['images'],
+            'countries' => $attributes['countries'] ?? null,
             'extras' => Arr::only($attributes['extras'], ['wp', 'yoast', 'meta']),
         ];
 
