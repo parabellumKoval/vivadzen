@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CacheManagementController;
 use Illuminate\Support\Facades\Route;
 
 // --------------------------
@@ -16,4 +17,6 @@ Route::group([
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
+    Route::get('cache-management', [CacheManagementController::class, 'index'])
+        ->name('admin.cache-management');
 }); // this should be the absolute last line of this file

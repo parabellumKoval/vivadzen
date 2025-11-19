@@ -68,6 +68,18 @@ return [
     ]
   ],
 
+  // Reviewable Cards Configuration
+  'reviewable_cards_config' => [
+    'App\Models\Product' => [
+      'view' => 'store::reviews.reviewable_card',
+      'edit_route' => 'product.edit',
+    ],
+    'Backpack\Articles\app\Models\Article' => [
+      'view' => 'articles::reviews.reviewable_card',
+      'edit_route' => 'article.edit',
+    ],
+  ],
+
   // Validation fields
   'fields' => [
     'text' => [

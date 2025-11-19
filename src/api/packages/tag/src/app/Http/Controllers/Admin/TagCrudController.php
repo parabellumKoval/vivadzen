@@ -67,6 +67,7 @@ class TagCrudController extends CrudController
       $this->crud->addColumn([
         'name' => 'label',
         'label' => 'Название',
+        'type' => 'text_progress'
       ]);
 
       $this->crud->addColumn([

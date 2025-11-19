@@ -10,13 +10,6 @@ use Symfony\Component\Process\Process;
 trait PrettyCommandOutput
 {
     /**
-     * The progress bar instance.
-     *
-     * @var \Symfony\Component\Console\Helper\ProgressBar|null
-     */
-    protected $progressBar;
-
-    /**
      * Run a SSH command.
      *
      * @param  string  $command  The SSH command that needs to be run
@@ -125,52 +118,5 @@ trait PrettyCommandOutput
     public function note($content)
     {
         $this->line("│ $content");
-    }
-
-    /**
-     * Display an info block at the beginning of each step.
-     *
-     * @param  string  $title
-     * @param  string  $subtitle
-     */
-    public function infoBlock($title, $subtitle = '')
-    {
-        $this->newLine();
-        $this->line('─────────────────────────────────────────────────────────────────────');
-        $this->info('  '.$title);
-        if ($subtitle) {
-            $this->comment('  '.$subtitle);
-        }
-        $this->line('─────────────────────────────────────────────────────────────────────');
-        $this->newLine();
-    }
-
-    /**
-     * Start a progress block.
-     *
-     * @param  string  $title
-     */
-    public function progressBlock($title)
-    {
-        $this->line('');
-        $this->info('→ '.$title);
-    }
-
-    /**
-     * Close the current progress block.
-     */
-    public function closeProgressBlock()
-    {
-        $this->info('✓ Done');
-    }
-
-    /**
-     * Close the current progress block with an error.
-     *
-     * @param  string  $message
-     */
-    public function errorProgressBlock($message = 'Failed')
-    {
-        $this->error('✗ '.$message);
     }
 }

@@ -154,6 +154,13 @@ return [
             'contentClass'   => 'col-md-8 col-md-offset-2',
         ],
 
+        /*
+         * Service Operation
+         */
+        'service' => [
+            'contentClass' => 'col-md-10 col-md-offset-1',
+        ],
+
     ],
 
     /*
@@ -164,6 +171,17 @@ return [
 
     'show_translatable_field_icon'     => true,
     'translatable_field_icon_position' => 'right', // left or right
+
+    // Query parameter / input name used to switch translation locale within CRUD forms.
+    'translatable_input_name' => 'translatable_locale',
+
+    // When set to true Backpack will use the first available (non-empty) translation
+    // whenever both the requested and fallback locales are empty. Use null to keep
+    // Spatie's default behaviour or false to explicitly disable the behaviour.
+    'translatable_fallback_any_locale' => true,
+
+    // Color used for translatable values that come from fallback / alternative locales.
+    'translatable_alternative_value_color' => '#999999',
 
     'locales' => [
         // "af_NA" => "Afrikaans (Namibia)",

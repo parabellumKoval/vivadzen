@@ -20,7 +20,8 @@ class ArticlesFromJson extends Command
     protected $signature = 'import:articles-from-json {path=public/blog.json : Relative path to the WordPress JSON export}'
         . ' {--lang=cs : Language code that will be stored on imported articles}'
         . ' {--countries= : Comma-separated list of country codes (e.g., cz,ua,de)}'
-        . ' {--dry-run : Parse the file without writing changes to the database}';
+        . ' {--dry-run : Parse the file without writing changes to the database}'
+        . ' {--no-duplicates : Skip articles if title exists in any language}';
 
     protected $description = 'Import blog articles that were exported from WordPress as JSON';
 
@@ -63,10 +64,15 @@ class ArticlesFromJson extends Command
 
         $lang = (string) ($this->option('lang') ?? 'cs');
         $dryRun = (bool) $this->option('dry-run');
+        $noDuplicates = (bool) $this->option('no-duplicates');
         $countries = $this->parseCountries((string) $this->option('countries'));
 
         if ($dryRun) {
             $this->warn('Dry run mode enabled — database will remain unchanged.');
+        }
+
+        if ($noDuplicates) {
+            $this->info('Duplicate detection enabled — articles with existing titles will be skipped.');
         }
 
         $stats = [
@@ -81,7 +87,7 @@ class ArticlesFromJson extends Command
         $progress->start();
 
         foreach ($posts as $payload) {
-            $result = $this->processArticle($payload, $lang, $countries, $dryRun);
+            $result = $this->processArticle($payload, $lang, $countries, $dryRun, $noDuplicates);
 
             $stats[$result['status']] = ($stats[$result['status']] ?? 0) + 1;
 
@@ -120,7 +126,7 @@ class ArticlesFromJson extends Command
     /**
      * @return array{status: string, message: string|null}
      */
-    private function processArticle(array $payload, string $lang, array $countries, bool $dryRun): array
+    private function processArticle(array $payload, string $lang, array $countries, bool $dryRun, bool $noDuplicates): array
     {
         $title = $this->extractTitle($payload);
         $slug = $this->extractSlug($payload, $title);
@@ -130,6 +136,17 @@ class ArticlesFromJson extends Command
                 'status' => 'skipped',
                 'message' => sprintf('Skipped WordPress post #%s — slug is empty.', Arr::get($payload, 'id', '?')),
             ];
+        }
+
+        // Check for duplicate titles if --no-duplicates flag is set
+        if ($noDuplicates && $title !== '') {
+            $duplicateFound = $this->checkDuplicateTitle($title);
+            if ($duplicateFound) {
+                return [
+                    'status' => 'skipped',
+                    'message' => sprintf('Skipped article with title "%s" — duplicate title found in existing articles.', $title),
+                ];
+            }
         }
 
         $warnings = [];
@@ -158,42 +175,34 @@ class ArticlesFromJson extends Command
         $publishedAt = $this->extractPublishedAt($payload);
         $status = $this->mapStatus(Arr::get($payload, 'status'));
 
-        $attributes = [
-            'lang' => $lang,
+        $existing = $this->findExistingArticle($payload, $slug);
+
+        $translatable = [
             'title' => $title !== '' ? $title : $slug,
-            'slug' => $slug,
-            'content' => $content,
             'excerpt' => $excerpt !== '' ? $excerpt : null,
+            'content' => $content,
+            'seo' => is_array($seo) ? $seo : [],
+        ];
+
+        $attributes = [
+            'slug' => $slug,
             'status' => $status,
             'published_at' => $publishedAt,
-            'seo' => $seo,
             'images' => $images,
             'extras' => $extras,
             'countries' => $countriesForArticle,
         ];
 
-        $sourceHash = $this->computeSourceHash($attributes);
-        $attributes['extras']['source_hash'] = $sourceHash;
-        $attributes['extras']['source_synced_at'] = Carbon::now()->toISOString();
-
-        $existing = $this->findExistingArticle($payload, $slug, $lang);
-
         if ($existing !== null) {
-            $currentHash = Arr::get($existing->extras, 'source_hash');
-
-            if ($currentHash === $sourceHash) {
-                return [
-                    'status' => 'skipped',
-                    'message' => sprintf('No changes detected for article with slug "%s".', $slug),
-                ];
+            if ($translatable['excerpt'] === null) {
+                $translatable['excerpt'] = $existing->getTranslation('excerpt', $lang, false) ?: null;
             }
 
-            if ($attributes['excerpt'] === null) {
-                $attributes['excerpt'] = $existing->excerpt;
-            }
-
-            if ($attributes['seo'] === [] && is_array($existing->seo)) {
-                $attributes['seo'] = $existing->seo;
+            if ($translatable['seo'] === []) {
+                $existingSeo = $existing->getTranslation('seo', $lang, false);
+                if (is_array($existingSeo)) {
+                    $translatable['seo'] = $existingSeo;
+                }
             }
 
             if ($attributes['images'] === [] && is_array($existing->images)) {
@@ -205,10 +214,31 @@ class ArticlesFromJson extends Command
                 $attributes['extras']
             );
 
-            if ($countries === []) {
-                $attributes['countries'] = $existing->countries;
+            // Merge countries with existing ones (without duplicates)
+            $existingCountries = is_array($existing->countries) ? $existing->countries : [];
+            $newCountries = $countriesForArticle ?? [];
+            $mergedCountries = array_values(array_unique(array_merge($existingCountries, $newCountries)));
+            $attributes['countries'] = $mergedCountries !== [] ? $mergedCountries : null;
+        }
+
+        $sourceHash = $this->computeSourceHash($attributes, $translatable, $lang);
+
+        if ($existing !== null) {
+            $currentHash = $this->getStoredSourceHash($existing, $lang);
+
+            if ($currentHash === $sourceHash) {
+                return [
+                    'status' => 'skipped',
+                    'message' => sprintf('No changes detected for article with slug "%s".', $slug),
+                ];
             }
         }
+
+        $attributes['extras'] = $this->appendSourceSyncMeta(
+            $attributes['extras'] ?? [],
+            $lang,
+            $sourceHash
+        );
 
         if ($dryRun) {
             $message = $existing
@@ -227,8 +257,20 @@ class ArticlesFromJson extends Command
 
         $article = $existing ?? new Article();
         $article->fill($attributes);
+        $article->setTranslation('title', $lang, $translatable['title']);
+
+        if ($translatable['excerpt'] !== null) {
+            $article->setTranslation('excerpt', $lang, $translatable['excerpt']);
+        }
+
+        $article->setTranslation('seo', $lang, $translatable['seo']);
+        $article->setContentTranslation($lang, $translatable['content']);
         $article->save();
-        $this->syncArticleTags($article, $tagTexts, $lang, $warnings);
+        
+        // Sync tags only for new articles, not for updates
+        if ($existing === null) {
+            $this->syncArticleTags($article, $tagTexts, $lang, $warnings);
+        }
 
         return [
             'status' => $existing ? 'updated' : 'created',
@@ -1383,13 +1425,12 @@ class ArticlesFromJson extends Command
         ]);
     }
 
-    private function findExistingArticle(array $payload, string $slug, string $lang): ?Article
+    private function findExistingArticle(array $payload, string $slug): ?Article
     {
         $wpId = Arr::get($payload, 'id');
 
         if ($wpId) {
             $byWpId = Article::query()
-                ->where('lang', $lang)
                 ->where('extras->wp->id', $wpId)
                 ->first();
 
@@ -1399,30 +1440,64 @@ class ArticlesFromJson extends Command
         }
 
         return Article::query()
-            ->where('lang', $lang)
             ->where('slug', $slug)
             ->first();
     }
 
-    private function computeSourceHash(array $attributes): string
+    private function computeSourceHash(array $articleAttributes, array $translationAttributes, string $lang): string
     {
         $payload = [
-            'lang' => $attributes['lang'],
-            'title' => $attributes['title'],
-            'slug' => $attributes['slug'],
-            'content' => $attributes['content'],
-            'excerpt' => $attributes['excerpt'],
-            'status' => $attributes['status'],
-            'published_at' => $attributes['published_at'] instanceof Carbon
-                ? $attributes['published_at']->toISOString()
-                : $attributes['published_at'],
-            'seo' => $attributes['seo'],
-            'images' => $attributes['images'],
-            'countries' => $attributes['countries'] ?? null,
-            'extras' => Arr::only($attributes['extras'], ['wp', 'yoast', 'meta']),
+            'locale' => $lang,
+            'title' => $translationAttributes['title'],
+            'excerpt' => $translationAttributes['excerpt'],
+            'content' => $translationAttributes['content'],
+            'status' => $articleAttributes['status'],
+            'published_at' => $articleAttributes['published_at'] instanceof Carbon
+                ? $articleAttributes['published_at']->toISOString()
+                : $articleAttributes['published_at'],
+            'seo' => $translationAttributes['seo'],
+            'images' => $articleAttributes['images'],
+            'countries' => $articleAttributes['countries'] ?? null,
+            'extras' => Arr::only($articleAttributes['extras'] ?? [], ['wp', 'yoast', 'meta']),
         ];
 
         return md5(json_encode($payload, JSON_UNESCAPED_UNICODE));
+    }
+
+    private function getStoredSourceHash(?Article $article, string $lang): ?string
+    {
+        if ($article === null) {
+            return null;
+        }
+
+        $extras = (array) $article->extras;
+
+        $hash = Arr::get($extras, "source.{$lang}.hash");
+
+        if ($hash !== null) {
+            return $hash;
+        }
+
+        return Arr::get($extras, 'source_hash');
+    }
+
+    private function appendSourceSyncMeta(array $extras, string $lang, string $hash): array
+    {
+        $timestamp = Carbon::now()->toISOString();
+
+        // Ensure 'source' is an array (it might be a string in old data)
+        if (!isset($extras['source']) || !is_array($extras['source'])) {
+            $extras['source'] = [];
+        }
+        
+        $extras['source'][$lang] = [
+            'hash' => $hash,
+            'synced_at' => $timestamp,
+        ];
+
+        unset($extras['source_hash'], $extras['source_synced_at']);
+
+        return $extras;
     }
 
     private function normalizeText(?string $value): ?string
@@ -1465,5 +1540,45 @@ class ArticlesFromJson extends Command
         $codes = array_filter($codes, fn($code) => $code !== '');
 
         return array_values(array_unique($codes));
+    }
+
+    /**
+     * Check if an article with the same title exists in any language
+     *
+     * @param string $title
+     * @return bool
+     */
+    private function checkDuplicateTitle(string $title): bool
+    {
+        $normalizedTitle = mb_strtolower(trim($title));
+        
+        if ($normalizedTitle === '') {
+            return false;
+        }
+
+        // Get all articles and check their titles in all languages
+        $articles = Article::all();
+        
+        foreach ($articles as $article) {
+            $titles = $article->getTranslations('title');
+            
+            if (!is_array($titles)) {
+                continue;
+            }
+            
+            foreach ($titles as $lang => $existingTitle) {
+                if (!is_string($existingTitle)) {
+                    continue;
+                }
+                
+                $normalizedExisting = mb_strtolower(trim($existingTitle));
+                
+                if ($normalizedExisting === $normalizedTitle) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
 }

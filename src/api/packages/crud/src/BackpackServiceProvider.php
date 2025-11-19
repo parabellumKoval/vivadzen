@@ -17,7 +17,6 @@ class BackpackServiceProvider extends ServiceProvider
     protected $commands = [
         \Backpack\CRUD\app\Console\Commands\Install::class,
         \Backpack\CRUD\app\Console\Commands\AddSidebarContent::class,
-        \Backpack\CRUD\app\Console\Commands\AddMenuContent::class,
         \Backpack\CRUD\app\Console\Commands\AddCustomRouteContent::class,
         \Backpack\CRUD\app\Console\Commands\Version::class,
         \Backpack\CRUD\app\Console\Commands\CreateUser::class,

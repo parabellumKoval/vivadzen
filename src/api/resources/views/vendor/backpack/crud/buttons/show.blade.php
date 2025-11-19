@@ -10,6 +10,9 @@
 	@else
 
 	<!-- Edit button group -->
+    @php
+        $translatableInputName = backpack_translatable_input_name();
+    @endphp
 	<div class="btn-group">
 	  <a href="{{ url($crud->route.'/'.$entry->getKey().'/show') }}" class="btn btn-sm btn-secondary"><i class="la la-eye"></i></a>
 	  <a class="btn btn-sm btn-secondary dropdown-toggle pl-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,7 +21,10 @@
 	  <ul class="dropdown-menu dropdown-menu-right">
   	    <li class="dropdown-header">{{ trans('backpack::crud.preview') }}:</li>
 	  	@foreach ($crud->model->getAvailableLocales() as $key => $locale)
-		  	<a class="dropdown-item" href="{{ url($crud->route.'/'.$entry->getKey().'/show') }}?locale={{ $key }}">{{ $locale }}</a>
+            @php
+                $query = http_build_query([$translatableInputName => $key]);
+            @endphp
+		  	<a class="dropdown-item" href="{{ url($crud->route.'/'.$entry->getKey().'/show').'?'.$query }}">{{ $locale }}</a>
 	  	@endforeach
 	  </ul>
 	</div>

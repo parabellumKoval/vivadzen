@@ -4,6 +4,7 @@ namespace Backpack\CRUD\app\Models\Traits\SpatieTranslatable;
 
 use Illuminate\Support\Arr;
 use Spatie\Translatable\HasTranslations as OriginalHasTranslations;
+use Spatie\Translatable\Translatable;
 
 trait HasTranslations
 {
@@ -57,6 +58,51 @@ trait HasTranslations
         return $translation;
     }
 
+    protected function normalizeLocale(string $key, string $locale, bool $useFallbackLocale): string
+    {
+        $translatedLocales = $this->getTranslatedLocales($key);
+
+        if (in_array($locale, $translatedLocales)) {
+            return $locale;
+        }
+
+        if (! $useFallbackLocale) {
+            return $locale;
+        }
+
+        $fallbackLocale = method_exists($this, 'getFallbackLocale') ? $this->getFallbackLocale() : null;
+
+        /** @var \Spatie\Translatable\Translatable $fallbackConfig */
+        $fallbackConfig = app(Translatable::class);
+
+        $fallbackLocale ??= $fallbackConfig->fallbackLocale ?? config('app.fallback_locale');
+
+        if (! is_null($fallbackLocale) && in_array($fallbackLocale, $translatedLocales)) {
+            return $fallbackLocale;
+        }
+
+        if (! empty($translatedLocales) && $this->backpackShouldFallbackToAnyLocale($fallbackConfig)) {
+            $firstLocale = reset($translatedLocales);
+
+            return is_string($firstLocale) ? $firstLocale : $locale;
+        }
+
+        return $locale;
+    }
+
+    protected function backpackShouldFallbackToAnyLocale(?Translatable $fallbackConfig = null): bool
+    {
+        $configured = config('backpack.crud.translatable_fallback_any_locale');
+
+        if ($configured !== null) {
+            return (bool) $configured;
+        }
+
+        $fallbackConfig ??= app(Translatable::class);
+
+        return (bool) ($fallbackConfig->fallbackAny ?? false);
+    }
+
     /*
     |--------------------------------------------------------------------------
     |                            ELOQUENT OVERWRITES
@@ -71,8 +117,9 @@ trait HasTranslations
      */
     public static function create(array $attributes = [])
     {
-        $locale = $attributes['locale'] ?? \App::getLocale();
-        $attributes = Arr::except($attributes, ['locale']);
+        $localeAttributeName = backpack_translatable_input_name();
+        $locale = $attributes[$localeAttributeName] ?? $attributes['locale'] ?? \App::getLocale();
+        $attributes = Arr::except($attributes, [$localeAttributeName, 'locale']);
         $non_translatable = [];
 
         $model = new static();
@@ -103,8 +150,9 @@ trait HasTranslations
             return false;
         }
 
-        $locale = $attributes['locale'] ?? \App::getLocale();
-        $attributes = Arr::except($attributes, ['locale']);
+        $localeAttributeName = backpack_translatable_input_name();
+        $locale = $attributes[$localeAttributeName] ?? $attributes['locale'] ?? \App::getLocale();
+        $attributes = Arr::except($attributes, [$localeAttributeName, 'locale']);
         $non_translatable = [];
 
         // do the actual saving
@@ -168,7 +216,7 @@ trait HasTranslations
             return $this->locale;
         }
 
-        return \Request::input('locale', \App::getLocale());
+        return backpack_translatable_request_locale(\App::getLocale());
     }
 
     /**
@@ -188,7 +236,7 @@ trait HasTranslations
             case 'findBySlug':
             case 'findBySlugOrFail':
 
-                $translation_locale = \Request::input('locale', \App::getLocale());
+                $translation_locale = backpack_translatable_request_locale(\App::getLocale());
 
                 if ($translation_locale) {
                     $item = parent::__call($method, $parameters);

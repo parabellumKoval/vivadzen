@@ -28,7 +28,8 @@ class ProductFromCsv extends Command
     const FILE_PATH = 'com.csv';
     // Mode updateOrCreateItem, updateIsActive, updateCategory, updateTranslations
     const MODE = 'updateTranslations';
-    const TRANSLATION_LANG = 'en';
+    const TRANSLATION_LANG = 'ua';
+    const SUPPLIER_ID = 2;
 
     private $totalRecords = 0;
     private $variableRecords = []; // Хранилище для variable записей
@@ -60,6 +61,169 @@ class ProductFromCsv extends Command
       'meta_desc' => 'BL',
     ];
 
+
+    private $ua_cz_map = [
+      // --- ENTHEOGENS & HERBS ---
+      // Banisteriopsis kaapi (vine) -> BANISTERIOPSIS CAAPI VINE
+      8090  => 8090,  // Parent
+      8094  => 8097,  // 50g (ID mismatch, Weight match)
+      19049 => 15628, // Banisteriopsis kaapi (ground leaf) -> dried leaves
+      19053 => 15642, // ground leaf 50g -> dried leaves 50g
+      15637 => 19052, // ground leaf 20g (UA 19052 -> CZ 15637)
+
+      // Kava-Kava
+      8224  => 8224,  // Kava-Kava (Piper Methysticum) -> Ground Kava Kava roots (Parent)
+      8227  => 8226,  // 100g
+      8228  => 8229,  // 50g
+      18628 => 17736, // Kava-Kava Liquid Extract -> VivaDzen Kava Kava Extract (Parent)
+      18952 => 18126, // Extract 10ml
+      18954 => 18127, // Extract 20ml
+      18955 => 18101, // Extract 30ml
+      20338 => 20338, // Instant Kava Kava - VivaDzen
+
+      // Kanna & Others
+      17945 => 17945, // Kanna dried plant (Parent)
+      17946 => 17946, // 1g
+      17947 => 17947, // 5g
+      17948 => 17948, // 10g
+      17949 => 17949, // 25g
+      17950 => 17950, // 50g
+      20173 => 20173, // Kanna Extract 10:1 (Parent)
+      20175 => 20175, // 1g
+      20176 => 20176, // 3g
+      20177 => 20177, // 5g
+
+      // Kratom (Specific Flavored Matches)
+      20097 => 20097, // Green Thai Kratom with Lemon (Parent)
+      20098 => 20098, // 25g
+      20099 => 20099, // 50g
+      20100 => 20100, // 100g
+      20113 => 20113, // Green Thai Kratom with RedBull
+      20118 => 20118, // Green Thai Kratom Apple
+      20123 => 20123, // Green Thai Kratom Cherry
+
+      // --- SUPERFOODS & POWDERS ---
+      // Guarana
+      8100  => 8100,  // Guarana powder (Parent)
+      8103  => 8102,  // 100g
+      8104  => 8105,  // 50g
+      19140 => 19307, // Guarana Shot (60ml) -> CZ has variations like Watermelon, linked Parent
+
+      // Ashwagandha
+      18935 => 14169, // Ashwagandha (Parent)
+      18949 => 14170, // 50g
+      18950 => 14171, // 100g
+      19171 => 13234, // Ashwagandha (capsules) 100pcs/CZ simple -> UA Parent
+      19174 => 13234, // 100 pcs (UA var -> CZ simple)
+      18662 => 18662, // Ashwaganda Extract in Capsules (Parent)
+
+      // Kola Nut & Agushie
+      18696 => 9440,  // Kola nut powder -> Ground Kola nuts (Parent)
+      18698 => 9445,  // 50g
+      18700 => 9442,  // 100g
+      18117 => 18117, // Agushie Powder (Parent)
+      18121 => 18121, // 500g
+      18122 => 18123, // 100g (Note: ID Cross-swapped in tables, fixed by weight)
+      18123 => 18122, // 250g (Note: ID Cross-swapped in tables, fixed by weight)
+
+      // Ginseng & Tongkat Ali
+      18816 => 14973, // Ginseng extract (powder 10:1) -> Ginseng Powder (Closest Match)
+      18819 => 14974, // 50g
+      18820 => 14975, // 100g
+      18672 => 18672, // Ginseng Extract in capsules
+      18762 => 18677, // Tongkat Ali (10:1 Extract in Capsules)
+      15062 => 15062, // Tongkat Ali... Crushed root / Extract (Simple)
+
+      // --- TEAS ---
+      // Alpine Meadow
+      8125  => 8125,  // Herbal tea Alpine meadow (Parent)
+      8128  => 8130,  // 50g
+      8129  => 8127,  // 100g
+
+      // Rooibos & Mate
+      8134  => 8134,  // Rooibos, African Tea
+      8139  => 8142,  // 50g
+      8140  => 8139,  // 100g
+      8116  => 8116,  // Mate (Parent)
+      8121  => 8121,  // 100g
+
+      // Da Hong Pao & Tie Guan Yin
+      8143  => 8143,  // Red tea Da Hong Pao
+      8149  => 8152,  // 50g
+      8152  => 8149,  // 100g
+      8188  => 8188,  // Imperial Green Tea Tie Guan Yin
+      8190  => 8193,  // 50g
+      8191  => 8190,  // 100g
+
+      // Anchan (Blue Tea)
+      8154  => 8154,  // Blue Anchan tea (Clitoria) -> ANČÁN blue tea
+      8160  => 8160,  // 10g
+      8164  => 8164,  // 20g/25g check -> CZ 8164 is 25g. UA 8164 is 20g. NO MATCH (Strict weight).
+
+      // Chinese Teas (Puer, etc)
+      18609 => 19274, // Shu Puer from Wulianshan Mountain, 250 g
+      18612 => 19273, // Ancient Brown Mountain, green pu-erh 357g
+      19079 => 10914, // Dragon Ball white tea
+      19081 => 10916, // 50g
+      19082 => 10917, // 100g
+      18622 => 19160, // Matcha tea Daily Nisio (UA Var -> CZ 1 pack 100g)
+
+      // --- MUSHROOMS ---
+      13077 => 19417, // Cordyceps Capsules (Parent)
+      19029 => 19957, // 100 capsules
+      19030 => 19956, // 50 capsules
+      19034 => 20385, // Red fly agaric (caps) -> dried caps
+      19036 => 20392, // 25g
+      19037 => 20393, // 50g
+      19038 => 20394, // 100g
+      19056 => 20209, // Panther fly agaric (powder) -> Tiger fly agaric
+      19682 => 20380, // Royal fly agaric (Amanita regalis), powder
+      19781 => 20382, // 25g
+      19782 => 20383, // 50g
+      19783 => 20384, // 100g
+      18786 => 20200, // Red fly agaric (powder)
+      18788 => 20202, // 50g
+      18789 => 20203, // 100g
+      19262 => 17741, // Shiitake mushrooms (UA Var -> CZ Simple 250g check?) No, UA has 25/50/100. CZ 17741 is 250g. No match on variants.
+      19267 => 17744, // Royal oyster mushrooms -> King oyster 250g (UA 19268 is 250g -> CZ 17744)
+
+      // --- CBD / HHC / VAPES (Strict Name Match) ---
+      // Pens
+      18630 => 18106, // Vape Pen Sugar Cookie
+      18632 => 18234, // Vape Pen Lime Sorbet
+      18634 => 18236, // Vape Pen Candy Cane Kush
+      19187 => 18238, // Vape Pen Tangie Sunrise -> Orange Creamsicle (Likely renaming, but strictly distinct. CZ 14119 is Tangie Preroll. Skip strict match unless name matches)
+      19196 => 19304, // Euphoria Vape Pen Heisenberg
+      19207 => 19824, // Euphoria Vape Pen Cactus Lemon
+      19209 => 19305, // Euphoria Vape Pen Ice Watermelon
+      12906 => 12906, // TH4C VAPE PEN – Tangerine
+      12912 => 12912, // TH4C VAPE PEN – Cherry
+      12914 => 12914, // TH4C VAPE PEN – Passion fruit
+      12938 => 12938, // THC-F1 VAPE PEN – Raspberry
+
+      // Oils (Happease / Hemnia / Euphoria)
+      17479 => 17076, // Happease Sleep ... Mountain River 5%
+      17481 => 19226, // Happease Relax ... Tropical Sunrise 20%
+      18802 => 17042, // Hemnia CBD Oil 10% THC Free
+      19213 => 19927, // Hemnia CBD Oil 20% THC Free
+      19218 => 17013, // Hemnia CBD Oil 30% THC Free
+      19221 => 17053, // Hemnia Full-Spectrum ... Green Tea? Check CZ 17053 is Full Spectrum 10% (No Green Tea explicitly in name but matching specs) -> Better match 17053
+      19232 => 17025, // Euphoria Full Spectrum oil super strong 20%
+      19238 => 13815, // Euphoria CBD oil 5% ... Mind Relax
+      19241 => 17059, // Euphoria 10% Anti-Stress -> Happease? No. Check CZ 13811 "Sleep Well". CZ 13815 "Mind Relax". CZ 13803 "Energy". 
+      19244 => 13811, // Euphoria CBD 10% ... Sleep Well
+      19250 => 13787, // Harmony CBD spray oil 1500 mg Citrus
+      19860 => 20050, // CannabiGold oil Best 10%
+
+      // Flowers & Prerolls (TH4C / THC-F1)
+      12904 => 12904, // TH4C – STRAWBERRY KUSH
+      12908 => 12908, // TH4C – LEMON HAZE
+      12951 => 12951, // THC-F1 Pre roll – O.G. KUSH
+      12953 => 12953, // THC-F1 Pre roll – SKUNK #1
+      13097 => 13097, // THC-F1 Pre-roll – PANDORA
+      13101 => 13101, // THC-F1 Pre-roll – VERTIGO
+      15333 => 15333, // THC-X Strawberry Gelato
+    ];
 
     public function handle()
     {
@@ -410,7 +574,7 @@ class ProductFromCsv extends Command
       $product->save();
 
       // Attach supplier
-      $product->setProductSupplier($supplier_id = 1, $in_stock = $data['in_stock'], $price, $old_price, $code = $data['code']);
+      $product->setProductSupplier($supplier_id = self::SUPPLIER_ID, $in_stock = $data['in_stock'], $price, $old_price, $code = $data['code']);
 
       return $product;
     }
