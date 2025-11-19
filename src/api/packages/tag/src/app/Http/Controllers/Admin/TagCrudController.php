@@ -26,6 +26,7 @@ class TagCrudController extends CrudController
     //use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ServiceOperation;
 
     // use \App\Http\Controllers\Admin\Traits\TagCrud;
 
@@ -48,7 +49,21 @@ class TagCrudController extends CrudController
     }
     
     protected function setupListOperation()
-    {          
+    {    
+
+      $this->crud->addColumn([
+        'name' => 'icon',
+        'label' => 'Иконка',
+        'type' => 'image',
+        // 'value' => function($entry) {
+        //   if (!empty($entry->icon)) {
+        //     return '<img src="' . $entry->icon . '" style="width: 26px; height: 26px; object-fit: cover;" />';
+        //   }
+        //   return '—';
+        // },
+        'escaped' => false,
+      ]);
+            
       $this->crud->addColumn([
         'name' => 'label',
         'label' => 'Название',
@@ -92,8 +107,18 @@ class TagCrudController extends CrudController
         'type' => 'color',
        ];
 
+       $field_icon = [
+        'name' => 'icon',
+        'label' => 'Иконка',
+        'filename' => null,
+        'type' => 'base64_image',
+        'hint' => 'Маленькая картинка для отображения рядом с тегом (рекомендуется 26x26px)',
+        'crop' => true,
+        'aspect_ratio' => 1,
+       ];
+
        if($this->opr === 'InlineCreate') {
-        $field_label['tab'] = $field_value['tab'] = $field_color['tab'] = 'Создать новый тег';
+        $field_label['tab'] = $field_value['tab'] = $field_color['tab'] = $field_icon['tab'] = 'Создать новый тег';
        }
 
 
@@ -110,6 +135,7 @@ class TagCrudController extends CrudController
       $this->crud->addField($field_label);
       $this->crud->addField($field_value);
       $this->crud->addField($field_color);
+      $this->crud->addField($field_icon);
     }
 
     protected function setupUpdateOperation()
@@ -142,11 +168,13 @@ class TagCrudController extends CrudController
         $data_label = $request->input('label');
         $data_value = $request->input('value');
         $data_color = $request->input('color');
+        $data_icon = $request->input('icon');
         
         $tag = Tag::create([
           'label' => $data_label,
           'value' => $data_value,
-          'color' => $data_color
+          'color' => $data_color,
+          'icon' => $data_icon
         ]);
 
         $tag_id = $tag->id;

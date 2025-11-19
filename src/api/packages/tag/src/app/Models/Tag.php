@@ -35,6 +35,7 @@ class Tag extends Model
       'value',
       'label',
       'color',
+      'icon',
       'extras'
     ];
     // protected $hidden = [];
@@ -72,6 +73,7 @@ class Tag extends Model
         "value" => $this->value,
         "label" => $this->label,
         "color" => $this->color,
+        "icon" => $this->icon,
         "extras" => $this->extras,
         "created_at" => $this->created_at
       ];
@@ -116,4 +118,49 @@ class Tag extends Model
     |--------------------------------------------------------------------------
     */
 
+    /*
+    |--------------------------------------------------------------------------
+    | SERVICE OPERATION
+    |--------------------------------------------------------------------------
+    */
+    public function getServiceMergeConfiguration(): array
+    {
+        return [
+            'label' => 'Слияние тегов',
+            'description' => 'Перенесите переводы и привязки дублирующегося тега.',
+            'candidate_search' => ['label', 'value', 'id'],
+            'fields' => [
+                'label' => [
+                    'label' => 'Название',
+                    'strategy' => 'translations',
+                    'default' => true,
+                    'help' => 'Добавляет отсутствующие переводы в целевом теге.',
+                ],
+                'value' => [
+                    'label' => 'Slug',
+                    'strategy' => 'replace',
+                ],
+                'color' => [
+                    'label' => 'Цвет',
+                    'strategy' => 'replace',
+                ],
+                'extras' => [
+                    'label' => 'Дополнительные данные',
+                    'strategy' => 'append',
+                ],
+            ],
+            'relations' => [
+                'taggables' => [
+                    'label' => 'Все привязки (ak_taggables)',
+                    'type' => 'table',
+                    'table' => 'ak_taggables',
+                    'column' => 'tag_id',
+                    'primary_key' => 'id',
+                    'unique' => ['taggable_type', 'taggable_id'],
+                    'default' => true,
+                    'help' => 'Заменит ID тега во всех прикреплённых сущностях и удалит дубли.',
+                ],
+            ],
+        ];
+    }
 }

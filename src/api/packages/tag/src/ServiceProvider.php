@@ -10,6 +10,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
 
       $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'tag');
+      
+      // Views
+      $this->loadViewsFrom(__DIR__.'/resources/views', 'tag');
     
 	    // Migrations
 	    $this->loadMigrationsFrom(__DIR__.'/database/migrations');

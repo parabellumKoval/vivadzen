@@ -52,7 +52,8 @@ trait TagFields {
 
     $this->crud->addColumn([
       'name' => 'tags',
-      'type' => 'relationship',
+      'type' => 'view',
+      'view' => 'tag::columns.tags_badges',
       'data-type' => $this->resolveTaggableMorphClass(),
       'label' => "Теги",
       'priority' => 1
