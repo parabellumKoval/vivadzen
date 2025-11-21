@@ -55,7 +55,7 @@ trait HasImagesCrudComponents
             $attribute = (string) $overrides['name'];
         }
 
-        $definition = $modelClass::imageColumnDefinition($attribute);
+        $definition = $modelClass::imageColumnDefinition($attribute, $overrides);
         unset($overrides['name']);
 
         $definition = array_replace_recursive($definition, $overrides);

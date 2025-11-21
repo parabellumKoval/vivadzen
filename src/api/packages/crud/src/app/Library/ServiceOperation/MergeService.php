@@ -6,7 +6,9 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -159,7 +161,7 @@ class MergeService
     /**
      * Merge $this->sourceEntry into $targetEntry using provided configuration.
      */
-    public function mergeInto(Model $targetEntry, array $selectedFields, array $forcedFields, bool $deleteSource, array $relationKeys = []): array
+    public function mergeInto(Model $targetEntry, array $selectedFields, array $forcedFields, bool $deleteSource, array $relationKeys = [], array $relationOptions = []): array
     {
         if (! $this->sourceEntry) {
             throw new InvalidArgumentException('Источник слияния не определён.');
@@ -176,8 +178,9 @@ class MergeService
         }
 
         $forceMap = array_flip($forcedFields);
+        $filteredRelationOptions = $this->filterRelationOptions($relationOptions, $relationKeys);
 
-        DB::transaction(function () use ($targetEntry, $selected, $forceMap, $deleteSource, $relationKeys) {
+        DB::transaction(function () use ($targetEntry, $selected, $forceMap, $deleteSource, $relationKeys, $filteredRelationOptions) {
             foreach ($selected as $fieldName) {
                 $definition = $this->fieldDefinitions[$fieldName] ?? null;
 
@@ -192,7 +195,14 @@ class MergeService
             $targetEntry->save();
 
             if ($relationKeys !== []) {
-                $this->mergeSelectedRelations($targetEntry, $this->sourceEntry, $relationKeys);
+                $this->mergeSelectedRelations(
+                    $targetEntry,
+                    $this->sourceEntry,
+                    $relationKeys,
+                    $selected,
+                    array_keys($forceMap),
+                    $filteredRelationOptions
+                );
             }
 
             if ($deleteSource) {
@@ -234,7 +244,7 @@ class MergeService
         $this->mergeReplace($target, $source, $field, $force);
     }
 
-    protected function mergeSelectedRelations(Model $target, Model $source, array $relationKeys): void
+    protected function mergeSelectedRelations(Model $target, Model $source, array $relationKeys, array $selectedFields, array $forcedFields, array $relationOptions = []): void
     {
         $unique = array_values(array_intersect(array_unique($relationKeys), array_keys($this->relationDefinitions)));
 
@@ -245,11 +255,22 @@ class MergeService
                 continue;
             }
 
-            $this->applyRelationMerge($target, $source, $definition);
+            $options = $relationOptions[$relationKey] ?? [];
+
+            $this->applyRelationMerge(
+                $target,
+                $source,
+                $definition,
+                $options,
+                $selectedFields,
+                $forcedFields,
+                $unique,
+                $relationOptions
+            );
         }
     }
 
-    protected function applyRelationMerge(Model $target, Model $source, array $definition): void
+    protected function applyRelationMerge(Model $target, Model $source, array $definition, array $options, array $selectedFields, array $forcedFields, array $selectedRelationKeys, array $relationOptions): void
     {
         $handler = $definition['handler'];
 
@@ -263,6 +284,15 @@ class MergeService
 
         if ($type === 'table') {
             $this->reassignTableRelation($target, $source, $definition);
+            $this->maybeMergeRelationDuplicates(
+                $target,
+                $definition,
+                $options,
+                $selectedFields,
+                $forcedFields,
+                $selectedRelationKeys,
+                $relationOptions
+            );
         }
     }
 
@@ -382,6 +412,290 @@ class MergeService
         if (is_callable($handler)) {
             $handler($target, $source, $payload);
         }
+    }
+
+    protected function maybeMergeRelationDuplicates(Model $target, array $definition, array $options, array $selectedFields, array $forcedFields, array $selectedRelationKeys, array $relationOptions): void
+    {
+        $mergeConfig = $definition['merge'] ?? null;
+
+        if (! $mergeConfig) {
+            return;
+        }
+
+        $enabled = $this->resolveRelationMergeEnabled($mergeConfig, $options);
+
+        if (! $enabled) {
+            return;
+        }
+
+        $mode = $this->resolveRelationMergeMode($mergeConfig, $options);
+
+        if (! $mode) {
+            return;
+        }
+
+        $relationName = $definition['key'];
+
+        if (! method_exists($target, $relationName)) {
+            return;
+        }
+
+        $relation = $target->{$relationName}();
+
+        if (! $relation instanceof Relation) {
+            return;
+        }
+
+        $entries = $relation->getQuery()->get();
+
+        if ($entries->count() < 2) {
+            return;
+        }
+
+        $groups = $this->groupRelationDuplicates($entries, $mode);
+
+        if ($groups === []) {
+            return;
+        }
+
+        $childRelationKeys = array_values(array_filter($selectedRelationKeys, fn ($key) => $key !== $relationName));
+        $childRelationOptions = $this->filterRelationOptions($relationOptions, $childRelationKeys);
+
+        foreach ($groups as $group) {
+            $this->mergeRelationDuplicateGroup($group, $selectedFields, $forcedFields, $childRelationKeys, $childRelationOptions);
+        }
+    }
+
+    protected function resolveRelationMergeEnabled(array $mergeConfig, array $options): bool
+    {
+        $default = (bool) ($mergeConfig['default'] ?? false);
+        $settings = $options['merge'] ?? null;
+
+        if (! is_array($settings) || ! array_key_exists('enabled', $settings)) {
+            return $default;
+        }
+
+        $value = $this->valueToBool($settings['enabled'], null);
+
+        return $value === null ? $default : $value;
+    }
+
+    protected function resolveRelationMergeMode(array $mergeConfig, array $options): ?array
+    {
+        $settings = $options['merge'] ?? null;
+        $modeKey = null;
+
+        if (is_array($settings) && isset($settings['mode'])) {
+            $candidate = trim((string) $settings['mode']);
+            $modeKey = $candidate !== '' ? $candidate : null;
+        }
+
+        return $this->getRelationMergeModeByKey($mergeConfig, $modeKey);
+    }
+
+    protected function getRelationMergeModeByKey(array $mergeConfig, ?string $modeKey): ?array
+    {
+        $modes = $mergeConfig['modes_map'] ?? [];
+
+        if ($modeKey && isset($modes[$modeKey])) {
+            return $modes[$modeKey];
+        }
+
+        $defaultKey = $mergeConfig['default_mode'] ?? null;
+
+        if ($defaultKey && isset($modes[$defaultKey])) {
+            return $modes[$defaultKey];
+        }
+
+        if ($modes === []) {
+            return null;
+        }
+
+        $first = reset($modes);
+
+        return $first ?: null;
+    }
+
+    protected function groupRelationDuplicates(Collection $entries, array $modeDefinition): array
+    {
+        $matcher = $modeDefinition['matcher'] ?? null;
+
+        if (is_string($matcher)) {
+            $method = 'groupDuplicatesUsing'.Str::studly($matcher);
+
+            if (method_exists($this, $method)) {
+                return $this->{$method}($entries, $modeDefinition);
+            }
+        }
+
+        if (is_callable($matcher)) {
+            return $this->normalizeDuplicateGroups($matcher($entries, $modeDefinition));
+        }
+
+        return [];
+    }
+
+    protected function groupDuplicatesUsingNumericAttribute(Collection $entries, array $modeDefinition): array
+    {
+        $attribute = $modeDefinition['config']['attribute'] ?? ($modeDefinition['config']['field'] ?? null);
+
+        if (! $attribute) {
+            return [];
+        }
+
+        $precision = array_key_exists('precision', $modeDefinition['config'])
+            ? (int) $modeDefinition['config']['precision']
+            : null;
+
+        $grouped = [];
+
+        foreach ($entries as $entry) {
+            if (! $entry instanceof Model) {
+                continue;
+            }
+
+            $value = data_get($entry, $attribute);
+            $value = $this->stringifyValue($value);
+            $numeric = $this->extractNumericValue($value);
+
+            if ($numeric === null) {
+                continue;
+            }
+
+            if ($precision !== null) {
+                $numeric = (float) number_format($numeric, $precision, '.', '');
+            }
+
+            $key = (string) $numeric;
+
+            $grouped[$key][] = $entry;
+        }
+
+        return collect($grouped)
+            ->filter(function ($group) {
+                return count($group) > 1;
+            })
+            ->map(function ($group) {
+                return collect($group);
+            })
+            ->values()
+            ->all();
+    }
+
+    protected function normalizeDuplicateGroups($groups): array
+    {
+        if ($groups instanceof Collection) {
+            $groups = $groups->all();
+        }
+
+        if (! is_array($groups)) {
+            return [];
+        }
+
+        $normalized = [];
+
+        foreach ($groups as $group) {
+            $collection = $group instanceof Collection ? $group : collect($group);
+            $collection = $collection->filter(fn ($entry) => $entry instanceof Model)->values();
+
+            if ($collection->count() > 1) {
+                $normalized[] = $collection;
+            }
+        }
+
+        return $normalized;
+    }
+
+    protected function mergeRelationDuplicateGroup(Collection $group, array $selectedFields, array $forcedFields, array $relationKeys, array $relationOptions): void
+    {
+        if ($group->count() < 2) {
+            return;
+        }
+
+        $ordered = $group->sortBy(function (Model $entry) {
+            return $entry->getKey();
+        })->values();
+
+        /** @var Model $target */
+        $target = $ordered->shift();
+
+        foreach ($ordered as $duplicate) {
+            if (! $duplicate instanceof Model) {
+                continue;
+            }
+
+            $service = new static($this->crud, $duplicate);
+            $result = $service->mergeInto($target, $selectedFields, $forcedFields, true, $relationKeys, $relationOptions);
+            $target = $result['target'] ?? $target->fresh();
+        }
+    }
+
+    protected function extractNumericValue($value): ?float
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if (is_numeric($value)) {
+            return (float) $value;
+        }
+
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $filtered = preg_replace('/[^0-9,\.]/', '', $value);
+
+        if ($filtered === null) {
+            return null;
+        }
+
+        $filtered = str_replace(',', '.', $filtered);
+        $filtered = trim($filtered);
+
+        if ($filtered === '' || ! is_numeric($filtered)) {
+            return null;
+        }
+
+        return (float) $filtered;
+    }
+
+    protected function filterRelationOptions(array $relationOptions, array $relationKeys): array
+    {
+        if ($relationKeys === []) {
+            return [];
+        }
+
+        return array_intersect_key($relationOptions, array_flip($relationKeys));
+    }
+
+    protected function valueToBool($value, ?bool $default = null): ?bool
+    {
+        if ($value === null) {
+            return $default;
+        }
+
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        if (is_string($value)) {
+            $normalized = strtolower(trim($value));
+
+            if (in_array($normalized, ['1', 'true', 'yes', 'on'], true)) {
+                return true;
+            }
+
+            if (in_array($normalized, ['0', 'false', 'no', 'off'], true)) {
+                return false;
+            }
+        }
+
+        if (is_numeric($value)) {
+            return ((int) $value) !== 0;
+        }
+
+        return $default;
     }
 
     protected function mergeTranslations(Model $target, Model $source, string $attribute, bool $force): void
@@ -592,6 +906,7 @@ class MergeService
         $constraints = $this->normalizeConstraints($config['constraints'] ?? []);
         $unique = $this->normalizeStringArray($config['unique'] ?? []);
         $primaryKey = $config['primary_key'] ?? 'id';
+        $mergeOptions = $this->normalizeRelationMergeOptions($config['merge'] ?? null);
 
         return [
             'key' => $key,
@@ -605,6 +920,90 @@ class MergeService
             'constraints' => $constraints,
             'unique' => $unique,
             'primary_key' => $primaryKey,
+            'merge' => $mergeOptions,
+        ];
+    }
+
+    protected function normalizeRelationMergeOptions($config): ?array
+    {
+        if (! is_array($config)) {
+            return null;
+        }
+
+        $modes = [];
+
+        foreach ((array) ($config['modes'] ?? []) as $modeKey => $modeDefinition) {
+            $normalized = $this->normalizeRelationMergeMode($modeKey, $modeDefinition);
+            $modes[$normalized['key']] = $normalized;
+        }
+
+        if ($modes === []) {
+            return null;
+        }
+
+        $defaultMode = $config['default_mode'] ?? null;
+
+        if ($defaultMode && ! isset($modes[$defaultMode])) {
+            $defaultMode = null;
+        }
+
+        if ($defaultMode === null) {
+            foreach ($modes as $mode) {
+                if ($mode['default']) {
+                    $defaultMode = $mode['key'];
+                    break;
+                }
+            }
+        }
+
+        if ($defaultMode === null) {
+            $defaultMode = array_key_first($modes);
+        }
+
+        return [
+            'label' => $config['label'] ?? __('Сшивать найденные дубликаты'),
+            'default' => (bool) ($config['default'] ?? false),
+            'default_mode' => $defaultMode,
+            'modes' => array_values($modes),
+            'modes_map' => $modes,
+        ];
+    }
+
+    protected function normalizeRelationMergeMode(string|int $name, $config): array
+    {
+        $key = is_string($name) ? trim($name) : '';
+
+        if ($key === '') {
+            $key = (string) ($config['key'] ?? $config['name'] ?? '');
+        }
+
+        if ($key === '') {
+            throw new InvalidArgumentException('Режим слияния связи должен иметь имя.');
+        }
+
+        $label = $config['label'] ?? Str::title(str_replace('_', ' ', $key));
+        $description = $config['description'] ?? null;
+        $matcher = $config['matcher'] ?? ($config['handler'] ?? null);
+        $default = (bool) ($config['default'] ?? false);
+
+        $options = $config['config'] ?? Arr::except($config, [
+            'label',
+            'description',
+            'matcher',
+            'handler',
+            'default',
+            'key',
+            'name',
+            'config',
+        ]);
+
+        return [
+            'key' => $key,
+            'label' => $label,
+            'description' => $description,
+            'matcher' => $matcher,
+            'default' => $default,
+            'config' => $options,
         ];
     }
 

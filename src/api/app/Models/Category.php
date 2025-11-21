@@ -226,7 +226,6 @@ public static function createOrUpdateCategoryChain(array $chain, string $locale)
 
 
   // TRANSLATOR
-
   public static function setupTranslatableSettings(): void
   {
       static::addCommonSettings([

@@ -25,9 +25,9 @@ class ProductFromCsv extends Command
     protected $description = 'Fetch an image from a URL using proxy server and save it locally';
 
     // const FILE_PATH = 'vivadzen-products.csv';
-    const FILE_PATH = 'com.csv';
-    // Mode updateOrCreateItem, updateIsActive, updateCategory, updateTranslations
-    const MODE = 'updateTranslations';
+    const FILE_PATH = 'ua.csv';
+    // Mode updateOrCreateItem, updateIsActive, updateCategory, updateTranslations, updateOrCreateItemUa
+    const MODE = 'updateOrCreateItem';
     const TRANSLATION_LANG = 'ua';
     const SUPPLIER_ID = 2;
 
@@ -327,8 +327,12 @@ class ProductFromCsv extends Command
         try {
           $response = $this->{self::MODE}($excel_product);
 
-          if(self::MODE === 'updateOrCreateItem') {
-            $relations_pairs[$response->id] = $excel_product['parent_id'] ?? null;
+          if ($response instanceof StoreProduct) {
+            if (self::MODE === 'updateOrCreateItem') {
+              $relations_pairs[$response->id] = $excel_product['parent_id'] ?? null;
+            } elseif (self::MODE === 'updateOrCreateItemUa' && ($response->wasRecentlyCreated ?? false)) {
+              $relations_pairs[$response->id] = $excel_product['parent_id'] ?? null;
+            }
           }
         }catch(\Exception $e) {
           throw $e;
@@ -337,7 +341,8 @@ class ProductFromCsv extends Command
         $bar->advance();
       }
 
-      $this->updateRelationship($relations_pairs);
+      $relationField = self::MODE === 'updateOrCreateItemUa' ? 'old_ua_id' : 'old_id';
+      $this->updateRelationship($relations_pairs, $relationField);
 
       $bar->finish();
 
@@ -480,11 +485,16 @@ class ProductFromCsv extends Command
         }
     }
 
-    private function updateRelationship($pairs) {
+    private function updateRelationship($pairs, string $parentReferenceField = 'old_id') {
+      $allowedFields = ['old_id', 'old_ua_id'];
+      if (!in_array($parentReferenceField, $allowedFields, true)) {
+        $parentReferenceField = 'old_id';
+      }
+
       foreach($pairs as $new_id => $old_parent_id){
         if(!$old_parent_id) continue;
 
-        $parent = StoreProduct::where('old_id', $old_parent_id)->first();
+        $parent = StoreProduct::where($parentReferenceField, $old_parent_id)->first();
         $child = StoreProduct::find($new_id);
 
         if ($parent && $child) {
@@ -506,7 +516,7 @@ class ProductFromCsv extends Command
         $categoryIds = [];
 
         foreach ($deepestChains as $chain) {
-            $category = Category::createOrUpdateCategoryChain($chain, 'cs');
+            $category = Category::createOrUpdateCategoryChain($chain, self::TRANSLATION_LANG);
             if ($category) $categoryIds[] = $category->id;
         }
 
@@ -545,9 +555,9 @@ class ProductFromCsv extends Command
       }
     }
 
-    private function updateOrCreateItem($data) {
+    private function updateOrCreateItem($data, bool $storeOldId = true, ?int $oldUaId = null) {
 
-      App::setLocale('cs');
+      App::setLocale(self::TRANSLATION_LANG);
 
       // Store images if exists
       if(!empty($data['images'])) {
@@ -569,7 +579,10 @@ class ProductFromCsv extends Command
       $product->excerpt = $data['excerpt'] ?? null;
       $product->is_active = $data['is_active'] ?? 0;
       $product->parent_id = $data['parent_id'] ?? null;
-      $product->old_id = $data['id'] ?? null;
+      $product->old_id = $storeOldId ? ($data['id'] ?? null) : null;
+      if ($oldUaId !== null) {
+        $product->old_ua_id = $oldUaId;
+      }
       $product->setImages($images_urls);
       $product->save();
 
@@ -577,6 +590,74 @@ class ProductFromCsv extends Command
       $product->setProductSupplier($supplier_id = self::SUPPLIER_ID, $in_stock = $data['in_stock'], $price, $old_price, $code = $data['code']);
 
       return $product;
+    }
+
+    private function updateOrCreateItemUa($data) {
+      $uaProductId = $data['id'] ?? null;
+
+      if (!$uaProductId) {
+        return null;
+      }
+
+      if (array_key_exists($uaProductId, $this->ua_cz_map)) {
+        $mappedOldId = $this->ua_cz_map[$uaProductId];
+        $existingProduct = StoreProduct::where('old_id', $mappedOldId)->first();
+
+        if ($existingProduct) {
+          $this->applyUaTranslations($existingProduct, $data);
+          $this->attachUaSupplier($existingProduct, $data);
+          $existingProduct->old_ua_id = $uaProductId;
+          $existingProduct->save();
+
+          return $existingProduct;
+        }
+
+        $this->warn("Mapped product with old_id {$mappedOldId} not found. Creating new product instead.");
+      }
+
+      $product = $this->updateOrCreateItem($data, false, $uaProductId);
+
+      return $product;
+    }
+
+    private function applyUaTranslations(StoreProduct $product, array $data): void
+    {
+      $lang = self::TRANSLATION_LANG;
+
+      $translations = [
+        'name' => $data['name'] ?? null,
+        'short_name' => $data['property_1_value'] ?? null,
+        'content' => $data['content'] ?? null,
+        'excerpt' => $data['excerpt'] ?? null,
+      ];
+
+      foreach ($translations as $field => $value) {
+        if (!empty($value)) {
+          $product->setTranslation($field, $lang, $value);
+        }
+      }
+    }
+
+    private function attachUaSupplier(StoreProduct $product, array $data): void
+    {
+      $price = $data['old_price'] ? $data['old_price'] : $data['price'];
+      $old_price = $data['old_price'] ? $data['price'] : null;
+
+      $pivotData = [
+        'in_stock' => $data['in_stock'] ?? 0,
+        'code' => $data['code'] ?? null,
+        'barcode' => null,
+        'price' => $price,
+        'old_price' => $old_price,
+      ];
+
+      $supplierRelation = $product->suppliers()->where('ak_supplier_product.supplier_id', self::SUPPLIER_ID);
+
+      if ($supplierRelation->exists()) {
+        $product->suppliers()->updateExistingPivot(self::SUPPLIER_ID, $pivotData);
+      } else {
+        $product->suppliers()->attach(self::SUPPLIER_ID, $pivotData);
+      }
     }
 
     private function extractIdInt($value) {

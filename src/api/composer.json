@@ -27,6 +27,7 @@
         "parabellumkoval/backpack-settings": "dev-main",
         "parabellumkoval/backpack-store": "dev-multistore",
         "parabellumkoval/backpack-tag": "dev-main",
+        "parabellumkoval/crud": "dev-main",
         "parabellumkoval/crud-filemanager": "dev-main",
         "spatie/laravel-feed": "^4.4"
     },

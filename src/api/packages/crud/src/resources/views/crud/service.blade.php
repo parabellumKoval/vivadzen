@@ -14,6 +14,7 @@
     $serviceRelations = $serviceRelations ?? [];
     $relationDefaults = $serviceRelationsDefault ?? [];
     $selectedRelations = old('relations', $relationDefaults);
+    $relationSettings = old('relation_settings', []);
     $strategyLabels = [
         'translations' => __('Переводы'),
         'append' => __('Добавление'),
@@ -79,22 +80,81 @@
                             <div class="list-group">
                                 @foreach ($serviceRelations as $relation)
                                     @php
-                                        $relationChecked = in_array($relation['key'], (array) $selectedRelations, true);
+                                        $relationKey = $relation['key'];
+                                        $relationChecked = in_array($relationKey, (array) $selectedRelations, true);
+                                        $mergeConfig = $relation['merge'] ?? null;
+                                        $mergeOptions = data_get($relationSettings, $relationKey, []);
+                                        $mergeInput = data_get($mergeOptions, 'merge', []);
+                                        $mergeEnabled = false;
+                                        $mergeMode = $mergeConfig['default_mode'] ?? null;
+
+                                        if ($mergeConfig) {
+                                            $mergeEnabledRaw = data_get($mergeInput, 'enabled');
+                                            $mergeEnabled = $mergeEnabledRaw === null
+                                                ? (bool) ($mergeConfig['default'] ?? false)
+                                                : filter_var($mergeEnabledRaw, FILTER_VALIDATE_BOOLEAN);
+                                            $mergeMode = data_get($mergeInput, 'mode') ?? ($mergeConfig['default_mode'] ?? null);
+                                        }
                                     @endphp
-                                    <div class="list-group-item">
+                                    <div class="list-group-item" data-relation-wrapper="{{ $relationKey }}">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox"
-                                                   class="custom-control-input"
-                                                   id="merge-relation-{{ $relation['key'] }}"
+                                                   class="custom-control-input js-relation-toggle"
+                                                   data-relation="{{ $relationKey }}"
+                                                   id="merge-relation-{{ $relationKey }}"
                                                    name="relations[]"
-                                                   value="{{ $relation['key'] }}"
+                                                   value="{{ $relationKey }}"
                                                    {{ $relationChecked ? 'checked' : '' }}>
-                                            <label class="custom-control-label font-weight-bold" for="merge-relation-{{ $relation['key'] }}">
+                                            <label class="custom-control-label font-weight-bold" for="merge-relation-{{ $relationKey }}">
                                                 {{ $relation['label'] }}
                                             </label>
                                         </div>
                                         @if ($relation['help'])
                                             <p class="text-muted small mb-0 mt-2">{{ $relation['help'] }}</p>
+                                        @endif
+
+                                        @if ($mergeConfig && !empty($mergeConfig['modes']))
+                                            <div class="mt-3 pl-4 border-left js-relation-options" data-relation-options="{{ $relationKey }}">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="hidden"
+                                                           name="relation_settings[{{ $relationKey }}][merge][enabled]"
+                                                           value="0">
+                                                    <input type="checkbox"
+                                                           class="custom-control-input"
+                                                           id="merge-relation-{{ $relationKey }}-duplicates"
+                                                           name="relation_settings[{{ $relationKey }}][merge][enabled]"
+                                                           value="1"
+                                                           {{ $mergeEnabled ? 'checked' : '' }}>
+                                                    <label class="custom-control-label" for="merge-relation-{{ $relationKey }}-duplicates">
+                                                        {{ $mergeConfig['label'] ?? __('Сшивать найденные дубликаты') }}
+                                                    </label>
+                                                </div>
+
+                                                <div class="form-group mt-3 mb-2">
+                                                    <label for="merge-relation-{{ $relationKey }}-mode" class="small font-weight-bold text-muted mb-1">
+                                                        {{ __('Находить похожие по') }}
+                                                    </label>
+                                                    <select class="form-control form-control-sm js-relation-mode"
+                                                            id="merge-relation-{{ $relationKey }}-mode"
+                                                            name="relation_settings[{{ $relationKey }}][merge][mode]"
+                                                            data-relation="{{ $relationKey }}">
+                                                        @foreach ($mergeConfig['modes'] as $mode)
+                                                            <option value="{{ $mode['key'] }}" {{ ($mergeMode === $mode['key']) ? 'selected' : '' }}>
+                                                                {{ $mode['label'] }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @foreach ($mergeConfig['modes'] as $mode)
+                                                        @if (!empty($mode['description']))
+                                                            <small class="text-muted d-block mt-2 {{ $mergeMode === $mode['key'] ? '' : 'd-none' }}"
+                                                                   data-merge-mode-help="{{ $relationKey }}"
+                                                                   data-merge-mode="{{ $mode['key'] }}">
+                                                                {{ $mode['description'] }}
+                                                            </small>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         @endif
                                     </div>
                                 @endforeach
@@ -228,6 +288,39 @@
                 const fieldKey = $(this).val();
                 const checked = $(this).is(':checked');
                 $("#merge-force-" + fieldKey).prop('disabled', !checked);
+            });
+
+            function toggleRelationOptions($checkbox) {
+                const relation = $checkbox.data('relation');
+                const enabled = $checkbox.is(':checked');
+                const $container = $('[data-relation-options="' + relation + '"]');
+
+                if (!$container.length) {
+                    return;
+                }
+
+                $container.toggleClass('text-muted', !enabled);
+                $container.find('input:not([type="hidden"]), select, textarea').prop('disabled', !enabled);
+            }
+
+            function updateRelationModeHelp($select) {
+                const relation = $select.data('relation');
+                const mode = $select.val();
+
+                $('[data-merge-mode-help="' + relation + '"]').addClass('d-none');
+                $('[data-merge-mode-help="' + relation + '"][data-merge-mode="' + mode + '"]').removeClass('d-none');
+            }
+
+            $('.js-relation-toggle').each(function(){
+                toggleRelationOptions($(this));
+            }).on('change', function(){
+                toggleRelationOptions($(this));
+            });
+
+            $('.js-relation-mode').each(function(){
+                updateRelationModeHelp($(this));
+            }).on('change', function(){
+                updateRelationModeHelp($(this));
             });
         })(jQuery);
     </script>

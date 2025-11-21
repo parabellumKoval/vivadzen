@@ -25,10 +25,10 @@ trait ProductCrud {
   // Extends of SetupCreateOperation
   public function createOperation() {
 
-    $this->setupTagFields();
-    $this->crud->modifyField('tags', [
-      'tab' => trans('backpack-store::product-field.tabs.main')
-    ]);
+    // $this->setupTagFields();
+    // $this->crud->modifyField('tags', [
+    //   'tab' => trans('backpack-store::product-field.tabs.main')
+    // ]);
 
     //
     // $this->crud->removeField('images');

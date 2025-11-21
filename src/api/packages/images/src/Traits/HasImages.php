@@ -104,7 +104,9 @@ trait HasImages
             $fieldDefinition['tab'] = $tab;
         }
 
-        $columnDefinition = static::buildDefaultColumnDefinition($attribute, $label, $prefix, $columnLimit);
+        $height = $config['height'] ?? '60px';
+        $width = $config['width'] ?? 'auto';
+        $columnDefinition = static::buildDefaultColumnDefinition($attribute, $label, $prefix, $columnLimit, $height, $width);
         if (isset($config['column'])) {
             $columnDefinition = array_replace_recursive($columnDefinition, $config['column']);
         }
@@ -167,14 +169,14 @@ trait HasImages
         ];
     }
 
-    protected static function buildDefaultColumnDefinition(string $attribute, string $label, string $prefix, int $limit): array
+    protected static function buildDefaultColumnDefinition(string $attribute, string $label, string $prefix, int $limit, string $height = '60px', string $width = 'auto'): array
     {
         return [
             'name' => $attribute,
             'label' => $label,
             'type' => 'closure',
             'escaped' => false,
-            'function' => function ($entry) use ($attribute, $prefix, $limit) {
+            'function' => function ($entry) use ($attribute, $prefix, $limit, $height, $width) {
                 if (!method_exists($entry, 'getImageCollectionPaths')) {
                     return '';
                 }
@@ -182,14 +184,14 @@ trait HasImages
                 $paths = $entry->getImageCollectionPaths($attribute, $limit);
 
                 return collect($paths)
-                    ->map(function ($path) use ($entry, $attribute, $prefix) {
+                    ->map(function ($path) use ($entry, $attribute, $prefix, $height, $width) {
                         $url = $entry->formatImageUrlForAttribute($attribute, $path, $prefix);
 
                         if (!$url) {
                             return '';
                         }
 
-                        return '<img src="' . e($url) . '" style="max-height:60px;margin-right:4px;border-radius:4px;" />';
+                        return '<img src="' . e($url) . '" style="max-height:' . $height . ';max-width:' . $width . ';margin-right:4px;border-radius:4px;" />';
                     })
                     ->implode('');
             },
@@ -308,11 +310,23 @@ trait HasImages
         return static::getImageCollectionConfig($attribute)['field'];
     }
 
-    public static function imageColumnDefinition(?string $attribute = null): array
+    public static function imageColumnDefinition(?string $attribute = null, array $overrides = []): array
     {
         $attribute ??= static::imageAttributeName();
+        $config = static::getImageCollectionConfig($attribute);
 
-        return static::getImageCollectionConfig($attribute)['column'];
+        if (isset($overrides['height']) || isset($overrides['width'])) {
+            $limit = $config['column_limit'];
+            $prefix = $config['prefix'];
+            $label = $config['label'];
+
+            $height = $overrides['height'] ?? '60px';
+            $width = $overrides['width'] ?? 'auto';
+
+            return static::buildDefaultColumnDefinition($attribute, $label, $prefix, $limit, $height, $width);
+        }
+
+        return $config['column'];
     }
 
     public static function defaultImagesFieldDefinition(): array

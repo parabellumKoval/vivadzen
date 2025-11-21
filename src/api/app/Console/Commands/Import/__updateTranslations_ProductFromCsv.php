@@ -19,9 +19,9 @@ use ParabellumKoval\BackpackImages\Facades\ImageUploader;
 use App\Models\Category;
 use App\Models\StoreProduct;
 
-class ProductFromCsv extends Command
+class ProductFromCsv3 extends Command
 {
-    protected $signature = 'import:products-from-csv {url?} {output?}';
+    protected $signature = 'import:products-from-csv-3 {url?} {output?}';
     protected $description = 'Fetch an image from a URL using proxy server and save it locally';
 
     // const FILE_PATH = 'vivadzen-products.csv';

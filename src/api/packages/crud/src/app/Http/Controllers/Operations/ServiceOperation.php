@@ -87,6 +87,8 @@ trait ServiceOperation
             'delete_source' => ['nullable', 'boolean'],
             'relations' => ['array'],
             'relations.*' => ['string'],
+            'relation_settings' => ['array'],
+            'relation_settings.*' => ['array'],
         ]);
 
         $targetId = (int) $validated['target_entry_id'];
@@ -105,10 +107,11 @@ trait ServiceOperation
         $fields = array_map('strval', $validated['fields']);
         $forced = array_map('strval', $validated['force'] ?? []);
         $relations = array_map('strval', $validated['relations'] ?? []);
+        $relationSettings = $validated['relation_settings'] ?? [];
         $deleteSource = (bool) ($validated['delete_source'] ?? false);
 
         try {
-            $result = $mergeService->mergeInto($targetEntry, $fields, $forced, $deleteSource, $relations);
+            $result = $mergeService->mergeInto($targetEntry, $fields, $forced, $deleteSource, $relations, $relationSettings);
         } catch (InvalidArgumentException $e) {
             return back()->withErrors(['service_merge' => $e->getMessage()])->withInput();
         } catch (\Throwable $e) {
