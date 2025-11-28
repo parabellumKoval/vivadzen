@@ -143,6 +143,7 @@
             placeholder: $placeholder,
             minimumInputLength: $minimumInputLength,
             allowClear: $allowClear,
+            escapeMarkup: function (markup) { return markup; },
             dropdownParent: $isFieldInline ? $('#inline-create-dialog .modal-content') : document.body,
             ajax: {
                 url: $dataSource,

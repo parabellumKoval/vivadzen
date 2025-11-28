@@ -6,7 +6,7 @@
 
 ### 1. Конфигурация
 
-Файл конфигурации: `config/frontend_cache_refresh.php`
+Файл конфигурации: `config/webhooks.php`
 
 ```php
 <?php
@@ -248,8 +248,7 @@ tail -f storage/logs/laravel.log | grep "frontend-cache-refresh"
 ### Кеш статусов
 
 Статусы операций хранятся в кеше Laravel в течение 1 часа. Ключи:
-- `frontend_cache_refresh.latest.{unit_hash}` - последний статус юнита
-- `frontend_cache_refresh.job.{job_hash}` - статус конкретной задачи
+- `webhooks.latest.{unit_key}` - последний статус юнита
 
 ## Безопасность
 
@@ -264,7 +263,7 @@ tail -f storage/logs/laravel.log | grep "frontend-cache-refresh"
 
 1. Проверьте консоль браузера на наличие JavaScript ошибок
 2. Убедитесь что CSRF токен присутствует в meta теге
-3. Проверьте правильность маршрутов в `routes/admin/frontend_cache_refresh.php`
+3. Проверьте правильность маршрутов в `packages/webhooks/routes/admin.php`
 
 ### Проблема: Задачи зависают
 
@@ -282,10 +281,10 @@ tail -f storage/logs/laravel.log | grep "frontend-cache-refresh"
 
 ### Добавление новой функциональности
 
-1. Модифицируйте `FrontendCacheRefreshJob` для новой логики
-2. Обновите контроллер `FrontendCacheRefreshController`
-3. Добавьте новые маршруты в `routes/admin/frontend_cache_refresh.php`
-4. Обновите виджет в `resources/views/vendor/backpack/base/widgets/frontend_cache_refresh.blade.php`
+1. Модифицируйте `WebhookDispatchJob` для новой логики
+2. Обновите контроллер `WebhookUnitController`
+3. Добавьте новые маршруты в `packages/webhooks/routes/admin.php`
+4. Обновите виджет в `packages/webhooks/resources/views/widgets/frontend_cache_refresh.blade.php`
 
 ### Тестирование
 

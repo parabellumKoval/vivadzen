@@ -25,7 +25,7 @@ class ProductSmallResource extends \Backpack\Store\app\Http\Resources\BaseResour
         'reviews' => $this->reviews,
         'ratings' => $this->ratings,
         'images' => $this->getImageSourcesForApi(2),
-        'inStock' => $this->in_stock,
+        'inStock' => $repr->in_stock,
         'modifications' => $this->resource_modifications,
         // 'active_modification' => $this->active_modification,
       ];

@@ -16,7 +16,8 @@ use Dress\Translator\app\Traits\TranslatableTrait;
 class Category extends BaseCategory implements TranslatableInterface
 {
   use TranslatableTrait;
-  // use Searchable;
+
+  protected $translatable = ['name', 'content', 'seo', 'extras_trans', 'extras_trans->caption', 'extras_trans->full_description', 'extras_trans->short_description'];
 
   public $children_list = [];
   private $bunny = null;
@@ -73,6 +74,8 @@ public static function createOrUpdateCategoryChain(array $chain, string $locale)
             $category = new self();
             $category->parent_id = $parentId;
             $category->setTranslation('name', $locale, $categoryName);
+            // Устанавливаем slug явно из имени категории
+            $category->slug = \Str::slug($categoryName);
             $category->save();
         } else {
             if (!$category->hasTranslation('name', $locale)) {
@@ -252,6 +255,16 @@ public static function createOrUpdateCategoryChain(array $chain, string $locale)
           'driver' => 'deepl',
           // 'scopeName' => 'namesQuery'
       ]);
+
+      static::addTranslatableCase([
+          'fields' => [
+              'extras_trans->caption' => 'Промо заголовок',
+              'extras_trans->full_description' => 'Полное описание',
+              'extras_trans->short_description' => 'Короткое описание',
+          ],
+          'driver' => 'deepl',
+          'scopeName' => 'extrasTransQuery'
+      ]);
   }
 
 
@@ -263,6 +276,10 @@ public static function createOrUpdateCategoryChain(array $chain, string $locale)
     $query->when($is_active_only, function ($query) {
         $query->where('is_active', 1);
     });
+  }
+
+  public function scopeExtrasTransQuery(Builder $query, $settings) {
+    $query->whereNotNull('extras_trans');
   }
 
 

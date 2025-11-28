@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Http;
 class TestJobBehavior extends Command
 {
     protected $signature = 'frontend:test-job-behavior {url}';
-    protected $description = 'Test exact same behavior as FrontendCacheRefreshJob';
+    protected $description = 'Test the same behavior as WebhookDispatchJob';
 
     public function handle()
     {
         $unitUrl = $this->argument('url');
-        $frontendUrl = rtrim(config('frontend_cache_refresh.frontend_url'), '/');
+        $frontendUrl = rtrim(config('webhooks.frontend_url'), '/');
         $fullUrl = $frontendUrl . $unitUrl;
         $timeout = 30; // Same as in your failing case
         

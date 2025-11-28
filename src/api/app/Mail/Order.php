@@ -90,7 +90,7 @@ class Order extends Mailable
         $lines[] = __('email.status') . ': <b>' . e($this->translateStatusKey('status.status', $this->order->status)) . '</b>';
         $lines[] = __('email.pay_status') . ': <b>' . e($this->translateStatusKey('status.pay_status', $this->order->pay_status)) . '</b>';
         $lines[] = __('email.delivery_status') . ': <b>' . e($this->translateStatusKey('status.delivery_status', $this->order->delivery_status)) . '</b>';
-        $lines[] = __('email.currency') . ': <b>' . e($this->currency) . '</b>';
+        $lines[] = __('email.currency') . ': <b>' . e($this->resolveCurrencyLabel($this->currency)) . '</b>';
 
         $products = $this->order->productsAnyway ?? [];
         $lines[] = __('email.items_count') . ': <b>' . e((string) max(0, count($products))) . '</b>';
@@ -200,7 +200,7 @@ class Order extends Mailable
             }
 
             if (! empty($bonuses['wallet_currency'])) {
-                $lines[] = __('email.bonus_wallet_currency') . ': ' . e($bonuses['wallet_currency']);
+                $lines[] = __('email.bonus_wallet_currency') . ': ' . e($this->resolveCurrencyLabel($bonuses['wallet_currency']));
             }
 
             if (! empty($bonuses['requested_points']) && abs((float) $bonuses['requested_points'] - $points) > 0.01) {
@@ -431,7 +431,9 @@ class Order extends Mailable
             $amount = abs($amount);
         }
 
-        return $prefix . number_format($amount, 2, '.', ' ') . ' ' . $currency;
+        $displayCurrency = $this->resolveCurrencyLabel($currency);
+
+        return $prefix . number_format($amount, 2, '.', ' ') . ' ' . trim($displayCurrency);
     }
 
     protected function translateStatusKey(string $baseKey, ?string $value): string
@@ -452,6 +454,13 @@ class Order extends Mailable
 
     protected function translateDeliveryMethod(string $method): string
     {
+        if (function_exists('store_delivery_method_label')) {
+            $label = store_delivery_method_label($method);
+            if ($label) {
+                return $label;
+            }
+        }
+
         $key = 'validation.values.delivery.method.' . $method;
         $translation = __($key);
 
@@ -462,8 +471,32 @@ class Order extends Mailable
         return strip_tags($translation);
     }
 
+    protected function resolveCurrencyLabel(?string $code): string
+    {
+        if (! $code) {
+            return '';
+        }
+
+        if (function_exists('currency_label')) {
+            return currency_label($code);
+        }
+
+        if (function_exists('store_currency_label')) {
+            return store_currency_label($code);
+        }
+
+        return strtoupper($code);
+    }
+
     protected function translatePaymentMethod(string $method): string
     {
+        if (function_exists('store_payment_method_label')) {
+            $label = store_payment_method_label($method);
+            if ($label) {
+                return $label;
+            }
+        }
+
         $key = 'validation.values.payment.method.' . $method;
         $translation = __($key);
 

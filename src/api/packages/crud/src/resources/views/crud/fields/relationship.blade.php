@@ -4,10 +4,18 @@
     if(isset($field['inline_create']) && !is_array($field['inline_create'])) {
         $field['inline_create'] = [true];
     }
+    if (! isset($field['data_source']) && isset($field['model']) && function_exists('helper_fetch_key_for_model')) {
+        $helperKey = helper_fetch_key_for_model($field['model']);
+
+        if ($helperKey) {
+            $field['data_source'] = route('backpack.helpers.fetch', ['key' => $helperKey]);
+            $field['ajax'] = true;
+        }
+    }
     $field['multiple'] = $field['multiple'] ?? $crud->relationAllowsMultiple($field['relation_type']);
     $field['ajax'] = $field['ajax'] ?? isset($field['data_source']);
     $field['placeholder'] = $field['placeholder'] ?? ($field['multiple'] ? trans('backpack::crud.select_entries') : trans('backpack::crud.select_entry'));
-    $field['attribute'] = $field['attribute'] ?? (new $field['model'])->identifiableAttribute();
+    $field['attribute'] = $field['attribute'] ?? ($field['ajax'] ? 'uniqHtml' : (new $field['model'])->identifiableAttribute());
     $field['allows_null'] = $field['allows_null'] ?? $crud->model::isColumnNullable($field['name']);
     // Note: isColumnNullable returns true if column is nullable in database, also true if column does not exist.
 

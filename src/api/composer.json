@@ -5,6 +5,16 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/webhooks"
+        },
+        {
+            "type": "path",
+            "url": "packages/dumper"
+        }
+    ],
     "require": {
         "php": "^8.2",
         "bacon/bacon-qr-code": "^2.0",
@@ -17,6 +27,7 @@
         "laravel/sanctum": "^4.2",
         "laravel/tinker": "^2.10.1",
         "maatwebsite/excel": "^3.1",
+        "ozh/phpass": "^1.4",
         "parabellumkoval/backpack-articles": "dev-main",
         "parabellumkoval/backpack-banners": "dev-main",
         "parabellumkoval/backpack-feedback": "dev-main",
@@ -29,6 +40,8 @@
         "parabellumkoval/backpack-tag": "dev-main",
         "parabellumkoval/crud": "dev-main",
         "parabellumkoval/crud-filemanager": "dev-main",
+        "parabellumkoval/dumper": "dev-main",
+        "parabellumkoval/webhooks": "dev-main",
         "spatie/laravel-feed": "^4.4"
     },
     "require-dev": {

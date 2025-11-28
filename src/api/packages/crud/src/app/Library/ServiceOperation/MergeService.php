@@ -3,6 +3,7 @@
 namespace Backpack\CRUD\app\Library\ServiceOperation;
 
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
+use Backpack\CRUD\app\Library\ServiceOperation\Similar\Providers\DatabaseSimilarSearchProvider;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,16 @@ class MergeService
      */
     protected array $relationDefinitions = [];
 
+    /**
+     * @var array<string, string>
+     */
+    protected array $cardViews = [];
+
+    /**
+     * @var array<string, mixed>
+     */
+    protected array $similarDefinition = [];
+
     public function __construct(CrudPanel $crud, ?Model $sourceEntry = null)
     {
         $this->crud = $crud;
@@ -45,6 +56,8 @@ class MergeService
         $this->definition = $this->resolveDefinition();
         $this->fieldDefinitions = $this->definition['fields'];
         $this->relationDefinitions = $this->definition['relations'];
+        $this->cardViews = $this->definition['cards'] ?? [];
+        $this->similarDefinition = $this->definition['similar'] ?? [];
     }
 
     public function getDefinition(): array
@@ -66,6 +79,32 @@ class MergeService
     public function getRelations(): array
     {
         return array_values($this->relationDefinitions);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getCardViews(): array
+    {
+        return $this->cardViews;
+    }
+
+    public function getEntryCardView(): string
+    {
+        return $this->cardViews['entry'] ?? 'crud::service.cards.default-entry';
+    }
+
+    public function getResultCardView(): string
+    {
+        return $this->cardViews['result'] ?? 'crud::service.cards.default-result';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getSimilarSearchDefinition(): array
+    {
+        return $this->similarDefinition;
     }
 
     /**
@@ -192,7 +231,9 @@ class MergeService
                 $this->applyFieldMerge($targetEntry, $this->sourceEntry, $definition, $force);
             }
 
-            $targetEntry->save();
+            $this->runWithServiceMergeFlag($targetEntry, function () use ($targetEntry) {
+                return $targetEntry->save();
+            });
 
             if ($relationKeys !== []) {
                 $this->mergeSelectedRelations(
@@ -214,6 +255,23 @@ class MergeService
             'target' => $targetEntry->fresh(),
             'source_deleted' => $deleteSource,
         ];
+    }
+
+    protected function runWithServiceMergeFlag(Model $model, callable $callback)
+    {
+        $flag = 'skipServiceModificationSync';
+
+        if (! property_exists($model, $flag)) {
+            return $callback();
+        }
+
+        $model->{$flag} = true;
+
+        try {
+            return $callback();
+        } finally {
+            $model->{$flag} = false;
+        }
     }
 
     protected function applyFieldMerge(Model $target, Model $source, array $definition, bool $force): void
@@ -535,7 +593,7 @@ class MergeService
         return [];
     }
 
-    protected function groupDuplicatesUsingNumericAttribute(Collection $entries, array $modeDefinition): array
+    protected function groupDuplicatesUsingNormalizedAttribute(Collection $entries, array $modeDefinition): array
     {
         $attribute = $modeDefinition['config']['attribute'] ?? ($modeDefinition['config']['field'] ?? null);
 
@@ -547,6 +605,49 @@ class MergeService
             ? (int) $modeDefinition['config']['precision']
             : null;
 
+        $normalizedGroups = $this->buildDuplicateGroups(
+            $this->groupEntriesByComparableString($entries, $attribute)
+        );
+
+        if ($normalizedGroups !== []) {
+            return $normalizedGroups;
+        }
+
+        return $this->buildDuplicateGroups(
+            $this->groupEntriesByNumericValue($entries, $attribute, $precision)
+        );
+    }
+
+    protected function groupDuplicatesUsingNumericAttribute(Collection $entries, array $modeDefinition): array
+    {
+        return $this->groupDuplicatesUsingNormalizedAttribute($entries, $modeDefinition);
+    }
+
+    protected function groupEntriesByComparableString(Collection $entries, string $attribute): array
+    {
+        $grouped = [];
+
+        foreach ($entries as $entry) {
+            if (! $entry instanceof Model) {
+                continue;
+            }
+
+            $value = data_get($entry, $attribute);
+            $value = $this->stringifyValue($value);
+            $normalized = $this->normalizeComparableString($value);
+
+            if ($normalized === null) {
+                continue;
+            }
+
+            $grouped[$normalized][] = $entry;
+        }
+
+        return $grouped;
+    }
+
+    protected function groupEntriesByNumericValue(Collection $entries, string $attribute, ?int $precision): array
+    {
         $grouped = [];
 
         foreach ($entries as $entry) {
@@ -566,18 +667,21 @@ class MergeService
                 $numeric = (float) number_format($numeric, $precision, '.', '');
             }
 
-            $key = (string) $numeric;
+            $grouped[(string) $numeric][] = $entry;
+        }
 
-            $grouped[$key][] = $entry;
+        return $grouped;
+    }
+
+    protected function buildDuplicateGroups(array $grouped): array
+    {
+        if ($grouped === []) {
+            return [];
         }
 
         return collect($grouped)
-            ->filter(function ($group) {
-                return count($group) > 1;
-            })
-            ->map(function ($group) {
-                return collect($group);
-            })
+            ->filter(fn ($group) => count($group) > 1)
+            ->map(fn ($group) => collect($group))
             ->values()
             ->all();
     }
@@ -658,6 +762,31 @@ class MergeService
         }
 
         return (float) $filtered;
+    }
+
+    protected function normalizeComparableString(?string $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        $normalized = function_exists('mb_strtolower')
+            ? mb_strtolower($value, 'UTF-8')
+            : strtolower($value);
+
+        $normalized = preg_replace('/[\s\p{P}\p{S}]+/u', '', $normalized);
+
+        if ($normalized === null) {
+            return null;
+        }
+
+        return $normalized !== '' ? $normalized : null;
     }
 
     protected function filterRelationOptions(array $relationOptions, array $relationKeys): array
@@ -868,6 +997,8 @@ class MergeService
         }
 
         $candidateQuery = $definition['candidate_query'] ?? null;
+        $cards = $this->normalizeCardViews($definition['cards'] ?? null);
+        $similar = $this->normalizeSimilarDefinition($definition['similar'] ?? null, $cards);
 
         return [
             'label' => $label,
@@ -881,6 +1012,227 @@ class MergeService
             'fields' => $fields,
             'relations' => $relations,
             'relation_defaults' => $relationDefaults,
+            'cards' => $cards,
+            'similar' => $similar,
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>|null  $config
+     * @return array<string, string>
+     */
+    protected function normalizeCardViews($config): array
+    {
+        $defaults = [
+            'entry' => 'crud::service.cards.default-entry',
+            'result' => 'crud::service.cards.default-result',
+        ];
+
+        if (! is_array($config)) {
+            return $defaults;
+        }
+
+        $entryView = $config['entry'] ?? $config['source'] ?? null;
+        $resultView = $config['result'] ?? $config['card'] ?? null;
+
+        return [
+            'entry' => is_string($entryView) && $entryView !== '' ? $entryView : $defaults['entry'],
+            'result' => is_string($resultView) && $resultView !== '' ? $resultView : $defaults['result'],
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>|null  $definition
+     * @return array<string, mixed>
+     */
+    protected function normalizeSimilarDefinition($definition, array $cards): array
+    {
+        $definition = is_array($definition) ? $definition : [];
+
+        $fields = $this->normalizeSimilarFields($definition['fields'] ?? []);
+        $strictness = $this->normalizeStrictnessOptions($definition['strictness'] ?? []);
+        $excludeChildren = $this->normalizeExcludeChildrenDefinition($definition['exclude_children'] ?? null);
+
+        $limit = (int) ($definition['limit'] ?? 20);
+        $limit = $limit > 0 ? $limit : 20;
+
+        $cardView = $definition['card_view'] ?? null;
+        if (! is_string($cardView) || $cardView === '') {
+            $cardView = $cards['result'];
+        }
+
+        $providerOptions = $definition['provider_options'] ?? [];
+        $providerOptions = is_array($providerOptions) ? $providerOptions : [];
+
+        return [
+            'enabled' => (bool) ($definition['enabled'] ?? false),
+            'label' => $definition['label'] ?? 'Поиск похожих записей',
+            'description' => $definition['description'] ?? null,
+            'limit' => $limit,
+            'fields' => $fields,
+            'strictness' => $strictness,
+            'provider' => $definition['provider'] ?? DatabaseSimilarSearchProvider::class,
+            'provider_options' => $providerOptions,
+            'exclude_children' => $excludeChildren,
+            'card_view' => $cardView,
+        ];
+    }
+
+    /**
+     * @param  array<int|string, mixed>  $fields
+     * @return array<int, array<string, mixed>>
+     */
+    protected function normalizeSimilarFields($fields): array
+    {
+        $normalized = [];
+
+        foreach ((array) $fields as $name => $config) {
+            if (is_string($config)) {
+                $config = ['key' => $config];
+            }
+
+            if (! is_array($config)) {
+                continue;
+            }
+
+            $key = $config['key'] ?? null;
+
+            if (! is_string($key) || $key === '') {
+                if (is_string($name) && $name !== '') {
+                    $key = $name;
+                } else {
+                    continue;
+                }
+            }
+
+            $column = $config['column'] ?? $key;
+            $column = is_string($column) && $column !== '' ? $column : $key;
+
+            $normalized[] = [
+                'key' => $key,
+                'column' => $column,
+                'label' => $config['label'] ?? Str::title(str_replace('_', ' ', $key)),
+                'resolver' => $config['resolver'] ?? null,
+            ];
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * @param  array<string, mixed>|null  $strictness
+     * @return array{options: array<string, array<string, mixed>>, default: string}
+     */
+    protected function normalizeStrictnessOptions($strictness): array
+    {
+        $defaults = [
+            'strict' => [
+                'key' => 'strict',
+                'label' => __('Жёсткий поиск'),
+                'description' => __('Максимально точные совпадения'),
+                'threshold' => 85.0,
+            ],
+            'normal' => [
+                'key' => 'normal',
+                'label' => __('Стандартный поиск'),
+                'description' => __('Баланс точности и количества результатов'),
+                'threshold' => 65.0,
+            ],
+            'relaxed' => [
+                'key' => 'relaxed',
+                'label' => __('Мягкий поиск'),
+                'description' => __('Больше кандидатов при меньшей точности'),
+                'threshold' => 45.0,
+            ],
+        ];
+
+        $strictness = is_array($strictness) ? $strictness : [];
+        $optionsSource = $strictness['options'] ?? $strictness;
+        $options = [];
+
+        foreach ((array) $optionsSource as $key => $config) {
+            if (is_string($config)) {
+                $config = ['label' => $config];
+            }
+
+            if (! is_array($config)) {
+                continue;
+            }
+
+            $name = $config['key'] ?? null;
+            if (! is_string($name) || $name === '') {
+                $name = is_string($key) ? $key : null;
+            }
+
+            if (! $name) {
+                continue;
+            }
+
+            $base = $defaults[$name] ?? [
+                'key' => $name,
+                'label' => Str::title(str_replace('_', ' ', $name)),
+                'description' => null,
+                'threshold' => 50.0,
+            ];
+
+            $options[$name] = [
+                'key' => $name,
+                'label' => $config['label'] ?? $base['label'],
+                'description' => $config['description'] ?? $base['description'],
+                'threshold' => isset($config['threshold'])
+                    ? (float) $config['threshold']
+                    : (float) $base['threshold'],
+            ];
+        }
+
+        if ($options === []) {
+            $options = $defaults;
+        } else {
+            foreach ($defaults as $key => $value) {
+                if (! isset($options[$key])) {
+                    $options[$key] = $value;
+                }
+            }
+        }
+
+        $default = $strictness['default'] ?? null;
+        if (! is_string($default) || ! isset($options[$default])) {
+            $default = 'normal';
+        }
+
+        return [
+            'options' => $options,
+            'default' => $default,
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>|null  $config
+     * @return array<string, mixed>
+     */
+    protected function normalizeExcludeChildrenDefinition($config): array
+    {
+        $config = is_array($config) ? $config : [];
+        $enabled = (bool) ($config['enabled'] ?? false);
+
+        $relation = $config['relation'] ?? null;
+        $relation = is_string($relation) && $relation !== '' ? $relation : null;
+
+        $column = $config['column'] ?? null;
+        $column = is_string($column) && $column !== '' ? $column : null;
+
+        $keyName = $config['key'] ?? null;
+        $keyName = is_string($keyName) && $keyName !== ''
+            ? $keyName
+            : $this->crud->model->getKeyName();
+
+        return [
+            'enabled' => $enabled,
+            'default' => $enabled ? (bool) ($config['default'] ?? true) : false,
+            'relation' => $relation,
+            'column' => $column,
+            'resolver' => $config['resolver'] ?? null,
+            'key' => $keyName,
         ];
     }
 

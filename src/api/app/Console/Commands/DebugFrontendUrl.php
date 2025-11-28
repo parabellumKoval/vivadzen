@@ -36,7 +36,7 @@ class DebugFrontendUrl extends Command
         $timeout = (int) $this->option('timeout');
         $detailed = $this->option('detailed');
         
-        $frontendUrl = rtrim(config('frontend_cache_refresh.frontend_url'), '/');
+        $frontendUrl = rtrim(config('webhooks.frontend_url'), '/');
         $fullUrl = $frontendUrl . $url;
         
         $this->info("🔍 Debugging Frontend URL");

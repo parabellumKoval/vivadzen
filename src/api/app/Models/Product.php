@@ -13,10 +13,14 @@ use Backpack\Tag\app\Traits\Taggable;
 use Dress\Translator\app\Interfaces\TranslatableInterface;
 use Dress\Translator\app\Traits\TranslatableTrait;
 
+// TRANSLATIONS
+// use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+
 class Product extends BaseProduct implements TranslatableInterface
 {
     use Reviewable;
     use Taggable;
+    // use HasTranslations;
 
     use TranslatableTrait;
 

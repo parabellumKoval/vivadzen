@@ -8,8 +8,8 @@
 
     $widgets['before_content'][] = [
         'type'    => 'view',
-        'view'    => backpack_view('widgets.frontend_cache_refresh'),
-        'wrapper' => ['class' => 'col-12'],
+        'view'    => 'webhooks::widgets.frontend_cache_refresh',
+        'wrapper' => ['class' => ''],
     ];
 @endphp
 

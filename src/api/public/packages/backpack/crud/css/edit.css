@@ -3,3 +3,7 @@
 * Backpack Crud / Edit
 *
 */
+
+.select2-container--bootstrap .select2-selection--single {
+  height: initial !important;
+}

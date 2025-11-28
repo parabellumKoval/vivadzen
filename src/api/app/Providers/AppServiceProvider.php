@@ -22,8 +22,13 @@ class AppServiceProvider extends ServiceProvider
         );
 
         app(\Backpack\Profile\app\Services\TriggerRegistry::class)->register(
-            \App\Services\Referral\Triggers\ReviewPublished::alias(),
-            \App\Services\Referral\Triggers\ReviewPublished::class
+            \App\Services\Referral\Triggers\ReviewTextPublished::alias(),
+            \App\Services\Referral\Triggers\ReviewTextPublished::class
+        );
+
+        app(\Backpack\Profile\app\Services\TriggerRegistry::class)->register(
+            \App\Services\Referral\Triggers\ReviewVideoPublished::alias(),
+            \App\Services\Referral\Triggers\ReviewVideoPublished::class
         );
     }
 

@@ -83,6 +83,7 @@
 
                     element.select2({
                         theme: "bootstrap",
+                        escapeMarkup: function (markup) { return markup; },
                         dropdownParent: $isFieldInline ? $('#inline-create-dialog .modal-content') : document.body
                     }).on('select2:unselect', function(e) {
                         if ($(this).attr('multiple') && $(this).val().length == 0) {

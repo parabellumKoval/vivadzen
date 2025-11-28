@@ -31,6 +31,8 @@ class ReviewMediumResource extends JsonResource
         'created_at' => $this->created_at,
         'video' => $this->videoData(),
         'is_video' => (bool) $this->is_video,
+        'lang' => $this->lang,
+        'country' => $this->country,
         'product' => $this->reviewable? new ProductBaseResource($this->reviewable): null,
       ];
     }

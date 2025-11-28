@@ -12,11 +12,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 use Backpack\Profile\app\Models\Traits\HasProfile;
 use Backpack\Profile\app\Models\Profile as ProfileModel;
+use Backpack\Helpers\Traits\FormatsUniqAttribute;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, Notifiable, CanResetPassword, HasProfile;
+    use HasApiTokens, Notifiable, CanResetPassword, HasProfile, FormatsUniqAttribute;
 
     /**
      * The attributes that are mass assignable.
@@ -128,5 +129,36 @@ class User extends Authenticatable implements MustVerifyEmail
             return null;
 
         return $this->profile->avatarUrl();
+    }
+
+    public function getUniqStringAttribute(): string
+    {
+        $profile = $this->profile;
+
+        return $this->formatUniqString([
+            '#'.$this->id,
+            $this->name,
+            $this->email,
+            $profile?->phone,
+            $profile?->country_code,
+            $this->email_verified_at ? 'verified' : 'not verified',
+        ]);
+    }
+
+    public function getUniqHtmlAttribute(): string
+    {
+        $profile = $this->profile;
+
+        $headline = $this->formatUniqString([
+            '#'.$this->id,
+            $this->name ?: $this->email,
+        ]);
+
+        return $this->formatUniqHtml($headline, [
+            $this->email,
+            $profile?->phone,
+            $profile?->country_code,
+            $this->email_verified_at ? 'verified' : 'not verified',
+        ]);
     }
 }

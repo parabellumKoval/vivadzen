@@ -1,0 +1,44 @@
+{
+  "name": "parabellumkoval/dumper",
+  "description": "Database dump and restore tooling for Backpack admin.",
+  "keywords": [
+    "parabellumKoval",
+    "backpack",
+    "laravel",
+    "mysql",
+    "dump"
+  ],
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "parabellumKoval",
+      "email": "parabellum.koval@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "laravel/framework": "^12.0",
+    "spatie/db-dumper": "^3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "ParabellumKoval\\Dumper\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ParabellumKoval\\Dumper\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ParabellumKoval\\Dumper\\DumperServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

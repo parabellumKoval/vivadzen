@@ -26,10 +26,14 @@ class ReviewLargeResource extends JsonResource
         'dislikes' => $this->dislikes? $this->dislikes: 0,
         'text' => $this->text,
         'owner' => $this->ownerModelOrInfo,
+        'video' => $this->videoData(true),
+        'is_video' => (bool) $this->is_video,
         'extras' => $clear_extras,
         'children' => self::collection($this->children),
         'reviewable' => $this->shortReviewable,
         'created_at' => $this->created_at,
+        'lang' => $this->lang,
+        'country' => $this->country,
         'product' => $this->reviewable? new ProductSmallResource($this->reviewable): null,
       ];
     }

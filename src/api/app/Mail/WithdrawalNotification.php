@@ -125,7 +125,24 @@ abstract class WithdrawalNotification extends Mailable
 
     protected function formatAmount(float|string $amount, string $currency): string
     {
-        return number_format((float) $amount, 2, '.', ' ') . ' ' . $currency;
+        return number_format((float) $amount, 2, '.', ' ') . ' ' . $this->resolveCurrencyLabel($currency);
+    }
+
+    protected function resolveCurrencyLabel(?string $currency): string
+    {
+        if (! $currency) {
+            return '';
+        }
+
+        if (function_exists('currency_label')) {
+            return currency_label($currency);
+        }
+
+        if (function_exists('store_currency_label')) {
+            return store_currency_label($currency);
+        }
+
+        return strtoupper($currency);
     }
 
     protected function ctaUrl(): string

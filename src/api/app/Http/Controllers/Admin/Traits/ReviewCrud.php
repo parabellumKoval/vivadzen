@@ -18,7 +18,10 @@ trait ReviewCrud {
       'label' => 'Достоинства',
       'type' => 'textarea',
       'fake' => true,
-      'store_in' => 'extras'
+      'store_in' => 'extras',
+      'wrapper' => [ 
+        'class' => 'form-group col-md-6'
+      ]
     ])->afterField('text');
 
     $this->crud->addField([
@@ -26,7 +29,10 @@ trait ReviewCrud {
       'label' => 'Недостатки',
       'type' => 'textarea',
       'fake' => true,
-      'store_in' => 'extras'
+      'store_in' => 'extras',
+      'wrapper' => [ 
+        'class' => 'form-group col-md-6'
+      ]
     ])->afterField('text');
 
     $this->crud->addField([

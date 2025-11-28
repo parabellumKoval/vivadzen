@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use ParabellumKoval\Webhooks\Services\WebhookRegistry;
 
 class TestFrontendConnection extends Command
 {
@@ -54,8 +55,8 @@ class TestFrontendConnection extends Command
 
     private function testConfiguredUnits(int $timeout)
     {
-        $frontendUrl = rtrim(config('frontend_cache_refresh.frontend_url'), '/');
-        $units = config('frontend_cache_refresh.units', []);
+        $frontendUrl = rtrim(config('webhooks.frontend_url'), '/');
+        $units = app(WebhookRegistry::class)->all();
 
         $this->info("Frontend base URL: {$frontendUrl}");
         $this->newLine();
@@ -70,7 +71,7 @@ class TestFrontendConnection extends Command
             $this->info("Testing unit: <comment>{$unit['title']}</comment>");
             
             // Handle both string and array URLs
-            $unitUrls = is_array($unit['url']) ? $unit['url'] : [$unit['url']];
+            $unitUrls = $unit['urls'] ?? (is_array($unit['url'] ?? null) ? $unit['url'] : [$unit['url'] ?? '/']);
             $unitTimeout = $unit['timeout'] ?? $timeout;
             
             if ($unitTimeout === 0) {
@@ -93,20 +94,21 @@ class TestFrontendConnection extends Command
             $this->info('🐳 Testing Docker alternative URLs...');
             $this->line('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
             
-            $alternativeUrls = [
+            $alternativeUrls = array_unique([
                 str_replace(['localhost', 'host.docker.internal'], 'host.docker.internal', $frontendUrl),
                 str_replace(['localhost', 'host.docker.internal'], 'localhost', $frontendUrl),
                 str_replace(['localhost', 'host.docker.internal'], '172.17.0.1', $frontendUrl),
                 str_replace(['localhost', 'host.docker.internal'], '127.0.0.1', $frontendUrl),
-            ];
-
-            $alternativeUrls = array_unique($alternativeUrls);
+            ]);
             
             foreach ($alternativeUrls as $altUrl) {
                 if ($altUrl !== $frontendUrl) {
                     // Test with first URL from first unit
-                    $firstUnit = $units[0];
-                    $firstUnitUrls = is_array($firstUnit['url']) ? $firstUnit['url'] : [$firstUnit['url']];
+                    $firstUnit = reset($units);
+                    if (!$firstUnit) {
+                        continue;
+                    }
+                    $firstUnitUrls = $firstUnit['urls'] ?? (is_array($firstUnit['url'] ?? null) ? $firstUnit['url'] : [$firstUnit['url'] ?? '/']);
                     $testUrl = $altUrl . $firstUnitUrls[0];
                     $this->testUrl($testUrl, $timeout, "Alternative ({$altUrl})");
                 }

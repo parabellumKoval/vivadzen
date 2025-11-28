@@ -2,11 +2,9 @@
 
 namespace App\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-
-use \Cviebrock\EloquentSluggable\Services\SlugService;
-
+use App\Services\Referral\Triggers\ReviewPublished as LegacyReviewPublishedTrigger;
+use App\Services\Referral\Triggers\ReviewTextPublished;
+use App\Services\Referral\Triggers\ReviewVideoPublished;
 use Backpack\Reviews\app\Events\ReviewDeleted;
 
 class ReviewDeletedListener
@@ -29,8 +27,22 @@ class ReviewDeletedListener
     public function handle(ReviewDeleted $event)
     {
         $review = $event->review;
-        
-        // Give bonus money for review
-        \Profile::reverseLatestForSubject('review.published', $review->getMorphClass(), $review->id, 'review_deleted');
+
+        $triggerAlias = $this->resolveTriggerAlias($review->is_video);
+
+        // Reverse bonus money for review
+        \Profile::reverseLatestForSubject($triggerAlias, $review->getMorphClass(), $review->id, 'review_deleted');
+
+        // Backward compatibility for legacy trigger entries
+        if ($triggerAlias !== LegacyReviewPublishedTrigger::alias()) {
+            \Profile::reverseLatestForSubject(LegacyReviewPublishedTrigger::alias(), $review->getMorphClass(), $review->id, 'review_deleted');
+        }
+    }
+
+    private function resolveTriggerAlias($isVideo): string
+    {
+        return $isVideo
+            ? ReviewVideoPublished::alias()
+            : ReviewTextPublished::alias();
     }
 }

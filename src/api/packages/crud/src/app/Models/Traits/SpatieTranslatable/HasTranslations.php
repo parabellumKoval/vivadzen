@@ -33,7 +33,13 @@ trait HasTranslations
             return parent::getAttributeValue($key);
         }
 
-        $translation = $this->getTranslation($key, $this->locale ?: config('app.locale'));
+        $requestedLocale = $this->locale ?: backpack_translatable_request_locale(null);
+
+        if (! $requestedLocale) {
+            $requestedLocale = \App::getLocale();
+        }
+
+        $translation = $this->getTranslation($key, $requestedLocale);
 
         // if it's a fake field, json_encode it
         if (is_array($translation)) {
@@ -98,9 +104,7 @@ trait HasTranslations
             return (bool) $configured;
         }
 
-        $fallbackConfig ??= app(Translatable::class);
-
-        return (bool) ($fallbackConfig->fallbackAny ?? false);
+        return true;
     }
 
     /*

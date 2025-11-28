@@ -2,11 +2,11 @@
 
 ## Что было создано:
 
-1. **Конфигурация**: `config/frontend_cache_refresh.php`
-2. **Job**: `app/Jobs/FrontendCacheRefreshJob.php`
-3. **Контроллер**: `app/Http/Controllers/Admin/FrontendCacheRefreshController.php`
-4. **Маршруты**: `routes/admin/frontend_cache_refresh.php`
-5. **Виджет**: `resources/views/vendor/backpack/base/widgets/frontend_cache_refresh.blade.php`
+1. **Конфигурация**: `config/webhooks.php` (поставляется пакетом `parabellumkoval/webhooks`)
+2. **Job**: `packages/webhooks/src/Jobs/WebhookDispatchJob.php`
+3. **Контроллер**: `packages/webhooks/src/Http/Controllers/Admin/WebhookUnitController.php`
+4. **Маршруты**: `packages/webhooks/routes/admin.php`
+5. **Виджет**: `packages/webhooks/resources/views/widgets/frontend_cache_refresh.blade.php`
 6. **Dashboard**: `resources/views/vendor/backpack/base/dashboard.blade.php`
 
 ## Быстрый старт:
@@ -48,12 +48,12 @@ php artisan queue:work --queue=frontend-cache
 
 ### 5. Кастомизация юнитов
 
-Редактировать `config/frontend_cache_refresh.php`:
+Редактировать `config/webhooks.php`:
 
 ```php
 'units' => [
     // Простой юнит
-    [
+    'my_cache' => [
         'title' => 'Мой кеш',
         'desc' => 'Описание моего кеша', 
         'url' => '/api/_refresh-my-cache',
@@ -62,7 +62,7 @@ php artisan queue:work --queue=frontend-cache
         'color' => 'btn-primary',
     ],
     // Юнит с несколькими URL
-    [
+    'categories_full' => [
         'title' => 'Категории',
         'desc' => 'Обновить все кеши категорий',
         'url' => [
@@ -74,7 +74,7 @@ php artisan queue:work --queue=frontend-cache
         'color' => 'btn-info',
     ],
     // Юнит с безлимитным timeout
-    [
+    'heavy_operation' => [
         'title' => 'Тяжелая операция',
         'desc' => 'Долгая операция без ограничений времени',
         'url' => '/api/_heavy-operation',
@@ -94,7 +94,7 @@ php artisan queue:work --queue=frontend-cache
 
 ### Логи:
 ```bash
-tail -f storage/logs/laravel.log | grep "Frontend cache refresh"
+tail -f storage/logs/laravel.log | grep "Webhook"
 ```
 
 ## Требования к фронтенду:

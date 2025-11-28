@@ -1,0 +1,29 @@
+{
+    "name": "parabellumkoval/webhooks",
+    "description": "Admin webhook management with manual, event-driven and scheduled triggers.",
+    "type": "library",
+    "homepage": "https://github.com/parabellumkoval/webhooks",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrej Koval",
+            "homepage": "https://github.com/parabellumkoval"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ParabellumKoval\\Webhooks\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ParabellumKoval\\Webhooks\\WebhooksServiceProvider"
+            ]
+        }
+    }
+}

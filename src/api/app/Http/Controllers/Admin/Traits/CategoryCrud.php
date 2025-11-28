@@ -15,6 +15,16 @@ trait CategoryCrud {
         'store_in' => 'extras',
         'tab' => 'Дополнительно'
     ]);
+    
+    $this->crud->addField([
+        'name' => 'image_size',
+        'label' => 'Величина картинки',
+        'type' => 'number',
+        'suffix' => '%',
+        'fake' => true,
+        'store_in' => 'extras',
+        'tab' => 'Дополнительно'
+    ]);
 
     $this->crud->addField([
         'name' => 'short_description',

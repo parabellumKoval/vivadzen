@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe10d3feecbce814e623bcf3b18e95a9",
+    "content-hash": "1b022182852f6ddbf466599f6fc1e318",
     "packages": [
         {
             "name": "backpack/basset",
@@ -4925,6 +4925,58 @@
             "time": "2025-10-18T11:10:27+00:00"
         },
         {
+            "name": "ozh/phpass",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ozh/phpass.git",
+                "reference": "18e832ee1585d57b464def1a135dbc458193f568"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ozh/phpass/zipball/18e832ee1585d57b464def1a135dbc458193f568",
+                "reference": "18e832ee1585d57b464def1a135dbc458193f568",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Ozh\\Phpass\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Public Domain"
+            ],
+            "authors": [
+                {
+                    "name": "Solar Designer",
+                    "email": "solar@openwall.com",
+                    "homepage": "http://openwall.com/phpass/"
+                }
+            ],
+            "description": "Portable PHP password hashing framework",
+            "homepage": "http://github.com/ozh/phpass/",
+            "keywords": [
+                "blowfish",
+                "crypt",
+                "password",
+                "security"
+            ],
+            "support": {
+                "issues": "https://github.com/ozh/phpass/issues",
+                "source": "https://github.com/ozh/phpass/tree/1.4.0"
+            },
+            "abandoned": true,
+            "time": "2022-02-23T15:31:43+00:00"
+        },
+        {
             "name": "parabellumkoval/backpack-articles",
             "version": "dev-main",
             "dist": {
@@ -5220,16 +5272,10 @@
         {
             "name": "parabellumkoval/backpack-profile",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-profile.git",
-                "reference": "be89203d039ee76da14f51a42814fd2fc6f51d2e"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/be89203d039ee76da14f51a42814fd2fc6f51d2e",
-                "reference": "be89203d039ee76da14f51a42814fd2fc6f51d2e",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/profile",
+                "reference": "e5b2ed2a799e916d7ad10eb4c5ef417d1f407634"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -5237,7 +5283,6 @@
                 "laravel/socialite": "^5.23.0",
                 "php": "^8.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5247,15 +5292,36 @@
                 }
             },
             "autoload": {
-                "files": [
-                    "src/app/helpers.php"
-                ],
                 "psr-4": {
                     "Backpack\\Profile\\": "src/",
                     "Backpack\\Profile\\Database\\Factories\\": "database/factories"
+                },
+                "files": [
+                    "src/app/helpers.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Backpack\\Profile\\Tests\\": "tests"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php ./vendor/bin/testbench package:discover --ansi"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -5276,11 +5342,10 @@
                 "profile",
                 "user"
             ],
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-profile/issues",
-                "source": "https://github.com/parabellumKoval/backpack-profile/tree/main"
-            },
-            "time": "2025-11-04T08:49:47+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-reviews",
@@ -5421,7 +5486,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/store",
-                "reference": "879540d4ca0a4dd717962799511a7be81d1cb029"
+                "reference": "5258435153ff6502b47b31873a28cb0dfb18b2e6"
             },
             "require": {
                 "bacon/bacon-qr-code": "^2.0",
@@ -5735,6 +5800,59 @@
             }
         },
         {
+            "name": "parabellumkoval/dumper",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/dumper",
+                "reference": "8d8118ee24229c009b30835b3be3041e5a670623"
+            },
+            "require": {
+                "laravel/framework": "^12.0",
+                "php": "^8.2",
+                "spatie/db-dumper": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ParabellumKoval\\Dumper\\DumperServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ParabellumKoval\\Dumper\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "ParabellumKoval\\Dumper\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "parabellumKoval",
+                    "email": "parabellum.koval@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Database dump and restore tooling for Backpack admin.",
+            "keywords": [
+                "backpack",
+                "dump",
+                "laravel",
+                "mysql",
+                "parabellumKoval"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "parabellumkoval/request-data",
             "version": "0.1.x-dev",
             "source": {
@@ -5799,6 +5917,46 @@
                 "source": "https://github.com/parabellumKoval/request-data/tree/0.1"
             },
             "time": "2025-10-04T13:52:33+00:00"
+        },
+        {
+            "name": "parabellumkoval/webhooks",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/webhooks",
+                "reference": "14f0c662bfd450e2a3f4cc9885cd973586cf3f30"
+            },
+            "require": {
+                "laravel/framework": "^12.0",
+                "php": "^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ParabellumKoval\\Webhooks\\WebhooksServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ParabellumKoval\\Webhooks\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrej Koval",
+                    "homepage": "https://github.com/parabellumkoval"
+                }
+            ],
+            "description": "Admin webhook management with manual, event-driven and scheduled triggers.",
+            "homepage": "https://github.com/parabellumkoval/webhooks",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -7306,6 +7464,69 @@
                 "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.9.0"
             },
             "time": "2025-07-11T13:20:48+00:00"
+        },
+        {
+            "name": "spatie/db-dumper",
+            "version": "3.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/db-dumper.git",
+                "reference": "91e1fd4dc000aefc9753cda2da37069fc996baee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/91e1fd4dc000aefc9753cda2da37069fc996baee",
+                "reference": "91e1fd4dc000aefc9753cda2da37069fc996baee",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "symfony/process": "^5.0|^6.0|^7.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.22"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\DbDumper\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Dump databases",
+            "homepage": "https://github.com/spatie/db-dumper",
+            "keywords": [
+                "database",
+                "db-dumper",
+                "dump",
+                "mysqldump",
+                "spatie"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/db-dumper/tree/3.8.0"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-14T15:04:22+00:00"
         },
         {
             "name": "spatie/laravel-feed",
@@ -12847,7 +13068,9 @@
         "parabellumkoval/backpack-store": 20,
         "parabellumkoval/backpack-tag": 20,
         "parabellumkoval/crud": 20,
-        "parabellumkoval/crud-filemanager": 20
+        "parabellumkoval/crud-filemanager": 20,
+        "parabellumkoval/dumper": 20,
+        "parabellumkoval/webhooks": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

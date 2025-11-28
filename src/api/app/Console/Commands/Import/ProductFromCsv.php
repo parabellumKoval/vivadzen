@@ -27,12 +27,13 @@ class ProductFromCsv extends Command
     // const FILE_PATH = 'vivadzen-products.csv';
     const FILE_PATH = 'ua.csv';
     // Mode updateOrCreateItem, updateIsActive, updateCategory, updateTranslations, updateOrCreateItemUa
-    const MODE = 'updateOrCreateItem';
-    const TRANSLATION_LANG = 'ua';
+    const MODE = 'updateCategory';
+    const TRANSLATION_LANG = 'uk';
     const SUPPLIER_ID = 2;
 
     private $totalRecords = 0;
     private $variableRecords = []; // Хранилище для variable записей
+    private $createdProductIds = []; // ID товаров, созданных в текущем импорте
     private $fieldLetters = [
       'id' => 'A',
       'type' => 'B',
@@ -328,6 +329,11 @@ class ProductFromCsv extends Command
           $response = $this->{self::MODE}($excel_product);
 
           if ($response instanceof StoreProduct) {
+            // Отслеживаем созданные товары
+            if ($response->wasRecentlyCreated) {
+              $this->createdProductIds[] = $response->id;
+            }
+            
             if (self::MODE === 'updateOrCreateItem') {
               $relations_pairs[$response->id] = $excel_product['parent_id'] ?? null;
             } elseif (self::MODE === 'updateOrCreateItemUa' && ($response->wasRecentlyCreated ?? false)) {
@@ -494,7 +500,10 @@ class ProductFromCsv extends Command
       foreach($pairs as $new_id => $old_parent_id){
         if(!$old_parent_id) continue;
 
-        $parent = StoreProduct::where($parentReferenceField, $old_parent_id)->first();
+        // Ищем родителя только среди товаров, созданных в текущем импорте
+        $parent = StoreProduct::where($parentReferenceField, $old_parent_id)
+                              ->whereIn('id', $this->createdProductIds)
+                              ->first();
         $child = StoreProduct::find($new_id);
 
         if ($parent && $child) {

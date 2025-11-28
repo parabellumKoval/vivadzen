@@ -3,6 +3,7 @@
 namespace Backpack\CRUD\app\Http\Controllers\Operations;
 
 use Backpack\CRUD\app\Library\ServiceOperation\MergeService;
+use Backpack\CRUD\app\Library\ServiceOperation\Similar\SimilarSearchService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -31,6 +32,12 @@ trait ServiceOperation
         Route::get($segment.'/service/merge-candidates', [
             'as' => $routeName.'.service.merge-candidates',
             'uses' => $controller.'@serviceMergeCandidates',
+            'operation' => 'service',
+        ]);
+
+        Route::post($segment.'/{id}/service/similar-search', [
+            'as' => $routeName.'.service.similar',
+            'uses' => $controller.'@serviceSimilarSearch',
             'operation' => 'service',
         ]);
     }
@@ -65,6 +72,15 @@ trait ServiceOperation
         $this->data['serviceCandidatesEndpoint'] = $this->getServiceCandidatesEndpoint();
         $this->data['serviceRelations'] = $mergeService->getRelations();
         $this->data['serviceRelationsDefault'] = $mergeService->getRelationDefaults();
+        $this->data['serviceEntryCardView'] = $mergeService->getEntryCardView();
+        $this->data['serviceResultCardView'] = $mergeService->getResultCardView();
+        $this->data['serviceCards'] = $mergeService->getCardViews();
+
+        $serviceSimilar = $mergeService->getSimilarSearchDefinition();
+        $this->data['serviceSimilar'] = $serviceSimilar;
+        $this->data['serviceSimilarEnabled'] = (bool) ($serviceSimilar['enabled'] ?? false);
+        $this->data['serviceSimilarEndpoint'] = $this->getServiceSimilarEndpoint($entry);
+        $this->data['serviceSimilarDefaultStrictness'] = $serviceSimilar['strictness']['default'] ?? null;
 
         $this->data['title'] = $this->crud->getTitle() ?? __('Режим обслуживания');
 
@@ -150,13 +166,83 @@ trait ServiceOperation
         return response()->json(['results' => $results]);
     }
 
+    public function serviceSimilarSearch(Request $request, $id)
+    {
+        $this->crud->hasAccessOrFail('service');
+
+        $entry = $this->crud->getEntry($id);
+        abort_if(! $entry, 404);
+
+        $mergeService = $this->makeMergeService($entry);
+        $similarDefinition = $mergeService->getSimilarSearchDefinition();
+
+        if (! ($similarDefinition['enabled'] ?? false)) {
+            abort(404);
+        }
+
+        $validated = $request->validate([
+            'strictness' => ['nullable', 'string'],
+            'exclude_children' => ['nullable', 'boolean'],
+        ]);
+
+        $similarService = $this->makeSimilarSearchService($mergeService, $entry);
+
+        $payload = [
+            'strictness' => $validated['strictness'] ?? null,
+        ];
+
+        if (array_key_exists('exclude_children', $validated)) {
+            $payload['exclude_children'] = (bool) $validated['exclude_children'];
+        }
+
+        $results = $similarService->search($payload);
+        $cardView = $similarService->getResultCardView();
+
+        $rendered = $results->map(function (array $item) use ($cardView, $entry) {
+            /** @var \Illuminate\Database\Eloquent\Model $model */
+            $model = $item['model'];
+            $html = view($cardView, [
+                'entry' => $model,
+                'sourceEntry' => $entry,
+                'similarScore' => $item['score'],
+                'similarMeta' => $item['meta'],
+            ])->render();
+
+            return [
+                'id' => $model->getKey(),
+                'score' => $item['score'],
+                'meta' => $item['meta'],
+                'html' => $html,
+            ];
+        })->values();
+
+        return response()->json([
+            'results' => $rendered,
+            'meta' => [
+                'total' => $rendered->count(),
+                'strictness' => $similarService->getLastStrictnessKey(),
+                'limit' => $similarDefinition['limit'] ?? 20,
+            ],
+        ]);
+    }
+
     protected function makeMergeService(?Model $sourceEntry = null): MergeService
     {
         return new MergeService($this->crud, $sourceEntry);
     }
 
+    protected function makeSimilarSearchService(MergeService $mergeService, Model $entry): SimilarSearchService
+    {
+        return new SimilarSearchService($this->crud, $entry, $mergeService->getSimilarSearchDefinition(), $mergeService->getCardViews());
+    }
+
     protected function getServiceCandidatesEndpoint(): string
     {
         return url($this->crud->route.'/service/merge-candidates');
+    }
+
+    protected function getServiceSimilarEndpoint(Model $entry): string
+    {
+        return url($this->crud->route.'/'.$entry->getKey().'/service/similar-search');
     }
 }

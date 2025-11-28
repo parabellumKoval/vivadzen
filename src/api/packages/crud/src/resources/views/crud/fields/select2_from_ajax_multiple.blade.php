@@ -124,6 +124,7 @@
                 placeholder: $placeholder,
                 minimumInputLength: $minimumInputLength,
                 dropdownParent: $isFieldInline ? $('#inline-create-dialog .modal-content') : document.body,
+                escapeMarkup: function (markup) { return markup; },
                 ajax: {
                     url: $dataSource,
                     type: $method,

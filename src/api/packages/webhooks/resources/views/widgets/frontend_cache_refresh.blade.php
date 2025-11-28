@@ -1,16 +1,17 @@
 @php
     $widget['wrapper']['class'] = $widget['wrapper']['class'] ?? 'col-md-12';
-    $units = config('frontend_cache_refresh.units', []);
-    $gridColumns = config('frontend_cache_refresh.widget.grid_columns', 3);
-    $showLastRefresh = config('frontend_cache_refresh.widget.show_last_refresh', true);
-    $showStatus = config('frontend_cache_refresh.widget.show_status', true);
+    $registry = app(\ParabellumKoval\Webhooks\Services\WebhookRegistry::class);
+    $units = $registry->visible();
+    $gridColumns = config('webhooks.widget.grid_columns', 3);
+    $showLastRefresh = config('webhooks.widget.show_last_refresh', true);
+    $showStatus = config('webhooks.widget.show_status', true);
 @endphp
 
 <div class="{{ $widget['wrapper']['class'] }}">
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">
-                <i class="la la-refresh"></i> {{ config('frontend_cache_refresh.widget.title', 'Frontend Cache Management') }}
+                <i class="la la-refresh"></i> {{ config('webhooks.widget.title', 'Frontend Webhooks') }}
             </h3>
             @if($showStatus)
             <div class="card-tools">
@@ -22,7 +23,7 @@
         </div>
         <div class="card-body">
             <p class="text-muted">
-                {{ config('frontend_cache_refresh.widget.description', 'Manage and refresh frontend cache from admin panel') }}
+                {{ config('webhooks.widget.description', 'Manage and refresh frontend cache from admin panel') }}
             </p>
             
             @if($showStatus)
@@ -32,14 +33,14 @@
             @endif
             
             <div class="row" id="cache-refresh-units">
-                @foreach($units as $index => $unit)
+                @foreach($units as $unitKey => $unit)
                 @php
-                    $unitUrls = is_array($unit['url']) ? $unit['url'] : [$unit['url']];
-                    $primaryUrl = $unitUrls[0]; // Use first URL as primary identifier
+                    $unitUrls = $unit['urls'] ?? (is_array($unit['url'] ?? null) ? $unit['url'] : [data_get($unit, 'url', '/')]);
+                    $primaryUrl = $unitUrls[0] ?? '/';
                     $urlCount = count($unitUrls);
                 @endphp
                 <div class="col-md-{{ 12 / $gridColumns }} mb-3">
-                    <div class="card cache-unit-card" data-unit-url="{{ $primaryUrl }}" data-unit-urls='@json($unitUrls)'>
+                    <div class="card cache-unit-card" data-unit-key="{{ $unitKey }}" data-unit-url="{{ $primaryUrl }}" data-unit-urls='@json($unitUrls)'>
                         <div class="card-body text-center">
                             <div class="cache-unit-icon mb-2">
                                 <i class="la {{ $unit['icon'] ?? 'la-refresh' }} fa-2x text-{{ str_replace('btn-', '', $unit['color'] ?? 'primary') }}"></i>
@@ -79,6 +80,7 @@
                             
                             <button type="button" 
                                     class="btn {{ $unit['color'] ?? 'btn-primary' }} btn-sm cache-refresh-btn"
+                                    data-unit-key="{{ $unitKey }}"
                                     data-unit-url="{{ $primaryUrl }}"
                                     data-unit-title="{{ $unit['title'] }}"
                                     data-unit-urls='@json($unitUrls)'
@@ -107,11 +109,12 @@ $(document).ready(function() {
 
 function refreshCache(buttonElement) {
     const $button = $(buttonElement);
+    const unitKey = $button.data('unit-key');
     const unitUrl = $button.data('unit-url');
     const unitTitle = $button.data('unit-title');
     const unitUrls = $button.data('unit-urls') || [unitUrl];
     
-    const card = $(`.cache-unit-card[data-unit-url="${unitUrl}"]`);
+    const card = $(`.cache-unit-card[data-unit-key="${unitKey}"]`);
     const refreshIcon = $button.find('.refresh-icon');
     
     // Disable button and show loading state
@@ -132,7 +135,7 @@ function refreshCache(buttonElement) {
         url: '{{ backpack_url("frontend-cache-refresh") }}',
         method: 'POST',
         data: {
-            unit_url: unitUrl,
+            unit_key: unitKey,
             _token: $('meta[name="csrf-token"]').attr('content')
         },
         success: function(response) {
@@ -190,10 +193,15 @@ function refreshCacheStatus() {
         success: function(response) {
             if (response.success && response.data) {
                 response.data.forEach(function(item) {
-                    // For units with multiple URLs, use the first URL as identifier
-                    const unitUrls = item.urls || [item.unit.url];
-                    const primaryUrl = Array.isArray(item.unit.url) ? item.unit.url[0] : item.unit.url;
-                    const card = $(`.cache-unit-card[data-unit-url="${primaryUrl}"]`);
+                    const unitKey = (item.unit && item.unit.key) ? item.unit.key : item.unit_key;
+                    if (!unitKey) {
+                        return;
+                    }
+                    const card = $(`.cache-unit-card[data-unit-key="${unitKey}"]`);
+                    if (!card.length) {
+                        return;
+                    }
+                    const unitUrls = item.urls || (item.unit && item.unit.urls) || [];
                     const statusBadge = card.find('.status-badge');
                     const lastRefreshText = card.find('.last-refresh-text');
                     
@@ -201,22 +209,27 @@ function refreshCacheStatus() {
                     statusBadge.removeClass('badge-success badge-danger badge-warning badge-secondary badge-info');
                     
                     let statusText = 'Unknown';
+                    const totalItems = item.data && item.data.payload_items ? item.data.payload_items : null;
                     switch(item.status) {
                         case 'success':
                             statusBadge.addClass('badge-success');
-                            statusText = item.total_urls > 1 ? `Success (${item.total_urls})` : 'Success';
+                            statusText = totalItems ? `Success (${totalItems})` : 'Success';
                             break;
                         case 'failed':
                             statusBadge.addClass('badge-danger');
-                            statusText = item.total_urls > 1 ? `Failed (${item.total_urls})` : 'Failed';
+                            statusText = totalItems ? `Failed (${totalItems})` : 'Failed';
                             break;
                         case 'running':
                             statusBadge.addClass('badge-info');
-                            statusText = item.total_urls > 1 ? `Running... (${item.total_urls})` : 'Running...';
+                            statusText = 'Running...';
                             break;
                         case 'never_run':
                             statusBadge.addClass('badge-secondary');
                             statusText = 'Never Run';
+                            break;
+                        case 'skipped':
+                            statusBadge.addClass('badge-warning');
+                            statusText = 'Skipped';
                             break;
                         default:
                             statusBadge.addClass('badge-secondary');
@@ -229,6 +242,8 @@ function refreshCacheStatus() {
                     if (item.last_run) {
                         const lastRunDate = new Date(item.last_run * 1000);
                         updateLastRefreshTime(card, lastRunDate);
+                    } else if (lastRefreshText.length) {
+                        lastRefreshText.text('Never refreshed');
                     }
                 });
             }

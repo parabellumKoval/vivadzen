@@ -2,11 +2,8 @@
 
 namespace App\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-
-use \Cviebrock\EloquentSluggable\Services\SlugService;
-
+use App\Services\Referral\Triggers\ReviewTextPublished;
+use App\Services\Referral\Triggers\ReviewVideoPublished;
 use Backpack\Reviews\app\Events\ReviewPublished;
 
 class ReviewPublishedListener
@@ -29,8 +26,15 @@ class ReviewPublishedListener
     public function handle(ReviewPublished $event)
     {
         $review = $event->review;
-        
+
+        $triggerAlias = $review->is_video
+            ? ReviewVideoPublished::alias()
+            : ReviewTextPublished::alias();
+
         // Give bonus money for review
-        \Profile::trigger('review.published', null, [], $review->owner_id, ['subject_type' => $review->getMorphClass(), 'subject_id' => $review->id]);
+        \Profile::trigger($triggerAlias, null, [], $review->owner_id, [
+            'subject_type' => $review->getMorphClass(),
+            'subject_id' => $review->id,
+        ]);
     }
 }
