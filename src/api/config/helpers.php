@@ -26,6 +26,21 @@ return [
             'search_id' => true,
             'id_prefixes' => ['#'],
         ],
+        'catalog' => [
+            'model' => Backpack\Store\app\Models\Catalog::class,
+            'columns' => ['name', 'short_name', 'code', 'slug'],
+            'relation_columns' => [],
+            'search_id' => true,
+            'id_prefixes' => ['#'],
+        ],
+        'catalog_reviewable' => [
+            'model' => Backpack\Store\app\Models\Catalog::class,
+            'columns' => ['name', 'short_name', 'code', 'slug'],
+            'relation_columns' => [],
+            'search_id' => true,
+            'id_prefixes' => ['#'],
+            'key_column' => 'group_id',
+        ],
         'product' => [
             'model' => Backpack\Store\app\Models\Product::class,
             'columns' => ['name', 'code', 'slug'],

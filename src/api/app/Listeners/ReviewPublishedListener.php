@@ -4,28 +4,35 @@ namespace App\Listeners;
 
 use App\Services\Referral\Triggers\ReviewTextPublished;
 use App\Services\Referral\Triggers\ReviewVideoPublished;
+use App\Support\ReviewRewardContext;
 use Backpack\Reviews\app\Events\ReviewPublished;
 
 class ReviewPublishedListener
 {
+    public function __construct(
+        protected ReviewRewardContext $rewardContext
+    ) {
+    }
+
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
-    {
-    }
-
-    /**
-     * Handle the event.
-     *
-     * @param  object  $event
-     * @return void
-     */
     public function handle(ReviewPublished $event)
     {
+        if ($this->rewardContext->shouldSkipRewards()) {
+            return;
+        }
+
         $review = $event->review;
+
+        if (!$review->is_video) {
+            $link = data_get($review->extras, 'link');
+            if (blank($link)) {
+                return;
+            }
+        }
 
         $triggerAlias = $review->is_video
             ? ReviewVideoPublished::alias()

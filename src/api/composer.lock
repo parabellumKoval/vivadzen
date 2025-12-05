@@ -4982,7 +4982,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/articles",
-                "reference": "048d64ca2a91de98ec7c1524814aeeffe1065e69"
+                "reference": "4437363d08163030d30675f1bdfae297b057b8a4"
             },
             "require": {
                 "cviebrock/eloquent-sluggable": "^12.0",
@@ -5194,7 +5194,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/helpers",
-                "reference": "cc323395c777fd67f1bfe928c172a766a99a7801"
+                "reference": "6d3c663fbd745339947a45b88f51f07120f693a7"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -5281,6 +5281,7 @@
                 "laravel/framework": "^12.0",
                 "laravel/sanctum": "^4.2.0",
                 "laravel/socialite": "^5.23.0",
+                "ozh/phpass": "^1.4",
                 "php": "^8.2"
             },
             "type": "library",
@@ -5353,7 +5354,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/reviews",
-                "reference": "8f6501b27a67ae1f27e332123f3f651a6ef66edb"
+                "reference": "3f0d3de4d1fa91f89d8d435f1d4f6fd5d317f79a"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -5430,22 +5431,15 @@
         {
             "name": "parabellumkoval/backpack-settings",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-settings.git",
-                "reference": "193905c67663abdc41ba9f40131cba91eaebdc15"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-settings/zipball/193905c67663abdc41ba9f40131cba91eaebdc15",
-                "reference": "193905c67663abdc41ba9f40131cba91eaebdc15",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/settings",
+                "reference": "193905c67663abdc41ba9f40131cba91eaebdc15"
             },
             "require": {
                 "laravel/framework": "^12.0",
                 "php": "^8.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5459,7 +5453,6 @@
                     "Backpack\\Settings\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5474,11 +5467,10 @@
                 }
             ],
             "description": "Settings UI & Service for Laravel 8 + Backpack 4.1 (config/DB drivers, tabs, registry, aliases).",
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-settings/issues",
-                "source": "https://github.com/parabellumKoval/backpack-settings/tree/main"
-            },
-            "time": "2025-11-04T08:50:34+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-store",
@@ -5486,7 +5478,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/store",
-                "reference": "5258435153ff6502b47b31873a28cb0dfb18b2e6"
+                "reference": "32a3d4051f4488094e7698d82a07e7813754ea67"
             },
             "require": {
                 "bacon/bacon-qr-code": "^2.0",

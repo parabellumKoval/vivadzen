@@ -47,9 +47,11 @@ return [
   // Reviewable
   'reviewable_types_list' => [
     'product' => [
-      'model' => 'App\Models\Product',
+      'model' => 'Backpack\Store\app\Models\Catalog',
       'name' => 'Товар',
       'name_plur' => 'Товары',
+      'reviewable_key' => 'group_id',
+      'fetch_helper_key' => 'catalog_reviewable',
     ],
     'article' => [
       'model' => 'Backpack\Articles\app\Models\Article',
@@ -62,6 +64,11 @@ return [
   
   'morph_aliases' => [
     'App\Models\Product' => [
+      'model' => 'Backpack\Store\app\Models\Catalog',
+      'key' => 'group_id',
+      'country_field' => 'country_code'
+    ],
+    'Backpack\Store\app\Models\Catalog' => [
       'model' => 'Backpack\Store\app\Models\Catalog',
       'key' => 'group_id',
       'country_field' => 'country_code'

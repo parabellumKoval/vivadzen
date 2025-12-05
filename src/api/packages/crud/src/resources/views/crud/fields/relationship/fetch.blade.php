@@ -5,7 +5,8 @@
     $routeEntity = Str::kebab($entityWithoutAttribute);
 
     $connected_entity = new $field['model'];
-    $connected_entity_key_name = $connected_entity->getKeyName();
+    $customKeyColumn = $field['key_column'] ?? null;
+    $connected_entity_key_name = $customKeyColumn ?? $connected_entity->getKeyName();
 
     // we need to re-ensure field type here because relationship is a `switchboard` and not actually
     // a crud field like this one.

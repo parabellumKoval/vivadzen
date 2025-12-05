@@ -107,7 +107,6 @@
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/delivery') }}"><i class="nav-icon la la-shipping-fast"></i> <span>Доставка</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/payment') }}"><i class="nav-icon la la-credit-card"></i> <span>Оплата</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/search') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
-		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('product-list') }}"><i class="nav-icon la la-list"></i> <span>Списки</span></a></li>
 	</ul>
 </li>
 
@@ -118,6 +117,7 @@
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('seo-page') }}"><i class="nav-icon la la-bullseye"></i> <span>Посадочные страницы</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('search-queries') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('currency-rates') }}"><i class="nav-icon la la-exchange"></i> <span>Курсы валют</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('product-list') }}"><i class="nav-icon la la-list"></i> <span>Товарные списки</span></a></li>
 	</ul>
 </li>
 

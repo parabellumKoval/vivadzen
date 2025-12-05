@@ -54,7 +54,8 @@ class AddXRegionHeadersToRequest
         }
 
         $cleaned = preg_replace('/[^a-zA-Z]/', '', $value);
-        $code = strtoupper(substr($cleaned, 0, 2));
+        // $code = strtoupper(substr($cleaned, 0, 2));
+        $code = substr($cleaned, 0, 2);
 
         return strlen($code) === 2 ? $code : null;
     }

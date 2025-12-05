@@ -2,6 +2,11 @@
 
 return [
     'enabled' => env('STORE_SEARCH_ENABLED', true),
+
+    'history' => [
+        'enabled' => true
+    ],
+
     'driver'  => env('STORE_SEARCH_DRIVER', 'meilisearch'),
 
     'suffix_per_country' => env('STORE_SEARCH_INDEX_SUFFIX_PER_COUNTRY', true),
@@ -29,7 +34,7 @@ return [
             ],
             'filterableAttributes' => ['brandName', 'categories', 'in_stock', 'country_code'],
             'sortableAttributes'   => ['price', 'popularity', 'created_at'],
-            'distinctAttribute'    => 'group_id',
+            'distinctAttribute'    => null,
             'pagination'           => ['maxTotalHits' => 20000],
             'typoTolerance'        => ['enabled' => true],
             'synonyms'             => [],

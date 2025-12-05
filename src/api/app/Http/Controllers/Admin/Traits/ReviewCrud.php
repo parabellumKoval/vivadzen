@@ -14,6 +14,21 @@ trait ReviewCrud {
   public function createOperation() {
 
     $this->crud->addField([
+      'name' => 'link',
+      'label' => 'Ссылка на соцсеть',
+      'type' => 'url',
+      'fake' => true,
+      'store_in' => 'extras',
+      'attributes' => [
+        'placeholder' => 'https://instagram.com/my_account'
+      ],
+      'wrapper' => [
+        'class' => 'form-group col-md-6'
+      ],
+      'hint' => 'Используется для подтверждения подлинности отзыва и начисления бонусов.'
+    ])->afterField('text');
+
+    $this->crud->addField([
       'name' => 'advantages',
       'label' => 'Достоинства',
       'type' => 'textarea',
@@ -22,7 +37,7 @@ trait ReviewCrud {
       'wrapper' => [ 
         'class' => 'form-group col-md-6'
       ]
-    ])->afterField('text');
+    ])->afterField('link');
 
     $this->crud->addField([
       'name' => 'flaws',
@@ -33,7 +48,7 @@ trait ReviewCrud {
       'wrapper' => [ 
         'class' => 'form-group col-md-6'
       ]
-    ])->afterField('text');
+    ])->afterField('advantages');
 
     $this->crud->addField([
       'name' => 'verified_purchase',
@@ -41,7 +56,7 @@ trait ReviewCrud {
       'type' => 'boolean',
       'fake' => true,
       'store_in' => 'extras'
-    ])->afterField('text');
+    ])->afterField('flaws');
 
   }
 

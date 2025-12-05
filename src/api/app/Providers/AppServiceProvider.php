@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Support\ReviewRewardContext;
 use Illuminate\Support\ServiceProvider;
 
 use \Backpack\Store\app\Models\Order;
@@ -16,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(ReviewRewardContext::class, fn () => new ReviewRewardContext());
+
         app(\Backpack\Profile\app\Services\TriggerRegistry::class)->register(
            \App\Services\Referral\Triggers\OrderPaid::alias(),
            \App\Services\Referral\Triggers\OrderPaid::class
