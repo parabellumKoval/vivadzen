@@ -20,8 +20,6 @@
         "bacon/bacon-qr-code": "^2.0",
         "bunnycdn/storage": "^3.4",
         "dompdf/dompdf": "^2.0",
-        "dress-dev/translator": "0.1.x-dev",
-        "dress-dev/translator-backpack": "0.1.x-dev",
         "laravel/framework": "^12.0",
         "laravel/octane": "^2.12",
         "laravel/sanctum": "^4.2",
@@ -42,6 +40,8 @@
         "parabellumkoval/crud-filemanager": "dev-main",
         "parabellumkoval/dumper": "dev-main",
         "parabellumkoval/webhooks": "dev-main",
+        "parabellumkoval/translator": "dev-main",
+        "parabellumkoval/backpack-translator": "dev-main",
         "spatie/laravel-feed": "^4.4"
     },
     "require-dev": {

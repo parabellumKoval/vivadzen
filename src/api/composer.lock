@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b022182852f6ddbf466599f6fc1e318",
+    "content-hash": "64b80cef505003e7fb2296bf149c7ae6",
     "packages": [
         {
             "name": "backpack/basset",
@@ -1546,157 +1546,6 @@
                 }
             ],
             "time": "2025-10-31T18:51:33+00:00"
-        },
-        {
-            "name": "dress-dev/translator",
-            "version": "0.1.x-dev",
-            "dist": {
-                "type": "path",
-                "url": "packages/translator",
-                "reference": "a892cb788ed68d209b03c9954895897d4ba7c9bd"
-            },
-            "require": {
-                "deeplcom/deepl-php": "^1.8",
-                "laravel/framework": "^8.75 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^6.0",
-                "phpunit/phpunit": "^8.5"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Dress\\Translator\\ServiceProvider"
-                    ],
-                    "aliases": {
-                        "HistoryLogger": "Dress\\Translator\\Facades\\HistoryLogger",
-                        "ItemHistoryLogger": "Dress\\Translator\\Facades\\ItemHistoryLogger"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Dress\\Translator\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Dress\\Translator\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php ./vendor/bin/testbench package:discover --ansi"
-                ],
-                "analyse": [
-                    "vendor/bin/phpstan analyse"
-                ],
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/pest --coverage"
-                ],
-                "format": [
-                    "vendor/bin/pint"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "dress",
-                    "email": "dressdeveloper@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Auto Translator",
-            "homepage": "https://github.com/dress-dev/translator",
-            "keywords": [
-                "dress-dev",
-                "laravel",
-                "translator"
-            ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "dress-dev/translator-backpack",
-            "version": "0.1.x-dev",
-            "dist": {
-                "type": "path",
-                "url": "packages/translator-backpack",
-                "reference": "a892cb788ed68d209b03c9954895897d4ba7c9bd"
-            },
-            "require": {
-                "laravel/framework": "^8.75 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
-                "php": "^8.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Dress\\Translator\\Backpack\\ServiceProvider"
-                    ],
-                    "aliases": {
-                        "Translation": "Dress\\Translator\\Backpack\\Facades\\Translator"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Dress\\Translator\\Backpack\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Dress\\Translator\\Backpack\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php ./vendor/bin/testbench package:discover --ansi"
-                ],
-                "analyse": [
-                    "vendor/bin/phpstan analyse"
-                ],
-                "test": [
-                    "vendor/bin/pest"
-                ],
-                "test-coverage": [
-                    "vendor/bin/pest --coverage"
-                ],
-                "format": [
-                    "vendor/bin/pint"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "dress",
-                    "email": "dressdeveloper@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Auto Translator",
-            "homepage": "https://github.com/dress-dev/translator-backpack",
-            "keywords": [
-                "backpack",
-                "dress-dev",
-                "laravel",
-                "translator"
-            ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
         },
         {
             "name": "egulias/email-validator",
@@ -4979,10 +4828,16 @@
         {
             "name": "parabellumkoval/backpack-articles",
             "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "packages/articles",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-articles.git",
                 "reference": "4437363d08163030d30675f1bdfae297b057b8a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/4437363d08163030d30675f1bdfae297b057b8a4",
+                "reference": "4437363d08163030d30675f1bdfae297b057b8a4",
+                "shasum": ""
             },
             "require": {
                 "cviebrock/eloquent-sluggable": "^12.0",
@@ -4995,15 +4850,16 @@
                 "orchestra/testbench": "^6.0",
                 "phpunit/phpunit": "*"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Backpack\\Articles\\ServiceProvider"
-                    ],
                     "aliases": {
                         "Product": "Backpack\\Articles\\Facades\\Article"
-                    }
+                    },
+                    "providers": [
+                        "Backpack\\Articles\\ServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -5012,28 +4868,7 @@
                     "Backpack\\Articles\\Database\\Factories\\": "database/factories"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Backpack\\Articles\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php ./vendor/bin/testbench package:discover --ansi"
-                ],
-                "analyse": [
-                    "vendor/bin/phpstan analyse"
-                ],
-                "test": [
-                    "vendor/bin/pest"
-                ],
-                "test-coverage": [
-                    "vendor/bin/pest --coverage"
-                ],
-                "format": [
-                    "vendor/bin/pint"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5052,10 +4887,11 @@
                 "laravel",
                 "parabellumKoval"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-articles/issues",
+                "source": "https://github.com/parabellumKoval/backpack-articles/tree/main"
+            },
+            "time": "2025-11-28T15:31:23+00:00"
         },
         {
             "name": "parabellumkoval/backpack-banners",
@@ -5191,15 +5027,22 @@
         {
             "name": "parabellumkoval/backpack-helpers",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-helpers.git",
+                "reference": "3cad13d2e9be65d77916ba7fc2ae2fee6e0d85a1"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/helpers",
-                "reference": "6d3c663fbd745339947a45b88f51f07120f693a7"
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-helpers/zipball/3cad13d2e9be65d77916ba7fc2ae2fee6e0d85a1",
+                "reference": "3cad13d2e9be65d77916ba7fc2ae2fee6e0d85a1",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0",
                 "php": "^8.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5213,6 +5056,7 @@
                     "Backpack\\Helpers\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5224,18 +5068,25 @@
             ],
             "description": "Helpers for Laravel Backpack 4.1 - extra columns, fields, traits and services.",
             "homepage": "https://github.com/parabellumkoval/backpack-helpers",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-helpers/issues",
+                "source": "https://github.com/parabellumKoval/backpack-helpers/tree/main"
+            },
+            "time": "2025-12-05T17:04:18+00:00"
         },
         {
             "name": "parabellumkoval/backpack-images",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-images.git",
+                "reference": "2c540665fed9c4b0a7e0a41e5210289d609ad42a"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/images",
-                "reference": "37822ede267b72023fcaece2a6d9df4dc8967fa2"
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-images/zipball/2c540665fed9c4b0a7e0a41e5210289d609ad42a",
+                "reference": "2c540665fed9c4b0a7e0a41e5210289d609ad42a",
+                "shasum": ""
             },
             "require": {
                 "bunnycdn/storage": "^3.4",
@@ -5244,15 +5095,16 @@
                 "illuminate/support": "^12.0",
                 "php": "^8.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "ParabellumKoval\\BackpackImages\\BackpackImagesServiceProvider"
-                    ],
                     "aliases": {
                         "ImageUploader": "ParabellumKoval\\BackpackImages\\Facades\\ImageUploader"
-                    }
+                    },
+                    "providers": [
+                        "ParabellumKoval\\BackpackImages\\BackpackImagesServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -5260,22 +5112,30 @@
                     "ParabellumKoval\\BackpackImages\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Reusable image uploader and Backpack helpers for Laravel 12.",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-images/issues",
+                "source": "https://github.com/parabellumKoval/backpack-images/tree/main"
+            },
+            "time": "2025-12-05T17:04:49+00:00"
         },
         {
             "name": "parabellumkoval/backpack-profile",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-profile.git",
+                "reference": "f305561a7c66707e046c398d80d4da1a03f66cda"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/profile",
-                "reference": "e5b2ed2a799e916d7ad10eb4c5ef417d1f407634"
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/f305561a7c66707e046c398d80d4da1a03f66cda",
+                "reference": "f305561a7c66707e046c398d80d4da1a03f66cda",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -5284,6 +5144,7 @@
                 "ozh/phpass": "^1.4",
                 "php": "^8.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5293,36 +5154,15 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "src/app/helpers.php"
+                ],
                 "psr-4": {
                     "Backpack\\Profile\\": "src/",
                     "Backpack\\Profile\\Database\\Factories\\": "database/factories"
-                },
-                "files": [
-                    "src/app/helpers.php"
-                ]
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Backpack\\Profile\\Tests\\": "tests"
                 }
             },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php ./vendor/bin/testbench package:discover --ansi"
-                ],
-                "analyse": [
-                    "vendor/bin/phpstan analyse"
-                ],
-                "test": [
-                    "vendor/bin/pest"
-                ],
-                "test-coverage": [
-                    "vendor/bin/pest --coverage"
-                ],
-                "format": [
-                    "vendor/bin/pint"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5343,18 +5183,25 @@
                 "profile",
                 "user"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-profile/issues",
+                "source": "https://github.com/parabellumKoval/backpack-profile/tree/main"
+            },
+            "time": "2025-12-05T17:05:17+00:00"
         },
         {
             "name": "parabellumkoval/backpack-reviews",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-reviews.git",
+                "reference": "43802f50f76f48bece57617f049fc66018f37b0d"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/reviews",
-                "reference": "3f0d3de4d1fa91f89d8d435f1d4f6fd5d317f79a"
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/43802f50f76f48bece57617f049fc66018f37b0d",
+                "reference": "43802f50f76f48bece57617f049fc66018f37b0d",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -5365,15 +5212,16 @@
                 "orchestra/testbench": "^6.0",
                 "phpunit/phpunit": "*"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Backpack\\Reviews\\ServiceProvider"
-                    ],
                     "aliases": {
                         "Reviews": "Backpack\\Reviews\\Facades\\Reviews"
-                    }
+                    },
+                    "providers": [
+                        "Backpack\\Reviews\\ServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -5382,29 +5230,7 @@
                     "Backpack\\Reviews\\Database\\Factories\\": "database/factories"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "App\\": "src/app/",
-                    "Backpack\\Reviews\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php ./vendor/bin/testbench package:discover --ansi"
-                ],
-                "analyse": [
-                    "vendor/bin/phpstan analyse"
-                ],
-                "test": [
-                    "vendor/bin/pest"
-                ],
-                "test-coverage": [
-                    "vendor/bin/pest --coverage"
-                ],
-                "format": [
-                    "vendor/bin/pint"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5423,23 +5249,31 @@
                 "parabellumKoval",
                 "review"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-reviews/issues",
+                "source": "https://github.com/parabellumKoval/backpack-reviews/tree/main"
+            },
+            "time": "2025-12-05T17:05:42+00:00"
         },
         {
             "name": "parabellumkoval/backpack-settings",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-settings.git",
+                "reference": "030c5471820310252f8e9b85cc44a5a158ff37d8"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/settings",
-                "reference": "193905c67663abdc41ba9f40131cba91eaebdc15"
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-settings/zipball/030c5471820310252f8e9b85cc44a5a158ff37d8",
+                "reference": "030c5471820310252f8e9b85cc44a5a158ff37d8",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0",
                 "php": "^8.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5453,6 +5287,7 @@
                     "Backpack\\Settings\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5467,18 +5302,25 @@
                 }
             ],
             "description": "Settings UI & Service for Laravel 8 + Backpack 4.1 (config/DB drivers, tabs, registry, aliases).",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-settings/issues",
+                "source": "https://github.com/parabellumKoval/backpack-settings/tree/main"
+            },
+            "time": "2025-12-05T17:06:23+00:00"
         },
         {
             "name": "parabellumkoval/backpack-store",
             "version": "dev-multistore",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-store.git",
+                "reference": "02563f081ddc9d338cec618886c4b087cb2cad1f"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/store",
-                "reference": "32a3d4051f4488094e7698d82a07e7813754ea67"
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/02563f081ddc9d338cec618886c4b087cb2cad1f",
+                "reference": "02563f081ddc9d338cec618886c4b087cb2cad1f",
+                "shasum": ""
             },
             "require": {
                 "bacon/bacon-qr-code": "^2.0",
@@ -5498,14 +5340,14 @@
             "type": "library",
             "extra": {
                 "laravel": {
+                    "aliases": {
+                        "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade",
+                        "Store": "Backpack\\Store\\Facades\\Store"
+                    },
                     "providers": [
                         "Backpack\\CRUD\\BackpackServiceProvider",
                         "Backpack\\Store\\ServiceProvider"
-                    ],
-                    "aliases": {
-                        "Store": "Backpack\\Store\\Facades\\Store",
-                        "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade"
-                    }
+                    ]
                 }
             },
             "autoload": {
@@ -5515,32 +5357,7 @@
                     "Backpack\\Store\\Database\\Factories\\": "database/factories"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "App\\": "src/app/",
-                    "Backpack\\Store\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php ./vendor/bin/testbench package:discover --ansi"
-                ],
-                "analyse": [
-                    "vendor/bin/phpstan analyse"
-                ],
-                "test": [
-                    "vendor/bin/pest"
-                ],
-                "test-coverage": [
-                    "vendor/bin/pest --coverage"
-                ],
-                "format": [
-                    "vendor/bin/pint"
-                ],
-                "phpunit": [
-                    "vendor/bin/phpunit --testdox"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5559,18 +5376,25 @@
                 "parabellumKoval",
                 "products"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-store/issues",
+                "source": "https://github.com/parabellumKoval/backpack-store/tree/multistore"
+            },
+            "time": "2025-12-05T17:00:36+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-tag.git",
+                "reference": "84e9460256b89bfae080ed624479a8abb26fa932"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/tag",
-                "reference": "fea4341f156de8aab5fc419201b52dc4e32630ab"
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-tag/zipball/84e9460256b89bfae080ed624479a8abb26fa932",
+                "reference": "84e9460256b89bfae080ed624479a8abb26fa932",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -5584,12 +5408,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Backpack\\Tag\\ServiceProvider"
-                    ],
                     "aliases": {
                         "Tag": "Backpack\\Tag\\Facades\\Tag"
-                    }
+                    },
+                    "providers": [
+                        "Backpack\\Tag\\ServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -5598,29 +5422,7 @@
                     "Backpack\\Tag\\Database\\Factories\\": "database/factories"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "App\\": "src/app/",
-                    "Backpack\\Tag\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php ./vendor/bin/testbench package:discover --ansi"
-                ],
-                "analyse": [
-                    "vendor/bin/phpstan analyse"
-                ],
-                "test": [
-                    "vendor/bin/pest"
-                ],
-                "test-coverage": [
-                    "vendor/bin/pest --coverage"
-                ],
-                "format": [
-                    "vendor/bin/pint"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5639,18 +5441,85 @@
                 "parabellumKoval",
                 "tag"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-tag/issues",
+                "source": "https://github.com/parabellumKoval/backpack-tag/tree/main"
+            },
+            "time": "2025-12-05T18:48:05+00:00"
+        },
+        {
+            "name": "parabellumkoval/backpack-translator",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-translator.git",
+                "reference": "13e54e7e326443fbe91595ec2a1ec4b9303b7710"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-translator/zipball/13e54e7e326443fbe91595ec2a1ec4b9303b7710",
+                "reference": "13e54e7e326443fbe91595ec2a1ec4b9303b7710",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.75 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "php": "^8.2"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Translation": "Dress\\Translator\\Backpack\\Facades\\Translator"
+                    },
+                    "providers": [
+                        "Dress\\Translator\\Backpack\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dress\\Translator\\Backpack\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "dress",
+                    "email": "parabellumkoval@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Auto Translator",
+            "homepage": "https://github.com/parabellumkoval/backpack-translator",
+            "keywords": [
+                "backpack",
+                "laravel",
+                "parabellumKoval",
+                "translator"
+            ],
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-translator/issues",
+                "source": "https://github.com/parabellumKoval/backpack-translator/tree/main"
+            },
+            "time": "2025-12-05T19:03:41+00:00"
         },
         {
             "name": "parabellumkoval/crud",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/CRUD.git",
+                "reference": "043151b30b57636066eb6da3ab591e4e551884f1"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/crud",
-                "reference": "f89f02261205e70db93017d40f205b7330b91e55"
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/CRUD/zipball/043151b30b57636066eb6da3ab591e4e551884f1",
+                "reference": "043151b30b57636066eb6da3ab591e4e551884f1",
+                "shasum": ""
             },
             "require": {
                 "creativeorange/gravatar": "~1.0",
@@ -5671,19 +5540,20 @@
                 "backpack/revise-operation": "Optional operation to remember all entry changes, undo and redo them (aka audit trait).",
                 "digitallyhappy/toggle-field-for-backpack": "Optional field to toggle a boolean. Prettier alternative to the checkbox field."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
-                },
                 "laravel": {
-                    "providers": [
-                        "Backpack\\CRUD\\BackpackServiceProvider"
-                    ],
                     "aliases": {
                         "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade",
                         "Widget": "Backpack\\CRUD\\app\\Library\\Widget"
-                    }
+                    },
+                    "providers": [
+                        "Backpack\\CRUD\\BackpackServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
                 }
             },
             "autoload": {
@@ -5691,64 +5561,49 @@
                     "Backpack\\CRUD\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Backpack\\CRUD\\Tests\\": "tests"
-                },
-                "files": [
-                    "src/helpers.php"
-                ],
-                "exclude-from-classmap": [
-                    "**/config"
-                ]
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit --testdox"
-                ],
-                "test-failing": [
-                    "vendor/bin/phpunit --order-by=defects --stop-on-failure"
-                ],
-                "test-coverage": [
-                    "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "proprietary"
             ],
             "description": "Quickly build an admin interfaces using Laravel, CoreUI, Bootstrap and jQuery.",
             "homepage": "https://github.com/parabellumkoval/CRUD",
             "keywords": [
-                "BREAD",
-                "CMS",
-                "CRUD",
-                "admin interface",
+                "Admin Interface",
+                "Content management system",
                 "admin panel",
                 "admin panel for laravel",
                 "base",
                 "bootstrap 4 admin panel laravel",
+                "bread",
+                "cms",
                 "content management framework",
-                "content management system",
                 "coreui for laravel",
                 "create",
+                "crud",
                 "delete",
                 "laravel admin",
-                "parabellumkoval",
+                "parabellumKoval",
                 "read",
                 "update"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/parabellumKoval/CRUD/tree/main"
+            },
+            "time": "2025-12-05T17:02:42+00:00"
         },
         {
             "name": "parabellumkoval/crud-filemanager",
             "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "packages/crud-filemanager",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/crud-filemanager.git",
                 "reference": "bb5f46e082046e182cb5ef086098bdc01dcb70a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/crud-filemanager/zipball/bb5f46e082046e182cb5ef086098bdc01dcb70a2",
+                "reference": "bb5f46e082046e182cb5ef086098bdc01dcb70a2",
+                "shasum": ""
             },
             "require": {
                 "backpack/basset": "^1.1.1|^1.3.2",
@@ -5759,6 +5614,7 @@
                 "orchestra/testbench": "^8",
                 "phpunit/phpunit": "^10.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5772,24 +5628,21 @@
                     "Backpack\\FileManager\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Backpack\\FileManager\\Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Backpack admin interface for files and folder, using elFinder",
             "homepage": "https://github.com/parabellumkoval/CRUD-filemanager",
             "keywords": [
-                "FileManager",
-                "Laravel"
+                "filemanager",
+                "laravel"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/crud-filemanager/issues",
+                "source": "https://github.com/parabellumKoval/crud-filemanager/tree/main"
+            },
+            "time": "2025-11-16T14:58:32+00:00"
         },
         {
             "name": "parabellumkoval/dumper",
@@ -5797,7 +5650,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/dumper",
-                "reference": "8d8118ee24229c009b30835b3be3041e5a670623"
+                "reference": "5b73d3efb44647d49e4ff76d0e0010bcb952b817"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -5911,12 +5764,77 @@
             "time": "2025-10-04T13:52:33+00:00"
         },
         {
+            "name": "parabellumkoval/translator",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/translator.git",
+                "reference": "0042662731f35bff736cd0f0ccb0f0c26d6783e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/translator/zipball/0042662731f35bff736cd0f0ccb0f0c26d6783e5",
+                "reference": "0042662731f35bff736cd0f0ccb0f0c26d6783e5",
+                "shasum": ""
+            },
+            "require": {
+                "deeplcom/deepl-php": "^1.8",
+                "laravel/framework": "^8.75 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^8.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "HistoryLogger": "Dress\\Translator\\Facades\\HistoryLogger",
+                        "ItemHistoryLogger": "Dress\\Translator\\Facades\\ItemHistoryLogger"
+                    },
+                    "providers": [
+                        "Dress\\Translator\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dress\\Translator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "dress",
+                    "email": "parabellumkoval@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Auto Translator",
+            "homepage": "https://github.com/parabellumkoval/translator",
+            "keywords": [
+                "laravel",
+                "parabellumKoval",
+                "translator"
+            ],
+            "support": {
+                "issues": "https://github.com/parabellumKoval/translator/issues",
+                "source": "https://github.com/parabellumKoval/translator/tree/main"
+            },
+            "time": "2025-12-05T19:01:32+00:00"
+        },
+        {
             "name": "parabellumkoval/webhooks",
             "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/webhooks",
-                "reference": "14f0c662bfd450e2a3f4cc9885cd973586cf3f30"
+                "reference": "9138f1e53104f2c4829a3350bc3c246413b39e81"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -13047,8 +12965,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dress-dev/translator": 20,
-        "dress-dev/translator-backpack": 20,
         "parabellumkoval/backpack-articles": 20,
         "parabellumkoval/backpack-banners": 20,
         "parabellumkoval/backpack-feedback": 20,
@@ -13059,9 +12975,11 @@
         "parabellumkoval/backpack-settings": 20,
         "parabellumkoval/backpack-store": 20,
         "parabellumkoval/backpack-tag": 20,
+        "parabellumkoval/backpack-translator": 20,
         "parabellumkoval/crud": 20,
         "parabellumkoval/crud-filemanager": 20,
         "parabellumkoval/dumper": 20,
+        "parabellumkoval/translator": 20,
         "parabellumkoval/webhooks": 20
     },
     "prefer-stable": true,
@@ -13070,5 +12988,5 @@
         "php": "^8.2"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
