@@ -314,11 +314,11 @@ storage.link:
 	docker compose -f ${COMPOSE_FILE} exec api php artisan storage:link --relative
 
 # Clear temps
-remove.temps: 
-	rm -rf ./storage/logs/*
-	rm -rf ./storage/framework/sessions/*
-	rm -rf ./storage/framework/views/*
-	rm -rf ./storage/framework/cache/data/*
+remove.temps.%: 
+	rm -rf ./storage_$*/logs/*
+	rm -rf ./storage_$*/framework/sessions/*
+	rm -rf ./storage_$*/framework/views/*
+	rm -rf ./storage_$*/framework/cache/data/*
 
 # Permissions
 permissions: 
