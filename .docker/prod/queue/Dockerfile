@@ -9,6 +9,8 @@ FROM ${IMAGE_REGISTRY}/api-base:${IMAGE_TAG}
 WORKDIR /var/www/html
 
 
+COPY ./src/api/.env.prod ./.env
+
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
