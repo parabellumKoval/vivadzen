@@ -57,19 +57,20 @@ return [
         'rules' => 'required|in:zasilkovna_cod,novaposhta_cod,default_cash,liqpay_online,card_online,bank_transfer'
       ],
       'settlement' => [
-        'rules' => 'required_if:payment.method,bank_transfer|required_unless:delivery.method,novaposhta_warehouse,packeta_warehouse,default_pickup|nullable|string|min:2|max:500'
+        // 
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ],
       'street' => [
-        'rules' => 'required_if:payment.method,bank_transfer|required_unless:delivery.method,novaposhta_warehouse,packeta_warehouse,default_pickup|nullable|string|min:2|max:255'
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ],
       'house' => [
-        'rules' => 'required_if:payment.method,bank_transfer|required_unless:delivery.method,novaposhta_warehouse,packeta_warehouse,default_pickup|nullable|string|min:1|max:50'
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ],
       'room' => [
-        'rules' => 'required_if:payment.method,bank_transfer|required_unless:delivery.method,novaposhta_warehouse,packeta_warehouse,default_pickup|nullable|string|min:1|max:50'
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ],
       'zip' => [
-        'rules' => 'required_if:payment.method,bank_transfer|required_unless:delivery.method,novaposhta_warehouse,packeta_warehouse,default_pickup|nullable|string|min:5|max:255'
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ]
     ],
 
@@ -77,7 +78,7 @@ return [
       'rules' => 'array:settlement,settlementRef,street,streetRef,area,region,type,house,room,zip,method,warehouse,warehouseRef,price,priceCurrency',
       'store_in' => 'info',
       'method' => [
-        'rules' => 'required|in:novaposhta_address,novaposhta_warehouse,packeta_address,packeta_warehouse,default_pickup'
+        'rules' => 'required|in:novaposhta_address,novaposhta_warehouse,packeta_address,packeta_warehouse,default_pickup,default_address'
       ],
       'warehouse' => [
         'rules' => 'required_if:delivery.method,novaposhta_warehouse,packeta_warehouse|nullable|string|min:1|max:500'

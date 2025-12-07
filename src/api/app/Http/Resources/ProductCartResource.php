@@ -20,7 +20,7 @@ class ProductCartResource extends \Backpack\Store\app\Http\Resources\BaseResourc
         'short_name' => $this->short_name,
         'price' => $this->price,
         'old_price' => $this->oldPrice,
-        'image' => $this->getFirstImageSrc(),
+        'image' => $this->getFirstImageForApi(),
         'amount' => $this->amount
       ];
     }

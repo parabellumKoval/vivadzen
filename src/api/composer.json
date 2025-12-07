@@ -36,12 +36,12 @@
         "parabellumkoval/backpack-settings": "dev-main",
         "parabellumkoval/backpack-store": "dev-multistore",
         "parabellumkoval/backpack-tag": "dev-main",
+        "parabellumkoval/backpack-translator": "dev-main",
         "parabellumkoval/crud": "dev-main",
         "parabellumkoval/crud-filemanager": "dev-main",
         "parabellumkoval/dumper": "dev-main",
-        "parabellumkoval/webhooks": "dev-main",
         "parabellumkoval/translator": "dev-main",
-        "parabellumkoval/backpack-translator": "dev-main",
+        "parabellumkoval/webhooks": "dev-main",
         "spatie/laravel-feed": "^4.4"
     },
     "require-dev": {
