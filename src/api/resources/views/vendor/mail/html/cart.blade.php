@@ -2,8 +2,15 @@
   @foreach($products as $key => $product)
     @php
     //config('backpack.store.product.image.base_path')
-      $image = $product['image'] ?? null;
-      $src = $image ? (\Illuminate\Support\Str::startsWith($image, ['http://', 'https://']) ? $image : url($image)) : null;
+      $imageData = $product['image'] ?? null;
+      if(is_array($imageData)) {
+        $image = $imageData['src'] ?? $imageData['url'] ?? null;
+      } else {
+        $image = $imageData;
+      }
+      $src = (is_string($image) && $image !== '')
+        ? (\Illuminate\Support\Str::startsWith($image, ['http://', 'https://']) ? $image : url($image))
+        : null;
       $price = $product['price_formatted'] ?? null;
       $total = $product['total_formatted'] ?? null;
       $currencyCode = $product['currency'] ?? ($currency ?? null);
