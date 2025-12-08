@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac90d1c7dcb9a0fd64cf9da5c6201cc1",
+    "content-hash": "b992837296138ab1601130e9bbd9bdc6",
     "packages": [
         {
             "name": "backpack/basset",
@@ -5594,10 +5594,16 @@
         {
             "name": "parabellumkoval/crud-filemanager",
             "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "packages/crud-filemanager",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/crud-filemanager.git",
                 "reference": "585dbaaf860a5b3adc362b7d3d360ec63f1e296b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/crud-filemanager/zipball/585dbaaf860a5b3adc362b7d3d360ec63f1e296b",
+                "reference": "585dbaaf860a5b3adc362b7d3d360ec63f1e296b",
+                "shasum": ""
             },
             "require": {
                 "backpack/basset": "^1.1.1|^1.3.2",
@@ -5608,6 +5614,7 @@
                 "orchestra/testbench": "^8",
                 "phpunit/phpunit": "^10.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5621,23 +5628,21 @@
                     "Backpack\\FileManager\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Backpack\\FileManager\\Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Backpack admin interface for files and folder, using elFinder",
             "homepage": "https://github.com/parabellumkoval/CRUD-filemanager",
             "keywords": [
-                "FileManager",
-                "Laravel"
+                "filemanager",
+                "laravel"
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/crud-filemanager/issues",
+                "source": "https://github.com/parabellumKoval/crud-filemanager/tree/main"
+            },
+            "time": "2025-12-08T18:41:28+00:00"
         },
         {
             "name": "parabellumkoval/dumper",
@@ -5831,15 +5836,22 @@
         {
             "name": "parabellumkoval/webhooks",
             "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "packages/webhooks",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/webhooks.git",
                 "reference": "9138f1e53104f2c4829a3350bc3c246413b39e81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/webhooks/zipball/9138f1e53104f2c4829a3350bc3c246413b39e81",
+                "reference": "9138f1e53104f2c4829a3350bc3c246413b39e81",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0",
                 "php": "^8.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5853,6 +5865,7 @@
                     "ParabellumKoval\\Webhooks\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5864,9 +5877,11 @@
             ],
             "description": "Admin webhook management with manual, event-driven and scheduled triggers.",
             "homepage": "https://github.com/parabellumkoval/webhooks",
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/webhooks/issues",
+                "source": "https://github.com/parabellumKoval/webhooks/tree/main"
+            },
+            "time": "2025-12-05T17:13:10+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",

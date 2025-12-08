@@ -5,16 +5,7 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "packages/webhooks"
-        },
-        {
-            "type": "path",
-            "url": "packages/crud-filemanager"
-        }
-    ],
+    "repositories": [],
     "require": {
         "php": "^8.2",
         "bacon/bacon-qr-code": "^2.0",
