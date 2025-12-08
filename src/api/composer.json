@@ -12,7 +12,7 @@
         },
         {
             "type": "path",
-            "url": "packages/dumper"
+            "url": "packages/crud-filemanager"
         }
     ],
     "require": {
