@@ -12,6 +12,7 @@ use ParabellumKoval\BackpackImages\Casts\ImageCollectionCast;
 
 trait HasImages
 {
+    protected static bool $imageCollectionsResolving = false;
     /**
      * Register casts for every configured image collection.
      */
@@ -61,6 +62,9 @@ trait HasImages
         $collections = static::imageCollections();
         $resolved = [];
 
+        $wasResolving = static::$imageCollectionsResolving ?? false;
+        static::$imageCollectionsResolving = true;
+
         foreach ($collections as $key => $config) {
             if (is_int($key)) {
                 if (!is_string($config) || $config === '') {
@@ -80,6 +84,8 @@ trait HasImages
             $resolved[$attribute] = static::prepareImageCollectionConfig($attribute, (array) $config);
         }
 
+        static::$imageCollectionsResolving = $wasResolving;
+
         return $resolved;
     }
 
@@ -90,9 +96,9 @@ trait HasImages
         $newItemLabel = $config['new_item_label'] ?? __('images::base.add_image');
         $columnLimit = (int) ($config['column_limit'] ?? 1);
 
-        $provider = $config['provider'] ?? config('backpack-images.default_provider', 'local');
-        $folder = $config['folder'] ?? config('backpack-images.default_folder', 'images');
-        $prefix = $config['prefix'] ?? static::resolveUrlPrefix($provider);
+        $provider = $config['provider'] ?? static::imageProviderName($attribute);
+        $folder = $config['folder'] ?? static::imageStorageFolder($attribute);
+        $prefix = $config['prefix'] ?? static::imageFieldPrefix($attribute);
 
         $fieldDefinition = static::buildDefaultFieldDefinition($attribute, $label, $tab, $newItemLabel, $prefix);
         if (isset($config['field'])) {
@@ -140,7 +146,7 @@ trait HasImages
                     'label' => __('images::base.image'),
                     'type' => 'image',
                     'crop' => false,
-                    'prefix' => $prefix,
+                    'prefix' => static::normalizeFieldPrefix($prefix),
                 ],
                 [
                     'name' => 'alt',
@@ -167,6 +173,17 @@ trait HasImages
             'tab' => $tab,
             'default' => [],
         ];
+    }
+
+    protected static function normalizeFieldPrefix(?string $prefix): string
+    {
+        $prefix = (string) $prefix;
+
+        if ($prefix === '') {
+            return '';
+        }
+
+        return rtrim($prefix, '/') . '/';
     }
 
     protected static function buildDefaultColumnDefinition(string $attribute, string $label, string $prefix, int $limit, string $height = '60px', string $width = 'auto'): array
@@ -219,13 +236,23 @@ trait HasImages
 
     protected static function resolveUrlPrefix(string $provider): string
     {
-        $prefix = config("backpack-images.providers.$provider.url_prefix");
+        $config = config("backpack-images.providers.$provider");
 
-        if (is_string($prefix) && $prefix !== '') {
-            return $prefix;
+        if (is_array($config)) {
+            $prefix = $config['url_prefix'] ?? ($config['pull_zone_url'] ?? null);
+
+            if (is_string($prefix) && $prefix !== '') {
+                return rtrim($prefix, '/');
+            }
         }
 
-        return config('backpack-images.default_url_prefix', '/');
+        $default = config('backpack-images.default_url_prefix', '/');
+
+        if (is_string($default) && $default !== '') {
+            return rtrim($default, '/');
+        }
+
+        return '/';
     }
 
     protected static function getImageCollectionConfig(string $attribute): array
@@ -267,6 +294,11 @@ trait HasImages
     public static function imageProviderName(?string $attribute = null): string
     {
         $attribute ??= static::imageAttributeName();
+
+        if (static::$imageCollectionsResolving ?? false) {
+            return config('backpack-images.default_provider', 'local');
+        }
+
         /** @var ImageUploadOptions $options */
         $options = static::getImageCollectionConfig($attribute)['options'];
 
@@ -276,6 +308,11 @@ trait HasImages
     public static function imageStorageFolder(?string $attribute = null): string
     {
         $attribute ??= static::imageAttributeName();
+
+        if (static::$imageCollectionsResolving ?? false) {
+            return config('backpack-images.default_folder', 'images');
+        }
+
         /** @var ImageUploadOptions $options */
         $options = static::getImageCollectionConfig($attribute)['options'];
 
@@ -285,6 +322,12 @@ trait HasImages
     public static function imageFieldPrefix(?string $attribute = null): string
     {
         $attribute ??= static::imageAttributeName();
+
+        if (static::$imageCollectionsResolving ?? false) {
+            $provider = static::imageProviderName($attribute);
+
+            return static::resolveUrlPrefix($provider);
+        }
 
         return static::getImageCollectionConfig($attribute)['prefix'];
     }

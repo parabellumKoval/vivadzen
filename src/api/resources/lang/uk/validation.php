@@ -159,39 +159,73 @@ return [
     */
 
     'attributes' => [
-      'provider' => '<b>Отримувач</b>',
-      'user' => [
-        'firstname' => "<b>Ім'я</b>",
-        'lastname' => '<b>Прізвище</b>',
-        'email' => '<b>Email</b>',
-        'phone' => '<b>Телефон</b>'
-      ],
-      'delivery' => [
-        'method' => '<b>Метод доставки</b>',
-        'settlement' => '<b>Населений пункт</b>',
-        'warehouse' => '<b>Номер відділення</b>',
-        'street' => '<b>Вулиця</b>',
-        'house' => '<b>Номер будинку</b>',
-        'room' => '<b>Квартира</b>',
-        'zip' => '<b>Індекс</b>'
-      ],
-      'payment' => [
-        'method' => '<b>Метод оплати</b>'
-      ],
-      'comment' => '<b>Коментар</b>'
+        'provider' => '<b>Отримувач</b>',
+        'user' => [
+            'first_name' => "<b>Ім'я</b>",
+            'firstname' => "<b>Ім'я</b>",
+            'last_name' => '<b>Прізвище</b>',
+            'lastname' => '<b>Прізвище</b>',
+            'email' => '<b>Email</b>',
+            'phone' => '<b>Телефон</b>',
+        ],
+        'payment' => [
+            'method' => '<b>Метод оплати</b>',
+            'settlement' => '<b>Місто платника</b>',
+            'street' => '<b>Вулиця платника</b>',
+            'house' => '<b>Будинок платника</b>',
+            'room' => '<b>Квартира платника</b>',
+            'zip' => '<b>Поштовий індекс платника</b>',
+        ],
+        'delivery' => [
+            'method' => '<b>Метод доставки</b>',
+            'settlement' => '<b>Населений пункт</b>',
+            'settlementRef' => '<b>ID населеного пункту</b>',
+            'warehouse' => '<b>Номер відділення</b>',
+            'warehouseRef' => '<b>ID відділення</b>',
+            'street' => '<b>Вулиця</b>',
+            'streetRef' => '<b>ID вулиці</b>',
+            'house' => '<b>Номер будинку</b>',
+            'room' => '<b>Квартира</b>',
+            'zip' => '<b>Поштовий індекс</b>',
+            'area' => '<b>Область</b>',
+            'region' => '<b>Регіон</b>',
+            'type' => '<b>Тип адреси</b>',
+        ],
+        'comment' => '<b>Коментар</b>',
+        'bonus' => '<b>Бонуси</b>',
+        'bonusInFiat' => '<b>Сума бонусної знижки</b>',
+        'promocode' => '<b>Промокод</b>',
     ],
-     
+
     'values' => [
-      'provider' => [
-        'data' => '<b>Гість</b>'
-      ],
-      'delivery' => [
-        'method' => [
-          'address' => "<b>Кур'єр</b>",
-          'warehouse' => '<b>Відділення пошти</b>',
-          'pickup' => '<b>Самовивіз</b>'
-        ]
-      ]
+        'provider' => [
+            'data' => '<b>Гість</b>',
+            'auth' => '<b>Профіль</b>',
+            'outer' => '<b>Партнер</b>',
+        ],
+        'delivery' => [
+            'method' => [
+                'address' => "<b>Кур'єр</b>",
+                'warehouse' => '<b>Відділення пошти</b>',
+                'pickup' => '<b>Самовивіз</b>',
+                'novaposhta_address' => "<b>Кур'єр Nova Poshta</b>",
+                'novaposhta_warehouse' => '<b>Відділення Nova Poshta</b>',
+                'packeta_address' => '<b>Кур’єр Zasilkovna</b>',
+                'packeta_warehouse' => '<b>Відділення/поштомат Zasilkovna</b>',
+                'default_pickup' => '<b>Самовивіз</b>',
+                'default_address' => '<b>Поштова доставка</b>',
+            ],
+        ],
+        'payment' => [
+            'method' => [
+                'zasilkovna_cod' => '<b>Накладений платіж Zasilkovna</b>',
+                'novaposhta_cod' => '<b>Накладений платіж Nova Poshta</b>',
+                'default_cash' => '<b>Оплата при отриманні</b>',
+                'liqpay_online' => '<b>Онлайн-оплата LiqPay</b>',
+                'card_online' => '<b>Оплата карткою онлайн</b>',
+                'bank_transfer' => '<b>Банківський переказ</b>',
+            ],
+        ],
     ]
 
 ];

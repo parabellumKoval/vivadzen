@@ -3,6 +3,7 @@
 namespace ParabellumKoval\BackpackImages;
 
 use Illuminate\Support\ServiceProvider;
+use ParabellumKoval\BackpackImages\Console\Commands\TransferImagesCommand;
 use ParabellumKoval\BackpackImages\Services\ImageUploader;
 use ParabellumKoval\BackpackImages\Support\FileNameGenerator;
 use ParabellumKoval\BackpackImages\Support\ImageProviderFactory;
@@ -52,5 +53,11 @@ class BackpackImagesServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'backpack-images');
 
         $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'images');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                TransferImagesCommand::class,
+            ]);
+        }
     }
 }

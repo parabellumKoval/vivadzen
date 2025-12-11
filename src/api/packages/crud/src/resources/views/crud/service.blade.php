@@ -57,6 +57,7 @@
 @endsection
 
 @push('after_styles')
+    <link href="{{ asset('packages/backpack/crud/css/service.css') }}" rel="stylesheet">
     <link href="{{ asset('packages/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('packages/select2-bootstrap-theme/dist/select2-bootstrap.min.css') }}" rel="stylesheet">
 @endpush
@@ -72,10 +73,48 @@
             const endpoint = $target.data('endpoint');
             const sourceId = $target.data('source-id');
             const selected = $target.data('selected');
+            const placeholder = '{{ __('Выберите запись для слияния') }}';
+
+            function getCandidateMarkup(data) {
+                if (!data) {
+                    return null;
+                }
+
+                if (data.html) {
+                    return data.html;
+                }
+
+                if (data.element) {
+                    const $element = $(data.element);
+                    const stored = $element.data('data');
+
+                    if (stored && stored.html) {
+                        return stored.html;
+                    }
+                }
+
+                return null;
+            }
+
+            function formatCandidateResult(data) {
+                if (!data || data.loading) {
+                    return data && data.text ? data.text : '';
+                }
+
+                return getCandidateMarkup(data) || data.text || '';
+            }
+
+            function formatCandidateSelection(data) {
+                if (!data || !data.id) {
+                    return data && data.text ? data.text : '';
+                }
+
+                return getCandidateMarkup(data) || data.text || '';
+            }
 
             $target.select2({
                 theme: 'bootstrap',
-                placeholder: '{{ __('Выберите запись для слияния') }}',
+                placeholder: placeholder,
                 ajax: {
                     url: endpoint,
                     dataType: 'json',
@@ -93,6 +132,9 @@
                         };
                     }
                 },
+                templateResult: formatCandidateResult,
+                templateSelection: formatCandidateSelection,
+                escapeMarkup: function(markup) { return markup; },
                 allowClear: true,
             });
 
@@ -101,6 +143,8 @@
                     if (response && response.results && response.results.length) {
                         const entry = response.results[0];
                         const option = new Option(entry.text, entry.id, true, true);
+                        const $option = $(option);
+                        $option.data('data', entry);
                         $target.append(option).trigger('change');
                     }
                 });

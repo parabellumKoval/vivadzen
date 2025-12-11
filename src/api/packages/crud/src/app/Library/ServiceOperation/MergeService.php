@@ -1573,10 +1573,52 @@ class MergeService
 
     protected function makeCandidateOption(Model $entry): array
     {
+        $label = $this->formatCandidateLabel($entry);
+        $uniqHtml = $this->resolveCandidateUniqHtml($entry);
+        $uniqString = $this->resolveCandidateUniqString($entry);
+
+        $text = $uniqString
+            ?? ($uniqHtml ? trim(strip_tags($uniqHtml)) : null)
+            ?? $label;
+
+        $html = $uniqHtml ?? '<div><strong>'.e($text).'</strong></div>';
+
         return [
             'id' => $entry->getKey(),
-            'text' => $this->formatCandidateLabel($entry),
+            'text' => $text,
+            'html' => $html,
             'slug' => method_exists($entry, 'getSlugOrTitleAttribute') ? ($entry->slug_or_title ?? null) : null,
         ];
+    }
+
+    protected function resolveCandidateUniqHtml(Model $entry): ?string
+    {
+        return $this->resolveModelUniqAttribute($entry, 'uniqHtml');
+    }
+
+    protected function resolveCandidateUniqString(Model $entry): ?string
+    {
+        return $this->resolveModelUniqAttribute($entry, 'uniqString');
+    }
+
+    protected function resolveModelUniqAttribute(Model $entry, string $attribute): ?string
+    {
+        $keys = array_unique([$attribute, Str::snake($attribute)]);
+
+        foreach ($keys as $key) {
+            $value = $entry->getAttribute($key);
+
+            if ($value === null) {
+                continue;
+            }
+
+            $stringValue = trim($this->stringifyValue($value));
+
+            if ($stringValue !== '') {
+                return $stringValue;
+            }
+        }
+
+        return null;
     }
 }

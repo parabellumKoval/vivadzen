@@ -23,7 +23,8 @@ class ProductCartResource extends \Backpack\Store\app\Http\Resources\BaseResourc
         'rating' => $this->rating,
         'image' => $this->effective()->getFirstImageForApi(),
         'inStock' => $this->in_stock,
-        'external' => $this->external ?? 0
+        'external' => $this->external ?? 0,
+        'amount' => $this->amount
       ];
     }
 }

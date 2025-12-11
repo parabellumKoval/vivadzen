@@ -158,6 +158,69 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'provider' => '<b>Customer type</b>',
+        'user' => [
+            'first_name' => '<b>First name</b>',
+            'last_name' => '<b>Last name</b>',
+            'phone' => '<b>Phone number</b>',
+            'email' => '<b>Email</b>',
+        ],
+        'payment' => [
+            'method' => '<b>Payment method</b>',
+            'settlement' => '<b>Billing city</b>',
+            'street' => '<b>Billing street</b>',
+            'house' => '<b>Building number</b>',
+            'room' => '<b>Apartment</b>',
+            'zip' => '<b>Billing postal code</b>',
+        ],
+        'delivery' => [
+            'method' => '<b>Delivery method</b>',
+            'warehouse' => '<b>Pickup point</b>',
+            'warehouseRef' => '<b>Pickup point ID</b>',
+            'settlement' => '<b>City</b>',
+            'settlementRef' => '<b>City ID</b>',
+            'area' => '<b>Area</b>',
+            'region' => '<b>Region</b>',
+            'type' => '<b>Address type</b>',
+            'street' => '<b>Street</b>',
+            'streetRef' => '<b>Street ID</b>',
+            'house' => '<b>House number</b>',
+            'room' => '<b>Apartment</b>',
+            'zip' => '<b>Postal code</b>',
+        ],
+        'comment' => '<b>Comment</b>',
+        'bonus' => '<b>Bonus points</b>',
+        'bonusInFiat' => '<b>Bonus discount amount</b>',
+        'promocode' => '<b>Promo code</b>',
+    ],
+
+    'values' => [
+        'provider' => [
+            'data' => '<b>Guest</b>',
+            'auth' => '<b>Profile</b>',
+            'outer' => '<b>Partner order</b>',
+        ],
+        'delivery' => [
+            'method' => [
+                'novaposhta_address' => '<b>Nova Poshta courier delivery</b>',
+                'novaposhta_warehouse' => '<b>Nova Poshta branch/locker</b>',
+                'packeta_address' => '<b>Zasilkovna courier delivery</b>',
+                'packeta_warehouse' => '<b>Zasilkovna pickup point</b>',
+                'default_pickup' => '<b>Pickup</b>',
+                'default_address' => '<b>Postal delivery</b>',
+            ],
+        ],
+        'payment' => [
+            'method' => [
+                'zasilkovna_cod' => '<b>Zasilkovna cash on delivery</b>',
+                'novaposhta_cod' => '<b>Nova Poshta cash on delivery</b>',
+                'default_cash' => '<b>Pay on delivery</b>',
+                'liqpay_online' => '<b>LiqPay online payment</b>',
+                'card_online' => '<b>Card payment online</b>',
+                'bank_transfer' => '<b>Bank transfer</b>',
+            ],
+        ],
+    ]
 
 ];

@@ -1,0 +1,407 @@
+<?php
+
+namespace ParabellumKoval\BackpackImages\Console\Commands;
+
+use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use ParabellumKoval\BackpackImages\Contracts\ImageStorageProvider;
+use ParabellumKoval\BackpackImages\DTO\StoredImage;
+use ParabellumKoval\BackpackImages\Services\ImageUploader;
+use ParabellumKoval\BackpackImages\Support\ImageUploadOptions;
+use Symfony\Component\HttpFoundation\File\File;
+use Throwable;
+
+class TransferImagesCommand extends Command
+{
+    protected $signature = 'backpack-images:transfer
+        {model : Fully qualified model class that uses the HasImages trait}
+        {--attribute=images : Model attribute that stores images}
+        {--source= : Source provider name (defaults to backpack-images.default_provider)}
+        {--target= : Target provider name (defaults to backpack-images.default_provider)}
+        {--folder= : Destination folder on the target provider}
+        {--chunk=100 : Number of records processed per chunk}
+        {--dry-run : Simulate the transfer without persisting changes}';
+
+    protected $description = 'Transfer stored image references from one provider to another and update the model attribute paths.';
+
+    /** @var array<string, string> */
+    protected array $transferredCache = [];
+
+    public function handle(ImageUploader $uploader): int
+    {
+        $modelClass = ltrim((string) $this->argument('model'), '\\');
+        $attribute = (string) ($this->option('attribute') ?: 'images');
+        $chunkSize = $this->resolveChunkSize();
+        $dryRun = (bool) $this->option('dry-run');
+
+        if (!class_exists($modelClass)) {
+            $this->error(sprintf('Model class [%s] was not found.', $modelClass));
+
+            return self::FAILURE;
+        }
+
+        if (!is_subclass_of($modelClass, Model::class)) {
+            $this->error(sprintf('Class [%s] must extend %s.', $modelClass, Model::class));
+
+            return self::FAILURE;
+        }
+
+        if (!method_exists($modelClass, 'imageAttributeNames')) {
+            $this->error(sprintf('Model [%s] must use the HasImages trait.', $modelClass));
+
+            return self::FAILURE;
+        }
+
+        if (!in_array($attribute, $modelClass::imageAttributeNames(), true)) {
+            $this->error(sprintf('Attribute [%s] is not registered as an image collection on [%s].', $attribute, $modelClass));
+
+            return self::FAILURE;
+        }
+
+        $sourceProvider = (string) ($this->option('source') ?: config('backpack-images.default_provider', 'local'));
+        $targetProvider = (string) ($this->option('target') ?: config('backpack-images.default_provider', 'local'));
+        $targetFolder = $this->option('folder');
+        $targetFolder = $targetFolder !== null ? trim((string) $targetFolder, '/') : null;
+
+        if ($sourceProvider === $targetProvider) {
+            $this->error('Source and target providers must be different.');
+
+            return self::INVALID;
+        }
+
+        try {
+            $sourceProviderInstance = $uploader->getProvider($sourceProvider);
+        } catch (Throwable $exception) {
+            $this->error(sprintf('Unable to resolve source provider [%s]: %s', $sourceProvider, $exception->getMessage()));
+
+            return self::FAILURE;
+        }
+
+        try {
+            $uploader->getProvider($targetProvider);
+        } catch (Throwable $exception) {
+            $this->error(sprintf('Unable to resolve target provider [%s]: %s', $targetProvider, $exception->getMessage()));
+
+            return self::FAILURE;
+        }
+
+        $targetOptions = $this->resolveTargetOptions($modelClass, $attribute, $targetProvider, $targetFolder, $uploader);
+        $sourceDisk = $this->resolveSourceDisk($sourceProvider);
+
+        $this->info(sprintf(
+            'Transferring [%s] images for %s (from %s to %s)%s',
+            $attribute,
+            $modelClass,
+            $sourceProvider,
+            $targetProvider,
+            $dryRun ? ' [dry-run]' : ''
+        ));
+
+        $stats = [
+            'records_scanned' => 0,
+            'records_updated' => 0,
+            'images_total' => 0,
+            'uploads' => 0,
+            'cached' => 0,
+            'skipped' => 0,
+            'failed' => 0,
+        ];
+
+        /** @var \Illuminate\Database\Eloquent\Builder $query */
+        $query = $modelClass::query();
+
+        $query->chunkById($chunkSize, function ($models) use ($attribute, $sourceDisk, $uploader, $targetOptions, $sourceProviderInstance, $dryRun, &$stats) {
+            foreach ($models as $model) {
+                $this->processModel($model, $attribute, $sourceDisk, $sourceProviderInstance, $uploader, $targetOptions, $dryRun, $stats);
+            }
+        });
+
+        $this->info(sprintf(
+            'Finished. Records scanned: %d, updated: %d, Images processed: %d, Uploaded: %d, Cached: %d, Skipped: %d, Failed: %d',
+            $stats['records_scanned'],
+            $stats['records_updated'],
+            $stats['images_total'],
+            $stats['uploads'],
+            $stats['cached'],
+            $stats['skipped'],
+            $stats['failed']
+        ));
+
+        return self::SUCCESS;
+    }
+
+    protected function processModel(
+        Model $model,
+        string $attribute,
+        ?string $sourceDisk,
+        ImageStorageProvider $sourceProvider,
+        ImageUploader $uploader,
+        ImageUploadOptions $targetOptions,
+        bool $dryRun,
+        array &$stats
+    ): void {
+        $images = $this->extractImages($model, $attribute);
+
+        if (empty($images)) {
+            return;
+        }
+
+        $stats['records_scanned']++;
+
+        $changed = false;
+        $modelKey = $model->getKey();
+
+        foreach ($images as $index => $image) {
+            $src = trim((string) ($image['src'] ?? ''));
+
+            if ($src === '') {
+                $stats['skipped']++;
+                continue;
+            }
+
+            $stats['images_total']++;
+
+            if (isset($this->transferredCache[$src])) {
+                $images[$index]['src'] = $this->transferredCache[$src];
+                $stats['cached']++;
+                $changed = true;
+                continue;
+            }
+
+            $stored = $this->transferSingleImage($src, $sourceDisk, $sourceProvider, $uploader, $targetOptions, $model, $attribute);
+
+            if (!$stored instanceof StoredImage) {
+                $stats['failed']++;
+                $this->warn(sprintf('Unable to transfer image "%s" for %s #%s', $src, get_class($model), $modelKey));
+                continue;
+            }
+
+            $images[$index]['src'] = $stored->path;
+            $this->transferredCache[$src] = $stored->path;
+            $stats['uploads']++;
+            $changed = true;
+            $this->line(sprintf('Transferred "%s" for %s #%s', $src, class_basename($model), $modelKey));
+        }
+
+        if (!$changed) {
+            return;
+        }
+
+        $stats['records_updated']++;
+
+        if ($dryRun) {
+            $this->line(sprintf('[dry-run] Would update %s #%s', class_basename($model), $modelKey));
+
+            return;
+        }
+
+        $model->setAttribute($attribute, $images);
+
+        if (method_exists($model, 'saveQuietly')) {
+            $model->saveQuietly();
+        } else {
+            $model->save();
+        }
+    }
+
+    protected function transferSingleImage(
+        string $src,
+        ?string $sourceDisk,
+        ImageStorageProvider $sourceProvider,
+        ImageUploader $uploader,
+        ImageUploadOptions $targetOptions,
+        Model $model,
+        string $attribute
+    ): ?StoredImage {
+        [$file, $cleanup] = $this->getSourceFile($src, $sourceDisk, $sourceProvider, $model, $attribute, $uploader);
+
+        if (!$file instanceof File) {
+            return null;
+        }
+
+        try {
+            return $uploader->uploadFromFile($file, $targetOptions);
+        } catch (Throwable $exception) {
+            $this->warn(sprintf('Upload failed for "%s": %s', $src, $exception->getMessage()));
+
+            return null;
+        } finally {
+            if ($cleanup) {
+                $cleanup();
+            }
+        }
+    }
+
+    /**
+     * @return array{0: File|null, 1: callable|null}
+     */
+    protected function getSourceFile(
+        string $src,
+        ?string $sourceDisk,
+        ImageStorageProvider $sourceProvider,
+        Model $model,
+        string $attribute,
+        ImageUploader $uploader
+    ): array {
+        if ($sourceDisk) {
+            $file = $this->getFileFromDisk($sourceDisk, $src);
+
+            if ($file instanceof File) {
+                return [$file, null];
+            }
+        }
+
+        $url = $this->resolveSourceUrl($src, $sourceProvider, $model, $attribute, $uploader);
+
+        if (!$url) {
+            return [null, null];
+        }
+
+        return $this->downloadToTemporaryFile($url);
+    }
+
+    protected function getFileFromDisk(string $disk, string $path): ?File
+    {
+        try {
+            $storage = Storage::disk($disk);
+
+            if (!$storage->exists($path)) {
+                return null;
+            }
+
+            $absolutePath = $storage->path($path);
+
+            if (!is_file($absolutePath)) {
+                return null;
+            }
+
+            return new File($absolutePath);
+        } catch (Throwable) {
+            return null;
+        }
+    }
+
+    /**
+     * @return array{0: File|null, 1: callable|null}
+     */
+    protected function downloadToTemporaryFile(string $url): array
+    {
+        $tempPath = tempnam(sys_get_temp_dir(), 'img-transfer-');
+
+        if ($tempPath === false) {
+            return [null, null];
+        }
+
+        try {
+            $response = Http::timeout(120)->sink($tempPath)->get($url);
+
+            if (!$response->successful()) {
+                @unlink($tempPath);
+
+                return [null, null];
+            }
+        } catch (Throwable) {
+            @unlink($tempPath);
+
+            return [null, null];
+        }
+
+        $cleanup = static function () use ($tempPath): void {
+            @unlink($tempPath);
+        };
+
+        return [new File($tempPath), $cleanup];
+    }
+
+    protected function resolveSourceUrl(
+        string $src,
+        ImageStorageProvider $provider,
+        Model $model,
+        string $attribute,
+        ImageUploader $uploader
+    ): ?string {
+        if ($this->isAbsoluteUrl($src)) {
+            return $src;
+        }
+
+        try {
+            return $provider->getUrl($src);
+        } catch (Throwable) {
+            if (method_exists($model, 'formatImageUrlForAttribute')) {
+                return $model->formatImageUrlForAttribute($attribute, $src);
+            }
+        }
+
+        return null;
+    }
+
+    protected function extractImages(Model $model, string $attribute): array
+    {
+        $value = $model->getAttribute($attribute);
+
+        if ($value instanceof Collection) {
+            $value = $value->toArray();
+        }
+
+        if (is_string($value)) {
+            $decoded = json_decode($value, true);
+            $value = json_last_error() === JSON_ERROR_NONE ? $decoded : [];
+        }
+
+        if (!is_array($value)) {
+            return [];
+        }
+
+        return array_values(array_map(static fn ($item) => is_array($item) ? $item : (array) $item, $value));
+    }
+
+    protected function resolveTargetOptions(
+        string $modelClass,
+        string $attribute,
+        string $targetProvider,
+        ?string $folder,
+        ImageUploader $uploader
+    ): ImageUploadOptions {
+        if (method_exists($modelClass, 'imageUploadOptions')) {
+            $options = $modelClass::imageUploadOptions($attribute);
+        } else {
+            $options = $uploader->getDefaultOptions();
+        }
+
+        $overrides = ['provider' => $targetProvider];
+
+        if ($folder !== null && $folder !== '') {
+            $overrides['folder'] = $folder;
+        }
+
+        return $options->withOverrides($overrides);
+    }
+
+    protected function resolveSourceDisk(string $providerName): ?string
+    {
+        $config = config("backpack-images.providers.{$providerName}");
+
+        if (!is_array($config)) {
+            return null;
+        }
+
+        $disk = $config['disk'] ?? null;
+
+        return is_string($disk) && $disk !== '' ? $disk : null;
+    }
+
+    protected function resolveChunkSize(): int
+    {
+        $chunk = (int) ($this->option('chunk') ?? 100);
+
+        return $chunk > 0 ? $chunk : 100;
+    }
+
+    protected function isAbsoluteUrl(string $value): bool
+    {
+        return str_starts_with($value, 'http://') || str_starts_with($value, 'https://');
+    }
+}

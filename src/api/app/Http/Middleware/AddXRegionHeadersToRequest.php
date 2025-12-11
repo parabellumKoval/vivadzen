@@ -38,13 +38,31 @@ class AddXRegionHeadersToRequest
 
         $parts = explode(',', $header);
         $primary = trim($parts[0] ?? '');
-        $primary = explode(';', $primary)[0] ?? '';
 
         if ($primary === '') {
             return null;
         }
 
-        return strtolower(substr($primary, 0, 5));
+        $primary = strtolower($primary);
+
+        if (str_contains($primary, ';')) {
+            $primary = substr($primary, 0, strpos($primary, ';'));
+        }
+
+        $segments = preg_split('/[-_]/', $primary);
+        $language = $segments[0] ?? null;
+
+        if (!$language) {
+            return null;
+        }
+
+        $supported = (array) config('app.supported_locales', []);
+
+        if (!empty($supported) && !in_array($language, $supported, true)) {
+            return null;
+        }
+
+        return $language;
     }
 
     protected function normalizeCountry(?string $value): ?string

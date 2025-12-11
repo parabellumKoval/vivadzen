@@ -4831,12 +4831,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-articles.git",
-                "reference": "4437363d08163030d30675f1bdfae297b057b8a4"
+                "reference": "3f8d40f15dbbd0267b60b044fdd467f95879228b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/4437363d08163030d30675f1bdfae297b057b8a4",
-                "reference": "4437363d08163030d30675f1bdfae297b057b8a4",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/3f8d40f15dbbd0267b60b044fdd467f95879228b",
+                "reference": "3f8d40f15dbbd0267b60b044fdd467f95879228b",
                 "shasum": ""
             },
             "require": {
@@ -4891,7 +4891,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-articles/issues",
                 "source": "https://github.com/parabellumKoval/backpack-articles/tree/main"
             },
-            "time": "2025-11-28T15:31:23+00:00"
+            "time": "2025-12-11T19:29:10+00:00"
         },
         {
             "name": "parabellumkoval/backpack-banners",
@@ -5080,12 +5080,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-images.git",
-                "reference": "2c540665fed9c4b0a7e0a41e5210289d609ad42a"
+                "reference": "fc29ad4d88f850ad84dbbbd58374f0b692efa968"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-images/zipball/2c540665fed9c4b0a7e0a41e5210289d609ad42a",
-                "reference": "2c540665fed9c4b0a7e0a41e5210289d609ad42a",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-images/zipball/fc29ad4d88f850ad84dbbbd58374f0b692efa968",
+                "reference": "fc29ad4d88f850ad84dbbbd58374f0b692efa968",
                 "shasum": ""
             },
             "require": {
@@ -5121,7 +5121,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-images/issues",
                 "source": "https://github.com/parabellumKoval/backpack-images/tree/main"
             },
-            "time": "2025-12-05T17:04:49+00:00"
+            "time": "2025-12-11T19:30:44+00:00"
         },
         {
             "name": "parabellumkoval/backpack-profile",
@@ -5314,12 +5314,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "aa44ad3eb49a13980bb8f053fbb406a260a88cf1"
+                "reference": "1712629452ca6bf4fa1d67b5f5ad0bc4a6457979"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/aa44ad3eb49a13980bb8f053fbb406a260a88cf1",
-                "reference": "aa44ad3eb49a13980bb8f053fbb406a260a88cf1",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/1712629452ca6bf4fa1d67b5f5ad0bc4a6457979",
+                "reference": "1712629452ca6bf4fa1d67b5f5ad0bc4a6457979",
                 "shasum": ""
             },
             "require": {
@@ -5380,7 +5380,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/multistore"
             },
-            "time": "2025-12-07T15:34:30+00:00"
+            "time": "2025-12-11T19:32:26+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",
@@ -5513,12 +5513,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/CRUD.git",
-                "reference": "043151b30b57636066eb6da3ab591e4e551884f1"
+                "reference": "04c468f8522ba0043b71cd988357b7150bd6b530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/CRUD/zipball/043151b30b57636066eb6da3ab591e4e551884f1",
-                "reference": "043151b30b57636066eb6da3ab591e4e551884f1",
+                "url": "https://api.github.com/repos/parabellumKoval/CRUD/zipball/04c468f8522ba0043b71cd988357b7150bd6b530",
+                "reference": "04c468f8522ba0043b71cd988357b7150bd6b530",
                 "shasum": ""
             },
             "require": {
@@ -5589,7 +5589,7 @@
             "support": {
                 "source": "https://github.com/parabellumKoval/CRUD/tree/main"
             },
-            "time": "2025-12-05T17:02:42+00:00"
+            "time": "2025-12-11T19:31:23+00:00"
         },
         {
             "name": "parabellumkoval/crud-filemanager",
