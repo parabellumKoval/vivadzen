@@ -5,6 +5,10 @@ return [
   'new_order_admin' => 'New order',
   'all_rights_reserved' => 'All rights reserved',
   'thank_for_order' => 'Thank you for your order!',
+  'order_admin' => [
+    'title' => 'New order: :code',
+    'button' => 'View order',
+  ],
 
   'referral' => [
     'new_sponsor_subject' => 'You have a new referral',
@@ -84,5 +88,13 @@ return [
       'rejected' => 'Rejected',
       'paid' => 'Paid',
     ],
+  ],
+
+  'verify_email' => [
+    'subject' => 'Verify Email Address',
+    'greeting' => 'Welcome!',
+    'intro' => 'Please click the button below to verify your email address.',
+    'button' => 'Verify Email',
+    'outro' => 'If you did not create an account, please ignore this email.',
   ],
 ];

@@ -23,7 +23,8 @@ class TransferImagesCommand extends Command
         {--target= : Target provider name (defaults to backpack-images.default_provider)}
         {--folder= : Destination folder on the target provider}
         {--chunk=100 : Number of records processed per chunk}
-        {--dry-run : Simulate the transfer without persisting changes}';
+        {--dry-run : Simulate the transfer without persisting changes}
+        {--keep-names : Preserve original file names when uploading to the target provider}';
 
     protected $description = 'Transfer stored image references from one provider to another and update the model attribute paths.';
 
@@ -36,6 +37,7 @@ class TransferImagesCommand extends Command
         $attribute = (string) ($this->option('attribute') ?: 'images');
         $chunkSize = $this->resolveChunkSize();
         $dryRun = (bool) $this->option('dry-run');
+        $preserveNames = (bool) $this->option('keep-names');
 
         if (!class_exists($modelClass)) {
             $this->error(sprintf('Model class [%s] was not found.', $modelClass));
@@ -88,7 +90,7 @@ class TransferImagesCommand extends Command
             return self::FAILURE;
         }
 
-        $targetOptions = $this->resolveTargetOptions($modelClass, $attribute, $targetProvider, $targetFolder, $uploader);
+        $targetOptions = $this->resolveTargetOptions($modelClass, $attribute, $targetProvider, $targetFolder, $uploader, $preserveNames);
         $sourceDisk = $this->resolveSourceDisk($sourceProvider);
 
         $this->info(sprintf(
@@ -113,9 +115,9 @@ class TransferImagesCommand extends Command
         /** @var \Illuminate\Database\Eloquent\Builder $query */
         $query = $modelClass::query();
 
-        $query->chunkById($chunkSize, function ($models) use ($attribute, $sourceDisk, $uploader, $targetOptions, $sourceProviderInstance, $dryRun, &$stats) {
+        $query->chunkById($chunkSize, function ($models) use ($attribute, $sourceDisk, $uploader, $targetOptions, $sourceProviderInstance, $dryRun, $preserveNames, &$stats) {
             foreach ($models as $model) {
-                $this->processModel($model, $attribute, $sourceDisk, $sourceProviderInstance, $uploader, $targetOptions, $dryRun, $stats);
+                $this->processModel($model, $attribute, $sourceDisk, $sourceProviderInstance, $uploader, $targetOptions, $dryRun, $preserveNames, $stats);
             }
         });
 
@@ -141,6 +143,7 @@ class TransferImagesCommand extends Command
         ImageUploader $uploader,
         ImageUploadOptions $targetOptions,
         bool $dryRun,
+        bool $preserveNames,
         array &$stats
     ): void {
         $images = $this->extractImages($model, $attribute);
@@ -171,7 +174,7 @@ class TransferImagesCommand extends Command
                 continue;
             }
 
-            $stored = $this->transferSingleImage($src, $sourceDisk, $sourceProvider, $uploader, $targetOptions, $model, $attribute);
+            $stored = $this->transferSingleImage($src, $sourceDisk, $sourceProvider, $uploader, $targetOptions, $model, $attribute, $preserveNames);
 
             if (!$stored instanceof StoredImage) {
                 $stats['failed']++;
@@ -214,9 +217,10 @@ class TransferImagesCommand extends Command
         ImageUploader $uploader,
         ImageUploadOptions $targetOptions,
         Model $model,
-        string $attribute
+        string $attribute,
+        bool $preserveNames
     ): ?StoredImage {
-        [$file, $cleanup] = $this->getSourceFile($src, $sourceDisk, $sourceProvider, $model, $attribute, $uploader);
+        [$file, $cleanup] = $this->getSourceFile($src, $sourceDisk, $sourceProvider, $model, $attribute, $uploader, $preserveNames);
 
         if (!$file instanceof File) {
             return null;
@@ -244,7 +248,8 @@ class TransferImagesCommand extends Command
         ImageStorageProvider $sourceProvider,
         Model $model,
         string $attribute,
-        ImageUploader $uploader
+        ImageUploader $uploader,
+        bool $preserveNames
     ): array {
         if ($sourceDisk) {
             $file = $this->getFileFromDisk($sourceDisk, $src);
@@ -260,7 +265,9 @@ class TransferImagesCommand extends Command
             return [null, null];
         }
 
-        return $this->downloadToTemporaryFile($url);
+        $desiredName = $preserveNames ? basename($src) : null;
+
+        return $this->downloadToTemporaryFile($url, $desiredName);
     }
 
     protected function getFileFromDisk(string $disk, string $path): ?File
@@ -287,7 +294,7 @@ class TransferImagesCommand extends Command
     /**
      * @return array{0: File|null, 1: callable|null}
      */
-    protected function downloadToTemporaryFile(string $url): array
+    protected function downloadToTemporaryFile(string $url, ?string $desiredName = null): array
     {
         $tempPath = tempnam(sys_get_temp_dir(), 'img-transfer-');
 
@@ -307,6 +314,22 @@ class TransferImagesCommand extends Command
             @unlink($tempPath);
 
             return [null, null];
+        }
+
+        if ($desiredName !== null) {
+            $desiredName = basename(trim($desiredName));
+
+            if ($desiredName !== '') {
+                $targetPath = dirname($tempPath) . DIRECTORY_SEPARATOR . $desiredName;
+
+                if (file_exists($targetPath)) {
+                    $targetPath = dirname($tempPath) . DIRECTORY_SEPARATOR . uniqid('img-transfer-', true) . '-' . $desiredName;
+                }
+
+                if (@rename($tempPath, $targetPath)) {
+                    $tempPath = $targetPath;
+                }
+            }
         }
 
         $cleanup = static function () use ($tempPath): void {
@@ -363,7 +386,8 @@ class TransferImagesCommand extends Command
         string $attribute,
         string $targetProvider,
         ?string $folder,
-        ImageUploader $uploader
+        ImageUploader $uploader,
+        bool $preserveNames
     ): ImageUploadOptions {
         if (method_exists($modelClass, 'imageUploadOptions')) {
             $options = $modelClass::imageUploadOptions($attribute);
@@ -375,6 +399,11 @@ class TransferImagesCommand extends Command
 
         if ($folder !== null && $folder !== '') {
             $overrides['folder'] = $folder;
+        }
+
+        if ($preserveNames) {
+            $overrides['preserveOriginalName'] = true;
+            $overrides['generateUniqueName'] = false;
         }
 
         return $options->withOverrides($overrides);

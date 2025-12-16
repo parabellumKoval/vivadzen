@@ -3,6 +3,8 @@
 namespace App\Models;
 
 
+use App\Support\RegionalContext;
+use App\Notifications\VerifyEmailNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -51,6 +53,87 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        $regionalContext = $this->resolveRegionalContext();
+        $this->notify(new VerifyEmailNotification($regionalContext));
+    }
+
+    protected function resolveRegionalContext(): ?array
+    {
+        if (class_exists(RegionalContext::class) && app()->bound(RegionalContext::class)) {
+            return app(RegionalContext::class)->snapshot();
+        }
+
+        return null;
+    }
+
+    protected function preferredVerificationLocale(): ?string
+    {
+        foreach ($this->verificationLocaleCandidates() as $candidate) {
+            $normalized = $this->normalizeLocale($candidate);
+
+            if ($normalized) {
+                return $normalized;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array<int, string|null>
+     */
+    protected function verificationLocaleCandidates(): array
+    {
+        $candidates = [];
+
+        // Priority 1: Locale from current request context (RegionalContext from Accept-Language header)
+        if (class_exists(RegionalContext::class) && app()->bound(RegionalContext::class)) {
+            $snapshot = app(RegionalContext::class)->snapshot();
+            if (!empty($snapshot['locale'])) {
+                $candidates[] = $snapshot['locale'];
+            }
+        }
+
+        // Priority 2: Application locale
+        $candidates[] = app()->getLocale();
+        
+        // Priority 3: User's own locale preference
+        $candidates[] = $this->locale ?? null;
+        
+        // Priority 4: Default application locale
+        $candidates[] = config('app.locale');
+        
+        // Priority 5 (LOWEST): Profile locale - should rarely be used
+        // Note: profile locale might be set from sponsor during referral signup,
+        // so we keep it as a very last resort
+        $candidates[] = $this->profile?->locale;
+
+        return array_filter($candidates, static fn ($value) => $value !== null && $value !== '');
+    }
+
+    protected function normalizeLocale(?string $locale): ?string
+    {
+        if ($locale === null || $locale === '') {
+            return null;
+        }
+
+        $normalized = strtolower(str_replace('_', '-', $locale));
+
+        if (str_contains($normalized, '-')) {
+            $normalized = explode('-', $normalized)[0];
+        }
+
+        $supported = (array) config('app.supported_locales', []);
+
+        if (!empty($supported) && !in_array($normalized, $supported, true)) {
+            return null;
+        }
+
+        return $normalized;
     }
 
     public function toArray(): array

@@ -21,8 +21,11 @@
 
   {{-- Contacts --}}
   @isset($contacts)
+    @php
+      $contactDetails = is_array($contacts) ? $contacts : null;
+    @endphp
     @slot('contacts')
-      @component('mail::contacts')
+      @component('mail::contacts', ['details' => $contactDetails])
       @endcomponent
     @endslot
   @endisset

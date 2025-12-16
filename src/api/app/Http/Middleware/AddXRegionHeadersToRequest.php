@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\RegionalContext;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,10 @@ class AddXRegionHeadersToRequest
 
         if (!empty($payload)) {
             $request->merge($payload);
+        }
+
+        if (app()->bound(RegionalContext::class)) {
+            app(RegionalContext::class)->hydrateFromRequest($request, $lang);
         }
 
         return $next($request);

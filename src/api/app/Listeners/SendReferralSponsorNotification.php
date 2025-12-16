@@ -28,8 +28,27 @@ class SendReferralSponsorNotification
             return;
         }
 
+        // Save current regional context to restore it after queueing
+        // This prevents the sponsor's locale from affecting other queued emails (e.g., verification)
+        $previousContext = null;
+        if (class_exists(\App\Support\RegionalContext::class) && app()->bound(\App\Support\RegionalContext::class)) {
+            $previousContext = app(\App\Support\RegionalContext::class)->snapshot();
+        }
+
+        $regionalContext = [
+            'locale' => $event->sponsor->locale ?? $event->sponsor->user?->locale ?? null,
+        ];
+
         Mail::to($email)->queue(
-            new ReferralSponsorNotification($event->sponsor, $event->referral)
+            new ReferralSponsorNotification($event->sponsor, $event->referral, $regionalContext)
         );
+
+        // Restore the previous regional context to prevent interference with other queued notifications
+        if ($previousContext && class_exists(\App\Support\RegionalContext::class) && app()->bound(\App\Support\RegionalContext::class)) {
+            $service = app(\App\Support\RegionalContext::class);
+            $service->setLocale($previousContext['locale'] ?? null);
+            $service->setRegion($previousContext['region'] ?? null);
+            $service->setAcceptLanguage($previousContext['accept_language'] ?? null);
+        }
     }
 }

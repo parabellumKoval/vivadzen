@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Mail\Concerns\InteractsWithRegionalContext;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -9,6 +10,7 @@ use Illuminate\Support\Str;
 
 class Order extends Mailable
 {
+    use InteractsWithRegionalContext;
     use Queueable, SerializesModels;
 
     public $order;
@@ -33,10 +35,14 @@ class Order extends Mailable
      *
      * @return void
      */
-    public function __construct($order)
+    public function __construct($order, ?array $regionalContext = null)
     {
         $this->order = $order;
-        app()->setLocale('uk');
+        $this->initializeRegionalContext($regionalContext);
+
+        if (! $this->hasRegionalLocale()) {
+            $this->setRegionalLocale(config('app.locale', 'uk'));
+        }
     }
 
     /**

@@ -23,10 +23,15 @@ class ReviewController extends \Backpack\Reviews\app\Http\Controllers\Api\Review
     $reviewable_type = $request->input('reviewable_type', 'not_exist');
     $is_moderated = $request->input('is_moderated', 1);
     $with_text = $request->input('with_text', null);
+    $typeMap = $this->buildReviewableTypeMap(config('backpack.reviews.morph_aliases', []));
+    $filterNullType = $reviewable_type !== 'not_exist' && $this->isNullReviewableType($reviewable_type);
+    $reviewableTypes = $reviewable_type !== 'not_exist'
+        ? $this->resolveReviewableTypeVariants($reviewable_type, $typeMap)
+        : [];
 
     if($request->input('reviewable_slug') && $request->input('reviewable_type')) {
       $reviewable = $request->input('reviewable_type')::where('slug', $request->input('reviewable_slug'))->first();
-      $reviewable_id = $reviewable? $reviewable->id: null;
+      $reviewable_id = $reviewable? ($reviewable->getReviewableKey() ?? $reviewable->parent_id ?? $reviewable->id): null;
     }
 
     $node_ids = Category::getCategoryNodeIdList(
@@ -51,11 +56,15 @@ class ReviewController extends \Backpack\Reviews\app\Http\Controllers\Api\Review
           $query->where('ak_reviews.text', '=', null)->orWhere('ak_reviews.text', '=', '');
         }
       })
-      ->when($reviewable_type !== 'not_exist', function($query) use ($reviewable_type){
-        if($reviewable_type === 'null') {
+      ->when($reviewable_type !== 'not_exist', function($query) use ($filterNullType, $reviewableTypes){
+        if($filterNullType) {
           $query->whereNull('ak_reviews.reviewable_type');
-        }else {
-          $query->where('ak_reviews.reviewable_type', $reviewable_type);
+        } elseif (!empty($reviewableTypes)) {
+          if (count($reviewableTypes) === 1) {
+            $query->where('ak_reviews.reviewable_type', $reviewableTypes[0]);
+          } else {
+            $query->whereIn('ak_reviews.reviewable_type', $reviewableTypes);
+          }
         }
       })
       ->where('ak_reviews.is_moderated', $is_moderated)

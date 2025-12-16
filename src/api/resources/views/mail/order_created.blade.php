@@ -1,4 +1,4 @@
-@component('mail::message', ["contacts" => true])
+@component('mail::message', ['contacts' => $mailContacts ?? true])
   @component('mail::title')
   <table width="100%">
     <tr>

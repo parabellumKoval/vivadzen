@@ -3,6 +3,7 @@
     "description": "Reusable image uploader and Backpack helpers for Laravel 12.",
     "type": "library",
     "license": "MIT",
+    "version": "dev-main",
     "require": {
         "php": "^8.2",
         "bunnycdn/storage": "^3.4",

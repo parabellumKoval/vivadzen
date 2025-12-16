@@ -18,7 +18,7 @@ class OrderCreated extends Order
       
       return $this->subject(__('mail.new_order') . ' / Vivadzen')
                   ->markdown('mail.order_created')
-                  ->with([
+                  ->with($this->regionalViewData([
                     'order' => $this->order,
                     'summary' => $this->summary,
                     'pricing' => $this->pricing,
@@ -29,6 +29,6 @@ class OrderCreated extends Order
                     'delivery' => $this->delivery,
                     'invoice' => $this->invoice,
                     'currency' => $this->currency,
-                  ]);
+                  ]));
     }
 }

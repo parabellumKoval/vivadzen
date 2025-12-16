@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 use App\Models\Region;
 use Backpack\Store\app\Models\Category;
+use Backpack\Store\app\Services\Category\CategoryAvailability;
 use App\Http\Resources\CategorySlugResource;
 
 class CategoryController extends \App\Http\Controllers\Controller
@@ -34,6 +35,10 @@ class CategoryController extends \App\Http\Controllers\Controller
     // }
 
     $category = Category::where('slug', $slug)->where('is_active', 1)->first();
+
+    if ($category) {
+      CategoryAvailability::ensure($category, $request->input('country'));
+    }
    
     // if no category found try found in Regions
     if(!$category) {
@@ -78,6 +83,9 @@ class CategoryController extends \App\Http\Controllers\Controller
 
     // 3) If Not product then try get category and return catalog data (same 1 step)
     $category = Category::where('slug', $slug)->where('is_active', 1)->first();
+    if ($category) {
+      CategoryAvailability::ensure($category, $request->input('country'));
+    }
    
     // if no category found try found in Regions
     if(!$category) {

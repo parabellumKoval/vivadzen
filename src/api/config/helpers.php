@@ -42,7 +42,7 @@ return [
             'key_column' => 'group_id',
         ],
         'product' => [
-            'model' => Backpack\Store\app\Models\Product::class,
+            'model' => App\Models\Product::class,
             'columns' => ['name', 'code', 'slug'],
             'relation_columns' => [
                 'brand' => ['name', 'slug'],
@@ -50,6 +50,17 @@ return [
             ],
             'search_id' => true,
             'id_prefixes' => ['#'],
+        ],
+        'product_base' => [
+            'model' => App\Models\Product::class,
+            'columns' => ['name', 'code', 'slug'],
+            'relation_columns' => [
+                'brand' => ['name', 'slug'],
+                'categories' => ['name', 'slug'],
+            ],
+            'search_id' => true,
+            'id_prefixes' => ['#'],
+            'query' => App\Support\Helpers\ProductBaseFetchQuery::class,
         ],
         'tag' => [
             'model' => Backpack\Tag\app\Models\Tag::class,
@@ -71,15 +82,7 @@ return [
             ],
             'search_id' => true,
             'id_prefixes' => ['#'],
-            'query' => function ($query) {
-                $attributeId = request()->get('attribute_id');
-
-                if ($attributeId) {
-                    $query->where('attribute_id', $attributeId);
-                }
-
-                return $query;
-            },
+            'query' => App\Support\Helpers\AttributeValueFetchQuery::class,
         ],
         'merchant_category' => [
             'model' => Backpack\Store\app\Models\MerchantCategory::class,

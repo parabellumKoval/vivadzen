@@ -25,8 +25,27 @@ class SendWithdrawalPaidMail
             return;
         }
 
+        // Save current regional context to restore it after queueing
+        // This prevents the user's locale from affecting other queued emails
+        $previousContext = null;
+        if (class_exists(\App\Support\RegionalContext::class) && app()->bound(\App\Support\RegionalContext::class)) {
+            $previousContext = app(\App\Support\RegionalContext::class)->snapshot();
+        }
+
+        $regionalContext = [
+            'locale' => $user->profile?->locale ?? $user->locale ?? null,
+        ];
+
         Mail::to($email)->queue(
-            new WithdrawalPaidNotification($withdrawal)
+            new WithdrawalPaidNotification($withdrawal, $regionalContext)
         );
+
+        // Restore the previous regional context to prevent interference with other queued notifications
+        if ($previousContext && class_exists(\App\Support\RegionalContext::class) && app()->bound(\App\Support\RegionalContext::class)) {
+            $service = app(\App\Support\RegionalContext::class);
+            $service->setLocale($previousContext['locale'] ?? null);
+            $service->setRegion($previousContext['region'] ?? null);
+            $service->setAcceptLanguage($previousContext['accept_language'] ?? null);
+        }
     }
 }

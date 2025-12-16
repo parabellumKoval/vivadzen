@@ -10,6 +10,7 @@ use Backpack\Store\app\Models\Product as BaseProduct;
 use Backpack\Reviews\app\Traits\Reviewable;
 use Backpack\Tag\app\Traits\Taggable;
 
+use Backpack\Reviews\app\Models\Review;
 use Dress\Translator\app\Interfaces\TranslatableInterface;
 use Dress\Translator\app\Traits\TranslatableTrait;
 
@@ -144,6 +145,114 @@ class Product extends BaseProduct implements TranslatableInterface
                     }
                     $query->whereRaw('(' . implode(' + ', $conditions) . ') = 1');
                 });
+    }
+
+    /**
+     * Return base product id for grouping reviews by parent.
+     */
+    public function getReviewableKey(): int
+    {
+        return (int) ($this->parent_id ?: $this->getKey());
+    }
+
+    /**
+     * Build list of morph types that should be treated as product reviews (for backward compatibility).
+     *
+     * @return string[]
+     */
+    protected function reviewableMorphs(): array
+    {
+        $types = [
+            static::class,
+            \Backpack\Store\app\Models\Product::class,
+            \Backpack\Store\app\Models\Catalog::class,
+        ];
+
+        $configured = \Settings::get('backpack.reviews.reviewable_types_list', []);
+        $productType = data_get($configured, 'product.model');
+
+        if ($productType) {
+            $types[] = ltrim($productType, '\\');
+        }
+
+        return array_values(array_unique(array_filter($types)));
+    }
+
+    /**
+     * Base query for moderated reviews scoped to base product id and all product morph types.
+     */
+    protected function reviewsBaseQuery(): Builder
+    {
+        $model = config('backpack.reviews.review_model', Review::class) ?: Review::class;
+
+        return $model::query()
+            ->where('reviewable_id', $this->getReviewableKey())
+            ->whereIn('reviewable_type', $this->reviewableMorphs());
+    }
+
+    public function getTotalLikesAttribute()
+    {
+        return $this->reviewsBaseQuery()->moderated()->sum('likes');
+    }
+
+    public function getTotalDislikesAttribute()
+    {
+        return $this->reviewsBaseQuery()->moderated()->sum('dislikes');
+    }
+
+    public function getReviewsWithRatingCountAttribute()
+    {
+        return $this->reviewsBaseQuery()->moderated()->whereNotNull('rating')->count();
+    }
+
+    public function getReviewsCountAttribute()
+    {
+        return $this->reviewsBaseQuery()->moderated()->count();
+    }
+
+    public function getRatingAttribute()
+    {
+        $rating = $this->reviewsBaseQuery()->moderated()->avg('rating');
+
+        return $rating ? round((float) $rating, 1) : null;
+    }
+
+    public function getDetailedRatingAttribute()
+    {
+        return $this->reviewsBaseQuery()->moderated()->avg('extras.rating.avr');
+    }
+
+    public function getSingleDetailedRating($key)
+    {
+        if (!array_key_exists($key, config('backpack.reviews.detailed_rating_params'))) {
+            throw new \Exception("Key $key does not exist in allowed array set (config: backpack.reviews.detailed_rating_params). ", 1);
+        }
+
+        return $this->reviewsBaseQuery()->moderated()->avg('extras.rating.' . $key);
+    }
+
+    public function getReviewsRatingDetailesAttribute()
+    {
+        $reviews = $this->reviewsBaseQuery()->moderated()->get();
+
+        $rating_1 = $reviews->where('rating', 1)->count();
+        $rating_2 = $reviews->where('rating', 2)->count();
+        $rating_3 = $reviews->where('rating', 3)->count();
+        $rating_4 = $reviews->where('rating', 4)->count();
+        $rating_5 = $reviews->where('rating', 5)->count();
+
+        return [
+            'reviews_count' => $reviews->count(),
+            'rating_count' => $reviews->whereNotNull('rating')->count(),
+            'rating' => $this->rating !== null ? round($this->rating, 1) : null,
+            'rating_detailes' => [
+                'rating_5' => $rating_5,
+                'rating_4' => $rating_4,
+                'rating_3' => $rating_3,
+                'rating_2' => $rating_2,
+                'rating_1' => $rating_1
+            ]
+        ];
     }
     // protected $morphClass = 'Backpack\Store\app\Models\Product';
 

@@ -2,12 +2,12 @@
 
 namespace App\Observers;
 
+use App\Mail\OrderCreated;
+use App\Mail\OrderCreatedAdmin;
+use App\Support\RegionalContext;
 use Illuminate\Support\Facades\Mail;
 
 use \Backpack\Store\app\Models\Order;
-
-use \App\Mail\OrderCreated;
-use \App\Mail\OrderCreatedAdmin;
 
 class OrderObserver
 {
@@ -19,6 +19,7 @@ class OrderObserver
      */
     public function created(Order $order)
     {
+      $regionalContext = $this->resolveRegionalContextSnapshot();
 
       // SEND NOTY TO ADMIN EMAIL
       Mail::to(config('app.admin_email'))->queue(new OrderCreatedAdmin($order));  
@@ -27,7 +28,7 @@ class OrderObserver
       $email = $order->info['user']['email'] ?? null;
 
       if($email)
-        Mail::to($email)->queue(new OrderCreated($order));
+        Mail::to($email)->queue(new OrderCreated($order, $regionalContext));
     }
 
     /**
@@ -72,6 +73,12 @@ class OrderObserver
     {
         //
     }
+    protected function resolveRegionalContextSnapshot(): ?array
+    {
+        if (class_exists(RegionalContext::class)) {
+            return app(RegionalContext::class)->snapshot();
+        }
 
-
+        return null;
+    }
 }

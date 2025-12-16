@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Mail\Concerns\InteractsWithRegionalContext;
 use Backpack\Profile\app\Models\WithdrawalRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -9,18 +10,24 @@ use Illuminate\Queue\SerializesModels;
 
 abstract class WithdrawalNotification extends Mailable
 {
+    use InteractsWithRegionalContext;
     use Queueable;
     use SerializesModels;
 
     protected ?string $recipientLocale = null;
 
     public function __construct(
-        protected WithdrawalRequest $withdrawal
+        protected WithdrawalRequest $withdrawal,
+        ?array $regionalContext = null
     ) {
         $this->withdrawal->loadMissing('user.profile');
-        $this->recipientLocale = $this->determineLocale();
+        $this->initializeRegionalContext($regionalContext);
 
-        app()->setLocale($this->recipientLocale);
+        if (! $this->hasRegionalLocale()) {
+            $this->setRegionalLocale($this->determineLocale());
+        }
+
+        $this->recipientLocale = $this->regionalLocale() ?? config('app.locale', 'uk');
     }
 
     abstract protected function subjectKey(): string;
@@ -38,12 +45,12 @@ abstract class WithdrawalNotification extends Mailable
     {
         return $this->subject(__($this->subjectKey(), $this->titleParameters()))
             ->markdown($this->viewName())
-            ->with([
+            ->with($this->regionalViewData([
                 'withdrawal' => $this->withdrawal,
                 'details' => $this->details(),
                 'title' => __($this->titleKey(), $this->titleParameters()),
                 'ctaUrl' => $this->ctaUrl(),
-            ]);
+            ]));
     }
 
     protected function determineLocale(): string

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Mail\Concerns\InteractsWithRegionalContext;
 use Backpack\Profile\app\Models\Reward;
 use Backpack\Profile\app\Models\RewardEvent;
 use Backpack\Profile\app\Models\WalletLedger;
@@ -13,6 +14,7 @@ use Illuminate\Queue\SerializesModels;
 
 class RewardLedgerEntryNotification extends Mailable
 {
+    use InteractsWithRegionalContext;
     use Queueable;
     use SerializesModels;
 
@@ -24,12 +26,17 @@ class RewardLedgerEntryNotification extends Mailable
         protected RewardEvent $event,
         protected Reward $reward,
         protected WalletLedger $ledger,
-        protected ?string $balance
+        protected ?string $balance,
+        ?array $regionalContext = null
     ) {
         $this->triggerMeta = TriggerLabels::resolve($event->trigger);
         $this->payload = is_array($event->payload) ? $event->payload : [];
 
-        app()->setLocale($this->determineLocale());
+        $this->initializeRegionalContext($regionalContext);
+
+        if (! $this->hasRegionalLocale()) {
+            $this->setRegionalLocale($this->determineLocale());
+        }
     }
 
     public function build(): self
@@ -44,7 +51,7 @@ class RewardLedgerEntryNotification extends Mailable
 
         return $this->subject(__($subjectKey))
             ->markdown('mail.reward_ledger_entry')
-            ->with([
+            ->with($this->regionalViewData([
                 'recipient' => $this->recipient,
                 'event' => $this->event,
                 'reward' => $this->reward,
@@ -57,7 +64,7 @@ class RewardLedgerEntryNotification extends Mailable
                 'isReversal' => (bool) ($this->triggerMeta['reversal'] ?? false),
                 'intro' => __($this->introKey($direction), ['amount' => $amountFormatted]),
                 'ctaUrl' => $this->ctaUrl(),
-            ]);
+            ]));
     }
 
     protected function determineLocale(): string

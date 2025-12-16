@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Mail\Concerns\InteractsWithRegionalContext;
 use Backpack\Profile\app\Models\Profile;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -9,28 +10,34 @@ use Illuminate\Queue\SerializesModels;
 
 class ReferralSponsorNotification extends Mailable
 {
+    use InteractsWithRegionalContext;
     use Queueable;
     use SerializesModels;
 
     public function __construct(
         protected Profile $sponsor,
-        protected Profile $referral
+        protected Profile $referral,
+        ?array $regionalContext = null
     ) {
-        app()->setLocale($this->determineLocale());
+        $this->initializeRegionalContext($regionalContext);
+
+        if (! $this->hasRegionalLocale()) {
+            $this->setRegionalLocale($this->determineLocale());
+        }
     }
 
     public function build(): self
     {
         return $this->subject(__('mail.referral.new_sponsor_subject'))
             ->markdown('mail.referral_sponsor_notification')
-            ->with([
+            ->with($this->regionalViewData([
                 'sponsor' => $this->sponsor,
                 'referral' => $this->referral,
                 'details' => $this->details(),
                 'ctaUrl' => $this->ctaUrl(),
                 'sponsorName' => $this->displayName($this->sponsor),
                 'referralName' => $this->displayName($this->referral),
-            ]);
+            ]));
     }
 
     protected function determineLocale(): string

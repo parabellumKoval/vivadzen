@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Support\RegionalContext;
 use App\Support\ReviewRewardContext;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(RegionalContext::class, fn () => new RegionalContext());
         $this->app->singleton(ReviewRewardContext::class, fn () => new ReviewRewardContext());
 
         app(\Backpack\Profile\app\Services\TriggerRegistry::class)->register(

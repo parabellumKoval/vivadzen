@@ -1,8 +1,8 @@
-@component('mail::message')
+@component('mail::message', ['contacts' => $mailContacts ?? true])
   @component('mail::title')
   <table width="100%">
     <tr class="title-inner">
-      <td class="title-number">Новый заказ: {{ $order->code }}</td>
+      <td class="title-number">{{ __('mail.order_admin.title', ['code' => $order->code]) }}</td>
       <td class="title-data">{{ $order->created_at->format('d.m.Y H:i') }}</td>
     </tr>
   </table>
@@ -84,6 +84,6 @@
   </table>
 
   @component('mail::button', ['url' => url('/admin/order/'.$order->id.'/show') ])
-    Подробнее
+    {{ __('mail.order_admin.button') }}
   @endcomponent
 @endcomponent

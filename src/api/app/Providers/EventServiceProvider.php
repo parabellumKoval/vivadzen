@@ -14,7 +14,10 @@ use Backpack\Profile\app\Events\WithdrawalApproved;
 use Backpack\Profile\app\Events\WithdrawalPaid;
 use Backpack\Reviews\app\Events\ReviewPublished;
 use Backpack\Store\app\Models\Order as StoreOrder;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -37,6 +40,16 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     /**
+     * Register any events for your application.
+     */
+    public function register(): void
+    {
+        // Prevent duplicate email verification listeners by clearing any defaults
+        // before parent::register is called
+        $this->ensureSingleEmailVerificationListener();
+    }
+
+    /**
      * Bootstrap any application services.
      */
     public function boot(): void
@@ -44,5 +57,18 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         StoreOrder::observe(OrderObserver::class);
+    }
+
+    /**
+     * Ensure only a single email verification listener is registered.
+     * Prevents duplicate emails when using multiple EventServiceProviders.
+     */
+    protected function ensureSingleEmailVerificationListener(): void
+    {
+        // Remove all existing listeners for the Registered event
+        Event::forget(Registered::class);
+        
+        // Register only our single listener
+        Event::listen(Registered::class, SendEmailVerificationNotification::class);
     }
 }

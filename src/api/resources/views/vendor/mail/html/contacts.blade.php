@@ -1,3 +1,22 @@
+@php
+  $details = $details ?? [];
+  $address = trim((string) ($details['address'] ?? __('contacts.address')));
+  $phone = trim((string) ($details['phone'] ?? __('contacts.phone')));
+  $email = trim((string) ($details['email'] ?? __('contacts.email')));
+  $phoneHref = $phone !== '' ? preg_replace('/\s+/', '', $phone) : null;
+  $emailHref = $email !== '' ? $email : null;
+  $social = $details['social'] ?? [];
+  if (!is_array($social)) {
+      $social = [];
+  }
+  $social = array_filter($social, fn ($value) => is_string($value) && trim($value) !== '');
+  $socialIcons = [
+      'instagram' => 'instagram',
+      'viber' => 'viber',
+      'telegram' => 'telegram',
+      'whatsapp' => 'whatsapp',
+  ];
+@endphp
 <tr>
   <td class="contacts">
     <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
@@ -8,8 +27,9 @@
               <td colspan="2" class="cell-label">📌&nbsp;&nbsp;@lang('email.our_address'):</td>
             </tr>
             <tr>
-              <td colspan="2" class="cell-value">@lang('contacts.address')</td>
+              <td colspan="2" class="cell-value">{{ $address }}</td>
             </tr>
+            @if($phone || $email)
             <tr>
               <td>
                 <table>
@@ -18,7 +38,11 @@
                   </tr>
                   <tr>
                     <td class="cell-value">
-                      <a href="tel:{{ __('contacts.phone') }}" class="contact-link">@lang('contacts.phone')</a>  
+                      @if($phone)
+                        <a href="tel:{{ e($phoneHref) }}" class="contact-link">{{ $phone }}</a>
+                      @else
+                        &mdash;
+                      @endif
                     </td>
                   </tr>
                 </table>
@@ -30,37 +54,33 @@
                   </tr>
                   <tr>
                     <td class="cell-value">
-                      <a href="mailto:{{ __('contacts.email') }}" class="contact-link">@lang('contacts.email')</a>
+                      @if($email)
+                        <a href="mailto:{{ e($emailHref) }}" class="contact-link">{{ $email }}</a>
+                      @else
+                        &mdash;
+                      @endif
                     </td>
                   </tr>
                 </table>
               </td>
             </tr>
+            @endif
+            @if(!empty($social))
             <tr>
               <td colspan="2" class="cell-label">@lang('email.messangers'):</td>
             </tr>
             <tr>
               <td colspan="2" class="">
-                <!-- <a href="{{ __('contacts.facebook') }}" class="social-btn facebook">
-                  <img src="{{ url('/sys/images/logo/facebook.png') }}" class="icon"/>
-                </a> -->
-                <a href="{{ __('contacts.instagram') }}" class="social-btn instagram">
-                  <img src="{{ url('/sys/icon/instagram.png') }}" class="icon"/>
-                </a>
-                <!-- <a href="{{ __('contacts.tiktok') }}" class="social-btn tiktok">
-                  <img src="{{ url('/sys/images/logo/tiktok.png') }}" class="icon"/>
-                </a>
-                <a href="{{ __('contacts.whatsapp') }}" class="social-btn whatsapp">
-                  <img src="{{ url('/sys/images/logo/whatsapp.png') }}" class="icon"/>
-                </a> -->
-                <a href="{{ __('contacts.viber') }}" class="social-btn viber">
-                  <img src="{{ url('/sys/icon/viber.png') }}" class="icon"/>
-                </a>
-                <a href="{{ __('contacts.telegram') }}" class="social-btn telegram">
-                  <img src="{{ url('/sys/icon/telegram.png') }}" class="icon"/>
-                </a>
+                @foreach($socialIcons as $network => $icon)
+                  @if(!empty($social[$network]))
+                    <a href="{{ e($social[$network]) }}" class="social-btn {{ $network }}">
+                      <img src="{{ url('/sys/icon/' . $icon . '.png') }}" class="icon"/>
+                    </a>
+                  @endif
+                @endforeach
               </td>
             </tr>
+            @endif
           </table>
         </td>
       </tr>

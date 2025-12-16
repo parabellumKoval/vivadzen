@@ -5,7 +5,6 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
-    "repositories": [],
     "require": {
         "php": "^8.2",
         "bacon/bacon-qr-code": "^2.0",
@@ -25,7 +24,7 @@
         "parabellumkoval/backpack-profile": "dev-main",
         "parabellumkoval/backpack-reviews": "dev-main",
         "parabellumkoval/backpack-settings": "dev-main",
-        "parabellumkoval/backpack-store": "dev-multistore",
+        "parabellumkoval/backpack-store": "0.4.x-dev",
         "parabellumkoval/backpack-tag": "dev-main",
         "parabellumkoval/backpack-translator": "dev-main",
         "parabellumkoval/crud": "dev-main",
@@ -95,6 +94,15 @@
             "php-http/discovery": true
         }
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/*",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
