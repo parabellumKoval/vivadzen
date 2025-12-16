@@ -79,6 +79,7 @@ RUN chown -R ${MY_USER}:${MY_USER} /var/www/html && \
     chmod -R 755 /var/www/html/storage && \
     chmod -R 755 /var/www/html/public
 
+COPY ./src/api/.env.prod ./.env
 
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
