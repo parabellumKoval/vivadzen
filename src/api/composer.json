@@ -24,7 +24,7 @@
         "parabellumkoval/backpack-profile": "dev-main",
         "parabellumkoval/backpack-reviews": "dev-main",
         "parabellumkoval/backpack-settings": "dev-main",
-        "parabellumkoval/backpack-store": "0.4.x-dev",
+        "parabellumkoval/backpack-store": "dev-multistore",
         "parabellumkoval/backpack-tag": "dev-main",
         "parabellumkoval/backpack-translator": "dev-main",
         "parabellumkoval/crud": "dev-main",
@@ -94,15 +94,7 @@
             "php-http/discovery": true
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "packages/*",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
+    "repositories": [],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
