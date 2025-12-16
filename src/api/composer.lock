@@ -5026,15 +5026,22 @@
         {
             "name": "parabellumkoval/backpack-helpers",
             "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "packages/helpers",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-helpers.git",
                 "reference": "3cad13d2e9be65d77916ba7fc2ae2fee6e0d85a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-helpers/zipball/3cad13d2e9be65d77916ba7fc2ae2fee6e0d85a1",
+                "reference": "3cad13d2e9be65d77916ba7fc2ae2fee6e0d85a1",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0",
                 "php": "^8.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5048,6 +5055,7 @@
                     "Backpack\\Helpers\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5059,10 +5067,11 @@
             ],
             "description": "Helpers for Laravel Backpack 4.1 - extra columns, fields, traits and services.",
             "homepage": "https://github.com/parabellumkoval/backpack-helpers",
-            "transport-options": {
-                "symlink": false,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-helpers/issues",
+                "source": "https://github.com/parabellumKoval/backpack-helpers/tree/main"
+            },
+            "time": "2025-12-05T17:04:18+00:00"
         },
         {
             "name": "parabellumkoval/backpack-images",
