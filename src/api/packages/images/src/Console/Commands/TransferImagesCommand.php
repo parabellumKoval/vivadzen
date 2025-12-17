@@ -133,8 +133,12 @@ class TransferImagesCommand extends Command
             'failed' => 0,
         ];
 
+        /** @var Model $modelInstance */
+        $modelInstance = new $modelClass();
+
         /** @var \Illuminate\Database\Eloquent\Builder $query */
-        $query = $modelClass::query();
+        $query = $modelInstance->newQuery();
+        $this->optimizeTransferQuery($query, $modelInstance, $attribute);
 
         $query->chunkById($chunkSize, function ($models) use ($attribute, $sourceDisk, $uploader, $targetOptions, $sourceProviderInstance, $dryRun, $preserveNames, &$stats) {
             foreach ($models as $model) {
@@ -551,6 +555,23 @@ class TransferImagesCommand extends Command
             $this->info(sprintf('Loaded %d skipped IDs from %s', count($this->skippedIds), $skipFile));
         } catch (Throwable $exception) {
             $this->warn(sprintf('Error reading skip file: %s', $exception->getMessage()));
+        }
+    }
+
+    /**
+     * Strip default eager loads and limit selected columns to reduce memory usage.
+     */
+    protected function optimizeTransferQuery($query, Model $model, string $attribute): void
+    {
+        if (method_exists($query, 'setEagerLoads')) {
+            $query->setEagerLoads([]);
+        }
+
+        $keyName = $model->getKeyName();
+        $columns = array_filter(array_unique([$keyName, $attribute]));
+
+        if (!empty($columns)) {
+            $query->select($columns);
         }
     }
 }
