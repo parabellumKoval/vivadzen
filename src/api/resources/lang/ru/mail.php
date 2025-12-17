@@ -90,6 +90,27 @@ return [
     ],
   ],
 
+  'feedback' => [
+    'one_click_subject' => 'Новый запрос «Купить в один клик» :phone',
+    'title' => 'Запрос «Купить в один клик»',
+    'button' => 'Открыть заявку',
+    'labels' => [
+      'name' => 'Имя',
+      'phone' => 'Телефон',
+      'email' => 'Email',
+      'type' => 'Тип',
+      'comment' => 'Комментарий',
+      'created_at' => 'Создано',
+      'product' => 'Товар',
+      'product_code' => 'Артикул',
+      'product_id' => 'ID товара',
+      'price' => 'Цена',
+      'old_price' => 'Старая цена',
+      'in_stock' => 'Остаток',
+      'slug' => 'Слаг',
+    ],
+  ],
+
   'verify_email' => [
     'subject' => 'Подтвердите адрес электронной почты',
     'greeting' => 'Добро пожаловать!',

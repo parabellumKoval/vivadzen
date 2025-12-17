@@ -7,12 +7,14 @@ use App\Listeners\SendReferralSponsorNotification;
 use App\Listeners\SendRewardLedgerEntryNotification;
 use App\Listeners\SendWithdrawalApprovedMail;
 use App\Listeners\SendWithdrawalPaidMail;
+use App\Observers\FeedbackObserver;
 use App\Observers\OrderObserver;
 use Backpack\Profile\app\Events\ReferralAttached;
 use Backpack\Profile\app\Events\RewardLedgerEntryCreated;
 use Backpack\Profile\app\Events\WithdrawalApproved;
 use Backpack\Profile\app\Events\WithdrawalPaid;
 use Backpack\Reviews\app\Events\ReviewPublished;
+use Backpack\Feedback\app\Models\Feedback;
 use Backpack\Store\app\Models\Order as StoreOrder;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -57,6 +59,7 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         StoreOrder::observe(OrderObserver::class);
+        Feedback::observe(FeedbackObserver::class);
     }
 
     /**

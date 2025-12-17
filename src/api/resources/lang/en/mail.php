@@ -90,6 +90,27 @@ return [
     ],
   ],
 
+  'feedback' => [
+    'one_click_subject' => 'New one-click purchase request :phone',
+    'title' => 'One-click purchase request',
+    'button' => 'Open request',
+    'labels' => [
+      'name' => 'Name',
+      'phone' => 'Phone',
+      'email' => 'Email',
+      'type' => 'Type',
+      'comment' => 'Comment',
+      'created_at' => 'Created at',
+      'product' => 'Product',
+      'product_code' => 'SKU',
+      'product_id' => 'Product ID',
+      'price' => 'Price',
+      'old_price' => 'Old price',
+      'in_stock' => 'Stock',
+      'slug' => 'Slug',
+    ],
+  ],
+
   'verify_email' => [
     'subject' => 'Verify Email Address',
     'greeting' => 'Welcome!',

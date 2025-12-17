@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use Backpack\Feedback\app\Models\Feedback;
 
 use App\Mail\Buy1ClickCreatedAdmin;
+use App\Support\AdminNotificationResolver;
 
 class FeedbackObserver
 {
@@ -18,7 +19,19 @@ class FeedbackObserver
      */
     public function created(Feedback $feedback)
     {
-      Mail::to(env('ADMIN_MAIL', 'info@vivadzen.com'))->queue(new Buy1ClickCreatedAdmin($feedback));
+        $type = strtolower(trim((string) $feedback->type));
+
+        if ($type !== '1_click_buy') {
+            return;
+        }
+
+        $recipients = AdminNotificationResolver::resolve();
+
+        if (empty($recipients)) {
+            return;
+        }
+
+        Mail::to($recipients)->queue(new Buy1ClickCreatedAdmin($feedback));
     }
 
 }

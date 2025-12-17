@@ -17,6 +17,7 @@ return [
     // Registrars: list of classes implementing SettingsRegistrarInterface
     'registrars' => [
         // Example: \Vendor\Package\Settings\StoreSettingsRegistrar::class,
+        \App\Settings\CoreSettingsRegistrar::class,
         \App\Settings\SiteSettingsRegistrar::class,
         \Backpack\Store\app\Settings\StoreSettingsRegistrar::class,
         \Backpack\Store\app\Settings\ModulesSettingsRegistrar::class,

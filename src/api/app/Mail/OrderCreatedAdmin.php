@@ -6,6 +6,15 @@ use \App\Mail\Order;
 
 class OrderCreatedAdmin extends Order
 {
+    public function __construct($order, ?array $regionalContext = null)
+    {
+        parent::__construct($order, [
+            'locale' => 'ru',
+            'accept_language' => 'ru',
+        ]);
+
+        $this->setRegionalRegion(null);
+    }
 
     /**
      * Build the message.

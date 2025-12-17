@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Mail\OrderCreated;
 use App\Mail\OrderCreatedAdmin;
+use App\Support\AdminNotificationResolver;
 use App\Support\RegionalContext;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,9 +21,12 @@ class OrderObserver
     public function created(Order $order)
     {
       $regionalContext = $this->resolveRegionalContextSnapshot();
+      $adminRecipients = AdminNotificationResolver::resolve($order->country_code ?? null);
 
       // SEND NOTY TO ADMIN EMAIL
-      Mail::to(config('app.admin_email'))->queue(new OrderCreatedAdmin($order));  
+      if (!empty($adminRecipients)) {
+          Mail::to($adminRecipients)->queue(new OrderCreatedAdmin($order));
+      }
 
       // SEND NOTY TO CUSTOMER
       $email = $order->info['user']['email'] ?? null;
