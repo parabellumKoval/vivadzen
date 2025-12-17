@@ -172,23 +172,30 @@ class TransferImagesCommand extends Command
         bool $preserveNames,
         array &$stats
     ): void {
-        $modelKey = $model->getKey();
+        try {
+            $modelKey = $model->getKey();
 
-        // Skip if model ID is in the skipped list
-        if (in_array($modelKey, $this->skippedIds, true)) {
-            $stats['skipped']++;
-            return;
-        }
+            // Skip if model ID is in the skipped list
+            if (in_array($modelKey, $this->skippedIds, true)) {
+                $stats['skipped']++;
+                return;
+            }
 
-        // Skip if model ID is less than or equal to skip-before-id
-        if ($this->skipBeforeId !== null && $modelKey <= $this->skipBeforeId) {
-            $stats['skipped']++;
-            return;
-        }
+            // Skip if model ID is less than or equal to skip-before-id
+            if ($this->skipBeforeId !== null && $modelKey <= $this->skipBeforeId) {
+                $stats['skipped']++;
+                return;
+            }
 
-        $images = $this->extractImages($model, $attribute);
+            $images = $this->extractImages($model, $attribute);
 
-        if (empty($images)) {
+            if (empty($images)) {
+                return;
+            }
+        } catch (Throwable $exception) {
+            $modelKey = $model->getKey() ?? 'unknown';
+            $this->error(sprintf('Error processing %s #%s: %s', class_basename($model), $modelKey, $exception->getMessage()));
+            $stats['failed']++;
             return;
         }
 
@@ -197,35 +204,42 @@ class TransferImagesCommand extends Command
         $changed = false;
 
         foreach ($images as $index => $image) {
-            $src = trim((string) ($image['src'] ?? ''));
+            try {
+                $src = trim((string) ($image['src'] ?? ''));
 
-            if ($src === '') {
-                $stats['skipped']++;
-                continue;
-            }
+                if ($src === '') {
+                    $stats['skipped']++;
+                    continue;
+                }
 
-            $stats['images_total']++;
+                $stats['images_total']++;
 
-            if (isset($this->transferredCache[$src])) {
-                $images[$index]['src'] = $this->transferredCache[$src];
-                $stats['cached']++;
+                if (isset($this->transferredCache[$src])) {
+                    $images[$index]['src'] = $this->transferredCache[$src];
+                    $stats['cached']++;
+                    $changed = true;
+                    continue;
+                }
+
+                $stored = $this->transferSingleImage($src, $sourceDisk, $sourceProvider, $uploader, $targetOptions, $model, $attribute, $preserveNames);
+
+                if (!$stored instanceof StoredImage) {
+                    $stats['failed']++;
+                    $this->warn(sprintf('Unable to transfer image "%s" for %s #%s', $src, get_class($model), $modelKey));
+                    continue;
+                }
+
+                $images[$index]['src'] = $stored->path;
+                $this->transferredCache[$src] = $stored->path;
+                $stats['uploads']++;
                 $changed = true;
-                continue;
-            }
-
-            $stored = $this->transferSingleImage($src, $sourceDisk, $sourceProvider, $uploader, $targetOptions, $model, $attribute, $preserveNames);
-
-            if (!$stored instanceof StoredImage) {
+                $this->line(sprintf('Transferred "%s" for %s #%s', $src, class_basename($model), $modelKey));
+            } catch (Throwable $exception) {
+                $src = $image['src'] ?? 'unknown';
+                $this->error(sprintf('Error processing image "%s" for %s #%s: %s', $src, class_basename($model), $modelKey, $exception->getMessage()));
                 $stats['failed']++;
-                $this->warn(sprintf('Unable to transfer image "%s" for %s #%s', $src, get_class($model), $modelKey));
                 continue;
             }
-
-            $images[$index]['src'] = $stored->path;
-            $this->transferredCache[$src] = $stored->path;
-            $stats['uploads']++;
-            $changed = true;
-            $this->line(sprintf('Transferred "%s" for %s #%s', $src, class_basename($model), $modelKey));
         }
 
         if (!$changed) {
@@ -240,12 +254,17 @@ class TransferImagesCommand extends Command
             return;
         }
 
-        $model->setAttribute($attribute, $images);
+        try {
+            $model->setAttribute($attribute, $images);
 
-        if (method_exists($model, 'saveQuietly')) {
-            $model->saveQuietly();
-        } else {
-            $model->save();
+            if (method_exists($model, 'saveQuietly')) {
+                $model->saveQuietly();
+            } else {
+                $model->save();
+            }
+        } catch (Throwable $exception) {
+            $this->error(sprintf('Failed to save %s #%s: %s', class_basename($model), $modelKey, $exception->getMessage()));
+            $stats['failed']++;
         }
 
         // Unset model to free memory
@@ -262,22 +281,31 @@ class TransferImagesCommand extends Command
         string $attribute,
         bool $preserveNames
     ): ?StoredImage {
-        [$file, $cleanup] = $this->getSourceFile($src, $sourceDisk, $sourceProvider, $model, $attribute, $uploader, $preserveNames);
-
-        if (!$file instanceof File) {
-            return null;
-        }
-
         try {
-            return $uploader->uploadFromFile($file, $targetOptions);
-        } catch (Throwable $exception) {
-            $this->warn(sprintf('Upload failed for "%s": %s', $src, $exception->getMessage()));
+            [$file, $cleanup] = $this->getSourceFile($src, $sourceDisk, $sourceProvider, $model, $attribute, $uploader, $preserveNames);
 
-            return null;
-        } finally {
-            if ($cleanup) {
-                $cleanup();
+            if (!$file instanceof File) {
+                return null;
             }
+
+            try {
+                return $uploader->uploadFromFile($file, $targetOptions);
+            } catch (Throwable $exception) {
+                $this->warn(sprintf('Upload failed for "%s": %s', $src, $exception->getMessage()));
+
+                return null;
+            } finally {
+                if ($cleanup) {
+                    try {
+                        $cleanup();
+                    } catch (Throwable) {
+                        // Ignore cleanup errors
+                    }
+                }
+            }
+        } catch (Throwable $exception) {
+            $this->warn(sprintf('Error preparing file for "%s": %s', $src, $exception->getMessage()));
+            return null;
         }
     }
 
@@ -327,8 +355,13 @@ class TransferImagesCommand extends Command
                 return null;
             }
 
+            if (!is_readable($absolutePath)) {
+                return null;
+            }
+
             return new File($absolutePath);
-        } catch (Throwable) {
+        } catch (Throwable $exception) {
+            $this->warn(sprintf('Error reading file from disk "%s" at path "%s": %s', $disk, $path, $exception->getMessage()));
             return null;
         }
     }
@@ -345,14 +378,14 @@ class TransferImagesCommand extends Command
         }
 
         try {
-            $response = Http::timeout(120)->sink($tempPath)->get($url);
+            $response = Http::timeout(60)->connectTimeout(30)->retry(2, 100)->sink($tempPath)->get($url);
 
             if (!$response->successful()) {
                 @unlink($tempPath);
 
                 return [null, null];
             }
-        } catch (Throwable) {
+        } catch (Throwable $exception) {
             @unlink($tempPath);
 
             return [null, null];
@@ -405,22 +438,26 @@ class TransferImagesCommand extends Command
 
     protected function extractImages(Model $model, string $attribute): array
     {
-        $value = $model->getAttribute($attribute);
+        try {
+            $value = $model->getAttribute($attribute);
 
-        if ($value instanceof Collection) {
-            $value = $value->toArray();
-        }
+            if ($value instanceof Collection) {
+                $value = $value->toArray();
+            }
 
-        if (is_string($value)) {
-            $decoded = json_decode($value, true);
-            $value = json_last_error() === JSON_ERROR_NONE ? $decoded : [];
-        }
+            if (is_string($value)) {
+                $decoded = json_decode($value, true);
+                $value = json_last_error() === JSON_ERROR_NONE ? $decoded : [];
+            }
 
-        if (!is_array($value)) {
+            if (!is_array($value)) {
+                return [];
+            }
+
+            return array_values(array_map(static fn ($item) => is_array($item) ? $item : (array) $item, $value));
+        } catch (Throwable $exception) {
             return [];
         }
-
-        return array_values(array_map(static fn ($item) => is_array($item) ? $item : (array) $item, $value));
     }
 
     protected function resolveTargetOptions(
