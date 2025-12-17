@@ -103,10 +103,10 @@
 	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-gear"></i> Настройки</a>
 	<ul class="nav-dropdown-items">
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/site') }}"><i class="nav-icon la la-info-circle"></i> <span>Общие</span></a></li>
-		<!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/store') }}"><i class="nav-icon la la-user"></i> <span>Магазин</span></a></li> -->
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/delivery') }}"><i class="nav-icon la la-shipping-fast"></i> <span>Доставка</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/payment') }}"><i class="nav-icon la la-credit-card"></i> <span>Оплата</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/search') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/core') }}"><i class="nav-icon las la-microchip"></i> <span>Системные</span></a></li>
 	</ul>
 </li>
 
