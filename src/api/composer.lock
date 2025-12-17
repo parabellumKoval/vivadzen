@@ -2516,16 +2516,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.43.0",
+            "version": "v12.43.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "9f875fad08f5d409b4c33293eca34f7af36e8ecf"
+                "reference": "195b893593a9298edee177c0844132ebaa02102f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/9f875fad08f5d409b4c33293eca34f7af36e8ecf",
-                "reference": "9f875fad08f5d409b4c33293eca34f7af36e8ecf",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/195b893593a9298edee177c0844132ebaa02102f",
+                "reference": "195b893593a9298edee177c0844132ebaa02102f",
                 "shasum": ""
             },
             "require": {
@@ -2734,7 +2734,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-12-16T15:27:26+00:00"
+            "time": "2025-12-16T18:53:08+00:00"
         },
         {
             "name": "laravel/octane",
@@ -5137,12 +5137,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-profile.git",
-                "reference": "3b6d0bd81dff27d09e6718053a832e88b2e80d12"
+                "reference": "1707e5dbb780a8cfc70fc1768b628e9595ef8b3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/3b6d0bd81dff27d09e6718053a832e88b2e80d12",
-                "reference": "3b6d0bd81dff27d09e6718053a832e88b2e80d12",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/1707e5dbb780a8cfc70fc1768b628e9595ef8b3c",
+                "reference": "1707e5dbb780a8cfc70fc1768b628e9595ef8b3c",
                 "shasum": ""
             },
             "require": {
@@ -5195,7 +5195,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-profile/issues",
                 "source": "https://github.com/parabellumKoval/backpack-profile/tree/main"
             },
-            "time": "2025-12-16T15:39:37+00:00"
+            "time": "2025-12-17T11:52:27+00:00"
         },
         {
             "name": "parabellumkoval/backpack-reviews",
@@ -5322,12 +5322,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "64abf7cc143abe1994a7be3ef1d136f7ab267da6"
+                "reference": "4aa6ee5c7ea4ad277368815b459aab1317cfe1f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/64abf7cc143abe1994a7be3ef1d136f7ab267da6",
-                "reference": "64abf7cc143abe1994a7be3ef1d136f7ab267da6",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/4aa6ee5c7ea4ad277368815b459aab1317cfe1f0",
+                "reference": "4aa6ee5c7ea4ad277368815b459aab1317cfe1f0",
                 "shasum": ""
             },
             "require": {
@@ -5388,7 +5388,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/multistore"
             },
-            "time": "2025-12-16T18:01:05+00:00"
+            "time": "2025-12-17T11:51:33+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",
@@ -5461,12 +5461,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-translator.git",
-                "reference": "13e54e7e326443fbe91595ec2a1ec4b9303b7710"
+                "reference": "85ef7d6d37e3b53756ddcbb8a1535c49b06e9e6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-translator/zipball/13e54e7e326443fbe91595ec2a1ec4b9303b7710",
-                "reference": "13e54e7e326443fbe91595ec2a1ec4b9303b7710",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-translator/zipball/85ef7d6d37e3b53756ddcbb8a1535c49b06e9e6c",
+                "reference": "85ef7d6d37e3b53756ddcbb8a1535c49b06e9e6c",
                 "shasum": ""
             },
             "require": {
@@ -5513,7 +5513,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-translator/issues",
                 "source": "https://github.com/parabellumKoval/backpack-translator/tree/main"
             },
-            "time": "2025-12-05T19:03:41+00:00"
+            "time": "2025-12-17T11:47:16+00:00"
         },
         {
             "name": "parabellumkoval/crud",
