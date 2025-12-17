@@ -25,7 +25,8 @@ class TransferImagesCommand extends Command
         {--chunk=100 : Number of records processed per chunk}
         {--dry-run : Simulate the transfer without persisting changes}
         {--keep-names : Preserve original file names when uploading to the target provider}
-        {--skip-file= : Path to file with already processed model IDs (format: one entry per line, e.g. "Model #42")}';
+        {--skip-file= : Path to file with already processed model IDs (format: one entry per line, e.g. "Model #42")}
+        {--skip-before-id= : Skip all records with ID less than or equal to this value}';
 
     protected $description = 'Transfer stored image references from one provider to another and update the model attribute paths.';
 
@@ -35,6 +36,9 @@ class TransferImagesCommand extends Command
     /** @var array<int> */
     protected array $skippedIds = [];
 
+    /** @var int|null */
+    protected ?int $skipBeforeId = null;
+
     public function handle(ImageUploader $uploader): int
     {
         $modelClass = ltrim((string) $this->argument('model'), '\\');
@@ -43,10 +47,17 @@ class TransferImagesCommand extends Command
         $dryRun = (bool) $this->option('dry-run');
         $preserveNames = (bool) $this->option('keep-names');
         $skipFile = $this->option('skip-file');
+        $skipBeforeId = $this->option('skip-before-id');
 
         // Load skipped IDs from file if provided
         if ($skipFile) {
             $this->loadSkippedIds((string) $skipFile, $modelClass);
+        }
+
+        // Set minimum ID to skip
+        if ($skipBeforeId) {
+            $this->skipBeforeId = (int) $skipBeforeId;
+            $this->info(sprintf('Will skip all records with ID <= %d', $this->skipBeforeId));
         }
 
         if (!class_exists($modelClass)) {
@@ -129,6 +140,11 @@ class TransferImagesCommand extends Command
             foreach ($models as $model) {
                 $this->processModel($model, $attribute, $sourceDisk, $sourceProviderInstance, $uploader, $targetOptions, $dryRun, $preserveNames, $stats);
             }
+            
+            // Clear cache every chunk to free memory
+            if (count($this->transferredCache) > 10000) {
+                $this->transferredCache = array_slice($this->transferredCache, -5000, null, true);
+            }
         });
 
         $this->info(sprintf(
@@ -160,6 +176,12 @@ class TransferImagesCommand extends Command
 
         // Skip if model ID is in the skipped list
         if (in_array($modelKey, $this->skippedIds, true)) {
+            $stats['skipped']++;
+            return;
+        }
+
+        // Skip if model ID is less than or equal to skip-before-id
+        if ($this->skipBeforeId !== null && $modelKey <= $this->skipBeforeId) {
             $stats['skipped']++;
             return;
         }
@@ -225,6 +247,9 @@ class TransferImagesCommand extends Command
         } else {
             $model->save();
         }
+
+        // Unset model to free memory
+        unset($model);
     }
 
     protected function transferSingleImage(
