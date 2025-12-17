@@ -24,12 +24,16 @@ class TransferImagesCommand extends Command
         {--folder= : Destination folder on the target provider}
         {--chunk=100 : Number of records processed per chunk}
         {--dry-run : Simulate the transfer without persisting changes}
-        {--keep-names : Preserve original file names when uploading to the target provider}';
+        {--keep-names : Preserve original file names when uploading to the target provider}
+        {--skip-file= : Path to file with already processed model IDs (format: one entry per line, e.g. "Model #42")}';
 
     protected $description = 'Transfer stored image references from one provider to another and update the model attribute paths.';
 
     /** @var array<string, string> */
     protected array $transferredCache = [];
+
+    /** @var array<int> */
+    protected array $skippedIds = [];
 
     public function handle(ImageUploader $uploader): int
     {
@@ -38,6 +42,12 @@ class TransferImagesCommand extends Command
         $chunkSize = $this->resolveChunkSize();
         $dryRun = (bool) $this->option('dry-run');
         $preserveNames = (bool) $this->option('keep-names');
+        $skipFile = $this->option('skip-file');
+
+        // Load skipped IDs from file if provided
+        if ($skipFile) {
+            $this->loadSkippedIds((string) $skipFile, $modelClass);
+        }
 
         if (!class_exists($modelClass)) {
             $this->error(sprintf('Model class [%s] was not found.', $modelClass));
@@ -146,6 +156,14 @@ class TransferImagesCommand extends Command
         bool $preserveNames,
         array &$stats
     ): void {
+        $modelKey = $model->getKey();
+
+        // Skip if model ID is in the skipped list
+        if (in_array($modelKey, $this->skippedIds, true)) {
+            $stats['skipped']++;
+            return;
+        }
+
         $images = $this->extractImages($model, $attribute);
 
         if (empty($images)) {
@@ -155,7 +173,6 @@ class TransferImagesCommand extends Command
         $stats['records_scanned']++;
 
         $changed = false;
-        $modelKey = $model->getKey();
 
         foreach ($images as $index => $image) {
             $src = trim((string) ($image['src'] ?? ''));
@@ -432,5 +449,46 @@ class TransferImagesCommand extends Command
     protected function isAbsoluteUrl(string $value): bool
     {
         return str_starts_with($value, 'http://') || str_starts_with($value, 'https://');
+    }
+
+    /**
+     * Load IDs of already processed models from a skip file.
+     * File format: one entry per line with model name and ID, e.g. "Product #42"
+     */
+    protected function loadSkippedIds(string $skipFile, string $modelClass): void
+    {
+        if (!is_file($skipFile) || !is_readable($skipFile)) {
+            $this->warn(sprintf('Skip file not found or not readable: %s', $skipFile));
+            return;
+        }
+
+        $modelBaseName = class_basename($modelClass);
+        $pattern = sprintf('/^.*%s\s+#(\d+)/', $modelBaseName);
+        $skippedIds = [];
+
+        try {
+            $handle = fopen($skipFile, 'r');
+            if ($handle === false) {
+                $this->warn(sprintf('Unable to open skip file: %s', $skipFile));
+                return;
+            }
+
+            while (($line = fgets($handle)) !== false) {
+                $line = trim($line);
+                if ($line === '') {
+                    continue;
+                }
+
+                if (preg_match($pattern, $line, $matches)) {
+                    $skippedIds[] = (int) $matches[1];
+                }
+            }
+
+            fclose($handle);
+            $this->skippedIds = $skippedIds;
+            $this->info(sprintf('Loaded %d skipped IDs from %s', count($this->skippedIds), $skipFile));
+        } catch (Throwable $exception) {
+            $this->warn(sprintf('Error reading skip file: %s', $exception->getMessage()));
+        }
     }
 }
