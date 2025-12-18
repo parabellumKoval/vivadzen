@@ -4840,12 +4840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-articles.git",
-                "reference": "e4de00e17229ecc686d6ad7eca3bcd97860522cb"
+                "reference": "2abc7b5203d7ecbd04bac2a0c995a0a32b66c1a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/e4de00e17229ecc686d6ad7eca3bcd97860522cb",
-                "reference": "e4de00e17229ecc686d6ad7eca3bcd97860522cb",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/2abc7b5203d7ecbd04bac2a0c995a0a32b66c1a4",
+                "reference": "2abc7b5203d7ecbd04bac2a0c995a0a32b66c1a4",
                 "shasum": ""
             },
             "require": {
@@ -4899,7 +4899,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-articles/issues",
                 "source": "https://github.com/parabellumKoval/backpack-articles/tree/main"
             },
-            "time": "2025-12-16T15:38:42+00:00"
+            "time": "2025-12-18T11:59:13+00:00"
         },
         {
             "name": "parabellumkoval/backpack-banners",
