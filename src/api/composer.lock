@@ -5038,12 +5038,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-helpers.git",
-                "reference": "3cad13d2e9be65d77916ba7fc2ae2fee6e0d85a1"
+                "reference": "3ada685d80f9064b8b207bbab350e6a1ac4ccc9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-helpers/zipball/3cad13d2e9be65d77916ba7fc2ae2fee6e0d85a1",
-                "reference": "3cad13d2e9be65d77916ba7fc2ae2fee6e0d85a1",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-helpers/zipball/3ada685d80f9064b8b207bbab350e6a1ac4ccc9c",
+                "reference": "3ada685d80f9064b8b207bbab350e6a1ac4ccc9c",
                 "shasum": ""
             },
             "require": {
@@ -5080,7 +5080,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-helpers/issues",
                 "source": "https://github.com/parabellumKoval/backpack-helpers/tree/main"
             },
-            "time": "2025-12-05T17:04:18+00:00"
+            "time": "2025-12-18T09:59:19+00:00"
         },
         {
             "name": "parabellumkoval/backpack-images",
