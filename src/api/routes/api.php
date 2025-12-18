@@ -29,6 +29,7 @@ Route::prefix('sitemap')->controller(SitemapController::class)->group(function (
   Route::get('/products', 'getProducts')->middleware('api');
   Route::get('/brands', 'getBrands')->middleware('api');
   Route::get('/articles', 'getArticles')->middleware('api');
+  Route::get('/full', 'getFull')->middleware('api');
 });
 
 Route::get('/category_cached/{slug}', [CategoryController::class, 'categoryCached'])->middleware(['api', AddXRegionHeadersToRequest::class]);
