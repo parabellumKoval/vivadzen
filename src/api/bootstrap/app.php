@@ -11,12 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Apply regional context middleware globally for all API requests
-        // This ensures Accept-Language and X-Region headers are processed for registration and other requests
-        $middleware->append(\App\Http\Middleware\AddXRegionHeadersToRequest::class);
-        
-        // глобально для api
+        // Use API group to apply middleware across /api/* routes only
         $middleware->group('api', [
+            \App\Http\Middleware\AddXRegionHeadersToRequest::class,
             \App\Http\Middleware\ForceJsonResponse::class,
         ]);
         
