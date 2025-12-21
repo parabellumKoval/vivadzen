@@ -53,6 +53,10 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'client_url' => rtrim(
+        env('CLIENT_URL', env('FRONT_URL', env('APP_URL', 'http://localhost:3000'))),
+        '/'
+    ),
 
     /*
     |--------------------------------------------------------------------------

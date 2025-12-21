@@ -66,13 +66,27 @@ class LiqpayController extends Controller
     Log::channel('liqpay')->info('LIQPAY RESULT');
     Log::channel('liqpay')->info(print_r($d,true));
 
-    $client_url = config('liqpay.client_url');
+    $client_url = config('liqpay.client_url') ?: config('app.client_url') ?: config('app.url');
+    $client_url = is_string($client_url) ? trim($client_url) : '';
+    $has_client_url = $client_url !== '';
+
+    if ($has_client_url) {
+      $client_url = rtrim($client_url, '/');
+    }
 
     if($this->updateOrder($d)){
-      return redirect("{$client_url}/checkout/complete/{$d->order_id}");
-    }else {
-      return redirect($client_url);
+      $complete_path = ltrim("checkout/complete/{$d->order_id}", '/');
+      $redirect_url = $has_client_url ? "{$client_url}/{$complete_path}" : "/{$complete_path}";
+
+      return redirect()->to($redirect_url);
     }
+
+    if (!$has_client_url) {
+      Log::channel('liqpay')->warning('CLIENT_URL is not configured. Falling back to "/" redirect.');
+      return redirect()->to('/');
+    }
+
+    return redirect()->to($client_url);
   }
 
 
