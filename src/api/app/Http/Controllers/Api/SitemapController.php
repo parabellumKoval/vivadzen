@@ -280,11 +280,46 @@ class SitemapController extends \App\Http\Controllers\Controller
   protected function collectCategories(array $defaultRegions): array
   {
     $categories = \DB::table('ak_product_categories')
-      ->select('slug', 'updated_at')
+      ->select('id', 'slug', 'updated_at', 'parent_id', 'countries')
       ->where('is_active', 1)
+      ->orderBy('lft')
       ->get();
 
-    return $this->mapSimpleItems($categories, 'category', $defaultRegions);
+    $categoriesById = [];
+    foreach ($categories as $category) {
+      $categoriesById[$category->id] = $category;
+    }
+
+    $regionsCache = [];
+    $items = [];
+
+    foreach ($categories as $category) {
+      $slug = $this->normalizeSlug($category->slug ?? null);
+      if (!$slug) {
+        continue;
+      }
+
+      $availableRegions = $this->resolveCategoryRegions(
+        $category->id,
+        $categoriesById,
+        $defaultRegions,
+        $regionsCache
+      );
+
+      if (empty($availableRegions)) {
+        continue;
+      }
+
+      $items[] = [
+        'type' => 'category',
+        'slug' => $slug,
+        'available_regions' => $availableRegions,
+        'lastmod' => $this->formatLastmod($category->updated_at ?? null),
+        'disable_base_canonical' => false,
+      ];
+    }
+
+    return $items;
   }
 
   protected function collectBrands(array $defaultRegions): array
@@ -378,6 +413,45 @@ class SitemapController extends \App\Http\Controllers\Controller
     }
 
     return $items;
+  }
+
+  protected function resolveCategoryRegions(int $categoryId, array $categoriesById, array $defaultRegions, array &$cache, array $path = []): array
+  {
+    if (isset($cache[$categoryId])) {
+      return $cache[$categoryId];
+    }
+
+    if (!isset($categoriesById[$categoryId])) {
+      return $cache[$categoryId] = $defaultRegions;
+    }
+
+    if (in_array($categoryId, $path, true)) {
+      return $cache[$categoryId] = $defaultRegions;
+    }
+
+    $category = $categoriesById[$categoryId];
+
+    $parentRegions = null;
+    if ($category->parent_id && isset($categoriesById[$category->parent_id])) {
+      $parentRegions = $this->resolveCategoryRegions(
+        $category->parent_id,
+        $categoriesById,
+        $defaultRegions,
+        $cache,
+        array_merge($path, [$categoryId])
+      );
+    }
+
+    $fallback = $parentRegions ?? $defaultRegions;
+    $regions = $this->normalizeRegions($category->countries ?? null, $fallback);
+
+    if ($parentRegions !== null) {
+      $regions = array_values(array_intersect($regions, $parentRegions));
+    }
+
+    $cache[$categoryId] = $regions;
+
+    return $regions;
   }
 
   protected function normalizeSlug(?string $slug): ?string

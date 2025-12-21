@@ -88,6 +88,11 @@ class Product extends BaseProduct implements TranslatableInterface
         return backpack_url('product/' . $this->id . '/edit');
     }
 
+    public function regionalContents()
+    {
+        return $this->hasMany(ProductRegionalContent::class, 'product_id');
+    }
+
     public function scopeTranslatableQuery(Builder $query, $settings) {
         $is_active_only = isset($settings['query']['is_active_only'])? (bool)$settings['query']['is_active_only']: false;
         $in_stock_only = isset($settings['query']['in_stock_only'])? (bool)$settings['query']['in_stock_only']: false;

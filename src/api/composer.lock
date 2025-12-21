@@ -2352,16 +2352,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "3.11.5",
+            "version": "3.11.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "76e96d3809d53dd8d597005634a733d4b2f6c2c3"
+                "reference": "5f6d27d9fd56312c47f347929e7ac15345c605a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/76e96d3809d53dd8d597005634a733d4b2f6c2c3",
-                "reference": "76e96d3809d53dd8d597005634a733d4b2f6c2c3",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/5f6d27d9fd56312c47f347929e7ac15345c605a1",
+                "reference": "5f6d27d9fd56312c47f347929e7ac15345c605a1",
                 "shasum": ""
             },
             "require": {
@@ -2408,7 +2408,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Intervention/image/issues",
-                "source": "https://github.com/Intervention/image/tree/3.11.5"
+                "source": "https://github.com/Intervention/image/tree/3.11.6"
             },
             "funding": [
                 {
@@ -2424,7 +2424,7 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2025-11-29T11:18:34+00:00"
+            "time": "2025-12-17T13:38:29+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -5137,12 +5137,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-profile.git",
-                "reference": "1707e5dbb780a8cfc70fc1768b628e9595ef8b3c"
+                "reference": "fd3219b4fdd85ff496068595790a84c31fb1e5b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/1707e5dbb780a8cfc70fc1768b628e9595ef8b3c",
-                "reference": "1707e5dbb780a8cfc70fc1768b628e9595ef8b3c",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/fd3219b4fdd85ff496068595790a84c31fb1e5b0",
+                "reference": "fd3219b4fdd85ff496068595790a84c31fb1e5b0",
                 "shasum": ""
             },
             "require": {
@@ -5195,7 +5195,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-profile/issues",
                 "source": "https://github.com/parabellumKoval/backpack-profile/tree/main"
             },
-            "time": "2025-12-17T11:52:27+00:00"
+            "time": "2025-12-21T11:21:37+00:00"
         },
         {
             "name": "parabellumkoval/backpack-reviews",
@@ -5203,12 +5203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-reviews.git",
-                "reference": "43802f50f76f48bece57617f049fc66018f37b0d"
+                "reference": "253d9f71ca0ab3066cbdf8f161978459bf81550c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/43802f50f76f48bece57617f049fc66018f37b0d",
-                "reference": "43802f50f76f48bece57617f049fc66018f37b0d",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/253d9f71ca0ab3066cbdf8f161978459bf81550c",
+                "reference": "253d9f71ca0ab3066cbdf8f161978459bf81550c",
                 "shasum": ""
             },
             "require": {
@@ -5261,7 +5261,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-reviews/issues",
                 "source": "https://github.com/parabellumKoval/backpack-reviews/tree/main"
             },
-            "time": "2025-12-05T17:05:42+00:00"
+            "time": "2025-12-21T11:22:25+00:00"
         },
         {
             "name": "parabellumkoval/backpack-settings",
@@ -5322,12 +5322,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "55c1c7629d0d7d638fe5b9f2916ba0156931b637"
+                "reference": "0954889207d1b7c77c565de7653072e932ba2b19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/55c1c7629d0d7d638fe5b9f2916ba0156931b637",
-                "reference": "55c1c7629d0d7d638fe5b9f2916ba0156931b637",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/0954889207d1b7c77c565de7653072e932ba2b19",
+                "reference": "0954889207d1b7c77c565de7653072e932ba2b19",
                 "shasum": ""
             },
             "require": {
@@ -5388,7 +5388,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/multistore"
             },
-            "time": "2025-12-18T10:23:35+00:00"
+            "time": "2025-12-21T11:18:49+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",
@@ -5461,12 +5461,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-translator.git",
-                "reference": "85ef7d6d37e3b53756ddcbb8a1535c49b06e9e6c"
+                "reference": "c8898644f307d1f3b66e8a45d713858ea5bbbab7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-translator/zipball/85ef7d6d37e3b53756ddcbb8a1535c49b06e9e6c",
-                "reference": "85ef7d6d37e3b53756ddcbb8a1535c49b06e9e6c",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-translator/zipball/c8898644f307d1f3b66e8a45d713858ea5bbbab7",
+                "reference": "c8898644f307d1f3b66e8a45d713858ea5bbbab7",
                 "shasum": ""
             },
             "require": {
@@ -5513,7 +5513,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-translator/issues",
                 "source": "https://github.com/parabellumKoval/backpack-translator/tree/main"
             },
-            "time": "2025-12-17T11:47:16+00:00"
+            "time": "2025-12-21T11:24:28+00:00"
         },
         {
             "name": "parabellumkoval/crud",
@@ -5782,12 +5782,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/translator.git",
-                "reference": "0042662731f35bff736cd0f0ccb0f0c26d6783e5"
+                "reference": "c1c474696d350bed5f232463be1e07ed2e5a55d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/translator/zipball/0042662731f35bff736cd0f0ccb0f0c26d6783e5",
-                "reference": "0042662731f35bff736cd0f0ccb0f0c26d6783e5",
+                "url": "https://api.github.com/repos/parabellumKoval/translator/zipball/c1c474696d350bed5f232463be1e07ed2e5a55d0",
+                "reference": "c1c474696d350bed5f232463be1e07ed2e5a55d0",
                 "shasum": ""
             },
             "require": {
@@ -5839,7 +5839,7 @@
                 "issues": "https://github.com/parabellumKoval/translator/issues",
                 "source": "https://github.com/parabellumKoval/translator/tree/main"
             },
-            "time": "2025-12-05T19:01:32+00:00"
+            "time": "2025-12-21T11:23:36+00:00"
         },
         {
             "name": "parabellumkoval/webhooks",
@@ -5847,12 +5847,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/webhooks.git",
-                "reference": "9138f1e53104f2c4829a3350bc3c246413b39e81"
+                "reference": "f0cbd46a853114cbe51280f2a159f636f03def7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/webhooks/zipball/9138f1e53104f2c4829a3350bc3c246413b39e81",
-                "reference": "9138f1e53104f2c4829a3350bc3c246413b39e81",
+                "url": "https://api.github.com/repos/parabellumKoval/webhooks/zipball/f0cbd46a853114cbe51280f2a159f636f03def7a",
+                "reference": "f0cbd46a853114cbe51280f2a159f636f03def7a",
                 "shasum": ""
             },
             "require": {
@@ -5889,7 +5889,7 @@
                 "issues": "https://github.com/parabellumKoval/webhooks/issues",
                 "source": "https://github.com/parabellumKoval/webhooks/tree/main"
             },
-            "time": "2025-12-05T17:13:10+00:00"
+            "time": "2025-12-21T11:20:01+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -7058,16 +7058,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.12.17",
+            "version": "v0.12.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "85fbbd9f3064e157fc21fe4362b2b5c19f2ea631"
+                "reference": "ddff0ac01beddc251786fe70367cd8bbdb258196"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/85fbbd9f3064e157fc21fe4362b2b5c19f2ea631",
-                "reference": "85fbbd9f3064e157fc21fe4362b2b5c19f2ea631",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/ddff0ac01beddc251786fe70367cd8bbdb258196",
+                "reference": "ddff0ac01beddc251786fe70367cd8bbdb258196",
                 "shasum": ""
             },
             "require": {
@@ -7131,9 +7131,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.12.17"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.12.18"
             },
-            "time": "2025-12-15T04:55:34+00:00"
+            "time": "2025-12-17T14:35:46+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

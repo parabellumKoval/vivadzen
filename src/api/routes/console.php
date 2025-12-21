@@ -9,5 +9,4 @@ use Illuminate\Support\Facades\Schedule;
 // })->purpose('Display an inspiring quote');
 
 
-
 Schedule::command('store:currency:refresh')->everyTenMinutes();

@@ -43,6 +43,7 @@ return [
             'url' => [
                 '/api/_categories/refresh/slugs',
                 '/api/_categories/refresh/list',
+                '/api/_categories/refresh/main',
             ],
             'button' => 'Обновить категории',
             'icon' => 'la-list-alt',

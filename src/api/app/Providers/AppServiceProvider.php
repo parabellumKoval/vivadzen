@@ -21,6 +21,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(RegionalContext::class, fn () => new RegionalContext());
         $this->app->singleton(ReviewRewardContext::class, fn () => new ReviewRewardContext());
 
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \App\Console\Commands\MigrateProductRegionalContent::class,
+                \App\Console\Commands\GenerateProductRedirects::class,
+                \App\Console\Commands\GenerateUaProductRedirects::class,
+            ]);
+        }
+
         app(\Backpack\Profile\app\Services\TriggerRegistry::class)->register(
            \App\Services\Referral\Triggers\OrderPaid::alias(),
            \App\Services\Referral\Triggers\OrderPaid::class
