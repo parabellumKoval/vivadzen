@@ -10,13 +10,17 @@ if [ -n "${DB_HOST}" ]; then
 fi
 
 # Опционально: обновить автолоадер (если composer есть в образе)
-composer dump-autoload -o || true
+if command -v composer >/dev/null 2>&1; then
+  composer dump-autoload -o || true
+fi
 
 # Оптимизация Laravel. В новых версиях включает config:cache, route:cache, view:cache (+ events в 11+)
 php artisan optimize || true
 
 # Симлинк хранилища (optimize этого не делает)
-php artisan storage:link || true
+if [ ! -e "public/storage" ]; then
+  php artisan storage:link || true
+fi
 
 # (по желанию) миграции
 # php artisan migrate --force || true
