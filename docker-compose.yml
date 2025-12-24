@@ -184,6 +184,8 @@ services:
       args:
         IMAGE_REGISTRY: ${IMAGE_REGISTRY}
         IMAGE_TAG: ${IMAGE_TAG}
+    extra_hosts:
+        - "mail.vivadzen.com:78.140.162.187"
     volumes:
       # - ./src/api:/var/www/html
       - ./storage_queue:/var/www/html/storage
