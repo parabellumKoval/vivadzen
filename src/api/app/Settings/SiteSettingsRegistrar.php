@@ -53,21 +53,37 @@ class SiteSettingsRegistrar implements SettingsRegistrarInterface
                     $page->add(Field::make('site.contacts.social.viber', 'text')
                         ->label('Viber')
                         ->cast('string')
+                        ->regionable(true)
                         ->tab('Социальные сети и мессенджеры')
                     );
                     $page->add(Field::make('site.contacts.social.whatsapp', 'text')
                         ->label('Whatsapp')
                         ->cast('string')
+                        ->regionable(true)
                         ->tab('Социальные сети и мессенджеры')
                     );
                     $page->add(Field::make('site.contacts.social.telegram', 'text')
                         ->label('Telegram')
                         ->cast('string')
+                        ->regionable(true)
                         ->tab('Социальные сети и мессенджеры')
                     );
                     $page->add(Field::make('site.contacts.social.instagram', 'text')
                         ->label('Instagram')
                         ->cast('string')
+                        ->regionable(true)
+                        ->tab('Социальные сети и мессенджеры')
+                    );
+                    $page->add(Field::make('site.contacts.social.facebook', 'text')
+                        ->label('Facebook')
+                        ->cast('string')
+                        ->regionable(true)
+                        ->tab('Социальные сети и мессенджеры')
+                    );
+                    $page->add(Field::make('site.contacts.social.youtube', 'text')
+                        ->label('Youtube')
+                        ->cast('string')
+                        ->regionable(true)
                         ->tab('Социальные сети и мессенджеры')
                     );
                 })

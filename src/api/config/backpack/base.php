@@ -26,6 +26,9 @@ return [
     // Project name. Shown in the window title.
     'project_name' => 'Backpack Admin Panel',
 
+    // Path to the favicon relative to the public directory; set to null to disable.
+    'favicon' => 'favicon.ico',
+
     // When clicking on the admin panel's top-left logo/name,
     // where should the user be redirected?
     // The string below will be passed through the url() helper.
@@ -72,7 +75,7 @@ return [
     // ------
 
     // Menu logo. You can replace this with an <img> tag if you have a logo.
-    'project_logo'   => '<b>Back</b>pack',
+    'project_logo'   => '<b>Viva</b>dzen',
 
     // Show / hide breadcrumbs on admin panel pages.
     'breadcrumbs' => true,
@@ -112,7 +115,7 @@ return [
     'developer_link' => 'http://tabacitu.ro',
 
     // Show powered by Laravel Backpack in the footer? true/false
-    'show_powered_by' => true,
+    'show_powered_by' => false,
 
     // -------
     // SCRIPTS
