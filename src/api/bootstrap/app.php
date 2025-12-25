@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         // Trust proxy headers so signed URLs validate behind a reverse proxy.
-        $middleware->trustProxies(at: '*');
+        // $middleware->trustProxies(at: '*');
         
         // Переопределенный Sanctum
         $middleware->alias([
