@@ -3,9 +3,13 @@
 namespace App\Providers;
 
 use App\Listeners\ResyncProductOnReviewPublished;
+use App\Listeners\SendReferralNotification;
 use App\Listeners\SendReferralSponsorNotification;
+use App\Listeners\SendRewardLedgerNotification;
 use App\Listeners\SendRewardLedgerEntryNotification;
+use App\Listeners\SendReviewPublishedNotification;
 use App\Listeners\SendWithdrawalApprovedMail;
+use App\Listeners\SendWithdrawalNotification;
 use App\Listeners\SendWithdrawalPaidMail;
 use App\Observers\FeedbackObserver;
 use App\Observers\OrderObserver;
@@ -26,18 +30,23 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         ReviewPublished::class => [
             ResyncProductOnReviewPublished::class,
+            SendReviewPublishedNotification::class,
         ],
         ReferralAttached::class => [
             SendReferralSponsorNotification::class,
+            SendReferralNotification::class,
         ],
         RewardLedgerEntryCreated::class => [
             SendRewardLedgerEntryNotification::class,
+            SendRewardLedgerNotification::class,
         ],
         WithdrawalApproved::class => [
             SendWithdrawalApprovedMail::class,
+            SendWithdrawalNotification::class,
         ],
         WithdrawalPaid::class => [
             SendWithdrawalPaidMail::class,
+            SendWithdrawalNotification::class,
         ],
     ];
 

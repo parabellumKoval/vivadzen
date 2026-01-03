@@ -187,10 +187,10 @@ return [
       'rules' => 'array:first_name,last_name,phone,email',
       'store_in' => 'info',
       'first_name' => [
-        'rules' => 'required_if:payment.method,bank_transfer|required_if:delivery.method,packeta_warehouse,packeta_address|nullable|string|min:2|max:150'
+        'rules' => 'required|string|min:2|max:150'
       ],
       'last_name' => [
-        'rules' => 'required_if:payment.method,bank_transfer|required_if:delivery.method,packeta_warehouse,packeta_address|nullable|string|min:2|max:150'
+        'rules' => 'required|string|min:2|max:150'
       ],
       'phone' => [
         'rules' => 'required|string|min:2|max:80'

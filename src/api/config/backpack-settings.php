@@ -26,7 +26,8 @@ return [
         \Backpack\Store\app\Settings\PaymentSettingsRegistrar::class,
         \Backpack\Store\app\Settings\InvoicesSettingsRegistrar::class,
         \Backpack\Reviews\app\Settings\ReviewsSettingsRegistrar::class,
-        \Backpack\Profile\app\Settings\ProfileSettingsRegistrar::class
+        \Backpack\Profile\app\Settings\ProfileSettingsRegistrar::class,
+        \ParabellumKoval\AiContentGenerator\Settings\AiContentGeneratorSettingsRegistrar::class
     ],
 
     // Access control for the admin UI routes

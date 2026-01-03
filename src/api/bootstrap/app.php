@@ -32,4 +32,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 'code'    => 'unauthenticated',
             ], 401);
         });
-    })->create();
+    })
+    ->withBroadcasting(__DIR__.'/../routes/channels.php', [
+        'middleware' => ['auth:sanctum'],
+    ])
+    ->create();

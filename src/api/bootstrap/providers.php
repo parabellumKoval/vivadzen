@@ -6,5 +6,6 @@ return [
     App\Providers\RouteServiceProvider::class,
 
     // App
-    ParabellumKoval\BackpackImages\BackpackImagesServiceProvider::class
+    ParabellumKoval\BackpackImages\BackpackImagesServiceProvider::class,
+    Illuminate\Broadcasting\BroadcastServiceProvider::class,
 ];

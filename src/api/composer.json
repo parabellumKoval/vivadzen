@@ -32,6 +32,8 @@
         "parabellumkoval/dumper": "dev-main",
         "parabellumkoval/translator": "dev-main",
         "parabellumkoval/webhooks": "dev-main",
+        "parabellumkoval/ai-content-generator": "dev-main",
+        "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-feed": "^4.4"
     },
     "require-dev": {

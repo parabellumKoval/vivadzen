@@ -79,6 +79,16 @@
 	</ul>
 </li>
 
+
+<li class="nav-item nav-dropdown">
+	<a class="nav-link nav-dropdown-toggle" href="#"><i class="las la-robot"></i> Генерация AI</a>
+	<ul class="nav-dropdown-items">
+		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('/settings/ai-content') }}'><i class='nav-icon las la-cog'></i> Настройки</a></li>
+		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('/ai-content-generator/providers') }}'><i class='nav-icon las la-check-circle'></i> Статусы</a></li>
+		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('ai-content-generations') }}'><i class='nav-icon las la-history'></i> Операции</a></li>
+	</ul>
+</li>
+
 <!-- Pages -->
 <!-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('page') }}'><i class='nav-icon las la-file'></i> <span>Страницы</span></a></li> -->
 
@@ -126,7 +136,7 @@
 	<ul class="nav-dropdown-items">
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('profile-dashboard') }}"><i class="nav-icon la la-columns"></i> <span>Дашбоард</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('profile') }}"><i class="nav-icon la la-user-circle"></i> <span>Профили</span></a></li>
-		<!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('referrals') }}"><i class="nav-icon la la-user-plus"></i> <span>Реферальная сеть</span></a></li> -->
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('notifications') }}"><i class="nav-icon la la-bell"></i> <span>Уведомления</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/profile') }}"><i class="nav-icon la la-user-edit"></i> <span>Настройки</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('withdrawals') }}"><i class="nav-icon la la-money-bill-wave"></i> <span>Вывод средств</span></a></li>
 
