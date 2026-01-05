@@ -27,6 +27,16 @@ class ReviewPublishedListener
 
         $review = $event->review;
 
+        // Skip reward if marked in extras (for bot-generated reviews)
+        if (data_get($review->extras, 'skip_reward') === true) {
+            return;
+        }
+
+        // Skip reward for bot-generated reviews
+        if (data_get($review->extras, 'generated_by_bot') === true) {
+            return;
+        }
+
         if (!$review->is_video) {
             $link = data_get($review->extras, 'link');
             if (blank($link)) {

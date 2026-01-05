@@ -10,3 +10,4 @@ use Illuminate\Support\Facades\Schedule;
 
 
 Schedule::command('store:currency:refresh')->everyTenMinutes();
+Schedule::command('reviews:google:sync')->hourly();
