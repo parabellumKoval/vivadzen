@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use Backpack\Feedback\app\Models\Feedback;
 
 use App\Mail\Buy1ClickCreatedAdmin;
+use App\Mail\LandingPromoCode;
 use App\Support\AdminNotificationResolver;
 
 class FeedbackObserver
@@ -21,17 +22,43 @@ class FeedbackObserver
     {
         $type = strtolower(trim((string) $feedback->type));
 
-        if ($type !== '1_click_buy') {
+        $adminNotificationTypes = [
+            '1_click_buy',
+            'landing_sample_set',
+        ];
+
+        if (in_array($type, $adminNotificationTypes, true)) {
+            $recipients = AdminNotificationResolver::resolve();
+
+            if (!empty($recipients)) {
+                Mail::to($recipients)->queue(new Buy1ClickCreatedAdmin($feedback));
+            }
+        }
+
+        $promoType = strtolower(trim((string) config('landing.promo_subscribe.feedback_type')));
+        if ($promoType !== '' && $type === $promoType) {
+            $this->sendLandingPromoCode($feedback);
+        }
+    }
+
+    protected function sendLandingPromoCode(Feedback $feedback): void
+    {
+        $email = trim((string) $feedback->email);
+
+        if ($email === '' || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             return;
         }
 
-        $recipients = AdminNotificationResolver::resolve();
+        $promoCode = trim((string) config('landing.promo_subscribe.promo_code'));
 
-        if (empty($recipients)) {
+        if ($promoCode === '') {
             return;
         }
 
-        Mail::to($recipients)->queue(new Buy1ClickCreatedAdmin($feedback));
+        $ctaUrl = trim((string) config('landing.promo_subscribe.cta_url'));
+        $ctaUrl = $ctaUrl !== '' ? $ctaUrl : null;
+
+        Mail::to($email)->queue(new LandingPromoCode($promoCode, $ctaUrl));
     }
 
 }

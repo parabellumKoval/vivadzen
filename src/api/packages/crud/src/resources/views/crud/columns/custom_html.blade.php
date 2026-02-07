@@ -1,5 +1,10 @@
 @php
-    $column['text'] = $column['value'] ?? '';
+    $value = $column['value'] ?? '';
+    // Если value - это Closure, вызываем её с entry
+    if ($value instanceof \Closure) {
+        $value = $value($entry);
+    }
+    $column['text'] = $value;
     $column['escaped'] = $column['escaped'] ?? false;
     $column['prefix'] = $column['prefix'] ?? '';
     $column['suffix'] = $column['suffix'] ?? '';

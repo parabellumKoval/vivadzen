@@ -90,6 +90,15 @@ return [
     ],
   ],
 
+  'landing_promo' => [
+    'subject' => 'Tu código promocional para comprar en la tienda Vivadzen',
+    'title' => 'Código promocional para compras en tienda',
+    'intro' => '¡Gracias por tu solicitud! Usa este código promocional al comprar en la tienda.',
+    'code_label' => 'Tu código promocional',
+    'code_hint' => 'Muestra este código al vendedor al pagar.',
+    'button' => 'Visitar el sitio',
+  ],
+
   'verify_email' => [
     'subject' => 'Verifica tu dirección de correo electrónico',
     'greeting' => '¡Bienvenido!',

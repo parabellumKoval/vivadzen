@@ -2,7 +2,7 @@
   @component('mail::title')
   <table width="100%">
     <tr class="title-inner">
-      <td class="title-number">{{ __('mail.feedback.title') }}</td>
+      <td class="title-number">{{ $title ?? __('mail.feedback.title') }}</td>
       <td class="title-data">
         {{ optional($feedback->created_at)->format('d.m.Y H:i') }}
       </td>

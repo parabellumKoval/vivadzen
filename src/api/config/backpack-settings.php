@@ -27,7 +27,8 @@ return [
         \Backpack\Store\app\Settings\InvoicesSettingsRegistrar::class,
         \Backpack\Reviews\app\Settings\ReviewsSettingsRegistrar::class,
         \Backpack\Profile\app\Settings\ProfileSettingsRegistrar::class,
-        \ParabellumKoval\AiContentGenerator\Settings\AiContentGeneratorSettingsRegistrar::class
+        \ParabellumKoval\AiContentGenerator\Settings\AiContentGeneratorSettingsRegistrar::class,
+        \Backpack\Schedule\Settings\ScheduleSettingsRegistrar::class
     ],
 
     // Access control for the admin UI routes

@@ -90,6 +90,15 @@ return [
     ],
   ],
 
+  'landing_promo' => [
+    'subject' => 'Váš promo kód pro nákup v prodejně Vivadzen',
+    'title' => 'Promo kód pro nákup v prodejně',
+    'intro' => 'Děkujeme za váš zájem! Tento promo kód použijte při nákupu v prodejně.',
+    'code_label' => 'Váš promo kód',
+    'code_hint' => 'Ukažte tento kód prodejci při nákupu.',
+    'button' => 'Přejít na web',
+  ],
+
   'verify_email' => [
     'subject' => 'Ověřte svou e-mailovou adresu',
     'greeting' => 'Vítejte!',

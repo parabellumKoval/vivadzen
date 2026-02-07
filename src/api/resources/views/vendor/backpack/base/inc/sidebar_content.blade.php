@@ -117,13 +117,14 @@
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/payment') }}"><i class="nav-icon la la-credit-card"></i> <span>Оплата</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/search') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/core') }}"><i class="nav-icon las la-microchip"></i> <span>Системные</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/schedule') }}"><i class="nav-icon las la-clock"></i> <span>Планировщик публикаций</span></a></li>
 	</ul>
 </li>
-
 
 <li class="nav-item nav-dropdown">
 	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-cubes"></i> Сервисы</a>
 	<ul class="nav-dropdown-items">
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('scheduled-publication') }}"><i class="nav-icon la la-clock"></i> <span>Планировщик публикаций</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('seo-page') }}"><i class="nav-icon la la-bullseye"></i> <span>Посадочные страницы</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('search-queries') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('currency-rates') }}"><i class="nav-icon la la-exchange"></i> <span>Курсы валют</span></a></li>

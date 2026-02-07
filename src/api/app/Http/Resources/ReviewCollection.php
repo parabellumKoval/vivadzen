@@ -2,12 +2,13 @@
  
 namespace App\Http\Resources;
  
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 use \Backpack\Reviews\app\Models\Review;
  
-class ReviewCollection extends ResourceCollection
+class ReviewCollection extends JsonResource
 {
-  private $total, $last_page, $current_page, $per_page, $rating_count, $rating_avg, $resource_class;  
+  private $total, $last_page, $current_page, $per_page, $rating_count, $rating_avg, $resource_class;
+  private $items;
 
   public function __construct($resource, Array $options)
   {
@@ -20,8 +21,10 @@ class ReviewCollection extends ResourceCollection
     $this->current_page = $resource->currentPage();
     $this->per_page = $resource->perPage();
 
-    $collection = $resource->getCollection();
-    parent::__construct($collection);
+    $this->items = $resource->getCollection();
+    
+    // Передаём null в parent, чтобы избежать вызова resolve() на моделях
+    parent::__construct(null);
   }
 
   /**
@@ -33,7 +36,7 @@ class ReviewCollection extends ResourceCollection
   public function toArray($request)
   {
     return [
-      'data' => $this->resource_class::collection($this->collection),
+      'data' => $this->resource_class::collection($this->items),
       'meta' => [
         'total' => $this->total,
         'current_page' => $this->current_page,

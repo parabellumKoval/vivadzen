@@ -34,9 +34,17 @@ class Buy1ClickCreatedAdmin extends Mailable
         $this->requestLines = $this->buildRequestLines();
         $this->productLines = $this->buildProductLines();
 
-        $subject = __('mail.feedback.one_click_subject', [
-            'phone' => (string) ($this->feedback->phone ?? ''),
-        ]);
+        $type = strtolower(trim((string) $this->feedback->type));
+        $phone = (string) ($this->feedback->phone ?? '');
+        $isSampleSet = $type === 'landing_sample_set';
+
+        $subject = $isSampleSet
+            ? __('mail.feedback.sample_set_subject', ['phone' => $phone])
+            : __('mail.feedback.one_click_subject', ['phone' => $phone]);
+
+        $title = $isSampleSet
+            ? __('mail.feedback.sample_set_title')
+            : __('mail.feedback.title');
 
         return $this->subject($subject)
             ->markdown('mail.buy1click_created_admin')
@@ -45,6 +53,7 @@ class Buy1ClickCreatedAdmin extends Mailable
                 'contactLines' => $this->contactLines,
                 'requestLines' => $this->requestLines,
                 'productLines' => $this->productLines,
+                'title' => $title,
             ]));
     }
 

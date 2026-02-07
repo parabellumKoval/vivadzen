@@ -90,6 +90,15 @@ return [
     ],
   ],
 
+  'landing_promo' => [
+    'subject' => 'Ihr Promo-Code für den Einkauf im Vivadzen-Laden',
+    'title' => 'Promo-Code für den Einkauf im Laden',
+    'intro' => 'Danke für Ihre Anfrage! Verwenden Sie diesen Promo-Code beim Einkauf im Laden.',
+    'code_label' => 'Ihr Promo-Code',
+    'code_hint' => 'Zeigen Sie diesen Code beim Kauf dem Verkäufer.',
+    'button' => 'Zur Website',
+  ],
+
   'verify_email' => [
     'subject' => 'E-Mail-Adresse bestätigen',
     'greeting' => 'Willkommen!',

@@ -92,7 +92,9 @@ return [
 
   'feedback' => [
     'one_click_subject' => 'New one-click purchase request :phone',
+    'sample_set_subject' => 'New sample set request :phone',
     'title' => 'One-click purchase request',
+    'sample_set_title' => 'Sample set request',
     'button' => 'Open request',
     'labels' => [
       'name' => 'Name',
@@ -109,6 +111,15 @@ return [
       'in_stock' => 'Stock',
       'slug' => 'Slug',
     ],
+  ],
+
+  'landing_promo' => [
+    'subject' => 'Your promo code for in-store purchase at Vivadzen',
+    'title' => 'Promo code for in-store purchase',
+    'intro' => 'Thanks for your request! Use this promo code when you buy in the store.',
+    'code_label' => 'Your promo code',
+    'code_hint' => 'Show this code to the seller at checkout.',
+    'button' => 'Visit the website',
   ],
 
   'verify_email' => [

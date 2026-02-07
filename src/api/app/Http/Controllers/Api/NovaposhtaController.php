@@ -1,120 +1,106 @@
 <?php
-	
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\NpSettlement;
+use App\Models\NpWarehouse;
+use App\Services\NovaPoshta\NovaPoshtaClient;
+use App\Services\NovaPoshta\NpSearchService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-
-use Daaner\NovaPoshta\Models\Counterparty;
-use Daaner\NovaPoshta\Models\Address;
 
 class NovaposhtaController extends Controller
 {
+    public function settlements(Request $request, NpSearchService $searchService)
+    {
+        $query = $this->inputString($request, ['q', 'find']);
+        $ref = $this->inputString($request, ['ref']);
+        $popular = $request->boolean('popular');
+        $limit = (int) ($request->input('limit') ?: 20);
 
-  public function counterpartyContacts(Request $request) {
-    $cp = new Counterparty;
+        if ($ref !== '') {
+            $items = NpSettlement::query()->where('ref', $ref)->limit(1)->get();
+        } elseif ($popular && $query === '') {
+            $items = $searchService->popularSettlements($limit);
+        } else {
+            $items = $searchService->searchSettlements($query, $limit);
+        }
 
-    //если список менее 100 человек - пагинация не обязательна
-    $cp->setPage(1);
-    $cp->setLimit(100);
+        return response()->json([
+            'data' => $items->map(fn (NpSettlement $item) => $this->formatSettlement($item)),
+        ]);
+    }
 
-    $agent = $cp->getCounterpartyContactPerson('489b9bff-7926-11ec-8513-b88303659df5');
+    public function warehouses(Request $request, NpSearchService $searchService)
+    {
+        $query = $this->inputString($request, ['q', 'find']);
+        $settlementRef = $this->inputString($request, ['settlementRef', 'settlement_ref']);
+        $limit = (int) ($request->input('limit') ?: 100);
 
-    return $agent;
-  }
+        if ($settlementRef === '') {
+            return response()->json(['data' => []]);
+        }
 
-	public function addressList(Request $request) {
-    $cp = new Counterparty;
+        $items = $searchService->searchWarehouses($query, $settlementRef, $limit);
 
-    //return $request->form;
-    //по умолчанию Recipient
-    $cp->setLimit(100);
+        return response()->json([
+            'data' => $items->map(fn (NpWarehouse $item) => $this->formatWarehouse($item)),
+        ]);
+    }
 
-    $cp->setCounterpartyProperty('Sender'); // или насильно Recipient
-    $addresses = $cp->getCounterpartyAddresses($request->form['sender']);
+    public function streets(Request $request, NovaPoshtaClient $client)
+    {
+        $query = $this->inputString($request, ['q', 'find']);
+        $settlementRef = $this->inputString($request, ['settlementRef', 'settlement_ref']);
+        $limit = (int) ($request->input('limit') ?: 50);
 
-    // dd($addresses);
+        if ($settlementRef === '') {
+            return response()->json(['data' => []]);
+        }
 
-    return $addresses;
-  }
+        $data = $client->searchStreets($settlementRef, $query !== '' ? $query : null, $limit);
 
+        return response()->json(['data' => $data]);
+    }
 
-	public function contactsList(Request $request) {
-    $cp = new Counterparty;
+    private function formatSettlement(NpSettlement $settlement): array
+    {
+        return [
+            'Ref' => $settlement->ref,
+            'Description' => $settlement->name_uk,
+            'DescriptionRu' => $settlement->name_ru,
+            'AreaDescription' => $settlement->area_uk,
+            'AreaDescriptionRu' => $settlement->area_ru,
+            'RegionDescription' => $settlement->region_uk,
+            'RegionDescriptionRu' => $settlement->region_ru,
+            'RegionsDescription' => $settlement->region_uk,
+            'RegionsDescriptionRu' => $settlement->region_ru,
+            'SettlementTypeDescription' => $settlement->type_uk,
+            'SettlementTypeDescriptionRu' => $settlement->type_ru,
+        ];
+    }
 
-    $cp->setLimit(100);
-    $contacts = $cp->getCounterpartyContactPerson($request->form['sender']);
+    private function formatWarehouse(NpWarehouse $warehouse): array
+    {
+        return [
+            'Ref' => $warehouse->ref,
+            'Description' => $warehouse->name_uk,
+            'DescriptionRu' => $warehouse->name_ru,
+            'SettlementRef' => $warehouse->settlement_ref,
+            'CategoryOfWarehouse' => $warehouse->category,
+            'TypeOfWarehouse' => $warehouse->type,
+        ];
+    }
 
-    return $contacts;
-  }
+    private function inputString(Request $request, array $keys): string
+    {
+        foreach ($keys as $key) {
+            $value = $request->input($key);
+            if ($value !== null && $value !== '') {
+                return (string) $value;
+            }
+        }
 
-
-	public function counterpartyList(Request $request) {
-    $cp = new Counterparty;
-
-    //если список менее 100 человек - пагинация не обязательна
-    $cp->setPage(1);
-    $cp->setLimit(100);
-
-    //если значение не указано - по умолчанию будет `Recipient`
-    $cp->setCounterpartyProperty('Sender');
-    $agent = $cp->getCounterparties();
-
-    dd($agent);
-    return $agent;
-    //с поиском (поиск не ищет вхождения. "Турфирма" найдется по "турф", но не найдется по "фирма")
-    //$agent = $cp->getCounterparties('Талісман');
-  }
-
-
-  public function settlementFind(Request $request) {
-    $adr = new Address;
-    $adr->setLimit(100);
-
-    $cities = $adr->getSettlements($request->q);
-
-    return $cities;
-  }
-
-
-  public function cityFind(Request $request) {
-    $adr = new Address;
-    $adr->setLimit(100);
-
-    if($request->q)
-      $cities = $adr->getCities($request->q);
-    elseif($request->ref)
-      $cities = $adr->getCities($request->ref, false);
-    else
-      $cities = [];
-
-    return $cities;
-  }
-
-
-  public function warehouseFind(Request $request) {
-    $adr = new Address;
-    $adr->setLimit(100);
-
-    // $adr->filterPostFinance();
-    // $adr->setTypeOfWarehouseRef('9a68df70-0267-42a8-bb5c-37f427e36ee4');
-    
-    $warehouses = $adr->getWarehouseSettlements($request->form['RecipientCityName']);
-
-    return $warehouses;
-  }
-
-	public function streetFind(Request $request) {
-    $adr = new Address;
-    $adr->setLimit(100);
-
-    $results = $adr->searchSettlementStreets($request->form['RecipientCityName'], $request->q);
-    $streets = $results['result'][0]['Addresses'] ?? null;
-
-    return [
-      'result' => $streets
-    ];
-  }
+        return '';
+    }
 }

@@ -1,0 +1,39 @@
+{
+  "name": "parabellumkoval/backpack-schedule",
+  "description": "Scheduled publishing for Laravel Backpack models",
+  "keywords": [
+    "parabellumKoval",
+    "backpack",
+    "laravel",
+    "schedule",
+    "publish"
+  ],
+  "homepage": "https://github.com/parabellumkoval/backpack-schedule",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "parabellumKoval",
+      "email": "parabellum.koval@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "laravel/framework": "^12.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Backpack\\Schedule\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Backpack\\Schedule\\ScheduleServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

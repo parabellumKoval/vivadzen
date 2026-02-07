@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.10.1",
         "maatwebsite/excel": "^3.1",
         "ozh/phpass": "^1.4",
+        "parabellumkoval/ai-content-generator": "dev-main",
         "parabellumkoval/backpack-articles": "dev-main",
         "parabellumkoval/backpack-banners": "dev-main",
         "parabellumkoval/backpack-feedback": "dev-main",
@@ -23,6 +24,7 @@
         "parabellumkoval/backpack-images": "dev-main",
         "parabellumkoval/backpack-profile": "dev-main",
         "parabellumkoval/backpack-reviews": "dev-main",
+        "parabellumkoval/backpack-schedule": "dev-main",
         "parabellumkoval/backpack-settings": "dev-main",
         "parabellumkoval/backpack-store": "dev-multistore",
         "parabellumkoval/backpack-tag": "dev-main",
@@ -32,7 +34,6 @@
         "parabellumkoval/dumper": "dev-main",
         "parabellumkoval/translator": "dev-main",
         "parabellumkoval/webhooks": "dev-main",
-        "parabellumkoval/ai-content-generator": "dev-main",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-feed": "^4.4"
     },
@@ -99,7 +100,15 @@
             "php": "8.2.29"
         }
     },
-    "repositories": [],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/*",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }

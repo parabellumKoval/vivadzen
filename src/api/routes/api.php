@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\NovaposhtaController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\SitemapController;
 
@@ -42,4 +43,10 @@ Route::get('/company-category/slugs-simple', [CategoryController::class, 'getSlu
 Route::prefix('search')->controller(SearchController::class)->group(function () {
   Route::get('', 'index')->middleware('api');
   Route::get('/livesearch', 'livesearch')->middleware(['api', AddXRegionHeadersToRequest::class]);
+});
+
+Route::prefix('np')->controller(NovaposhtaController::class)->middleware(['api', AddXRegionHeadersToRequest::class])->group(function () {
+  Route::get('/settlements', 'settlements');
+  Route::get('/warehouses', 'warehouses');
+  Route::get('/streets', 'streets');
 });
