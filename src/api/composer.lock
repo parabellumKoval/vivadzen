@@ -5251,12 +5251,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-reviews.git",
-                "reference": "8fa78487c352f5b6212927d93c276d6dd346f1fa"
+                "reference": "f0c33287f1a6eab057d130cc292c1ea849b75ef6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/8fa78487c352f5b6212927d93c276d6dd346f1fa",
-                "reference": "8fa78487c352f5b6212927d93c276d6dd346f1fa",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/f0c33287f1a6eab057d130cc292c1ea849b75ef6",
+                "reference": "f0c33287f1a6eab057d130cc292c1ea849b75ef6",
                 "shasum": ""
             },
             "require": {
@@ -5309,7 +5309,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-reviews/issues",
                 "source": "https://github.com/parabellumKoval/backpack-reviews/tree/main"
             },
-            "time": "2026-02-18T13:51:38+00:00"
+            "time": "2026-02-18T14:44:05+00:00"
         },
         {
             "name": "parabellumkoval/backpack-schedule",
