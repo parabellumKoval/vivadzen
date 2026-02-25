@@ -116,6 +116,7 @@
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/delivery') }}"><i class="nav-icon la la-shipping-fast"></i> <span>Доставка</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/payment') }}"><i class="nav-icon la la-credit-card"></i> <span>Оплата</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/search') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/age-verification') }}"><i class="nav-icon las la-user-check"></i> <span>Проверка возраста</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/core') }}"><i class="nav-icon las la-microchip"></i> <span>Системные</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/schedule') }}"><i class="nav-icon las la-clock"></i> <span>Планировщик публикаций</span></a></li>
 	</ul>

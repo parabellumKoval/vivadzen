@@ -45,4 +45,11 @@ return [
         'client_secret' => env('FB_CLIENT_SECRET'),
         'redirect' => env('FB_REDIRECT_URI', 'https://api.example.com/api/auth/oauth/facebook/callback'),
     ],
+
+    'adulto' => [
+        'public_key' => env('ADULTO_PUBLIC_KEY'),
+        'private_key' => env('ADULTO_PRIVATE_KEY'),
+        'verify_url' => env('ADULTO_VERIFY_URL', 'https://adulto.cz/api/v1/verify'),
+        'timeout' => (int) env('ADULTO_TIMEOUT', 10),
+    ],
 ];

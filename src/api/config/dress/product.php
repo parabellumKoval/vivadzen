@@ -24,7 +24,7 @@ return [
     'medium' => 'Backpack\Store\app\Http\Resources\ProductMediumResource',
     
     // Large product resource used for product page (show route)
-    'large' => 'Backpack\Store\app\Http\Resources\ProductLargeResource',
+    'large' => 'App\Http\Resources\ProductLargeResource',
 
     // Cart product resource used for order
     'cart' => 'App\Http\Resources\ProductCartResource',

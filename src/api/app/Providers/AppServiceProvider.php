@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Api\OrderController as AppOrderController;
+use App\Services\AgeVerification\AdultoClient;
+use App\Services\AgeVerification\AgeVerificationService;
 use App\Support\RegionalContext;
 use App\Support\ReviewRewardContext;
 use Illuminate\Support\ServiceProvider;
 
 use \Backpack\Store\app\Models\Order;
+use \Backpack\Store\app\Http\Controllers\Api\OrderController as StoreOrderController;
 use \Backpack\Reviews\app\Models\Review;
 use \Backpack\Feedback\app\Models\Feedback;
 use \Backpack\Transactions\app\Models\Transaction;
@@ -20,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(RegionalContext::class, fn () => new RegionalContext());
         $this->app->singleton(ReviewRewardContext::class, fn () => new ReviewRewardContext());
+        $this->app->scoped(AgeVerificationService::class);
+        $this->app->scoped(AdultoClient::class);
+        $this->app->bind(StoreOrderController::class, AppOrderController::class);
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -42,6 +49,11 @@ class AppServiceProvider extends ServiceProvider
         app(\Backpack\Profile\app\Services\TriggerRegistry::class)->register(
             \App\Services\Referral\Triggers\ReviewVideoPublished::alias(),
             \App\Services\Referral\Triggers\ReviewVideoPublished::class
+        );
+
+        app(\Backpack\Profile\app\Services\TriggerRegistry::class)->register(
+            \App\Services\Referral\Triggers\ReviewPhotoPublished::alias(),
+            \App\Services\Referral\Triggers\ReviewPhotoPublished::class
         );
     }
 

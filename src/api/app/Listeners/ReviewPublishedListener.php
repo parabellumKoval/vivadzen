@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Services\Referral\Triggers\ReviewTextPublished;
 use App\Services\Referral\Triggers\ReviewVideoPublished;
+use App\Services\Referral\Triggers\ReviewPhotoPublished;
 use App\Support\ReviewRewardContext;
 use Backpack\Reviews\app\Events\ReviewPublished;
 
@@ -37,21 +38,32 @@ class ReviewPublishedListener
             return;
         }
 
-        if (!$review->is_video) {
+        $reviewType = method_exists($review, 'resolveReviewType')
+            ? $review->resolveReviewType()
+            : ($review->is_video ? 'video' : 'text');
+
+        if ($reviewType === 'text') {
             $link = data_get($review->extras, 'link');
             if (blank($link)) {
                 return;
             }
         }
 
-        $triggerAlias = $review->is_video
-            ? ReviewVideoPublished::alias()
-            : ReviewTextPublished::alias();
+        $triggerAlias = $this->resolveTriggerAlias($reviewType);
 
         // Give bonus money for review
         \Profile::trigger($triggerAlias, null, [], $review->owner_id, [
             'subject_type' => $review->getMorphClass(),
             'subject_id' => $review->id,
         ]);
+    }
+
+    protected function resolveTriggerAlias(string $reviewType): string
+    {
+        return match ($reviewType) {
+            'video' => ReviewVideoPublished::alias(),
+            'photo' => ReviewPhotoPublished::alias(),
+            default => ReviewTextPublished::alias(),
+        };
     }
 }

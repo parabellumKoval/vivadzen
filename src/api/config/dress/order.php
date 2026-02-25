@@ -183,6 +183,11 @@ return [
       'store_in' => 'info'
     ],
 
+    'age_verification_uid' => [
+      'rules' => 'nullable|string|min:8|max:255',
+      'store_in' => 'info'
+    ],
+
     'user' => [
       'rules' => 'array:first_name,last_name,phone,email',
       'store_in' => 'info',

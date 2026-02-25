@@ -5251,12 +5251,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-reviews.git",
-                "reference": "f0c33287f1a6eab057d130cc292c1ea849b75ef6"
+                "reference": "9bba7d466807f0e5af1f5801f6ea99956036cc83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/f0c33287f1a6eab057d130cc292c1ea849b75ef6",
-                "reference": "f0c33287f1a6eab057d130cc292c1ea849b75ef6",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/9bba7d466807f0e5af1f5801f6ea99956036cc83",
+                "reference": "9bba7d466807f0e5af1f5801f6ea99956036cc83",
                 "shasum": ""
             },
             "require": {
@@ -5309,7 +5309,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-reviews/issues",
                 "source": "https://github.com/parabellumKoval/backpack-reviews/tree/main"
             },
-            "time": "2026-02-18T14:44:05+00:00"
+            "time": "2026-02-25T12:37:36+00:00"
         },
         {
             "name": "parabellumkoval/backpack-schedule",
@@ -5428,12 +5428,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "6c648e663c7b8ba0bca08f586b9f3d6daa4be296"
+                "reference": "2b2519e9abfc863827e7f0c85fe2b909b2c651b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/6c648e663c7b8ba0bca08f586b9f3d6daa4be296",
-                "reference": "6c648e663c7b8ba0bca08f586b9f3d6daa4be296",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/2b2519e9abfc863827e7f0c85fe2b909b2c651b2",
+                "reference": "2b2519e9abfc863827e7f0c85fe2b909b2c651b2",
                 "shasum": ""
             },
             "require": {
@@ -5494,7 +5494,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/multistore"
             },
-            "time": "2026-01-05T19:18:35+00:00"
+            "time": "2026-02-25T12:47:02+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",

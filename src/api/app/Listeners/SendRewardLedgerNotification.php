@@ -46,6 +46,7 @@ class SendRewardLedgerNotification
         $labels = [
             'review.published.text' => 'Published review (text)',
             'review.published.video' => 'Published review (video)',
+            'review.published.photo' => 'Published review (photo)',
             'review.published' => 'Published review',
             'store.order_paid' => 'Paid order',
             'referral.signup' => 'Referral signup',
