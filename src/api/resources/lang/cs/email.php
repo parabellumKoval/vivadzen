@@ -43,6 +43,7 @@ return [
     'subtotal' => 'Mezisoučet',
     'shipping_total' => 'Doprava',
     'tax_total' => 'Daně',
+    'campaign_discount_total' => 'Sleva akce',
     'promocode_discount_total' => 'Sleva z promo kódu',
     'personal_discount_total' => 'Osobní sleva',
     'bonus_discount_total' => 'Sleva z bonusů',
@@ -51,6 +52,7 @@ return [
     'amount' => 'Částka',
 
     'promocode' => 'Promo kód',
+    'campaigns' => 'Akce',
     'promocode_value' => 'Podmínky promo kódu',
     'personal_discount' => 'Osobní sleva',
     'bonuses' => 'Bonusy',

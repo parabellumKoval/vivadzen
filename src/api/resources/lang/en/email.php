@@ -43,6 +43,7 @@ return [
     'subtotal' => 'Subtotal',
     'shipping_total' => 'Shipping',
     'tax_total' => 'Taxes',
+    'campaign_discount_total' => 'Campaign discount',
     'promocode_discount_total' => 'Promocode discount',
     'personal_discount_total' => 'Personal discount',
     'bonus_discount_total' => 'Bonus discount',
@@ -51,6 +52,7 @@ return [
     'amount' => 'Amount',
 
     'promocode' => 'Promocode',
+    'campaigns' => 'Campaigns',
     'promocode_value' => 'Promocode details',
     'personal_discount' => 'Personal discount',
     'bonuses' => 'Bonuses',

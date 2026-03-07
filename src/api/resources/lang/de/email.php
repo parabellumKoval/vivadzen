@@ -43,6 +43,7 @@ return [
     'subtotal' => 'Zwischensumme',
     'shipping_total' => 'Versand',
     'tax_total' => 'Steuern',
+    'campaign_discount_total' => 'Aktionsrabatt',
     'promocode_discount_total' => 'Gutscheinrabatt',
     'personal_discount_total' => 'Persönlicher Rabatt',
     'bonus_discount_total' => 'Bonusrabatt',
@@ -51,6 +52,7 @@ return [
     'amount' => 'Betrag',
 
     'promocode' => 'Gutscheincode',
+    'campaigns' => 'Aktionen',
     'promocode_value' => 'Details zum Gutscheincode',
     'personal_discount' => 'Persönlicher Rabatt',
     'bonuses' => 'Boni',

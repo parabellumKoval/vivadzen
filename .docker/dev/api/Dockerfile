@@ -39,12 +39,15 @@ WORKDIR /var/www/html
 # Export Octane port
 EXPOSE 8000
 
+
 # Run the Octane service
 # CMD ["php", "artisan", "octane:start", "--server=swoole", "--host=0.0.0.0", "--port=8000", "--max-requests=1000", "--watch"]
+CMD ["sh", "-c", "composer dump-autoload && composer clear-cache && php artisan octane:start --server=swoole --host=0.0.0.0 --port=8000 --max-requests=1000 --watch"]
+# CMD ["sh", "-c", "find vendor/parabellumkoval -type f > /dev/null && php artisan octane:start --server=swoole --host=0.0.0.0 --port=8000 --max-requests=1000 --watch"]
 
 # # The health check configuration
 # HEALTHCHECK --start-period=5s --interval=5s --timeout=5s --retries=3 \
 #     CMD php artisan octane:status || exit 1
 
 # ВРЕМЕННО для отладки
-CMD ["sh", "-c", "tail -f /dev/null"]
+# CMD ["sh", "-c", "tail -f /dev/null"]

@@ -43,6 +43,7 @@ return [
     'subtotal' => 'Subtotal',
     'shipping_total' => 'Envío',
     'tax_total' => 'Impuestos',
+    'campaign_discount_total' => 'Descuento de promoción',
     'promocode_discount_total' => 'Descuento por cupón',
     'personal_discount_total' => 'Descuento personal',
     'bonus_discount_total' => 'Descuento con bonos',
@@ -51,6 +52,7 @@ return [
     'amount' => 'Importe',
 
     'promocode' => 'Cupón',
+    'campaigns' => 'Promociones',
     'promocode_value' => 'Detalles del cupón',
     'personal_discount' => 'Descuento personal',
     'bonuses' => 'Bonos',

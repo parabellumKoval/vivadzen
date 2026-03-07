@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Services\AgeVerification\AgeVerificationService;
+use Backpack\Store\app\Services\Campaign\CampaignPayloadService;
 
 class ProductCartResource extends \Backpack\Store\app\Http\Resources\BaseResource
 {
@@ -24,6 +25,9 @@ class ProductCartResource extends \Backpack\Store\app\Http\Resources\BaseResourc
         'slug' => $this->slug,
         'price' => $this->price,
         'oldPrice' => $this->old_price,
+        'basePrice' => $this->base_price ?? ($this->campaign ? $this->old_price : $this->price),
+        'campaignDiscount' => $this->campaign_discount_amount ?? 0,
+        'campaign' => app(CampaignPayloadService::class)->make($this->campaign),
         'currency' => $this->currency,
         'rating' => $this->rating,
         'image' => $this->effective()->getFirstImageForApi(),

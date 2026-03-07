@@ -130,6 +130,7 @@
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('search-queries') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('currency-rates') }}"><i class="nav-icon la la-exchange"></i> <span>Курсы валют</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('product-list') }}"><i class="nav-icon la la-list"></i> <span>Товарные списки</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('campaign') }}"><i class="nav-icon las la-bullhorn"></i> <span>Акции</span></a></li>
 	</ul>
 </li>
 

@@ -43,6 +43,7 @@ return [
     'subtotal' => 'Сумма товаров',
     'shipping_total' => 'Доставка',
     'tax_total' => 'Налоги',
+    'campaign_discount_total' => 'Скидка акции',
     'promocode_discount_total' => 'Скидка промокода',
     'personal_discount_total' => 'Персональная скидка',
     'bonus_discount_total' => 'Скидка бонусами',
@@ -51,6 +52,7 @@ return [
     'amount' => 'Сумма',
 
     'promocode' => 'Промокод',
+    'campaigns' => 'Акции',
     'promocode_value' => 'Условия промокода',
     'personal_discount' => 'Персональная скидка',
     'bonuses' => 'Бонусы',

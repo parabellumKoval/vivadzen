@@ -112,6 +112,10 @@ class Order extends Mailable
         $lines[] = __('email.shipping_total') . ': ' . e($this->formatMoney($this->order->shipping_total));
         $lines[] = __('email.tax_total') . ': ' . e($this->formatMoney($this->order->tax_total));
 
+        if ((float) $this->order->campaign_discount_total > 0) {
+            $lines[] = __('email.campaign_discount_total') . ': ' . e($this->formatMoney($this->order->campaign_discount_total, null, true));
+        }
+
         if ((float) $this->order->promocode_discount_total > 0) {
             $lines[] = __('email.promocode_discount_total') . ': ' . e($this->formatMoney($this->order->promocode_discount_total, null, true));
         }
@@ -136,6 +140,11 @@ class Order extends Mailable
     protected function buildAdjustmentLines(): array
     {
         $lines = [];
+
+        $campaignLines = $this->buildCampaignLines();
+        if ($campaignLines) {
+            $lines = array_merge($lines, $campaignLines);
+        }
 
         $promocode = $this->order->promocode;
 
@@ -179,6 +188,48 @@ class Order extends Mailable
 
         if ($bonusLines) {
             $lines = array_merge($lines, $bonusLines);
+        }
+
+        return $this->filterLines($lines);
+    }
+
+    protected function buildCampaignLines(): array
+    {
+        $lines = [];
+        $campaigns = data_get($this->order->info, 'campaigns', []);
+
+        if ((float) $this->order->campaign_discount_total > 0) {
+            $lines[] = __('email.campaign_discount_total') . ': ' . e($this->formatMoney($this->order->campaign_discount_total, null, true));
+        }
+
+        if (!is_array($campaigns) || empty($campaigns)) {
+            return $this->filterLines($lines);
+        }
+
+        $campaignNames = [];
+        foreach ($campaigns as $campaign) {
+            if (!is_array($campaign)) {
+                continue;
+            }
+
+            $name = trim((string) ($campaign['name'] ?? ''));
+            if ($name === '') {
+                continue;
+            }
+
+            $percent = isset($campaign['discount_percent'])
+                ? (float) $campaign['discount_percent']
+                : (isset($campaign['discountPercent']) ? (float) $campaign['discountPercent'] : null);
+
+            if ($percent !== null && $percent > 0) {
+                $campaignNames[] = $name . ' (-' . number_format($percent, 2) . '%)';
+            } else {
+                $campaignNames[] = $name;
+            }
+        }
+
+        if (!empty($campaignNames)) {
+            $lines[] = __('email.campaigns') . ': <b>' . e(implode(', ', $campaignNames)) . '</b>';
         }
 
         return $this->filterLines($lines);
