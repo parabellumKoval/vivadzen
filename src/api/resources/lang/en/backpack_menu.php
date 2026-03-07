@@ -9,6 +9,7 @@ return [
     'promocodes' => 'Coupons',
     'catalogs' => 'Catalogs',
     'categories' => 'Categories',
+    'faq_templates' => 'FAQ templates',
     'regions' => 'Regions',
     'brands' => 'Brands',
     'warehouse' => 'Warehouse',

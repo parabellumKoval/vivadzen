@@ -9,6 +9,7 @@ return [
     'promocodes' => 'Купони',
     'catalogs' => 'Каталоги',
     'categories' => 'Категорії',
+    'faq_templates' => 'FAQ шаблони',
     'regions' => 'Регіони',
     'brands' => 'Бренди',
     'warehouse' => 'Склад',
