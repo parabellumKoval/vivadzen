@@ -109,4 +109,10 @@ return [
         'table' => 'failed_jobs',
     ],
 
+    'generation_run' => [
+        'tries' => (int) env('GENERATION_RUN_QUEUE_TRIES', 1),
+        'timeout_seconds' => (int) env('GENERATION_RUN_QUEUE_TIMEOUT_SECONDS', 1800),
+        'stale_minutes' => (int) env('GENERATION_RUN_STALE_MINUTES', 30),
+    ],
+
 ];

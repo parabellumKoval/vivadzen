@@ -27,7 +27,7 @@ return [
             'id_prefixes' => ['#'],
         ],
         'faq_template' => [
-            'model' => Backpack\Store\app\Models\FaqTemplate::class,
+            'model' => App\Models\FaqTemplate::class,
             'columns' => ['name'],
             'search_id' => true,
             'id_prefixes' => ['#'],

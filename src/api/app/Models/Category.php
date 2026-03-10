@@ -17,7 +17,7 @@ class Category extends BaseCategory implements TranslatableInterface
 {
   use TranslatableTrait;
 
-  protected $translatable = ['name', 'content', 'seo', 'extras_trans', 'extras_trans->caption', 'extras_trans->full_description', 'extras_trans->short_description'];
+  protected $translatable = ['name', 'content', 'seo', 'extras_trans', 'extras_trans->caption', 'extras_trans->full_description', 'extras_trans->short_description', 'extras_trans->faq_items'];
 
   public $children_list = [];
   private $bunny = null;
@@ -265,6 +265,14 @@ public static function createOrUpdateCategoryChain(array $chain, string $locale)
           'driver' => 'deepl',
           'scopeName' => 'extrasTransQuery'
       ]);
+
+      static::addTranslatableCase([
+          'fields' => [
+              'extras_trans->faq_items' => 'FAQ пункты',
+          ],
+          'driver' => 'deepl',
+          'scopeName' => 'faqItemsQuery',
+      ]);
   }
 
 
@@ -280,6 +288,30 @@ public static function createOrUpdateCategoryChain(array $chain, string $locale)
 
   public function scopeExtrasTransQuery(Builder $query, $settings) {
     $query->whereNotNull('extras_trans');
+  }
+
+  public function scopeFaqItemsQuery(Builder $query, $settings) {
+    $from_langs = $settings['from_languages'] ?? [];
+
+    if (empty($from_langs)) {
+      $query->whereRaw('1 = 0');
+      return;
+    }
+
+    $query->whereNotNull('extras_trans')
+      ->where('extras_trans', '!=', '')
+      ->where(function ($query) use ($from_langs) {
+        foreach ($from_langs as $index => $lang_key) {
+          $json_key = str_replace('.', '\\.', (string) $lang_key);
+          $json_path = '$.' . $json_key . '.faq_items';
+
+          $method = $index === 0 ? 'whereRaw' : 'orWhereRaw';
+          $query->{$method}(
+            '(JSON_TYPE(JSON_EXTRACT(extras_trans, ?)) = "ARRAY" AND JSON_LENGTH(JSON_EXTRACT(extras_trans, ?)) > 0)',
+            [$json_path, $json_path]
+          );
+        }
+      });
   }
 
 
