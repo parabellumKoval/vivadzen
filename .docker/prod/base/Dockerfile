@@ -92,13 +92,15 @@ Options = UnsafeLegacyRenegotiation/' /etc/ssl/openssl.cnf
 WORKDIR /var/www/html
 
 # Copy files from builder image
-COPY --from=builder /var/www/html ./
+# COPY --from=builder /var/www/html ./
 
 
 ARG MY_USER=0
 ARG MY_GROUP=0
 
-RUN chown -R ${MY_USER}:${MY_GROUP} .
+# RUN chown -R ${MY_USER}:${MY_GROUP} .
+
+COPY --from=builder --chown=${MY_USER}:${MY_GROUP} /var/www/html ./
 
 RUN chmod -R 755 /var/www/html/storage && \
     chmod -R 755 /var/www/html/public
