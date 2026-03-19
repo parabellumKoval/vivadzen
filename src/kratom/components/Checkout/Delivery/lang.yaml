@@ -1,0 +1,42 @@
+ru:
+  packeta_warehouse: Пункт выдачи Zasilkovna
+  packeta_address: Курьер Zasilkovna
+  novaposhta_warehouse: Отделение Новой Почты
+  novaposhta_address: Курьер Новой Почты
+  default_pickup: Самовывоз
+  default_address: Адресная доставка
+uk:
+  packeta_warehouse: Пункт видачі Zasilkovna
+  packeta_address: Курʼєр Zasilkovna
+  novaposhta_warehouse: Відділення Нової Пошти
+  novaposhta_address: Курʼєр Нової Пошти
+  default_pickup: Самовивіз
+  default_address: Адресна доставка
+en:
+  packeta_warehouse: Zasilkovna pickup point
+  packeta_address: Zasilkovna courier
+  novaposhta_warehouse: Nova Poshta branch
+  novaposhta_address: Nova Poshta courier
+  default_pickup: Pickup
+  default_address: Home delivery
+de:
+  packeta_warehouse: Zasilkovna-Abholpunkt
+  packeta_address: Zasilkovna-Kurier
+  novaposhta_warehouse: Nova-Poshta-Filiale
+  novaposhta_address: Nova-Poshta-Kurier
+  default_pickup: Abholung
+  default_address: Adresszustellung
+es:
+  packeta_warehouse: Punto de recogida Zasilkovna
+  packeta_address: Mensajero Zasilkovna
+  novaposhta_warehouse: Sucursal Nova Poshta
+  novaposhta_address: Mensajero Nova Poshta
+  default_pickup: Recogida
+  default_address: Entrega a domicilio
+cs:
+  packeta_warehouse: Výdejní místo Zasilkovna
+  packeta_address: Kurýr Zasilkovna
+  novaposhta_warehouse: Pobočka Nova Poshta
+  novaposhta_address: Kurýr Nova Poshta
+  default_pickup: Osobní odběr
+  default_address: Adresní doručení

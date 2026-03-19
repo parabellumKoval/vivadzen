@@ -1,0 +1,24 @@
+ru:
+  promocode_cancel: Отмена промокода
+  cancel_desc: Вы точно желаете отменить приминение промокод?
+  sale: Скидка
+uk:
+  promocode_cancel: Скасування промокоду
+  cancel_desc: Ви точно хочете скасувати застосування промокоду?
+  sale: Знижка
+de:
+  promocode_cancel: Stornierung des Promo-Codes
+  cancel_desc: Möchten Sie die Anwendung des Promo-Codes wirklich aufheben?
+  sale: Rabatt
+es:
+  promocode_cancel: Cancelación del código promocional
+  cancel_desc: ¿Seguro que desea cancelar la aplicación del código promocional?
+  sale: Descuento
+cs:
+  promocode_cancel: Zrušení promo kódu
+  cancel_desc: Opravdu si přejete zrušit použití promo kódu?
+  sale: Sleva
+en:
+  promocode_cancel: Promo code cancellation
+  cancel_desc: Are you sure you want to cancel applying the promo code?
+  sale: Discount

@@ -15,15 +15,27 @@
 @endphp
 
 @section('header')
-    <section class="content-header">
-        <h1>
+    <section class="container-fluid">
+        <h2 class="mb-3">
             Бэкапы базы данных
             <small>Создание, скачивание и восстановление дампов</small>
-        </h1>
+        </h2>
+        <a href="{{ backpack_url('settings/dumper') }}" class="btn btn-outline-primary mb-3">
+            <i class="la la-cog"></i> Настройки
+        </a>
     </section>
 @endsection
 
 @section('content')
+@if(!empty($remoteStatus['enabled']))
+    <div class="alert alert-info">
+        Удалённая отправка включена.
+        @if(!empty($remoteStatus['providers']))
+            Провайдеры: <strong>{{ implode(', ', $remoteStatus['providers']) }}</strong>.
+        @endif
+    </div>
+@endif
+
 <div class="row">
     <div class="col-md-5">
         <div class="card">
@@ -93,6 +105,11 @@
                                                 <input type="hidden" name="reference" value="{{ $dump->identifier() }}">
                                                 <button type="submit" class="btn btn-sm btn-warning">Восстановить</button>
                                             </form>
+                                            <form method="POST" action="{{ route('backpack.dumper.delete') }}" class="d-inline" onsubmit="return confirm('Удалить выбранный дамп? Это действие необратимо.');">
+                                                @csrf
+                                                <input type="hidden" name="reference" value="{{ $dump->identifier() }}">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -113,8 +130,9 @@
                 <div>
                     <h4 class="card-title mb-1">{{ $case['label'] }} <small class="text-muted">({{ $case['key'] }})</small></h4>
                     <div class="text-muted small">
-                        <span class="mr-3">Cron: <code>{{ $case['cron'] ?? '—' }}</code></span>
+                        <span class="mr-3">Периодичность: {{ $case['schedule_label'] ?? ($case['cron'] ?? '—') }}</span>
                         <span class="mr-3">Таблицы: {{ $case['tables'] === '*' ? 'Вся база' : (is_array($case['tables']) ? implode(', ', $case['tables']) : $case['tables']) }}</span>
+                        <span class="mr-3">В облако: {{ !empty($case['sync_to_remote']) ? 'Да' : 'Нет' }}</span>
                         @if(!empty($case['retention']['keep_last']))
                             <span class="mr-3">Храним последних: {{ $case['retention']['keep_last'] }}</span>
                         @endif
@@ -155,6 +173,11 @@
                                                 @csrf
                                                 <input type="hidden" name="reference" value="{{ $dump->identifier() }}">
                                                 <button type="submit" class="btn btn-sm btn-warning">Восстановить</button>
+                                            </form>
+                                            <form method="POST" action="{{ route('backpack.dumper.delete') }}" class="d-inline" onsubmit="return confirm('Удалить выбранный дамп? Это действие необратимо.');">
+                                                @csrf
+                                                <input type="hidden" name="reference" value="{{ $dump->identifier() }}">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
                                             </form>
                                         </td>
                                     </tr>

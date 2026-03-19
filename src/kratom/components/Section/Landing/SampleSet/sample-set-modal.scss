@@ -1,0 +1,31 @@
+.sample-set-modal {
+  &__content {
+    display: grid;
+    gap: 20px;
+  }
+
+  &__desc {
+    margin: 0;
+    color: rgba($color-text, 0.85);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  &__form {
+    display: grid;
+    gap: 16px;
+  }
+
+  &__actions {
+    margin-top: 4px;
+  }
+
+  &__submit {
+    width: 100%;
+  }
+}
+
+.form-label {
+  margin-bottom: 10px;
+  font-size: 14px;
+}

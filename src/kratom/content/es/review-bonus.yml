@@ -1,0 +1,21 @@
+title: "Consigue {pointsName} por una reseña valiosa"
+items:
+  - type: cta
+    text: "Deja una reseña sobre un producto o la tienda y gana {pointsName} en Vivadzen.com"
+  - type: text
+    text: "Abre la página del producto que quieres reseñar y elige el formato — texto, fotos o vídeo"
+  - type: text
+    text: "También puedes publicar aquí mismo una reseña en texto, fotos o vídeo sobre la tienda en general"
+  - type: text
+    text: "Para recibir la recompensa por una reseña en texto, añade un enlace a tu perfil en redes sociales"
+  - type: text
+    text: "En reseñas con fotos y video, el enlace social es opcional: la recompensa se acredita tras la publicación"
+  - type: highlight
+    before: "Tras la moderación la reseña aparece en Vivadzen,"
+    highlight: "el bono llega al instante a tu saldo {pointsName}"
+    after: " — úsalo para pagar un pedido o retirarlo a tu tarjeta"
+  - type: manual
+    text: "sobre el programa de bonificaciones de Vivadzen."
+    button:
+      label: "Más información"
+      link: "/vivapoints"

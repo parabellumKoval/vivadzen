@@ -1,0 +1,60 @@
+.bonus{
+  &-label {
+    line-height: 120%;
+    margin-bottom: 15px;
+    &-amount {
+      font-weight: 500;
+    }
+  }
+
+  &-wrapper {
+  }
+
+  &-action {
+    display: grid;
+    grid-template-columns: 25px min-content;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto 0 0;
+    color: $color-orange;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &-text {
+      padding: 2px 0;
+      border-bottom: 1px dashed $color-orange;
+    }
+
+    &-image {
+      width: 25px;
+      height: 25px;
+      object-fit: contain;
+    }
+  }
+
+  &-form {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    grid-gap: 15px;
+
+    &-amount {
+      width: 100%;
+      max-width: initial;
+    }
+
+    &-hint {
+      margin-top: 5px;
+      font-size: 14px;
+      color: $color-4;
+    }
+  }
+
+  &-use {
+    &-label {
+      margin: 0 0 10px 0;
+      // text-transform: uppercase;
+      font-size: 14px;
+      color: $color-4;
+    }
+  }
+}

@@ -11,6 +11,7 @@ use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ParabellumKoval\Dumper\Data\DumpRecord;
+use ParabellumKoval\Dumper\Support\AutoDumpSchedulePresets;
 use PDO;
 use RuntimeException;
 use Spatie\DbDumper\Databases\MySql;
@@ -19,6 +20,8 @@ use Throwable;
 
 class DumpManager
 {
+    protected const MAX_DUMP_ATTEMPTS = 3;
+
     protected string $connectionName;
 
     /**
@@ -33,6 +36,16 @@ class DumpManager
     protected ?bool $mysqldumpSupportsColumnStatistics = null;
 
     /**
+     * @var array{raw: string, version: string|null, is_mariadb: bool}|null
+     */
+    protected ?array $mysqldumpClientInfo = null;
+
+    /**
+     * @var array{raw: string, version: string|null, is_mariadb: bool}|null
+     */
+    protected ?array $mysqlClientInfo = null;
+
+    /**
      * @var array<string, string>|null
      */
     protected ?array $tableSlugMap = null;
@@ -41,9 +54,14 @@ class DumpManager
         protected FilesystemFactory $filesystem,
         protected DatabaseManager $database,
         protected Repository $config,
-        protected TableInspector $inspector
+        protected TableInspector $inspector,
+        protected DumperSettings $settings,
+        protected RemoteDumpManager $remoteManager
     ) {
-        $this->connectionName = $this->inspector->connectionName();
+        $this->connectionName = (string) $this->settings->value(
+            'dumper.connection',
+            $this->inspector->connectionName()
+        );
         $this->connectionConfig = $this->config->get("database.connections.{$this->connectionName}", []);
         $this->metaExtension = (string) $this->config->get('dumper.metadata_extension', '.meta.json');
     }
@@ -86,16 +104,33 @@ class DumpManager
      */
     public function autoCases(): array
     {
-        $cases = (array) $this->config->get('dumper.auto.cases', []);
-        $baseDirectory = $this->normalizeDirectory((string) $this->config->get('dumper.auto.base_directory', 'dumps/auto'));
-        $baseDisk = (string) $this->config->get('dumper.auto.disk', $this->manualConfig()['disk']);
-        $prefix = (string) $this->config->get('dumper.auto.filename_prefix', 'auto');
+        $auto = $this->settings->group('dumper.auto', (array) $this->config->get('dumper.auto', []));
+        $cases = $this->configuredAutoCases();
+        $baseDirectory = $this->normalizeDirectory((string) ($auto['base_directory'] ?? 'dumps/auto'));
+        $baseDisk = (string) ($auto['disk'] ?? $this->manualConfig()['disk']);
+        $prefix = (string) ($auto['filename_prefix'] ?? 'auto');
 
         $normalized = [];
 
         foreach ($cases as $key => $definition) {
             $definition = (array) $definition;
+            $scheduleKey = trim((string) ($definition['schedule'] ?? ''));
+            $cron = AutoDumpSchedulePresets::cronFor($scheduleKey);
+
+            if ($cron === null) {
+                $cron = trim((string) ($definition['cron'] ?? ''));
+                $cron = $cron !== '' ? $cron : null;
+            }
+
+            if ($scheduleKey === '') {
+                $scheduleKey = AutoDumpSchedulePresets::keyForCron($cron);
+            }
+
             $directory = $this->normalizeDirectory($definition['directory'] ?? $definition['path'] ?? $key);
+            if ($directory === '') {
+                $directory = $this->normalizeDirectory((string) $key);
+            }
+
             $fullDirectory = $directory;
             if ($baseDirectory !== '') {
                 $fullDirectory = $baseDirectory . '/' . ltrim($directory, '/');
@@ -103,14 +138,17 @@ class DumpManager
 
             $normalized[$key] = [
                 'key' => (string) $key,
-                'label' => $definition['label'] ?? Str::headline((string) $key),
-                'tables' => $definition['tables'] ?? '*',
-                'cron' => $definition['cron'] ?? null,
-                'description' => $definition['description'] ?? null,
+                'label' => (string) ($definition['label'] ?? Str::headline((string) $key)),
+                'tables' => $this->normalizeAutoCaseTables($definition['tables[]'] ?? $definition['tables'] ?? '*'),
+                'schedule' => $scheduleKey !== '' ? $scheduleKey : null,
+                'schedule_label' => AutoDumpSchedulePresets::labelFor($scheduleKey),
+                'cron' => $cron,
+                'description' => ($definition['description'] ?? null) !== null ? (string) $definition['description'] : null,
                 'disk' => $definition['disk'] ?? $baseDisk,
                 'directory' => $fullDirectory,
-                'retention' => $definition['retention'] ?? [],
+                'retention' => $this->normalizeAutoCaseRetention($definition),
                 'filename_prefix' => $definition['filename_prefix'] ?? $prefix,
+                'sync_to_remote' => $this->normalizeBooleanConfigValue($definition['sync_to_remote'] ?? false) ?? false,
             ];
         }
 
@@ -121,7 +159,7 @@ class DumpManager
     {
         $manual = $this->manualConfig();
 
-        return $this->createDump(
+        $record = $this->createDump(
             $manual['disk'],
             $manual['directory'],
             $manual['filename_prefix'],
@@ -130,6 +168,12 @@ class DumpManager
             $this->normalizeTablesInput($tables),
             $label
         );
+
+        if (!empty($manual['sync_to_remote'])) {
+            $this->remoteManager->dispatchUpload($record);
+        }
+
+        return $record;
     }
 
     public function createAutoDump(string $caseKey): ?DumpRecord
@@ -150,6 +194,10 @@ class DumpManager
             $this->normalizeTablesConfig($case['tables']),
             $case['label'] ?? null
         );
+
+        if (!empty($case['sync_to_remote'])) {
+            $this->remoteManager->dispatchUpload($record);
+        }
 
         $this->applyRetention($caseKey, $case);
 
@@ -187,21 +235,39 @@ class DumpManager
         }
 
         $filePath = $adapter->path($record->path);
+        $options = [
+            'disable_ssl' => $this->shouldDisableSslByDefault(),
+        ];
 
-        $process = new Process($this->buildMysqlCommand());
-        $process->setTimeout(null);
-        $stream = fopen($filePath, 'rb');
+        for ($attempt = 1; $attempt <= self::MAX_DUMP_ATTEMPTS; $attempt++) {
+            $stream = fopen($filePath, 'rb');
 
-        if ($stream === false) {
-            throw new RuntimeException('Unable to read dump file for restore.');
-        }
+            if ($stream === false) {
+                throw new RuntimeException('Unable to read dump file for restore.');
+            }
 
-        try {
-            $process->setInput($stream);
-            $process->mustRun();
-        } finally {
-            if (is_resource($stream)) {
-                fclose($stream);
+            $process = new Process($this->buildMysqlCommand($options));
+            $process->setTimeout(null);
+
+            try {
+                $process->setInput($stream);
+                $process->mustRun();
+
+                return;
+            } catch (Throwable $exception) {
+                $shouldRetryWithSslDisabled = !$options['disable_ssl']
+                    && $this->isSslFailure($exception)
+                    && $this->canDisableMysqlSsl();
+
+                if (!$shouldRetryWithSslDisabled || $attempt === self::MAX_DUMP_ATTEMPTS) {
+                    throw $exception;
+                }
+
+                $options['disable_ssl'] = true;
+            } finally {
+                if (is_resource($stream)) {
+                    fclose($stream);
+                }
             }
         }
     }
@@ -210,8 +276,29 @@ class DumpManager
     {
         $adapter = $this->filesystem->disk($record->disk);
 
+        if ($this->shouldDispatchRemoteDelete($record)) {
+            $this->remoteManager->dispatchDelete($record);
+        }
+
         $adapter->delete($record->path);
         $adapter->delete($this->metaPath($record->path));
+    }
+
+    public function resolveStoredDump(string $disk, string $path): ?DumpRecord
+    {
+        if (!$this->isAllowedPath($disk, $path)) {
+            return null;
+        }
+
+        return $this->buildRecord($disk, $path);
+    }
+
+    /**
+     * @param array<int, string> $providers
+     */
+    public function markRemoteProviders(DumpRecord $record, array $providers): DumpRecord
+    {
+        return $this->writeRemoteProvidersMetadata($record, $providers);
     }
 
     public function groupedAutoDumps(): array
@@ -232,6 +319,132 @@ class DumpManager
     public function tableOptions(): array
     {
         return array_map(fn (string $table) => ['text' => $table, 'value' => $table], $this->inspector->tables());
+    }
+
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    protected function configuredAutoCases(): array
+    {
+        $cases = $this->normalizeAutoCaseDefinitions($this->settings->value('dumper.auto.cases'));
+        $customized = $this->normalizeBooleanConfigValue($this->settings->value('dumper.auto.cases_customized', null)) ?? false;
+
+        if ($customized || $cases !== []) {
+            return $cases;
+        }
+
+        return $this->normalizeAutoCaseDefinitions($this->config->get('dumper.auto.cases', []));
+    }
+
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    protected function normalizeAutoCaseDefinitions(mixed $cases): array
+    {
+        if (!is_array($cases)) {
+            return [];
+        }
+
+        $normalized = [];
+        $usedKeys = [];
+
+        foreach ($cases as $index => $definition) {
+            if (!is_array($definition)) {
+                continue;
+            }
+
+            $label = trim((string) ($definition['label'] ?? ''));
+            if ($label === '' && is_string($index)) {
+                $label = Str::headline($index);
+            }
+
+            if ($label === '') {
+                continue;
+            }
+
+            $candidateKey = trim((string) ($definition['key'] ?? ''));
+            if ($candidateKey === '' && is_string($index)) {
+                $candidateKey = $index;
+            }
+
+            $key = $this->uniqueAutoCaseKey($candidateKey, $label, $usedKeys);
+            $definition['label'] = $label;
+            $definition['key'] = $key;
+            $normalized[$key] = $definition;
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * @param array<string, bool> $usedKeys
+     */
+    protected function uniqueAutoCaseKey(string $candidateKey, string $label, array &$usedKeys): string
+    {
+        $baseKey = Str::slug($candidateKey !== '' ? $candidateKey : $label, '_');
+        if ($baseKey === '') {
+            $baseKey = 'auto_case';
+        }
+
+        $key = $baseKey;
+        $suffix = 2;
+
+        while (isset($usedKeys[$key])) {
+            $key = $baseKey . '_' . $suffix;
+            $suffix++;
+        }
+
+        $usedKeys[$key] = true;
+
+        return $key;
+    }
+
+    /**
+     * @return array<int, string>|string
+     */
+    protected function normalizeAutoCaseTables(mixed $tables): array|string
+    {
+        if ($tables === null || $tables === '' || $tables === '*' || $tables === ['*']) {
+            return '*';
+        }
+
+        if (is_string($tables)) {
+            $tables = array_map('trim', explode(',', $tables));
+        }
+
+        $tables = array_values(array_filter(array_map(
+            static fn (mixed $table): string => trim((string) $table),
+            (array) $tables
+        )));
+
+        if ($tables === [] || in_array('__all__', $tables, true) || in_array('*', $tables, true)) {
+            return '*';
+        }
+
+        return array_values(array_unique($tables));
+    }
+
+    /**
+     * @param array<string, mixed> $definition
+     * @return array{keep_last: int|null, keep_days: int|null}
+     */
+    protected function normalizeAutoCaseRetention(array $definition): array
+    {
+        $retention = (array) ($definition['retention'] ?? []);
+
+        return [
+            'keep_last' => $this->normalizeRetentionValue($definition['retention_keep_last'] ?? $retention['keep_last'] ?? null),
+            'keep_days' => $this->normalizeRetentionValue($definition['retention_keep_days'] ?? $retention['keep_days'] ?? null),
+        ];
+    }
+
+    protected function normalizeRetentionValue(mixed $value): ?int
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        return max(0, (int) $value);
     }
 
     protected function createDump(
@@ -257,7 +470,8 @@ class DumpManager
             $adapter->makeDirectory($directory);
         }
 
-        $this->buildDumper($tables)->dumpToFile($this->absolutePath($adapter, $relativePath));
+        $absolutePath = $this->absolutePath($adapter, $relativePath);
+        $this->dumpToFile($absolutePath, $tables);
 
         $meta = [
             'label' => $label,
@@ -271,7 +485,13 @@ class DumpManager
 
         $adapter->put($this->metaPath($relativePath), json_encode($meta, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
-        return $this->buildRecord($disk, $relativePath);
+        $record = $this->buildRecord($disk, $relativePath);
+
+        if (!$record) {
+            throw new RuntimeException('Dump file was created but is invalid or empty.');
+        }
+
+        return $record;
     }
 
     protected function scanDirectory(string $disk, string $directory, string $source, ?string $caseKey): Collection
@@ -298,6 +518,11 @@ class DumpManager
         $adapter = $this->filesystem->disk($disk);
 
         if (!$adapter->exists($path)) {
+            return null;
+        }
+
+        $size = (int) $adapter->size($path);
+        if ($size <= 0) {
             return null;
         }
 
@@ -328,7 +553,8 @@ class DumpManager
             $meta['source'] ?? $source ?? 'manual',
             $meta['case'] ?? $caseKey,
             $meta['label'] ?? null,
-            (int) $adapter->size($path)
+            $size,
+            $this->normalizeRemoteProviders($meta['remote_providers'] ?? [])
         );
     }
 
@@ -380,13 +606,29 @@ class DumpManager
 
     protected function manualConfig(): array
     {
-        $manual = (array) $this->config->get('dumper.manual', []);
+        $manual = $this->settings->group('dumper.manual', (array) $this->config->get('dumper.manual', []));
 
         return [
             'disk' => $manual['disk'] ?? 'local',
             'directory' => $manual['directory'] ?? 'dumps/manual',
             'filename_prefix' => $manual['filename_prefix'] ?? 'manual',
+            'sync_to_remote' => $this->normalizeBooleanConfigValue($manual['sync_to_remote'] ?? false) ?? false,
         ];
+    }
+
+    protected function shouldDispatchRemoteDelete(DumpRecord $record): bool
+    {
+        if ($record->remoteProviders !== []) {
+            return true;
+        }
+
+        if ($record->isAuto()) {
+            return true;
+        }
+
+        $manual = $this->manualConfig();
+
+        return !empty($manual['sync_to_remote']);
     }
 
     protected function normalizeDirectory(?string $directory): string
@@ -458,7 +700,48 @@ class DumpManager
         throw new RuntimeException('Filesystem does not expose local path for dumps.');
     }
 
-    protected function buildDumper(?array $tables): MySql
+    protected function dumpToFile(string $absolutePath, ?array $tables): void
+    {
+        $options = [
+            'disable_column_statistics' => $this->shouldDisableColumnStatistics(),
+            'disable_ssl' => $this->shouldDisableSslByDefault(),
+        ];
+
+        $lastException = null;
+
+        for ($attempt = 1; $attempt <= self::MAX_DUMP_ATTEMPTS; $attempt++) {
+            try {
+                $this->buildDumper($tables, $options)->dumpToFile($absolutePath);
+
+                return;
+            } catch (Throwable $exception) {
+                $lastException = $exception;
+                $this->deleteFileIfExists($absolutePath);
+
+                $shouldRetry = false;
+
+                if ($options['disable_column_statistics'] && $this->isColumnStatisticsFailure($exception)) {
+                    $options['disable_column_statistics'] = false;
+                    $shouldRetry = true;
+                }
+
+                if (!$options['disable_ssl'] && $this->isSslFailure($exception) && $this->canDisableMysqldumpSsl()) {
+                    $options['disable_ssl'] = true;
+                    $shouldRetry = true;
+                }
+
+                if (!$shouldRetry || $attempt === self::MAX_DUMP_ATTEMPTS) {
+                    throw $exception;
+                }
+            }
+        }
+
+        if ($lastException) {
+            throw $lastException;
+        }
+    }
+
+    protected function buildDumper(?array $tables, array $options = []): MySql
     {
         $config = $this->connectionConfig;
 
@@ -481,8 +764,13 @@ class DumpManager
         $dumper->useExtendedInserts();
         $this->configureMysqldumpBinary($dumper);
         $this->configureSslOptions($dumper);
+        $this->configureTablespaceOptions($dumper);
 
-        if ($this->shouldDisableColumnStatistics()) {
+        if (($options['disable_ssl'] ?? false) === true) {
+            $this->disableMysqldumpSsl($dumper);
+        }
+
+        if (($options['disable_column_statistics'] ?? false) === true && $this->mysqldumpSupportsColumnStatisticsOption()) {
             $dumper->doNotUseColumnStatistics();
         }
 
@@ -495,12 +783,15 @@ class DumpManager
         return $dumper;
     }
 
-    protected function buildMysqlCommand(): array
+    protected function buildMysqlCommand(array $options = []): array
     {
         $config = $this->connectionConfig;
-        $binary = trim((string) $this->config->get('dumper.binaries.mysql', 'mysql'));
+        $binary = trim((string) $this->settings->value(
+            'dumper.binaries.mysql',
+            $this->config->get('dumper.binaries.mysql', 'mysql')
+        ));
 
-        $command = [$binary];
+        $command = [$binary !== '' ? $binary : 'mysql'];
 
         $username = $config['username'] ?? $config['user'] ?? null;
         if ($username) {
@@ -523,6 +814,10 @@ class DumpManager
             $command[] = '--socket=' . $config['unix_socket'];
         }
 
+        if (($options['disable_ssl'] ?? false) === true) {
+            $command[] = $this->mysqlDisableSslOption();
+        }
+
         $command[] = $config['database'] ?? '';
 
         return $command;
@@ -530,7 +825,10 @@ class DumpManager
 
     protected function configureMysqldumpBinary(MySql $dumper): void
     {
-        $binaryPath = trim((string) $this->config->get('dumper.binaries.mysqldump', ''));
+        $binaryPath = trim((string) $this->settings->value(
+            'dumper.binaries.mysqldump',
+            $this->config->get('dumper.binaries.mysqldump', '')
+        ));
         $binary = 'mysqldump';
 
         if ($binaryPath !== '') {
@@ -542,18 +840,32 @@ class DumpManager
         if ($this->mysqldumpBinary !== $binary) {
             $this->mysqldumpBinary = $binary;
             $this->mysqldumpSupportsColumnStatistics = null;
+            $this->mysqldumpClientInfo = null;
         }
     }
 
     protected function shouldDisableColumnStatistics(): bool
     {
-        $configured = $this->normalizeBooleanConfigValue($this->config->get('dumper.options.disable_column_statistics'));
+        $configured = $this->normalizeBooleanConfigValue($this->settings->value(
+            'dumper.options.disable_column_statistics',
+            $this->config->get('dumper.options.disable_column_statistics')
+        ));
 
         if ($configured !== null) {
-            return $configured;
+            return $configured && $this->mysqldumpSupportsColumnStatisticsOption();
         }
 
         return $this->mysqldumpSupportsColumnStatisticsOption();
+    }
+
+    protected function shouldDisableSslByDefault(): bool
+    {
+        $configured = $this->normalizeBooleanConfigValue($this->settings->value(
+            'dumper.options.disable_ssl',
+            $this->config->get('dumper.options.disable_ssl')
+        ));
+
+        return $configured ?? false;
     }
 
     protected function mysqldumpSupportsColumnStatisticsOption(): bool
@@ -562,32 +874,17 @@ class DumpManager
             return $this->mysqldumpSupportsColumnStatistics;
         }
 
-        try {
-            $process = new Process([$this->mysqldumpBinary, '--version']);
-            $process->setTimeout(5);
-            $process->run();
+        $clientInfo = $this->mysqldumpClientInfo();
 
-            if (!$process->isSuccessful()) {
-                return $this->mysqldumpSupportsColumnStatistics = false;
-            }
-
-            $output = trim($process->getOutput() . ' ' . $process->getErrorOutput());
-            if ($output === '') {
-                return $this->mysqldumpSupportsColumnStatistics = false;
-            }
-
-            if (str_contains(Str::lower($output), 'mariadb')) {
-                return $this->mysqldumpSupportsColumnStatistics = false;
-            }
-
-            if (preg_match('/(\d+\.\d+\.\d+)/', $output, $matches) === 1) {
-                return $this->mysqldumpSupportsColumnStatistics = version_compare($matches[1], '8.0.0', '>=');
-            }
-        } catch (Throwable) {
+        if ($clientInfo['is_mariadb']) {
             return $this->mysqldumpSupportsColumnStatistics = false;
         }
 
-        return $this->mysqldumpSupportsColumnStatistics = false;
+        if ($clientInfo['version'] === null) {
+            return $this->mysqldumpSupportsColumnStatistics = false;
+        }
+
+        return $this->mysqldumpSupportsColumnStatistics = version_compare($clientInfo['version'], '8.0.0', '>=');
     }
 
     protected function decodeReference(string $reference): ?array
@@ -690,6 +987,125 @@ class DumpManager
         }
     }
 
+    protected function configureTablespaceOptions(MySql $dumper): void
+    {
+        $noTablespaces = $this->normalizeBooleanConfigValue($this->settings->value(
+            'dumper.options.no_tablespaces',
+            $this->config->get('dumper.options.no_tablespaces')
+        ));
+
+        if ($noTablespaces ?? true) {
+            $dumper->addExtraOption('--no-tablespaces');
+        }
+    }
+
+    protected function disableMysqldumpSsl(MySql $dumper): void
+    {
+        $dumper->setSkipSsl();
+        $dumper->setSslFlag(ltrim($this->mysqldumpDisableSslOption(), '-'));
+    }
+
+    protected function mysqldumpDisableSslOption(): string
+    {
+        return $this->disableSslOptionForClient($this->mysqldumpClientInfo());
+    }
+
+    protected function mysqlDisableSslOption(): string
+    {
+        return $this->disableSslOptionForClient($this->mysqlClientInfo());
+    }
+
+    protected function canDisableMysqldumpSsl(): bool
+    {
+        return $this->mysqldumpDisableSslOption() !== '';
+    }
+
+    protected function canDisableMysqlSsl(): bool
+    {
+        return $this->mysqlDisableSslOption() !== '';
+    }
+
+    protected function disableSslOptionForClient(array $clientInfo): string
+    {
+        if ($clientInfo['is_mariadb']) {
+            return '--skip-ssl';
+        }
+
+        if ($clientInfo['version'] !== null && version_compare($clientInfo['version'], '8.4.0', '>=')) {
+            return '--ssl-mode=DISABLED';
+        }
+
+        return '--skip-ssl';
+    }
+
+    /**
+     * @return array{raw: string, version: string|null, is_mariadb: bool}
+     */
+    protected function mysqldumpClientInfo(): array
+    {
+        if ($this->mysqldumpClientInfo !== null) {
+            return $this->mysqldumpClientInfo;
+        }
+
+        return $this->mysqldumpClientInfo = $this->binaryClientInfo($this->mysqldumpBinary);
+    }
+
+    /**
+     * @return array{raw: string, version: string|null, is_mariadb: bool}
+     */
+    protected function mysqlClientInfo(): array
+    {
+        if ($this->mysqlClientInfo !== null) {
+            return $this->mysqlClientInfo;
+        }
+
+        $binary = trim((string) $this->settings->value(
+            'dumper.binaries.mysql',
+            $this->config->get('dumper.binaries.mysql', 'mysql')
+        ));
+
+        return $this->mysqlClientInfo = $this->binaryClientInfo($binary !== '' ? $binary : 'mysql');
+    }
+
+    /**
+     * @return array{raw: string, version: string|null, is_mariadb: bool}
+     */
+    protected function binaryClientInfo(string $binary): array
+    {
+        try {
+            $process = new Process([$binary, '--version']);
+            $process->setTimeout(5);
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                return [
+                    'raw' => '',
+                    'version' => null,
+                    'is_mariadb' => false,
+                ];
+            }
+
+            $output = trim($process->getOutput() . ' ' . $process->getErrorOutput());
+            $version = null;
+
+            if (preg_match('/(\d+\.\d+\.\d+)/', $output, $matches) === 1) {
+                $version = $matches[1];
+            }
+
+            return [
+                'raw' => $output,
+                'version' => $version,
+                'is_mariadb' => str_contains(Str::lower($output), 'mariadb'),
+            ];
+        } catch (Throwable) {
+            return [
+                'raw' => '',
+                'version' => null,
+                'is_mariadb' => false,
+            ];
+        }
+    }
+
     protected function connectionOptionValue(array $options, ?int $pdoKey, array $configKeys): ?string
     {
         if ($pdoKey !== null && array_key_exists($pdoKey, $options)) {
@@ -734,6 +1150,31 @@ class DumpManager
         $filtered = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 
         return $filtered;
+    }
+
+    protected function isColumnStatisticsFailure(Throwable $exception): bool
+    {
+        $message = Str::lower($exception->getMessage());
+
+        return str_contains($message, 'column-statistics')
+            || str_contains($message, 'unknown variable');
+    }
+
+    protected function isSslFailure(Throwable $exception): bool
+    {
+        $message = Str::lower($exception->getMessage());
+
+        return str_contains($message, 'tls/ssl')
+            || str_contains($message, 'ssl error')
+            || str_contains($message, 'self-signed certificate')
+            || str_contains($message, 'certificate verify failed');
+    }
+
+    protected function deleteFileIfExists(string $path): void
+    {
+        if (is_file($path)) {
+            @unlink($path);
+        }
     }
 
     protected function guessTablesFromFilename(string $filename): ?array
@@ -809,6 +1250,46 @@ class DumpManager
         }
 
         return $decoded;
+    }
+
+    /**
+     * @param array<int, string> $providers
+     */
+    protected function writeRemoteProvidersMetadata(DumpRecord $record, array $providers): DumpRecord
+    {
+        $adapter = $this->filesystem->disk($record->disk);
+        $metaPath = $this->metaPath($record->path);
+        $meta = [];
+
+        if ($adapter->exists($metaPath)) {
+            $decoded = json_decode($adapter->get($metaPath), true);
+            if (is_array($decoded)) {
+                $meta = $decoded;
+            }
+        }
+
+        $meta['remote_providers'] = array_values(array_unique($providers));
+
+        $adapter->put($metaPath, json_encode($meta, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+
+        return $this->buildRecord($record->disk, $record->path) ?? $record;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function normalizeRemoteProviders(mixed $value): array
+    {
+        if (!is_array($value)) {
+            return [];
+        }
+
+        $providers = array_filter(array_map(
+            static fn (mixed $provider): string => trim((string) $provider),
+            $value
+        ));
+
+        return array_values(array_unique($providers));
     }
 
     /**

@@ -15,7 +15,8 @@ class DumpRecord
         public readonly string $source,
         public readonly ?string $caseKey,
         public readonly ?string $label,
-        public readonly int $size
+        public readonly int $size,
+        public readonly array $remoteProviders = []
     ) {
     }
 

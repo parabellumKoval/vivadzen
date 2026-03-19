@@ -1,0 +1,64 @@
+
+.free-delivery {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  grid-gap: 10px;
+  align-items: center;
+  line-height: 120%;
+  &-icon {
+    font-size: 24px;
+    color: $color-violet;
+  }
+  &-name {
+    color: $color-violet;
+  }
+  &-desc {
+    color: $color-0;
+    .bold {
+      font-weight: 500;
+    }
+  }
+  &-price {
+    display: inline;
+  }
+}
+
+.free-delivery-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: $color-0;
+
+  &-text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+  }
+
+  &-price {
+    font-weight: 600;
+    color: $color-violet;
+  }
+
+  &-bar {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba($color-violet, 0.15);
+    overflow: hidden;
+  }
+
+  &-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: $color-violet;
+    border-radius: inherit;
+    transition: width 0.3s ease;
+  }
+}

@@ -20,6 +20,7 @@ return [
         \App\Settings\CoreSettingsRegistrar::class,
         \App\Settings\SiteSettingsRegistrar::class,
         \App\Settings\AdultoSettingsRegistrar::class,
+        \ParabellumKoval\Dumper\Settings\DumperSettingsRegistrar::class,
         \Backpack\Store\app\Settings\StoreSettingsRegistrar::class,
         \Backpack\Store\app\Settings\ModulesSettingsRegistrar::class,
         \Backpack\Store\app\Settings\SearchSettingsRegistrar::class,

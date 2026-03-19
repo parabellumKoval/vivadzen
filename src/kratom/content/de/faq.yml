@@ -1,0 +1,49 @@
+items:
+  qa1:
+    id: 1
+    q: Wie sind Ihre Öffnungszeiten?
+    a: Telefonische Bestellungen nehmen wir Montag bis Freitag von 10:00 bis 18:00 Uhr entgegen. Samstag und Sonntag sind Ruhetage. Online-Bestellungen auf der Website sind rund um die Uhr möglich.
+  qa2:
+    id: 2
+    q: Kann ich einen Artikel bestellen, wenn er als nicht verfügbar angezeigt wird?
+    a: Hinterlassen Sie eine Anfrage mit Ihrer Telefonnummer und E-Mail-Adresse. Unser Manager meldet sich, sobald der Artikel wieder vorrätig ist.
+  qa3:
+    id: 3
+    q: Muss ich ein Konto erstellen?
+    a: Die Registrierung ist freiwillig, beschleunigt aber die Bestellbearbeitung. In jedem Fall kontaktieren wir Sie telefonisch.
+  qa4:
+    id: 4
+    q: Wann erhalte ich meine Bestellung?
+    a: Die Lieferzeit hängt vom ausgewählten Dienst ab und wird direkt neben den verfügbaren Methoden angezeigt.
+  qa5:
+    id: 5
+    q: Kann sich der Gesamtpreis ändern?
+    a: Wenn Preisänderungen auftreten, ruft der Manager Sie vorher an und informiert Sie.
+  qa6:
+    id: 6
+    q: Wie kann ich bezahlen?
+    a: Zahlungsarten erscheinen automatisch, sobald Sie die Versandart wählen, und richten sich nach Ihrer Region.
+  qa7:
+    id: 7
+    q: Wie kann ich eine ungeeignete oder defekte Ware zurückgeben?
+    a: "<p>Als Verbraucher in der EU können Sie gemäß unserer Widerrufsbelehrung innerhalb von 14 Tagen nach Erhalt der Ware vom Kaufvertrag zurücktreten. Die Artikel müssen unbenutzt, vollständig und im Originalzustand mit Kaufnachweis zurückgesendet werden. Das Widerrufsrecht gilt nicht für maßgeschneiderte Produkte, schnell verderbliche Waren oder aus hygienischen Gründen versiegelte Produkte, deren Siegel entfernt wurde, sowie weitere Ausnahmen aus der Belehrung.</p>
+        <p>Senden Sie uns eine Widerrufserklärung (per E-Mail oder Kontaktformular) und schicken Sie die Ware innerhalb von 14 Tagen zurück. Die Rücksendekosten trägt der Kunde. Sobald wir die Ware oder einen Versandnachweis erhalten, erstatten wir alle Zahlungen (höchstens in Höhe der günstigsten angebotenen Versandart) innerhalb von 14 Tagen über dieselbe Zahlungsmethode.</p>"
+  qa8:
+    id: 8
+    q: Wo und wie kann ich Produkte umtauschen oder zurückgeben?
+    a: Kontaktieren Sie unseren Support oder besuchen Sie die Abholstelle, damit wir Ihnen sagen können, welchen verfügbaren Dienst Sie für den Umtausch nutzen sollen.
+  qa9:
+    id: 9
+    q: Wohin liefern Sie?
+    a: Wir versenden über die Versandpartner, die in Ihrer Region verfügbar sind – die Liste aktualisiert sich automatisch.
+  qa10:
+    id: 10
+    q: Wie finde ich einen Artikel in Ihrem großen Sortiment?
+    a: "<p>So klappt es:</p>
+        <ol><li>Geben Sie den Produktnamen, eine Zutat oder Marke in das Suchfeld ein.</li>
+            <li>Nutzen Sie die Filter, um gewünschte Parameter wie Typ, Preisbereich oder Hersteller festzulegen – der Shop zeigt passende Produkte an.</li>
+        </ol>"
+  qa11:
+    id: 11
+    q: Wie verfolge ich mein Paket?
+    a: Nach dem Versand senden wir Ihnen eine Sendungsnummer; verfolgen Sie diese über die Website oder App des gewählten Dienstes.

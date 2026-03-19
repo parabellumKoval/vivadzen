@@ -1,0 +1,302 @@
+.contacts-menu {
+  &__wrapper {
+    position: relative;
+    display: flex;
+    gap: 100px;
+    z-index: 2;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 10px 0;
+    list-style: none;
+  }
+
+  &__li {
+    margin: 0;
+    padding: 0;
+
+    a {
+      display: block;
+      padding: 10px 0;
+      color: $color-8;
+      text-decoration: none;
+
+      &:hover {
+        color: $color-orange;
+      }
+    }
+  }
+
+  &__title {
+    text-transform: uppercase;
+    color: rgba($color-8, 0.3);
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid rgba($color-8, 0.3);
+  }
+}
+
+.contacts-social-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  padding: 70px 20px;
+  z-index: 2;
+
+  &__title {
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    color: $color-8;
+  }
+
+  &__list {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__groups {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 30px;
+    width: 100%;
+    max-width: 420px;
+
+    @include desktop {
+      gap: 50px;
+    }
+  }
+
+  &__group-label {
+    margin-bottom: 8px;
+    text-align: center;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba($color-8, 0.65);
+  }
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    .social-link__icon {
+      transform: scale(1.1);
+    }
+
+    .social-link__text {
+      opacity: 1;
+    }
+  }
+
+  &__icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  &__text {
+    position: absolute;
+    bottom: -1.5rem;
+    font-size: 0.625rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  &--telegram {
+    background: linear-gradient(135deg, #0088cc 0%, #0077b5 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #0077b5 0%, #0066a1 100%);
+    }
+  }
+
+  &--viber {
+    background: linear-gradient(135deg, #7d3c98 0%, #6b2f8a 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #6b2f8a 0%, #5a267c 100%);
+    }
+  }
+
+  &--whatsapp {
+    background: linear-gradient(135deg, #25d366 0%, #20c655 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #20c655 0%, #1bb34d 100%);
+    }
+  }
+
+  &--instagram {
+    background: linear-gradient(135deg, #f58529 0%, #dd2a7b 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #dd2a7b 0%, #c2185b 100%);
+    }
+  }
+
+  &--facebook {
+    background: linear-gradient(135deg, #1877f2 0%, #0a66c2 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #0a66c2 0%, #054a99 100%);
+    }
+  }
+
+  &--youtube {
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+    }
+  }
+}
+
+.welcome-section {
+  --welcome-section-pad-y: 100px;
+  --reveal-inset: 50%;
+  --reveal-radius: 50%;
+  width: 100%;
+  min-height: calc(100vh + (2 * var(--welcome-section-pad-y)));
+  min-height: calc(100svh + (2 * var(--welcome-section-pad-y)));
+  padding: var(--welcome-section-pad-y) 0;
+  box-sizing: border-box;
+  position: relative;
+  background-color: #000;
+  overflow: hidden;
+
+  &__desc {
+    margin: 25px 0 0 0;
+    text-align: center;
+    color: $color-8;
+    letter-spacing: 0.8em;
+    font-size: 1rem;
+    text-transform: uppercase;
+    opacity: 0.3;
+  }
+
+  &__reveal {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    will-change: clip-path;
+    clip-path: inset(var(--reveal-inset) round var(--reveal-radius));
+    -webkit-clip-path: inset(var(--reveal-inset) round var(--reveal-radius));
+  }
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+
+    &-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    width: 80%;
+    max-width: 1000px;
+  }
+}
+
+#welcome-svg {
+  width: 100%;
+  height: auto;
+
+  path {
+    fill: none !important;
+    stroke: white !important;
+    stroke-width: 10px;
+    stroke-linecap: round;
+  }
+
+  &.finished {
+    path {
+      fill: white !important;
+      transition: fill 0.8s ease;
+    }
+  }
+}
+
+@include mobile {
+  .contacts-menu {
+    &__wrapper {
+      gap: 32px;
+      text-align: center;
+    }
+
+    &__title {
+      padding-bottom: 12px;
+    }
+
+    &__li a {
+      padding: 6px 0;
+    }
+  }
+
+  .contacts-social-card {
+    padding: 40px 16px;
+  }
+
+  .social-link {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    &__icon {
+      font-size: 1.2rem;
+    }
+  }
+
+  .welcome-section {
+    --welcome-section-pad-y: 60px;
+
+    &__desc {
+      letter-spacing: 0.25em;
+      font-size: 0.75rem;
+    }
+
+    .container {
+      width: 90%;
+    }
+  }
+}

@@ -1,0 +1,344 @@
+@use './vars' as *;
+@use './mixins' as *;
+@use "sass:color";
+
+// BUTTONS
+.btn {
+  height: 40px;
+  border-radius: $radiusBtn;
+  transition: border $speed-fast, color $speed-fast, background $speed-fast;
+  @include desktop {
+    height: 50px;
+  }
+}
+.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 10px;
+  width: 100%;
+  height: 40px;
+  padding: 0 35px;
+  border-radius: $radiusBtn;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: transform .3s, color $speed-fast .3s, border $speed-fast, background $speed-fast;
+  @include tablet {
+    width: min-content;
+  }
+  @include desktop {
+    height: 50px;
+    font-size: 18px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+  // &:before {
+  //   content: '';
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  //   height: 0;
+  //   padding-bottom: 100%;
+  //   border-radius: 100%;
+  // }
+  &.clear-padding {
+    padding: 0;
+  }
+  &.full {
+    width: 100%;
+    max-width: 100%;
+  }
+  &.bold {
+    font-weight: 700;
+  }
+  &.uppercase {
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  &.wide {
+    padding: 0 45px;
+  }
+  &.light {
+    text-transform: none;
+    font-weight: 400;
+  }
+  &.small {
+    height: 40px;
+    padding: 0 20px;
+  }
+  &.mini {
+    height: 34px;
+    padding: 0 15px;
+  }
+
+  &.promo {
+    background: linear-gradient(135deg, #73C56F, #FF8400);
+    color: #fff;
+    box-shadow: 0 12px 32px rgba(255, 132, 0, 0.35);
+    transition: transform 0.6s;
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  &.primary {
+    background: $color-green;
+    color: #fff;
+    &:hover {
+      background: color.adjust($color-green, $lightness: 10%);
+    }
+    &.loading {
+      &:before {
+        background: color.adjust($color-green, $lightness: 10%);;
+      }
+    }
+  }
+
+  &.alternate {
+    background: $color-orange;
+    color: #fff;
+    &:hover {
+      background: color.adjust($color-orange, $lightness: 10%);
+    }
+  }
+
+  &.secondary {
+    background: $color-border;
+    color: $color-dark;
+    &:hover {
+      background: color.adjust($color-border, $lightness: -4%);
+    }
+    &.darker {
+      color: $color-0;
+    }
+    &.loading {
+      &:before {
+        background: $color-5;
+      }
+    }
+  }
+
+  &.color-secondary {
+    border: 2px solid $color-border;
+    color: $color-border;
+  }
+
+  &.color-primary {
+    border: 2px solid $color-green;
+    color: $color-green;
+    &:hover {
+      border-color: color.adjust($color-green, $lightness: 10%);
+      color: color.adjust($color-green, $lightness: 10%);
+    }
+  }
+  &.color-orange {
+    // border: 2px solid $color-orange;
+    color: $color-orange;
+    background: $color-8;
+    &:hover {
+      // border-color: color.adjust($color-orange, $lightness: 10%);
+      color: color.adjust($color-orange, $lightness: 10%);
+    }
+  }
+  &.color-violet {
+    border: 2px solid $color-violet;
+    color: $color-violet;
+    &:hover {
+      border-color: color.adjust($color-violet, $lightness: 10%);
+      color: color.adjust($color-violet, $lightness: 10%);
+    }
+  }
+  &.color-dark {
+    border: 2px solid $color-0;
+  }
+  
+  // &.orange {
+  //   background: $color-8;
+  //   color: $color-orange;
+  //   &:hover {
+  //     background: color.scale($color-bg-2, $lightness: 84%);
+  //   }
+  //   &.loading {
+  //     &:before {
+  //       background: color.scale($color-orange, $lightness: 80%);
+  //     }
+  //   }
+  //   &.active {
+  //     background: $color-orange;
+  //     color: $color-8;
+  //     &:hover {
+  //       background: color.scale($color-orange, $lightness: 15%);
+  //     }
+  //   }
+  // }
+
+  &.orange {
+    background: $color-orange;
+    color: $color-8;
+    &:hover {
+      background: color.scale($color-orange, $lightness: 10%);
+    }
+    &.loading {
+      &:before {
+        background: color.scale($color-orange, $lightness: 80%);
+      }
+    }
+    &.active {
+      background: $color-orange;
+      color: $color-8;
+      &:hover {
+        background: color.scale($color-orange, $lightness: 15%);
+      }
+    }
+  }
+  &.green {
+    background: color.scale($color-green, $lightness: 84%);
+    color: $color-green;
+    &:hover {
+      background: color.scale($color-bg-2, $lightness: 84%);
+    }
+    &.loading {
+      &:before {
+        background: color.scale($color-orange, $lightness: 80%);
+      }
+    }
+    &.active {
+      background: $color-orange;
+      color: $color-8;
+      &:hover {
+        background: color.scale($color-orange, $lightness: 15%);
+      }
+    }
+  }
+  &.violet {
+    background: color.scale($color-violet, $lightness: 84%);
+    color: $color-violet;
+    &:hover {
+      background: color.scale($color-violet, $lightness: 80%);
+    }
+    &.loading {
+      &:before {
+        background: color.scale($color-violet, $lightness: 80%);
+      }
+    }
+  }
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+  &:active {
+    transition: transform 0s;
+    transform: scale(0.95);
+  }
+  &.loading {
+    opacity: 0.55;
+    pointer-events: none;
+    & > * {
+      pointer-events: none;
+    }
+    &:before {
+      animation: loading 2s infinite;
+    }
+  }
+  &.disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    & > * {
+      pointer-events: none;
+    }
+  }
+  .icon {
+    position: absolute;
+    left: 20px;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+  .inline-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  &.inline-icon {
+    .icon {
+      position: relative;
+      left: initial;
+    }
+  }
+  &.large-icon {
+    .icon {
+      font-size: 24px;
+    }
+  }
+}
+// LINK
+.link {
+  transition: color $speed;
+  &:hover {
+    color: $color-green !important;
+  }
+}
+.a-link {
+  text-decoration: underline;
+}
+.text-link {
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-gap: 6px;
+  transition: color $speed;
+  white-space: nowrap;
+  span {
+    position: relative;
+    padding: 2px 0;
+    border-bottom: 1px dashed;
+  }
+  &:hover {
+    color: $color-green;
+  }
+  &.loading {
+    pointer-events: none;
+    cursor: auto;
+    &:hover {
+      color: initial;
+    }
+    span{
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100px;
+        width: 100px;
+        border-radius: 50px;
+        background: $color-0;
+        z-index: -1;
+        margin: -50px 0 0 -50px;
+        transform: scale(0);
+        opacity: 1;
+        animation: loading2 1.5s infinite;
+      }
+    }
+  }
+}
+.router-link-active {
+  color: $color-green;  
+}
+@keyframes loading2 {
+  0%{
+    opacity: 1;
+    transform: scale(0);
+  }
+  50%{
+    opacity: 0;
+    transform: scale(1);
+  }
+  100%{
+    opacity: 0;
+    transform: scale(0);
+  }
+}

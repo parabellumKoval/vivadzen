@@ -80,6 +80,8 @@ class GenerationRunControllerTest extends TestCase
             'schedule_max_per_day' => 2,
             'schedule_hour_from' => 10,
             'schedule_hour_to' => 18,
+            'photo_review_chance_numerator' => 4,
+            'photo_review_chance_denominator' => 10,
         ]));
 
         $this->assertSame(201, $response->getStatusCode());
@@ -94,8 +96,31 @@ class GenerationRunControllerTest extends TestCase
         $this->assertSame('5', $run->options['--limit']);
         $this->assertSame(['cs'], $run->options['--locale']);
         $this->assertSame(['CZ'], $run->options['--country']);
+        $this->assertSame('1', $run->options['--prevent-duplicate-reviewers']);
+        $this->assertTrue($run->meta['prevent_duplicate_reviewers']);
+        $this->assertSame('4/10', $run->options['--photo-review-chance']);
 
         Queue::assertPushed(RunGenerationCommand::class, fn (RunGenerationCommand $job) => $job->runId === $run->id);
+    }
+
+    public function test_review_generation_endpoint_allows_disabling_duplicate_reviewer_prevention(): void
+    {
+        Queue::fake();
+
+        $response = app(GenerationRunController::class)->storeReviews(Request::create('/admin/review/generation-runs', 'POST', [
+            'selection_mode' => 'all',
+            'min_reviews' => 1,
+            'max_reviews' => 1,
+            'prevent_duplicate_reviewers' => false,
+        ]));
+
+        $this->assertSame(201, $response->getStatusCode());
+
+        $run = GenerationRun::query()->latest('id')->first();
+
+        $this->assertNotNull($run);
+        $this->assertSame('0', $run->options['--prevent-duplicate-reviewers']);
+        $this->assertFalse($run->meta['prevent_duplicate_reviewers']);
     }
 
     public function test_index_marks_stale_running_runs_as_failed(): void

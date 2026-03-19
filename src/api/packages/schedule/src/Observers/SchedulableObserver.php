@@ -99,7 +99,7 @@ class SchedulableObserver
      */
     public function deleted(Model $model): void
     {
-        ScheduledPublication::where('schedulable_type', get_class($model))
+        ScheduledPublication::where('schedulable_type', $model->getMorphClass())
             ->where('schedulable_id', $model->getKey())
             ->where('status', 'pending')
             ->update(['status' => 'cancelled']);

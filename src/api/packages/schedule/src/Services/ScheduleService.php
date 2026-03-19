@@ -59,7 +59,7 @@ class ScheduleService
 
         // Создаем новую только если нет существующей
         return ScheduledPublication::create([
-            'schedulable_type' => get_class($model),
+            'schedulable_type' => $model->getMorphClass(),
             'schedulable_id' => $model->getKey(),
             'publish_at' => $publishAt,
             'overwrite_created_at' => $overwriteCreatedAt,
@@ -74,7 +74,7 @@ class ScheduleService
      */
     public function cancel(Model $model): int
     {
-        return ScheduledPublication::where('schedulable_type', get_class($model))
+        return ScheduledPublication::where('schedulable_type', $model->getMorphClass())
             ->where('schedulable_id', $model->getKey())
             ->where('status', 'pending')
             ->update(['status' => 'cancelled']);
@@ -85,7 +85,7 @@ class ScheduleService
      */
     public function hasScheduled(Model $model): bool
     {
-        return ScheduledPublication::where('schedulable_type', get_class($model))
+        return ScheduledPublication::where('schedulable_type', $model->getMorphClass())
             ->where('schedulable_id', $model->getKey())
             ->where('status', 'pending')
             ->exists();
@@ -96,7 +96,7 @@ class ScheduleService
      */
     public function getScheduled(Model $model): ?ScheduledPublication
     {
-        return ScheduledPublication::where('schedulable_type', get_class($model))
+        return ScheduledPublication::where('schedulable_type', $model->getMorphClass())
             ->where('schedulable_id', $model->getKey())
             ->where('status', 'pending')
             ->first();

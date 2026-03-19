@@ -11,6 +11,7 @@ class GenerationRun extends Model
 
     public const TYPE_BOT_USERS = 'bot_users';
     public const TYPE_PRODUCT_REVIEWS = 'product_reviews';
+    public const TYPE_PRODUCT_REVIEW_PHOTOS = 'product_review_photos';
 
     public const STATUS_QUEUED = 'queued';
     public const STATUS_RUNNING = 'running';

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use ParabellumKoval\Dumper\Http\Requests\CreateDumpRequest;
 use ParabellumKoval\Dumper\Http\Requests\RestoreDumpRequest;
 use ParabellumKoval\Dumper\Services\DumpManager;
+use ParabellumKoval\Dumper\Services\RemoteDumpManager;
 use ParabellumKoval\Dumper\Services\TableInspector;
 use Prologue\Alerts\Facades\Alert;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -18,7 +19,8 @@ class DumperController extends Controller
 {
     public function __construct(
         protected DumpManager $manager,
-        protected TableInspector $inspector
+        protected TableInspector $inspector,
+        protected RemoteDumpManager $remoteManager
     ) {
     }
 
@@ -29,6 +31,7 @@ class DumperController extends Controller
             'manualDumps' => $this->manager->manualDumps(),
             'autoCases' => $this->manager->autoCases(),
             'autoDumps' => $this->manager->groupedAutoDumps(),
+            'remoteStatus' => $this->remoteManager->status(),
         ]);
     }
 
@@ -65,6 +68,27 @@ class DumperController extends Controller
         } catch (Throwable $exception) {
             report($exception);
             Alert::error(trans('dumper::messages.restore_failed', ['message' => $exception->getMessage()]))->flash();
+        }
+
+        return redirect()->back();
+    }
+
+    public function delete(RestoreDumpRequest $request): RedirectResponse
+    {
+        $record = $this->manager->resolveReference($request->input('reference'));
+
+        if (!$record) {
+            Alert::warning(trans('dumper::messages.not_found'))->flash();
+
+            return redirect()->back();
+        }
+
+        try {
+            $this->manager->delete($record);
+            Alert::success(trans('dumper::messages.deleted', ['file' => $record->filename]))->flash();
+        } catch (Throwable $exception) {
+            report($exception);
+            Alert::error(trans('dumper::messages.delete_failed', ['message' => $exception->getMessage()]))->flash();
         }
 
         return redirect()->back();

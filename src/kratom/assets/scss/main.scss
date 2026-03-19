@@ -1,0 +1,418 @@
+@use './vars' as *;
+@use './mixins' as *;
+@use './reset' as *;
+@use './buttons' as *;
+@use './animations' as *;
+
+@use 'sass:color';
+
+/* General */
+:root {
+  --font-sans: 'Onest', 'Rubic',  'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  // --font-display: 'Alegreya Sans', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Nunito', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  // pointer-events: none;
+  // touch-action: pan-left, pan-right, pan-up, pan-down, pan-x, pan-y;
+  // @include desktop {
+  //   pointer-events: all;
+  //   touch-action: auto;
+  // }
+}
+input,
+button,
+a,
+textarea,
+label,
+*[clickable] { 
+  touch-action: manipulation;
+  pointer-events: auto; 
+}
+*[button] {
+  transition: transform $speed-fast;
+  &:active {
+    transition: transform 0s;
+    transform: scale(0.95);
+  }
+}
+*[scrollable],
+*[pointer] {
+  pointer-events: auto;
+  * {
+    pointer-events: auto;
+  }
+}
+html {
+  overflow-x: initial;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 100%;
+  color: $color-1;
+  scroll-snap-type: y mandatory;
+  height: 100%;
+  @include desktop {
+    overflow-x: hidden;
+    width: 100%;
+    font-size: 16px;
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $color-7;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($color-green, 0.75);
+    &:hover {
+      background: rgba($color-green, 1);
+    }
+  }
+}
+body {
+  background: $color-bg;
+  @include tablet {
+    scroll-snap-type: none;
+    max-height: initial;
+  }
+
+  &.modal-open-ios {
+    /* Фиксирует body, что отключает прокрутку */
+    position: fixed;
+    /* Занимает всю область просмотра */
+    width: 100%; 
+    /* Важно для iOS, чтобы избежать прокрутки содержимого за модальным окном */
+    overflow-y: hidden;
+  }
+}
+
+.bold {
+  font-weight: 600;
+}
+
+a {
+  color: $color-0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+}
+.font-onest {
+  font-family: 'Onest', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+.font-alegreya {
+  font-family: 'Alegreya Sans', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+.container {
+  padding: 0 15px;
+  min-width: 320px;
+  margin: 0 auto;
+  width: 100%;
+  // overflow-x: hidden;
+  @include tablet {
+    overflow-x: initial;
+  }
+  @include desktop {
+    padding: 0 35px;
+    // max-width: 1440px;
+    max-width: 2160px;
+  }
+}
+.full-container {
+  max-width: 2090px;
+  margin: 0 auto;
+}
+.pseudo-full {
+  margin-left: -35px;
+  margin-right: -35px;
+  padding: 0 35px;
+  width: calc(100% + 70px);
+}
+.hide-scroll {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.caption {
+  margin-bottom: 40px;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 33px;
+}
+.sticky {
+  @include desktop {
+    position: sticky;
+    top: 80px; 
+  }
+}
+img {
+  &.image-placeholder {
+    object-fit: cover !important;
+  }
+  &.lazy {
+    opacity: 1;
+    transition: opacity $speed;
+    &.loaded {
+      opacity: 1;
+    }
+  }
+}
+// COMMON PAGE
+.page {
+  &-base {
+  }
+}
+// TITLE
+.title {
+  &-common {
+    font-family: var(--font-display);
+    margin-bottom: 20px;
+    font-size: 36px;
+    line-height: 115%;
+    font-weight: 900;
+    color: $color-1;
+
+    @include desktop {
+      line-height: 145%;
+      font-size: 44px;
+    }
+  }
+  &-secondary {
+    font-family: var(--font-display);
+    font-size: 24px;
+    line-height: 115%;
+    font-weight: 900;
+    // text-transform: uppercase;
+    @include desktop {
+      line-height: 145%;
+    }
+  }
+}
+.section-title {
+  font-family: var(--font-display);
+  padding: 0 20px;
+  margin-bottom: 15px;
+  color: $color-1;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 140%;
+  // text-transform: uppercase;
+  text-align: center;
+  @include tablet{
+    margin-bottom: 20px;
+    font-size: 26px;
+  }
+  @include desktop {
+    margin-bottom: 30px;
+    font-size: 38px;
+    text-align: center;
+  }
+}
+
+.secondary-section {
+  margin-top: 30px;
+  @include tablet {
+    margin-top: 40px;
+  }
+  @include desktop {
+    margin-top: 60px;
+  }
+  @include ld {
+    margin-top: 80px;
+  }
+}
+
+.main-section {
+  margin-top: 50px;
+  @include tablet {
+    margin-top: 65px;
+  }
+  @include desktop {
+    margin-top: 80px;
+  }
+  @include ld {
+    margin-top: 160px;
+  }
+
+  &-title {
+    margin-bottom: 20px;
+    line-height: 120%;
+    font-size: 32px;
+    font-weight: 900;
+    color: $color-primary;
+    text-align: center;
+
+    @include desktop {
+      margin-bottom: 30px;
+      font-size: 36px;
+    }
+
+    @include ld {
+      margin-bottom: 50px;
+      font-size: 58px;
+    }
+  }
+}
+.section-nav {
+  margin-top: 30px;
+}
+
+.home-section-margin {
+  margin-top: 60px;
+  margin-bottom: 60px;
+
+  @include desktop {
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+
+  @include ld {
+    margin-top: 160px;
+    margin-bottom: 160px;
+  }
+
+  &--viva {
+    @include mobile {
+      margin-top: -30px;
+      margin-bottom: -30px;
+    }
+  }
+}
+
+.home-section-viva {
+  margin-bottom: -50px;
+
+  @include desktop {
+    margin-bottom: -160px;
+  }
+}
+// FORM
+.label {
+  font-size: 12px;
+  color: $color-4;
+  @include desktop {
+    font-size: 14px;
+  }
+}
+// COLORS
+.orange {
+  color: $color-orange;
+}
+.green {
+  color: $color-green;
+}
+
+
+.google-bg {
+  background: $color-google;
+  color: $color-8;
+  transition: background $speed;
+  &:hover {
+    background: color.scale($color-google, $lightness: 20%);
+  }
+}
+.facebook-bg {
+  background: $color-facebook;
+  color: $color-8;
+  transition: background $speed;
+  &:hover {
+    background: color.scale($color-facebook, $lightness: 20%);
+  }
+}
+.x-bg {
+  background: $color-0;
+  color: $color-8;
+  transition: background $speed;
+  &:hover {
+    background: color.scale($color-0, $lightness: 20%);
+  }
+}
+.instagram-bg {
+  background: $color-instagram;
+  color: $color-8;
+  transition: background $speed;
+  &:hover {
+    background: color.scale($color-instagram, $lightness: 20%);
+  }
+}
+.youtube-bg {
+  background: $color-youtube;
+  color: $color-8;
+  transition: background $speed;
+  &:hover {
+    background: color.scale($color-youtube, $lightness: 20%);
+  }
+}
+.tiktok-bg {
+  background: $color-tiktok;
+  color: $color-8;
+  transition: background $speed;
+  &:hover {
+    background: color.scale($color-tiktok, $lightness: 20%);
+  }
+}
+
+.telegram-bg {
+  background: $color-telegram;
+  color: $color-8;
+  transition: background $speed;
+  &:hover {
+    background: color.scale($color-telegram, $lightness: 20%);
+  }
+}
+
+.viber-bg {
+  background: $color-viber;
+  color: $color-8;
+  transition: background $speed;
+  &:hover {
+    background: color.scale($color-viber, $lightness: 20%);
+  }
+}
+
+.whatsapp-bg {
+  background: $color-whatsapp;
+  color: $color-8;
+  transition: background $speed;
+  &:hover {
+    background: color.scale($color-whatsapp, $lightness: 20%);
+  }
+}
+
+.facebook-text {
+  color: $color-facebook;
+}
+.instagram-text {
+  color: $color-instagram;
+}
+.facebook-link {
+  color: $color-facebook;
+  &:hover {
+    color: color.scale($color-facebook, $lightness: 30%);
+  }
+}
+.instagram-link {
+  color: $color-instagram;
+  &:hover {
+    color: color.scale($color-instagram, $lightness: 30%);
+  }
+}
+//
+.violet-text {
+  color: $color-violet;
+}

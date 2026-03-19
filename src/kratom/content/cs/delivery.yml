@@ -1,0 +1,7 @@
+default_address: "Adresní doručení ve Španělsku a Německu prostřednictvím UPS, DHL, FedEx, EMS, TNT, Zasilkovna, Ceska posta, DPD a PPL. Cena a termín závisí na zvoleném dopravci a hmotnosti zásilky. Balík dorazí k vašim dveřím nebo na nejbližší výdejní místo, pokud to služba umožňuje."
+default_pickup: "Osobní odběr ve stejný den. Před příjezdem si prosím potvrďte dostupnost zboží a čas převzetí s manažerem. Výdejní místo je na uvedené adrese a zboží rezervujeme po potvrzení."
+novaposhta_warehouse: "Doručení na pobočky Nova Poshta po celé Ukrajině do 1–3 dní. Po odeslání obdržíte SMS s číslem zásilky. Cena: objednávky do 1000 UAH stojí 70–80 UAH, od 1000 UAH symbolických 0,01 UAH. Zkontrolujte zásilku na pobočce před platbou."
+novaposhta_address: "Kurýrní doručení Nova Poshta během 1–3 dnů na uvedenou adresu. Čas závisí na regionu a domlouvá se s kurýrem. Harmonogram a stav zjistíte na webu Nova Poshta."
+packeta_warehouse: "Doručení do výdejních míst Zasilkovna po celé Evropě, obvykle do 2–5 pracovních dnů. Příjemce si při objednávce volí pohodlné výdejní místo. Cena je v rámci země pevná a vypočítá se při objednávce."
+packeta_address: "Kurýrní doručení Zasilkovna v České republice a dalších evropských zemích. Zásilka dorazí přímo na zadanou adresu do 2–5 dnů. Cena závisí na zemi a hmotnosti a počítá se automaticky při dokončení objednávky."
+info: "Pokud můžete počkat 2–3 týdny, zvolte nejlevnější dopravu. Vyjde přibližně na 5–10 USD podle vaší lokality."

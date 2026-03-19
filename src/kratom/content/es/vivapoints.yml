@@ -1,0 +1,154 @@
+hero:
+  title: "Programa de fidelidad de Vivadzen"
+  subtitle: "Gana <b class='orange'>{pointsName}</b>"
+  lead: "Bienvenido al mundo de ventajas de Vivadzen. Valoramos tu opinión y estamos listos para pagar dinero real por ella."
+  description: "{pointsName} son mucho más que descuentos: es una moneda interna completa que puedes usar en nuevas compras o retirar a tu tarjeta bancaria o monedero cripto."
+  note: "Importante: el programa de bonificación está disponible solo para usuarios conectados. Para empezar a acumular puntos, {register} o entra en tu {account}."
+  highlights:
+    - label: "Reseñas en video, foto y texto"
+      icon: "hugeicons:ai-generative"
+    - label: "Red de referidos multinivel"
+      icon: "hugeicons:user-group"
+    - label: "Retiro en dinero o cripto"
+      icon: "hugeicons:wallet-done-02"
+  cta:
+    label: "Ir a Mi cuenta"
+    to: "/account"
+
+earn:
+  title: "¿Cómo ganar {pointsName}?"
+  subtitle: "Ofrecemos formas sencillas y transparentes de conseguir bonos. Elige la opción que prefieras y mira cómo crece tu saldo."
+  methods:
+    - key: video
+      icon: "hugeicons:play-circle-02"
+      title: "Reseña en video - <div class='orange'>{amount} puntos</div>"
+      description: "La opción más rentable. Muestra el producto en acción o cuenta tu experiencia de compra."
+      steps:
+        - "Graba un video mostrando un artículo comprado con nosotros o comparte tu experiencia con <b>Vivadzen</b>."
+        - "Sube el video a <b>YouTube</b>."
+        - "Ve a la ficha del producto y deja una reseña con el enlace al video."
+    - key: photo
+      icon: "hugeicons:image-02"
+      title: "Reseña con fotos - <div class='orange'>{amount} puntos</div>"
+      description: "Adjunta fotos claras del producto o del unboxing a tu reseña."
+      steps:
+        - "Haz hasta 5 fotos del producto, del paquete o del resultado de uso."
+        - "Abre la página del producto o de reseñas de la tienda y elige el formato 'reseña con fotos'."
+        - "Adjunta las fotos, añade un comentario opcional y envía la reseña a moderación."
+    - key: text
+      icon: "hugeicons:edit-02"
+      title: "Reseña escrita - <div class='orange'>{amount} puntos</div>"
+      description: "¿Te gusta escribir? Deja un comentario detallado en la página del producto."
+      steps:
+        - "Escribe una reseña honesta del producto en nuestro sitio."
+        - "En el formulario añade un enlace a uno de tus perfiles sociales para verificarla."
+      socials_label: "Redes admitidas:"
+      socials:
+        - label: "Instagram"
+          icon: "hugeicons:instagram"
+        - label: "Facebook"
+          icon: "hugeicons:facebook-01"
+        - label: "TikTok"
+          icon: "hugeicons:tiktok"
+        - label: "Twitter (X)"
+          icon: "hugeicons:new-twitter-rectangle"
+    - key: referral
+      icon: "solar:users-group-two-rounded-linear"
+      title: "Programa de referidos - <div class='orange'>hasta {maxPercent} de los pedidos de tus amigos</div>"
+      description: "Crea una fuente de ingresos pasivos con nuestro sistema de invitaciones de tres niveles. Recibe puntos por las compras de tus amigos y de su red."
+      levels:
+        - label: "Nivel 1"
+          amount: "{level1}"
+        - label: "Nivel 2"
+          amount: "{level2}"
+        - label: "Nivel 3"
+          amount: "{level3}"
+      link_label: "Ver reglas del programa de referidos"
+
+moderation:
+  title: "Moderación y abono"
+  intro: "Nos importa la transparencia, por eso revisamos todas las acciones."
+  items:
+    - title: "Revisión de reseñas"
+      text: "Suele tardar hasta {hours} horas. Las recompensas por referidos se acreditan automáticamente tras el pago del invitado."
+    - title: "Abono"
+      text: "Después de la aprobación o confirmación del pago, los puntos se suman de inmediato."
+    - title: "Notificación"
+      text: "Verás el nuevo saldo en {account} y recibirás un correo electrónico."
+
+exchange:
+  title: "Tipo de cambio y divisas"
+  intro: "Tu esfuerzo tiene un valor real. Vinculamos {pointsName} a una moneda estable para facilitar los cálculos."
+  rate_label: "Tasa de conversión:"
+  rate: "1 {pointsName} = {rate}"
+  currencies_label: "Puedes retirar puntos en el equivalente de otras divisas según la tasa vigente del sitio:"
+  currencies:
+    - label: "Euro (EUR)"
+      icon: "emojione:flag-for-european-union"
+    - label: "Grivna ucraniana (UAH)"
+      icon: "emojione:flag-for-ukraine"
+    - label: "Dólar estadounidense (USD)"
+      icon: "emojione:flag-for-united-states"
+    - label: "Corona checa (CZK)"
+      icon: "emojione:flag-for-czechia"
+    - label: "Criptomoneda (USDT y otras)"
+      icon: "logos:bitcoin"
+
+usage:
+  title: "¿Cómo usar los puntos?"
+  intro: "Tienes dos caminos para gestionar tus {pointsName}. Tú decides en todo momento."
+  options:
+    - key: pay
+      icon: "solar:cart-check-outline"
+      title: "Opción A: Pagar pedidos"
+      description: "Utiliza tus puntos para cubrir hasta {maxPercent} de cualquier pedido nuevo en Vivadzen."
+      note: "Solo tienes que elegir 'Pagar con bonos' al finalizar la compra."
+    - key: withdraw
+      icon: "solar:wallet-money-linear"
+      title: "Opción B: Retirar fondos"
+      description: "Convierte los puntos en dinero real. Retíralos a tarjetas bancarias o a un monedero cripto."
+      conditions:
+        - label: "Monto mínimo"
+          value: "{minWithdraw} puntos"
+        - label: "Tiempo de procesamiento"
+          value: "{processingDays} días"
+      process:
+        - "Crea una solicitud de retiro en tu {account}."
+        - "La cantidad se congela temporalmente en tu saldo."
+        - "Tras la aprobación, enviamos el dinero a los datos indicados y te avisamos."
+  disclaimer: "Si se rechaza la solicitud (por ejemplo, por datos incorrectos), los puntos retenidos vuelven automáticamente al saldo de bonos."
+
+faq:
+  title: "Preguntas frecuentes"
+  list:
+    - question: "¿Los puntos caducan?"
+      answer: "No, {pointsName} no caducan. No reiniciamos el saldo aunque pases un tiempo sin usar el programa."
+    - question: "¿Puedo combinar puntos y cupones?"
+      answer: "Sí, {pointsName} se combinan con otras promociones y códigos de descuento."
+    - question: "¿Necesito una cuenta para participar?"
+      answer: "Sí, el programa es solo para usuarios conectados: {register} o entra a tu {account} para empezar a sumar {pointsName}."
+    - question: "¿Cuántos niveles tiene el programa de referidos y qué porcentajes ofrece?"
+      answer: "Hay tres niveles: las invitaciones directas traen {level1}, el segundo nivel {level2} y el tercero {level3}. Los abonos se generan automáticamente tras el pago del invitado."
+    - question: "¿Cuándo acreditan los puntos por reseñas o referidos?"
+      answer: "Las reseñas se moderan en un máximo de {hours} horas y las recompensas por referidos aparecen justo después de confirmarse el pago."
+    - question: "¿Dónde veo mi saldo e historial?"
+      answer: "En {account} tienes la sección de monedero: verás tu saldo actual, el ledger y el estado de cada retiro."
+    - question: "¿Existe un límite para pagar con puntos?"
+      answer: "Sí, puedes cubrir hasta {maxPercent} de cualquier pedido con puntos; el resto se paga con el método habitual."
+    - question: "¿Cuál es el mínimo para retirar y cuánto tarda?"
+      answer: "La solicitud mínima es de {minWithdraw} puntos y el procesamiento estándar tarda hasta {processingDays} días."
+    - question: "¿Qué ocurre con los puntos tras solicitar un retiro?"
+      answer: "El monto queda retenido temporalmente y no se puede usar hasta que el equipo de pagos complete la revisión y transferencia."
+    - question: "¿Puedo cancelar una solicitud de retiro?"
+      answer: "Sí, mientras el estado no sea 'pagado', puedes cancelarla en {account}; los puntos retenidos volverán al instante a tu saldo disponible."
+    - question: "¿En qué divisas puedo retirar {pointsName}?"
+      answer: "Aceptamos retiros en EUR, USD, UAH, CZK y criptomonedas populares como USDT según la tasa actual."
+    - question: "¿Cómo se registran todos los movimientos?"
+      answer: "Cada acción se guarda en el Wallet Ledger: puedes ver el iniciador, el tipo de operación (credit/debit/hold/release) y el pedido o solicitud relacionada."
+
+cta:
+  title: "¿Listo para empezar?"
+  text: "Entra al catálogo, elige tu producto favorito o comparte tu enlace de referido y consigue tus primeros {pointsName} hoy mismo."
+  button:
+    label: "Ir a Mi cuenta"
+    to: "/account"

@@ -106,6 +106,80 @@ class SiteSettingsRegistrar implements SettingsRegistrarInterface
                         ->hint('Текст в верхней строке.')
                         ->tab('Основное')
                     );
+                })
+
+                ->page('Главная', function ($page) {
+                    $page->add(Field::make('site.home.sections.banner', 'checkbox')
+                        ->label('Показывать баннер (верхний hero)')
+                        ->default(true)
+                        ->cast('bool')
+                        ->regionable(true)
+                        ->tab('Секции')
+                    );
+
+                    $page->add(Field::make('site.home.sections.category', 'checkbox')
+                        ->label('Показывать блок категорий')
+                        ->default(true)
+                        ->cast('bool')
+                        ->regionable(true)
+                        ->tab('Секции')
+                    );
+
+                    $page->add(Field::make('site.home.sections.lists_main', 'checkbox')
+                        ->label('Показывать блок подборок товаров')
+                        ->default(true)
+                        ->cast('bool')
+                        ->regionable(true)
+                        ->tab('Секции')
+                    );
+
+                    $page->add(Field::make('site.home.sections.about', 'checkbox')
+                        ->label('Показывать блок "О нас"')
+                        ->default(true)
+                        ->cast('bool')
+                        ->regionable(true)
+                        ->tab('Секции')
+                    );
+
+                    $page->add(Field::make('site.home.sections.review_video', 'checkbox')
+                        ->label('Показывать блок видео-отзывов')
+                        ->default(true)
+                        ->cast('bool')
+                        ->regionable(true)
+                        ->tab('Секции')
+                    );
+
+                    $page->add(Field::make('site.home.sections.referral', 'checkbox')
+                        ->label('Показывать реферальный блок')
+                        ->default(true)
+                        ->cast('bool')
+                        ->regionable(true)
+                        ->tab('Секции')
+                    );
+
+                    $page->add(Field::make('site.home.sections.vivapoints', 'checkbox')
+                        ->label('Показывать блок VivaPoints')
+                        ->default(true)
+                        ->cast('bool')
+                        ->regionable(true)
+                        ->tab('Секции')
+                    );
+
+                    $page->add(Field::make('site.home.sections.mobile_sidebar', 'checkbox')
+                        ->label('Показывать мобильный sidebar (категории + статьи)')
+                        ->default(true)
+                        ->cast('bool')
+                        ->regionable(true)
+                        ->tab('Секции')
+                    );
+
+                    $page->add(Field::make('site.home.sections.affiliate_link', 'checkbox')
+                        ->label('Показывать floating кнопку affiliate (`lazy-affiliate-link`)')
+                        ->default(true)
+                        ->cast('bool')
+                        ->regionable(true)
+                        ->tab('Дополнительно')
+                    );
                 });
         });
     }

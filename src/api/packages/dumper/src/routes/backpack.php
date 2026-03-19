@@ -13,6 +13,7 @@ Route::group([
     Route::get('dumper', [DumperController::class, 'index'])->name('backpack.dumper.index');
     Route::post('dumper/manual', [DumperController::class, 'store'])->name('backpack.dumper.manual');
     Route::post('dumper/restore', [DumperController::class, 'restore'])->name('backpack.dumper.restore');
+    Route::post('dumper/delete', [DumperController::class, 'delete'])->name('backpack.dumper.delete');
     Route::get('dumper/download/{reference}', [DumperController::class, 'download'])->name('backpack.dumper.download');
     Route::post('dumper/auto/{case}/run', [DumperController::class, 'runAutoCase'])->name('backpack.dumper.auto.run');
 });

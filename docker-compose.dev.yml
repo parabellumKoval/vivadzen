@@ -184,6 +184,21 @@ services:
       - api
     restart: always
 
+  schedule:
+    build:
+      dockerfile: .docker/dev/schedule/Dockerfile
+      args:
+        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+        IMAGE_TAG: ${IMAGE_TAG}
+    volumes:
+      - ./src/api:/var/www/html
+    depends_on:
+      - redis
+      - mysql
+    networks:
+      - api
+    restart: unless-stopped
+
   opensearch:
     image: opensearchproject/opensearch:2.11.1
     container_name: opensearch

@@ -1,0 +1,60 @@
+.sale {
+  &-list {
+    display: grid;
+    grid-gap: 20px;
+  }
+  &-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+  }
+  &-label {
+    color: $color-3;
+  }
+  &-value {
+    display: flex;
+    text-align: right;
+    &.large {
+      font-size: 20px;
+    }
+  }
+  &-features {
+    display: grid;
+    grid-auto-flow: row;
+    // gap: 20px;
+
+    &>* {
+      border-top: 1px solid $color-border;
+      padding: 20px 0;
+    }
+  }
+  &-footer {
+    // padding: 20px 0;
+    // border-top: 1px solid $color-border;
+    // border-bottom: 1px solid $color-border;
+  }
+  &-button {
+    width: 100%;
+  }
+  &-line {
+    height: 1px;
+    width: 100%;
+    background: $color-border;
+  }
+
+  &-age-verification {
+    display: grid;
+    gap: 8px;
+  }
+
+  &-age-verification__error {
+    color: #b53c3c;
+    font-size: 13px;
+  }
+}
+
+// .free-delivery-box {
+//   padding: 20px 0 0 0;
+//   border-top: 1px solid #f1e4d5;
+// }

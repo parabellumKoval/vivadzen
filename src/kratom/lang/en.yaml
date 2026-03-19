@@ -1,0 +1,577 @@
+vivapoints:
+  hero:
+    metric_video: Video review
+    metric_text: Text review
+    metric_referral: Referral network
+regions:
+  global: Global
+  ua: Ukraine
+  cz: Czech Republic
+  de: Germany
+  es: Spain
+
+title:
+  categories: Categories
+  products: Products
+  home: Home
+  catalog: Catalog
+  contacts: Contacts
+  cart: Cart
+  checkout: Checkout
+  search_results: Search results
+  search: Search
+  comparison: Comparison
+  favorite: Favorites
+  brands: Brands
+  articles: Articles
+  blog: Blog
+  delivery: Delivery
+  payment: Payment
+  guarantees: Guarantees
+  qa: FAQ
+  about: About us
+  sales: Promotions
+  news: News
+  reviews: Reviews
+  vivapoints: "{pointsName}"
+  vivapoints_and_rewards: "{pointsName} and rewards"
+  affiliate_system: Affiliate program
+  czech-republic-kratom: Buy kratom in Czech Republic
+  agreement: Public offer agreement
+  returns: Return policy
+  checkout_payment: Order payment
+  other: Other
+  checkout_complete: Thank you for your order!
+  checkout_complete_failed: Error while placing the order
+  policy: Privacy policy
+  terms: Terms of use
+  certificates: Certificates
+  remove_userdata: Deleting user data
+  withdrawal: Withdrawal
+  account:
+    account: Account
+    orders: Order history
+    promocodes: My promo codes
+    referrals: Referral program
+    settings: Settings
+    support: Support
+    favorite: Favorite products
+    transactions: Transactions
+    network:
+      tabs:
+        common: 'Overview'
+        referrals: 'Referral network'
+        conditions: 'Program terms'
+
+meta:
+  address: Na Bojisti 1471/22, 120 00 Nove Mesto, Prague 2, Czechia
+  djini_desc: Online store "Vivadzen"
+
+label:
+  articul: SKU
+  sale: Sale
+  status: Status
+  value_search: Search values
+  only_in_stock: In stock only
+  top_sales: Best sellers
+  top_price: Great price
+  with_rates: With ratings and reviews
+  selections: Collections
+  grn: UAH
+  sec: sec
+  price: Price
+  all: Product
+  desc: Description
+  props: Specifications
+  guide: Buying guide
+  common_info: General information
+  auth: Site authentication
+  register: Registration
+  login: Login
+  lang: Language
+  auth_enter: Sign in to your account
+  total: Total
+  available: In stock
+  running_out: Running out
+  not_available: Out of stock
+  delivery_ready: Ready to ship
+  customer: Customer
+  promocode: Promo code
+  brand: Brand
+  thorough: More details
+  filters: Filters
+  our_address: Our address
+  product_code: Product code
+  contact_phones: Contact phone numbers
+  address: Our address
+  our_socials: Our social networks
+  messengers: Support
+  social_networks: Social networks
+  messengers_consultation_hint: Our messengers for consultations and order details
+  sub_title: Subscribe for discounts!
+  sub_desc: We email subscribers promo codes and bonuses every week.
+  min_read: min read
+  active_filters: Applied filters
+  all_products: All products
+  show: Show
+  reviews: '{reviews} reviews | {reviews} review | {reviews} reviews | {reviews} reviews'
+  products: '{products} products | {products} product | {products} products | {products} products'
+  page: 'page {page}'
+  product:
+    sale: Promotion
+    price: Great price
+    top: Bestseller
+
+messages:
+  review_gift: 5% coupon for a verified store review
+  rates_reviews: '{rates} ratings and {reviews} reviews'
+  products_found: Found {amount} products
+  no_results: No results
+  empty_cart: Your cart is empty
+  in_your_cart: 'In your cart {products} product'
+  cart_item_unavailable: Product unavailable in your region
+  leave_review: Leave a review
+  delivery_price: Delivery cost
+  delivery_vendor_price: According to the carrier rates
+  products_total: Items total
+  to_pay: Amount due
+  bonuses_use: Paid with bonuses
+  use_promocode: Apply promo code
+  enter_promocode: Enter the code
+  accept_payment: We accept payment
+  payment_methods: Payment methods
+  i_agreed_with: I agree with the
+  agree_privacy_policy: Privacy policy
+  no_catalog_results: Nothing found, try changing the filters or query
+  personal_discount: Personal discount
+  chose_delivery_country: Select a delivery country
+  chose_delivery: Choose a delivery method to see available payment methods
+  select_region_delivery_notice: To view every available delivery option and read the details, please select your delivery country first
+  select_region_payment_notice: To view every available payment option and read the details, please select your delivery country first
+  email_verification_required: A confirmation link has been sent to your email. Please verify your email address to activate your account.
+  verify_age_before_order: Complete ADULTO.cz age verification before placing the order.
+  adulto_unavailable: ADULTO.cz is temporarily unavailable. Please try again later.
+
+message:
+  email_verification_required: A confirmation link has been sent to your email. Please verify your email address to activate your account.
+
+store_only:
+  title: In-store purchase only
+  description: This item is available exclusively in our physical store.
+  badge: In-store only
+  map_title: Find us on the map
+  address_label: Store address
+  address_fallback: Address is being updated
+  button: See where to buy
+  banner: This item can only be purchased in our physical store.
+
+age_gate:
+  title: Age confirmation
+  description: Please confirm you are at least 18 years old to continue on Vivadzen.
+  confirm: Yes, I'm 18+
+  decline: No, take me away
+
+age_verification:
+  badge: 18+ sale
+  product_banner: This product can be purchased in the Czech Republic only after ADULTO.cz age verification during checkout.
+
+campaign:
+  campaign_title: Campaign
+  view_conditions: View conditions
+  conditions_title: Campaign conditions
+  until_end_days: Campaign ends in {days} days
+  until_end_hours: Campaign ends in {hours} hours
+  in_catalog: Campaign products
+  view_all_products: View all campaign products
+  discount_line: Campaign discount
+
+button:
+  collapse: Collapse
+  expand: Expand
+  logout: Log out
+  logout_system: Log out
+  yes: Yes
+  no: No
+  ok: OK
+  enter: Sign in
+  register: Sign up
+  pay: Proceed to payment
+  back: Back
+  reply: Reply
+  buy: Buy
+  to_cart: Add to cart
+  leave_review: Leave a review
+  1_click_buy: Buy in one click
+  filters: Filters
+  sorting: Sorting
+  apply: Apply
+  save: Save
+  cancel: Cancel
+  delete: Delete
+  load_more: Load more
+  reset_all: Reset all
+  view_all: View all
+  send: Send
+  sub: Subscribe
+  create_order: Place order
+  send_request: Send request
+  login_or_register: Sign in / Sign up
+  go_home: Go to homepage
+  download_invoice: Download invoice PDF
+
+form:
+  enter:
+    name: Enter your name
+    phone: Enter phone number
+    email: Enter email
+    message: Enter message
+    comment: Enter comment
+    password: Enter password
+    password_confirmation: Enter password again
+    review: Write a review
+    reply: Write your reply
+    invoice_qr: QR code to pay the invoice
+    invoice_pdf: You can download the invoice
+    use_qr_or_invoice: Use QR code or invoice to pay the order
+  full_name: Full name
+  firstname: First name
+  name: Name
+  income: Income
+  referrals: Referrals
+  lastname: Last name
+  phone: Phone
+  email: Email
+  comment: Comment
+  password: Password
+  password_confirmation: Password again
+  method: Method
+  review: Review
+  reply: Reply
+  country: Country
+  city: City
+  max: Maximum {value}
+  delivery:
+    settlement: Locality
+    warehouse: Branch number
+    city: City
+    street: Street
+    house: House
+    room: Apartment
+    zip: ZIP code
+    address: Delivery address
+    novaposhta_warehouse: Nova Poshta branch/parcel locker
+    novaposhta_address: Nova Poshta courier delivery
+    packeta_warehouse: Zasilkovna branch/parcel locker
+    packeta_address: Zasilkovna courier delivery
+    default_pickup: Pickup
+    default_address: Postal delivery
+  payment:
+    liqpay_online: LiqPay online payment
+    card_online: Card payment online
+    default_cash: Pay on delivery
+    zasilkovna_cod: Zasilkovna cash on delivery
+    novaposhta_cod: Nova Poshta cash on delivery
+    bank_transfer: Bank transfer
+
+status:
+  new: New
+  canceled: Cancelled
+  fail: Error
+  failed: Error
+  completed: Completed
+  pending: Pending
+  promocode:
+    active: Active
+    not_active: Inactive
+    expired: Expired
+    limit: Limit reached
+
+pay_status:
+  waiting: Awaiting payment
+  failed: Error
+  paied: Paid
+
+delivery_status:
+  waiting: Awaiting shipment
+  sent: Shipped
+  failed: Error
+  delivered: Delivered
+  pickedup: Picked up
+
+payment:
+  type:
+    delivery: Cash on delivery
+    cash: Cash
+    online: Cashless payment
+
+error:
+  occurred: An error occurred, please try again 😓
+  required: This field is required
+  error: An error occurred
+  check_fields: Check that the fields are filled in correctly
+  auth:
+    password:
+      require: The password must be at least 6 characters
+      confirmation: Password and confirmation must match
+    "A user with this email address has already been registered": A user with this email address is already registered
+    "Password recovery requires an email": Email is required to recover the password
+    "Auth session missing!": Authorization session is missing!
+    "Invalid login credentials": Invalid login credentials
+    "User already registered": User already registered
+    "Password should be at least 6 characters": Password must be at least 6 characters
+    "Signup requires a valid password": Signup requires a valid password
+    "To signup, please provide your email": Please provide your email to sign up
+    "Unable to validate email address: invalid format": "Unable to validate email address: invalid format"
+    "Anonymous sign-ins are disabled": Anonymous sign-ins are disabled
+    "Email rate limit exceeded": Email rate limit exceeded
+
+noty:
+  add: Added
+  remove: Removed
+  comparison:
+    add: Product added to comparison list
+    remove: Product removed from comparison list
+  favorite:
+    need_login: Log in to add the product to favorites 🔑
+    success: Product added to favorites 😍
+  1_click:
+    title: Thanks, request sent
+    sent: We will contact you shortly to clarify the order details 😎
+    fail: The order was not placed 😔
+  subscription:
+    sent_title: Subscription confirmed
+    sent: You have successfully subscribed 😉
+    fail: Subscription failed 😔
+  feedback:
+    sent: Request sent successfully 😉
+    fail: Request was not sent
+  copied: "Copied to clipboard: {text}"
+  product_to_cart: Product {product} added to cart
+  product_delete_cart: Product {product} removed from cart
+  auth:
+    logout: You have logged out 😉
+    register:
+      privacy: You must agree with the privacy policy to sign up.
+      success: Registration successful 👍
+      fail: Registration failed. Check the details provided 👈
+    login:
+      success: Logged in successfully 😎
+      failed: Login error. Make sure the fields are filled in correctly 😔
+    password:
+      recovery:
+        sent: A password reset email was sent to {email}.
+        fail: Error. The link was not sent 😓
+      changed:
+        success: Password changed successfully. You can log in with the new password 🔑.
+    email:
+      confirmation:
+        sent: A confirmation email has been sent to you.
+      changed:
+        success: Email confirmed successfully. You can now use it to access your account. 👍
+        fail: Email confirmation failed. Please try again.
+  update:
+    success: Data updated successfully
+    fail: Data was not updated
+  promocode:
+    success: Promo code {code} applied to the order
+    removed: Promo code {code} removed
+  review:
+    need_login: Log in to leave a review 🔑
+    fail_title: Review was not published 😓
+    fail: Check that the fields are filled in correctly
+    success_title: Great 😎
+    success: Thank you, your review has been sent
+  order:
+    fail: An error occurred while placing the order
+  withdrawal:
+    success_title: Great 😎
+    fail_title: Error
+    requested: Withdrawal request received, please wait for processing.
+    fail: Make sure the fields are filled in correctly 😔
+
+seo:
+  page:
+    title: "{title} - Vivadzen"
+    desc: "{title} on vivadzen.com"
+
+delivery:
+  more: More about delivery
+  delivery: Delivery across Ukraine
+  provider_tariffs: According to carrier rates
+  np_warehouse: "To Nova Poshta branch / locker"
+  np_address: "Nova Poshta courier to your address"
+  z_warehouse: "To Zasilkovna branch / locker"
+  z_address: "Zasilkovna courier to your address"
+  pickup: Pickup
+  address: Delivery to address
+  from_shop: from the store
+  packeta_warehouse: Zasilkovna branch/locker
+  packeta_address: By Zasilkovna courier
+  novaposhta_warehouse: Nova Poshta branch/locker
+  novaposhta_address: By Nova Poshta courier
+  default_pickup: Pickup
+  from: from
+  subtitle: Delivery methods depend on the selected country. Change the delivery country to see options for your region.
+
+payments:
+  subtitle: Payment methods depend on the selected country. Change the delivery country to see the options for your region.
+  liqpay_online:
+    title: LiqPay online payment
+    desc: Pay for your order online
+  card_online:
+    title: Card payment online
+    desc: Pay for your order online
+  default_cash:
+    title: Pay on delivery
+    desc: Pay by card or cash when picking up at our store
+  zasilkovna_cod:
+    title: Zasilkovna cash on delivery
+    desc: Pay by card or cash upon receipt
+  novaposhta_cod:
+    title: Nova Poshta cash on delivery
+    desc: Pay by card or cash upon receipt
+  bank_transfer:
+    title: Bank transfer
+    desc: We will email you the payment details you need, including the variable symbol required for the transfer. You can also create the payment order by scanning a QR code.
+    fill_contacts: Fill in the fields required to issue an invoice
+
+wallet:
+  created_at: Created at
+  type: Type
+  amount: Amount
+  operation_info: Operation Information
+  related_order: Related Order
+  referral_info: Referral Information
+  related_operation: Related Operation
+  currency_conversion: Currency Conversion
+  order_info: Order Information
+  context_info: Context Information
+  description: Description
+  trigger: Trigger
+  order_id: Order ID
+  order_total: Order Total
+  user_id: User ID
+  referral_level: Referral Level
+  beneficiary_type: Beneficiary Type
+  rewards_count: Rewards Count
+  total_reward: Total Reward
+  payment_status: Payment Status
+  paid: Paid
+  unpaid: Unpaid
+  reference_type: Reference Type
+  reference_id: Reference ID
+  target_currency: Target Currency
+  exchange_rate: Exchange Rate
+  target_amount: Target Amount
+  currency: Currency
+  order_code: Order Code
+  context_currency: Context Currency
+  upline: Upline
+  withdrawal_request: Withdrawal Request
+  order: Order
+  no_details_available: No details available
+  type_labels:
+    credit: Credit
+    debit: Debit
+    hold: Hold
+    capture: Capture
+    release: Release
+  operations:
+    credit:
+      referral_reward: Referral program reward
+      review_reward: Review reward
+      order_reward: Order reward
+      bonus: Bonus credit
+      refund: Refund
+      default: Account top-up
+    debit:
+      withdrawal: Withdrawal
+      order: Order payment
+      fee: Service fee
+      default: Debit
+    hold:
+      withdrawal: Withdrawal hold
+      order: Order hold
+      default: Funds hold
+    capture:
+      withdrawal: Withdrawal confirmation
+      order: Order confirmation
+      default: Operation confirmation
+    release:
+      withdrawal: Withdrawal release
+      order: Order release
+      default: Funds release
+  triggers:
+    review_published: Published review
+    store_order_paid: Paid store order
+    referral_signup: Referral registration
+    referral_purchase: Referral purchase
+    unknown: Other event
+
+affiliate:
+  defaults:
+    ttl: '30 days'
+  cta:
+    register_button: 'Sign up'
+    register_prompt: 'Sign up'
+  account:
+    label: 'Account'
+  form:
+    code_placeholder: 'YOUR_CODE'
+  withdrawal:
+    rules_label: 'Bonus system and withdrawals'
+  link:
+    regular_label: 'Regular link'
+    referral_label: 'Referral link'
+  media:
+    link_preview_alt: 'Affiliate link preview'
+    ttl_image_alt: 'TTL rule illustration'
+
+kratom:
+  header:
+    store: 'Kratom Store'
+  footer:
+    eyebrow: 'VivaDzen mini-store'
+    title: 'Kratom curated for the Czech market'
+    text: 'One focused storefront on the same backend and catalog logic, trimmed down to essentials: kratom, articles, checkout, and support.'
+    legal: 'Legal'
+  product_card:
+    variants: 'variants'
+  catalog:
+    eyebrow: 'Czech Republic only'
+    text: 'Focused range of kratom products available for the Czech market, with direct checkout and multilingual content.'
+    fulfilment: 'Prague fulfilment'
+    age_verification: 'Age verification at checkout'
+  product:
+    eyebrow: 'Single-category storefront'
+    choose_variation: 'Choose variation'
+    overview: 'Overview'
+    details: 'Details'
+    checkout_note: 'Checkout note'
+    checkout_note_text: 'Orders are processed on the main VivaDzen backend. Delivery, payment methods, stock, and article content are shared with the main system, while this storefront stays focused on Czech kratom sales only.'
+  checkout:
+    eyebrow: 'Guest checkout'
+    text: 'No account required. Delivery and payment methods are loaded from the shared VivaDzen backend.'
+    empty_prefix: 'Your cart is empty.'
+    empty_action: 'Go to catalog'
+    empty_suffix: 'and add products to continue.'
+    payment_redirect: 'The order is created on the shared backend, then you are redirected to the payment gateway.'
+    order_label: 'Order #{code}'
+  complete:
+    order: 'Order'
+    created: 'Created'
+    customer: 'Customer'
+    delivery: 'Delivery'
+    payment: 'Payment'
+  blog:
+    eyebrow: 'Editorial'
+    text: 'Articles, guides, and Czech-market updates published from the same shared backend.'
+  article:
+    reading_time: 'Reading time {minutes} min'
+    content: 'Content'
+  contacts:
+    phone: 'Phone'
+    email: 'Email'
+    address: 'Address'
+    social: 'Social'
+    support: 'Support'

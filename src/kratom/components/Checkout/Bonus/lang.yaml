@@ -1,0 +1,24 @@
+ru:
+  use_bonus: Использовать бонусы
+  on_your_balance: На вашем бонусном счете 
+  how_much_bonus: Сколько бонусов использовать для оплаты заказа
+uk:
+  use_bonus: Використати бонуси
+  on_your_balance: На вашому бонусному рахунку
+  how_much_bonus: Скільки бонусів використати для оплати замовлення
+en:
+  use_bonus: Use bonuses
+  on_your_balance: On your bonus balance
+  how_much_bonus: How many bonuses to apply to the order
+de:
+  use_bonus: Boni verwenden
+  on_your_balance: Auf Ihrem Bonuskonto
+  how_much_bonus: Wie viele Boni sollen auf die Bestellung angerechnet werden
+es:
+  use_bonus: Usar bonos
+  on_your_balance: En tu saldo de bonos
+  how_much_bonus: Cuántos bonos usar para pagar el pedido
+cs:
+  use_bonus: Použít bonusy
+  on_your_balance: Na vašem bonusovém účtu
+  how_much_bonus: Kolik bonusů použít na platbu objednávky

@@ -1,0 +1,67 @@
+ru:
+  title: "Легальный рынок кратома"
+  title_suffix: "ваша"
+  title_highlight: "Безопасность"
+  description: "Чешская Республика ввела лицензирование продажи кратома — это значительный шаг к прозрачному и регулируемому рынку. Vivadzen полностью соответствует новым требованиям. Мы не адаптируемся в последнюю минуту, а с самого начала строили долгосрочный, легальный проект. Это защищает вас, наш бизнес и качество продукции."
+  license_button: "Лицензия производителя"
+  stamp_text: "ЛЕГАЛЬНЫЙ СЕРТИФИЦИРОВАННЫЙ ПРОДУКТ ЕС ◆ ЛЕГАЛЬНЫЙ СЕРТИФИЦИРОВАННЫЙ ПРОДУКТ ЕС ◆"
+  right:
+    item1:
+      title: "Мы легально производим"
+      description: "Полное соответствие законодательству Чехии."
+      image_alt: "Легальное производство Vivadzen"
+    item2:
+      title: "Вы легально приобретаете"
+      description: "Понятная документация и маркировка продуктов."
+      image_alt: "Сертифицированный продукт Vivadzen"
+
+uk:
+  title: "Легальний ринок кратому"
+  title_suffix: "ваша"
+  title_highlight: "Безпека"
+  description: "Чеська Республіка запровадила ліцензування продажу кратому — це значний крок до прозорого та регульованого ринку. Vivadzen повністю відповідає новим вимогам. Ми не адаптуємося в останню хвилину, а з самого початку будували довгостроковий, легальний проєкт. Це захищає вас, наш бізнес і якість продукції."
+  license_button: "Ліцензія виробника"
+  stamp_text: "ЛЕГАЛЬНИЙ СЕРТИФІКОВАНИЙ ПРОДУКТ ЄС ◆ ЛЕГАЛЬНИЙ СЕРТИФІКОВАНИЙ ПРОДУКТ ЄС ◆"
+  right:
+    item1:
+      title: "Ми легально виробляємо"
+      description: "Повна відповідність законодавству Чехії."
+      image_alt: "Легальне виробництво Vivadzen"
+    item2:
+      title: "Ви легально купуєте"
+      description: "Зрозуміла документація та маркування продуктів."
+      image_alt: "Сертифікований продукт Vivadzen"
+
+en:
+  title: "Legal kratom market"
+  title_suffix: "your"
+  title_highlight: "Safety"
+  description: "The Czech Republic introduced licensing for kratom sales — a major step toward a transparent and regulated market. Vivadzen fully complies with the new requirements. We did not adapt at the last moment; from the start we built a long-term, legal project. This protects you, our business, and product quality."
+  license_button: "Manufacturer license"
+  stamp_text: "LEGAL CERTIFIED EU PRODUCT ◆ LEGAL CERTIFIED EU PRODUCT ◆"
+  right:
+    item1:
+      title: "We produce legally"
+      description: "Full compliance with Czech legislation."
+      image_alt: "Vivadzen legal production"
+    item2:
+      title: "You buy legally"
+      description: "Clear documentation and product labeling."
+      image_alt: "Vivadzen certified product"
+
+cs:
+  title: "Legální trh s kratomem"
+  title_suffix: "vaše"
+  title_highlight: "bezpečí"
+  description: "Česká republika zavedla licencování prodeje kratomu — významný krok k transparentnímu a regulovanému trhu. Vivadzen plně splňuje nové požadavky. Neadaptujeme se na poslední chvíli; od začátku jsme budovali dlouhodobý, legální projekt. To chrání vás, naše podnikání i kvalitu produktů."
+  license_button: "Licence výrobce"
+  stamp_text: "LEGÁLNÍ CERTIFIKOVANÝ PRODUKT EU ◆ LEGÁLNÍ CERTIFIKOVANÝ PRODUKT EU ◆"
+  right:
+    item1:
+      title: "Legálně vyrábíme"
+      description: "Plný soulad s legislativou České republiky."
+      image_alt: "Legální výroba Vivadzen"
+    item2:
+      title: "Legálně nakupujete"
+      description: "Srozumitelná dokumentace a označení produktů."
+      image_alt: "Certifikovaný produkt Vivadzen"

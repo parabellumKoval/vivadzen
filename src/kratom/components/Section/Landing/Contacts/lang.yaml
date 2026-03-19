@@ -1,0 +1,39 @@
+ru:
+  title:
+    open: "Мы открыты на карте и в Интернете"
+  description: "Вы легко нас найдете и легко с нами свяжетесь. В нашем физическом магазине представлен выбор различных сортов кратома."
+  label:
+    address: "Адрес"
+    phone: "Телефон"
+    email: "Email"
+    schedule: "Часы работы"
+
+en:
+  title:
+    open: "We are open on the map and on the Internet"
+  description: "You will easily find us and easily contact us. Our physical store features a selection of various kratom varieties."
+  label:
+    address: "Address"
+    phone: "Phone"
+    email: "Email"
+    schedule: "Hours of Operation"
+
+cs:
+  title:
+    open: "Jsme otevřeni na mapě a na internetu"
+  description: "Snadno nás najdete a snadno se s námi budete moci spojit. V naší fyzické prodejně najdete různé odrůdy kratomu."
+  label:
+    address: "Adresa"
+    phone: "Telefon"
+    email: "Email"
+    schedule: "Pracovní doba"
+
+uk:
+  title:
+    open: "Ми відкриті на карті та в Інтернеті"
+  description: "Вам легко нас знайти та легко з нами зв'язатися. У нашому фізичному магазині представлений вибір різних сортів кратому."
+  label:
+    address: "Адреса"
+    phone: "Телефон"
+    email: "Email"
+    schedule: "Графік роботи"

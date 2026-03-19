@@ -43,10 +43,14 @@ trait HasScheduleFields
         $timeUntilPublish = null;
         
         if ($entry && $entry->exists) {
-            $scheduledPublication = ScheduledPublication::where('schedulable_type', get_class($entry))
-                ->where('schedulable_id', $entry->getKey())
-                ->where('status', 'pending')
-                ->first();
+            if (method_exists($entry, 'scheduledPublication')) {
+                $scheduledPublication = $entry->scheduledPublication()->first();
+            } else {
+                $scheduledPublication = ScheduledPublication::where('schedulable_type', $entry->getMorphClass())
+                    ->where('schedulable_id', $entry->getKey())
+                    ->where('status', 'pending')
+                    ->first();
+            }
             
             if ($scheduledPublication) {
                 $timeUntilPublish = $scheduledPublication->time_until_publish;

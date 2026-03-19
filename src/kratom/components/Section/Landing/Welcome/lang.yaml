@@ -1,0 +1,91 @@
+ru:
+  desc: "в наш безумный кратом-магазин Vivadzen!"
+  social: "Наши социальные аккаунты"
+  nav:
+    title: "Навигация"
+    home: "Главная"
+    legal: "Кратом в Чехии"
+    timeline: "4 ключевые фичи Vivadzen"
+    kratom: "Премиум кратом"
+    colors: "Цвет кратома"
+    origins: "Регион кратома"
+    bonus: "Бонусная программа"
+    reviews: "Отзывы"
+    contacts: "Контакты"
+  info:
+    title: "Информация"
+    certificates: "Сертификаты продавца"
+    labs: "Лабораторные тесты"
+    store: "Интернет-магазин Vivadzen"
+  modal_titles:
+    certificates: "Сертификаты"
+    licenses: "Лицензии производителя"
+
+uk:
+  desc: "до нашого шалено крутого магазину кратому Vivadzen!"
+  social: "Наші соціальні акаунти"
+  nav:
+    title: "Навігація"
+    home: "Головна"
+    legal: "Кратом у Чехії"
+    timeline: "4 ключові фічі Vivadzen"
+    kratom: "Преміум кратом"
+    colors: "Колір кратому"
+    origins: "Регіон кратому"
+    bonus: "Бонусна програма"
+    reviews: "Відгуки"
+    contacts: "Контакти"
+  info:
+    title: "Інформація"
+    certificates: "Сертифікати продавця"
+    labs: "Лабораторні тести"
+    store: "Інтернет-магазин Vivadzen"
+  modal_titles:
+    certificates: "Сертифікати"
+    licenses: "Ліцензії виробника"
+
+en:
+  desc: "to our insane Vivadzen kratom store!"
+  social: "Our social accounts"
+  nav:
+    title: "Navigation"
+    home: "Home"
+    legal: "Kratom in Czechia"
+    timeline: "4 key Vivadzen features"
+    kratom: "Premium kratom"
+    colors: "Kratom colors"
+    origins: "Kratom regions"
+    bonus: "Bonus program"
+    reviews: "Reviews"
+    contacts: "Contacts"
+  info:
+    title: "Information"
+    certificates: "Seller certificates"
+    labs: "Laboratory tests"
+    store: "Vivadzen online store"
+  modal_titles:
+    certificates: "Certificates"
+    licenses: "Manufacturer licenses"
+
+cs:
+  desc: "do našeho šíleného obchodu s kratomem Vivadzen!"
+  social: "Naše sociální sítě"
+  nav:
+    title: "Navigace"
+    home: "Domů"
+    legal: "Kratom v Česku"
+    timeline: "4 klíčové funkce Vivadzen"
+    kratom: "Prémiový kratom"
+    colors: "Barvy kratomu"
+    origins: "Regiony kratomu"
+    bonus: "Bonusový program"
+    reviews: "Recenze"
+    contacts: "Kontakty"
+  info:
+    title: "Informace"
+    certificates: "Certifikáty prodejce"
+    labs: "Laboratorní testy"
+    store: "Online obchod Vivadzen"
+  modal_titles:
+    certificates: "Certifikáty"
+    licenses: "Licencí výrobce"

@@ -7,8 +7,11 @@ use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\ServiceProvider;
 use ParabellumKoval\Dumper\Console\Commands\RunAutoDumpCommand;
+use ParabellumKoval\Dumper\RemoteProviders\BunnyRemoteDumpProvider;
 use ParabellumKoval\Dumper\Services\AutoDumpScheduler;
+use ParabellumKoval\Dumper\Services\DumperSettings;
 use ParabellumKoval\Dumper\Services\DumpManager;
+use ParabellumKoval\Dumper\Services\RemoteDumpManager;
 use ParabellumKoval\Dumper\Services\TableInspector;
 
 class DumperServiceProvider extends ServiceProvider
@@ -24,12 +27,36 @@ class DumperServiceProvider extends ServiceProvider
             );
         });
 
+        $this->app->singleton(DumperSettings::class, function ($app) {
+            return new DumperSettings(
+                $app->make(Repository::class)
+            );
+        });
+
+        $this->app->singleton(BunnyRemoteDumpProvider::class, function ($app) {
+            return new BunnyRemoteDumpProvider(
+                $app->make(DumperSettings::class)
+            );
+        });
+
+        $this->app->singleton(RemoteDumpManager::class, function ($app) {
+            return new RemoteDumpManager(
+                $app->make(FilesystemFactory::class),
+                $app->make(DumperSettings::class),
+                [
+                    $app->make(BunnyRemoteDumpProvider::class),
+                ]
+            );
+        });
+
         $this->app->singleton(DumpManager::class, function ($app) {
             return new DumpManager(
                 $app->make(FilesystemFactory::class),
                 $app->make(DatabaseManager::class),
                 $app->make(Repository::class),
-                $app->make(TableInspector::class)
+                $app->make(TableInspector::class),
+                $app->make(DumperSettings::class),
+                $app->make(RemoteDumpManager::class)
             );
         });
 

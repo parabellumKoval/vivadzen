@@ -1,0 +1,43 @@
+cs:
+  title: "Získejte -15% na první nákup v prodejně"
+  description: "Zadejte svůj e-mail a pošleme vám promo kód -15% na celý sortiment kratom. Při nákupu v prodejně ho sdělte prodejci."
+  discount_hint: "Sleva -15 % platí při prvním nákupu. Pokud na zadaném e-mailu nenajdeme historii objednávek, pošleme vám promo kód, který stačí říct na prodejně."
+  placeholder: "Váš e-mail"
+  button: "Získat slevu"
+  success: "Super! Promo kód jsme odeslali na váš e-mail."
+  success_existing_customer: "Děkujeme! Sleva -15 % platí pouze pro nové zákazníky při první objednávce."
+  badge: "-15%"
+  image_alt: "Vivadzen promo box"
+
+en:
+  title: "Get -15% on your first in-store purchase"
+  description: "Enter your email and we'll send you a promo code for -15% off our entire kratom selection. Just mention the code to the seller when making your purchase."
+  discount_hint: "You get 15% off your first purchase. If the provided email has no purchase history, we'll send a promo code to use in-store."
+  placeholder: "Your email"
+  button: "Get discount"
+  success: "Great! We've sent the promo code to your email."
+  success_existing_customer: "Thanks for your interest. The 15% discount is available for new customers on their first purchase."
+  badge: "-15%"
+  image_alt: "Vivadzen promo box"
+
+ru:
+  title: "Получите -15% на первую покупку в магазине"
+  description: "Введите email и мы отправим вам промокод -15% на весь ассортимент кратома. Назовите промокод продавцу при покупке."
+  discount_hint: "Вы получите скидку 15%, если покупаете у нас впервые. Укажите email: если на нём нет истории покупок, мы отправим промокод, сообщите его в магазине и получите скидку."
+  placeholder: "Ваш email"
+  button: "Получить скидку"
+  success: "Отлично! Промокод отправлен на ваш email."
+  success_existing_customer: "Спасибо за интерес! Скидка 15% действует только для новых клиентов при первой покупке."
+  badge: "-15%"
+  image_alt: "Промо-бокс Vivadzen"
+
+uk:
+  title: "Отримайте -15% на першу покупку в магазині"
+  description: "Введіть email і ми надішлемо вам промокод -15% на весь асортимент кратому. Назвіть промокод продавцю під час покупки."
+  discount_hint: "Ви отримаєте знижку 15%, якщо купуєте у нас вперше. Вкажіть email: якщо на ньому немає історії покупок, ми надішлемо промокод, повідомте його в магазині та отримайте знижку."
+  placeholder: "Ваш email"
+  button: "Отримати знижку"
+  success: "Чудово! Промокод надіслано на ваш email."
+  success_existing_customer: "Дякуємо за інтерес! Знижка 15% діє лише для нових клієнтів при першій покупці."
+  badge: "-15%"
+  image_alt: "Промо-бокс Vivadzen"

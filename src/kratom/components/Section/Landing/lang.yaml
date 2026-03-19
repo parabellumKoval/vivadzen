@@ -1,0 +1,352 @@
+ru:
+  kratom_word: "кратом"
+  modal_titles:
+    certificates: "Сертификаты"
+    licenses: "Лицензии"
+  matrix:
+    title: "KRATOM"
+    subtitle: "ПРОДВИНУТАЯ БОТАНИЧЕСКАЯ ФОРМУЛА"
+  section:
+    title: "Твой природный помощник"
+    subtitle: "Подберите свой идеальный цвет кратома"
+  buttons:
+    choose: "Выбрать {color}"
+  effects_title: "Эффекты {color} {product}"
+  units:
+    gram: "г"
+    currency: "Kč"
+  colors:
+    white:
+      name: "Белый"
+      title: "Стимуляция и Концентрация"
+      desc: "Замена кофе и энергетикам.\nМощный ноотроп для работы мозга.\nМаксимальный заряд бодрости с утра.\nПомощь при тяжелом физическом труде."
+      effects:
+        fatigue:
+          label: "Синдром усталости"
+          text: "Борьба с дневной сонливостью, вялостью и хроническим упадком сил."
+        work:
+          label: "Работа и Учеба"
+          text: "Фокус внимания, программирование, написание текстов, работа с данными."
+        clarity:
+          label: "Ясность ума"
+          text: "Убирает мозговой туман, повышает скорость мышления и мотивацию."
+        sport:
+          label: "Спорт и Тренировки"
+          text: "Предтренировочный комплекс, повышение выносливости, кардио нагрузки."
+    green:
+      name: "Зеленый"
+      title: "Социум и Настроение"
+      desc: "Социальная смазка и уверенность.\nПриродный антидепрессант.\nПодъем настроения без гиперактивности.\nКомфортное состояние для переговоров."
+      effects:
+        social:
+          label: "Социальная тревожность"
+          text: "Страх общения, зажатость на людях, неуверенность в себе."
+        mood:
+          label: "Депрессия и Апатия"
+          text: "Отсутствие интереса к жизни, плохое настроение, уныние."
+        creativity:
+          label: "Креативность"
+          text: "Мозговой штурм, творческие задачи, генерация идей."
+        activity:
+          label: "Активный отдых"
+          text: "Прогулки, встречи с друзьями, вечеринки, публичные выступления."
+    red:
+      name: "Красный"
+      title: "Обезболивание и Сон"
+      desc: "Природный анальгетик.\nАльтернатива аптечным обезболивающим.\nМощное седативное действие.\nПомощь при зависимости от опиатов."
+      effects:
+        pain:
+          label: "Хронические боли"
+          text: "Грыжи, боли в спине, артрит, травмы, мышечные боли."
+        sleep:
+          label: "Бессонница"
+          text: "Трудности с засыпанием, прерывистый сон, беспокойные ноги."
+        stress:
+          label: "Высокий стресс"
+          text: "Нервное перенапряжение, невозможность расслабиться после работы."
+        withdrawal:
+          label: "Синдром отмены"
+          text: "Снятие ломки, отказ от тяжелых веществ, облегчение абстиненции."
+    gold:
+      name: "Золотой"
+      title: "Спокойствие и Анти-стресс"
+      desc: "Средство от тревоги и паники.\nЭмоциональная перезагрузка.\nГлубокое чувство комфорта.\nВосстановление нервной системы."
+      effects:
+        burnout:
+          label: "Эмоциональное выгорание"
+          text: "Усталость от общения, раздражительность, нервное истощение."
+        anxiety:
+          label: "Тревожное расстройство"
+          text: "Навязчивые мысли, постоянное беспокойство, ожидание плохого."
+        panic:
+          label: "Панические атаки"
+          text: "Внезапные приступы страха, учащенное сердцебиение, нервная дрожь."
+        relax:
+          label: "Вечерний релакс"
+          text: "Просмотр кино, чтение, медитация, спокойный отдых дома."
+
+uk:
+  kratom_word: "кратом"
+  modal_titles:
+    certificates: "Сертифікати"
+    licenses: "Ліцензії"
+  matrix:
+    title: "KRATOM"
+    subtitle: "ПРОГРЕСИВНА БОТАНІЧНА ФОРМУЛА"
+  section:
+    title: "Твій природний помічник"
+    subtitle: "Підбери свій ідеальний колір кратому"
+  buttons:
+    choose: "Обрати {color}"
+  effects_title: "Ефекти {color} {product}"
+  units:
+    gram: "г"
+    currency: "Kč"
+  colors:
+    white:
+      name: "Білий"
+      title: "Стимуляція та Концентрація"
+      desc: "Заміна кави та енергетикам.\nПотужний ноотроп для роботи мозку.\nМаксимальний заряд бадьорості зранку.\nДопомога при важкій фізичній праці."
+      effects:
+        fatigue:
+          label: "Синдром втоми"
+          text: "Боротьба з денною сонливістю, млявістю та хронічним занепадом сил."
+        work:
+          label: "Робота й Навчання"
+          text: "Фокус уваги, програмування, написання текстів, робота з даними."
+        clarity:
+          label: "Ясність розуму"
+          text: "Знімає мозковий туман, підвищує швидкість мислення та мотивацію."
+        sport:
+          label: "Спорт і Тренування"
+          text: "Передтренувальний комплекс, підвищення витривалості, кардіо навантаження."
+    green:
+      name: "Зелений"
+      title: "Соціум і Настрій"
+      desc: "Соціальна легкість та впевненість.\nПриродний антидепресант.\nПідйом настрою без гіперактивності.\nКомфортний стан для переговорів."
+      effects:
+        social:
+          label: "Соціальна тривожність"
+          text: "Страх спілкування, скутість серед людей, невпевненість у собі."
+        mood:
+          label: "Депресія й Апатія"
+          text: "Відсутність інтересу до життя, поганий настрій, пригніченість."
+        creativity:
+          label: "Креативність"
+          text: "Мозковий штурм, творчі завдання, генерація ідей."
+        activity:
+          label: "Активний відпочинок"
+          text: "Прогулянки, зустрічі з друзями, вечірки, публічні виступи."
+    red:
+      name: "Червоний"
+      title: "Знеболення та Сон"
+      desc: "Природний анальгетик.\nАльтернатива аптечним знеболювальним.\nПотужна седативна дія.\nДопомога при залежності від опіоїдів."
+      effects:
+        pain:
+          label: "Хронічні болі"
+          text: "Грижі, біль у спині, артрит, травми, м’язові болі."
+        sleep:
+          label: "Безсоння"
+          text: "Складно заснути, переривчастий сон, неспокійні ноги."
+        stress:
+          label: "Високий стрес"
+          text: "Нервове перенапруження, неможливість розслабитися після роботи."
+        withdrawal:
+          label: "Синдром відміни"
+          text: "Полегшення ломки, відмова від важких речовин, полегшення абстиненції."
+    gold:
+      name: "Золотий"
+      title: "Спокій та Антистрес"
+      desc: "Засіб від тривоги та паніки.\nЕмоційне перезавантаження.\nГлибоке відчуття комфорту.\nВідновлення нервової системи."
+      effects:
+        burnout:
+          label: "Емоційне вигорання"
+          text: "Втома від спілкування, дратівливість, нервове виснаження."
+        anxiety:
+          label: "Тривожний розлад"
+          text: "Нав’язливі думки, постійне занепокоєння, очікування поганого."
+        panic:
+          label: "Панічні атаки"
+          text: "Раптові напади страху, прискорене серцебиття, нервове тремтіння."
+        relax:
+          label: "Вечірній релакс"
+          text: "Перегляд кіно, читання, медитація, спокійний відпочинок вдома."
+
+en:
+  kratom_word: "kratom"
+  modal_titles:
+    certificates: "Certificates"
+    licenses: "Licenses"
+  matrix:
+    title: "KRATOM"
+    subtitle: "ADVANCED BOTANICAL FORMULA"
+  section:
+    title: "Your natural ally"
+    subtitle: "Choose your ideal kratom color"
+  buttons:
+    choose: "Choose {color}"
+  effects_title: "{color} {product} strain effects"
+  units:
+    gram: "g"
+    currency: "Kč"
+  colors:
+    white:
+      name: "White"
+      title: "Stimulation and Focus"
+      desc: "A coffee and energy drink alternative.\nA powerful nootropic for brain work.\nMaximum morning boost.\nSupport during heavy physical labor."
+      effects:
+        fatigue:
+          label: "Fatigue syndrome"
+          text: "Fights daytime sleepiness, sluggishness, and chronic lack of energy."
+        work:
+          label: "Work and study"
+          text: "Focus for coding, writing, and data work."
+        clarity:
+          label: "Mental clarity"
+          text: "Lifts brain fog and increases speed of thinking and motivation."
+        sport:
+          label: "Sports and training"
+          text: "Pre-workout boost, endurance and cardio support."
+    green:
+      name: "Green"
+      title: "Social and Mood"
+      desc: "Social ease and confidence.\nNatural antidepressant.\nMood lift without hyperactivity.\nComfortable state for negotiations."
+      effects:
+        social:
+          label: "Social anxiety"
+          text: "Fear of interaction, stiffness around people, low self-confidence."
+        mood:
+          label: "Depression and apathy"
+          text: "Loss of interest in life, low mood, and apathy."
+        creativity:
+          label: "Creativity"
+          text: "Brainstorming, creative tasks, idea generation."
+        activity:
+          label: "Active leisure"
+          text: "Walks, meetups with friends, parties, public speaking."
+    red:
+      name: "Red"
+      title: "Pain Relief and Sleep"
+      desc: "Natural analgesic.\nAlternative to pharmacy painkillers.\nStrong sedative effect.\nSupport during opiate dependence."
+      effects:
+        pain:
+          label: "Chronic pain"
+          text: "Herniations, back pain, arthritis, injuries, muscle pain."
+        sleep:
+          label: "Insomnia"
+          text: "Trouble falling asleep, fragmented sleep, restless legs."
+        stress:
+          label: "High stress"
+          text: "Nervous overstrain, inability to relax after work."
+        withdrawal:
+          label: "Withdrawal"
+          text: "Eases withdrawal, helps step away from heavy substances, relieves abstinence symptoms."
+    gold:
+      name: "Gold"
+      title: "Calm and Anti-stress"
+      desc: "Remedy for anxiety and panic.\nEmotional reset.\nDeep sense of comfort.\nRestoration of the nervous system."
+      effects:
+        burnout:
+          label: "Emotional burnout"
+          text: "Fatigue from communication, irritability, nervous exhaustion."
+        anxiety:
+          label: "Anxiety disorder"
+          text: "Intrusive thoughts, constant worry, expectation of the worst."
+        panic:
+          label: "Panic attacks"
+          text: "Sudden bouts of fear, rapid heartbeat, trembling."
+        relax:
+          label: "Evening relaxation"
+          text: "Movies, reading, meditation, quiet rest at home."
+
+cs:
+  kratom_word: "kratom"
+  modal_titles:
+    certificates: "Certifikáty"
+    licenses: "Licence"
+  matrix:
+    title: "KRATOM"
+    subtitle: "POKROČILÁ BOTANICKÁ FORMULE"
+  section:
+    title: "Tvůj přírodní pomocník"
+    subtitle: "Vyberte si svůj ideální odstín kratomu"
+  buttons:
+    choose: "Vybrat {color}"
+  effects_title: "Účinky {color} {product}"
+  effects_product: "kratomu"
+  units:
+    gram: "g"
+    currency: "Kč"
+  colors:
+    white:
+      name: "Bílý"
+      effects_name: "bílého"
+      title: "Stimulace a koncentrace"
+      desc: "Náhrada kávy a energetických nápojů.\nSilné nootropikum pro práci mozku.\nMaximální ranní dávka energie.\nPomoc při těžké fyzické práci."
+      effects:
+        fatigue:
+          label: "Syndrom únavy"
+          text: "Bojuje s denní ospalostí, malátností a chronickým nedostatkem sil."
+        work:
+          label: "Práce a studium"
+          text: "Soustředění, programování, psaní textů, práce s daty."
+        clarity:
+          label: "Jasnost mysli"
+          text: "Odstraňuje mozkovou mlhu, zvyšuje rychlost myšlení a motivaci."
+        sport:
+          label: "Sport a trénink"
+          text: "Předtréninkový boost, vyšší výdrž, kardio zátěž."
+    green:
+      name: "Zelený"
+      effects_name: "zeleného"
+      title: "Společnost a nálada"
+      desc: "Sociální uvolnění a sebedůvěra.\nPřírodní antidepresivum.\nZlepšení nálady bez hyperaktivity.\nPohodový stav pro jednání."
+      effects:
+        social:
+          label: "Sociální úzkost"
+          text: "Strach z komunikace, ztuhlost mezi lidmi, nejistota."
+        mood:
+          label: "Deprese a apatie"
+          text: "Ztráta zájmu o život, špatná nálada, sklíčenost."
+        creativity:
+          label: "Kreativita"
+          text: "Brainstorming, kreativní úkoly, generování nápadů."
+        activity:
+          label: "Aktivní odpočinek"
+          text: "Procházky, setkání s přáteli, večírky, veřejné vystoupení."
+    red:
+      name: "Červený"
+      effects_name: "červeného"
+      title: "Úleva od bolesti a spánek"
+      desc: "Přírodní analgetikum.\nAlternativa k lékárenským analgetikům.\nSilný sedativní účinek.\nPomoc při závislosti na opiátech."
+      effects:
+        pain:
+          label: "Chronické bolesti"
+          text: "Výhřezy, bolesti zad, artritida, úrazy, svalové bolesti."
+        sleep:
+          label: "Nespavost"
+          text: "Obtížné usínání, přerušovaný spánek, neklidné nohy."
+        stress:
+          label: "Vysoký stres"
+          text: "Nervové přepětí, neschopnost se uvolnit po práci."
+        withdrawal:
+          label: "Abstinenční syndrom"
+          text: "Zmírnění abstinence, odvykání těžkých látek, úleva od abstinenčních příznaků."
+    gold:
+      name: "Zlatý"
+      effects_name: "zlatého"
+      title: "Klid a antistres"
+      desc: "Prostředek proti úzkosti a panice.\nEmoční restart.\nHluboký pocit komfortu.\nObnova nervového systému."
+      effects:
+        burnout:
+          label: "Emoční vyhoření"
+          text: "Únava z komunikace, podrážděnost, nervové vyčerpání."
+        anxiety:
+          label: "Úzkostná porucha"
+          text: "Nutkavé myšlenky, neustálé obavy, očekávání špatného."
+        panic:
+          label: "Panické ataky"
+          text: "Náhlé záchvaty strachu, zrychlený tep, nervový třes."
+        relax:
+          label: "Večerní relax"
+          text: "Filmy, čtení, meditace, klidný odpočinek doma."

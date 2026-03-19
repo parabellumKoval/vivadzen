@@ -1,0 +1,7 @@
+zasilkovna_cod: "Cash on delivery via Zasilkovna within the Czech Republic, payable in cash or by card (if a terminal is available). Carrier fee: fixed 15 CZK + 1% of the order amount. The carrier deducts the fee upon delivery; the amount is calculated automatically."
+novaposhta_cod: "Cash on delivery with Nova Poshta in Ukraine. Pay in cash or by card when receiving the parcel. Carrier fee: 2% of the amount + 20 UAH. Payment confirmation happens automatically once the parcel is handed over."
+default_cash: "Pay in cash or by card when picking up your order at the collection point. No extra fees. We recommend preparing the exact amount in advance."
+liqpay_online: "Online payment via LiqPay (Visa/MasterCard, Apple Pay, Google Pay). The transaction is instant and protected by 3D Secure. Vivadzen does not charge an additional fee."
+card_online: "Secure online card payment gateway accepting international and Ukrainian Visa/MasterCard cards. Payment is confirmed automatically and no extra commission applies."
+bank_transfer: "Bank transfer to the company account. After placing your order, we send the bank details and variable symbol. You can pay via online banking or QR code. Funds are credited within 1 to 24 hours depending on your bank."
+info: "Choose any payment method that suits you. If you do not see the option you need, contact us. We offer different delivery methods, but the result is the same — your order arrives at your door. Delivery costs are paid separately. After you choose a shipping method, we will inform you of the price."

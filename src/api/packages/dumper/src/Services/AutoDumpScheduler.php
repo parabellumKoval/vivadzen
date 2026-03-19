@@ -3,6 +3,7 @@
 namespace ParabellumKoval\Dumper\Services;
 
 use Illuminate\Console\Scheduling\Schedule;
+use ParabellumKoval\Dumper\Support\AutoDumpSchedulePresets;
 
 class AutoDumpScheduler
 {
@@ -24,8 +25,9 @@ class AutoDumpScheduler
             $name = 'dumper.auto.' . $case['key'];
             $description = $case['description'] ?? 'Auto dump case: ' . $case['label'];
 
-            $this->schedule->command('dumper:auto', ['case' => $case['key']])
+            $this->schedule->command('dumper:auto', [$case['key']])
                 ->cron($case['cron'])
+                ->when(fn () => AutoDumpSchedulePresets::isDue($case['schedule'] ?? null, now()))
                 ->withoutOverlapping()
                 ->name($name)
                 ->description($description);

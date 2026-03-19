@@ -1,0 +1,111 @@
+ru:
+  hero:
+    title: "Премиальный кратом для [[--твоего ресурса--]]"
+    pack_alt: "Пачка Vivadzen Kratom"
+    cup_alt: "Чай из кратома"
+  callouts:
+    organic:
+      title: "100% Organic Leaf"
+      text: "Природный продукт без ГМО и синтетических добавок"
+    alkaloid:
+      title: "Alkaloid Rich"
+      text: "Высокое содержание митрагинина"
+    nano:
+      title: "Nano-grind texture"
+      text: "Хорошо растворяется без «песка»"
+    lab:
+      title: "Lab Tested"
+      text: "Чистота и безопасность гарантированы"
+  benefits:
+    title: "Ежедневная чашка Vivadzen Kratom помогает с:"
+    items:
+      focus: "Фокус"
+      energy: "Энергия"
+      gut: "Здоровье ЖКТ"
+      immune: "Иммунитет"
+      stress: "Антистресс"
+    cta: "Попробовать оригинальный кратом"
+
+uk:
+  hero:
+    title: "Преміальний кратом для [[--твого ресурсу--]]"
+    pack_alt: "Пакування Vivadzen Kratom"
+    cup_alt: "Чай з кратому"
+  callouts:
+    organic:
+      title: "100% Organic Leaf"
+      text: "Природний продукт без ГМО та синтетичних добавок"
+    alkaloid:
+      title: "Alkaloid Rich"
+      text: "Високий вміст мітрагініну"
+    nano:
+      title: "Nano-grind texture"
+      text: "Добре розчиняється без «піску»"
+    lab:
+      title: "Lab Tested"
+      text: "Чистота та безпека гарантовані"
+  benefits:
+    title: "Щоденна чашка Vivadzen Kratom допомагає з:"
+    items:
+      focus: "Фокус"
+      energy: "Енергія"
+      gut: "Здоровʼя ШКТ"
+      immune: "Імунітет"
+      stress: "Антистрес"
+    cta: "Спробувати оригінальний кратом"
+
+en:
+  hero:
+    title: "Premium kratom for [[--your well-being--]]"
+    pack_alt: "Vivadzen Kratom pack"
+    cup_alt: "Kratom tea"
+  callouts:
+    organic:
+      title: "100% Organic Leaf"
+      text: "Natural product without GMOs or synthetic additives"
+    alkaloid:
+      title: "Alkaloid Rich"
+      text: "High mitragynine content"
+    nano:
+      title: "Nano-grind texture"
+      text: "Dissolves well without grit"
+    lab:
+      title: "Lab Tested"
+      text: "Purity and safety guaranteed"
+  benefits:
+    title: "A daily cup of Vivadzen Kratom helps with:"
+    items:
+      focus: "Focus"
+      energy: "Energy"
+      gut: "Gut health"
+      immune: "Immune support"
+      stress: "Stress support"
+    cta: "Try the Original Kratom"
+
+cs:
+  hero:
+    title: "Prémiový kratom pro tvůj [[--vnitřní balanc--]]"
+    pack_alt: "Balení Vivadzen Kratom"
+    cup_alt: "Kratomový čaj"
+  callouts:
+    organic:
+      title: "100% Organic Leaf"
+      text: "Přírodní produkt bez GMO a syntetických přísad"
+    alkaloid:
+      title: "Alkaloid Rich"
+      text: "Vysoký obsah mitragyninu"
+    nano:
+      title: "Nano-grind texture"
+      text: "Dobře se rozpouští bez „písku“"
+    lab:
+      title: "Lab Tested"
+      text: "Čistota a bezpečnost zaručena"
+  benefits:
+    title: "Denní šálek Vivadzen Kratom pomáhá s:"
+    items:
+      focus: "Soustředění"
+      energy: "Energie"
+      gut: "Zdraví trávení"
+      immune: "Imunita"
+      stress: "Podpora proti stresu"
+    cta: "Vyzkoušet originální kratom"

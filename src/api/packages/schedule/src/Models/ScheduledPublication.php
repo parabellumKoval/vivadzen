@@ -64,6 +64,10 @@ class ScheduledPublication extends Model
      */
     public function scopeForModel($query, string $modelClass)
     {
+        if (class_exists($modelClass)) {
+            $modelClass = (new $modelClass())->getMorphClass();
+        }
+
         return $query->where('schedulable_type', $modelClass);
     }
 

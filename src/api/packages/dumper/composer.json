@@ -19,6 +19,7 @@
   ],
   "require": {
     "php": "^8.2",
+    "bunnycdn/storage": "^3.4",
     "laravel/framework": "^12.0",
     "spatie/db-dumper": "^3.5"
   },

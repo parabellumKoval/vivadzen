@@ -1,0 +1,154 @@
+hero:
+  title: "Věrnostní program Vivadzen"
+  subtitle: "Sbírej <b class='orange'>{pointsName}</b>"
+  lead: "Vítej ve světě výhod Vivadzen! Vážíme si tvého názoru a rádi za něj zaplatíme skutečné peníze."
+  description: "{pointsName} nejsou jen slevy - jde o plnohodnotnou interní měnu, kterou můžeš utratit za nové objednávky nebo vybrat na bankovní kartu či krypto peněženku."
+  note: "Důležité: Bonusový program je dostupný pouze přihlášeným uživatelům. Chceš-li začít sbírat body, {register} nebo se přihlas do svého {account}."
+  highlights:
+    - label: "Video, foto i textové recenze"
+      icon: "hugeicons:ai-generative"
+    - label: "Víceúrovňová partnerská síť"
+      icon: "hugeicons:user-group"
+    - label: "Výběr v hotovosti i kryptu"
+      icon: "hugeicons:wallet-done-02"
+  cta:
+    label: "Přejít do účtu"
+    to: "/account"
+
+earn:
+  title: "Jak získat {pointsName}?"
+  subtitle: "Nabízíme jednoduché a transparentní způsoby, jak získat bonusy. Zvol si variantu a sleduj, jak roste zůstatek."
+  methods:
+    - key: video
+      icon: "hugeicons:play-circle-02"
+      title: "Video recenze - <div class='orange'>{amount} bodů</div>"
+      description: "Nejvýnosnější možnost. Ukaž produkt v akci nebo se poděl o svou zkušenost s nákupem."
+      steps:
+        - "Nahraj video, ve kterém představíš zboží zakoupené u nás nebo popíšeš zkušenost s obchodem <b>Vivadzen</b>."
+        - "Video nahraj na <b>YouTube</b>."
+        - "Na kartě produktu zanech recenzi s odkazem na video."
+    - key: photo
+      icon: "hugeicons:image-02"
+      title: "Foto recenze - <div class='orange'>{amount} bodů</div>"
+      description: "Přidej k recenzi kvalitní fotografie produktu nebo rozbalení."
+      steps:
+        - "Pořiď až 5 fotografií produktu, balení nebo výsledku použití."
+        - "Na stránce produktu nebo recenzí obchodu vyber formát 'foto recenze'."
+        - "Přilož fotografie, volitelně přidej komentář a odešli k moderaci."
+    - key: text
+      icon: "hugeicons:edit-02"
+      title: "Textová recenze - <div class='orange'>{amount} bodů</div>"
+      description: "Rád píšeš? Zanech na stránce produktu podrobný komentář."
+      steps:
+        - "Napiš upřímnou recenzi na našem webu."
+        - "Do formuláře uveď odkaz na některý ze svých profilů na sociálních sítích kvůli ověření."
+      socials_label: "Podporované sítě:"
+      socials:
+        - label: "Instagram"
+          icon: "hugeicons:instagram"
+        - label: "Facebook"
+          icon: "hugeicons:facebook-01"
+        - label: "TikTok"
+          icon: "hugeicons:tiktok"
+        - label: "Twitter (X)"
+          icon: "hugeicons:new-twitter-rectangle"
+    - key: referral
+      icon: "solar:users-group-two-rounded-linear"
+      title: "Partnerský program - <div class='orange'>až {maxPercent} z objednávek přátel</div>"
+      description: "Vybuduj si pasivní příjem díky našemu tříúrovňovému systému pozvánek. Body získáváš za nákupy přátel i jejich kontaktů."
+      levels:
+        - label: "1. úroveň"
+          amount: "{level1}"
+        - label: "2. úroveň"
+          amount: "{level2}"
+        - label: "3. úroveň"
+          amount: "{level3}"
+      link_label: "Pravidla partnerského programu"
+
+moderation:
+  title: "Moderace a připsání"
+  intro: "Záleží nám na férovosti, proto kontrolujeme každou akci."
+  items:
+    - title: "Kontrola recenzí"
+      text: "Obvykle trvá až {hours} hodin. Partnerské odměny se připisují automaticky po zaplacení objednávky pozvaným."
+    - title: "Připsání bodů"
+      text: "Hned po schválení nebo potvrzení platby se body objeví na tvém účtu."
+    - title: "Oznámení"
+      text: "Změnu uvidíš v sekci {account} a dostaneš e-mail."
+
+exchange:
+  title: "Směnný kurz a měny"
+  intro: "Tvá práce má jasnou hodnotu. {pointsName} jsme navázali na stabilní měnu pro snadné přepočty."
+  rate_label: "Konverzní kurz:"
+  rate: "1 {pointsName} = {rate}"
+  currencies_label: "Body můžeš vybírat v ekvivalentu dalších měn podle aktuální sazby webu:"
+  currencies:
+    - label: "Euro (EUR)"
+      icon: "emojione:flag-for-european-union"
+    - label: "Ukrajinská hřivna (UAH)"
+      icon: "emojione:flag-for-ukraine"
+    - label: "Americký dolar (USD)"
+      icon: "emojione:flag-for-united-states"
+    - label: "Česká koruna (CZK)"
+      icon: "emojione:flag-for-czechia"
+    - label: "Kryptoměna (USDT aj.)"
+      icon: "logos:bitcoin"
+
+usage:
+  title: "Jak body využít?"
+  intro: "K dispozici máš dvě cesty. Rozhodnutí o {pointsName} je vždy na tobě."
+  options:
+    - key: pay
+      icon: "solar:cart-check-outline"
+      title: "Varianta A: Platba objednávek"
+      description: "Použij body a zaplať až {maxPercent} ceny nové objednávky na Vivadzen."
+      note: "V pokladně zvol možnost 'Zaplatit bonusy'."
+    - key: withdraw
+      icon: "solar:wallet-money-linear"
+      title: "Varianta B: Výběr peněz"
+      description: "Proměň body ve skutečné peníze. Vyber je na bankovní kartu nebo krypto peněženku."
+      conditions:
+        - label: "Minimální částka"
+          value: "{minWithdraw} bodů"
+        - label: "Doba zpracování"
+          value: "{processingDays} dnů"
+      process:
+        - "Vytvoř žádost o výběr v sekci {account}."
+        - "Požadované body se dočasně zablokují."
+        - "Po schválení odešleme prostředky na uvedené údaje a dáme ti vědět."
+  disclaimer: "Pokud je žádost zamítnuta (například kvůli chybným údajům), zablokované body se automaticky vrátí na bonusový účet."
+
+faq:
+  title: "Často kladené dotazy"
+  list:
+    - question: "Můžou body propadnout?"
+      answer: "Ne, {pointsName} nemají expiraci. Neanulujeme zůstatek ani po delší pauze."
+    - question: "Lze body kombinovat s promo kódy?"
+      answer: "Ano, {pointsName} se sčítají s dalšími akcemi a kupony."
+    - question: "Musím mít účet, abych se mohl zapojit?"
+      answer: "Ano, program je jen pro přihlášené uživatele: {register} nebo otevři svůj {account} a začni sbírat {pointsName}."
+    - question: "Kolik má partnerský program úrovní a jaké jsou procenta?"
+      answer: "Celkem tři. Přímá pozvání přináší {level1}, druhá úroveň {level2} a třetí {level3}. Připsání proběhne automaticky po zaplacení objednávky."
+    - question: "Kdy se připíší body za recenzi nebo pozvánku?"
+      answer: "Recenze moderujeme do {hours} hodin a partnerské odměny se objeví hned po potvrzení platby."
+    - question: "Kde uvidím zůstatek a historii?"
+      answer: "V sekci {account} je peněženka s aktuálním zůstatkem {pointsName}, ledgerem i stavy všech výběrů."
+    - question: "Existuje limit pro platbu body?"
+      answer: "Ano, body mohou pokrýt až {maxPercent} libovolné objednávky, zbytek doplatíš běžným způsobem."
+    - question: "Jaký je minimální výběr a jak dlouho trvá?"
+      answer: "Minimální žádost je {minWithdraw} bodů a standardní zpracování trvá až {processingDays} dnů."
+    - question: "Co se stane s body po odeslání žádosti o výběr?"
+      answer: "Částka se dočasně podrží a není k dispozici, dokud výplatní tým nedokončí kontrolu a převod."
+    - question: "Mohu žádost o výběr zrušit?"
+      answer: "Ano, dokud nemá status 'vyplaceno', můžeš ji v {account} zrušit a blokované body se okamžitě vrátí."
+    - question: "V jakých měnách mohu {pointsName} vybrat?"
+      answer: "Podporujeme výplaty v EUR, USD, UAH, CZK i populárních kryptoměnách jako USDT dle aktuálního kurzu."
+    - question: "Jak se evidují veškeré pohyby?"
+      answer: "Každá akce se zapisuje do Wallet Ledgeru: je vidět iniciátor, typ operace (credit/debit/hold/release) i související objednávka nebo žádost."
+
+cta:
+  title: "Připraven začít?"
+  text: "Otevři katalog, vyber si oblíbený produkt nebo sdílej referral odkaz a získej první {pointsName} ještě dnes."
+  button:
+    label: "Přejít do účtu"
+    to: "/account"
