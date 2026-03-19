@@ -24,6 +24,8 @@ COPY ./src/api ./
 
 RUN cp ./.env.prod ./.env
 
+RUN chmod -R 755 storage public
+
 # Dump composer autoload
 # RUN composer dump-autoload --optimize
 
@@ -94,16 +96,13 @@ WORKDIR /var/www/html
 # Copy files from builder image
 # COPY --from=builder /var/www/html ./
 
-
 ARG MY_USER=0
 ARG MY_GROUP=0
 
-# RUN chown -R ${MY_USER}:${MY_GROUP} .
-
 COPY --from=builder --chown=${MY_USER}:${MY_GROUP} /var/www/html ./
 
-RUN chmod -R 755 /var/www/html/storage && \
-    chmod -R 755 /var/www/html/public
+# RUN chmod -R 755 /var/www/html/storage && \
+#     chmod -R 755 /var/www/html/public
 
 # Optimizing configuration loading
 # RUN php artisan config:cache \
