@@ -75,9 +75,41 @@ Options = UnsafeLegacyRenegotiation/' /etc/ssl/openssl.cnf
 
 ARG MY_USER=www-data
 
-RUN chown -R ${MY_USER}:${MY_USER} /var/www/html && \
-    chmod -R 755 /var/www/html/storage && \
-    chmod -R 755 /var/www/html/public
+RUN mkdir -p \
+    /var/www/html/storage/app/public \
+    /var/www/html/storage/framework/cache \
+    /var/www/html/storage/framework/sessions \
+    /var/www/html/storage/framework/views \
+    /var/www/html/storage/logs \
+    /var/www/html/bootstrap/cache \
+    /var/www/html/public/uploads \
+    /var/www/html/public/images \
+    /var/www/html/public/invoices \
+    /var/www/html/public/backups \
+    && chown -R ${MY_USER}:${MY_USER} \
+    /var/www/html/storage \
+    /var/www/html/bootstrap/cache \
+    && chown ${MY_USER}:${MY_USER} \
+    /var/www/html/public \
+    /var/www/html/public/uploads \
+    /var/www/html/public/images \
+    /var/www/html/public/invoices \
+    /var/www/html/public/backups \
+    && chmod 755 \
+    /var/www/html/storage \
+    /var/www/html/storage/app \
+    /var/www/html/storage/app/public \
+    /var/www/html/storage/framework \
+    /var/www/html/storage/framework/cache \
+    /var/www/html/storage/framework/sessions \
+    /var/www/html/storage/framework/views \
+    /var/www/html/storage/logs \
+    /var/www/html/bootstrap/cache \
+    /var/www/html/public \
+    /var/www/html/public/uploads \
+    /var/www/html/public/images \
+    /var/www/html/public/invoices \
+    /var/www/html/public/backups
 
 COPY ./src/api/.env.prod ./.env
 

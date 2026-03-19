@@ -24,7 +24,32 @@ COPY ./src/api ./
 
 RUN cp ./.env.prod ./.env
 
-RUN chmod -R 755 storage public
+RUN mkdir -p \
+    storage/app/public \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache \
+    public/uploads \
+    public/images \
+    public/invoices \
+    public/backups \
+    && chmod 755 \
+    storage \
+    storage/app \
+    storage/app/public \
+    storage/framework \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache \
+    public \
+    public/uploads \
+    public/images \
+    public/invoices \
+    public/backups
 
 # Dump composer autoload
 # RUN composer dump-autoload --optimize

@@ -3,6 +3,9 @@
 /.idea
 /.vscode
 /.git
+/src/api/storage
+/src/api/vendor
+/src/api/node_modules
 /bootstrap/cache/*
 /storage/app/*
 /storage/framework/views/*
