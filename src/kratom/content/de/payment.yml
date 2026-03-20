@@ -1,0 +1,7 @@
+zasilkovna_cod: "Nachnahme über Zasilkovna innerhalb Tschechiens, zahlbar in bar oder per Karte (falls terminal verfügbar). Zustellergebühr: 15 CZK fix + 1 % des Bestellwertes. Die Gebühr wird bei der Übergabe automatisch berechnet."
+novaposhta_cod: "Nachnahme über Nova Poshta in der Ukraine. Bezahlung in bar oder per Karte bei Erhalt. Zustellergebühr: 2 % des Betrags + 20 UAH. Die Zahlung wird automatisch bestätigt, sobald das Paket übergeben wurde."
+default_cash: "Bar- oder Kartenzahlung bei Abholung im Ausgabepunkt. Keine zusätzlichen Gebühren. Bitte halten Sie den Betrag möglichst passend bereit."
+liqpay_online: "Online-Zahlung über LiqPay (Visa/MasterCard, Apple Pay, Google Pay). Die Transaktion erfolgt sofort und ist durch 3D Secure geschützt. Vivadzen erhebt keine zusätzliche Gebühr."
+card_online: "Sicheres Online-Kartenportal für internationale und ukrainische Visa/MasterCard. Die Zahlung wird automatisch bestätigt, zusätzliche Gebühren fallen nicht an."
+bank_transfer: "Banküberweisung auf das Firmenkonto. Nach der Bestellung erhalten Sie Bankdaten und Variabilní symbol. Zahlung per Onlinebanking oder QR-Code möglich. Der Zahlungseingang dauert 1 bis 24 Stunden, abhängig von Ihrer Bank."
+info: "Wählen Sie die für Sie passende Zahlungsmethode. Falls Sie einen anderen Weg benötigen, kontaktieren Sie uns. Die Versandkosten werden gesondert berechnet, unabhängig von der Zustellart. Nach Auswahl der Lieferung informieren wir Sie über den Preis."

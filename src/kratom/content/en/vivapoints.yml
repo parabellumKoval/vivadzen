@@ -1,0 +1,154 @@
+hero:
+  title: "Vivadzen Loyalty Program"
+  subtitle: "Earn <b class='orange'>{pointsName}</b>"
+  lead: "Welcome to Vivadzen's world of perks! We value your opinion and are ready to pay real money for it."
+  description: "{pointsName} are more than discounts - they are full-fledged in-store currency that you can spend on new purchases or withdraw to your bank card or crypto wallet."
+  note: "Important: The bonus program is available only to logged-in users. To start earning points, please {register} or sign in to your {account}."
+  highlights:
+    - label: "Video, photo, and text reviews"
+      icon: "hugeicons:ai-generative"
+    - label: "Multi-level referral network"
+      icon: "hugeicons:user-group"
+    - label: "Withdraw cash or crypto"
+      icon: "hugeicons:wallet-done-02"
+  cta:
+    label: "Go to My Account"
+    to: "/account"
+
+earn:
+  title: "How to earn {pointsName}?"
+  subtitle: "We offer simple, transparent ways to collect bonuses. Pick what suits you and watch your balance grow."
+  methods:
+    - key: video
+      icon: "hugeicons:play-circle-02"
+      title: "Video review - <div class='orange'>{amount} points</div>"
+      description: "The most rewarding method. Show the product in action or share your shopping experience."
+      steps:
+        - "Record a video demonstrating an item purchased from us or talk about using the <b>Vivadzen</b> store."
+        - "Upload the video to <b>YouTube</b>."
+        - "Open the product page and leave a review with a link to your video."
+    - key: photo
+      icon: "hugeicons:image-02"
+      title: "Photo review - <div class='orange'>{amount} points</div>"
+      description: "Add clear product or unboxing photos and attach them to your review."
+      steps:
+        - "Take up to 5 photos of the product, package, or usage result."
+        - "Open the product card or store reviews page and choose the “Photo review” format."
+        - "Attach the photos, optionally add a comment, and submit for moderation."
+    - key: text
+      icon: "hugeicons:edit-02"
+      title: "Text review - <div class='orange'>{amount} points</div>"
+      description: "If writing is your thing, leave a detailed comment on the product page."
+      steps:
+        - "Write an honest review of the product on our website."
+        - "Add a link to one of your social profiles in the review form so we can verify it."
+      socials_label: "Supported social networks:"
+      socials:
+        - label: "Instagram"
+          icon: "hugeicons:instagram"
+        - label: "Facebook"
+          icon: "hugeicons:facebook-01"
+        - label: "TikTok"
+          icon: "hugeicons:tiktok"
+        - label: "Twitter (X)"
+          icon: "hugeicons:new-twitter-rectangle"
+    - key: referral
+      icon: "solar:users-group-two-rounded-linear"
+      title: "Referral program - <div class='orange'>up to {maxPercent} from friends' orders</div>"
+      description: "Build a passive income stream with our three-level invitation system. Earn points for your friends' purchases and their circles."
+      levels:
+        - label: "Level 1"
+          amount: "{level1}"
+        - label: "Level 2"
+          amount: "{level2}"
+        - label: "Level 3"
+          amount: "{level3}"
+      link_label: "Read the referral program rules"
+
+moderation:
+  title: "Moderation and crediting"
+  intro: "We care about fairness, so every user action is reviewed."
+  items:
+    - title: "Review check"
+      text: "Usually takes up to {hours} hours. Referral rewards are credited automatically after the invited friend pays for an order."
+    - title: "Crediting"
+      text: "Points appear right after approval or payment confirmation."
+    - title: "Notification"
+      text: "You'll see the updated balance in {account} and receive an email."
+
+exchange:
+  title: "Exchange rate and currencies"
+  intro: "Your efforts have a clear value. {pointsName} are tied to a stable currency for easy conversion."
+  rate_label: "Conversion rate:"
+  rate: "1 {pointsName} = {rate}"
+  currencies_label: "You can withdraw points in the equivalent of other currencies at the site's current rate:"
+  currencies:
+    - label: "Euro (EUR)"
+      icon: "emojione:flag-for-european-union"
+    - label: "Ukrainian hryvnia (UAH)"
+      icon: "emojione:flag-for-ukraine"
+    - label: "US dollar (USD)"
+      icon: "emojione:flag-for-united-states"
+    - label: "Czech koruna (CZK)"
+      icon: "emojione:flag-for-czechia"
+    - label: "Cryptocurrency (USDT etc.)"
+      icon: "logos:bitcoin"
+
+usage:
+  title: "How to use points?"
+  intro: "You have two ways to manage your {pointsName}. The choice is always yours."
+  options:
+    - key: pay
+      icon: "solar:cart-check-outline"
+      title: "Option A: Pay for orders"
+      description: "Spend your points to cover up to {maxPercent} of any new order on Vivadzen."
+      note: "Simply choose 'Pay with bonuses' when checking out."
+    - key: withdraw
+      icon: "solar:wallet-money-linear"
+      title: "Option B: Withdraw funds"
+      description: "Turn points into real money. Withdraw them to bank cards or a crypto wallet."
+      conditions:
+        - label: "Minimum amount"
+          value: "{minWithdraw} points"
+        - label: "Processing time"
+          value: "{processingDays} days"
+      process:
+        - "Create a withdrawal request inside {account}."
+        - "The requested points are temporarily put on hold."
+        - "After approval, we send the funds to your details and notify you."
+  disclaimer: "If a request is rejected (for example, due to incorrect details), the on-hold points automatically return to your bonus balance."
+
+faq:
+  title: "Frequently asked questions"
+  list:
+    - question: "Can points expire?"
+      answer: "No, {pointsName} never expire. We don't reset the balance even if you take a break."
+    - question: "Can I combine points with promo codes?"
+      answer: "Yes, {pointsName} can be used together with other promotions and coupons."
+    - question: "Do I need an account to join?"
+      answer: "Yes, the program is only for logged-in users: {register} or open your {account} to start collecting {pointsName}."
+    - question: "How many referral levels are there and what are the percentages?"
+      answer: "There are three levels: direct invites bring {level1}, the second tier - {level2}, the third - {level3}. Rewards trigger automatically after an invited user pays for an order."
+    - question: "When are points credited for a review or referral?"
+      answer: "Reviews are moderated within {hours} hours, and referral rewards appear right after the order payment is confirmed."
+    - question: "Where can I see my balance and history?"
+      answer: "In {account} there is a wallet section showing the current {pointsName} balance, ledger, and withdrawal statuses."
+    - question: "Is there a limit on paying with points?"
+      answer: "Yes, you can cover up to {maxPercent} of any order with points - the rest is paid as usual."
+    - question: "What's the minimum withdrawal amount and processing time?"
+      answer: "The minimum request is {minWithdraw} points, and standard processing takes up to {processingDays} days."
+    - question: "What happens to points after I submit a withdrawal?"
+      answer: "The amount is temporarily held and unavailable until the payout team completes its checks and transfer."
+    - question: "Can I cancel a withdrawal request?"
+      answer: "Yes, until the request status becomes 'paid', you can cancel it in {account}; the on-hold points instantly return to your available balance."
+    - question: "In which currencies can I withdraw {pointsName}?"
+      answer: "We support payouts in EUR, USD, UAH, CZK, and popular cryptocurrencies like USDT at the current rate."
+    - question: "How do you track every credit and debit?"
+      answer: "Each action is logged in the Wallet Ledger: you can see the initiator, operation type (credit/debit/hold/release), and the linked order or request."
+
+cta:
+  title: "Ready to start?"
+  text: "Go to the catalog, pick your favorite product, or copy your referral link to earn the first {pointsName} right away!"
+  button:
+    label: "Go to My Account"
+    to: "/account"

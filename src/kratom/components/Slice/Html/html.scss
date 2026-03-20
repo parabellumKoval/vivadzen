@@ -1,0 +1,24 @@
+@use './assets/scss/rich-text' as *;
+
+.slice-html {
+  display: block;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+
+  // :deep(p + p) {
+  //   margin-top: 1rem;
+  // }
+
+  // :deep(h2),
+  // :deep(h3) {
+  //   margin-top: 2rem;
+  //   margin-bottom: 1rem;
+  //   line-height: 1.2;
+  // }
+
+  // :deep(ol),
+  // :deep(ul) {
+  //   padding-left: 1.6rem;
+  //   margin-top: 1rem;
+  // }
+}

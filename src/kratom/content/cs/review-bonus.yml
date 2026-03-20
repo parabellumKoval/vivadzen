@@ -1,0 +1,21 @@
+title: "Získejte {pointsName} za hodnotnou recenzi"
+items:
+  - type: cta
+    text: "Napište recenzi na produkt nebo obchod a získávejte {pointsName} na Vivadzen.com"
+  - type: text
+    text: "Otevřete stránku vybraného produktu a zvolte formát recenze – text, foto nebo video"
+  - type: text
+    text: "Textovou, foto či video recenzi na obchod jako celek můžete přidat přímo na této stránce"
+  - type: text
+    text: "Abyste získali odměnu za textovou recenzi, přidejte odkaz na svůj profil na sociální síti"
+  - type: text
+    text: "U foto a video recenzí je odkaz na sociální síť volitelný, odměna se připíše po publikaci"
+  - type: highlight
+    before: "Po schválení se recenze zobrazí na Vivadzen,"
+    highlight: "bonus se okamžitě připíše na váš účet Viva"
+    after: " – můžete jím zaplatit objednávku nebo si jej převést na kartu"
+  - type: manual
+    text: "o bonusovém systému Vivadzen."
+    button:
+      label: "Zjistěte více"
+      link: "/vivapoints"

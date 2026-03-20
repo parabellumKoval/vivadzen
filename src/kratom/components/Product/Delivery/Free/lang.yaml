@@ -1,0 +1,47 @@
+ru:
+  free: Бесплатная доставка
+  order: при заказе
+  from: от
+  activated: активирована
+  left: Осталось
+  to_free: до бесплатной доставки
+  
+uk:
+  free: Безкоштовна доставка
+  order: при замовленні
+  from: від
+  activated: активована
+  left: Залишилось
+  to_free: до безкоштовної доставки
+  
+de:
+  free: Kostenloser Versand
+  order: bei Bestellungen
+  from: ab
+  activated: aktiviert
+  left: Noch
+  to_free: bis zum kostenlosen Versand
+  
+es:
+  free: Envío gratuito
+  order: en pedidos
+  from: desde
+  activated: activado
+  left: Faltan
+  to_free: para el envío gratis
+  
+cs:
+  free: Doprava zdarma
+  order: při objednávce
+  from: od
+  activated: aktivována
+  left: Zbývá
+  to_free: do dopravy zdarma
+  
+en:
+  free: Free delivery
+  order: for orders
+  from: from
+  activated: activated
+  left: Remaining
+  to_free: to free delivery

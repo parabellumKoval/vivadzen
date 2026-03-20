@@ -1,0 +1,75 @@
+ru:
+  header:
+    logo_alt: "Логотип Vivadzen"
+    lang_label: "Выбор языка"
+  nav:
+    label: "Навигация по странице"
+    legal: "Легальный рынок"
+    colors: "Цвета кратома"
+    bonus: "Бонусы"
+    reviews: "Отзывы"
+    contacts: "Контакты"
+  license_logo_alt: "Логотип Vivadzen"
+  license_text: "Лицензированный продавец в Чехии"
+  rating_text: "4.7 рейтинг на Google"
+  title: "Где купить кратом в Чехии?"
+  description: "Премиальные сорта кратома с прозрачным происхождением, лабораторными тестами и выгодными условиями для партнеров."
+  btn_catalog: "Выбрать кратом"
+  btn_shop: "Наш магазин"
+
+uk:
+  header:
+    logo_alt: "Логотип Vivadzen"
+    lang_label: "Вибір мови"
+  nav:
+    label: "Навігація сторінкою"
+    legal: "Легальний ринок"
+    colors: "Кольори кратому"
+    bonus: "Бонуси"
+    reviews: "Відгуки"
+    contacts: "Контакти"
+  license_logo_alt: "Логотип Vivadzen"
+  license_text: "Ліцензований продавець у Чехії"
+  rating_text: "П’ять зірок на Google"
+  title: "Де купити кратом у Чехії?"
+  description: "Преміальні сорти крату́му з прозорим походженням, лабораторними тестами та вигідними умовами для партнерів."
+  btn_catalog: "Обрати кратом"
+  btn_shop: "Наш магазин"
+
+en:
+  header:
+    logo_alt: "Vivadzen logo"
+    lang_label: "Language switcher"
+  nav:
+    label: "Page navigation"
+    legal: "Legal market"
+    colors: "Kratom colors"
+    bonus: "Bonuses"
+    reviews: "Reviews"
+    contacts: "Contacts"
+  license_logo_alt: "Vivadzen logo"
+  license_text: "Licensed seller in Czech Republic"
+  rating_text: "4.7 рейтинг на Google"
+  title: "Where to buy kratom in Czech Republic?"
+  description: "Premium kratom strains with transparent origins, laboratory testing, and favorable terms for partners."
+  btn_catalog: "Choose kratom"
+  btn_shop: "Our store"
+
+cs:
+  header:
+    logo_alt: "Logo Vivadzen"
+    lang_label: "Přepínač jazyka"
+  nav:
+    label: "Navigace stránkou"
+    legal: "Legální trh"
+    colors: "Barvy kratomu"
+    bonus: "Bonusy"
+    reviews: "Recenze"
+    contacts: "Kontakty"
+  license_logo_alt: "Logo Vivadzen"
+  license_text: "Licencovaný prodejce v České republice"
+  rating_text: "Hodnocení 4,7 na Googlu"
+  title: "Kde koupit kratom v České republice?"
+  description: "Prémiové odrůdy kratomu s transparentním původem, laboratorním testováním a výhodných podmínkách pro partnery."
+  btn_catalog: "Vybrat kratom"
+  btn_shop: "Náš obchod"

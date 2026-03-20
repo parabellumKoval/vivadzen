@@ -1,0 +1,17 @@
+.sale {
+  &-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+  }
+  &-label {
+    color: $color-3;
+  }
+  &-value {
+    text-align: right;
+    &.large {
+      font-size: 20px;
+    }
+  }
+}

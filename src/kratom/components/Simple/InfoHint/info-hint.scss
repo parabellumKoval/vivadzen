@@ -1,0 +1,96 @@
+.info-hint {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-left: 0.35em;
+
+  &__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba($color-8, 0.9);
+    background: rgba($color-0, 0.6);
+    color: $color-8;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    .iconify {
+      font-size: 12px;
+      line-height: 1;
+      display: block;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.28);
+      border-color: rgba(255, 255, 255, 0.75);
+    }
+  }
+
+  &__bubble {
+    --info-hint-arrow-left: 0px;
+
+    position: fixed;
+    width: max-content;
+    min-width: 180px;
+    color: #fff;
+    background: rgba(17, 24, 39, 0.95);
+    border-radius: 10px;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+    z-index: 10000;
+    pointer-events: auto;
+    overflow-wrap: anywhere;
+    will-change: top, left;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: var(--info-hint-arrow-left);
+      transform: translateX(-50%);
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+    }
+
+    &--top {
+      &::after {
+        top: 100%;
+        border-top: 7px solid rgba(17, 24, 39, 0.95);
+      }
+    }
+
+    &--bottom {
+      &::after {
+        bottom: 100%;
+        border-bottom: 7px solid rgba(17, 24, 39, 0.95);
+      }
+    }
+  }
+}
+
+.info-hint-pop-enter-active,
+.info-hint-pop-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.info-hint-pop-enter-from,
+.info-hint-pop-leave-to {
+  opacity: 0;
+  transform: translateY(3px);
+}
+
+@media (max-width: 767px) {
+  .info-hint {
+    &__bubble {
+      min-width: 0;
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+  }
+}

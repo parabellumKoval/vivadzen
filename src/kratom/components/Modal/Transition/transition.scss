@@ -1,0 +1,60 @@
+.fade-enter-active,
+.fade-leave-active {
+  transition: filter .6s, transform .3s, opacity .3s;
+}
+.fade-enter-from {
+  opacity: 0;
+  filter: blur(15px);
+  transform: translateX(50%) translateY(30%) !important;
+  
+  @include desktop {
+    transform: translateY(15%) !important;
+  }
+}
+.fade-leave-to {
+  transition: transform 0s !important;
+  filter: blur(0);
+  transform: translateX(50%) translateY(0) !important;
+  @include desktop {
+    transform: translateY(0) !important;
+  }
+}
+//modal
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.3s;
+}
+.modal-enter-from {
+  opacity: 0;
+  filter: blur(1rem);
+}
+.modal-leave-to {
+  transition: transform 0s, opacity 0s;
+}
+:deep(.modal) {
+  position: absolute;
+  bottom: 0px;
+  top: initial;
+  right: 50%;
+  transform: translateX(50%);
+  width: calc(100% - 20px);
+  overflow-y: auto;
+  border-radius: 10px;
+
+  @include desktop {
+    max-width: calc(100vw - 90px);
+    max-height: calc(100vh - 90px);
+    bottom: initial;
+    transform: initial;
+    width: max-content;
+  }
+}
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0, 0.2);
+  z-index: 350;
+}

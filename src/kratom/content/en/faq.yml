@@ -1,0 +1,49 @@
+items:
+  qa1:
+    id: 1
+    q: What are your working hours?
+    a: We accept phone orders Monday to Friday from 10:00 to 18:00. Saturday and Sunday are days off. Online orders on the website are accepted 24/7.
+  qa2:
+    id: 2
+    q: If the website says an item is out of stock, can I still order it?
+    a: Leave a request with your phone number and email address. Our manager will contact you as soon as the item is back in stock.
+  qa3:
+    id: 3
+    q: Do I have to create an account on the site?
+    a: Registration is optional, but it speeds up order processing. In any case, our manager will contact you.
+  qa4:
+    id: 4
+    q: When will I receive my order?
+    a: Delivery timelines depend on the carrier you select at checkout and are shown next to every available method.
+  qa5:
+    id: 5
+    q: Can the total order cost change?
+    a: If prices change, the manager will call you beforehand to let you know.
+  qa6:
+    id: 6
+    q: How do I pay for my order?
+    a: Payment methods appear automatically after you choose a delivery option and depend on your current region.
+  qa7:
+    id: 7
+    q: How can I return an item that doesn’t fit or has defects?
+    a: "<p>EU customers may withdraw from the purchase within 14 days of receiving the goods in accordance with our Return Policy. The product must be unused, in its original condition, and accompanied by proof of purchase. The right of withdrawal does not apply to personalised goods, perishable items, hygienically sealed goods that were opened, or other exceptions listed in the policy.</p>
+        <p>Send us a notice of withdrawal (email or the contact form) and return the parcel within 14 days. Return shipping is paid by the customer. Once we receive the goods or proof of dispatch, we refund all payments (up to the cheapest delivery option) within 14 days using the original payment method.</p>"
+  qa8:
+    id: 8
+    q: Where and how can I exchange or return an item?
+    a: Contact our manager or visit the pickup point so we can advise which available carrier to use for the exchange.
+  qa9:
+    id: 9
+    q: Where do you ship orders?
+    a: We ship via the delivery partners available in your region; the list updates automatically on the website.
+  qa10:
+    id: 10
+    q: How can I find the right item in such a large catalog?
+    a: "<p>Try one of these methods:</p>
+        <ol><li>Enter the product name, ingredient, or brand in the search field.</li>
+            <li>Use the product filters to set the parameters you need—type, price range, manufacturer, etc.—and the system will do the rest.</li>
+        </ol>"
+  qa11:
+    id: 11
+    q: How can I track my parcel if it’s shipped by mail?
+    a: After we hand the parcel to the carrier, we send you a tracking number. Follow it on the chosen carrier’s website or app.

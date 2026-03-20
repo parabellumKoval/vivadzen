@@ -1,0 +1,133 @@
+.cart {
+  display: block;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: calc(100% + 20px);
+  margin-bottom: -20px;
+  @include tablet {
+  }
+  @include desktop {
+    height: calc(100% + 50px);
+    margin-bottom: -50px;
+  }
+}
+.product {
+  &-card {
+    padding: 20px 0;
+    border-bottom: 1px solid $color-border;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+.title {
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 135%;
+}
+.body {
+  &-inner {
+    margin-bottom: 20px;
+
+    @include desktop {
+      margin-bottom: 30px;
+    }
+  }
+  &-lists {
+    border-top: 1px solid $color-border;
+    margin: 0 -20px;
+    padding: 20px 15px;
+
+    @include desktop {
+      margin: 0 -50px;
+      padding: 20px 50px;
+    }
+  }
+}
+.footer {
+  position: sticky;
+  bottom: -20px;
+  left: -20px;
+  padding: 15px 15px 15px 15px;
+  display: grid;
+  grid-template-columns: 4fr 2fr;
+  flex-direction: row-reverse;
+  row-gap: 10px;
+  column-gap: 20px;
+  transform: translateX(-20px);
+  width: calc(100% + 40px);
+  justify-content: end;
+  background: $color-bg;
+  border-top: 1px solid $color-border;
+  z-index: 10;
+
+  @include desktop {
+    flex-direction: row-reverse;
+    grid-template-columns: 3fr  1fr minmax(min-content, 200px);
+    align-items: center;
+    gap: 25px;
+    bottom: -50px;
+    transform: translateX(-50px);
+    width: calc(100% + 100px);
+    padding: 30px;
+  }
+  
+}
+.free-delivery {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  width: 100%;
+  :deep(.free-delivery-desc) {
+    font-size: 14px;
+  }
+
+  @include desktop {
+    max-width: 300px;
+    grid-column-start: initial;
+    grid-column-end: initial;
+    align-items: flex-start;
+  }
+}
+.checkout-btn {
+  width: 100%;
+
+  @include desktop {
+    order: 3;
+  }
+}
+
+.total {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 5px;
+
+  @include tablet {
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  @include desktop {
+    margin-left: auto;
+    gap: 0;
+  }
+
+  .label {
+    @include desktop {
+      margin-bottom: 5px;
+    }
+  }
+
+  .price {
+    font-size: 20px;
+    font-weight: 600;
+    @include desktop {
+      font-size: 22px;
+    }
+  }
+}

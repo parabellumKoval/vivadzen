@@ -1,0 +1,24 @@
+
+.form {
+  &-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+    line-height: 160%;
+    @include desktop {
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
+    }
+  }
+  &-row {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    @include desktop {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+  &-tabs {
+    margin-bottom: 20px;
+  }
+}

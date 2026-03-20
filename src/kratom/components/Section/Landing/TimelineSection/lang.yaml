@@ -1,0 +1,159 @@
+ru:
+  header:
+    title_brand: "Vivadzen"
+    title_text: "Европейский стандарт качества на рынке кратома"
+    description: "Мы объединили прямые поставки из Юго-Восточной Азии с жестким лабораторным контролем в Чехии, чтобы вы получили продукт, которому можно доверять."
+  steps:
+    origin:
+      title: "Происхождение"
+      description: "Мы работаем только с фермерскими хозяйствами, практикующими сбор урожая с дикорастущих старых деревьев."
+      props:
+        mitragynine: "Высокий уровень митрагинина"
+        fertilizers: "Выращен без использования удобрений"
+    safety:
+      title: "Безопасность"
+      description_prefix: "Продукт проходит двухэтапную проверку в независимых лабораториях"
+      description_highlight: "Чешской Республики"
+      description_suffix: ". Мы тестируем продукт на отсутствие тяжелых металлов, отсутствие патогенной микрофлоры и точное содержание алкалоидов."
+      button: "Сертификаты"
+    standards:
+      title: "Стандарты"
+      description_prefix: "Продукт фасуется на сертифицированном производстве в"
+      highlight_europe: "Европе"
+      description_middle: "с соблюдением норм гигиены. Мы используем герметичные"
+      highlight_packs: "Дой-паки"
+      description_suffix: "которые защищают кратом от воздействия ультрафиолета и влаги, сохраняя его свойства на протяжении всего срока хранения."
+    ecosystem:
+      title: "Экосистема"
+      highlight_brand: "Vivadzen"
+      description_prefix: "работает строго в рамках законодательства"
+      highlight_czech: "Чешской Республики"
+      description_middle: "и"
+      highlight_eu: "ЕС"
+      description_suffix: "и объединяет персональные финансовые привилегии и инструменты для развития сообщества."
+      props:
+        vivapoints: "Накапливай {pointsName} — оплачивай заказы или выводи"
+        partner: "Профессиональная партнерская программа"
+  footer:
+    title: "VIVADZEN"
+    description: "ADVANCED BOTANICAL FORMULA"
+
+uk:
+  header:
+    title_brand: "Vivadzen"
+    title_text: "Європейський стандарт якості на ринку кратому"
+    description: "Ми поєднали прямі поставки з Південно-Східної Азії з жорстким лабораторним контролем у Чехії, щоб ви отримали продукт, якому можна довіряти."
+  steps:
+    origin:
+      title: "Походження"
+      description: "Ми працюємо лише з фермерськими господарствами, що збирають урожай з дикорослих старих дерев."
+      props:
+        mitragynine: "Високий рівень мітрагініну"
+        fertilizers: "Вирощено без використання добрив"
+    safety:
+      title: "Безпека"
+      description_prefix: "Продукт проходить двоетапну перевірку в незалежних лабораторіях"
+      description_highlight: "Чеської Республіки"
+      description_suffix: ". Ми тестуємо продукт на відсутність важких металів, патогенної мікрофлори та точний вміст алкалоїдів."
+      button: "Сертифікати"
+    standards:
+      title: "Стандарти"
+      description_prefix: "Продукт фасується на сертифікованому виробництві в"
+      highlight_europe: "Європі"
+      description_middle: "із дотриманням норм гігієни. Ми використовуємо герметичні"
+      highlight_packs: "дой-паки"
+      description_suffix: "які захищають кратом від ультрафіолету та вологи, зберігаючи його властивості протягом усього терміну зберігання."
+    ecosystem:
+      title: "Екосистема"
+      highlight_brand: "Vivadzen"
+      description_prefix: "працює суворо в рамках законодавства"
+      highlight_czech: "Чеської Республіки"
+      description_middle: "та"
+      highlight_eu: "ЄС"
+      description_suffix: "і поєднує персональні фінансові привілеї з інструментами для розвитку спільноти."
+      props:
+        vivapoints: "Накопичуйте {pointsName} — оплачуйте замовлення або виводьте"
+        partner: "Професійна партнерська програма"
+  footer:
+    title: "VIVADZEN"
+    description: "ADVANCED BOTANICAL FORMULA"
+
+en:
+  header:
+    title_brand: "Vivadzen"
+    title_text: "European quality standard on the kratom market"
+    description: "We combined direct supplies from Southeast Asia with strict laboratory control in the Czech Republic so you receive a product you can trust."
+  steps:
+    origin:
+      title: "Origin"
+      description: "We work only with farms that harvest from wild, old trees."
+      props:
+        mitragynine: "High mitragynine content"
+        fertilizers: "Grown without fertilizers"
+    safety:
+      title: "Safety"
+      description_prefix: "The product undergoes a two-stage inspection in independent laboratories of"
+      description_highlight: "the Czech Republic"
+      description_suffix: ". We test for heavy metals, pathogenic microflora, and precise alkaloid content."
+      button: "Certificates"
+    standards:
+      title: "Standards"
+      description_prefix: "The product is packaged at a certified facility in"
+      highlight_europe: "Europe"
+      description_middle: "in compliance with hygiene standards. We use sealed"
+      highlight_packs: "doy-packs"
+      description_suffix: "that protect kratom from UV light and moisture, preserving its properties throughout shelf life."
+    ecosystem:
+      title: "Ecosystem"
+      highlight_brand: "Vivadzen"
+      description_prefix: "operates strictly within the legislation of"
+      highlight_czech: "the Czech Republic"
+      description_middle: "and"
+      highlight_eu: "the EU"
+      description_suffix: "and combines personal financial perks with tools for community growth."
+      props:
+        vivapoints: "Accumulate {pointsName} — pay for orders or cash out"
+        partner: "Professional partner program"
+  footer:
+    title: "VIVADZEN"
+    description: "ADVANCED BOTANICAL FORMULA"
+
+cs:
+  header:
+    title_brand: "Vivadzen"
+    title_text: "Evropský standard kvality na trhu s kratomem"
+    description: "Spojili jsme přímé dodávky z jihovýchodní Asie s přísnou laboratorní kontrolou v České republice, abyste získali produkt, kterému můžete důvěřovat."
+  steps:
+    origin:
+      title: "Původ"
+      description: "Spolupracujeme pouze s farmami, které sklízí listy z divoce rostoucích starých stromů."
+      props:
+        mitragynine: "Vysoký obsah mitragyninu"
+        fertilizers: "Pěstováno bez použití hnojiv"
+    safety:
+      title: "Bezpečnost"
+      description_prefix: "Produkt prochází dvoustupňovou kontrolou v nezávislých laboratořích"
+      description_highlight: "České republiky"
+      description_suffix: ". Testujeme na přítomnost těžkých kovů, patogenní mikroflóry a přesný obsah alkaloidů."
+      button: "Certifikáty"
+    standards:
+      title: "Standardy"
+      description_prefix: "Produkt je balen v certifikovaném provozu v"
+      highlight_europe: "Evropě"
+      description_middle: "s dodržením hygienických norem. Používáme hermetické"
+      highlight_packs: "doy-packy"
+      description_suffix: "které chrání kratom před UV zářením a vlhkostí, a zachovávají jeho vlastnosti po celou dobu skladování."
+    ecosystem:
+      title: "Ekosystém"
+      highlight_brand: "Vivadzen"
+      description_prefix: "funguje přísně v rámci legislativy"
+      highlight_czech: "České republiky"
+      description_middle: "a"
+      highlight_eu: "EU"
+      description_suffix: "a spojuje osobní finanční výhody s nástroji pro rozvoj komunity."
+      props:
+        vivapoints: "Sbírejte {pointsName} — plaťte objednávky nebo vybírejte"
+        partner: "Profesionální partnerský program"
+  footer:
+    title: "VIVADZEN"
+    description: "ADVANCED BOTANICAL FORMULA"

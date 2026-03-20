@@ -1,0 +1,117 @@
+hero:
+  eyebrow: "{pointsName} Affiliate"
+  title: "Vivadzen-Partnerprogramm: mit Empfehlungen verdienen"
+  description: "Verwandeln Sie das Vertrauen Ihrer Community in ein stabiles Einkommen. Sie teilen hochwertige Produkte – wir schreiben Punkte für jeden Einkauf bis zur dritten Ebene Ihres Netzwerks gut."
+  image: '/images/af-2.png'
+  stats:
+    - label: "Eigene Ebene"
+      value: "{level1}"
+    - label: "Freunde Ihrer Freunde"
+      value: "{level2}"
+    - label: "Dritte Ebene"
+      value: "{level3}"
+  highlights:
+    - icon: 'solar:money-bag-linear'
+      label: "Passives Einkommen in {pointsName}"
+    - icon: 'solar:users-group-two-rounded-linear'
+      label: "Netztiefe – 3 Ebenen"
+    - icon: 'solar:shield-minimalistic-linear'
+      label: "Faires Gutschriften nach der Lieferung"
+  cta:
+    primary:
+      label: "Partnerlink erhalten"
+    secondary:
+      label: "Programmbedingungen"
+levels:
+  title: "Drei Ebenen von Prämien"
+  subtitle: "Unser Empfehlungssystem arbeitet in die Tiefe, daher zählt jeder Teilnehmer."
+  cards:
+    - icon: 'solar:ranking-bold-duotone'
+      label: "Ebene 1"
+      accent: "Persönliche Einladungen"
+      percent: "{level1}"
+      description: "Teilen Sie den Link mit Freunden, Followern oder Kunden und erhalten Sie sofort einen Anteil jeder bezahlten Bestellung."
+    - icon: 'solar:share-bold-duotone'
+      label: "Ebene 2"
+      accent: "Freunde von Freunden"
+      percent: "{level2}"
+      description: "Empfehlen Ihre Referrals Vivadzen weiter, verdienen Sie weiterhin an jedem erfolgreichen Kauf mit."
+    - icon: 'solar:radar-linear'
+      label: "Ebene 3"
+      accent: "Erweiterter Kreis"
+      percent: "{level3}"
+      description: "Das Netzwerk wächst und Sie erhalten echtes passives Einkommen für den Ausbau der Community rund um die Marke."
+algo:
+  title: "So werden {pointsName} gutgeschrieben"
+  intro: "Wir dokumentieren jede Geldbewegung, damit Partner jederzeit transparente Statistiken sehen."
+  cards:
+    - icon: 'solar:cart-linear'
+      title: "Berechnungsgrundlage"
+      description: "Der Prozentsatz wird nicht vom Gesamtwarenkorb genommen, sondern vom endgültigen Zahlbetrag nach allen Promo-Codes, Boni und Versandkosten."
+      bullets:
+        - "Das ist der Betrag, den der Kunde tatsächlich bezahlt hat."
+        - "Rabatte und Bonusabzüge sind bereits berücksichtigt."
+    - icon: 'solar:dollar-bold-duotone'
+      title: "Währungsumrechnung"
+      description: "Einkäufe können in CZK, EUR, USD oder UAH bezahlt werden – das System erfasst die lokale Zahlung, berechnet Ihren Prozentsatz und wandelt ihn sofort in {pointsName} um."
+      bullets:
+        - "Die Punkte liegen auf einem gemeinsamen Bonuskonto."
+        - "Die Umrechnung erfolgt zum aktuellen Kurs auf der Website."
+    - icon: 'solar:clock-circle-bold-duotone'
+      title: "Zeitpunkt der Gutschrift"
+      description: "Um Manipulationen auszuschließen, werden Punkte erst gutgeschrieben, wenn die Bestellung bezahlt und ausgeliefert wurde."
+      bullets:
+        - "Der Bestellstatus muss auf \"Abgeschlossen\" wechseln."
+        - "Im Account erscheint eine Benachrichtigung über die Gutschrift."
+  quote:
+    title: "Abschließende Prüfung"
+    text: "Die Gutschrift erfolgt nicht beim Klick auf 'Kaufen', sondern nach der erfolgreichen Bearbeitung der Bestellung. So schützen wir ehrliche Partner und Kunden."
+link:
+  title: "Ihr wichtigstes Werkzeug – der Link"
+  subtitle: "Das System muss verstehen, dass der Kunde von Ihnen kommt, deshalb speichert Ihr Account einen persönlichen Code."
+  image: '/images/af-3.png'
+  steps:
+    - "{register} oder melden Sie sich in {account} an."
+    - "Wechseln Sie zu 'Partnerprogramm' und kopieren Sie Ihren Code."
+    - "Fügen Sie ihn jedem Link zu Produkten oder Bereichen der Website hinzu."
+  example:
+    base: 'vivadzen.com/product/super-cream'
+    referral: 'vivadzen.com/product/super-cream?ref={code}'
+    hint: "Achten Sie nach dem Klick darauf, dass der ref-Parameter in der Adresszeile bleibt – dann hat das System den Käufer Ihnen zugeordnet."
+  note: "Sie können einzelne Produkte, Sammlungen oder sogar den Blog empfehlen – Hauptsache am Ende des Links steht Ihr Code."
+ttl:
+  title: "First-Click-Regel"
+  image: '/images/af-4.png'
+  description: "Der Partner, der den Nutzer zuerst gebracht hat, behält den Vorrang während der gesamten TTL."
+  bullets:
+    - "Nach dem Klick 'merkt' sich das System die Quelle und weist den Kunden für {ttl} Ihnen zu."
+    - "Folgt der Kunde während der TTL einem anderen Link, wird der Verkauf trotzdem Ihnen zugerechnet."
+    - "Sobald sich der Nutzer registriert, bleibt er dauerhaft in Ihrem Partnernetzwerk."
+control:
+  title: "Kontrolle und Benachrichtigungen"
+  intro: "Verfolgen Sie das Wachstum Ihres Teams jederzeit direkt im Account."
+  cards:
+    - icon: 'solar:colour-tuneing-linear'
+      title: "Netzwerkstruktur"
+      text: "Der Bereich 'Account → Partnerprogramm → Partnernetzwerk' zeigt den gesamten Baum aller Ebenen."
+    - icon: 'solar:wallet-money-linear'
+      title: "Finanzen"
+      text: "Unter 'Account → Transaktionen' finden Sie das Protokoll aller Gutschriften, Ebenen und Beträge."
+    - icon: 'solar:letter-linear'
+      title: "E-Mail-Benachrichtigungen"
+      text: "Wir informieren Sie, wenn ein neuer Partner erscheint oder Boni für eine abgeschlossene Bestellung gutgeschrieben werden."
+payout:
+  title: "Auszahlungen und Punkte nutzen"
+  intro: "{pointsName} sind echtes Geld, das Sie ausgeben oder auszahlen lassen können."
+  options:
+    - icon: 'solar:cart-check-linear'
+      title: "Einkäufe bezahlen"
+      text: "Decken Sie bis zu 100 % des Warenkorbs mit Bonuspunkten beim Checkout."
+    - icon: 'solar:wallet-money-bold-duotone'
+      title: "Geld auszahlen"
+      text: "Überweisen Sie die Punkte auf eine Bankkarte oder ein Krypto-Wallet. Die Details stehen im Bereich '{withdraw}'."
+cta:
+  title: "Erweitern Sie Ihr Partnernetz noch heute"
+  text: "Kopieren Sie den Link in Ihrem Account, senden Sie ihn einem Freund oder posten Sie ihn in sozialen Netzwerken – die ersten {pointsName} kommen direkt nach der abgeschlossenen Bestellung."
+  button:
+    label: "Partner-Dashboard öffnen"

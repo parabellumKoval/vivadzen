@@ -1,0 +1,21 @@
+title: "Sammeln Sie {pointsName} für eine wertvolle Bewertung"
+items:
+  - type: cta
+    text: "Hinterlassen Sie eine Bewertung zu einem Produkt oder dem Shop und sammeln Sie {pointsName} auf Vivadzen.com"
+  - type: text
+    text: "Öffnen Sie die Produktseite, die Sie bewerten möchten, und wählen Sie das Format – Text, Foto oder Video"
+  - type: text
+    text: "Eine Text-, Foto- oder Videobewertung zum Shop insgesamt können Sie direkt auf dieser Seite verfassen"
+  - type: text
+    text: "Um eine Belohnung für eine Textbewertung zu erhalten, fügen Sie einen Link zu Ihrem Social-Media-Profil hinzu"
+  - type: text
+    text: "Für Foto- und Videobewertungen ist ein Social-Link optional – die Belohnung wird nach Veröffentlichung gutgeschrieben"
+  - type: highlight
+    before: "Nach der Moderation erscheint die Bewertung auf Vivadzen,"
+    highlight: "der Bonus landet sofort auf Ihrem {pointsName}-Konto"
+    after: " – damit können Sie eine Bestellung bezahlen oder ihn auszahlen lassen"
+  - type: manual
+    text: "über das Bonusprogramm von Vivadzen."
+    button:
+      label: "Mehr erfahren"
+      link: "/vivapoints"

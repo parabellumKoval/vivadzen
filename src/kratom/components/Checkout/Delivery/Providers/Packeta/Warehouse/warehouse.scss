@@ -1,0 +1,25 @@
+.warehouse {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 15px;
+
+  @include desktop {
+    grid-template-columns: min-content 1fr;
+  }
+
+  &-point {
+    display: block;
+    line-height: 120%;
+
+    &-name {
+      display: inline;
+      font-weight: 500;
+    }
+
+    &-info {
+      padding-left: 10px;
+      display: inline;
+    }
+  }
+}

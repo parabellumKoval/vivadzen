@@ -1,0 +1,28 @@
+.country {
+  display: grid;
+  grid-template-columns: min-content min-content;
+  gap: 15px;
+  align-items: center;
+
+  &-label {
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  &-value {
+    display: grid;
+    grid-template-columns: 24px min-content;
+    gap: 5px;
+    align-items: center;
+    cursor: pointer;
+    
+    &-label {
+      padding: 2px 0;
+      border-bottom: 1px dashed $color-dark;
+    }
+
+    .icon {
+      font-size: 24px;
+    }
+  }
+}

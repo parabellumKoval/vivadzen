@@ -1,0 +1,50 @@
+@use '~/assets/scss/skeleton' as *;
+
+.list-wrapper {
+    background-color: $color-bg-3;
+}
+.title-secondary {
+      font-weight: 400;
+      margin-bottom: 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+}
+    // :deep(.title-secondary) {
+    //   font-weight: 400;
+    //   margin-bottom: 10px;
+    //   font-size: 12px;
+    //   text-transform: uppercase;
+    //   font-weight: 700;
+    // }
+:deep(.snap-carousel) {
+  @include desktop {
+    height: 250px;
+  }
+}
+:deep(.snap-carousel__controls) {
+  grid-template-columns: 1fr;
+  margin-top: 15px;
+}
+:deep(.snap-carousel__arrow) {
+  display: none;
+}
+
+.skeleton {
+  &-title {
+    height: 20px;
+    width: 200px;
+    margin-bottom: 15px;
+    @extend .skeleton-loading;
+    border-radius: $radius;
+  }
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    @include desktop {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+}

@@ -1,0 +1,22 @@
+.slice-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.slice-image__media {
+  max-width: 100%;
+  max-height: 70vh;
+  height: 100%;
+  width: auto;
+  border-radius: 1rem;
+  object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.slice-image__caption {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.65);
+}

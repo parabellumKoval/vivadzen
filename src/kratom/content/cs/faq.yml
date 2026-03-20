@@ -1,0 +1,49 @@
+items:
+  qa1:
+    id: 1
+    q: Jaká je vaše pracovní doba?
+    a: Telefonické objednávky přijímáme od pondělí do pátku od 10:00 do 18:00. V sobotu a neděli máme volno. Objednávky přes web přijímáme nepřetržitě.
+  qa2:
+    id: 2
+    q: Mohu si objednat zboží, které je na webu označeno jako nedostupné?
+    a: Zanechte žádost s telefonem a e-mailem. Jakmile bude zboží skladem, manažer vás kontaktuje.
+  qa3:
+    id: 3
+    q: Musím se na webu registrovat?
+    a: Není to povinné, ale registrace urychlí zpracování objednávky. Každopádně vás kontaktuje náš manažer.
+  qa4:
+    id: 4
+    q: Kdy obdržím svou objednávku?
+    a: Dodací lhůta závisí na vybraném dopravci a zobrazí se přímo u jednotlivých dostupných metod.
+  qa5:
+    id: 5
+    q: Může se změnit celková cena objednávky?
+    a: Pokud dojde ke změně ceny, manažer vám předem zavolá a informuje vás.
+  qa6:
+    id: 6
+    q: Jak mohu zaplatit?
+    a: Platební možnosti se zobrazí automaticky po výběru dopravy a řídí se aktivním regionem.
+  qa7:
+    id: 7
+    q: Jak vrátím zboží, které mi nevyhovuje nebo je vadné?
+    a: "<p>Jako spotřebitel v EU můžete podle našich Podmínek vrácení odstoupit od kupní smlouvy do 14 dnů od převzetí zboží. Výrobek musí být nepoužitý, v původním stavu a s dokladem o koupi. Právo odstoupit se nevztahuje na zboží vyrobené na zakázku, rychle se kazící produkty, hygienicky zapečetěné výrobky s porušeným obalem ani další výjimky uvedené v dokumentu.</p>
+        <p>Zašlete nám oznámení o odstoupení (e-mailem nebo kontaktním formulářem) a do 14 dnů zboží odešlete zpět. Náklady na zpáteční dopravu hradí zákazník. Jakmile obdržíme zboží nebo doklad o odeslání, vrátíme všechny platby (maximálně ve výši nejlevnější nabízené dopravy) do 14 dnů stejným platebním způsobem.</p>"
+  qa8:
+    id: 8
+    q: Kde a jak mohu zboží vyměnit nebo vrátit?
+    a: Spojte se s naším manažerem nebo navštivte výdejní místo – poradíme, kterou dostupnou dopravní službu využít pro výměnu.
+  qa9:
+    id: 9
+    q: Kam doručujete?
+    a: Odesíláme pouze službami, které jsou ve vašem regionu dostupné, proto se seznam destinací na webu aktualizuje automaticky.
+  qa10:
+    id: 10
+    q: Jak najdu požadované zboží v tak velkém katalogu?
+    a: "<p>Zkuste:</p>
+        <ol><li>zadat název produktu, složku nebo značku do vyhledávacího pole;</li>
+            <li>použít filtry a nastavit parametry jako typ, cenové rozpětí či výrobce – systém vyhledá odpovídající produkty.</li>
+        </ol>"
+  qa11:
+    id: 11
+    q: Jak zjistím, kde se nachází moje zásilka?
+    a: Po odeslání vám pošleme sledovací číslo; stav zásilky sledujte na webu nebo v aplikaci vybraného dopravce.

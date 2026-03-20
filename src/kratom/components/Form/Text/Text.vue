@@ -1,0 +1,106 @@
+<script>
+export default {
+  data() {
+    return {
+      onFocus: false
+    }
+  },
+
+  props: {
+    modelValue: {
+      type: String
+    },
+    placeholder: {
+      type: String
+    },
+    required: {
+      type: Boolean,
+      default: false
+    },
+    error: {
+      type: [Object, Array, String, Boolean],
+      default: false
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    readonly: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      default: 'text'
+    }
+  },
+
+  computed: {
+    isActive() {
+      return this.onFocus || this.modelValue?.length > 0
+    },
+
+    id() {
+      return 'input-' + (Math.random() + 1).toString(36).substring(7);
+    }
+  },
+
+  methods: {
+    changeHandler(event) {
+      this.$emit('update:modelValue', event.target.value)
+    },
+
+    focusHandler(event) {
+      this.onFocus = true
+      this.$emit('focused', event)
+    },
+
+    blurHandler(event) {
+      this.onFocus = false
+      this.$emit('blured', event)
+    }, 
+
+    keyUpHandler(event) {
+      this.$emit('keyup', event)
+    },
+
+    keyDownHandler(event) {
+      this.$emit('keydown', event)
+    }
+  },
+}
+</script>
+
+<style src="./text.scss" lang="sass" scoped />
+
+<template>
+  <div
+    :class="{
+      error: error && error.length,
+      disabled: isDisabled,
+      required: required
+    }"
+    class="input__wrapper"
+  >
+    <input
+      :value="modelValue"
+      :id="id"
+      @input="changeHandler"
+      @keydown="keyDownHandler"
+      @keyup="keyUpHandler"
+      @focus="focusHandler"
+      @blur="blurHandler"
+      :placeholder="placeholder"
+      :readonly="readonly"
+      :type="type"
+      class="main-input"
+    >
+
+    <div class="right">
+      <slot name="right"></slot>
+    </div>
+    
+    <form-error :error="error"></form-error>
+
+  </div>
+</template>

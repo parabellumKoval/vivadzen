@@ -1,0 +1,195 @@
+ru:
+  kratom_word: "кратом"
+  header:
+    title: "Откройте для себя разнообразие сортов из разных уголков мира"
+    image_alt: "Пачка Vivadzen Kratom"
+  spec_labels:
+    speed: "Скорость"
+    duration: "Длительность"
+    character: "Характер"
+  bottom:
+    title: "Регион произрастания"
+    description: "Уникальный состав почвы и климат конкретного региона формируют алкалоидный профиль растения. География отвечает за глубину, продолжительность эффекта и индивидуальные оттенки свойств каждого сорта."
+  origins:
+    maengda:
+      name: "Maeng Da"
+      subtitle: "Мощность и Пиковая Эффективность"
+      specs:
+        speed: "Быстрый старт (10-15 мин)"
+        duration: "Средняя (3-4 часа)"
+        character: "Резкий, Выраженный, Интенсивный"
+    malay:
+      name: "Malay"
+      subtitle: "Выносливость и «Длинные ноги»"
+      specs:
+        speed: "Медленный разгон (Creeper)"
+        duration: "Максимальная (5-7 часов)"
+        character: "Ровный, Стабильный, Пролонгированный"
+    thai:
+      name: "Thai"
+      subtitle: "Энергия и Мотивация"
+      specs:
+        speed: "Очень быстрый"
+        duration: "Средняя"
+        character: "Стимулирующий, Деятельный"
+    borneo:
+      name: "Borneo"
+      subtitle: "Тяжесть и Глубина"
+      specs:
+        speed: "Средняя"
+        duration: "Длительная"
+        character: "Тяжелый, Обволакивающий, Телесный"
+    sumatra:
+      name: "Sumatra"
+      subtitle: "Настроение и Комфорт"
+      specs:
+        speed: "Средняя / Плавная"
+        duration: "Средняя"
+        character: "Мягкий, Эйфоричный, Уютный"
+
+uk:
+  kratom_word: "кратом"
+  header:
+    title: "Відкрийте для себе різноманіття сортів з різних куточків світу"
+    image_alt: "Пачка Vivadzen Kratom"
+  spec_labels:
+    speed: "Швидкість"
+    duration: "Тривалість"
+    character: "Характер"
+  bottom:
+    title: "Регіон зростання"
+    description: "Унікальний склад ґрунту та клімат конкретного регіону формують алкалоїдний профіль рослини. Географія відповідає за глибину, тривалість ефекту та індивідуальні відтінки властивостей кожного сорту."
+  origins:
+    maengda:
+      name: "Maeng Da"
+      subtitle: "Потужність і пікова ефективність"
+      specs:
+        speed: "Швидкий старт (10–15 хв)"
+        duration: "Середня (3–4 години)"
+        character: "Різкий, виражений, інтенсивний"
+    malay:
+      name: "Malay"
+      subtitle: "Витривалість і «довгі ноги»"
+      specs:
+        speed: "Повільний розгін (Creeper)"
+        duration: "Максимальна (5–7 годин)"
+        character: "Рівний, стабільний, пролонгований"
+    thai:
+      name: "Thai"
+      subtitle: "Енергія та мотивація"
+      specs:
+        speed: "Дуже швидкий"
+        duration: "Середня"
+        character: "Стимулюючий, діяльний"
+    borneo:
+      name: "Borneo"
+      subtitle: "Важкість і глибина"
+      specs:
+        speed: "Середня"
+        duration: "Тривала"
+        character: "Важкий, обволікаючий, тілесний"
+    sumatra:
+      name: "Sumatra"
+      subtitle: "Настрій та комфорт"
+      specs:
+        speed: "Середня / плавна"
+        duration: "Середня"
+        character: "М’який, ейфоричний, затишний"
+
+en:
+  kratom_word: "kratom"
+  header:
+    title: "Discover a [[--variety of strains--]] from different parts of the world"
+    image_alt: "Vivadzen Kratom pack"
+  spec_labels:
+    speed: "Speed"
+    duration: "Duration"
+    character: "Character"
+  bottom:
+    title: "Growing region"
+    description: "The unique soil and climate of each region shape the plant’s alkaloid profile. Geography defines the depth, duration, and nuanced effects of each strain."
+  origins:
+    maengda:
+      name: "Maeng Da"
+      subtitle: "Power and Peak Effectiveness"
+      specs:
+        speed: "Fast onset (10–15 min)"
+        duration: "Medium (3–4 hours)"
+        character: "Sharp, pronounced, intense"
+    malay:
+      name: "Malay"
+      subtitle: "Endurance and “Long legs”"
+      specs:
+        speed: "Slow ramp-up (Creeper)"
+        duration: "Maximum (5–7 hours)"
+        character: "Even, stable, prolonged"
+    thai:
+      name: "Thai"
+      subtitle: "Energy and Motivation"
+      specs:
+        speed: "Very fast"
+        duration: "Medium"
+        character: "Stimulating, active"
+    borneo:
+      name: "Borneo"
+      subtitle: "Heaviness and Depth"
+      specs:
+        speed: "Medium"
+        duration: "Long-lasting"
+        character: "Heavy, enveloping, body-focused"
+    sumatra:
+      name: "Sumatra"
+      subtitle: "Mood and Comfort"
+      specs:
+        speed: "Medium / smooth"
+        duration: "Medium"
+        character: "Soft, euphoric, cozy"
+
+cs:
+  kratom_word: "kratom"
+  header:
+    title: "Objevte rozmanitost odrůd z různých koutů světa"
+    image_alt: "Balení Vivadzen Kratom"
+  spec_labels:
+    speed: "Rychlost"
+    duration: "Doba trvání"
+    character: "Charakter"
+  bottom:
+    title: "Region původu"
+    description: "Jedinečné složení půdy a klima konkrétního regionu formují alkaloidní profil rostliny. Geografie určuje hloubku, délku účinku a individuální nuance vlastností každé odrůdy."
+  origins:
+    maengda:
+      name: "Maeng Da"
+      subtitle: "Síla a špičková účinnost"
+      specs:
+        speed: "Rychlý nástup (10–15 min)"
+        duration: "Střední (3–4 hodiny)"
+        character: "Ostrý, výrazný, intenzivní"
+    malay:
+      name: "Malay"
+      subtitle: "Výdrž a „dlouhé nohy“"
+      specs:
+        speed: "Pomalý nástup (Creeper)"
+        duration: "Maximální (5–7 hodin)"
+        character: "Rovnoměrný, stabilní, prodloužený"
+    thai:
+      name: "Thai"
+      subtitle: "Energie a motivace"
+      specs:
+        speed: "Velmi rychlý"
+        duration: "Střední"
+        character: "Stimulující, aktivní"
+    borneo:
+      name: "Borneo"
+      subtitle: "Tíha a hloubka"
+      specs:
+        speed: "Střední"
+        duration: "Dlouhotrvající"
+        character: "Těžký, obklopující, tělesný"
+    sumatra:
+      name: "Sumatra"
+      subtitle: "Nálada a komfort"
+      specs:
+        speed: "Střední / jemná"
+        duration: "Střední"
+        character: "Měkký, euforický, útulný"

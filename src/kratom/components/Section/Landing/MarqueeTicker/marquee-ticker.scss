@@ -1,0 +1,85 @@
+.marquee-ticker {
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #8b5cf6 0%,
+    #d946ef 20%,
+    #ec4899 40%,
+    #f43f5e 60%,
+    #10b981 80%,
+    #06b6d4 100%
+  );
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  @include mobile {
+    height: 64px;
+  }
+
+  &__track {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    overflow: visible;
+  }
+
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
+    animation: marquee-scroll linear infinite;
+    will-change: transform;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: white;
+    letter-spacing: 0.1em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    padding: 0 10px;
+    line-height: 100px;
+    height: 100px;
+
+    @include mobile {
+      font-size: 18px;
+      line-height: 64px;
+      height: 64px;
+    }
+  }
+
+  &__separator {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin: 0 20px;
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 100px;
+    height: 100px;
+
+    @include mobile {
+      font-size: 16px;
+      line-height: 64px;
+      height: 64px;
+      margin: 0 12px;
+    }
+  }
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

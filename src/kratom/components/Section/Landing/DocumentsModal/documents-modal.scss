@@ -1,0 +1,49 @@
+.landing-documents-modal {
+  :deep(.modal-inner) {
+    padding: 24px;
+  }
+}
+
+.documents-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 1000px;
+
+  @include desktop {
+    min-width: 1000px;
+  }
+}
+
+.documents-modal__doc {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+}
+
+.documents-modal__doc-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.documents-modal__doc-viewer {
+  width: 100%;
+  height: 70vh;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f3f3f3;
+}
+
+.documents-modal__doc-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b6b6b;
+  font-size: 14px;
+}

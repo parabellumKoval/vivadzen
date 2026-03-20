@@ -1,0 +1,7 @@
+zasilkovna_cod: "Contra reembolso mediante Zasilkovna en la República Checa, con pago en efectivo o tarjeta (si hay terminal). Comisión del transportista: 15 CZK fijos + 1 % del importe del pedido. La comisión se descuenta al entregar el paquete y se calcula automáticamente."
+novaposhta_cod: "Contra reembolso con Nova Poshta en Ucrania. Pago en efectivo o tarjeta al recibir el paquete. Comisión del transportista: 2 % del importe + 20 UAH. El pago se confirma automáticamente tras la entrega."
+default_cash: "Pago en efectivo o tarjeta al recoger el pedido en el punto de entrega. Sin comisiones adicionales. Recomendamos llevar el importe exacto."
+liqpay_online: "Pago en línea mediante LiqPay (Visa/MasterCard, Apple Pay, Google Pay). La operación es instantánea y está protegida con 3D Secure. Vivadzen no cobra comisión adicional."
+card_online: "Pasarela segura para pagos con tarjeta Visa/MasterCard internacionales y de Ucrania. El pago se confirma automáticamente y no tiene comisión extra."
+bank_transfer: "Transferencia bancaria a la cuenta de la empresa. Tras realizar el pedido recibirás los datos bancarios y el símbolo variable. Puedes pagar mediante banca en línea o código QR. Los fondos se acreditan en 1 a 24 horas según tu banco."
+info: "Elige el método de pago que más te convenga. Si necesitas otra opción, contáctanos. La entrega se paga por separado, independientemente del método elegido. Después de seleccionar el envío, te informaremos el costo."

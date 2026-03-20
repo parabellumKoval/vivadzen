@@ -1,0 +1,53 @@
+.pagination {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(30px, 40px);
+  align-items: center;
+  column-gap: 5px;
+  &-wrapper {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(30px, 40px) 1fr minmax(30px, 40px);
+    column-gap: 5px;
+    max-width: calc(100vw - 30px);
+    @include desktop {
+      width: max-content;
+    }
+  }
+}
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 50px;
+  width: 100%;
+  padding: 0;
+  font-weight: 400;
+  font-size: 14px;
+  border-radius: 10px;
+  // border: 2px solid $color-border;
+  background: none;
+  transition: box-shadow $speed, width $speed, background $speed;
+  @include tablet {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  &.active {
+    font-weight: 300;
+    background: $color-bg-2;
+    color: $color-3 !important;
+    // box-shadow: 0px 4px 10px 0px rgba(146, 128, 255, 0.15);
+  }
+  &:hover {
+    color: $color-primary;
+  }
+  &.active {
+    cursor: default;
+  }
+  &.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: $color-3 !important;
+  }
+}

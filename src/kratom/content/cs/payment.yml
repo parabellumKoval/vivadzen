@@ -1,0 +1,7 @@
+zasilkovna_cod: "Dobírka prostřednictvím Zasilkovna v České republice, platba v hotovosti nebo kartou (pokud je terminál k dispozici). Poplatek dopravce: fixních 15 CZK + 1 % z hodnoty objednávky. Poplatek se strhává při převzetí a počítá automaticky."
+novaposhta_cod: "Dobírka přes Nova Poshta na území Ukrajiny. Platba v hotovosti nebo kartou při převzetí. Poplatek dopravce: 2 % z částky + 20 UAH. Platba se potvrzuje automaticky po předání zásilky."
+default_cash: "Platba v hotovosti nebo kartou při osobním odběru ve výdejním místě. Bez dalších poplatků. Doporučujeme mít připravenou přesnou částku."
+liqpay_online: "Online platba přes LiqPay (Visa/MasterCard, Apple Pay, Google Pay). Platba probíhá okamžitě a je chráněna 3D Secure. Vivadzen si neúčtuje žádný poplatek."
+card_online: "Zabezpečená brána pro platby kartou Visa/MasterCard, domácí i mezinárodní. Platba se potvrzuje automaticky a bez poplatku."
+bank_transfer: "Bankovní převod na účet společnosti. Po objednání obdržíte platební údaje a variabilní symbol. Platit lze online bankovnictvím nebo QR kódem. Připsání peněz trvá 1 až 24 hodin podle banky zákazníka."
+info: "Vyberte si způsob platby, který vám vyhovuje. Pokud potřebujete jinou možnost, kontaktujte nás. Cena dopravy se účtuje zvlášť bez ohledu na zvolený způsob. Po výběru dopravy vás o ceně informujeme."

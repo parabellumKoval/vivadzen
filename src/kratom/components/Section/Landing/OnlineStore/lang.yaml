@@ -1,0 +1,23 @@
+ru:
+  title: "Интернет-магазин Vivadzen: категории товаров"
+  button: "Перейти на главную"
+  description_fallback: "У нас большой онлайн-каталог с натуральными продуктами, витаминами и товарами для ежедневного баланса и энергии."
+  category_description_fallback: "Перейдите в категорию и выберите лучшие товары для себя."
+
+uk:
+  title: "Інтернет-магазин Vivadzen: категорії товарів"
+  button: "Перейти на головну"
+  description_fallback: "У нас великий онлайн-каталог із натуральними продуктами, вітамінами та товарами для щоденного балансу й енергії."
+  category_description_fallback: "Перейдіть у категорію та оберіть найкращі товари для себе."
+
+en:
+  title: "Vivadzen Online Store: Product Categories"
+  button: "Go to the online store"
+  description_fallback: "Explore our large online catalog with natural products, vitamins, and daily essentials for balance and energy."
+  category_description_fallback: "Open the category and choose the products that fit your goals."
+
+cs:
+  title: "Internetový obchod Vivadzen: kategorie produktů"
+  button: "Přejít na hlavní stránku"
+  description_fallback: "Prozkoumejte náš široký online katalog s přírodními produkty, vitamíny a zbožím pro každodenní rovnováhu a energii."
+  category_description_fallback: "Otevřete kategorii a vyberte si produkty, které vám sedí."

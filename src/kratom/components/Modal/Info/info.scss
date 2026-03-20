@@ -1,0 +1,33 @@
+.modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+
+  &__message {
+    font-size: 14px;
+    line-height: 1.6;
+    color: $color-3;
+    margin: 0;
+
+    @include desktop {
+      font-size: 16px;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    button {
+      flex: 1;
+      max-width: 100%;
+
+      @include desktop {
+        flex: 0 0 auto;
+        min-width: 120px;
+      }
+    }
+  }
+}

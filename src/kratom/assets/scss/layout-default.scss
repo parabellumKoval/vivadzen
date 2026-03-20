@@ -1,0 +1,16 @@
+.main {
+  position: relative;
+  width: 100%;
+  @include tablet {
+    overflow-x: initial;
+  }
+  @include desktop {
+    width: auto;
+  }
+}
+.comp-btn{
+  :deep(.comparison-btn) {
+    border: 2px solid $color-8;
+    padding: 0 55px;
+  }
+}

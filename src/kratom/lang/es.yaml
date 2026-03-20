@@ -1,0 +1,570 @@
+regions:
+  global: Global
+  ua: Ucrania
+  cz: República Checa
+  de: Alemania
+  es: España
+
+title:
+  categories: Categorías
+  products: Productos
+  home: Inicio
+  catalog: Catálogo
+  contacts: Contactos
+  cart: Carrito
+  checkout: Finalizar compra
+  search_results: Resultados de búsqueda
+  search: Buscar
+  comparison: Comparación
+  favorite: Favoritos
+  brands: Marcas
+  articles: Artículos
+  blog: Blog
+  delivery: Entrega
+  payment: Pago
+  guarantees: Garantías
+  qa: Preguntas frecuentes
+  about: Sobre nosotros
+  sales: Promociones
+  news: Noticias
+  reviews: Reseñas
+  vivapoints: "{pointsName}"
+  vivapoints_and_rewards: "{pointsName} y recompensas"
+  affiliate_system: Programa de afiliados
+  czech-republic-kratom: Comprar kratom en República Checa
+  agreement: Acuerdo de oferta pública
+  returns: Política de devoluciones
+  checkout_payment: Pago del pedido
+  other: Otros
+  checkout_complete: ¡Gracias por tu pedido!
+  checkout_complete_failed: Error al realizar el pedido
+  policy: Política de privacidad
+  terms: Términos de uso
+  certificates: Certificados
+  remove_userdata: Eliminación de datos del usuario
+  withdrawal: Retiro
+  account:
+    account: Cuenta
+    orders: Historial de pedidos
+    promocodes: Mis cupones
+    referrals: Programa de referidos
+    settings: Configuración
+    support: Soporte
+    favorite: Productos favoritos
+    transactions: Transacciones
+    network:
+      tabs:
+        common: 'Información general'
+        referrals: 'Red de afiliados'
+        conditions: 'Condiciones del programa'
+
+meta:
+  address: Na Bojisti 1471/22, 120 00 Nove Mesto, Praga 2, Chequia
+  djini_desc: Tienda en línea "Vivadzen"
+
+label:
+  articul: SKU
+  sale: Oferta
+  status: Estado
+  value_search: Buscar valores
+  only_in_stock: Solo en stock
+  top_sales: Más vendidos
+  top_price: Mejor precio
+  with_rates: Con valoraciones y reseñas
+  selections: Colecciones
+  grn: UAH
+  sec: seg
+  price: Precio
+  all: Producto
+  desc: Descripción
+  props: Especificaciones
+  guide: Guía de compra
+  common_info: Información general
+  auth: Autenticación en el sitio
+  register: Registro
+  login: Iniciar sesión
+  lang: Idioma
+  auth_enter: Inicia sesión en tu cuenta
+  total: Total
+  available: Disponible
+  running_out: Quedan pocas unidades
+  not_available: No disponible
+  delivery_ready: Listo para enviar
+  customer: Cliente
+  promocode: Cupón
+  brand: Marca
+  thorough: Más detalles
+  filters: Filtros
+  our_address: Nuestra dirección
+  product_code: Código del producto
+  contact_phones: Teléfonos de contacto
+  address: Nuestra dirección
+  our_socials: Nuestras redes sociales
+  messengers: Soporte
+  social_networks: Redes sociales
+  messengers_consultation_hint: Nuestros mensajeros para consultas y aclaración de información sobre pedidos
+  sub_title: ¡Suscríbete para descuentos!
+  sub_desc: Enviamos a los suscriptores cupones y bonos cada semana.
+  min_read: min de lectura
+  active_filters: Filtros aplicados
+  all_products: Todos los productos
+  show: Mostrar
+  reviews: '{reviews} reseñas | {reviews} reseña | {reviews} reseñas | {reviews} reseñas'
+  products: '{products} productos | {products} producto | {products} productos | {products} productos'
+  page: 'página {page}'
+  product:
+    sale: Promoción
+    price: Mejor precio
+    top: Más vendido
+
+messages:
+  review_gift: Cupón del -5% por una reseña verificada de la tienda
+  rates_reviews: '{rates} valoraciones y {reviews} reseñas'
+  products_found: Se encontraron {amount} productos
+  no_results: Sin resultados
+  empty_cart: El carrito está vacío
+  in_your_cart: 'En tu carrito {products} producto'
+  cart_item_unavailable: Producto no disponible en tu región
+  leave_review: Dejar reseña
+  delivery_price: Costo de envío
+  delivery_vendor_price: Según tarifas del transportista
+  products_total: Total de artículos
+  to_pay: Importe a pagar
+  bonuses_use: Pagado con bonos
+  use_promocode: Aplicar cupón
+  enter_promocode: Introduce el código
+  accept_payment: Aceptamos pagos
+  payment_methods: Métodos de pago
+  i_agreed_with: Estoy de acuerdo con
+  agree_privacy_policy: la política de privacidad
+  no_catalog_results: No se encontró nada, prueba cambiar los filtros o la búsqueda
+  personal_discount: Descuento personal
+  chose_delivery_country: Selecciona el país de entrega
+  chose_delivery: Elige un método de envío para ver los métodos de pago disponibles
+  select_region_delivery_notice: Para ver todos los métodos de entrega disponibles y leer la información detallada, primero selecciona tu país de entrega
+  select_region_payment_notice: Para ver todos los métodos de pago disponibles y leer la información detallada, primero selecciona tu país de entrega
+  email_verification_required: Se ha enviado un enlace de confirmación a tu correo electrónico. Por favor, verifica tu dirección de correo electrónico para activar tu cuenta.
+
+message:
+  email_verification_required: Se ha enviado un enlace de confirmación a tu correo electrónico. Por favor, verifica tu dirección de correo electrónico para activar tu cuenta.
+
+store_only:
+  title: Disponible solo en tienda
+  description: Este producto está disponible únicamente en nuestra tienda física.
+  badge: Solo en tienda
+  map_title: Estamos en el mapa
+  address_label: Dirección de la tienda
+  address_fallback: Dirección en actualización
+  button: Dónde comprar
+  banner: Este producto solo se puede comprar en nuestra tienda física.
+
+age_gate:
+  title: Confirmación de edad
+  description: Confirma que tienes al menos 18 años para continuar en Vivadzen.
+  confirm: Sí, tengo 18+
+  decline: No
+
+age_verification:
+  badge: Venta 18+
+  product_banner: Este producto en Chequia solo se puede comprar tras la verificación de edad de ADULTO.cz durante el proceso de compra.
+
+campaign:
+  campaign_title: Promoción
+  view_conditions: Ver condiciones
+  conditions_title: Condiciones de la promoción
+  until_end_days: La promoción termina en {days} días
+  until_end_hours: La promoción termina en {hours} horas
+  in_catalog: Productos de la promoción
+  view_all_products: Ver todos los productos en promoción
+  discount_line: Descuento promocional
+
+button:
+  collapse: Contraer
+  expand: Expandir
+  logout: Cerrar sesión
+  logout_system: Cerrar sesión
+  yes: Sí
+  no: No
+  ok: OK
+  enter: Iniciar sesión
+  register: Registrarse
+  pay: Proceder al pago
+  back: Atrás
+  reply: Responder
+  buy: Comprar
+  to_cart: Añadir al carrito
+  leave_review: Dejar reseña
+  1_click_buy: Comprar en un clic
+  filters: Filtros
+  sorting: Ordenar
+  apply: Aplicar
+  save: Guardar
+  cancel: Cancelar
+  delete: Eliminar
+  load_more: Cargar más
+  reset_all: Restablecer todo
+  view_all: Ver todo
+  send: Enviar
+  sub: Suscribirse
+  create_order: Realizar pedido
+  send_request: Enviar solicitud
+  login_or_register: Iniciar sesión / Registrarse
+  go_home: Ir al inicio
+  download_invoice: Descargar factura en PDF
+
+form:
+  enter:
+    name: Ingresa el nombre
+    phone: Ingresa el teléfono
+    email: Ingresa el correo
+    message: Ingresa el mensaje
+    comment: Ingresa el comentario
+    password: Ingresa la contraseña
+    password_confirmation: Repite la contraseña
+    review: Escribe una reseña
+    reply: Escribe tu respuesta
+    invoice_qr: Código QR para pagar la factura
+    invoice_pdf: Puedes descargar la factura
+    use_qr_or_invoice: Usa el código QR o la factura para pagar el pedido
+  full_name: Nombre completo
+  firstname: Nombre
+  name: Nombre
+  income: Ingresos
+  referrals: Referidos
+  lastname: Apellido
+  phone: Teléfono
+  email: Correo electrónico
+  comment: Comentario
+  password: Contraseña
+  password_confirmation: Contraseña nuevamente
+  method: Método
+  review: Reseña
+  reply: Respuesta
+  country: País
+  city: Ciudad
+  max: Máximo {value}
+  delivery:
+    settlement: Localidad
+    warehouse: Número de sucursal
+    city: Ciudad
+    street: Calle
+    house: Casa
+    room: Apartamento
+    zip: Código postal
+    address: Dirección de entrega
+    novaposhta_warehouse: Sucursal/locker de Nova Poshta
+    novaposhta_address: Entrega por mensajero de Nova Poshta
+    packeta_warehouse: Sucursal/locker de Zasilkovna
+    packeta_address: Entrega por mensajero de Zasilkovna
+    default_pickup: Recogida
+    default_address: Envío postal
+  payment:
+    liqpay_online: Pago online con LiqPay
+    card_online: Pago con tarjeta online
+    default_cash: Pago contra entrega
+    zasilkovna_cod: Contra reembolso Zasilkovna
+    novaposhta_cod: Contra reembolso Nova Poshta
+    bank_transfer: Transferencia bancaria
+
+status:
+  new: Nuevo
+  canceled: Cancelado
+  fail: Error
+  failed: Error
+  completed: Completado
+  pending: En curso
+  promocode:
+    active: Activo
+    not_active: Inactivo
+    expired: Expirado
+    limit: Límite alcanzado
+
+pay_status:
+  waiting: Pendiente de pago
+  failed: Error
+  paied: Pagado
+
+delivery_status:
+  waiting: Pendiente de envío
+  sent: Enviado
+  failed: Error
+  delivered: Entregado
+  pickedup: Retirado
+
+payment:
+  type:
+    delivery: Pago contra entrega
+    cash: Efectivo
+    online: Pago sin efectivo
+
+error:
+  occurred: Ocurrió un error, inténtalo de nuevo 😓
+  required: Campo obligatorio
+  error: Ocurrió un error
+  check_fields: Verifica que los campos estén completados correctamente
+  auth:
+    password:
+      require: La contraseña debe tener al menos 6 caracteres
+      confirmation: Las contraseñas deben coincidir
+    "A user with this email address has already been registered": Un usuario con este correo ya está registrado
+    "Password recovery requires an email": Para recuperar la contraseña se requiere un correo electrónico
+    "Auth session missing!": ¡Falta la sesión de autenticación!
+    "Invalid login credentials": Credenciales de acceso no válidas
+    "User already registered": Usuario ya registrado
+    "Password should be at least 6 characters": La contraseña debe tener al menos 6 caracteres
+    "Signup requires a valid password": Registrarse requiere una contraseña válida
+    "To signup, please provide your email": Para registrarte, proporciona tu correo electrónico
+    "Unable to validate email address: invalid format": "No se puede validar la dirección de correo: formato no válido"
+    "Anonymous sign-ins are disabled": Los inicios de sesión anónimos están deshabilitados
+    "Email rate limit exceeded": Se superó el límite de envíos de correos
+
+noty:
+  add: Añadido
+  remove: Eliminado
+  comparison:
+    add: Producto agregado a la lista de comparación
+    remove: Producto eliminado de la lista de comparación
+  favorite:
+    need_login: Inicia sesión para añadir el producto a favoritos 🔑
+    success: Producto añadido a favoritos 😍
+  1_click:
+    title: Gracias, solicitud enviada
+    sent: Nos pondremos en contacto pronto para aclarar los detalles del pedido 😎
+    fail: No se realizó el pedido 😔
+  subscription:
+    sent_title: Suscripción confirmada
+    sent: Suscripción realizada con éxito 😉
+    fail: La suscripción no se completó 😔
+  feedback:
+    sent: Solicitud enviada con éxito 😉
+    fail: La solicitud no se envió
+  copied: "Copiado al portapapeles: {text}"
+  product_to_cart: Producto {product} añadido al carrito
+  product_delete_cart: Producto {product} eliminado del carrito
+  auth:
+    logout: Has cerrado sesión 😉
+    register:
+      privacy: Para registrarte debes aceptar la política de privacidad.
+      success: Te registraste correctamente 👍
+      fail: El registro falló. Verifica los datos ingresados 👈
+    login:
+      success: Inicio de sesión correcto 😎
+      failed: Error de inicio de sesión. Asegúrate de completar los campos correctamente 😔
+    password:
+      recovery:
+        sent: Se envió un correo a {email} para restablecer la contraseña.
+        fail: Error. El enlace no se envió 😓
+      changed:
+        success: Contraseña cambiada con éxito. Puedes iniciar sesión con la nueva contraseña 🔑.
+    email:
+      confirmation:
+        sent: Se envió un correo para confirmar tu email.
+      changed:
+        success: Correo confirmado con éxito. Ahora puedes usarlo para acceder a tu cuenta. 👍
+        fail: No se pudo confirmar el correo. Inténtalo nuevamente.
+  update:
+    success: Datos actualizados correctamente
+    fail: Los datos no se actualizaron
+  promocode:
+    success: Cupón {code} aplicado al pedido
+    removed: Cupón {code} cancelado
+  review:
+    need_login: Inicia sesión para dejar una reseña 🔑
+    fail_title: La reseña no se publicó 😓
+    fail: Verifica que los campos estén completados correctamente
+    success_title: ¡Genial! 😎
+    success: Gracias, tu reseña ha sido enviada
+  order:
+    fail: Ocurrió un error al realizar el pedido
+  withdrawal:
+    success_title: ¡Genial! 😎
+    fail_title: Error
+    requested: Solicitud de retiro recibida, espera la revisión.
+    fail: Asegúrate de completar los campos correctamente 😔
+
+seo:
+  page:
+    title: "{title} - Vivadzen"
+    desc: "{title} en vivadzen.com"
+
+delivery:
+  more: Más sobre la entrega
+  delivery: Entrega en Ucrania
+  provider_tariffs: Según tarifas del transportista
+  np_warehouse: "A la sucursal / locker de Nova Poshta"
+  np_address: "Mensajero de Nova Poshta a tu dirección"
+  z_warehouse: "A la sucursal / locker de Zasilkovna"
+  z_address: "Mensajero de Zasilkovna a tu dirección"
+  pickup: Recogida
+  address: Entrega a domicilio
+  from_shop: desde la tienda
+  packeta_warehouse: Sucursal/locker de Zasilkovna
+  packeta_address: Por mensajero de Zasilkovna
+  novaposhta_warehouse: Sucursal/locker de Nova Poshta
+  novaposhta_address: Por mensajero de Nova Poshta
+  default_pickup: Recogida
+  from: desde
+  subtitle: Los métodos de entrega dependen del país seleccionado. Cambia el país de entrega para ver las opciones de tu región.
+
+payments:
+  subtitle: Los métodos de pago dependen del país seleccionado. Cambia el país de entrega para ver las opciones disponibles.
+  liqpay_online:
+    title: Pago en línea con LiqPay
+    desc: Paga tu pedido en línea
+  card_online:
+    title: Pago con tarjeta en línea
+    desc: Paga tu pedido en línea
+  default_cash:
+    title: Pago contra entrega
+    desc: Al recoger en nuestra tienda paga con tarjeta o efectivo
+  zasilkovna_cod:
+    title: Contra reembolso Zasilkovna
+    desc: Paga con tarjeta o efectivo al recibir
+  novaposhta_cod:
+    title: Contra reembolso Nova Poshta
+    desc: Paga con tarjeta o efectivo al recibir
+  bank_transfer:
+    title: Transferencia bancaria
+    desc: Te enviaremos por correo los datos necesarios de pago, incluido el símbolo variable que debes indicar. También puedes generar la orden escaneando un código QR.
+    fill_contacts: Completa los campos necesarios para emitir la factura
+
+wallet:
+  created_at: Creado el
+  type: Tipo
+  amount: Cantidad
+  operation_info: Información de la operación
+  related_order: Pedido relacionado
+  referral_info: Información de referidos
+  related_operation: Operación relacionada
+  currency_conversion: Conversión de moneda
+  order_info: Información del pedido
+  context_info: Información del contexto
+  description: Descripción
+  trigger: Disparador
+  order_id: ID del pedido
+  order_total: Total del pedido
+  user_id: ID del usuario
+  referral_level: Nivel de referido
+  beneficiary_type: Tipo de beneficiario
+  rewards_count: Cantidad de recompensas
+  total_reward: Recompensa total
+  payment_status: Estado del pago
+  paid: Pagado
+  unpaid: No pagado
+  reference_type: Tipo de referencia
+  reference_id: ID de referencia
+  target_currency: Moneda objetivo
+  exchange_rate: Tasa de cambio
+  target_amount: Cantidad objetivo
+  currency: Moneda
+  order_code: Código del pedido
+  context_currency: Moneda del contexto
+  upline: Superior
+  withdrawal_request: Solicitud de retiro
+  order: Pedido
+  no_details_available: No hay detalles disponibles
+  type_labels:
+    credit: Abono
+    debit: Débito
+    hold: Bloqueo
+    capture: Confirmación
+    release: Desbloqueo
+  operations:
+    credit:
+      referral_reward: Recompensa del programa de referidos
+      review_reward: Recompensa por reseña
+      order_reward: Recompensa por pedido
+      bonus: Abono de bonificación
+      refund: Reembolso
+      default: Recarga de cuenta
+    debit:
+      withdrawal: Retiro de fondos
+      order: Pago del pedido
+      fee: Comisión
+      default: Cargo
+    hold:
+      withdrawal: Bloqueo para retiro
+      order: Bloqueo para pedido
+      default: Bloqueo de fondos
+    capture:
+      withdrawal: Confirmación de retiro
+      order: Confirmación de pago de pedido
+      default: Confirmación de operación
+    release:
+      withdrawal: Liberación de retiro
+      order: Liberación de pedido
+      default: Liberación de fondos
+  triggers:
+    review_published: Reseña publicada
+    store_order_paid: Pedido pagado
+    referral_signup: Registro de referido
+    referral_purchase: Compra del referido
+    unknown: Otro evento
+
+affiliate:
+  defaults:
+    ttl: '30 días'
+  cta:
+    register_button: 'Registrarse'
+    register_prompt: 'Regístrate'
+  account:
+    label: 'Cuenta personal'
+  form:
+    code_placeholder: 'TU_CÓDIGO'
+  withdrawal:
+    rules_label: 'Sistema de bonificaciones y retiros'
+  link:
+    regular_label: 'Enlace normal'
+    referral_label: 'Enlace de afiliado'
+  media:
+    link_preview_alt: 'Vista previa del enlace de afiliado'
+    ttl_image_alt: 'Ilustración de la regla del primer clic'
+
+kratom:
+  header:
+    store: 'Tienda de kratom'
+  footer:
+    eyebrow: 'Mini-tienda VivaDzen'
+    title: 'Kratom para el mercado checo'
+    text: 'Una tienda enfocada sobre el mismo backend y la misma lógica de catálogo, reducida a lo esencial: kratom, artículos, compra y soporte.'
+    legal: 'Legal'
+  product_card:
+    variants: 'variantes'
+  catalog:
+    eyebrow: 'Solo República Checa'
+    text: 'Selección enfocada de productos de kratom para el mercado checo, con compra directa y contenido multilingüe.'
+    fulfilment: 'Expedición desde Praga'
+    age_verification: 'Verificación de edad en el pago'
+  product:
+    eyebrow: 'Tienda de una sola categoría'
+    choose_variation: 'Elige una variante'
+    overview: 'Resumen'
+    details: 'Detalles'
+    checkout_note: 'Nota de compra'
+    checkout_note_text: 'Los pedidos se procesan en el backend principal de VivaDzen. La entrega, los métodos de pago, el stock y el contenido editorial se comparten con el sistema principal, mientras que esta tienda se centra solo en la venta de kratom en Chequia.'
+  checkout:
+    eyebrow: 'Compra como invitado'
+    text: 'No hace falta una cuenta. Los métodos de entrega y pago se cargan desde el backend compartido de VivaDzen.'
+    empty_prefix: 'Tu carrito está vacío.'
+    empty_action: 'Ir al catálogo'
+    empty_suffix: 'y añade productos para continuar.'
+    payment_redirect: 'El pedido se crea en el backend compartido y luego se te redirige a la pasarela de pago.'
+    order_label: 'Pedido #{code}'
+  complete:
+    order: 'Pedido'
+    created: 'Creado'
+    customer: 'Cliente'
+    delivery: 'Entrega'
+    payment: 'Pago'
+  blog:
+    eyebrow: 'Editorial'
+    text: 'Artículos, guías y novedades para el mercado checo publicados desde el mismo backend compartido.'
+  article:
+    reading_time: 'Tiempo de lectura {minutes} min'
+    content: 'Contenido'
+  contacts:
+    phone: 'Teléfono'
+    email: 'Correo'
+    address: 'Dirección'
+    social: 'Social'
+    support: 'Soporte'

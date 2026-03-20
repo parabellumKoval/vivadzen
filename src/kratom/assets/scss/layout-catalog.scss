@@ -1,0 +1,232 @@
+@use './assets/scss/rich-text' as *;
+
+.selected {
+  display: none;
+  @include tablet {
+    position: sticky;
+    top: 80px;
+    width: 100%;
+    min-height: 50px;
+    z-index: 20;
+    background: $color-border;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+  }
+}
+.catalog {
+  &-campaign-promo {
+    margin: 0 0 24px;
+  }
+
+  &-header {
+    .title-description {
+      margin: 10px 0 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: $color-3;
+
+      @include desktop {
+        font-size: 16px;
+      }
+    }
+
+    @include mobile {
+      background-color: $color-green;
+      color: $color-8;
+
+      .title-common,
+      .title-description,
+      :deep(.breadcrumbs__link) {
+        color: $color-8;
+      }
+    }
+  }
+}
+.header {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  margin: 0 0 15px 0;
+  @include desktop {
+    grid-template-columns: 1fr 2fr 2fr;
+    margin: 30px 0 15px 0;
+  }
+  &.no-filters {
+    margin: 15px 0 15px 0;
+    @include desktop {
+      margin: 30px 0 15px 0;
+      grid-template-columns: 1fr min-content;
+    }
+  }
+  &-title {
+    display: none;
+    @include desktop {
+      display: block;
+      font-weight: 500;
+      font-size: 20px;
+    }
+  }
+  &-desc {
+    color: $color-3;
+  }
+  &-actions {
+    display: none;
+    @include desktop {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  @include desktop {
+    grid-template-columns: 20% 80%;
+  }
+  &.no-filters {
+    @include desktop {
+      grid-template-columns: 100%;
+    }
+    .content-grid {
+      @include desktop {
+        grid-template-columns: repeat(7, 1fr);
+      }
+    }
+  }
+  &-inner {
+    display: grid;
+    grid-gap: 20px;
+    justify-items: flex-end;
+  }
+  &-empty {
+    padding: 0 15px;
+    @include desktop {
+      padding: 0;
+    }
+    &-message {
+      padding: 35px 0;
+    }
+  }
+  &-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+    row-gap: 30px;
+    width: calc(100vw - 30px);
+    max-width: 100vw;
+    margin: 0;
+    @include tablet {
+    }
+    @include desktop {
+      grid-template-columns: repeat(4, 1fr);
+      grid-column-gap: 15px;
+      grid-row-gap: 50px;
+      width: 100%;
+    }
+    @include ld {
+      grid-template-columns: repeat(5, 1fr);
+      grid-row-gap: 50px;
+      width: 100%;
+    }
+    @include xld {
+      grid-template-columns: repeat(5, 1fr);
+      grid-row-gap: 50px;
+      grid-column-gap: 25px;
+      width: 100%;
+    }
+
+    &-item {
+      height: min-content;
+    }
+
+    &-banner {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      border-radius: $radius;
+      height: 100%;
+      background: #f6e6d5;
+
+      &-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &-overlay {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        align-content: end;
+        gap: 6px;
+        padding: 14px;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 10%, rgba(0, 0, 0, 0.72) 100%);
+      }
+
+      &-title {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      &-action {
+        color: #f5d3ad;
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
+  }
+}
+.filters {
+  display: none;
+  @include desktop {
+    display: block;
+  }
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+  grid-gap: 30px;
+  margin: 40px auto 50px auto;
+  @include desktop {
+    flex-direction: row;
+    justify-content: center;
+    margin: 40px 0 50px auto;
+  }
+}
+.pending {
+  opacity: 0.5;
+  pointer-events: none;
+  :deep(*) {
+    pointer-events: none;
+  }
+}
+
+.sentinel {
+  position: absolute;
+  top: -1px; /* Сдвигаем чуть вверх, чтобы observer сработал ровно в момент касания */
+  left: 0;
+  right: 0;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.header-slot {
+  @include mobile {
+    position: sticky;
+    top: 60px;
+    z-index: 100;
+    transform: translateY(-60px);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &.header-visible {
+    transform: translateY(0);
+  }
+}

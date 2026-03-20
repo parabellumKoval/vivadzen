@@ -1,0 +1,102 @@
+.phone-region {
+  position: relative;
+  width: 100%;
+}
+
+.phone-region__selector {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px 6px 4px;
+  background: transparent;
+  border: none;
+  color: $color-text;
+  cursor: pointer;
+  z-index: 2;
+  transition: color $speed;
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.open .phone-region__chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.phone-region__flag {
+  width: 20px;
+  height: 20px;
+}
+
+.phone-region__dial {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.phone-region__chevron {
+  color: $color-3;
+  transition: transform $speed;
+}
+
+.phone-region :deep(.main-input) {
+  padding-left: 112px;
+}
+
+.phone-region__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 230px;
+  background: $color-8;
+  border: 1px solid $color-4;
+  border-radius: $radius;
+  box-shadow: 0 8px 20px rgba($color-text, 0.1);
+  z-index: 5;
+  overflow: hidden;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.phone-region__option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  color: $color-text;
+  text-align: left;
+  cursor: pointer;
+  transition: background $speed, color $speed;
+
+  &.active {
+    background: rgba($color-green, 0.12);
+  }
+
+  &:hover {
+    background: rgba($color-green, 0.08);
+  }
+}
+
+.phone-region__option-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.phone-region__option-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.phone-region__option-dial {
+  font-size: 12px;
+  color: $color-3;
+}

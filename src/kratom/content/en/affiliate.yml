@@ -1,0 +1,117 @@
+hero:
+  eyebrow: "{pointsName} Affiliate"
+  title: "Vivadzen affiliate programme: earn from recommendations"
+  description: "Turn your audience's trust into steady income. You share quality products – we credit points for every purchase up to the third level of your network."
+  image: '/images/af-2.png'
+  stats:
+    - label: "Personal level"
+      value: "{level1}"
+    - label: "Friends of friends"
+      value: "{level2}"
+    - label: "Third tier"
+      value: "{level3}"
+  highlights:
+    - icon: 'solar:money-bag-linear'
+      label: "Passive {pointsName} income"
+    - icon: 'solar:users-group-two-rounded-linear'
+      label: "Network depth — 3 tiers"
+    - icon: 'solar:shield-minimalistic-linear'
+      label: "Fair payouts after delivery"
+  cta:
+    primary:
+      label: "Get your referral link"
+    secondary:
+      label: "Programme terms"
+levels:
+  title: "Three levels of rewards"
+  subtitle: "Our referral network goes deep, so every participant matters."
+  cards:
+    - icon: 'solar:ranking-bold-duotone'
+      label: "Level 1"
+      accent: "Personal invites"
+      percent: "{level1}"
+      description: "Share the link with friends, followers or clients and instantly receive a share of each paid order."
+    - icon: 'solar:share-bold-duotone'
+      label: "Level 2"
+      accent: "Friends of friends"
+      percent: "{level2}"
+      description: "When your referrals recommend Vivadzen further, you keep earning a percentage from every successful purchase."
+    - icon: 'solar:radar-linear'
+      label: "Level 3"
+      accent: "Distant circle"
+      percent: "{level3}"
+      description: "The network expands while you get true passive profit for growing the community around the brand."
+algo:
+  title: "How {pointsName} are credited"
+  intro: "We carefully log every cash flow so a partner always sees transparent statistics."
+  cards:
+    - icon: 'solar:cart-linear'
+      title: "Calculation base"
+      description: "The percentage is taken not from the full basket but from the final payable amount after promo codes, bonuses and delivery."
+      bullets:
+        - "That's the amount the customer actually paid."
+        - "Bonus redemptions and discounts are already included."
+    - icon: 'solar:dollar-bold-duotone'
+      title: "Currency conversion"
+      description: "Orders may be paid in CZK, EUR, USD or UAH — the system captures the local payment, calculates your percentage and instantly converts it into {pointsName}."
+      bullets:
+        - "Points are stored in a single bonus account."
+        - "Conversion uses the current rate on the website."
+    - icon: 'solar:clock-circle-bold-duotone'
+      title: "Moment of crediting"
+      description: "To eliminate fraud, points arrive only after the order is paid and delivered to the client."
+      bullets:
+        - "The order status must change to \"Completed\"."
+        - "You receive an inbox notification about the credit."
+  quote:
+    title: "Final verification"
+    text: "Credits happen not at the 'Buy' click but after a successful order processing. That protects honest partners and the customer."
+link:
+  title: "The key tool — your link"
+  subtitle: "The system has to understand that a customer came from you, so your account stores a personal code."
+  image: '/images/af-3.png'
+  steps:
+    - "{register} or log in to {account}."
+    - "Go to the 'Affiliate programme' section and copy your code."
+    - "Append it to any link to products or sections of the site."
+  example:
+    base: 'vivadzen.com/product/super-cream'
+    referral: 'vivadzen.com/product/super-cream?ref={code}'
+    hint: "After clicking, make sure the ref parameter remains in the address bar — that means the system assigned the buyer to you."
+  note: "You can recommend particular products, curated lists or even the blog — the only rule is to keep your code at the end of the link."
+ttl:
+  title: "First click rule"
+  image: '/images/af-4.png'
+  description: "The partner who first brought the user keeps the priority for the entire TTL."
+  bullets:
+    - "After the click the system 'remembers' the source and locks the client to you for {ttl}."
+    - "If during the TTL the client follows someone else's link, the sale still counts for you."
+    - "Once the user registers they remain in your partner network forever."
+control:
+  title: "Control and notifications"
+  intro: "You can monitor the growth of your team 24/7 inside the Account."
+  cards:
+    - icon: 'solar:colour-tuneing-linear'
+      title: "Network structure"
+      text: "The 'Account → Affiliate Programme → Partner Network' section shows the full tree of all levels."
+    - icon: 'solar:wallet-money-linear'
+      title: "Finances"
+      text: "'Account → Transactions' keeps the log of credits, levels and amounts."
+    - icon: 'solar:letter-linear'
+      title: "Email notifications"
+      text: "We message you when a new partner appears or bonuses are credited for a completed order."
+payout:
+  title: "Withdrawals and using points"
+  intro: "{pointsName} are real money that you can spend or withdraw."
+  options:
+    - icon: 'solar:cart-check-linear'
+      title: "Pay for orders"
+      text: "Cover up to 100% of the basket with bonuses during checkout."
+    - icon: 'solar:wallet-money-bold-duotone'
+      title: "Withdraw funds"
+      text: "Transfer points to a bank card or crypto wallet. Detailed rules are described in the '{withdraw}' section."
+cta:
+  title: "Start growing your partner network today"
+  text: "Copy the link in your account, send it to a friend or post it on social media — the first {pointsName} arrive right after a completed order."
+  button:
+    label: "Open the affiliate dashboard"

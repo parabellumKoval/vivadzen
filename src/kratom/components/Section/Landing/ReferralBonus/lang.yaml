@@ -1,0 +1,111 @@
+ru:
+  vivapoints_info: "Мы поощряем вашу активность: за отзывы и написание статей начисляем Viva, которые можно использовать в магазине."
+  header:
+    title: "Получайте бонусы, рекомендуя Vivadzen"
+    lead: "Рекомендации и партнерство — часть нашей культуры. Приглашайте заинтересованных людей и получайте преимущества и бонусы."
+    image_alt: "Бонусная программа Vivadzen"
+  items:
+    discounts:
+      title: "Накопительная скидка до 10%"
+      description: "Чем больше покупок, тем выше персональная скидка — все считается автоматически."
+      image_alt: "Накопительная система скидок"
+    affiliate:
+      title: "Трехуровневая партнерская программа"
+      description: "Создайте систему пассивного дохода и получайте процент с покупок вашей сети."
+      image_alt: "Трехуровневая партнерская программа"
+    promocodes:
+      title: "Еженедельные промокоды для вас и друзей"
+      description: "Персональные коды, которыми удобно делиться — экономия с каждой посылкой."
+      image_alt: "Еженедельные промокоды"
+    vivapoints:
+      title: "{pointsName} за активность в экосистеме"
+      description: "Мы поощряем участие бонусными баллами VIVA, которые можно использовать в магазине."
+      image_alt: "{pointsName} за активность"
+  join:
+    title: "Присоединяйтесь к партнерской программе Vivadzen"
+    description: "Начните строить свою сеть и зарабатывать уже сегодня. Чем больше ваша сеть, тем выше ваш доход!"
+    button: "Присоединиться"
+
+uk:
+  vivapoints_info: "Ми заохочуємо вашу активність: за відгуки та написання статей нараховуємо Viva, які можна використати в магазині."
+  header:
+    title: "Отримуйте бонуси, рекомендуючи Vivadzen"
+    lead: "Рекомендації та партнерство — частина нашої культури. Запрошуйте зацікавлених людей і отримуйте переваги та бонуси."
+    image_alt: "Бонусна програма Vivadzen"
+  items:
+    discounts:
+      title: "Накопичувальна знижка до 10%"
+      description: "Чим більше покупок, тим вища персональна знижка — усе рахується автоматично."
+      image_alt: "Накопичувальна система знижок"
+    affiliate:
+      title: "Трирівнева партнерська програма"
+      description: "Створіть систему пасивного доходу та отримуйте відсоток з покупок вашої мережі."
+      image_alt: "Трирівнева партнерська програма"
+    promocodes:
+      title: "Щотижневі промокоди для вас і друзів"
+      description: "Персональні коди, якими зручно ділитися — економія з кожною посилкою."
+      image_alt: "Щотижневі промокоди"
+    vivapoints:
+      title: "{pointsName} за активність в екосистемі"
+      description: "Ми заохочуємо участь бонусними балами VIVA, які можна використати в магазині."
+      image_alt: "{pointsName} за активність"
+  join:
+    title: "Приєднуйтесь до партнерської програми Vivadzen"
+    description: "Почніть будувати свою мережу та заробляти вже сьогодні. Чим більша ваша мережа, тим вищий ваш дохід!"
+    button: "Приєднатися"
+
+en:
+  vivapoints_info: "We reward your activity: for reviews and writing articles, we credit Viva that you can use in the store."
+  header:
+    title: "Earn bonuses by recommending Vivadzen"
+    lead: "Referrals and partnership are part of our culture. Invite interested people and receive perks and bonuses."
+    image_alt: "Vivadzen bonus program"
+  items:
+    discounts:
+      title: "Loyalty discount up to 10%"
+      description: "The more you buy, the higher your personal discount — calculated automatically."
+      image_alt: "Loyalty discount system"
+    affiliate:
+      title: "Three-level affiliate program"
+      description: "Build a passive income system and earn a percentage from purchases across your network."
+      image_alt: "Three-level affiliate program"
+    promocodes:
+      title: "Weekly promo codes for you and friends"
+      description: "Personal codes that are easy to share — savings on every parcel."
+      image_alt: "Weekly promo codes"
+    vivapoints:
+      title: "{pointsName} for ecosystem activity"
+      description: "We reward participation with bonus VIVA points you can use in the store."
+      image_alt: "{pointsName} rewards"
+  join:
+    title: "Join the Vivadzen affiliate program"
+    description: "Start building your network and earning today. The bigger your network, the higher your income!"
+    button: "Join"
+
+cs:
+  vivapoints_info: "Odměňujeme vaši aktivitu: za recenze a psaní článků připisujeme Viva, které můžete využít v obchodě."
+  header:
+    title: "Získejte bonusy doporučováním Vivadzen"
+    lead: "Doporučení a partnerství jsou součástí naší kultury. Pozvěte zainteresované lidi a získávejte výhody i bonusy."
+    image_alt: "Bonusový program Vivadzen"
+  items:
+    discounts:
+      title: "Věrnostní sleva až 10 %"
+      description: "Čím více nakupujete, tím vyšší osobní sleva — vše se počítá automaticky."
+      image_alt: "Věrnostní systém slev"
+    affiliate:
+      title: "Tříúrovňový partnerský program"
+      description: "Vytvořte si systém pasivního příjmu a získávejte procento z nákupů vaší sítě."
+      image_alt: "Tříúrovňový partnerský program"
+    promocodes:
+      title: "Týdenní promo kódy pro vás a přátele"
+      description: "Osobní kódy, které se snadno sdílejí — úspora s každou zásilkou."
+      image_alt: "Týdenní promo kódy"
+    vivapoints:
+      title: "{pointsName} za aktivitu v ekosystému"
+      description: "Odměňujeme účast bonusovými body VIVA, které lze využít v obchodě."
+      image_alt: "{pointsName} odměny"
+  join:
+    title: "Připojte se k partnerskému programu Vivadzen"
+    description: "Začněte budovat svou síť a vydělávat už dnes. Čím větší síť, tím vyšší váš příjem!"
+    button: "Připojit se"

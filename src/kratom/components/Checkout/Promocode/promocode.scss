@@ -1,0 +1,65 @@
+.promocode{
+  &-wrapper {
+  }
+  &-action {
+    margin: 0 auto 0 0;
+    color: $color-green;
+  }
+  &-form {
+  }
+  &-sale {
+    color: $color-orange;
+    font-weight: 500;
+  }
+  &-btns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+    margin: 15px 0 0 0;
+  }
+  &-card {
+    text-align: left;
+    width: calc(100% + 20px);
+    padding: 20px;
+    margin: 0 -10px;
+    border-radius: $radius;
+    background: $color-border;
+    border: 3px dotted $color-green;
+    overflow: hidden;
+  }
+  &-header {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    align-items: center;
+    grid-gap: 15px;
+    margin: -20px 0 15px -20px;
+    padding: 15px;
+    width: calc(100% + 40px);
+    background: rgba($color-8, 0.4);
+  }
+  &-desc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .promocode-action {
+      color: $color-dark;
+    }
+  }
+  &-name {
+    font-size: 18px;
+    line-height: 135%;
+    color: $color-green;
+    font-weight: 500;
+    font-style: italic;
+  }
+  &-remove-btn {
+    width: 30px;
+    height: 30px;
+    transition: color .3s, border .3s;
+    transform: translateX(15px) translateY(-15px);
+    &:hover {
+      color: $color-red;
+    }
+  }
+}
