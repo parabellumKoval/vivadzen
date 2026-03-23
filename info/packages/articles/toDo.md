@@ -1,0 +1,5 @@
+# Articles To‑Do
+
+1. **Add caching/ETags to article APIs.** The current endpoints recompute the query on every request (`ArticleController::index`, `show`, etc.) and do not leverage the shared cache helpers that catalog routes use (`CategoryController` caches category data). A lightweight cache layer or ETag header would keep the feed responsive for high-traffic blogs.
+2. **Surface schedule metadata.** Articles already support `published_at` and can be wired to `Backpack\Schedule` (see `Schedule` traits in `packages/schedule`), but the API never shares the pending `ScheduledPublication`. Expose the scheduled queue or plan to mark the next `publish_at` so the marketing UI can preview upcoming content.
+3. **Document/tag endpoints for front-end navigation.** The grouped-by-tags endpoint currently builds a hash of articles per tag but lacks locale-aware caching or pagination. Consider adding a dedicated `/api/articles/tags` endpoint plus optional `country`/`locale` filters to drive `featured` or `tag cloud` widgets without loading the full dataset.

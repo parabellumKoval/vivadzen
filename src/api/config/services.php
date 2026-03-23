@@ -49,7 +49,7 @@ return [
     'adulto' => [
         'public_key' => env('ADULTO_PUBLIC_KEY'),
         'private_key' => env('ADULTO_PRIVATE_KEY'),
-        'verify_url' => env('ADULTO_VERIFY_URL', 'https://adulto.cz/api/v1/verify'),
+        'verify_url' => env('ADULTO_VERIFY_URL', 'https://api.result.adulto.cz'),
         'timeout' => (int) env('ADULTO_TIMEOUT', 10),
     ],
 ];

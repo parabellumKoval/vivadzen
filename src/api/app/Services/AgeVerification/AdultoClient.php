@@ -30,20 +30,17 @@ class AdultoClient
 
     protected function sendVerifyRequest(string $uid): bool
     {
-        $publicKey = $this->publicKey();
         $privateKey = $this->privateKey();
-        $verifyUrl = rtrim((string) config('services.adulto.verify_url', 'https://adulto.cz/api/v1/verify'), '/');
+        $verifyUrl = rtrim((string) config('services.adulto.verify_url', 'https://api.result.adulto.cz'), '/');
         $timeout = (int) config('services.adulto.timeout', 10);
-        $signature = hash('sha256', $publicKey . $uid . $privateKey);
 
         try {
             $response = Http::acceptJson()
-                ->withHeaders([
-                    'x-api-key' => $publicKey,
-                    'x-signature' => $signature,
-                ])
                 ->timeout($timeout > 0 ? $timeout : 10)
-                ->get(sprintf('%s/%s', $verifyUrl, urlencode($uid)));
+                ->get($verifyUrl, [
+                    'secret' => $privateKey,
+                    'response' => $uid,
+                ]);
         } catch (\Throwable $exception) {
             Log::channel('single')->warning('ADULTO verify request failed.', [
                 'message' => $exception->getMessage(),
@@ -61,7 +58,21 @@ class AdultoClient
             return false;
         }
 
-        return (bool) data_get($response->json(), 'data.verified', false);
+        $payload = $response->json();
+        $verifiedUid = trim((string) data_get($payload, 'adultocz-verify-uid', ''));
+        $isAdult = data_get($payload, 'adultocz-verify-adult');
+
+        if ($verifiedUid === '' || !hash_equals($uid, $verifiedUid)) {
+            Log::channel('single')->warning('ADULTO verify response uid mismatch.', [
+                'expected_uid' => $uid,
+                'actual_uid' => $verifiedUid,
+                'payload' => $payload,
+            ]);
+
+            return false;
+        }
+
+        return filter_var($isAdult, FILTER_VALIDATE_BOOLEAN);
     }
 
     protected function publicKey(): string
