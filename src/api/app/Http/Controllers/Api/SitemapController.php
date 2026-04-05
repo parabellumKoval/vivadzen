@@ -186,8 +186,10 @@ class SitemapController extends \App\Http\Controllers\Controller
    */
   protected function collectProducts(array $defaultRegions): array
   {
+    $storefront = \Store::storefront();
     $catalog = \DB::table('ak_catalog')
       ->select('slug', 'country_code', 'group_id', 'product_id', 'item_type', 'extras', 'seo', 'is_available')
+      ->where('storefront_code', $storefront)
       ->where('is_available', 1)
       ->whereNotNull('slug')
       ->get();
