@@ -1,0 +1,283 @@
+cs:
+  intro:
+    paragraphs:
+      - "Dle aktuální legislativy v ČR vivadzen s.r.o. jako prodejce psychomoduláčních látek musí u každého zákazníka ověřit věk."
+      - "Proces probíhá přes státní službu Mobilní klíč eGovernmentu nebo jiné prostředky Identity občana."
+    alert: "VAŠE DATA JSOU V BEZPEČÍ. OBDRŽÍME POUZE INFORMACI, ZDA VÁM JE 18+ LET. Žádné osobní údaje k nám nepřichází a neukládáme je."
+  sections:
+    - number: "1"
+      title: "Stažení aplikace Mobilní klíč eGovernmentu"
+      steps:
+        - >-
+          <strong>Stáhněte si aplikaci.</strong> Do svého mobilního telefonu si nainstalujte aplikaci Mobilní klíč eGovernmentu. Pro Android i iOS je zdarma a oficiálně vydaná státní správou.
+        - >-
+          <strong>Otevřete web Identity občana.</strong> Na počítači nebo jiném zařízení přejděte na <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer">www.identita.gov.cz</a>. Ve správě přihlašovacích prostředků v Portálu Identity občana budete později přidávat Mobilní klíč eGovernmentu.
+    - number: "2"
+      title: "Přihlášení do Identity občana"
+      steps:
+        - 'Na stránce identita.gov.cz zvolte možnost <strong>Přihlásit se do Identity občana</strong>.'
+        - 'Jako doporučený způsob vyberte <strong>Bankovní identitu</strong>, například vaši banku, kde máte internetové bankovnictví.'
+        - "Je to nejrychlejší a nejpohodlnější varianta."
+        - "Přihlaste se stejně, jako se přihlašujete do internetového bankovnictví."
+        - "Po úspěšném přihlášení se ocitnete ve správě svého profilu v Portálu Identity občana."
+      note: "Přihlášení probíhá přes Identity občana a službu NIA."
+    - number: "3"
+      title: "Propojení aplikace s vaším profilem"
+      lead: "Po přihlášení uvidíte přehled přihlašovacích prostředků. Zde budete přidávat Mobilní klíč eGovernmentu."
+      steps:
+        - 'V Portálu Identity občana přejděte do části <strong>Přihlašovací prostředky</strong> v levém menu.'
+        - 'V seznamu prostředků najděte položku <strong>Mobilní klíč eGovernmentu</strong> a klikněte na ikonu plus pro přidání nového klíče.'
+        - "Na obrazovce počítače se zobrazí QR kód pro aktivaci aplikace ve vašem telefonu."
+        - "Platnost QR kódu je časově omezená, obvykle přibližně 5 minut. Pokud to nestihnete, můžete si kód kdykoliv vygenerovat znovu."
+      note: "QR kód slouží k propojení aplikace s vaší identitou občana."
+    - number: "4"
+      title: "Aktivace Mobilního klíče"
+      steps:
+        - "Na svém telefonu otevřete aplikaci Mobilní klíč eGovernmentu."
+        - 'Na úvodní obrazovce zvolte možnost <strong>Aktivace klíče k identitě občana</strong>.'
+        - 'V dalším kroku klikněte na tlačítko <strong>Mám hotovo – načíst kód pro připojení</strong>.'
+        - "Namiřte fotoaparát telefonu na QR kód zobrazený na monitoru počítače."
+        - "Telefon vás vyzve k nastavení PINu nebo biometrického přihlášení. Tím dokončíte propojení aplikace s vaší identitou občana."
+      tips:
+        - "V aplikaci zvolte možnost „Aktivace klíče k identitě občana“ a tím začnete propojení s účtem Identity občana."
+        - "Po zobrazení QR kódu na počítači klikněte v aplikaci na „Mám hotovo – načíst kód pro připojení“ a kód naskenujte."
+    - number: "5"
+      title: "Ověření věku při nákupu"
+      steps:
+        - "Na našem e-shopu vložte vybrané produkty do košíku a přejděte k objednávce."
+        - "V košíku nebo během objednávky zvolte možnost ověření věku pomocí Mobilního klíče eGovernmentu."
+        - "Na obrazovce e-shopu se zobrazí QR kód pro ověření věku."
+        - "Na mobilu otevřete aplikaci Mobilní klíč eGovernmentu, naskenujte QR kód a potvrďte odeslání informace o věku."
+        - "Aplikace předá pouze údaj, zda jste starší 18 let. Nepředává rodné číslo, adresu ani jiné citlivé osobní údaje."
+        - "Po potvrzení se vrátíte zpět do košíku, kde můžete objednávku dokončit."
+      lead: "Jakmile máte Mobilní klíč jednou nastavený, je každé další ověření věku otázkou několika vteřin."
+  important:
+    title: "Důležité"
+    paragraphs:
+      - "Celý proces aktivace Mobilního klíče absolvujete pouze jednou."
+      - "Při dalších objednávkách už jen:"
+    steps:
+      - "otevřete aplikaci Mobilní klíč eGovernmentu,"
+      - "naskenujete QR kód v košíku,"
+      - "potvrdíte ověření věku."
+    footer: "Celé ověření pak zabere jen pár vteřin a můžete ihned dokončit nákup."
+  alternative:
+    title: "Alternativní možnost: MojeID"
+    text: "Pokud vám Mobilní klíč nevyhovuje, můžete využít také službu MojeID."
+    bullets:
+      - "Účet MojeID si můžete propojit s Identitou občana online, například opět přes Bankovní identitu."
+      - "Úroveň identity a věk si můžete nechat ověřit také osobně na jakékoliv pobočce Czech POINT."
+      - "Po úspěšném propojení funguje ověření věku na e-shopu podobně jako u Mobilního klíče. E-shop pouze ověří, zda je vám 18+."
+
+en:
+  intro:
+    paragraphs:
+      - "Under current Czech legislation, vivadzen s.r.o. must verify the age of every customer when selling psychomodulating substances."
+      - "The process runs through the state Mobile Key eGovernment service or other Citizen Identity methods."
+    alert: "YOUR DATA IS SAFE. WE RECEIVE ONLY THE INFORMATION WHETHER YOU ARE 18+ YEARS OLD. No personal data is transferred to us or stored by us."
+  sections:
+    - number: "1"
+      title: "Download the Mobile Key eGovernment app"
+      steps:
+        - >-
+          <strong>Download the app.</strong> Install the Mobile Key eGovernment app on your mobile phone. It is available for Android and iOS free of charge and is officially provided by the Czech state administration.
+        - >-
+          <strong>Open the Citizen Identity website.</strong> On a computer or another device, go to <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer">www.identita.gov.cz</a>. Later, in the Citizen Identity Portal, you will add Mobile Key eGovernment in the sign-in methods section.
+    - number: "2"
+      title: "Sign in to Citizen Identity"
+      steps:
+        - 'On identita.gov.cz choose <strong>Sign in to Citizen Identity</strong>.'
+        - 'As the recommended option, select <strong>Bank Identity</strong>, for example your bank where you already use internet banking.'
+        - "This is the fastest and most convenient option."
+        - "Sign in the same way you sign in to internet banking."
+        - "After successful sign-in you will see your profile administration in the Citizen Identity Portal."
+      note: "The sign-in is processed via Citizen Identity and the NIA service."
+    - number: "3"
+      title: "Connect the app to your profile"
+      lead: "After signing in, you will see an overview of sign-in methods. This is where you add Mobile Key eGovernment."
+      steps:
+        - 'In the Citizen Identity Portal, open the <strong>Sign-in methods</strong> section in the left menu.'
+        - 'In the list of methods, find <strong>Mobile Key eGovernment</strong> and click the plus icon to add a new key.'
+        - "A QR code for app activation on your phone will appear on the computer screen."
+        - "The QR code is time-limited, usually for around 5 minutes. If you miss it, you can generate a new code at any time."
+      note: "The QR code is used only to connect the app to your Citizen Identity."
+    - number: "4"
+      title: "Activate Mobile Key"
+      steps:
+        - "Open the Mobile Key eGovernment app on your phone."
+        - 'On the start screen choose <strong>Activate a key for Citizen Identity</strong>.'
+        - 'In the next step click <strong>I am ready – scan the code to connect</strong>.'
+        - "Point your phone camera at the QR code displayed on the computer monitor."
+        - "Your phone will ask you to set a PIN or biometric sign-in. This completes the connection between the app and your Citizen Identity."
+      tips:
+        - "In the app choose “Activate a key for Citizen Identity” to start linking it to your Citizen Identity account."
+        - "After the QR code appears on your computer, click “I am ready – scan the code to connect” in the app and scan the code."
+    - number: "5"
+      title: "Age verification during purchase"
+      steps:
+        - "On our e-shop, add the selected products to the cart and proceed to checkout."
+        - "In the cart or during checkout choose age verification using Mobile Key eGovernment."
+        - "A QR code for age verification will appear on the e-shop screen."
+        - "Open the Mobile Key eGovernment app on your phone, scan the QR code, and confirm sending the age information."
+        - "The app transfers only whether you are older than 18. It does not send your birth number, address, or any other sensitive personal data."
+        - "After confirmation, you return to the cart where you can finish the order."
+      lead: "Once Mobile Key is set up, every next age verification takes only a few seconds."
+  important:
+    title: "Important"
+    paragraphs:
+      - "You complete the Mobile Key activation process only once."
+      - "For future orders you only:"
+    steps:
+      - "open the Mobile Key eGovernment app,"
+      - "scan the QR code in the cart,"
+      - "confirm the age verification."
+    footer: "The whole verification then takes just a few seconds and you can complete your purchase immediately."
+  alternative:
+    title: "Alternative option: MojeID"
+    text: "If Mobile Key does not suit you, you can also use MojeID."
+    bullets:
+      - "You can connect your MojeID account with Citizen Identity online, for example via Bank Identity again."
+      - "You can also verify your identity level and age in person at any Czech POINT branch."
+      - "After successful linking, age verification on the e-shop works similarly to Mobile Key. The e-shop only verifies that you are 18+."
+
+ru:
+  intro:
+    paragraphs:
+      - "Согласно действующему законодательству Чехии vivadzen s.r.o. как продавец психомодулирующих веществ обязан проверять возраст каждого покупателя."
+      - "Процесс проходит через государственный сервис Mobilní klíč eGovernmentu или другие средства Identity občana."
+    alert: "ВАШИ ДАННЫЕ В БЕЗОПАСНОСТИ. МЫ ПОЛУЧАЕМ ТОЛЬКО ИНФОРМАЦИЮ О ТОМ, ЧТО ВАМ ЕСТЬ 18+ ЛЕТ. Никакие персональные данные к нам не передаются и не хранятся."
+  sections:
+    - number: "1"
+      title: "Установка приложения Mobilní klíč eGovernmentu"
+      steps:
+        - >-
+          <strong>Скачайте приложение.</strong> Установите приложение Mobilní klíč eGovernmentu на свой телефон. Оно бесплатно доступно для Android и iOS и официально выпускается государственными органами Чехии.
+        - >-
+          <strong>Откройте сайт Identity občana.</strong> На компьютере или другом устройстве перейдите на <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer">www.identita.gov.cz</a>. Позже в разделе способов входа на портале Identity občana вы добавите Mobilní klíč eGovernmentu.
+    - number: "2"
+      title: "Вход в Identity občana"
+      steps:
+        - 'На сайте identita.gov.cz выберите <strong>Войти в Identity občana</strong>.'
+        - 'В качестве рекомендуемого варианта выберите <strong>Bankovní identitu</strong>, например свой банк, где у вас уже есть интернет-банкинг.'
+        - "Это самый быстрый и удобный вариант."
+        - "Авторизуйтесь так же, как входите в интернет-банкинг."
+        - "После успешного входа вы попадёте в управление своим профилем на портале Identity občana."
+      note: "Авторизация проходит через Identity občana и сервис NIA."
+    - number: "3"
+      title: "Связка приложения с вашим профилем"
+      lead: "После входа вы увидите список способов авторизации. Здесь и нужно добавить Mobilní klíč eGovernmentu."
+      steps:
+        - 'На портале Identity občana перейдите в раздел <strong>Способы входа</strong> в левом меню.'
+        - 'В списке найдите <strong>Mobilní klíč eGovernmentu</strong> и нажмите значок плюс, чтобы добавить новый ключ.'
+        - "На экране компьютера появится QR-код для активации приложения на телефоне."
+        - "QR-код действует ограниченное время, обычно около 5 минут. Если не успеете, вы всегда можете сгенерировать новый."
+      note: "QR-код используется только для привязки приложения к вашей Identity občana."
+    - number: "4"
+      title: "Активация Mobilní klíč"
+      steps:
+        - "Откройте приложение Mobilní klíč eGovernmentu на телефоне."
+        - 'На стартовом экране выберите <strong>Активация ключа для Identity občana</strong>.'
+        - 'На следующем шаге нажмите <strong>Готово, считать код для подключения</strong>.'
+        - "Наведите камеру телефона на QR-код, показанный на мониторе компьютера."
+        - "Телефон предложит настроить PIN или биометрический вход. После этого привязка приложения к вашей Identity občana будет завершена."
+      tips:
+        - "В приложении выберите «Активация ключа для Identity občana», чтобы начать привязку к аккаунту Identity občana."
+        - "Когда QR-код появится на компьютере, нажмите в приложении «Готово, считать код для подключения» и отсканируйте код."
+    - number: "5"
+      title: "Проверка возраста при покупке"
+      steps:
+        - "Добавьте нужные товары в корзину на нашем сайте и перейдите к оформлению заказа."
+        - "В корзине или во время оформления выберите проверку возраста через Mobilní klíč eGovernmentu."
+        - "На экране магазина появится QR-код для проверки возраста."
+        - "Откройте приложение Mobilní klíč eGovernmentu на телефоне, отсканируйте QR-код и подтвердите отправку информации о возрасте."
+        - "Приложение передаёт только факт, что вам больше 18 лет. Дата рождения, адрес и другие чувствительные данные не передаются."
+        - "После подтверждения вы вернётесь в корзину и сможете завершить заказ."
+      lead: "После первой настройки Mobilní klíč каждая следующая проверка возраста занимает всего несколько секунд."
+  important:
+    title: "Важно"
+    paragraphs:
+      - "Весь процесс активации Mobilní klíč вы проходите только один раз."
+      - "При следующих заказах нужно лишь:"
+    steps:
+      - "открыть приложение Mobilní klíč eGovernmentu,"
+      - "отсканировать QR-код в корзине,"
+      - "подтвердить проверку возраста."
+    footer: "Вся проверка занимает всего несколько секунд, после чего можно сразу завершить покупку."
+  alternative:
+    title: "Альтернатива: MojeID"
+    text: "Если Mobilní klíč вам не подходит, можно использовать сервис MojeID."
+    bullets:
+      - "Аккаунт MojeID можно связать с Identity občana онлайн, например снова через Bankovní identitu."
+      - "Уровень идентификации и возраст можно также подтвердить лично в любом отделении Czech POINT."
+      - "После успешной связки проверка возраста в магазине работает аналогично Mobilní klíč. Магазин только проверяет, что вам есть 18+."
+
+uk:
+  intro:
+    paragraphs:
+      - "Відповідно до чинного законодавства Чехії vivadzen s.r.o. як продавець психомодулюючих речовин зобов'язаний перевіряти вік кожного покупця."
+      - "Процес відбувається через державний сервіс Mobilní klíč eGovernmentu або інші засоби Identity občana."
+    alert: "ВАШІ ДАНІ У БЕЗПЕЦІ. МИ ОТРИМУЄМО ЛИШЕ ІНФОРМАЦІЮ ПРО ТЕ, ЩО ВАМ Є 18+ РОКІВ. Жодні персональні дані до нас не передаються і не зберігаються."
+  sections:
+    - number: "1"
+      title: "Встановлення застосунку Mobilní klíč eGovernmentu"
+      steps:
+        - >-
+          <strong>Завантажте застосунок.</strong> Встановіть застосунок Mobilní klíč eGovernmentu на свій телефон. Він безкоштовно доступний для Android та iOS і офіційно випускається державними органами Чехії.
+        - >-
+          <strong>Відкрийте сайт Identity občana.</strong> На комп'ютері або іншому пристрої перейдіть на <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer">www.identita.gov.cz</a>. Пізніше в розділі способів входу на порталі Identity občana ви додасте Mobilní klíč eGovernmentu.
+    - number: "2"
+      title: "Вхід до Identity občana"
+      steps:
+        - 'На сайті identita.gov.cz виберіть <strong>Увійти до Identity občana</strong>.'
+        - 'Як рекомендований варіант виберіть <strong>Bankovní identitu</strong>, наприклад свій банк, де у вас уже є інтернет-банкінг.'
+        - "Це найшвидший і найзручніший спосіб."
+        - "Авторизуйтеся так само, як входите в інтернет-банкінг."
+        - "Після успішного входу ви потрапите до керування своїм профілем на порталі Identity občana."
+      note: "Авторизація проходить через Identity občana та сервіс NIA."
+    - number: "3"
+      title: "Прив'язка застосунку до вашого профілю"
+      lead: "Після входу ви побачите список способів авторизації. Саме тут потрібно додати Mobilní klíč eGovernmentu."
+      steps:
+        - 'На порталі Identity občana перейдіть до розділу <strong>Способи входу</strong> у лівому меню.'
+        - 'У списку знайдіть <strong>Mobilní klíč eGovernmentu</strong> і натисніть значок плюс, щоб додати новий ключ.'
+        - "На екрані комп'ютера з'явиться QR-код для активації застосунку на телефоні."
+        - "QR-код діє обмежений час, зазвичай близько 5 хвилин. Якщо не встигнете, ви завжди можете згенерувати новий."
+      note: "QR-код використовується лише для прив'язки застосунку до вашої Identity občana."
+    - number: "4"
+      title: "Активація Mobilní klíč"
+      steps:
+        - "Відкрийте застосунок Mobilní klíč eGovernmentu на телефоні."
+        - 'На стартовому екрані виберіть <strong>Активація ключа для Identity občana</strong>.'
+        - 'На наступному кроці натисніть <strong>Готово, зчитати код для підключення</strong>.'
+        - "Наведіть камеру телефону на QR-код, показаний на моніторі комп'ютера."
+        - "Телефон запропонує налаштувати PIN або біометричний вхід. Після цього прив'язку застосунку до вашої Identity občana буде завершено."
+      tips:
+        - "У застосунку виберіть «Активація ключа для Identity občana», щоб почати прив'язку до акаунта Identity občana."
+        - "Коли QR-код з'явиться на комп'ютері, натисніть у застосунку «Готово, зчитати код для підключення» і відскануйте код."
+    - number: "5"
+      title: "Перевірка віку під час покупки"
+      steps:
+        - "Додайте потрібні товари в кошик на нашому сайті та перейдіть до оформлення замовлення."
+        - "У кошику або під час оформлення виберіть перевірку віку через Mobilní klíč eGovernmentu."
+        - "На екрані магазину з'явиться QR-код для перевірки віку."
+        - "Відкрийте застосунок Mobilní klíč eGovernmentu на телефоні, відскануйте QR-код і підтвердьте надсилання інформації про вік."
+        - "Застосунок передає лише факт, що вам більше 18 років. Дата народження, адреса та інші чутливі дані не передаються."
+        - "Після підтвердження ви повернетеся до кошика і зможете завершити замовлення."
+      lead: "Після першого налаштування Mobilní klíč кожна наступна перевірка віку займає лише кілька секунд."
+  important:
+    title: "Важливо"
+    paragraphs:
+      - "Увесь процес активації Mobilní klíč ви проходите лише один раз."
+      - "Під час наступних замовлень потрібно лише:"
+    steps:
+      - "відкрити застосунок Mobilní klíč eGovernmentu,"
+      - "відсканувати QR-код у кошику,"
+      - "підтвердити перевірку віку."
+    footer: "Уся перевірка займає лише кілька секунд, після чого можна одразу завершити покупку."
+  alternative:
+    title: "Альтернатива: MojeID"
+    text: "Якщо Mobilní klíč вам не підходить, можна використати сервіс MojeID."
+    bullets:
+      - "Акаунт MojeID можна пов'язати з Identity občana онлайн, наприклад знову через Bankovní identitu."
+      - "Рівень ідентифікації та вік також можна підтвердити особисто в будь-якому відділенні Czech POINT."
+      - "Після успішного зв'язування перевірка віку в магазині працює так само, як і через Mobilní klíč. Магазин лише перевіряє, що вам є 18+."

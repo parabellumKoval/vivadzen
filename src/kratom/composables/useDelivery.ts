@@ -35,6 +35,11 @@ export const useDelivery = () => {
       logo: '/images/logo/dpd.png',
       title: 'Dpd',
       countries: ['cz','es','de']
+    },{
+      id: 7,
+      logo: '/images/logo/company.png',
+      title: 'Messenger.cz',
+      countries: ['cz']
     }
   ])
 
@@ -88,6 +93,13 @@ export const useDelivery = () => {
     )
   })
 
+  const messengerAddressPrice = computed(() => {
+    return buildPrice(
+      get('shipping.messenger.address_rates'),
+      get('shipping.messenger.currency')
+    )
+  })
+
   const defaultPrice = (methodKey = 'pickup') => {
     switch (methodKey) {
       case 'pickup':
@@ -100,6 +112,8 @@ export const useDelivery = () => {
         return novaposhtaWarehousePrice.value
       case 'novaposhta_address':
         return novaposhtaCourierPrice.value
+      case 'messenger_address':
+        return messengerAddressPrice.value
       default:
         return null
     }
@@ -110,6 +124,7 @@ export const useDelivery = () => {
     const packetaHome = packetaHomePrice.value
     const novaposhtaWarehouse = novaposhtaWarehousePrice.value
     const novaposhtaCourier = novaposhtaCourierPrice.value
+    const messengerAddress = messengerAddressPrice.value
 
     return [
       {
@@ -162,6 +177,16 @@ export const useDelivery = () => {
         price: fromShopLabel.value,
         isPriceObject: false
       }, 
+      {
+        key: 'messenger_address',
+        title: t('delivery.messenger_address'),
+        label: t('delivery.messenger_address'),
+        icon: 'iconoir:delivery',
+        image: '/images/logo/messenger.svg',
+        logo: '/images/logo/messenger.svg',
+        price: messengerAddress || providerTariffsLabel.value,
+        isPriceObject: !!messengerAddress
+      },
       {
         key: 'default_address',
         title: t('delivery.default_address'),

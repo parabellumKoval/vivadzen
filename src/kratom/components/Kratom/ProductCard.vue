@@ -1,129 +1,448 @@
 <script setup lang="ts">
+type ProductRecord = Record<string, any>
+
+const KRATOM_ORIGIN_BADGES = [
+  '/images/kratom-types/circle3-1.png',
+  '/images/kratom-types/circle3-2.png',
+  '/images/kratom-types/circle3-3.png',
+  '/images/kratom-types/circle3-4.png',
+  '/images/kratom-types/circle3-5.png',
+]
+
+const KRATOM_COLOR_BADGES = [
+  '/images/kratom-types/red.png',
+  '/images/kratom-types/green.png',
+  '/images/kratom-types/white.png',
+  '/images/kratom-types/gold.png',
+]
+
 const props = defineProps<{
-  product: Record<string, any>
+  product: ProductRecord
 }>()
 
 const { t } = useI18n()
+const cartStore = useCartStore()
+const modal = useModal()
 const regionPath = useToLocalePath()
+const selectedModification = ref<ProductRecord | null>(null)
+
+const getStableBadgeIndex = (source: string, salt: string, length: number) => {
+  if (!length) {
+    return 0
+  }
+
+  const value = `${source}:${salt}`
+  let hash = 0
+
+  for (const char of value) {
+    hash = ((hash << 5) - hash + char.charCodeAt(0)) | 0
+  }
+
+  return Math.abs(hash) % length
+}
 
 const image = computed(() => {
   const images = Array.isArray(props.product?.images) ? props.product.images : []
   return props.product?.image?.src || images[0]?.src || useImg().noImage
 })
 
-const hasMultipleModifications = computed(() => {
-  return Array.isArray(props.product?.modifications) && props.product.modifications.length > 1
+const badgeSeed = computed(() => {
+  return String(props.product?.id ?? props.product?.slug ?? props.product?.name ?? 'kratom-product')
 })
+
+const badges = computed(() => {
+  const seed = badgeSeed.value
+
+  return {
+    origin: KRATOM_ORIGIN_BADGES[getStableBadgeIndex(seed, 'origin', KRATOM_ORIGIN_BADGES.length)],
+    color: KRATOM_COLOR_BADGES[getStableBadgeIndex(seed, 'color', KRATOM_COLOR_BADGES.length)],
+  }
+})
+
+const modifications = computed<ProductRecord[]>(() => {
+  if (!Array.isArray(props.product?.modifications)) {
+    return []
+  }
+
+  return props.product.modifications.filter((modification: ProductRecord | null) => {
+    return Boolean(modification && (modification.short_name || modification.name || modification.id))
+  })
+})
+
+const activeProduct = computed(() => selectedModification.value ?? props.product)
 
 const displayPrice = computed(() => {
-  const basePrice = props.product?.old_price ?? props.product?.oldPrice ?? props.product?.basePrice
-  return basePrice ?? props.product?.price
+  return activeProduct.value?.price ?? props.product?.price
 })
 
-const addToCart = async () => {
-  if (hasMultipleModifications.value) {
-    await navigateTo(regionPath(`/${props.product.slug}`))
+const displayOldPrice = computed(() => {
+  return activeProduct.value?.old_price ?? activeProduct.value?.oldPrice ?? activeProduct.value?.basePrice ?? null
+})
+
+const currencyCode = computed(() => {
+  return activeProduct.value?.currency ?? props.product?.currency
+})
+
+const getModificationKey = (modification: ProductRecord | null) => {
+  if (!modification) {
+    return null
+  }
+
+  return modification.id ?? modification.slug ?? modification.short_name ?? modification.name ?? null
+}
+
+watch(modifications, (list) => {
+  if (!list.length) {
+    selectedModification.value = null
     return
   }
 
-  await useCartStore().add({ ...props.product, amount: 1 })
-  useModal().open(resolveComponent('ModalCart'), null, null, {
+  const currentKey = getModificationKey(selectedModification.value)
+  const current = list.find((modification) => getModificationKey(modification) === currentKey)
+  selectedModification.value = current ?? list[0]
+}, { immediate: true, deep: true })
+
+const selectModification = (modification: ProductRecord) => {
+  selectedModification.value = modification
+}
+
+const addToCart = async () => {
+  await cartStore.add({ ...props.product, ...activeProduct.value, amount: 1 })
+  modal.open(resolveComponent('ModalCart'), null, null, {
     width: { min: 968, max: 968 },
   })
 }
 </script>
 
 <template>
-  <article class="kratom-product-card">
-    <NuxtLink :to="regionPath(`/${product.slug}`)" class="kratom-product-card__media">
-      <nuxt-img
-        :src="image"
-        :alt="product.name"
-        :title="product.name"
-        width="640"
-        height="640"
-        sizes="mobile:90vw tablet:45vw desktop:360px"
-        format="webp"
-        quality="70"
-        fit="contain"
-      />
-      <span v-if="hasMultipleModifications" class="kratom-product-card__badge">
-        {{ product.modifications.length }} {{ t('kratom.product_card.variants') }}
-      </span>
-    </NuxtLink>
+  <div class="kratom-product-card-frame">
+    <div class="kratom-product-card-shell">
+      <div class="kratom-product-card">
+        <span class="kratom-product-card__ribbon" aria-hidden="true">
+          <!-- <span>premium quality</span> -->
+          <!-- <span>100% Legal</span> -->
+          <span>{{ t('kratom.product_card.ribbon') }}</span>
+        </span>
+        <NuxtLink :to="regionPath(`/${product.slug}`)" class="kratom-product-card__media">
+          <span class="kratom-product-card__media-clip">
+            <nuxt-img
+              :src="image"
+              :alt="product.name"
+              :title="product.name"
+              width="640"
+              height="640"
+              sizes="mobile:90vw tablet:45vw desktop:360px"
+              format="webp"
+              quality="70"
+              fit="contain"
+            />
+            <span class="kratom-product-card__badges" :aria-label="t('kratom.product_card.badges_label')">
+              <span class="kratom-product-card__badge">
+                <nuxt-img
+                  :src="badges.origin"
+                  :alt="t('kratom.product_card.origin_alt')"
+                  width="64"
+                  height="64"
+                  sizes="64px"
+                  format="webp"
+                  quality="80"
+                />
+              </span>
+              <span class="kratom-product-card__badge">
+                <nuxt-img
+                  :src="badges.color"
+                  :alt="t('kratom.product_card.color_alt')"
+                  width="64"
+                  height="64"
+                  sizes="64px"
+                  format="webp"
+                  quality="80"
+                />
+              </span>
+            </span>
+          </span>
+        </NuxtLink>
 
-    <div class="kratom-product-card__body">
-      <div class="kratom-product-card__meta">
-        <span v-if="product.brand?.name">{{ product.brand.name }}</span>
-        <span v-if="product.code">#{{ product.code }}</span>
-      </div>
+        <div class="kratom-product-card__body">
+          <!-- <div class="kratom-product-card__meta">
+            <span v-if="product.brand?.name">{{ product.brand.name }}</span>
+            <span v-if="product.code">#{{ product.code }}</span>
+          </div> -->
 
-      <NuxtLink :to="regionPath(`/${product.slug}`)" class="kratom-product-card__title">
-        {{ product.name }}
-      </NuxtLink>
+          <NuxtLink :to="regionPath(`/${product.slug}`)" class="kratom-product-card__title">
+            {{ product.name }}
+          </NuxtLink>
 
-      <p v-if="product.short_description || product.excerpt" class="kratom-product-card__excerpt">
-        {{ product.short_description || product.excerpt }}
-      </p>
+          <p v-if="product.short_description || product.excerpt" class="kratom-product-card__excerpt">
+            {{ product.short_description || product.excerpt }}
+          </p>
 
-      <div class="kratom-product-card__footer">
-        <div class="kratom-product-card__price">
-          <simple-price :value="displayPrice" :currency-code="product.currency" class="kratom-product-card__current-price" />
+          <div v-if="modifications.length" class="kratom-product-card__mods">
+            <button
+              v-for="(modification, index) in modifications"
+              :key="modification.id ?? modification.slug ?? index"
+              type="button"
+              class="kratom-product-card__mod"
+              :class="{ 'is-active': getModificationKey(selectedModification) === getModificationKey(modification) }"
+              @click="selectModification(modification)"
+            >
+              {{ modification.short_name || modification.name }}
+            </button>
+          </div>
+
+          <div class="kratom-product-card__footer">
+            <div class="kratom-product-card__price">
+              <simple-price
+                v-if="displayOldPrice && Number(displayOldPrice) > Number(displayPrice)"
+                :value="displayOldPrice"
+                :currency-code="currencyCode"
+                class="kratom-product-card__old-price"
+              />
+              <simple-price :value="displayPrice" :currency-code="currencyCode" class="kratom-product-card__current-price" />
+            </div>
+
+            <button type="button" class="button primary kratom-product-card__action" @click="addToCart">
+              <IconCSS name="ci:shopping-cart-01" class="kratom-product-card__action-icon" />
+              <span>{{ t('button.to_cart') }}</span>
+            </button>
+          </div>
         </div>
-
-        <button type="button" class="button primary kratom-product-card__action" @click="addToCart">
-          <span>{{ t('button.buy') }}</span>
-          <IconCSS name="mynaui:arrow-right-solid" />
-        </button>
       </div>
     </div>
-  </article>
+  </div>
 </template>
 
 <style scoped lang="scss">
+.kratom-product-card-frame {
+  position: relative;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 32px;
+    box-shadow: 0 24px 60px rgba(43, 55, 41, 0.05);
+    transition: box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+
+    &::before {
+      box-shadow: 0 36px 80px rgba(43, 55, 41, 0.12);
+    }
+
+    :deep(img) {
+      transform: scale(1.08) translateY(-4px);
+    }
+  }
+}
+
+.kratom-product-card-shell {
+  position: relative;
+  height: 100%;
+  padding: 3px;
+  overflow: hidden;
+  border-radius: 32px;
+}
+
 .kratom-product-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-radius: 28px;
-  overflow: hidden;
-  background: rgba(255, 250, 244, 0.92);
-  border: 1px solid rgba(74, 91, 68, 0.1);
-  box-shadow: 0 24px 60px rgba(43, 55, 41, 0.08);
+  border-radius: 29px;
+  container-type: inline-size;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: $color-8;
+    border: 1px solid rgba(74, 91, 68, 0.08);
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .kratom-product-card__media {
   position: relative;
-  padding: 28px;
-  min-height: 260px;
+  aspect-ratio: 1/1;
+  display: block;
+  border-radius: 32px 32px 0 0;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.kratom-product-card__media-clip {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(circle at top, rgba(143, 180, 134, 0.22), transparent 48%),
-    linear-gradient(180deg, rgba(243, 233, 221, 0.9), rgba(255, 250, 244, 0.2));
+  padding: 28px 20px 86px;
+  background-color: #f0f0f0;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 0;
+
+  :deep(img) {
+    width: 120%;
+    height: 120%;
+    object-fit: contain;
+    max-width: initial;
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.12));
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+
+.kratom-product-card__badges {
+  position: absolute;
+  right: clamp(14px, 5cqw, 20px);
+  bottom: clamp(14px, 5cqw, 20px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
 }
 
 .kratom-product-card__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(52px, 14cqw, 60px);
+  height: clamp(52px, 14cqw, 60px);
+  flex: 0 0 auto;
+
+  :deep(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(33, 39, 30, 0.18));
+  }
+}
+
+.kratom-product-card__ribbon {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  padding: 8px 12px;
+  top: 35px;
+  left: -47px;
+  z-index: 4;
+  width: 192px;
+  padding: 5px 20px 6px;
+  box-sizing: border-box;
+  transform: rotate(-45deg);
+  overflow: visible;
+  background:
+    // linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 38%, rgba(106, 98, 132, 0.08) 100%),
+    linear-gradient(90deg, rgba(105, 96, 130, 0.14) 0%, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0) 85%, rgba(105, 96, 130, 0.14) 100%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0.55) 52%, rgba(255, 255, 255, 0.18) 72%, rgba(255, 255, 255, 0.8)),
+    linear-gradient(90deg, #b9dafa 0%, #d1e7ff 18%, #efd5f9 50%, #d6eef2 78%, #b9dafa 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.65);
+  border-bottom: 1px solid rgba(120, 112, 142, 0.14);
+  box-shadow:
+    0 4px 14px rgba(132, 144, 168, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(120, 112, 142, 0.1);
+  text-align: center;
+  filter: saturate(1.08) contrast(1.02);
+  --tri-color: rgb(185 195 210);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 23px;
+    right: 13px;
+    width: 4px;
+    height: 4px;
+    background: var(--tri-color);
+    clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+    z-index: -1;
+    transform: rotate(90deg);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 23px;
+    left: 10px;
+    width: 4px;
+    height: 4px;
+    background: var(--tri-color);
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    z-index: -1;
+    transform: rotate(90deg);
+  }
+
+  span {
+    display: block;
+    width: 100%;
+    color: rgba($color-0, 0.8);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1.15;
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.62),
+      0 -1px 0 rgba(95, 85, 121, 0.18),
+      1px 0 0 rgba(255, 255, 255, 0.2),
+      -1px 0 0 rgba(104, 94, 131, 0.08);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+}
+
+
+.kratom-product-card__mods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.kratom-product-card__mod {
+  min-height: 30px;
+  padding: 0 16px;
   border-radius: 999px;
-  background: rgba(31, 43, 29, 0.88);
-  color: #fff7ec;
-  font-size: 12px;
+  border: 1px solid rgba($color-border, 0.8);
+  background: rgba(255, 255, 255, 0.78);
+  color: rgba($color-0, 0.8);
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(242, 141, 26, 0.4);
+  }
+
+  &.is-active {
+    // background: rgb(240 240 240);
+    // background: $color-8;
+    background: $color-green;
+    border-color: rgba($color-green, 0.8);
+    // color: rgba($color-0, 0.8);
+    color: $color-8;
+  }
 }
 
 .kratom-product-card__body {
-  padding: 22px;
+  // padding: 40px 40px 30px 40px;
+  padding: clamp(20px, 12cqw, 40px);
+  padding-bottom: clamp(10px, 10cqw, 30px);
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 14px;
+  gap: 20px;
 }
 
 .kratom-product-card__meta {
@@ -137,11 +456,16 @@ const addToCart = async () => {
 }
 
 .kratom-product-card__title {
+  height: 100%;
   color: #1b2619;
   text-decoration: none;
   font-family: var(--font-display);
-  font-size: 28px;
-  line-height: 1.02;
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 500;
+  // text-transform: uppercase;
+  color: $color-0;
+  text-align: left;
 }
 
 .kratom-product-card__excerpt {
@@ -154,7 +478,7 @@ const addToCart = async () => {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  align-items: end;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -163,16 +487,40 @@ const addToCart = async () => {
   gap: 6px;
 }
 
+// :deep(.kratom-product-card__old-price .value) {
+//   font-size: 15px;
+//   color: #8b9284;
+//   text-decoration: line-through;
+// }
+
 :deep(.kratom-product-card__current-price .value) {
-  font-size: 30px;
-  font-weight: 800;
-  color: #1f2b1d;
+  font-size: clamp(16px, 7cqw, 22px);
+  font-weight: 500;
+  color: $color-orange;
 }
 
 .kratom-product-card__action {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
   border-radius: 999px;
+  background: linear-gradient(135deg, #f28d1a, #e67d0e);
+  color: white;
+  border: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+  padding: 0 4cqw;
+  text-transform: uppercase;
+  font-size: clamp(12px, 5.5cqw, 15px);
+  font-weight: 600;
+  height: 44px;
+
+  &:hover {
+    background: linear-gradient(135deg, #e67d0e, #d56d05);
+    transform: scale(1.02);
+  }
+
+  &-icon {
+    font-size: clamp(12px, 7.5cqw, 20px);
+  }
 }
 </style>

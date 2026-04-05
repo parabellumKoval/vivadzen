@@ -19,4 +19,6 @@ Route::group([
 ], function () { // custom admin routes
     Route::get('cache-management', [CacheManagementController::class, 'index'])
         ->name('admin.cache-management');
+
+    Route::crud('delivery-report', 'DeliveryReportCrudController');
 }); // this should be the absolute last line of this file

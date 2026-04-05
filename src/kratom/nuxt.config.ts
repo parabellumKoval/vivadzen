@@ -5,6 +5,23 @@ const SITE_URL = process.env.SITE_URL || (process.env.NODE_ENV === 'production' 
 const SERVER_URL = process.env.SERVER_URL || `http://${HOST}:8000`
 const API_SERVER_URL = process.env.API_SERVER_URL || `${SERVER_URL}/api`
 const DOMAIN = process.env.DOMAIN || `${HOST}:8000`
+const parseBooleanEnv = (value: string | undefined, defaultValue: boolean) => {
+  if (value == null || value.trim() === '') {
+    return defaultValue
+  }
+
+  const normalized = value.trim().toLowerCase()
+
+  if (['true', '1', 'yes', 'on'].includes(normalized)) {
+    return true
+  }
+
+  if (['false', '0', 'no', 'off'].includes(normalized)) {
+    return false
+  }
+
+  return defaultValue
+}
 
 export default defineNuxtConfig({
   srcDir: process.env.SRC_DIR || '',
@@ -22,6 +39,8 @@ export default defineNuxtConfig({
       frontendUrl: SITE_URL,
       serverBase: SERVER_URL,
       apiBase: API_SERVER_URL,
+      storefrontCode: 'kratom',
+      kratomCheckoutAgeVerificationEnabled: parseBooleanEnv(process.env.NUXT_PUBLIC_KRATOM_CHECKOUT_AGE_VERIFICATION_ENABLED, true),
       adultoPublicKey: process.env.NUXT_PUBLIC_ADULTO_PUBLIC_KEY || '',
       adultoWidgetScriptUrl: process.env.NUXT_PUBLIC_ADULTO_WIDGET_SCRIPT_URL || 'https://api.js.m2a.cz/api.js',
       imagesDir: '/server/uploads/images',
@@ -37,7 +56,7 @@ export default defineNuxtConfig({
         categorySlug: 'kratom',
         region: 'cz',
         currency: 'CZK',
-        locales: ['cs', 'en', 'de', 'es'],
+        locales: ['cs', 'en', 'ru', 'uk'],
         defaultLocale: 'cs',
       },
     },
@@ -232,7 +251,7 @@ export default defineNuxtConfig({
     mainListEndpoint: '/category/main',
     enableTtl: false,
     ttlSec: 3600,
-    languages: ['cs', 'en', 'de', 'es'],
+    languages: ['cs', 'en', 'ru', 'uk'],
     regions: ['cz'],
     slugsRoutePath: '/api/_categories/slugs',
     categoryRoutePath: '/api/_categories/:slug',
@@ -251,7 +270,7 @@ export default defineNuxtConfig({
     ttlSec: 1800,
     refreshRoutePath: '/api/_refresh-settings',
     regions: ['cz'],
-    locales: ['cs', 'en', 'de', 'es'],
+    locales: ['cs', 'en', 'ru', 'uk'],
   },
 
   authBridge: {
@@ -302,20 +321,20 @@ export default defineNuxtConfig({
         shortName: 'Eng',
       },
       {
-        iso: 'de-DE',
-        language: 'de-DE',
-        code: 'de',
-        file: 'de.yaml',
-        name: 'Deutsch',
-        shortName: 'Deu',
+        iso: 'ru-RU',
+        language: 'ru-RU',
+        code: 'ru',
+        file: 'ru.yaml',
+        name: 'Русский',
+        shortName: 'Рус',
       },
       {
-        iso: 'es-ES',
-        language: 'es-ES',
-        code: 'es',
-        file: 'es.yaml',
-        name: 'Español',
-        shortName: 'Esp',
+        iso: 'uk-UA',
+        language: 'uk-UA',
+        code: 'uk',
+        file: 'uk.yaml',
+        name: 'Українська',
+        shortName: 'Укр',
       },
     ],
     experimental: {
@@ -332,7 +351,7 @@ export default defineNuxtConfig({
 
   content: {
     defaultLocale: 'cs',
-    locales: ['cs', 'en', 'de', 'es'],
+    locales: ['cs', 'en', 'ru', 'uk'],
     navigation: false,
   },
 
@@ -351,10 +370,10 @@ export default defineNuxtConfig({
       '/cs/checkout/**': { ssr: false, static: false, swr: false, delayHydration: false },
       '/en/checkout': { ssr: false, static: false, swr: false, delayHydration: false },
       '/en/checkout/**': { ssr: false, static: false, swr: false, delayHydration: false },
-      '/de/checkout': { ssr: false, static: false, swr: false, delayHydration: false },
-      '/de/checkout/**': { ssr: false, static: false, swr: false, delayHydration: false },
-      '/es/checkout': { ssr: false, static: false, swr: false, delayHydration: false },
-      '/es/checkout/**': { ssr: false, static: false, swr: false, delayHydration: false },
+      '/ru/checkout': { ssr: false, static: false, swr: false, delayHydration: false },
+      '/ru/checkout/**': { ssr: false, static: false, swr: false, delayHydration: false },
+      '/uk/checkout': { ssr: false, static: false, swr: false, delayHydration: false },
+      '/uk/checkout/**': { ssr: false, static: false, swr: false, delayHydration: false },
       '/_ipx/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/assets/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/images/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },

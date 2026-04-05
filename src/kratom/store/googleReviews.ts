@@ -44,6 +44,7 @@ export interface GoogleReviewsState {
 }
 
 export interface GoogleReviewsQueryParams {
+  page?: number
   per_page?: number
   location_id?: number
   location_name?: string
@@ -78,6 +79,9 @@ export const useGoogleReviewsStore = defineStore('googleReviewsStore', {
         const runtimeConfig = useRuntimeConfig()
         const queryParams = new URLSearchParams()
         
+        if (params.page) {
+          queryParams.set('page', String(params.page))
+        }
         if (params.per_page) {
           queryParams.set('per_page', String(params.per_page))
         }
@@ -126,6 +130,9 @@ export const useGoogleReviewsStore = defineStore('googleReviewsStore', {
       const runtimeConfig = useRuntimeConfig()
       const queryParams = new URLSearchParams()
       
+      if (params.page) {
+        queryParams.set('page', String(params.page))
+      }
       if (params.per_page) {
         queryParams.set('per_page', String(params.per_page))
       }

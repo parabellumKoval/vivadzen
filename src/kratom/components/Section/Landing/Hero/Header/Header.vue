@@ -19,6 +19,10 @@ const isLangOpen = ref(false)
 const isMoreOpen = ref(false)
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
+const isDesktopCatalogAvailable = ref(false)
+const isCatalogDropdownEnabled = ref(false)
+let desktopCatalogMediaQuery = null
+let cleanupDesktopCatalogMediaQuery = null
 
 const currentRegionCode = computed(() => regionStore.region.value)
 const allowedLocales = computed(() => regionStore.getLocalesForRegion(currentRegionCode.value))
@@ -46,10 +50,11 @@ const activeLanguage = computed(() => {
 const cartCount = computed(() => useCartStore().cartLength)
 
 const navItems = computed(() => [
-  { id: 'catalog', to: '/catalog', title: 'Catalog', priority: 40 },
-  { id: 'blog', to: '/blog', title: 'Blog', priority: 30 },
-  { id: 'about', to: '/about', title: 'About us', priority: 20 },
-  { id: 'contacts', to: '/contacts', title: 'Contacts', priority: 50 }
+  { id: 'catalog', to: '/catalog', title: t('title.catalog'), priority: 40 },
+  { id: 'blog', to: '/blog', title: t('title.blog'), priority: 30 },
+  { id: 'reviews', to: '/reviews', title: t('title.reviews'), priority: 25 },
+  { id: 'about', to: '/about', title: t('title.about'), priority: 20 },
+  { id: 'contacts', to: '/contacts', title: t('title.contacts'), priority: 50 }
 ])
 
 const visibleNav = ref(navItems.value)
@@ -58,7 +63,7 @@ const overflowNav = ref([])
 const stripLocalePrefix = (path) => {
   const normalizedPath = String(path || '/').replace(/\/+$/, '') || '/'
   const segments = normalizedPath.split('/').filter(Boolean)
-  const localesList = ['cs', 'en', 'de', 'es']
+  const localesList = ['cs', 'en', 'ru', 'uk']
   if (segments[0] && localesList.includes(segments[0])) {
     const next = '/' + segments.slice(1).join('/')
     return next === '/' ? '/' : next.replace(/\/+$/, '') || '/'
@@ -199,6 +204,19 @@ const handleNavLinkClick = (options = {}) => {
   }
 }
 
+const syncDesktopCatalogAvailability = () => {
+  isDesktopCatalogAvailable.value = Boolean(desktopCatalogMediaQuery?.matches)
+
+  if (!isDesktopCatalogAvailable.value) {
+    isCatalogDropdownEnabled.value = false
+  }
+}
+
+const enableCatalogDropdown = () => {
+  if (!isDesktopCatalogAvailable.value) return
+  isCatalogDropdownEnabled.value = true
+}
+
 const handleLogoClick = () => {
   isLangOpen.value = false
   isMoreOpen.value = false
@@ -274,6 +292,21 @@ onMounted(() => {
   resetMeasureRefs()
   updateNavLayout()
   updateHeaderScrollState()
+  desktopCatalogMediaQuery = window.matchMedia('(min-width: 1024px)')
+  syncDesktopCatalogAvailability()
+
+  const mediaListener = () => {
+    syncDesktopCatalogAvailability()
+  }
+
+  if (typeof desktopCatalogMediaQuery.addEventListener === 'function') {
+    desktopCatalogMediaQuery.addEventListener('change', mediaListener)
+    cleanupDesktopCatalogMediaQuery = () => desktopCatalogMediaQuery?.removeEventListener('change', mediaListener)
+  } else {
+    desktopCatalogMediaQuery.addListener(mediaListener)
+    cleanupDesktopCatalogMediaQuery = () => desktopCatalogMediaQuery?.removeListener(mediaListener)
+  }
+
   window.addEventListener('resize', updateNavLayout)
   window.addEventListener('resize', updateHeaderScrollState)
   window.addEventListener('scroll', updateHeaderScrollState, { passive: true })
@@ -290,6 +323,7 @@ onBeforeUnmount(() => {
   if (process.client) {
     document.body.style.overflow = ''
   }
+  cleanupDesktopCatalogMediaQuery?.()
 })
 
 watch(
@@ -361,7 +395,7 @@ watch(
             <span class="hero-header__menu-line hero-header__menu-line--middle"></span>
             <span class="hero-header__menu-line hero-header__menu-line--bottom"></span>
           </span>
-          <span class="hero-header__menu-text">{{ isMenuOpen ? 'CLOSE' : t('menu.button') }}</span>
+          <span class="hero-header__menu-text">{{ isMenuOpen ? t('menu.close') : t('menu.button') }}</span>
         </button>
       </div>
 
@@ -371,15 +405,33 @@ watch(
         :class="{ 'is-more-open': isMoreOpen }"
         :aria-label="t('nav.label')"
       >
-        <NuxtLink
+        <div
           v-for="item in visibleNav"
           :key="item.id"
-          :to="regionPath(item.to)"
-          class="hero-header__nav-link"
-          @click="handleNavLinkClick({ closeMenu: false })"
+          class="hero-header__nav-item"
+          :class="{ 'hero-header__nav-item--catalog': item.id === 'catalog' }"
+          @mouseenter="item.id === 'catalog' ? enableCatalogDropdown() : undefined"
+          @focusin="item.id === 'catalog' ? enableCatalogDropdown() : undefined"
         >
-          {{ item.title }}
-        </NuxtLink>
+          <NuxtLink
+            :to="regionPath(item.to)"
+            class="hero-header__nav-link"
+            :class="{ 'hero-header__nav-link--catalog': item.id === 'catalog' }"
+            @click="handleNavLinkClick({ closeMenu: false })"
+          >
+            <span>{{ item.title }}</span>
+            <IconCSS
+              v-if="item.id === 'catalog'"
+              name="iconoir:nav-arrow-down"
+              class="hero-header__nav-link-icon"
+            />
+          </NuxtLink>
+
+          <KratomCatalogDropdown
+            v-if="item.id === 'catalog'"
+            :enabled="isDesktopCatalogAvailable && isCatalogDropdownEnabled"
+          />
+        </div>
 
         <div
           v-if="overflowNav.length"
@@ -457,7 +509,7 @@ watch(
           :aria-label="t('title.cart')"
           @click="openCart"
         >
-          <IconCSS name="ph:shopping-cart-fill" class="hero-header__cart-icon" />
+          <IconCSS name="ci:shopping-cart-01" class="hero-header__cart-icon" />
           <span class="hero-header__cart-count">{{ cartCount }}</span>
         </button>
       </div>

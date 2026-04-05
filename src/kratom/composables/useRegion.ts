@@ -3,7 +3,7 @@ const REGIONS_META = {
   cz: { name: 'Czech Republic', locale: 'cs', currency: 'CZK', flagClass: 'emojione:flag-for-czechia' },
 } as const
 
-const LOCALES = ['cs', 'en', 'de', 'es'] as const
+const LOCALES = ['cs', 'en', 'ru', 'uk'] as const
 const DEFAULT_LOCALE = 'cs'
 const FIXED_REGION = 'cz'
 const FALLBACK_REGION = 'global'
@@ -37,14 +37,14 @@ export const useRegion = () => {
   const localeByRegion = computed(() => ({
     cs: FIXED_REGION,
     en: FIXED_REGION,
-    de: FIXED_REGION,
-    es: FIXED_REGION,
+    ru: FIXED_REGION,
+    uk: FIXED_REGION,
   }))
   const currencyByRegion = computed(() => ({
     cs: 'CZK',
     en: 'CZK',
-    de: 'CZK',
-    es: 'CZK',
+    ru: 'CZK',
+    uk: 'CZK',
   }))
   const regionsMeta = computed(() => REGIONS_META)
   const regionsMetaArray = computed(() => Object.entries(REGIONS_META).map(([code, meta]) => ({ code, ...meta })))

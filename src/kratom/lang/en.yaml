@@ -263,6 +263,7 @@ form:
     novaposhta_address: Nova Poshta courier delivery
     packeta_warehouse: Zasilkovna branch/parcel locker
     packeta_address: Zasilkovna courier delivery
+    messenger_address: Messenger.cz courier delivery
     default_pickup: Pickup
     default_address: Postal delivery
   payment:
@@ -271,6 +272,7 @@ form:
     default_cash: Pay on delivery
     zasilkovna_cod: Zasilkovna cash on delivery
     novaposhta_cod: Nova Poshta cash on delivery
+    messenger_cod: Messenger.cz cash on delivery
     bank_transfer: Bank transfer
 
 status:
@@ -309,6 +311,9 @@ error:
   required: This field is required
   error: An error occurred
   check_fields: Check that the fields are filled in correctly
+  product_not_found: Product not found
+  article_not_found: Article not found
+  order_not_found: Order not found
   auth:
     password:
       require: The password must be at least 6 characters
@@ -409,6 +414,7 @@ delivery:
   packeta_address: By Zasilkovna courier
   novaposhta_warehouse: Nova Poshta branch/locker
   novaposhta_address: By Nova Poshta courier
+  messenger_address: By Messenger.cz courier
   default_pickup: Pickup
   from: from
   subtitle: Delivery methods depend on the selected country. Change the delivery country to see options for your region.
@@ -429,6 +435,9 @@ payments:
     desc: Pay by card or cash upon receipt
   novaposhta_cod:
     title: Nova Poshta cash on delivery
+    desc: Pay by card or cash upon receipt
+  messenger_cod:
+    title: Messenger.cz cash on delivery
     desc: Pay by card or cash upon receipt
   bank_transfer:
     title: Bank transfer
@@ -535,8 +544,30 @@ kratom:
     title: 'Kratom curated for the Czech market'
     text: 'One focused storefront on the same backend and catalog logic, trimmed down to essentials: kratom, articles, checkout, and support.'
     legal: 'Legal'
+  region_switcher:
+    eyebrow: 'Regional storefronts'
+    title: 'You are in the VivaDzen kratom store for Czechia'
+    text: 'If you are shopping from another country, switch to the storefront for your region.'
+    dismiss: 'Close regional storefront popup'
+    regions:
+      ua:
+        title: 'VivaDzen Ukraine'
+        subtitle: 'Storefront for customers in Ukraine'
+      es:
+        title: 'VivaDzen Spain'
+        subtitle: 'Storefront for customers in Spain'
+      de:
+        title: 'VivaDzen Germany'
+        subtitle: 'Storefront for customers in Germany'
+      cz_other:
+        title: 'VivaDzen entheogens in Czechia (and more)'
+        subtitle: 'Czech storefront with entheogens and other categories'
   product_card:
     variants: 'variants'
+    ribbon: 'Certified kratom'
+    badges_label: 'Kratom type badges'
+    origin_alt: 'Kratom origin'
+    color_alt: 'Kratom color'
   catalog:
     eyebrow: 'Czech Republic only'
     text: 'Focused range of kratom products available for the Czech market, with direct checkout and multilingual content.'
@@ -544,11 +575,23 @@ kratom:
     age_verification: 'Age verification at checkout'
   product:
     eyebrow: 'Single-category storefront'
+    related_title: 'Other kratom from VivaDzen'
     choose_variation: 'Choose variation'
     overview: 'Overview'
     details: 'Details'
-    checkout_note: 'Checkout note'
-    checkout_note_text: 'Orders are processed on the main VivaDzen backend. Delivery, payment methods, stock, and article content are shared with the main system, while this storefront stays focused on Czech kratom sales only.'
+    shipping_payment: 'Delivery and payment'
+    delivery_methods_title: 'Available delivery'
+    payment_methods_title: 'Available payment'
+    delivery_methods_note: 'The exact delivery price is shown during checkout after you choose the method.'
+    payment_methods_note: 'Available payment methods depend on the selected delivery option during checkout.'
+    checkout_note: 'Note'
+    checkout_note_text: 'This site is dedicated exclusively to kratom sales in the Czech Republic. If you are looking for entheogens, superfoods, mushrooms, cannabis products, or other items, visit {link}, the main VivaDzen store serving customers in the Czech Republic, Ukraine, Spain, and Germany.'
+    checkout_note_link: 'the VivaDzen store'
+    adulto_eyebrow: '18+ only'
+    adulto_title: 'Purchase is available only after ADULTO age verification'
+    adulto_text: 'This product can be purchased only after age confirmation through the ADULTO plugin during checkout.'
+    adulto_action: 'View instructions'
+    adulto_modal_title: 'How to verify age and create an order'
   checkout:
     eyebrow: 'Guest checkout'
     text: 'No account required. Delivery and payment methods are loaded from the shared VivaDzen backend.'

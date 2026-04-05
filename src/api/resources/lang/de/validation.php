@@ -194,6 +194,7 @@ return [
                 'novaposhta_warehouse' => '<b>Nova-Poshta-Filiale/Paketautomat</b>',
                 'packeta_address' => '<b>Zasilkovna-Kurier</b>',
                 'packeta_warehouse' => '<b>Zasilkovna-Abholpunkt</b>',
+                'messenger_address' => '<b>Messenger.cz-Kurier</b>',
                 'default_pickup' => '<b>Abholung</b>',
                 'default_address' => '<b>Postzustellung</b>',
             ],
@@ -202,6 +203,7 @@ return [
             'method' => [
                 'zasilkovna_cod' => '<b>Zasilkovna-Nachnahme</b>',
                 'novaposhta_cod' => '<b>Nova-Poshta-Nachnahme</b>',
+                'messenger_cod' => '<b>Messenger.cz-Nachnahme</b>',
                 'default_cash' => '<b>Barzahlung bei Lieferung</b>',
                 'liqpay_online' => '<b>LiqPay Online-Zahlung</b>',
                 'card_online' => '<b>Kartenzahlung online</b>',

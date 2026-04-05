@@ -193,7 +193,7 @@
     position: relative;
     white-space: nowrap;
     min-width: 0;
-    overflow: hidden;
+    overflow: visible;
     padding-right: 16px;
     order: 2;
   }
@@ -203,6 +203,9 @@
   }
 
   &__nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     color: $color-8;
     text-decoration: none;
     font-weight: 600;
@@ -224,6 +227,47 @@
 
   &__nav-link--measure {
     opacity: 0;
+  }
+
+  &__nav-link-icon {
+    font-size: 14px;
+    opacity: 0.9;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  &__nav-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__nav-item--catalog {
+    padding-bottom: 18px;
+    margin-bottom: -18px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: -8px;
+      width: 96px;
+      height: 20px;
+    }
+
+    &:hover,
+    &:focus-within {
+      :deep(.catalog-dropdown) {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .hero-header__nav-link-icon {
+        transform: rotate(180deg);
+        opacity: 1;
+      }
+    }
   }
 
   &__nav-more {
@@ -319,7 +363,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.34);
+    background: rgba(0, 0, 0, 0.14);
     color: $color-8;
     cursor: pointer;
     transition: background 0.2s ease, transform 0.2s ease;
@@ -331,7 +375,7 @@
   }
 
   &__cart-icon {
-    font-size: 20px;
+    font-size: 30px;
   }
 
   &__cart-count {

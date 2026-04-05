@@ -73,6 +73,7 @@ export const useApiFetch = async (
   const runtimeConfig = useRuntimeConfig()
   const { regionAlias } = useRegion()
   const locale = useNuxtApp().$i18n?.locale
+  const storefrontCode = String(runtimeConfig.public.storefrontCode || 'kratom').trim()
   const m = (method || 'GET').toUpperCase() as 'GET'|'POST'|'PUT'|'PATCH'|'DELETE'
   const requestUrl = resolveApiRequestUrl(url, runtimeConfig.public.apiBase, 'api-client')
 
@@ -100,6 +101,7 @@ export const useApiFetch = async (
     b: m === 'GET' ? 0 : (plain ? 1 : 0),
     r: regionAlias?.value || '',
     l: locale?.value || '',
+    s: storefrontCode,
   })}`
 
   const asyncData = useAsyncData(

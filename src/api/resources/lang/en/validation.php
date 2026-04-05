@@ -207,6 +207,7 @@ return [
                 'novaposhta_warehouse' => '<b>Nova Poshta branch/locker</b>',
                 'packeta_address' => '<b>Zasilkovna courier delivery</b>',
                 'packeta_warehouse' => '<b>Zasilkovna pickup point</b>',
+                'messenger_address' => '<b>Messenger.cz courier delivery</b>',
                 'default_pickup' => '<b>Pickup</b>',
                 'default_address' => '<b>Postal delivery</b>',
             ],
@@ -215,6 +216,7 @@ return [
             'method' => [
                 'zasilkovna_cod' => '<b>Zasilkovna cash on delivery</b>',
                 'novaposhta_cod' => '<b>Nova Poshta cash on delivery</b>',
+                'messenger_cod' => '<b>Messenger.cz cash on delivery</b>',
                 'default_cash' => '<b>Pay on delivery</b>',
                 'liqpay_online' => '<b>LiqPay online payment</b>',
                 'card_online' => '<b>Card payment online</b>',

@@ -55,7 +55,7 @@ const submitHandler = async () => {
 
 <template>
   <div class="page-base kratom-payment-page">
-    <div class="container kratom-content-shell">
+    <div class="container kratom-page-container kratom-content-shell">
       <the-breadcrumbs :crumbs="breadcrumbs" />
       <h1 class="title-common">{{ t('title.checkout_payment') }}</h1>
 
@@ -87,8 +87,7 @@ const submitHandler = async () => {
 
 <style scoped lang="scss">
 .kratom-content-shell {
-  max-width: 980px;
-  padding-top: 32px;
+  padding-top: 24px;
 }
 
 .kratom-content-card {

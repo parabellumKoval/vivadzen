@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+use Backpack\Articles\app\Models\Article as BlogArticle;
 use Backpack\Store\app\Models\Category;
 use Backpack\Store\app\Models\Product;
 
@@ -20,9 +21,10 @@ class SitemapController extends \App\Http\Controllers\Controller
    * @return void
    */
   public function getArticles(Request $request) {
-    $articles = \DB::table('ak_articles')
-      ->select('ak_articles.slug')
-      ->where('status', 'PUBLISHED')
+    $articles = BlogArticle::query()
+      ->select('slug')
+      ->published()
+      ->availableInStorefront()
       ->get();
 
     $articles_array = $articles->all();
@@ -336,9 +338,10 @@ class SitemapController extends \App\Http\Controllers\Controller
 
   protected function collectArticles(array $defaultRegions): array
   {
-    $articles = \DB::table('ak_articles')
+    $articles = BlogArticle::query()
       ->select('slug', 'updated_at', 'countries')
-      ->where('status', 'PUBLISHED')
+      ->published()
+      ->availableInStorefront()
       ->get();
 
     return $this->mapSimpleItems(

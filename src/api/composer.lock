@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "43ec7ad6707b64093002fd8680a0981c",
+    "content-hash": "8106c98932ab675b6b641612d56220c2",
     "packages": [
         {
             "name": "backpack/basset",
@@ -4889,16 +4889,10 @@
         {
             "name": "parabellumkoval/backpack-articles",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-articles.git",
-                "reference": "e7c7c7a6df17a6a9814c9c48d80f67127c6e622b"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/e7c7c7a6df17a6a9814c9c48d80f67127c6e622b",
-                "reference": "e7c7c7a6df17a6a9814c9c48d80f67127c6e622b",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/articles",
+                "reference": "d81c2403cc92d808e57eab7fc616d2a861da640b"
             },
             "require": {
                 "cviebrock/eloquent-sluggable": "^12.0",
@@ -4910,16 +4904,15 @@
                 "orchestra/testbench": "^6.0",
                 "phpunit/phpunit": "*"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "Product": "Backpack\\Articles\\Facades\\Article"
-                    },
                     "providers": [
                         "Backpack\\Articles\\ServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "Product": "Backpack\\Articles\\Facades\\Article"
+                    }
                 }
             },
             "autoload": {
@@ -4928,7 +4921,28 @@
                     "Backpack\\Articles\\Database\\Factories\\": "database/factories"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Backpack\\Articles\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php ./vendor/bin/testbench package:discover --ansi"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -4947,11 +4961,10 @@
                 "laravel",
                 "parabellumKoval"
             ],
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-articles/issues",
-                "source": "https://github.com/parabellumKoval/backpack-articles/tree/main"
-            },
-            "time": "2026-03-10T15:58:40+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-banners",
@@ -5252,16 +5265,10 @@
         {
             "name": "parabellumkoval/backpack-reviews",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-reviews.git",
-                "reference": "eeae494ec728c723eb368485a9a472bcc74fadc6"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/eeae494ec728c723eb368485a9a472bcc74fadc6",
-                "reference": "eeae494ec728c723eb368485a9a472bcc74fadc6",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/reviews",
+                "reference": "eeae494ec728c723eb368485a9a472bcc74fadc6"
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -5272,16 +5279,15 @@
                 "orchestra/testbench": "^6.0",
                 "phpunit/phpunit": "*"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "Reviews": "Backpack\\Reviews\\Facades\\Reviews"
-                    },
                     "providers": [
                         "Backpack\\Reviews\\ServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "Reviews": "Backpack\\Reviews\\Facades\\Reviews"
+                    }
                 }
             },
             "autoload": {
@@ -5290,7 +5296,29 @@
                     "Backpack\\Reviews\\Database\\Factories\\": "database/factories"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "App\\": "src/app/",
+                    "Backpack\\Reviews\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php ./vendor/bin/testbench package:discover --ansi"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -5309,11 +5337,10 @@
                 "parabellumKoval",
                 "review"
             ],
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-reviews/issues",
-                "source": "https://github.com/parabellumKoval/backpack-reviews/tree/main"
-            },
-            "time": "2026-03-19T15:29:49+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-schedule",
@@ -5429,16 +5456,10 @@
         {
             "name": "parabellumkoval/backpack-store",
             "version": "dev-multistore",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "8df2359e252e43d04ed3fa9315cfcf652b6549de"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/8df2359e252e43d04ed3fa9315cfcf652b6549de",
-                "reference": "8df2359e252e43d04ed3fa9315cfcf652b6549de",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/store",
+                "reference": "052367658c8f5800ab202b175634fe1d75625678"
             },
             "require": {
                 "bacon/bacon-qr-code": "^2.0",
@@ -5458,14 +5479,14 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade",
-                        "Store": "Backpack\\Store\\Facades\\Store"
-                    },
                     "providers": [
                         "Backpack\\CRUD\\BackpackServiceProvider",
                         "Backpack\\Store\\ServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "Store": "Backpack\\Store\\Facades\\Store",
+                        "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade"
+                    }
                 }
             },
             "autoload": {
@@ -5475,7 +5496,32 @@
                     "Backpack\\Store\\Database\\Factories\\": "database/factories"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "App\\": "src/app/",
+                    "Backpack\\Store\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php ./vendor/bin/testbench package:discover --ansi"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ],
+                "phpunit": [
+                    "vendor/bin/phpunit --testdox"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -5494,11 +5540,10 @@
                 "parabellumKoval",
                 "products"
             ],
-            "support": {
-                "issues": "https://github.com/parabellumKoval/backpack-store/issues",
-                "source": "https://github.com/parabellumKoval/backpack-store/tree/multistore"
-            },
-            "time": "2026-03-20T18:52:12+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/backpack-tag",

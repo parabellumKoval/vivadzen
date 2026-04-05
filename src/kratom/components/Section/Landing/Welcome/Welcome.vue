@@ -150,9 +150,18 @@ const nav = computed(() => [
   { link: '#colors', title: t('nav.colors') },
   { link: '#origins', title: t('nav.origins') },
   { link: '#bonus', title: t('nav.bonus') },
-  { link: '#reviews', title: t('nav.reviews') },
+  { link: regionPath('/reviews'), title: t('title.reviews') },
   { link: '#contacts', title: t('nav.contacts') }
 ])
+
+const handleNavClick = (target) => {
+  if (String(target || '').startsWith('#')) {
+    scrollToSection(target)
+    return
+  }
+
+  navigateTo(target)
+}
 
 const handleInfoLink = (action) => {
   if (action === 'certificates') {
@@ -241,7 +250,7 @@ const info = computed(() => [
           <div class="contacts-menu__title">{{ t('nav.title') }}</div>
           <ul class="contacts-menu__list">
             <li v-for="li in nav" :key="li.link" class="contacts-menu__li">
-              <a :href="li.link" @click.prevent="scrollToSection(li.link)">{{ li.title }}</a>
+              <a :href="li.link" @click.prevent="handleNavClick(li.link)">{{ li.title }}</a>
             </li>
           </ul>
         </div>

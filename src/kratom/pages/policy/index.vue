@@ -8,7 +8,7 @@ const breadcrumbs = computed(() => [
 
 <template>
   <div class="page-base kratom-content-page">
-    <div class="container kratom-content-shell">
+    <div class="container kratom-page-container kratom-content-shell">
       <the-breadcrumbs :crumbs="breadcrumbs" />
       <h1 class="title-common">{{ t('title.policy') }}</h1>
       <ContentQuery path="policy" :locale="locale" find="one">
@@ -21,6 +21,6 @@ const breadcrumbs = computed(() => [
 </template>
 
 <style scoped lang="scss">
-.kratom-content-shell { max-width: 980px; padding-top: 32px; }
+.kratom-content-shell { padding-top: 24px; }
 .kratom-content-card { padding: 28px; border-radius: 32px; background: rgba(255,250,244,.92); border: 1px solid rgba(74,91,68,.1); }
 </style>

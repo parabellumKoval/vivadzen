@@ -76,13 +76,13 @@ const openSampleSetModal = () => {
   <section class="sample-set" ref="sectionRef">
     <nuxt-img 
         src="/images/landing/leaves-bg-clear.png"
-        alt="Kratom Flower"
+        :alt="t('image_alt')"
         loading="lazy"
         class="bg"
       />
     <nuxt-img 
         src="/images/landing/bg-stars-shine.png"
-        alt="Kratom Flower"
+        :alt="t('image_alt')"
         loading="lazy"
         class="bg-2"
       />
@@ -90,7 +90,7 @@ const openSampleSetModal = () => {
     <div class="sample-set__decor sample-set__decor--left" ref="leftDecor">
       <nuxt-img 
         src="/images/landing/vetka.png"
-        alt="Kratom Flower"
+        :alt="t('image_alt')"
         loading="lazy"
       />
     </div>
@@ -119,7 +119,7 @@ const openSampleSetModal = () => {
           >
             <nuxt-img 
               :src="product.img"
-              :alt="`Product ${product.id}`"
+              :alt="t('product_alt', { index: product.id })"
               class="sample-set__product-img"
               loading="lazy"
             />
@@ -137,7 +137,7 @@ const openSampleSetModal = () => {
     <div class="sample-set__decor sample-set__decor--right" ref="rightDecor">
         <nuxt-img 
           src="/images/landing/vetka.png"
-          alt="Kratom Flower"
+          :alt="t('image_alt')"
           loading="lazy"
         />
     </div>

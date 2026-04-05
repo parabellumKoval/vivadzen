@@ -194,6 +194,7 @@ return [
                 'novaposhta_warehouse' => '<b>Sucursal/locker Nova Poshta</b>',
                 'packeta_address' => '<b>Mensajería Zasilkovna</b>',
                 'packeta_warehouse' => '<b>Punto de recogida Zasilkovna</b>',
+                'messenger_address' => '<b>Mensajería Messenger.cz</b>',
                 'default_pickup' => '<b>Recogida</b>',
                 'default_address' => '<b>Envío postal</b>',
             ],
@@ -202,6 +203,7 @@ return [
             'method' => [
                 'zasilkovna_cod' => '<b>Contra reembolso Zasilkovna</b>',
                 'novaposhta_cod' => '<b>Contra reembolso Nova Poshta</b>',
+                'messenger_cod' => '<b>Contra reembolso Messenger.cz</b>',
                 'default_cash' => '<b>Pago contra entrega</b>',
                 'liqpay_online' => '<b>Pago en línea LiqPay</b>',
                 'card_online' => '<b>Pago con tarjeta en línea</b>',

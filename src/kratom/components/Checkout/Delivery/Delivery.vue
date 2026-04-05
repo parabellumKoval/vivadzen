@@ -1,5 +1,6 @@
 <script setup>
 import {useCartStore} from '~/store/cart'
+import CheckoutDeliveryProvidersMessengerAddress from '~/components/Checkout/Delivery/Providers/Messenger/Address/Address.vue'
 
 const {t} = useI18n()
 const props = defineProps({})
@@ -53,7 +54,6 @@ const deliveryMethod = computed({
 <!-- <i18n src='./lang.yaml' lang='yaml'></i18n> -->
 
 <template>
-  <checkout-delivery-country class="form-row"></checkout-delivery-country>
   <template v-if="isDefaultRegion">
     <div>{{ t('messages.chose_delivery_country') }}</div>
   </template>
@@ -84,6 +84,10 @@ const deliveryMethod = computed({
       <!-- Pickup delivery -->
       <div v-else-if="order.delivery.method === 'default_pickup'" class="form-grid">
         <checkout-delivery-providers-default-pickup></checkout-delivery-providers-default-pickup>
+      </div>
+      <!-- Messenger delivery -->
+      <div v-else-if="order.delivery.method === 'messenger_address'" class="form-grid">
+        <CheckoutDeliveryProvidersMessengerAddress />
       </div>
       <!-- Address delivery -->
       <div v-else-if="order.delivery.method === 'default_address'" class="form-grid">

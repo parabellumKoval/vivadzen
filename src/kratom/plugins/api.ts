@@ -11,6 +11,11 @@ export default defineNuxtPlugin((nuxtApp) => {
     secure: process.env.NODE_ENV === 'production',
     path: '/',
   })
+  const xsrfToken = useCookie<string | null>('XSRF-TOKEN', {
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+  })
   const referral = useReferralBridge()
 
   const i18n = (nuxtApp as any).$i18n;
@@ -18,6 +23,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const locale = i18n?.locale;
   const region = regionStore.regionAlias;  
+  const storefrontCode = String(config.public.storefrontCode || 'kratom').trim()
 
 
   const $api = $fetch.create({
@@ -30,14 +36,14 @@ export default defineNuxtPlugin((nuxtApp) => {
       const base: Record<string, string> = {
         Accept: 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
+        'X-Storefront': storefrontCode,
         ...(locale?.value ? { 'Accept-Language': locale.value } : {}),
         ...(region?.value ? { 'X-Region': region.value } : {}),
       }
 
       if (token.value) base.Authorization = `Bearer ${token.value}`
 
-      const xsrf = useCookie('XSRF-TOKEN').value
-      if (xsrf) base['X-XSRF-TOKEN'] = xsrf
+      if (xsrfToken.value) base['X-XSRF-TOKEN'] = xsrfToken.value
 
       const referralCode = referral.code.value
       if (referralCode) base['X-Referral-Code'] = referralCode
@@ -50,9 +56,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
     onResponseError({ response }) {
       if (response.status === 401 && token.value && !logoutInProgress) {
-        const { logout } = useAuth()
         logoutInProgress = true
-        logout() // централизованный выход
+        nuxtApp.runWithContext(() => useAuth().logout()) // централизованный выход
           .finally(() => {
             logoutInProgress = false
           })

@@ -71,6 +71,10 @@ const paymentMethod = computed({
       <div v-else-if="paymentMethod === 'default_cash'" class="form-grid">
         <checkout-payment-providers-default-cash></checkout-payment-providers-default-cash>
       </div>
+      <!-- Messenger COD -->
+      <div v-else-if="paymentMethod === 'messenger_cod'" class="form-grid">
+        <checkout-payment-providers-messenger-cod></checkout-payment-providers-messenger-cod>
+      </div>
       <!-- Address delivery -->
       <div v-else-if="paymentMethod === 'liqpay_online'" class="form-grid">
         <checkout-payment-providers-liqpay-online></checkout-payment-providers-liqpay-online>

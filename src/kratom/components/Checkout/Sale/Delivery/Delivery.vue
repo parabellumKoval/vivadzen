@@ -21,6 +21,7 @@ const deliveryPayload = computed(() => {
 
   const methodKey = order.value?.delivery?.method
   const destinationCountry = region.value
+  const isMessengerCod = methodKey === 'messenger_address' && order.value?.payment?.method === 'messenger_cod'
 
   if (!methodKey || !destinationCountry) {
     return null
@@ -30,8 +31,8 @@ const deliveryPayload = computed(() => {
     methodKey,
     destinationCountry,
     weightG: 1000,
-    codAmount: 0,
-    codEnabled: 0,
+    codAmount: isMessengerCod ? (cartStore.totalProducts || 0) : 0,
+    codEnabled: isMessengerCod ? 1 : 0,
     meta: {
       subtotal: cartStore.totalProducts || 0,
       promocode_discount: cartStore.promocodeSale || 0,

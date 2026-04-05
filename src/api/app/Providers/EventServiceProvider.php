@@ -11,6 +11,8 @@ use App\Listeners\SendReviewPublishedNotification;
 use App\Listeners\SendWithdrawalApprovedMail;
 use App\Listeners\SendWithdrawalNotification;
 use App\Listeners\SendWithdrawalPaidMail;
+use App\Models\DeliveryReport;
+use App\Observers\DeliveryReportObserver;
 use App\Observers\FeedbackObserver;
 use App\Observers\OrderObserver;
 use Backpack\Profile\app\Events\ReferralAttached;
@@ -68,6 +70,7 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         StoreOrder::observe(OrderObserver::class);
+        DeliveryReport::observe(DeliveryReportObserver::class);
         Feedback::observe(FeedbackObserver::class);
     }
 

@@ -47,8 +47,12 @@ const adultoPublicKey = computed(() => {
   return String(runtimeConfig.public.adultoPublicKey || '').trim()
 })
 
+const ageVerificationEnvEnabled = computed(() => {
+  return Boolean(runtimeConfig.public.kratomCheckoutAgeVerificationEnabled)
+})
+
 const ageVerificationFeatureEnabled = computed(() => {
-  return Boolean(getSetting('store.age_verification.adulto.enabled', false))
+  return ageVerificationEnvEnabled.value && Boolean(getSetting('store.age_verification.adulto.enabled', false))
 })
 
 const cartRequiresAgeVerification = computed(() => {

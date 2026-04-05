@@ -98,12 +98,15 @@ useHead({
     <div id="legal" class="page-reveal-section">
       <section-landing-legal-market />
     </div>
+    <div id="store" class="page-reveal-section">
+      <section-landing-product-grid />
+    </div>
     <div id="timeline" class="page-reveal-section">
       <section-landing-timeline-section />
     </div>
-    <div id="promo" class="page-reveal-section">
+    <!-- <div id="promo" class="page-reveal-section">
       <section-landing-promo-subscribe />
-    </div>
+    </div> -->
     <div id="kratom" class="page-reveal-section">
       <section-landing-kratom />
     </div>
@@ -119,9 +122,10 @@ useHead({
     <div id="bonus" class="page-reveal-section">
       <section-landing-referral-bonus />
     </div>
-    <div id="store" class="page-reveal-section">
+
+    <!-- <div id="store" class="page-reveal-section">
       <section-landing-online-store />
-    </div>
+    </div> -->
     <div id="reviews" class="page-reveal-section">
       <section-landing-google-reviews />
     </div>

@@ -33,14 +33,14 @@ export default defineI18nConfig(() => {
     numberFormats: {
       cs: { currency: currencyFormats, cur: decimalFormats },
       en: { currency: currencyFormats, cur: decimalFormats },
-      de: { currency: currencyFormats, cur: decimalFormats },
-      es: { currency: currencyFormats, cur: decimalFormats },
+      ru: { currency: currencyFormats, cur: decimalFormats },
+      uk: { currency: currencyFormats, cur: decimalFormats },
     },
     datetimeFormats: {
       cs: { short: shortDate, long: longDate },
       en: { short: shortDate, long: longDate },
-      de: { short: shortDate, long: longDate },
-      es: { short: shortDate, long: longDate },
+      ru: { short: shortDate, long: longDate },
+      uk: { short: shortDate, long: longDate },
     },
   }
 })

@@ -2,12 +2,14 @@
 
 namespace App\Support;
 
+use Backpack\Store\app\Services\Store;
 use Illuminate\Http\Request;
 
 class RegionalContext
 {
     protected ?string $locale = null;
     protected ?string $region = null;
+    protected ?string $storefront = null;
     protected ?string $acceptLanguage = null;
 
     public function hydrateFromRequest(Request $request, ?string $preferredLocale = null): void
@@ -30,6 +32,13 @@ class RegionalContext
         if ($region !== null) {
             $this->setRegion($region);
         }
+
+        $storefront = $request->get('storefront')
+            ?? $request->header('X-Storefront');
+
+        if ($storefront !== null) {
+            $this->setStorefront($storefront);
+        }
     }
 
     public function setLocale(?string $locale): void
@@ -50,6 +59,11 @@ class RegionalContext
         $this->region = $this->normalizeRegion($region) ?? $this->region;
     }
 
+    public function setStorefront(?string $storefront): void
+    {
+        $this->storefront = $this->normalizeStorefront($storefront) ?? $this->storefront;
+    }
+
     public function setAcceptLanguage(?string $value): void
     {
         $this->acceptLanguage = $value ?: $this->acceptLanguage;
@@ -60,6 +74,11 @@ class RegionalContext
         return [
             'locale' => $this->normalizeLocale($overrides['locale'] ?? $this->locale ?? app()->getLocale()),
             'region' => $this->normalizeRegion($overrides['region'] ?? $this->region),
+            'storefront' => $this->normalizeStorefront(
+                $overrides['storefront']
+                ?? $this->storefront
+                ?? ((class_exists(Store::class) && Store::isStorefrontEnabled()) ? Store::defaultStorefront() : null)
+            ),
             'accept_language' => $overrides['accept_language'] ?? $this->acceptLanguage,
         ];
     }
@@ -77,6 +96,10 @@ class RegionalContext
         if ($snapshot['region']) {
             $context['region'] = $snapshot['region'];
             $context['country'] = $snapshot['region'];
+        }
+
+        if ($snapshot['storefront']) {
+            $context['storefront'] = $snapshot['storefront'];
         }
 
         if ($snapshot['accept_language']) {
@@ -136,5 +159,17 @@ class RegionalContext
         $code = strtolower(substr((string) $cleaned, 0, 2));
 
         return strlen($code) === 2 ? $code : null;
+    }
+
+    protected function normalizeStorefront(?string $storefront): ?string
+    {
+        if ($storefront === null || $storefront === '') {
+            return null;
+        }
+
+        $cleaned = strtolower(trim((string) $storefront));
+        $cleaned = preg_replace('/[^a-z0-9_-]/', '', $cleaned);
+
+        return $cleaned !== '' ? $cleaned : null;
     }
 }

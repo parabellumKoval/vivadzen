@@ -27,12 +27,11 @@ class CategoryController extends \App\Http\Controllers\Controller
    * @return void
    */
   public function categoryCached(Request $request, $slug) {
-    Cache::forget('category-data-'.$slug);
-    // 1) TRY GET CASHED CATALOG DATA
-    // if(Cache::has('category-data-' . $slug)) {
-    //   $cached_data = Cache::get('category-data-' . $slug);
-    //   return response()->json($cached_data);
-    // }
+    $cacheKey = $this->categoryCacheKey($request, $slug, 'category-data');
+
+    if(Cache::has($cacheKey)) {
+      return response()->json(Cache::get($cacheKey));
+    }
 
     $category = Category::where('slug', $slug)->where('is_active', 1)->first();
 
@@ -50,7 +49,7 @@ class CategoryController extends \App\Http\Controllers\Controller
 
     if(!empty($category) || !empty($region)) {
       $all_data = $this->categoryData($request, $category, $region);
-      Cache::put('category-data-' . $slug, $all_data);
+      Cache::put($cacheKey, $all_data);
       return response()->json($all_data);
     }
   }
@@ -64,11 +63,11 @@ class CategoryController extends \App\Http\Controllers\Controller
    */
   public function productOrCategory(Request $request, $slug) {
     $page = $request->input('page', null);
+    $cacheKey = $this->categoryCacheKey($request, $slug, 'category-data');
 
-    // Cache::forget('category-data-'.$slug);
     // 1) TRY GET CASHED CATALOG DATA
-    if(Cache::has('category-data-' . $slug)) {
-      $cached_data = Cache::get('category-data-' . $slug);
+    if(Cache::has($cacheKey)) {
+      $cached_data = Cache::get($cacheKey);
 
       if(!empty($page) && $page > 1) {
         $cached_data = $this->updateProductsData($request, $cached_data, $slug);
@@ -78,7 +77,7 @@ class CategoryController extends \App\Http\Controllers\Controller
     }
 
     // 2) THEN TRY FIND PRODUCT
-    $product = $this->getProduct($slug);
+    $product = $this->getProduct($slug, $request);
     if($product) return response()->json($product);
 
     // 3) If Not product then try get category and return catalog data (same 1 step)
@@ -97,7 +96,7 @@ class CategoryController extends \App\Http\Controllers\Controller
 
     if(!empty($category) || !empty($region)) {
       $all_data = $this->catalogData($request, $category, $region);
-      Cache::put('category-data-' . $slug, $all_data);
+      Cache::put($cacheKey, $all_data);
       return response()->json($all_data);
     }
   }
@@ -108,9 +107,10 @@ class CategoryController extends \App\Http\Controllers\Controller
    * @param  mixed $slug
    * @return void
    */
-  public function getProduct($slug) {
+  public function getProduct($slug, ?Request $request = null) {
     $this->product_class = config('backpack.store.product.class', 'Backpack\Store\app\Models\Product');
-    $product = $this->product_class::where('slug', $slug)->where('is_active', 1)->first();
+    $country = $request?->input('country');
+    $product = $this->product_class::where('slug', $slug)->available($country)->first();
 
     // --- return the product
     if($product) {
@@ -128,11 +128,20 @@ class CategoryController extends \App\Http\Controllers\Controller
    * @return void
    */
   public function getSlugs(Request $request) {
-    
+    $country = $request->input('country');
+    $visibleIds = Category::visibleIdsForContext($country, null, true);
+
     $categories = Category::query()
       ->select('ak_product_categories.*')
       ->distinct('ak_product_categories.id')
       ->active()
+      ->when(!empty($visibleIds), function ($query) use ($visibleIds) {
+        $query->whereIn('ak_product_categories.id', $visibleIds);
+      }, function ($query) {
+        if (\Backpack\Store\app\Services\Store::isStorefrontEnabled()) {
+          $query->whereRaw('1=0');
+        }
+      })
       ->orderBy('lft')
       ->get();
     
@@ -149,11 +158,20 @@ class CategoryController extends \App\Http\Controllers\Controller
    * @return void
    */
   public function getSlugsSimple(Request $request) {
-    
+    $country = $request->input('country');
+    $visibleIds = Category::visibleIdsForContext($country, null, true);
+
     $slugs = Category::query()
       ->select('ak_product_categories.*')
       ->distinct('ak_product_categories.id')
       ->active()
+      ->when(!empty($visibleIds), function ($query) use ($visibleIds) {
+        $query->whereIn('ak_product_categories.id', $visibleIds);
+      }, function ($query) {
+        if (\Backpack\Store\app\Services\Store::isStorefrontEnabled()) {
+          $query->whereRaw('1=0');
+        }
+      })
       ->pluck('slug');
     
     return $slugs;
@@ -179,6 +197,8 @@ class CategoryController extends \App\Http\Controllers\Controller
     $fake_request = new \Illuminate\Http\Request();
     $fake_request->replace([
       'category_slug' => $slug,
+      'country' => $request->input('country'),
+      'storefront' => \Backpack\Store\app\Services\Store::storefront(),
       'per_page' => 20,
       'page' => $request->input('page')
     ]);
@@ -219,6 +239,7 @@ class CategoryController extends \App\Http\Controllers\Controller
     // Reviews
     $fake_request->replace([
       'country' => $country,
+      'storefront' => \Backpack\Store\app\Services\Store::storefront(),
       'category_id' => $category->id,
       'per_page' => 6,
       'with_text' => 1
@@ -233,6 +254,7 @@ class CategoryController extends \App\Http\Controllers\Controller
     //CHIP Products
     $fake_request->replace([
       'country' => $country,
+      'storefront' => \Backpack\Store\app\Services\Store::storefront(),
       'category_slug' => $slug,
       'price' => [5, 100000000],
       'order_by' => 'price',
@@ -247,6 +269,7 @@ class CategoryController extends \App\Http\Controllers\Controller
     //POPULAR Products
     $fake_request->replace([
       'country' => $country,
+      'storefront' => \Backpack\Store\app\Services\Store::storefront(),
       'category_slug' => $slug,
       'price' => [5, 100000000],
       'order_by' => 'sales',
@@ -286,6 +309,8 @@ class CategoryController extends \App\Http\Controllers\Controller
     $fake_request = new \Illuminate\Http\Request();
     $fake_request->replace([
       'category_slug' => $slug,
+      'country' => $request?->input('country'),
+      'storefront' => \Backpack\Store\app\Services\Store::storefront(),
       'per_page' => 20
     ]);
 
@@ -295,6 +320,8 @@ class CategoryController extends \App\Http\Controllers\Controller
 
     // Brands
     $fake_request->replace([
+      'country' => $request?->input('country'),
+      'storefront' => \Backpack\Store\app\Services\Store::storefront(),
       'category_slug' => $slug,
       'per_page' => 20000
     ]);
@@ -326,6 +353,8 @@ class CategoryController extends \App\Http\Controllers\Controller
 
     // Reviews
     $fake_request->replace([
+      'country' => $request?->input('country'),
+      'storefront' => \Backpack\Store\app\Services\Store::storefront(),
       'category_slug' => $slug,
       'per_page' => 6,
       'resource' => 'large',
@@ -339,6 +368,8 @@ class CategoryController extends \App\Http\Controllers\Controller
     //CHIP Products
     // category_id=3&price[0]=5&price[1]=100000000&order_by=price&order_dir=ASC&selections[0]=in_stock&per_page=5&with_filters=0
     $fake_request->replace([
+      'country' => $request?->input('country'),
+      'storefront' => \Backpack\Store\app\Services\Store::storefront(),
       'category_slug' => $slug,
       'price' => [5, 100000000],
       'order_by' => 'price',
@@ -353,6 +384,8 @@ class CategoryController extends \App\Http\Controllers\Controller
     //POPULAR Products
     //category_id=3&order_by=sales&order_dir=DESC&selections[0]=in_stock&per_page=5&with_filters=0
     $fake_request->replace([
+      'country' => $request?->input('country'),
+      'storefront' => \Backpack\Store\app\Services\Store::storefront(),
       'category_slug' => $slug,
       'price' => [5, 100000000],
       'order_by' => 'sales',
@@ -374,5 +407,14 @@ class CategoryController extends \App\Http\Controllers\Controller
       'chip_products' => $chip_products['products'] ?? null,
       'popular_products' => $popular_products['products'] ?? null
     ];
+  }
+
+  protected function categoryCacheKey(Request $request, string $slug, string $prefix): string
+  {
+    $country = strtolower((string) ($request->input('country') ?? \Store::country() ?? ''));
+    $storefront = strtolower((string) (\Backpack\Store\app\Services\Store::storefront() ?? ''));
+    $locale = strtolower((string) (app()->getLocale() ?? ''));
+
+    return implode(':', [$prefix, $slug, $country, $storefront, $locale]);
   }
 }

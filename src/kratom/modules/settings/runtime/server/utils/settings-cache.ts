@@ -1,6 +1,8 @@
 import { ofetch } from 'ofetch'
 import { useRuntimeConfig } from '#imports'
 import {
+  normalizeLocaleKey,
+  normalizeRegionKey,
   setDatasetEntry,
   type SettingsDataset,
 } from '../../utils/settings-helpers'
@@ -26,7 +28,7 @@ interface FetchCombo {
 }
 
 const STORAGE_KEY = 'settings-cache'
-const FETCH_CONCURRENCY = 4
+const FETCH_CONCURRENCY = 1
 
 function storage() {
   return useStorage<CacheEntry>('cache')
@@ -47,12 +49,29 @@ function getModuleOptions(): NormalizedSettingsModuleRuntimeOptions {
   }
 }
 
+function resolveStorefrontCode(): string {
+  const config = useRuntimeConfig()
+  return String(config.public?.storefrontCode || 'kratom').trim()
+}
+
 async function readCache(): Promise<CacheEntry | null> {
   return await storage().getItem<CacheEntry>(STORAGE_KEY)
 }
 
 async function writeCache(entry: CacheEntry) {
   await storage().setItem(STORAGE_KEY, entry)
+}
+
+function normalizeDataset(value: unknown): SettingsDataset {
+  return value && typeof value === 'object' ? (value as SettingsDataset) : {}
+}
+
+function hasExactVariant(dataset: SettingsDataset, region?: string | null, locale?: string | null) {
+  const regionKey = normalizeRegionKey(region)
+  const localeKey = normalizeLocaleKey(locale)
+  const bucket = dataset[regionKey]
+
+  return Boolean(bucket && Object.prototype.hasOwnProperty.call(bucket, localeKey))
 }
 
 const normalizeList = (values?: string[]) => {
@@ -106,14 +125,22 @@ const buildCombos = (regions?: string[], locales?: string[]): FetchCombo[] => {
 }
 
 const fetchCombo = async (apiUrl: string, combo: FetchCombo): Promise<SettingsEntry> => {
+  const storefrontCode = resolveStorefrontCode()
   const headers: Record<string, string> = {
     Accept: 'application/json',
+    'X-Storefront': storefrontCode,
   }
 
   if (combo.locale) headers['Accept-Language'] = combo.locale
   if (combo.region) headers['X-Region'] = combo.region
 
-  const query = combo.region ? { country: combo.region } : undefined
+  const query: Record<string, string> = {
+    storefront: storefrontCode,
+  }
+
+  if (combo.region) {
+    query.country = combo.region
+  }
 
   return await ofetch<SettingsEntry>(apiUrl, {
     retry: 0,
@@ -174,11 +201,11 @@ export async function getSettingsSWR(): Promise<SettingsDataset> {
   const cached = await readCache()
   if (cached) {
     if (!enableTtl) {
-      return cached.data
+      return cached.data || {}
     }
     const fresh = ttlMs > 0 && (now() - cached.fetchedAt) < ttlMs
     if (fresh) {
-      return cached.data
+      return cached.data || {}
     }
     void (async () => {
       try {
@@ -186,16 +213,55 @@ export async function getSettingsSWR(): Promise<SettingsDataset> {
         if (freshEntry) await writeCache(freshEntry)
       } catch {}
     })()
-    return cached.data
+    return cached.data || {}
   }
 
-  const freshEntry = await fetchRemote()
-  if (freshEntry) {
-    await writeCache(freshEntry)
-    return freshEntry.data
+  try {
+    const freshEntry = await fetchRemote()
+    if (freshEntry) {
+      await writeCache(freshEntry)
+      return freshEntry.data || {}
+    }
+  } catch {
+    return {}
   }
 
   return {}
+}
+
+export async function ensureSettingsVariant(
+  region?: string | null,
+  locale?: string | null
+): Promise<SettingsDataset> {
+  const cached = await readCache()
+  const dataset = normalizeDataset(cached?.data)
+
+  if (hasExactVariant(dataset, region, locale)) {
+    return dataset
+  }
+
+  try {
+    const { apiUrl } = getModuleOptions()
+    if (!apiUrl) {
+      return dataset
+    }
+
+    const value = await fetchCombo(apiUrl, {
+      region: region || undefined,
+      locale: locale || undefined,
+    })
+
+    const nextDataset: SettingsDataset = { ...dataset }
+    setDatasetEntry(nextDataset, region, locale, value)
+    await writeCache({
+      data: nextDataset,
+      fetchedAt: now(),
+    })
+
+    return nextDataset
+  } catch {
+    return dataset
+  }
 }
 
 export async function refreshSettingsNow(): Promise<SettingsDataset> {

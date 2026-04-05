@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\MessengerDeliveryReportController;
 use App\Http\Controllers\Api\NovaposhtaController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\SitemapController;
@@ -50,3 +51,5 @@ Route::prefix('np')->controller(NovaposhtaController::class)->middleware(['api',
   Route::get('/warehouses', 'warehouses');
   Route::get('/streets', 'streets');
 });
+
+Route::post('/delivery-reports/messenger', [MessengerDeliveryReportController::class, 'store'])->middleware('api');

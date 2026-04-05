@@ -1,0 +1,47 @@
+cs:
+  title_suffix: "kratom"
+  properties: "Vlastnosti"
+  modifications: "Dostupné varianty"
+  store_message: "Tento druh kratomu si můžete zakoupit v naší prodejně na adrese:"
+  messengers: "Chaty"
+  open_map: "Otevřít mapu"
+  contacts:
+    address: "Adresa"
+    phone: "Telefon"
+    schedule: "Otevírací doba"
+
+en:
+  title_suffix: "kratom"
+  properties: "Properties"
+  modifications: "Available variations"
+  store_message: "You can buy this kratom variety in our store at the following address:"
+  messengers: "Chats"
+  open_map: "Open map"
+  contacts:
+    address: "Address"
+    phone: "Phone"
+    schedule: "Opening hours"
+
+ru:
+  title_suffix: "kratom"
+  properties: "Свойства"
+  modifications: "Доступные варианты"
+  store_message: "Этот вид kratom можно купить в нашем магазине по адресу:"
+  messengers: "Чаты"
+  open_map: "Открыть карту"
+  contacts:
+    address: "Адрес"
+    phone: "Телефон"
+    schedule: "Часы работы"
+
+uk:
+  title_suffix: "kratom"
+  properties: "Властивості"
+  modifications: "Доступні варіанти"
+  store_message: "Цей вид kratom можна придбати в нашому магазині за адресою:"
+  messengers: "Чати"
+  open_map: "Відкрити мапу"
+  contacts:
+    address: "Адреса"
+    phone: "Телефон"
+    schedule: "Графік роботи"

@@ -3,11 +3,15 @@ const { t, locale, locales } = useI18n()
 const regionPath = useToLocalePath()
 const route = useRoute()
 const isMenuOpen = ref(false)
+const isDesktopCatalogAvailable = ref(false)
 const cartStore = useCartStore()
+let desktopCatalogMediaQuery: MediaQueryList | null = null
+let cleanupDesktopCatalogMediaQuery: (() => void) | null = null
 
 const navItems = computed(() => [
   { to: '/catalog', label: t('title.catalog') },
   { to: '/blog', label: t('title.blog') },
+  { to: '/reviews', label: t('title.reviews') },
   { to: '/about', label: t('title.about') },
   { to: '/contacts', label: t('title.contacts') },
 ])
@@ -27,7 +31,7 @@ function stripLocale(path: string) {
   const pathname = fullPath.replace(/[?#].*$/, '') || '/'
   const suffix = fullPath.slice(pathname.length)
   const segments = pathname.split('/').filter(Boolean)
-  if (segments[0] && ['cs', 'en', 'de', 'es'].includes(segments[0])) {
+  if (segments[0] && ['cs', 'en', 'ru', 'uk'].includes(segments[0])) {
     const next = '/' + segments.slice(1).join('/')
     const normalized = next === '/' ? '/' : next.replace(/\/$/, '') || '/'
     return `${normalized}${suffix}`
@@ -43,6 +47,10 @@ function closeMenu() {
   isMenuOpen.value = false
 }
 
+function syncDesktopCatalogAvailability() {
+  isDesktopCatalogAvailable.value = Boolean(desktopCatalogMediaQuery?.matches)
+}
+
 function openCart() {
   useModal().open(resolveComponent('ModalCart'), null, null, {
     width: { min: 968, max: 968 },
@@ -50,6 +58,34 @@ function openCart() {
 }
 
 watch(() => route.fullPath, closeMenu)
+
+onMounted(() => {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  desktopCatalogMediaQuery = window.matchMedia('(min-width: 1024px)')
+  syncDesktopCatalogAvailability()
+
+  const listener = () => {
+    syncDesktopCatalogAvailability()
+  }
+
+  if (typeof desktopCatalogMediaQuery.addEventListener === 'function') {
+    desktopCatalogMediaQuery.addEventListener('change', listener)
+    cleanupDesktopCatalogMediaQuery = () => desktopCatalogMediaQuery?.removeEventListener('change', listener)
+    return
+  }
+
+  desktopCatalogMediaQuery.addListener(listener)
+  cleanupDesktopCatalogMediaQuery = () => desktopCatalogMediaQuery?.removeListener(listener)
+})
+
+onBeforeUnmount(() => {
+  if (cleanupDesktopCatalogMediaQuery) {
+    cleanupDesktopCatalogMediaQuery()
+  }
+})
 </script>
 
 <template>
@@ -64,14 +100,24 @@ watch(() => route.fullPath, closeMenu)
       </NuxtLink>
 
       <nav class="site-header__nav" aria-label="Primary navigation">
-        <NuxtLink
+        <div
           v-for="item in navItems"
           :key="item.to"
-          :to="regionPath(item.to)"
-          class="site-header__nav-link"
+          class="site-header__nav-item"
+          :class="{ 'site-header__nav-item--catalog': item.to === '/catalog' }"
         >
-          {{ item.label }}
-        </NuxtLink>
+          <NuxtLink
+            :to="regionPath(item.to)"
+            class="site-header__nav-link"
+          >
+            {{ item.label }}
+          </NuxtLink>
+
+          <KratomCatalogDropdown
+            v-if="item.to === '/catalog'"
+            :enabled="isDesktopCatalogAvailable"
+          />
+        </div>
       </nav>
 
       <div class="site-header__actions">
@@ -179,6 +225,26 @@ watch(() => route.fullPath, closeMenu)
 
   @include desktop {
     display: flex;
+  }
+}
+
+.site-header__nav-item {
+  position: relative;
+  display: flex;
+}
+
+.site-header__nav-item--catalog {
+  padding-bottom: 18px;
+  margin-bottom: -18px;
+
+  &:hover,
+  &:focus-within {
+    :deep(.catalog-dropdown) {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translate(-50%, 0);
+    }
   }
 }
 

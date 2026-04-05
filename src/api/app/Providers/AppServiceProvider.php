@@ -7,6 +7,7 @@ use App\Services\AgeVerification\AdultoClient;
 use App\Services\AgeVerification\AgeVerificationService;
 use App\Support\RegionalContext;
 use App\Support\ReviewRewardContext;
+use App\Support\StorefrontSettings;
 use Illuminate\Support\ServiceProvider;
 
 use \Backpack\Store\app\Models\Order;
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(RegionalContext::class, fn () => new RegionalContext());
         $this->app->singleton(ReviewRewardContext::class, fn () => new ReviewRewardContext());
+        $this->app->singleton(StorefrontSettings::class, fn () => new StorefrontSettings());
         $this->app->scoped(AgeVerificationService::class);
         $this->app->scoped(AdultoClient::class);
         $this->app->bind(StoreOrderController::class, AppOrderController::class);

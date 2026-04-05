@@ -194,6 +194,7 @@ return [
                 'novaposhta_warehouse' => '<b>Pobočka/box Nova Poshta</b>',
                 'packeta_address' => '<b>Doručení kurýrem Zasilkovna</b>',
                 'packeta_warehouse' => '<b>Pobočka/box Zasilkovna</b>',
+                'messenger_address' => '<b>Doručení kurýrem Messenger.cz</b>',
                 'default_pickup' => '<b>Osobní odběr</b>',
                 'default_address' => '<b>Poštovní doručení</b>',
             ],
@@ -202,6 +203,7 @@ return [
             'method' => [
                 'zasilkovna_cod' => '<b>Dobírka Zasilkovna</b>',
                 'novaposhta_cod' => '<b>Dobírka Nova Poshta</b>',
+                'messenger_cod' => '<b>Dobírka Messenger.cz</b>',
                 'default_cash' => '<b>Platba při převzetí</b>',
                 'liqpay_online' => '<b>Online platba LiqPay</b>',
                 'card_online' => '<b>Platba kartou online</b>',

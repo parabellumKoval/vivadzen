@@ -52,4 +52,8 @@ return [
         'verify_url' => env('ADULTO_VERIFY_URL', 'https://api.result.adulto.cz'),
         'timeout' => (int) env('ADULTO_TIMEOUT', 10),
     ],
+
+    'messenger' => [
+        'delivery_reporting_api_key' => env('MESSENGER_DELIVERY_REPORTING_API_KEY'),
+    ],
 ];

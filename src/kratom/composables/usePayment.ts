@@ -126,6 +126,15 @@ export const usePayment = () => {
       image: '/images/logo/bank.png',
       logo: '/images/logo/company-mini.png',
       payments: ['packeta_warehouse', 'packeta_address', 'default_address', 'default_pickup']
+    },
+    {
+      key: 'messenger_cod',
+      title: t('payments.messenger_cod.title'),
+      label: t('payments.messenger_cod.title'),
+      icon: 'iconoir:delivery-truck',
+      image: '/images/logo/messenger.svg',
+      logo: '/images/logo/messenger.svg',
+      payments: ['messenger_address']
     }
   ])
 

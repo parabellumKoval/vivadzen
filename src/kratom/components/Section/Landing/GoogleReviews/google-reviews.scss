@@ -1,11 +1,11 @@
 .google-reviews {
   position: relative;
-  padding: 130px 2rem;
+  padding: 130px 0;
   background: #f0e1ca;
   overflow: hidden;
 
   @include mobile {
-    padding: 3rem 1rem;
+    padding: 3rem 0;
   }
 
   &:after {
@@ -22,7 +22,16 @@
     max-width: 1400px;
     margin: 0 auto;
     z-index: 10;
-    padding: 0;
+  }
+
+  &--masonry {
+    padding-top: 0;
+    padding-bottom: 48px;
+
+    @include mobile {
+      padding-top: 0;
+      padding-bottom: 40px;
+    }
   }
 
   &__header {
@@ -83,6 +92,20 @@
     position: relative;
   }
 
+  &__masonry {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+
+    @include tablet {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include desktop {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
   &__carousel {
     --arrow-bg: #ffffff;
     --arrow-fg: #374151;
@@ -133,6 +156,37 @@
   &__empty-icon {
     font-size: 3rem;
   }
+
+  &__load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  &__load-more-button {
+    min-width: 220px;
+    padding: 1rem 1.5rem;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #1e3f34, #406857);
+    color: #fff7ec;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    box-shadow: 0 16px 30px rgba(30, 63, 52, 0.2);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 36px rgba(30, 63, 52, 0.24);
+    }
+
+    &:disabled {
+      cursor: wait;
+      opacity: 0.7;
+    }
+  }
 }
 
 @keyframes spin {
@@ -149,7 +203,7 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(31, 43, 29, 0.08);
   transition: all 0.3s ease;
 
   &:hover {
@@ -276,5 +330,13 @@
     color: #64748b;
     line-height: 1.5;
     margin: 0;
+  }
+}
+
+.google-reviews--masonry {
+  .review-card {
+    width: auto;
+    display: flex;
+    margin-bottom: 0;
   }
 }

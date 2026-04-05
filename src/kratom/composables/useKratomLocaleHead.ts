@@ -1,8 +1,8 @@
 const LANGUAGE_BY_LOCALE: Record<string, string> = {
   cs: 'cs-CZ',
   en: 'en-US',
-  de: 'de-DE',
-  es: 'es-ES',
+  ru: 'ru-RU',
+  uk: 'uk-UA',
 }
 
 const normalizeLocale = (value: string | null | undefined) => String(value || '').trim().toLowerCase()
@@ -39,7 +39,7 @@ export const useKratomLocaleHead = () => {
   const runtimeConfig = useRuntimeConfig()
   const nuxtApp = tryUseNuxtApp()
 
-  const configuredLocales = ((runtimeConfig.public.kratomStore?.locales || ['cs', 'en', 'de', 'es']) as string[])
+  const configuredLocales = ((runtimeConfig.public.kratomStore?.locales || ['cs', 'en', 'ru', 'uk']) as string[])
     .map((code) => normalizeLocale(code))
     .filter(Boolean)
 

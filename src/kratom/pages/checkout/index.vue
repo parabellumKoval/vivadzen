@@ -62,7 +62,7 @@ cartStore.setPromocode(null)
 
 <template>
   <div class="page-base kratom-checkout-page">
-    <div class="container kratom-checkout-shell">
+    <div class="container kratom-page-container kratom-checkout-shell">
       <the-breadcrumbs :crumbs="breadcrumbs" />
 
       <section class="kratom-checkout-hero">
@@ -158,15 +158,15 @@ cartStore.setPromocode(null)
 
 <style scoped lang="scss">
 .kratom-checkout-shell {
-  padding-top: 32px;
+  padding-top: 24px;
 }
 
 .kratom-checkout-hero {
   margin-bottom: 28px;
-  padding: 28px;
-  border-radius: 32px;
-  background: linear-gradient(135deg, rgba(255, 247, 236, 0.96), rgba(240, 231, 219, 0.92));
-  border: 1px solid rgba(74, 91, 68, 0.1);
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  border: 0;
 }
 
 .kratom-checkout-hero__eyebrow {
@@ -212,7 +212,44 @@ cartStore.setPromocode(null)
   box-shadow: 0 24px 60px rgba(39, 49, 36, 0.06);
 }
 
+.checkout-box > .title-secondary {
+  margin: 0 0 18px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+
+  @include desktop {
+    margin-bottom: 24px;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+
+  @include desktop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+.checkout-product {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(74, 91, 68, 0.12);
+}
+
+.checkout-product:last-of-type {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+
 .kratom-checkout-side__sticky {
+  z-index: 999;
+  background: #fffaf4;
+
   @include desktop {
     position: sticky;
     top: 98px;

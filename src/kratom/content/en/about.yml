@@ -5,11 +5,6 @@ hero:
     - "We started modestly: we looked for reliable suppliers, tested the first batches and built a philosophy based on honesty, transparency, quality and responsibility."
     - "Over time, our team grew, and with it, our product range. We discovered the unique properties of herbal teas, organic coffee, hemp products, superfoods and medicinal mushrooms. We develop each of these areas with special attention to detail - from the place of cultivation to certification and independent laboratory tests."
     - "In 2022, we took another important step - we opened our first store in the heart of Prague. This became a symbol of our philosophy: combining quality, openness and love for nature with care for our customers. Today, we are already expanding beyond the Czech Republic and increasing our presence in Europe by opening branches in Spain and Germany."
-  image:
-    src: "https://vivadzen.com/wp-content/uploads/2024/07/group-kratom-1024x486.png"
-    alt: "VivaDzen product selection"
-    width: 1024
-    height: 486
 quote:
   title: "Our philosophy"
   text: "VivaDzen began its journey in 2012 with a simple but important goal: to make high-quality natural products accessible to people, helping them to take care of their health, harmony and balance in everyday life."
@@ -18,11 +13,6 @@ mediaBlocks:
     title: "Uncompromising quality"
     body:
       - "We believe that natural products should not only be beneficial, but also safe. We send each batch for independent laboratory testing. We check the content of active ingredients, possible impurities and heavy metals. This gives our customers confidence that the product they have chosen meets the highest standards."
-    image:
-      src: "https://vivadzen.com/wp-content/uploads/2024/06/RY1_6552-1.jpg"
-      alt: "Laboratory testing at VivaDzen"
-      width: 1024
-      height: 684
   - icon: "solar:money-bag-linear"
     title: "Fair prices"
     body:
@@ -31,11 +21,6 @@ mediaBlocks:
     title: "Fast delivery and personalised service"
     body:
       - "We value your time. Orders are processed as quickly as possible, and delivery is carried out throughout Europe. For those who value personal contact, we offer the opportunity to visit our store in Prague or in Spain or use our pick-up points."
-    image:
-      src: "https://vivadzen.com/wp-content/uploads/2024/07/group-tea2-1024x701.png"
-      alt: "VivaDzen packaging and delivery team"
-      width: 1024
-      height: 701
   - icon: "solar:leaf-outline"
     title: "Caring about responsibility"
     body:
@@ -73,11 +58,6 @@ offer:
           url: "https://vivadzen.com/product-category/mushrooms/"
         - label: "Entheogens"
           url: "https://vivadzen.com/product-category/entheogens/"
-  image:
-    src: "https://vivadzen.com/wp-content/uploads/2024/07/group-cbd-883x1024.png"
-    alt: "Assortment of VivaDzen wellness products"
-    width: 883
-    height: 1024
 values:
   title: "Our values"
   intro: "VivaDzen is more than just a shop. It is a philosophy and a community of people who believe in the power of nature."
@@ -88,11 +68,6 @@ values:
     - "Safety and trust."
     - "Honesty and responsibility."
   description: "We publish laboratory test results and write articles and blogs based on real research and the practical experience of real people and their stories. We do not use aggressive marketing - only honest facts that are accessible to everyone."
-  image:
-    src: "https://vivadzen.com/wp-content/uploads/2024/07/group-other-1024x769.png"
-    alt: "VivaDzen community gathering"
-    width: 1024
-    height: 769
 logistics:
   sections:
     - title: "Delivery across Europe"

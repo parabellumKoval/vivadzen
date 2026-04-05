@@ -1,0 +1,905 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - generic [ref=e6]:
+        - button "logo_alt" [ref=e7] [cursor=pointer]
+        - navigation "Navigace stránkou" [ref=e8]:
+          - link "Catalog" [ref=e9] [cursor=pointer]:
+            - /url: /catalog
+          - link "Blog" [ref=e10] [cursor=pointer]:
+            - /url: /blog
+          - link "About us" [ref=e11] [cursor=pointer]:
+            - /url: /about
+          - link "Contacts" [ref=e12] [cursor=pointer]:
+            - /url: /contacts
+        - generic "Přepínač jazyka" [ref=e13]:
+          - button "Čes" [ref=e14] [cursor=pointer]:
+            - generic [ref=e15]: Čes
+          - button "Košík" [ref=e17] [cursor=pointer]:
+            - generic [ref=e19]: "0"
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - img "Logo Vivadzen" [ref=e29]
+          - paragraph [ref=e30]: Licencovaný prodejce v České republice
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - generic [ref=e34]: ★
+            - generic [ref=e35]: ★
+            - generic [ref=e36]: ★
+            - generic [ref=e37]: ★
+            - generic [ref=e38]: ★
+          - paragraph [ref=e39]: Hodnocení 4,7 na Googlu
+      - heading "Kde koupit kratom v České republice?" [level=1] [ref=e40]
+      - paragraph [ref=e41]: Prémiové odrůdy kratomu s transparentním původem, laboratorním testováním a výhodných podmínkách pro partnery.
+      - generic [ref=e42]:
+        - button "Vybrat kratom" [ref=e43] [cursor=pointer]
+        - button "Náš obchod" [ref=e44] [cursor=pointer]
+    - generic [ref=e50]:
+      - generic [ref=e51]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e52]: ★
+      - generic [ref=e53]: OFICIÁLNÍ LICENCE
+      - generic [ref=e54]: ★
+      - generic [ref=e55]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e56]: ★
+      - generic [ref=e57]: OFICIÁLNÍ LICENCE
+      - generic [ref=e58]: ★
+      - generic [ref=e59]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e60]: ★
+      - generic [ref=e61]: OFICIÁLNÍ LICENCE
+      - generic [ref=e62]: ★
+      - generic [ref=e63]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e64]: ★
+      - generic [ref=e65]: OFICIÁLNÍ LICENCE
+      - generic [ref=e66]: ★
+      - generic [ref=e67]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e68]: ★
+      - generic [ref=e69]: OFICIÁLNÍ LICENCE
+      - generic [ref=e70]: ★
+      - generic [ref=e71]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e72]: ★
+      - generic [ref=e73]: OFICIÁLNÍ LICENCE
+      - generic [ref=e74]: ★
+      - generic [ref=e75]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e76]: ★
+      - generic [ref=e77]: OFICIÁLNÍ LICENCE
+      - generic [ref=e78]: ★
+      - generic [ref=e79]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e80]: ★
+      - generic [ref=e81]: OFICIÁLNÍ LICENCE
+      - generic [ref=e82]: ★
+      - generic [ref=e83]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e84]: ★
+      - generic [ref=e85]: OFICIÁLNÍ LICENCE
+      - generic [ref=e86]: ★
+      - generic [ref=e87]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e88]: ★
+      - generic [ref=e89]: OFICIÁLNÍ LICENCE
+      - generic [ref=e90]: ★
+      - generic [ref=e91]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e92]: ★
+      - generic [ref=e93]: OFICIÁLNÍ LICENCE
+      - generic [ref=e94]: ★
+      - generic [ref=e95]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e96]: ★
+      - generic [ref=e97]: OFICIÁLNÍ LICENCE
+      - generic [ref=e98]: ★
+      - generic [ref=e99]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e100]: ★
+      - generic [ref=e101]: OFICIÁLNÍ LICENCE
+      - generic [ref=e102]: ★
+      - generic [ref=e103]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e104]: ★
+      - generic [ref=e105]: OFICIÁLNÍ LICENCE
+      - generic [ref=e106]: ★
+      - generic [ref=e107]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e108]: ★
+      - generic [ref=e109]: OFICIÁLNÍ LICENCE
+      - generic [ref=e110]: ★
+      - generic [ref=e111]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e112]: ★
+      - generic [ref=e113]: OFICIÁLNÍ LICENCE
+      - generic [ref=e114]: ★
+      - generic [ref=e115]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e116]: ★
+      - generic [ref=e117]: OFICIÁLNÍ LICENCE
+      - generic [ref=e118]: ★
+      - generic [ref=e119]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e120]: ★
+      - generic [ref=e121]: OFICIÁLNÍ LICENCE
+      - generic [ref=e122]: ★
+      - generic [ref=e123]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e124]: ★
+      - generic [ref=e125]: OFICIÁLNÍ LICENCE
+      - generic [ref=e126]: ★
+      - generic [ref=e127]: NYNÍ 100% LEGÁLNÍ
+      - generic [ref=e128]: ★
+      - generic [ref=e129]: OFICIÁLNÍ LICENCE
+      - generic [ref=e130]: ★
+    - generic [ref=e138]:
+      - generic [ref=e139]:
+        - heading "Legální trh s kratomem — vaše bezpečí" [level=2] [ref=e140]:
+          - text: Legální trh s kratomem
+          - text: — vaše bezpečí
+        - paragraph [ref=e141]: Česká republika zavedla licencování prodeje kratomu — významný krok k transparentnímu a regulovanému trhu. Vivadzen plně splňuje nové požadavky. Neadaptujeme se na poslední chvíli; od začátku jsme budovali dlouhodobý, legální projekt. To chrání vás, naše podnikání i kvalitu produktů.
+        - button "Licence výrobce" [ref=e142] [cursor=pointer]:
+          - generic [ref=e144]: Licence výrobce
+      - generic [ref=e145]:
+        - generic [ref=e146]:
+          - img "Legální výroba Vivadzen" [ref=e148]
+          - heading "Legálně vyrábíme" [level=4] [ref=e149]
+          - paragraph [ref=e150]: Plný soulad s legislativou České republiky.
+        - generic [ref=e151]:
+          - generic [ref=e152]:
+            - img "Certifikovaný produkt Vivadzen" [ref=e153]
+            - img:
+              - generic: LEGÁLNÍ CERTIFIKOVANÝ PRODUKT EU ◆ LEGÁLNÍ CERTIFIKOVANÝ PRODUKT EU ◆
+          - heading "Legálně nakupujete" [level=4] [ref=e154]
+          - paragraph [ref=e155]: Srozumitelná dokumentace a označení produktů.
+    - generic [ref=e158]:
+      - generic [ref=e159]:
+        - paragraph [ref=e160]: Katalog Vivadzen
+        - heading "Bezpecny nakup kratomu online" [level=2] [ref=e161]
+        - paragraph [ref=e162]: "Vyberte si produkty primo na hlavni strance: bezpecna objednavka na webu, overeni veku pri nakupu, doruceni po cele Ceske republice nebo pohodlny osobni odber."
+        - generic [ref=e163]:
+          - generic [ref=e164]: Bezpecny nakup na webu
+          - generic [ref=e165]: Overeni veku
+          - generic [ref=e166]: Doruceni po Cesku nebo osobni odber
+      - generic [ref=e167]:
+        - generic [ref=e170]:
+          - generic [ref=e172]: Certified kratom
+          - link "Zelený Rurut Nano kratom prášek" [ref=e173] [cursor=pointer]:
+            - /url: /zeleny-rurut-nano-kratom-prasek-25g
+            - img "Zelený Rurut Nano kratom prášek" [ref=e175]
+          - generic [ref=e176]:
+            - link "Zelený Rurut Nano kratom prášek" [ref=e177] [cursor=pointer]:
+              - /url: /zeleny-rurut-nano-kratom-prasek-25g
+            - generic [ref=e178]:
+              - button "25g" [ref=e179] [cursor=pointer]
+              - button "50g" [ref=e180] [cursor=pointer]
+            - generic [ref=e181]:
+              - generic [ref=e184]: 140 Kč
+              - button "To card" [ref=e185] [cursor=pointer]:
+                - generic [ref=e187]: To card
+        - generic [ref=e190]:
+          - generic [ref=e192]: Certified kratom
+          - link "Bílá Maeng Da Kratom prášek" [ref=e193] [cursor=pointer]:
+            - /url: /bila-maeng-da-kratom-prasek-25g
+            - img "Bílá Maeng Da Kratom prášek" [ref=e195]
+          - generic [ref=e196]:
+            - link "Bílá Maeng Da Kratom prášek" [ref=e197] [cursor=pointer]:
+              - /url: /bila-maeng-da-kratom-prasek-25g
+            - generic [ref=e198]:
+              - button "25g" [ref=e199] [cursor=pointer]
+              - button "50g" [ref=e200] [cursor=pointer]
+            - generic [ref=e201]:
+              - generic [ref=e204]: 130 Kč
+              - button "To card" [ref=e205] [cursor=pointer]:
+                - generic [ref=e207]: To card
+        - generic [ref=e210]:
+          - generic [ref=e212]: Certified kratom
+          - link "Bílý slon Kratom prášek" [ref=e213] [cursor=pointer]:
+            - /url: /bily-slon-kratom-prasek-25g
+            - img "Bílý slon Kratom prášek" [ref=e215]
+          - generic [ref=e216]:
+            - link "Bílý slon Kratom prášek" [ref=e217] [cursor=pointer]:
+              - /url: /bily-slon-kratom-prasek-25g
+            - generic [ref=e218]:
+              - button "25g" [ref=e219] [cursor=pointer]
+              - button "50g" [ref=e220] [cursor=pointer]
+            - generic [ref=e221]:
+              - generic [ref=e224]: 140 Kč
+              - button "To card" [ref=e225] [cursor=pointer]:
+                - generic [ref=e227]: To card
+        - generic [ref=e230]:
+          - generic [ref=e232]: Certified kratom
+          - link "Zelený thajský Kratom Prášek" [ref=e233] [cursor=pointer]:
+            - /url: /zeleny-thajsky-kratom-prasek-25g
+            - img "Zelený thajský Kratom Prášek" [ref=e235]
+          - generic [ref=e236]:
+            - link "Zelený thajský Kratom Prášek" [ref=e237] [cursor=pointer]:
+              - /url: /zeleny-thajsky-kratom-prasek-25g
+            - generic [ref=e238]:
+              - button "25g" [ref=e239] [cursor=pointer]
+              - button "50g" [ref=e240] [cursor=pointer]
+            - generic [ref=e241]:
+              - generic [ref=e244]: 130 Kč
+              - button "To card" [ref=e245] [cursor=pointer]:
+                - generic [ref=e247]: To card
+        - generic [ref=e250]:
+          - generic [ref=e252]: Certified kratom
+          - link "Červená Maeng Da Kratom Prášek" [ref=e253] [cursor=pointer]:
+            - /url: /cervena-maeng-da-kratom-prasek-25g
+            - img "Červená Maeng Da Kratom Prášek" [ref=e255]
+          - generic [ref=e256]:
+            - link "Červená Maeng Da Kratom Prášek" [ref=e257] [cursor=pointer]:
+              - /url: /cervena-maeng-da-kratom-prasek-25g
+            - generic [ref=e258]:
+              - button "25g" [ref=e259] [cursor=pointer]
+              - button "50g" [ref=e260] [cursor=pointer]
+            - generic [ref=e261]:
+              - generic [ref=e264]: 130 Kč
+              - button "To card" [ref=e265] [cursor=pointer]:
+                - generic [ref=e267]: To card
+        - generic [ref=e270]:
+          - generic [ref=e272]: Certified kratom
+          - link "Zelená Maeng Da Kratom Prášek" [ref=e273] [cursor=pointer]:
+            - /url: /zelena-maeng-da-kratom-prasek-25g
+            - img "Zelená Maeng Da Kratom Prášek" [ref=e275]
+          - generic [ref=e276]:
+            - link "Zelená Maeng Da Kratom Prášek" [ref=e277] [cursor=pointer]:
+              - /url: /zelena-maeng-da-kratom-prasek-25g
+            - generic [ref=e278]:
+              - button "25g" [ref=e279] [cursor=pointer]
+              - button "50g" [ref=e280] [cursor=pointer]
+            - generic [ref=e281]:
+              - generic [ref=e284]: 130 Kč
+              - button "To card" [ref=e285] [cursor=pointer]:
+                - generic [ref=e287]: To card
+      - link "Přejít do katalogu" [ref=e289] [cursor=pointer]:
+        - /url: /catalog
+    - generic [ref=e291]:
+      - generic [ref=e292]:
+        - generic [ref=e294]:
+          - heading "Vivadzen — Evropský standard kvality na trhu s kratomem" [level=2] [ref=e295]
+          - paragraph [ref=e296]: Spojili jsme přímé dodávky z jihovýchodní Asie s přísnou laboratorní kontrolou v České republice, abyste získali produkt, kterému můžete důvěřovat.
+        - generic [ref=e297]:
+          - generic [ref=e299]:
+            - generic [ref=e300]: "1"
+            - generic [ref=e302]:
+              - heading "Původ" [level=4] [ref=e303]
+              - paragraph [ref=e304]: Spolupracujeme pouze s farmami, které sklízí listy z divoce rostoucích starých stromů.
+              - generic [ref=e305]:
+                - generic [ref=e307]: Vysoký obsah mitragyninu
+                - generic [ref=e309]: Pěstováno bez použití hnojiv
+          - generic [ref=e311]:
+            - generic [ref=e312]: "2"
+            - generic [ref=e314]:
+              - heading "Bezpečnost" [level=4] [ref=e315]
+              - paragraph [ref=e316]: Produkt prochází dvoustupňovou kontrolou v nezávislých laboratořích České republiky . Testujeme na přítomnost těžkých kovů, patogenní mikroflóry a přesný obsah alkaloidů.
+              - button "Certifikáty" [ref=e317] [cursor=pointer]
+          - generic [ref=e319]:
+            - generic [ref=e320]: "3"
+            - generic [ref=e322]:
+              - heading "Standardy" [level=4] [ref=e323]
+              - paragraph [ref=e324]: Produkt je balen v certifikovaném provozu v Evropě s dodržením hygienických norem. Používáme hermetické doy-packy které chrání kratom před UV zářením a vlhkostí, a zachovávají jeho vlastnosti po celou dobu skladování.
+          - generic [ref=e326]:
+            - generic [ref=e327]: "4"
+            - generic [ref=e329]:
+              - heading "Ekosystém" [level=4] [ref=e330]
+              - paragraph [ref=e331]: Vivadzen funguje přísně v rámci legislativy České republiky a EU a spojuje osobní finanční výhody s nástroji pro rozvoj komunity.
+              - generic [ref=e332]:
+                - generic [ref=e334]: Sbírejte VIVA — plaťte objednávky nebo vybírejte
+                - generic [ref=e336]: Profesionální partnerský program
+      - generic [ref=e337]:
+        - heading "VIVADZEN" [level=3] [ref=e338]
+        - generic [ref=e339]: ADVANCED BOTANICAL FORMULA
+    - generic [ref=e343]:
+      - generic [ref=e344]: "-15%"
+      - generic:
+        - img "Vivadzen promo box"
+      - generic [ref=e345]:
+        - generic [ref=e346]:
+          - heading "Získejte -15% na první nákup v prodejně" [level=3] [ref=e347]
+          - paragraph [ref=e348]:
+            - text: Zadejte svůj e-mail a pošleme vám promo kód -15% na celý sortiment kratom. Při nákupu v prodejně ho sdělte prodejci.
+            - button "Sleva -15 % platí při prvním nákupu. Pokud na zadaném e-mailu nenajdeme historii objednávek, pošleme vám promo kód, který stačí říct na prodejně." [ref=e350] [cursor=pointer]
+        - generic [ref=e352]:
+          - textbox "Váš e-mail" [ref=e353]
+          - button "Získat slevu" [ref=e354] [cursor=pointer]
+    - generic [ref=e357]:
+      - heading "Prémiový kratom pro tvůj vnitřní balanc" [level=2] [ref=e358]:
+        - generic [ref=e359]: Prémiový kratom pro tvůj vnitřní balanc
+      - generic [ref=e360]:
+        - generic [ref=e361]:
+          - img [ref=e362]
+          - img [ref=e414]
+          - img "Balení Vivadzen Kratom" [ref=e467]
+        - generic [ref=e469]:
+          - img "Kratomový čaj" [ref=e471]
+          - generic [ref=e472]:
+            - generic [ref=e473]:
+              - strong [ref=e474]: 100% Organic Leaf
+              - generic [ref=e475]: Přírodní produkt bez GMO a syntetických přísad
+            - img [ref=e476]
+          - generic [ref=e479]:
+            - generic [ref=e480]:
+              - strong [ref=e481]: Alkaloid Rich
+              - generic [ref=e482]: Vysoký obsah mitragyninu
+            - img [ref=e483]
+          - generic [ref=e486]:
+            - generic [ref=e487]:
+              - strong [ref=e488]: Nano-grind texture
+              - generic [ref=e489]: Dobře se rozpouští bez „písku“
+            - img [ref=e490]
+          - generic [ref=e493]:
+            - generic [ref=e494]:
+              - strong [ref=e495]: Lab Tested
+              - generic [ref=e496]: Čistota a bezpečnost zaručena
+            - img [ref=e497]
+      - generic [ref=e500]:
+        - heading "Denní šálek Vivadzen Kratom pomáhá s:" [level=3] [ref=e501]
+        - generic [ref=e502]:
+          - generic [ref=e506]: Soustředění
+          - generic [ref=e510]: Energie
+          - generic [ref=e514]: Zdraví trávení
+          - generic [ref=e518]: Imunita
+          - generic [ref=e522]: Podpora proti stresu
+        - button "Vyzkoušet originální kratom" [ref=e524] [cursor=pointer]
+    - generic [ref=e526]:
+      - generic [ref=e529]:
+        - heading "KRATOM" [level=3] [ref=e530]
+        - paragraph [ref=e531]: POKROČILÁ BOTANICKÁ FORMULE
+      - generic [ref=e533]:
+        - heading "Tvůj přírodní pomocník" [level=2] [ref=e534]
+        - generic [ref=e535]: Vyberte si svůj ideální odstín kratomu
+        - generic [ref=e536]:
+          - generic [ref=e537]:
+            - generic [ref=e538]:
+              - img "Bílý" [ref=e540]
+              - paragraph [ref=e541]: Bílýkratom
+              - generic [ref=e542]: Náhrada kávy a energetických nápojů. Silné nootropikum pro práci mozku. Maximální ranní dávka energie. Pomoc při těžké fyzické práci.
+              - button "Vybrat Bílý" [ref=e543] [cursor=pointer]
+            - generic [ref=e544]:
+              - img "Zelený" [ref=e546]
+              - paragraph [ref=e547]: Zelenýkratom
+              - generic [ref=e548]: Sociální uvolnění a sebedůvěra. Přírodní antidepresivum. Zlepšení nálady bez hyperaktivity. Pohodový stav pro jednání.
+              - button "Vybrat Zelený" [ref=e549] [cursor=pointer]
+            - generic [ref=e550]:
+              - img "Červený" [ref=e552]
+              - paragraph [ref=e553]: Červenýkratom
+              - generic [ref=e554]: Přírodní analgetikum. Alternativa k lékárenským analgetikům. Silný sedativní účinek. Pomoc při závislosti na opiátech.
+              - button "Vybrat Červený" [ref=e555] [cursor=pointer]
+            - generic [ref=e556]:
+              - img "Zlatý" [ref=e558]
+              - paragraph [ref=e559]: Zlatýkratom
+              - generic [ref=e560]: Prostředek proti úzkosti a panice. Emoční restart. Hluboký pocit komfortu. Obnova nervového systému.
+              - button "Vybrat Zlatý" [ref=e561] [cursor=pointer]
+          - generic [ref=e563]:
+            - generic [ref=e564]:
+              - generic [ref=e565]: Účinky bílého kratomu
+              - list [ref=e566]:
+                - listitem [ref=e567]:
+                  - generic [ref=e569]:
+                    - strong [ref=e570]: Syndrom únavy
+                    - generic [ref=e571]: Bojuje s denní ospalostí, malátností a chronickým nedostatkem sil.
+                - listitem [ref=e572]:
+                  - generic [ref=e574]:
+                    - strong [ref=e575]: Práce a studium
+                    - generic [ref=e576]: Soustředění, programování, psaní textů, práce s daty.
+                - listitem [ref=e577]:
+                  - generic [ref=e579]:
+                    - strong [ref=e580]: Jasnost mysli
+                    - generic [ref=e581]: Odstraňuje mozkovou mlhu, zvyšuje rychlost myšlení a motivaci.
+                - listitem [ref=e582]:
+                  - generic [ref=e584]:
+                    - strong [ref=e585]: Sport a trénink
+                    - generic [ref=e586]: Předtréninkový boost, vyšší výdrž, kardio zátěž.
+            - generic [ref=e587]:
+              - generic [ref=e588]: Účinky zeleného kratomu
+              - list [ref=e589]:
+                - listitem [ref=e590]:
+                  - generic [ref=e592]:
+                    - strong [ref=e593]: Sociální úzkost
+                    - generic [ref=e594]: Strach z komunikace, ztuhlost mezi lidmi, nejistota.
+                - listitem [ref=e595]:
+                  - generic [ref=e597]:
+                    - strong [ref=e598]: Deprese a apatie
+                    - generic [ref=e599]: Ztráta zájmu o život, špatná nálada, sklíčenost.
+                - listitem [ref=e600]:
+                  - generic [ref=e602]:
+                    - strong [ref=e603]: Kreativita
+                    - generic [ref=e604]: Brainstorming, kreativní úkoly, generování nápadů.
+                - listitem [ref=e605]:
+                  - generic [ref=e607]:
+                    - strong [ref=e608]: Aktivní odpočinek
+                    - generic [ref=e609]: Procházky, setkání s přáteli, večírky, veřejné vystoupení.
+            - generic [ref=e610]:
+              - generic [ref=e611]: Účinky červeného kratomu
+              - list [ref=e612]:
+                - listitem [ref=e613]:
+                  - generic [ref=e615]:
+                    - strong [ref=e616]: Chronické bolesti
+                    - generic [ref=e617]: Výhřezy, bolesti zad, artritida, úrazy, svalové bolesti.
+                - listitem [ref=e618]:
+                  - generic [ref=e620]:
+                    - strong [ref=e621]: Nespavost
+                    - generic [ref=e622]: Obtížné usínání, přerušovaný spánek, neklidné nohy.
+                - listitem [ref=e623]:
+                  - generic [ref=e625]:
+                    - strong [ref=e626]: Vysoký stres
+                    - generic [ref=e627]: Nervové přepětí, neschopnost se uvolnit po práci.
+                - listitem [ref=e628]:
+                  - generic [ref=e630]:
+                    - strong [ref=e631]: Abstinenční syndrom
+                    - generic [ref=e632]: Zmírnění abstinence, odvykání těžkých látek, úleva od abstinenčních příznaků.
+            - generic [ref=e633]:
+              - generic [ref=e634]: Účinky zlatého kratomu
+              - list [ref=e635]:
+                - listitem [ref=e636]:
+                  - generic [ref=e638]:
+                    - strong [ref=e639]: Emoční vyhoření
+                    - generic [ref=e640]: Únava z komunikace, podrážděnost, nervové vyčerpání.
+                - listitem [ref=e641]:
+                  - generic [ref=e643]:
+                    - strong [ref=e644]: Úzkostná porucha
+                    - generic [ref=e645]: Nutkavé myšlenky, neustálé obavy, očekávání špatného.
+                - listitem [ref=e646]:
+                  - generic [ref=e648]:
+                    - strong [ref=e649]: Panické ataky
+                    - generic [ref=e650]: Náhlé záchvaty strachu, zrychlený tep, nervový třes.
+                - listitem [ref=e651]:
+                  - generic [ref=e653]:
+                    - strong [ref=e654]: Večerní relax
+                    - generic [ref=e655]: Filmy, čtení, meditace, klidný odpočinek doma.
+    - generic [ref=e658]:
+      - heading "Objevte rozmanitost odrůd z různých koutů světa" [level=3] [ref=e660]
+      - generic [ref=e661]:
+        - generic [ref=e662]:
+          - generic [ref=e663] [cursor=pointer]:
+            - generic [ref=e664]: Maeng Dakratom
+            - generic [ref=e668]:
+              - paragraph [ref=e669]: Síla a špičková účinnost
+              - generic [ref=e670]:
+                - generic [ref=e671]: Rychlost
+                - generic [ref=e672]: Rychlý nástup (10–15 min)
+              - generic [ref=e673]:
+                - generic [ref=e674]: Doba trvání
+                - generic [ref=e675]: Střední (3–4 hodiny)
+              - generic [ref=e676]:
+                - generic [ref=e677]: Charakter
+                - generic [ref=e678]: Ostrý, výrazný, intenzivní
+          - generic [ref=e679] [cursor=pointer]:
+            - generic [ref=e680]: Malaykratom
+            - generic [ref=e681]:
+              - img "Malay" [ref=e683]
+              - generic:
+                - paragraph: Výdrž a „dlouhé nohy“
+          - generic [ref=e684] [cursor=pointer]:
+            - generic [ref=e685]: Thaikratom
+            - generic [ref=e686]:
+              - img "Thai" [ref=e688]
+              - generic:
+                - paragraph: Energie a motivace
+          - generic [ref=e689] [cursor=pointer]:
+            - generic [ref=e690]: Borneokratom
+            - generic [ref=e691]:
+              - img "Borneo" [ref=e693]
+              - generic:
+                - paragraph: Tíha a hloubka
+          - generic [ref=e694] [cursor=pointer]:
+            - generic [ref=e695]: Sumatrakratom
+            - generic [ref=e696]:
+              - img "Sumatra" [ref=e698]
+              - generic:
+                - paragraph: Nálada a komfort
+        - generic [ref=e699]:
+          - generic [ref=e700]:
+            - generic [ref=e701]: Region původu
+            - generic [ref=e702]: Jedinečné složení půdy a klima konkrétního regionu formují alkaloidní profil rostliny. Geografie určuje hloubku, délku účinku a individuální nuance vlastností každé odrůdy.
+          - generic [ref=e703]:
+            - img "Vivadzen Kratom Pack" [ref=e704]
+            - generic [ref=e705]:
+              - heading "Potřebujete pomoc při výběru?" [level=3] [ref=e706]
+              - paragraph [ref=e707]: Naši odborníci jsou vždy připraveni vám pomoci vybrat ideální odrůdu a barvu kratomu, která odpovídá vašim potřebám a preferencím.
+              - button "Kontaktujte nás" [ref=e708] [cursor=pointer]
+    - generic [ref=e710]:
+      - img "Kratom Flower" [ref=e711]
+      - img "Kratom Flower" [ref=e712]
+      - generic:
+        - img "Kratom Flower"
+      - generic [ref=e713]:
+        - generic [ref=e714]:
+          - heading "Nemůžete se rozhodnout?" [level=3] [ref=e715]
+          - heading "Vyzkoušejte náš Discovery Set — 5 prémiových odrůd v jednom" [level=2] [ref=e716]
+        - generic [ref=e717]:
+          - generic [ref=e718]:
+            - generic [ref=e719]:
+              - img "Product 1"
+            - generic [ref=e720]:
+              - img "Product 2"
+            - generic:
+              - img "Product 3"
+            - generic [ref=e721]:
+              - img "Product 4"
+            - generic [ref=e722]:
+              - img "Product 5"
+          - button "Získat vzorový set" [ref=e723] [cursor=pointer]
+      - generic:
+        - img "Kratom Flower"
+    - generic [ref=e725]:
+      - img "Bonusový program Vivadzen" [ref=e726]
+      - generic [ref=e727]:
+        - generic [ref=e729]:
+          - heading "Získejte bonusy doporučováním Vivadzen" [level=2] [ref=e730]
+          - paragraph [ref=e731]: Doporučení a partnerství jsou součástí naší kultury. Pozvěte zainteresované lidi a získávejte výhody i bonusy.
+        - generic [ref=e734]:
+          - generic [ref=e735]:
+            - img "Věrnostní systém slev" [ref=e736]
+            - heading "Věrnostní sleva až 10 %" [level=4] [ref=e737]
+            - paragraph [ref=e738]: Čím více nakupujete, tím vyšší osobní sleva — vše se počítá automaticky.
+          - generic [ref=e739]:
+            - img "Tříúrovňový partnerský program" [ref=e740]
+            - heading "Tříúrovňový partnerský program" [level=4] [ref=e741]
+            - paragraph [ref=e742]: Vytvořte si systém pasivního příjmu a získávejte procento z nákupů vaší sítě.
+          - generic [ref=e743]:
+            - img "Týdenní promo kódy" [ref=e744]
+            - heading "Týdenní promo kódy pro vás a přátele" [level=4] [ref=e745]
+            - paragraph [ref=e746]: Osobní kódy, které se snadno sdílejí — úspora s každou zásilkou.
+          - generic [ref=e747]:
+            - img "VIVA odměny" [ref=e748]
+            - heading "VIVA za aktivitu v ekosystému" [level=4] [ref=e749]
+            - paragraph [ref=e750]:
+              - text: Odměňujeme účast bonusovými body VIVA, které lze využít v obchodě.
+              - 'button "Odměňujeme vaši aktivitu: za recenze a psaní článků připisujeme Viva, které můžete využít v obchodě." [ref=e752] [cursor=pointer]'
+          - generic [ref=e755]:
+            - heading "Připojte se k partnerskému programu Vivadzen" [level=3] [ref=e756]
+            - paragraph [ref=e757]: Začněte budovat svou síť a vydělávat už dnes. Čím větší síť, tím vyšší váš příjem!
+            - link "Připojit se" [ref=e758] [cursor=pointer]:
+              - /url: /contacts
+    - generic [ref=e761]:
+      - generic [ref=e763]:
+        - generic:
+          - img "Logo Vivadzen"
+        - heading "Co říkají naši zákazníci" [level=2] [ref=e764]
+        - paragraph [ref=e765]: Skutečné recenze od našich zákazníků na Google. Váš názor je pro nás důležitý!
+      - generic [ref=e767]:
+        - generic:
+          - img "Kratomový nápoj"
+        - generic [ref=e768]:
+          - heading "Zkušenost, která mluví sama za sebe" [level=3] [ref=e769]
+          - paragraph [ref=e770]: 0 zákazníků, průměrné hodnocení — bezchybné. Děkujeme, že volíte vědomě.
+          - generic [ref=e772]:
+            - img [ref=e773]
+            - generic [ref=e784]: "5.0"
+          - generic [ref=e785]:
+            - paragraph [ref=e786]: Líbila se vám naše služba? Podělte se o své zkušenosti!
+            - link "Napsat recenzi na Google" [ref=e787] [cursor=pointer]:
+              - /url: https://g.page/r/CYrhuRRktnHVEBE/review
+              - text: Napsat recenzi na Google
+      - generic [ref=e790]:
+        - region "Karusel recenzí Google" [ref=e791]:
+          - generic [ref=e793]:
+            - generic [ref=e794]:
+              - img "Stepan Nemec" [ref=e796]
+              - generic [ref=e797]:
+                - heading "Stepan Nemec" [level=4] [ref=e798]
+                - paragraph [ref=e799]: 2. března 2026
+            - paragraph [ref=e807]: (Translated by Google) Great mud ☝️☝️ (Original) Skvele blaticko☝️☝️
+          - generic [ref=e809]:
+            - generic [ref=e810]:
+              - img "Tadeáš Malý" [ref=e812]
+              - generic [ref=e813]:
+                - heading "Tadeáš Malý" [level=4] [ref=e814]
+                - paragraph [ref=e815]: 1. března 2026
+            - paragraph [ref=e823]: Good
+          - generic [ref=e825]:
+            - generic [ref=e826]:
+              - img "Emil Navrátil" [ref=e828]
+              - generic [ref=e829]:
+                - heading "Emil Navrátil" [level=4] [ref=e830]
+                - paragraph [ref=e831]: 26. února 2026
+            - paragraph [ref=e839]: (Translated by Google) Great shop and package pickup (Original) Super shop i vyzvednuti baliku
+          - generic [ref=e841]:
+            - generic [ref=e842]:
+              - img "alex" [ref=e844]
+              - generic [ref=e845]:
+                - heading "alex" [level=4] [ref=e846]
+                - paragraph [ref=e847]: 25. února 2026
+            - paragraph [ref=e855]: Отличное обслуживание. Отдельно бы хотел похвалить Лизу (Translated by Google) Excellent service. I'd like to give a special shout out to Lisa.
+          - generic [ref=e857]:
+            - generic [ref=e858]:
+              - img "Egor Kuznetsov" [ref=e860]
+              - generic [ref=e861]:
+                - heading "Egor Kuznetsov" [level=4] [ref=e862]
+                - paragraph [ref=e863]: 17. února 2026
+            - paragraph [ref=e871]: zupeeer kraaa
+          - generic [ref=e873]:
+            - generic [ref=e874]:
+              - img "Adam Kryštof" [ref=e876]
+              - generic [ref=e877]:
+                - heading "Adam Kryštof" [level=4] [ref=e878]
+                - paragraph [ref=e879]: 8. února 2026
+            - paragraph [ref=e887]: (Translated by Google) Great assortment and prices, I can recommend (Original) Super sortiment i ceny, můžu doporučit
+          - generic [ref=e889]:
+            - generic [ref=e890]:
+              - img "Jeroným B" [ref=e892]
+              - generic [ref=e893]:
+                - heading "Jeroným B" [level=4] [ref=e894]
+                - paragraph [ref=e895]: 4. února 2026
+            - paragraph [ref=e903]: (Translated by Google) Great company and good kratom (Original) Super firma a dobrý kratom
+          - generic [ref=e905]:
+            - generic [ref=e906]:
+              - img "Václav Kodým" [ref=e908]
+              - generic [ref=e909]:
+                - heading "Václav Kodým" [level=4] [ref=e910]
+                - paragraph [ref=e911]: 29. ledna 2026
+            - paragraph [ref=e919]: (Translated by Google) Pleasant shop and staff (Original) Příjemný obchod i personál
+          - generic [ref=e921]:
+            - generic [ref=e922]:
+              - img "Kryštof Rejzek" [ref=e924]
+              - generic [ref=e925]:
+                - heading "Kryštof Rejzek" [level=4] [ref=e926]
+                - paragraph [ref=e927]: 21. ledna 2026
+            - paragraph [ref=e935]: (Translated by Google) Good stock and nice service, thank you (Original) Dobrá zásoba a milá obsluha děkuji
+          - generic [ref=e937]:
+            - generic [ref=e938]:
+              - img "Kubisss" [ref=e940]
+              - generic [ref=e941]:
+                - heading "Kubisss" [level=4] [ref=e942]
+                - paragraph [ref=e943]: 20. ledna 2026
+            - paragraph [ref=e951]: (Translated by Google) Pecka shop great staff and products are really high quality I would recommend coming back (Original) Pecka obchod skvělý personál a produkty jsou opravdu kv...
+          - generic [ref=e953]:
+            - generic [ref=e954]:
+              - img "Soukieu" [ref=e956]
+              - generic [ref=e957]:
+                - heading "Soukieu" [level=4] [ref=e958]
+                - paragraph [ref=e959]: 16. ledna 2026
+            - paragraph [ref=e967]: (Translated by Google) Best shop (Original) Nejlepsi obchod
+          - generic [ref=e969]:
+            - generic [ref=e970]:
+              - img "Tomáš Kubů" [ref=e972]
+              - generic [ref=e973]:
+                - heading "Tomáš Kubů" [level=4] [ref=e974]
+                - paragraph [ref=e975]: 5. ledna 2026
+            - paragraph [ref=e983]: (Translated by Google) Great store, pleasant service. 10/10. (Original) Skvely obchod, prijemna obsluha.10/10.
+            - generic [ref=e984]:
+              - generic [ref=e987]: Odpověď majitele
+              - paragraph [ref=e988]: Je velmi příjemné slyšet, že máme ty nejlepší zákazníky!❤️
+          - generic [ref=e990]:
+            - generic [ref=e991]:
+              - img "Patito 123" [ref=e993]
+              - generic [ref=e994]:
+                - heading "Patito 123" [level=4] [ref=e995]
+                - paragraph [ref=e996]: 18. prosince 2025
+            - paragraph [ref=e1004]: (Translated by Google) Great service ✨ I recommend (Original) Skvělá obsluha ✨ doporučuji
+            - generic [ref=e1005]:
+              - generic [ref=e1008]: Odpověď majitele
+              - paragraph [ref=e1009]: Děkujeme za vaši recenzi. Jsme hrdí na naše prodejce i zákazníky.❤️
+          - generic [ref=e1011]:
+            - generic [ref=e1012]:
+              - img "Jan Masak" [ref=e1014]
+              - generic [ref=e1015]:
+                - heading "Jan Masak" [level=4] [ref=e1016]
+                - paragraph [ref=e1017]: 17. prosince 2025
+            - paragraph [ref=e1025]: Very nice service and high quality products!
+            - generic [ref=e1026]:
+              - generic [ref=e1029]: Odpověď majitele
+              - paragraph [ref=e1030]: ❤️
+          - generic [ref=e1032]:
+            - generic [ref=e1033]:
+              - img "Simon Armin Petřík" [ref=e1035]
+              - generic [ref=e1036]:
+                - heading "Simon Armin Petřík" [level=4] [ref=e1037]
+                - paragraph [ref=e1038]: 9. prosince 2025
+            - paragraph [ref=e1046]: (Translated by Google) Winter 2024 almost every day here. best shop. (Original) zima 2024 skoro kazdy den tady. nejlepsi obchod.
+            - generic [ref=e1047]:
+              - generic [ref=e1050]: Odpověď majitele
+              - paragraph [ref=e1051]: Jsme velmi rádi, že obstojíme ve zkoušce času a že se nám daří získávat oblíbené stálé zákazníky. Dě...
+          - generic [ref=e1053]:
+            - generic [ref=e1054]:
+              - img "Jakub Frayer" [ref=e1056]
+              - generic [ref=e1057]:
+                - heading "Jakub Frayer" [level=4] [ref=e1058]
+                - paragraph [ref=e1059]: 9. prosince 2025
+            - paragraph [ref=e1067]: (Translated by Google) The most lit store 🔥 (Original) Nejvíc lit obchod 🔥🔥🔥🔥
+            - generic [ref=e1068]:
+              - generic [ref=e1071]: Odpověď majitele
+              - paragraph [ref=e1072]: 🥰❤️❤️❤️
+          - generic [ref=e1074]:
+            - generic [ref=e1075]:
+              - img "Čeněk Kras" [ref=e1077]
+              - generic [ref=e1078]:
+                - heading "Čeněk Kras" [level=4] [ref=e1079]
+                - paragraph [ref=e1080]: 1. prosince 2025
+            - paragraph [ref=e1088]: (Translated by Google) Good services. (Original) Dobré služby.
+            - generic [ref=e1089]:
+              - generic [ref=e1092]: Odpověď majitele
+              - paragraph [ref=e1093]: Děkuji 🥰
+          - generic [ref=e1095]:
+            - generic [ref=e1096]:
+              - img "Blqck Sabbotte" [ref=e1098]
+              - generic [ref=e1099]:
+                - heading "Blqck Sabbotte" [level=4] [ref=e1100]
+                - paragraph [ref=e1101]: 25. listopadu 2025
+            - paragraph [ref=e1109]: Хорошее обслуживание, интересный ассортимент) (Translated by Google) Good service, interesting selection)
+            - generic [ref=e1110]:
+              - generic [ref=e1113]: Odpověď majitele
+              - paragraph [ref=e1114]: 🥰Děkujeme za recenzi. Sortiment pečlivě vybíráme, abychom uspokojili různé požadavky zákazníků.
+          - generic [ref=e1116]:
+            - generic [ref=e1117]:
+              - img "Tanishi Upadhyay" [ref=e1119]
+              - generic [ref=e1120]:
+                - heading "Tanishi Upadhyay" [level=4] [ref=e1121]
+                - paragraph [ref=e1122]: 6. listopadu 2025
+            - paragraph [ref=e1130]: very lovely staff!
+            - generic [ref=e1131]:
+              - generic [ref=e1134]: Odpověď majitele
+              - paragraph [ref=e1135]: ❤️
+          - generic [ref=e1137]:
+            - generic [ref=e1138]:
+              - img "Kristian" [ref=e1140]
+              - generic [ref=e1141]:
+                - heading "Kristian" [level=4] [ref=e1142]
+                - paragraph [ref=e1143]: 3. listopadu 2025
+            - paragraph [ref=e1151]: (Translated by Google) best beauty shop (Original) nejlepsi kra shop
+            - generic [ref=e1152]:
+              - generic [ref=e1155]: Odpověď majitele
+              - paragraph [ref=e1156]: ❤️
+        - generic [ref=e1157]:
+          - button "Previous" [ref=e1158] [cursor=pointer]
+          - tablist [ref=e1160]:
+            - button "Go to page 1" [ref=e1161] [cursor=pointer]
+            - button "Go to page 2" [ref=e1162] [cursor=pointer]
+            - button "Go to page 3" [ref=e1163] [cursor=pointer]
+            - button "Go to page 4" [ref=e1164] [cursor=pointer]
+            - button "Go to page 5" [ref=e1165] [cursor=pointer]
+            - button "Go to page 6" [ref=e1166] [cursor=pointer]
+            - button "Go to page 7" [ref=e1167] [cursor=pointer]
+            - button "Go to page 8" [ref=e1168] [cursor=pointer]
+            - button "Go to page 9" [ref=e1169] [cursor=pointer]
+            - button "Go to page 10" [ref=e1170] [cursor=pointer]
+            - button "Go to page 11" [ref=e1171] [cursor=pointer]
+            - button "Go to page 12" [ref=e1172] [cursor=pointer]
+            - button "Go to page 13" [ref=e1173] [cursor=pointer]
+            - button "Go to page 14" [ref=e1174] [cursor=pointer]
+            - button "Go to page 15" [ref=e1175] [cursor=pointer]
+            - button "Go to page 16" [ref=e1176] [cursor=pointer]
+            - button "Go to page 17" [ref=e1177] [cursor=pointer]
+            - button "Go to page 18" [ref=e1178] [cursor=pointer]
+            - button "Go to page 19" [ref=e1179] [cursor=pointer]
+            - button "Go to page 20" [ref=e1180] [cursor=pointer]
+          - button "Next" [ref=e1181] [cursor=pointer]
+    - generic [ref=e1185]:
+      - generic [ref=e1186]:
+        - heading "Jsme otevřeni na mapě a na internetu" [level=2] [ref=e1187]
+        - paragraph [ref=e1188]: Snadno nás najdete a snadno se s námi budete moci spojit. V naší fyzické prodejně najdete různé odrůdy kratomu.
+      - generic [ref=e1190]:
+        - generic [ref=e1194]:
+          - paragraph [ref=e1195]: Adresa
+          - paragraph [ref=e1196]: "Ð˜Ñ\x81Ð¿Ð°Ð½Ñ\x81ÐºÐ¸Ð¹ 2"
+        - generic [ref=e1200]:
+          - paragraph [ref=e1201]: Telefon
+          - paragraph [ref=e1202]: +420 605 00 47 47
+        - generic [ref=e1206]:
+          - paragraph [ref=e1207]: Email
+          - paragraph [ref=e1208]: info@vivadzen.com
+        - generic [ref=e1212]:
+          - paragraph [ref=e1213]: Pracovní doba
+          - paragraph [ref=e1214]: Mon-Fri 10:00-19:00Sat-Sun 12:00-18:00
+      - iframe [ref=e1217]
+    - generic [ref=e1220]:
+      - generic [ref=e1225]:
+        - img [ref=e1226]
+        - generic [ref=e1229]: do našeho šíleného obchodu s kratomem Vivadzen!
+      - generic [ref=e1230]:
+        - generic [ref=e1231]: Naše sociální sítě
+        - generic [ref=e1232]:
+          - generic [ref=e1233]:
+            - generic [ref=e1234]: Podpora
+            - generic [ref=e1235]:
+              - link "Telegram" [ref=e1236] [cursor=pointer]:
+                - /url: https://t.me/vivadzen_shop
+                - generic [ref=e1238]: Telegram
+              - link "Whatsapp" [ref=e1239] [cursor=pointer]:
+                - /url: https://wa.me/380957779050
+                - generic [ref=e1241]: Whatsapp
+          - generic [ref=e1242]:
+            - generic [ref=e1243]: Sociální sítě
+            - link "Instagram" [ref=e1245] [cursor=pointer]:
+              - /url: https://www.instagram.com/viva.dzen/profilecard/?igsh=amJsemR6em42Z3Bj
+              - generic [ref=e1247]: Instagram
+      - generic [ref=e1248]:
+        - generic [ref=e1249]:
+          - generic [ref=e1250]: Navigace
+          - list [ref=e1251]:
+            - listitem [ref=e1252]:
+              - link "Domů" [ref=e1253] [cursor=pointer]:
+                - /url: "#home"
+            - listitem [ref=e1254]:
+              - link "Kratom v Česku" [ref=e1255] [cursor=pointer]:
+                - /url: "#legal"
+            - listitem [ref=e1256]:
+              - link "4 klíčové funkce Vivadzen" [ref=e1257] [cursor=pointer]:
+                - /url: "#timeline"
+            - listitem [ref=e1258]:
+              - link "Prémiový kratom" [ref=e1259] [cursor=pointer]:
+                - /url: "#kratom"
+            - listitem [ref=e1260]:
+              - link "Barvy kratomu" [ref=e1261] [cursor=pointer]:
+                - /url: "#colors"
+            - listitem [ref=e1262]:
+              - link "Regiony kratomu" [ref=e1263] [cursor=pointer]:
+                - /url: "#origins"
+            - listitem [ref=e1264]:
+              - link "Bonusový program" [ref=e1265] [cursor=pointer]:
+                - /url: "#bonus"
+            - listitem [ref=e1266]:
+              - link "Recenze" [ref=e1267] [cursor=pointer]:
+                - /url: "#reviews"
+            - listitem [ref=e1268]:
+              - link "Kontakty" [ref=e1269] [cursor=pointer]:
+                - /url: "#contacts"
+        - generic [ref=e1270]:
+          - generic [ref=e1271]: Informace
+          - list [ref=e1272]:
+            - listitem [ref=e1273]:
+              - link "Certifikáty prodejce" [ref=e1274] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e1275]:
+              - link "Laboratorní testy" [ref=e1276] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e1277]:
+              - link "Online obchod Vivadzen" [ref=e1278] [cursor=pointer]:
+                - /url: "#"
+    - generic "Landing quick actions" [ref=e1279]:
+      - button "Posunout stránku nahoru"
+      - button "Otevřít online chat" [ref=e1280] [cursor=pointer]
+  - contentinfo [ref=e1285]:
+    - generic [ref=e1286]:
+      - generic [ref=e1287]:
+        - generic [ref=e1288]:
+          - paragraph [ref=e1289]: Regionální obchody
+          - heading "Právě jste v internetovém obchodě s kratomem VivaDzen v Česku" [level=2] [ref=e1290]
+          - paragraph [ref=e1291]: Pokud jste v jiné zemi, přejděte na odpovídající verzi obchodu pro svůj region.
+        - generic [ref=e1292]:
+          - link "VivaDzen Ukrajina Verze obchodu pro zákazníky na Ukrajině" [ref=e1293] [cursor=pointer]:
+            - /url: https://vivadzen.com/ua/
+            - generic [ref=e1296]:
+              - generic [ref=e1297]: VivaDzen Ukrajina
+              - generic [ref=e1298]: Verze obchodu pro zákazníky na Ukrajině
+          - link "VivaDzen Španělsko Verze obchodu pro zákazníky ve Španělsku" [ref=e1300] [cursor=pointer]:
+            - /url: https://vivadzen.com/es/
+            - generic [ref=e1303]:
+              - generic [ref=e1304]: VivaDzen Španělsko
+              - generic [ref=e1305]: Verze obchodu pro zákazníky ve Španělsku
+          - link "VivaDzen Německo Verze obchodu pro zákazníky v Německu" [ref=e1307] [cursor=pointer]:
+            - /url: https://vivadzen.com/de/
+            - generic [ref=e1310]:
+              - generic [ref=e1311]: VivaDzen Německo
+              - generic [ref=e1312]: Verze obchodu pro zákazníky v Německu
+          - link "VivaDzen entheogeny v Česku (a další) Český obchod s entheogeny a dalšími kategoriemi" [ref=e1314] [cursor=pointer]:
+            - /url: https://vivadzen.com/cz/catalog
+            - generic [ref=e1317]:
+              - generic [ref=e1318]: VivaDzen entheogeny v Česku (a další)
+              - generic [ref=e1319]: Český obchod s entheogeny a dalšími kategoriemi
+      - generic [ref=e1321]:
+        - generic [ref=e1322]:
+          - paragraph [ref=e1323]: VivaDzen mini-store
+          - heading "Kratom pro český trh" [level=2] [ref=e1324]
+          - paragraph [ref=e1325]: "Jeden specializovaný obchod na stejném backendu a katalogové logice, zúžený jen na to podstatné: kratom, články, objednávku a podporu."
+        - generic [ref=e1326]:
+          - paragraph [ref=e1327]: Katalog
+          - generic [ref=e1328]:
+            - link "Katalog" [ref=e1329] [cursor=pointer]:
+              - /url: /catalog
+            - link "Blog" [ref=e1330] [cursor=pointer]:
+              - /url: /blog
+            - link "O nás" [ref=e1331] [cursor=pointer]:
+              - /url: /about
+            - link "Kontakty" [ref=e1332] [cursor=pointer]:
+              - /url: /contacts
+        - generic [ref=e1333]:
+          - paragraph [ref=e1334]: Právní informace
+          - generic [ref=e1335]:
+            - link "Zásady ochrany osobních údajů" [ref=e1336] [cursor=pointer]:
+              - /url: /policy
+            - link "Podmínky použití" [ref=e1337] [cursor=pointer]:
+              - /url: /terms
+            - link "Podmínky vrácení zboží" [ref=e1338] [cursor=pointer]:
+              - /url: /returns
+        - generic [ref=e1339]:
+          - paragraph [ref=e1340]: Kontakty
+          - generic [ref=e1341]:
+            - link "+420 605 00 47 47" [ref=e1342] [cursor=pointer]:
+              - /url: tel:+420605004747
+            - link "info@vivadzen.com" [ref=e1343] [cursor=pointer]:
+              - /url: mailto:[object Object]
+            - generic [ref=e1344]: "Ð˜Ñ\x81Ð¿Ð°Ð½Ñ\x81ÐºÐ¸Ð¹ 2"
+          - generic [ref=e1345]:
+            - link [ref=e1346] [cursor=pointer]:
+              - /url: https://t.me/vivadzen_shop
+            - link [ref=e1348] [cursor=pointer]:
+              - /url: https://wa.me/380957779050
+            - link [ref=e1350] [cursor=pointer]:
+              - /url: https://www.instagram.com/viva.dzen/profilecard/?igsh=amJsemR6em42Z3Bj

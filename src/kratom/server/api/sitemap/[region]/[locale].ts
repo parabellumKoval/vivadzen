@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
 
   const runtimeConfig = useRuntimeConfig()
   const apiBase = runtimeConfig.public?.apiBase || runtimeConfig.apiBase
+  const storefrontCode = String(runtimeConfig.public?.storefrontCode || 'kratom').trim()
 
   if (!apiBase) {
     throw createError({ statusCode: 500, statusMessage: 'API base URL is not configured' })
@@ -29,6 +30,7 @@ export default defineEventHandler(async (event) => {
   const urls = await generateSitemapEntries({
     region: regionParam,
     locale: localeParam,
+    storefront: storefrontCode,
     fallbackRegion,
     localesByRegion: REGIONS_MODULE_OPTIONS.localesByRegion || {},
     aliasToCanonical,

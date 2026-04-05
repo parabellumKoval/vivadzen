@@ -1,4 +1,4 @@
-import { getSettingsSWR } from '../utils/settings-cache'
+import { ensureSettingsVariant } from '../utils/settings-cache'
 import {
   getDatasetEntry,
   type SettingsServerPayload,
@@ -14,11 +14,12 @@ const DEFAULT_LOCALE_BY_REGION: Record<string, string> = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const all = await getSettingsSWR()
     const regionRaw = (event.context.region as string | undefined) || 'global'
     const region = regionRaw.toLowerCase()
     const forcedLocale = (event.context.forcedLocale as string | undefined) || null
     const locale = forcedLocale?.toLowerCase() || DEFAULT_LOCALE_BY_REGION[region] || null
+    const rawDataset = await ensureSettingsVariant(region, locale)
+    const all = rawDataset && typeof rawDataset === 'object' ? rawDataset : {}
 
     const payload: SettingsServerPayload = {
       all,

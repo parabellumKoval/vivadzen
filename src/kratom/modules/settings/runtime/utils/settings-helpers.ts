@@ -50,6 +50,10 @@ export const getDatasetEntry = (
   region?: string | null,
   locale?: string | null
 ): SettingsEntry => {
+  if (!dataset || typeof dataset !== 'object') {
+    return {}
+  }
+
   const regionKey = normalizeRegionKey(region)
   const localeKey = normalizeLocaleKey(locale)
 
@@ -78,5 +82,9 @@ export const getDatasetEntry = (
 }
 
 export const countDatasetEntries = (dataset: SettingsDataset) => {
+  if (!dataset || typeof dataset !== 'object') {
+    return 0
+  }
+
   return Object.values(dataset).reduce((sum, locales) => sum + Object.keys(locales).length, 0)
 }

@@ -1,4 +1,5 @@
 <script setup>
+const { t } = useI18n()
 const modal = useModal()
 const contacts = useContacts()
 
@@ -7,24 +8,24 @@ const color = computed(() => {
 })
 
 const modalTitle = computed(() => {
-  return color.value?.name ? `${color.value.name} kratom` : 'Kratom'
+  return color.value?.name ? `${color.value.name} ${t('title_suffix')}` : 'Kratom'
 })
 
 const contactItems = computed(() => {
   return [
     {
       icon: 'iconoir:map',
-      label: 'Адрес',
+      label: t('contacts.address'),
       value: contacts.address.value
     },
     {
       icon: 'iconoir:phone',
-      label: 'Телефон',
+      label: t('contacts.phone'),
       value: contacts.phone.value
     },
     {
       icon: 'iconoir:clock',
-      label: 'Часы работы',
+      label: t('contacts.schedule'),
       value: contacts.schedule.value
     }
   ].filter((item) => item.value)
@@ -55,6 +56,7 @@ const mapSrc = computed(() => {
 </script>
 
 <style src="./kratom-variety.scss" lang="scss" scoped />
+<i18n src="./lang.yaml" lang="yaml"></i18n>
 
 <template>
   <modal-wrapper :title="modalTitle">
@@ -63,14 +65,14 @@ const mapSrc = computed(() => {
         <div class="kratom-variety-modal__image">
           <nuxt-img
             :src="color.bg"
-            :alt="`${color.name} kratom`"
+            :alt="`${color.name} ${t('title_suffix')}`"
             class="kratom-variety-modal__image-inner"
           />
         </div>
         <div class="kratom-variety-modal__content">
           <p class="kratom-variety-modal__name">
             <span class="big">{{ color.name }}</span>
-            <span class="same" :style="{ color: color.color }"> kratom</span>
+            <span class="same" :style="{ color: color.color }"> {{ t('title_suffix') }}</span>
           </p>
           <div class="kratom-variety-modal__title">{{ color.title }}</div>
           <div class="kratom-variety-modal__desc">{{ color.desc }}</div>
@@ -78,7 +80,7 @@ const mapSrc = computed(() => {
       </div>
 
       <div class="kratom-variety-modal__section">
-        <div class="kratom-variety-modal__section-title">Свойства</div>
+        <div class="kratom-variety-modal__section-title">{{ t('properties') }}</div>
         <ul class="effects-list">
           <li v-for="effect in color.effects || []" :key="effect.label" class="effect-item">
             <IconCSS :name="effect.icon" class="effect-item__icon" :style="{ color: color.color }" />
@@ -91,7 +93,7 @@ const mapSrc = computed(() => {
       </div>
 
       <div class="kratom-variety-modal__section">
-        <div class="kratom-variety-modal__section-title">Доступные модификации</div>
+        <div class="kratom-variety-modal__section-title">{{ t('modifications') }}</div>
         <div class="kratom-variety-modal__mods">
           <div
             v-for="modification in color.modifications || []"
@@ -105,7 +107,7 @@ const mapSrc = computed(() => {
       </div>
 
       <div class="kratom-variety-modal__message">
-        Данный вид кратома вы можете приобрести, посетив наш магазин по адресу:
+        {{ t('store_message') }}
       </div>
 
       <div class="kratom-variety-modal__contacts">
@@ -127,7 +129,7 @@ const mapSrc = computed(() => {
           </div>
 
           <div v-if="messengers.length" class="kratom-variety-modal__messengers">
-            <div class="kratom-variety-modal__messengers-title">Чаты</div>
+            <div class="kratom-variety-modal__messengers-title">{{ t('messengers') }}</div>
             <div class="kratom-variety-modal__messengers-list">
               <a
                 v-for="messenger in messengers"
@@ -157,7 +159,7 @@ const mapSrc = computed(() => {
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
-          <span class="kratom-variety-modal__map-overlay">Открыть карту</span>
+          <span class="kratom-variety-modal__map-overlay">{{ t('open_map') }}</span>
         </a>
       </div>
     </div>

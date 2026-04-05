@@ -141,6 +141,7 @@ const isRegionAllowed = (
 type GenerateSitemapEntriesOptions = {
   region: string
   locale: string
+  storefront: string
   fallbackRegion: string
   localesByRegion: Record<string, string[]>
   aliasToCanonical: Record<string, string>
@@ -150,6 +151,7 @@ type GenerateSitemapEntriesOptions = {
 export const generateSitemapEntries = async ({
   region,
   locale,
+  storefront,
   fallbackRegion,
   localesByRegion,
   aliasToCanonical,
@@ -159,7 +161,17 @@ export const generateSitemapEntries = async ({
   const normalizedLocale = normalizeLocale(locale) || getDefaultLocaleForRegion(normalizedRegion, localesByRegion)
 
   try {
-    const payload = await $fetch(dataEndpoint).catch(() => ({ items: [] }))
+    const payload = await $fetch(dataEndpoint, {
+      headers: {
+        'X-Storefront': storefront,
+        'X-Region': normalizedRegion || region,
+        'Accept-Language': normalizedLocale || locale,
+      },
+      query: {
+        storefront,
+        country: normalizedRegion || region,
+      },
+    }).catch(() => ({ items: [] }))
     const items = Array.isArray((payload as any)?.items) ? (payload as any).items : []
 
     const staticEntries = SITEMAP_STATIC_ROUTES.map((slug) => ({

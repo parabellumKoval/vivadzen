@@ -20,6 +20,11 @@
         <i class='nav-icon las la-percentage'></i> {{ trans('backpack_menu.promocodes') }}
       </a>
     </li>
+    <li class='nav-item'>
+      <a class='nav-link' href='{{ backpack_url('delivery-report') }}'>
+        <i class='nav-icon las la-shipping-fast'></i> Отчеты доставки
+      </a>
+    </li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('campaign') }}"><i class="nav-icon las la-bullhorn"></i> <span>Акции</span></a></li>
 	</ul>
 </li>
@@ -55,7 +60,16 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('tag') }}'><i class='nav-icon las la-tags'></i> {{ trans('backpack_menu.tags') }}</a></li>
 
 <!-- Guidebook -->
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('article') }}"><i class="nav-icon la la-newspaper-o"></i> {{ trans('backpack_menu.articles') }}</a></li>
+<!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('article') }}"><i class="nav-icon la la-newspaper-o"></i> {{ trans('backpack_menu.articles') }}</a></li> -->
+
+<li class="nav-item nav-dropdown">
+	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-newspaper-o"></i> {{ trans('backpack_menu.articles') }}</a>
+	<ul class="nav-dropdown-items">
+		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('article') }}'><i class='nav-icon la la-newspaper-o'></i>  {{ trans('backpack_menu.articles') }}</a></li>
+		<li class='nav-item'><a class='nav-link' href='{{ backpack_url('article-category') }}'><i class='nav-icon las la-list-ul'></i> Категории</a></li>
+		<!-- <li class='nav-item'><a class='nav-link' href='{{ backpack_url('translator/settings') }}'><i class='nav-icon las la-cog'></i> Настройки</a></li> -->
+	</ul>
+</li>
 
 <!-- Faq -->
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('faq-template') }}'><i class='nav-icon las la-question-circle'></i> {{ trans('backpack_menu.faq_templates') }}</a></li>
@@ -121,6 +135,7 @@
 	<ul class="nav-dropdown-items">
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/site') }}"><i class="nav-icon la la-info-circle"></i> <span>Общие</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/delivery') }}"><i class="nav-icon la la-shipping-fast"></i> <span>Доставка</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/delivery-reporting') }}"><i class="nav-icon la la-truck"></i> <span>Delivery reporting</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/payment') }}"><i class="nav-icon la la-credit-card"></i> <span>Оплата</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/search') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('settings/age-verification') }}"><i class="nav-icon las la-user-check"></i> <span>Проверка возраста</span></a></li>

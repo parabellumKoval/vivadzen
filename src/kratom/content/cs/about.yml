@@ -5,11 +5,6 @@ hero:
     - "Začínali jsme skromně: hledali jsme spolehlivé dodavatele, testovali první šarže a budovali filozofii založenou na poctivosti, transparentnosti, kvalitě a zodpovědnosti."
     - "Postupem času náš tým rostl a s ním i naše produktové portfolio. Objevili jsme jedinečné vlastnosti bylinných čajů, organické kávy, konopných produktů, superpotravin a léčivých hub. Každý z těchto směrů rozvíjíme se zvláštní pozorností k detailu - od místa pěstování až po certifikaci a nezávislé laboratorní testy."
     - "V roce 2022 jsme udělali další důležitý krok - otevřeli jsme náš první obchod v srdci Prahy. Stal se symbolem naší filozofie: spojovat kvalitu, otevřenost a lásku k přírodě s péčí o naše zákazníky. Dnes se už rozšiřujeme za hranice České republiky a posilujeme naši přítomnost v Evropě otevíráním poboček ve Španělsku a Německu."
-  image:
-    src: "https://vivadzen.com/wp-content/uploads/2024/07/group-kratom-1024x486.png"
-    alt: "Výběr produktů VivaDzen"
-    width: 1024
-    height: 486
 quote:
   title: "Naše filozofie"
   text: "VivaDzen zahájil svou cestu v roce 2012 s jednoduchým, ale důležitým cílem: zpřístupnit lidem kvalitní přírodní produkty a pomoci jim pečovat o zdraví, harmonii a rovnováhu v každodenním životě."
@@ -18,11 +13,6 @@ mediaBlocks:
     title: "Neústupná kvalita"
     body:
       - "Věříme, že přírodní produkty mají být nejen prospěšné, ale i bezpečné. Každou šarži posíláme na nezávislé laboratorní testy. Kontrolujeme obsah aktivních látek, možné nečistoty i těžké kovy. Díky tomu mají naši zákazníci jistotu, že produkt splňuje nejvyšší standardy."
-    image:
-      src: "https://vivadzen.com/wp-content/uploads/2024/06/RY1_6552-1.jpg"
-      alt: "Laboratorní testování ve VivaDzen"
-      width: 1024
-      height: 684
   - icon: "solar:money-bag-linear"
     title: "Férové ceny"
     body:
@@ -31,11 +21,6 @@ mediaBlocks:
     title: "Rychlé doručení a osobní servis"
     body:
       - "Vážíme si vašeho času. Objednávky zpracováváme co nejrychleji a doručujeme po celé Evropě. Těm, kteří preferují osobní kontakt, nabízíme možnost navštívit naši prodejnu v Praze či ve Španělsku nebo využít naše výdejní místa."
-    image:
-      src: "https://vivadzen.com/wp-content/uploads/2024/07/group-tea2-1024x701.png"
-      alt: "Tým VivaDzen pro balení a doručení"
-      width: 1024
-      height: 701
   - icon: "solar:leaf-outline"
     title: "Zodpovědný přístup"
     body:
@@ -73,11 +58,6 @@ offer:
           url: "https://vivadzen.com/product-category/mushrooms/"
         - label: "Enteogeny"
           url: "https://vivadzen.com/product-category/entheogens/"
-  image:
-    src: "https://vivadzen.com/wp-content/uploads/2024/07/group-cbd-883x1024.png"
-    alt: "Sortiment wellness produktů VivaDzen"
-    width: 883
-    height: 1024
 values:
   title: "Naše hodnoty"
   intro: "VivaDzen je víc než jen obchod. Je to filozofie a komunita lidí, kteří věří v sílu přírody."
@@ -88,11 +68,6 @@ values:
     - "Bezpečnost a důvěra."
     - "Poctivost a odpovědnost."
   description: "Zveřejňujeme výsledky laboratorních testů a píšeme články a blogy založené na skutečném výzkumu a praktických zkušenostech reálných lidí a jejich příběhů. Nepoužíváme agresivní marketing - pouze poctivá fakta dostupná všem."
-  image:
-    src: "https://vivadzen.com/wp-content/uploads/2024/07/group-other-1024x769.png"
-    alt: "Setkání komunity VivaDzen"
-    width: 1024
-    height: 769
 logistics:
   sections:
     - title: "Doručení po celé Evropě"

@@ -22,6 +22,7 @@ interface CategoryModuleRuntimeOptions {
 interface ContextDescriptor {
   locale: MaybeString
   region: MaybeString
+  storefront: string
   key: string
 }
 
@@ -58,7 +59,7 @@ interface CategoryListCacheEntry<T = unknown> {
 const STORAGE_NAMESPACE = 'cache'
 const SLUGS_STORAGE_KEY = 'category:slugs'
 const DETAILS_STORAGE_PREFIX = 'category:details:'
-const LIST_STORAGE_PREFIX = 'category:list:'
+const LIST_STORAGE_PREFIX_V2 = 'category:list-v2:'
 
 const FALLBACK_SLUGS_ENDPOINT = '/djini-category/slugs-simple'
 const FALLBACK_DETAILS_ENDPOINT = '/category_cached/:slug'
@@ -118,6 +119,11 @@ function readModuleOptions(): Required<CategoryModuleRuntimeOptions> & {
   }
 }
 
+function resolveStorefrontCode() {
+  const config = useRuntimeConfig()
+  return String(config.public?.storefrontCode || 'kratom').trim()
+}
+
 function assertBaseUrl(baseUrl: MaybeString) {
   if (!baseUrl) {
     throw new Error(
@@ -127,12 +133,13 @@ function assertBaseUrl(baseUrl: MaybeString) {
   return baseUrl
 }
 
-function buildContextKey(locale: MaybeString, region: MaybeString) {
-  return `${locale ?? ''}::${region ?? ''}`
+function buildContextKey(locale: MaybeString, region: MaybeString, storefront: string) {
+  return `${locale ?? ''}::${region ?? ''}::${storefront}`
 }
 
 function collectContexts(): ContextDescriptor[] {
   const { languages, regions } = readModuleOptions()
+  const storefront = resolveStorefrontCode()
   const languageList = languages.length ? languages : [null]
   const regionList = regions.length ? regions : [null]
 
@@ -140,7 +147,8 @@ function collectContexts(): ContextDescriptor[] {
     regionList.map((region) => ({
       locale: locale ?? null,
       region: region ?? null,
-      key: buildContextKey(locale, region)
+      storefront,
+      key: buildContextKey(locale, region, storefront)
     }))
   )
 }
@@ -211,7 +219,8 @@ function resolveMainListUrl() {
 async function fetchSlugsForContext(context: ContextDescriptor) {
   const url = resolveSlugsUrl()
   const headers: Record<string, string> = {
-    Accept: 'application/json'
+    Accept: 'application/json',
+    'X-Storefront': context.storefront,
   }
   if (context.locale) headers['Accept-Language'] = context.locale
   if (context.region) headers['X-Region'] = context.region
@@ -222,7 +231,8 @@ async function fetchSlugsForContext(context: ContextDescriptor) {
 async function fetchCategoryDetailsForContext(slug: string, context: ContextDescriptor) {
   const url = resolveDetailsUrl(slug)
   const headers: Record<string, string> = {
-    Accept: 'application/json'
+    Accept: 'application/json',
+    'X-Storefront': context.storefront,
   }
   if (context.locale) headers['Accept-Language'] = context.locale
   if (context.region) headers['X-Region'] = context.region
@@ -235,11 +245,16 @@ async function fetchCategoryListForContext(
 ) {
   const url = resolveListUrl()
   const headers: Record<string, string> = {
-    Accept: 'application/json'
+    Accept: 'application/json',
+    'X-Storefront': context.storefront,
   }
   if (context.locale) headers['Accept-Language'] = context.locale
   if (context.region) headers['X-Region'] = context.region
-  return await ofetch(url, { retry: 0, headers, query })
+  const requestQuery = {
+    ...(query || {}),
+    storefront: context.storefront,
+  }
+  return await ofetch(url, { retry: 0, headers, query: requestQuery })
 }
 
 async function fetchCategoryMainListForContext(
@@ -247,7 +262,8 @@ async function fetchCategoryMainListForContext(
 ) {
   const url = resolveMainListUrl()
   const headers: Record<string, string> = {
-    Accept: 'application/json'
+    Accept: 'application/json',
+    'X-Storefront': context.storefront,
   }
   if (context.locale) headers['Accept-Language'] = context.locale
   if (context.region) headers['X-Region'] = context.region
@@ -287,7 +303,11 @@ function hashQueryObject(query: Record<string, any> | undefined) {
 }
 
 function listStorageKey(contextKey: string, queryHash: string) {
-  return `${LIST_STORAGE_PREFIX}${contextKey}::${queryHash}`
+  const safeKey = createHash('sha1')
+    .update(`${contextKey}::${queryHash}`)
+    .digest('hex')
+
+  return `${LIST_STORAGE_PREFIX_V2}${safeKey}`
 }
 
 async function readListEntry(
@@ -392,10 +412,12 @@ export async function getCategorySlugs(options: { force?: boolean } = {}) {
 function resolveRequestedContext(
   requestedLocale: MaybeString,
   requestedRegion: MaybeString,
+  requestedStorefront: MaybeString,
   contexts: ContextDescriptor[]
 ) {
   const normalizedLocale = (requestedLocale || '').toLowerCase()
   const normalizedRegion = (requestedRegion || '').toLowerCase()
+  const normalizedStorefront = (requestedStorefront || '').toLowerCase()
 
   const exact =
     contexts.find((ctx) => {
@@ -405,7 +427,9 @@ function resolveRequestedContext(
         (ctx.locale || '').toLowerCase() === normalizedLocale.split('-')[0]
       const regionMatch =
         !normalizedRegion || (ctx.region || '').toLowerCase() === normalizedRegion
-      return localeMatch && regionMatch
+      const storefrontMatch =
+        !normalizedStorefront || ctx.storefront.toLowerCase() === normalizedStorefront
+      return localeMatch && regionMatch && storefrontMatch
     }) || null
 
   return exact || contexts[0] || null
@@ -607,8 +631,9 @@ export async function getCategoryFromCache(
       : parseAcceptLanguage(headerLocale)
   const region =
     options.region != null ? options.region : event ? getHeader(event, 'x-region') : undefined
+  const storefront = event ? getHeader(event, 'x-storefront') : undefined
 
-  const selectedContext = resolveRequestedContext(locale, region, contexts)
+  const selectedContext = resolveRequestedContext(locale, region, storefront, contexts)
   if (!selectedContext) {
     throw new Error('[category-module] Failed to resolve locale/region context')
   }
@@ -662,8 +687,9 @@ export async function getCategoryListFromCache(
       : parseAcceptLanguage(headerLocale)
   const region =
     options.region != null ? options.region : event ? getHeader(event, 'x-region') : undefined
+  const storefront = event ? getHeader(event, 'x-storefront') : undefined
 
-  const selectedContext = resolveRequestedContext(locale, region, contexts)
+  const selectedContext = resolveRequestedContext(locale, region, storefront, contexts)
   if (!selectedContext) {
     throw new Error('[category-module] Failed to resolve locale/region context for list cache')
   }
@@ -714,8 +740,9 @@ export async function getCategoryMainListFromCache(
       : parseAcceptLanguage(headerLocale)
   const region =
     options.region != null ? options.region : event ? getHeader(event, 'x-region') : undefined
+  const storefront = event ? getHeader(event, 'x-storefront') : undefined
 
-  const selectedContext = resolveRequestedContext(locale, region, contexts)
+  const selectedContext = resolveRequestedContext(locale, region, storefront, contexts)
   if (!selectedContext) {
     throw new Error('[category-module] Failed to resolve locale/region context for main list cache')
   }

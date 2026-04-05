@@ -251,6 +251,7 @@ form:
     novaposhta_address: Nova-Poshta-Kurierzustellung
     packeta_warehouse: Zasilkovna-Filiale/Paketautomat
     packeta_address: Zasilkovna-Kurierzustellung
+    messenger_address: Messenger.cz-Kurierzustellung
     default_pickup: Abholung
     default_address: Postzustellung
   payment:
@@ -259,6 +260,7 @@ form:
     default_cash: Nachnahme
     zasilkovna_cod: Zasilkovna-Nachnahme
     novaposhta_cod: Nova-Poshta-Nachnahme
+    messenger_cod: Messenger.cz-Nachnahme
     bank_transfer: Banküberweisung
 
 status:
@@ -397,6 +399,7 @@ delivery:
   packeta_address: Per Zasilkovna-Kurier
   novaposhta_warehouse: Nova-Poshta-Filiale/Paketautomat
   novaposhta_address: Per Nova-Poshta-Kurier
+  messenger_address: Per Messenger.cz-Kurier
   default_pickup: Abholung
   from: ab
   subtitle: Liefermethoden hängen vom gewählten Land ab. Ändern Sie das Lieferland, um verfügbare Optionen zu sehen.
@@ -417,6 +420,9 @@ payments:
     desc: Bei Erhalt per Karte oder bar bezahlen
   novaposhta_cod:
     title: Nova-Poshta-Nachnahme
+    desc: Bei Erhalt per Karte oder bar bezahlen
+  messenger_cod:
+    title: Messenger.cz-Nachnahme
     desc: Bei Erhalt per Karte oder bar bezahlen
   bank_transfer:
     title: Banküberweisung
@@ -523,6 +529,24 @@ kratom:
     title: 'Kratom für den tschechischen Markt'
     text: 'Ein fokussierter Store auf derselben Backend- und Kataloglogik, reduziert auf das Wesentliche: Kratom, Artikel, Checkout und Support.'
     legal: 'Rechtliches'
+  region_switcher:
+    eyebrow: 'Regionale Storefronts'
+    title: 'Sie befinden sich gerade im VivaDzen-Kratom-Store für Tschechien'
+    text: 'Wenn Sie sich in einem anderen Land befinden, wechseln Sie zur passenden Storefront für Ihre Region.'
+    dismiss: 'Popup für regionale Storefronts schließen'
+    regions:
+      ua:
+        title: 'VivaDzen Ukraine'
+        subtitle: 'Storefront für Kundinnen und Kunden in der Ukraine'
+      es:
+        title: 'VivaDzen Spanien'
+        subtitle: 'Storefront für Kundinnen und Kunden in Spanien'
+      de:
+        title: 'VivaDzen Deutschland'
+        subtitle: 'Storefront für Kundinnen und Kunden in Deutschland'
+      cz_other:
+        title: 'VivaDzen Entheogene in Tschechien (und mehr)'
+        subtitle: 'Tschechische Storefront mit Entheogenen und weiteren Kategorien'
   product_card:
     variants: 'Varianten'
   catalog:
@@ -532,11 +556,22 @@ kratom:
     age_verification: 'Altersprüfung beim Checkout'
   product:
     eyebrow: 'Fokussierter Store'
+    related_title: 'Weiterer Kratom von VivaDzen'
     choose_variation: 'Variante wählen'
     overview: 'Überblick'
     details: 'Details'
+    shipping_payment: 'Versand und Zahlung'
+    delivery_methods_title: 'Verfügbare Lieferung'
+    payment_methods_title: 'Verfügbare Zahlung'
+    delivery_methods_note: 'Der genaue Versandpreis wird im Checkout angezeigt, nachdem Sie die Versandart gewählt haben.'
+    payment_methods_note: 'Die verfügbaren Zahlungsarten hängen von der gewählten Versandart im Checkout ab.'
     checkout_note: 'Hinweis zur Bestellung'
     checkout_note_text: 'Bestellungen werden über das Haupt-Backend von VivaDzen verarbeitet. Versand, Zahlungsmethoden, Lagerbestand und Artikelinhalte werden mit dem Hauptsystem geteilt, während sich dieser Store ausschließlich auf Kratom-Verkäufe in Tschechien konzentriert.'
+    adulto_eyebrow: 'Nur 18+'
+    adulto_title: 'Der Kauf ist erst nach ADULTO-Altersverifizierung möglich'
+    adulto_text: 'Dieses Produkt kann nur nach einer Altersbestätigung über das ADULTO-Plugin während des Checkouts gekauft werden.'
+    adulto_action: 'Anleitung ansehen'
+    adulto_modal_title: 'So bestätigen Sie Ihr Alter und erstellen eine Bestellung'
   checkout:
     eyebrow: 'Gastbestellung'
     text: 'Kein Konto erforderlich. Versand- und Zahlungsmethoden werden aus dem gemeinsamen VivaDzen-Backend geladen.'

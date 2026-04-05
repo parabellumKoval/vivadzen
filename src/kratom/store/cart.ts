@@ -165,7 +165,7 @@ export const useCartStore = defineStore('cartStore', {
     },
     flash: (state) => state.flashOrder,
     isAddressCollected: (state) => {
-      const methodsWithFullAddress = ['novaposhta_address', 'packeta_address', 'default_address']
+      const methodsWithFullAddress = ['novaposhta_address', 'packeta_address', 'messenger_address', 'default_address']
       const method = state.orderState.delivery.method
 
       if(method && methodsWithFullAddress.includes(method)) return true

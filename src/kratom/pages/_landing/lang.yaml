@@ -3,18 +3,18 @@ en:
     items:
       - "NOW 100% LEGAL"
       - "OFFICIAL LICENSE"
+ru:
+  marquee:
+    items:
+      - "ТЕПЕРЬ 100% ЛЕГАЛЬНО"
+      - "ОФИЦИАЛЬНАЯ ЛИЦЕНЗИЯ"
+uk:
+  marquee:
+    items:
+      - "ТЕПЕР 100% ЛЕГАЛЬНО"
+      - "ОФІЦІЙНА ЛІЦЕНЗІЯ"
 cs:
   marquee:
     items:
       - "NYNÍ 100% LEGÁLNÍ"
       - "OFICIÁLNÍ LICENCE"
-de:
-  marquee:
-    items:
-      - "JETZT 100% LEGAL"
-      - "OFFIZIELLE LIZENZ"
-es:
-  marquee:
-    items:
-      - "AHORA 100% LEGAL"
-      - "LICENCIA OFICIAL"

@@ -258,6 +258,7 @@ form:
     novaposhta_address: Kurýr Nova Poshta
     packeta_warehouse: Pobočka/box Zasilkovna
     packeta_address: Kurýr Zasilkovna
+    messenger_address: Doručení kurýrem Messenger.cz
     default_pickup: Osobní odběr
     default_address: Poštovní doručení
   payment:
@@ -266,6 +267,7 @@ form:
     default_cash: Platba při převzetí
     zasilkovna_cod: Dobírka Zasilkovna
     novaposhta_cod: Dobírka Nova Poshta
+    messenger_cod: Dobírka Messenger.cz
     bank_transfer: Bankovní převod
 
 status:
@@ -304,6 +306,9 @@ error:
   required: Pole je povinné
   error: Došlo k chybě
   check_fields: Zkontrolujte správnost vyplnění polí
+  product_not_found: Produkt nebyl nalezen
+  article_not_found: Článek nebyl nalezen
+  order_not_found: Objednávka nebyla nalezena
   auth:
     password:
       require: Heslo musí mít alespoň 6 znaků
@@ -404,6 +409,7 @@ delivery:
   packeta_address: Kurýr Zasilkovna
   novaposhta_warehouse: Pobočka/box Nova Poshta
   novaposhta_address: Kurýr Nova Poshta
+  messenger_address: Kurýr Messenger.cz
   default_pickup: Osobní odběr
   from: od
   subtitle: Způsoby doručení závisí na zvolené zemi. Změňte zemi doručení a zobrazte dostupné možnosti pro váš region.
@@ -424,6 +430,9 @@ payments:
     desc: Zaplaťte kartou nebo hotově při převzetí
   novaposhta_cod:
     title: Dobírka Nova Poshta
+    desc: Zaplaťte kartou nebo hotově při převzetí
+  messenger_cod:
+    title: Dobírka Messenger.cz
     desc: Zaplaťte kartou nebo hotově při převzetí
   bank_transfer:
     title: Bankovní převod
@@ -530,8 +539,30 @@ kratom:
     title: 'Kratom pro český trh'
     text: 'Jeden specializovaný obchod na stejném backendu a katalogové logice, zúžený jen na to podstatné: kratom, články, objednávku a podporu.'
     legal: 'Právní informace'
+  region_switcher:
+    eyebrow: 'Regionální obchody'
+    title: 'Právě jste v internetovém obchodě s kratomem VivaDzen v Česku'
+    text: 'Pokud jste v jiné zemi, přejděte na odpovídající verzi obchodu pro svůj region.'
+    dismiss: 'Zavřít regionální popup'
+    regions:
+      ua:
+        title: 'VivaDzen Ukrajina'
+        subtitle: 'Verze obchodu pro zákazníky na Ukrajině'
+      es:
+        title: 'VivaDzen Španělsko'
+        subtitle: 'Verze obchodu pro zákazníky ve Španělsku'
+      de:
+        title: 'VivaDzen Německo'
+        subtitle: 'Verze obchodu pro zákazníky v Německu'
+      cz_other:
+        title: 'VivaDzen entheogeny v Česku (a další)'
+        subtitle: 'Český obchod s entheogeny a dalšími kategoriemi'
   product_card:
     variants: 'variant'
+    ribbon: 'Certifikovaný kratom'
+    badges_label: 'Odznaky typu kratomu'
+    origin_alt: 'Původ kratomu'
+    color_alt: 'Barva kratomu'
   catalog:
     eyebrow: 'Pouze pro Českou republiku'
     text: 'Zaměřená nabídka kratomových produktů pro český trh s přímou objednávkou a vícejazyčným obsahem.'
@@ -539,11 +570,23 @@ kratom:
     age_verification: 'Ověření věku při objednávce'
   product:
     eyebrow: 'Specializovaný obchod'
+    related_title: 'Další kratom od VivaDzen'
     choose_variation: 'Vyberte variantu'
     overview: 'Přehled'
     details: 'Detaily'
-    checkout_note: 'Poznámka k objednávce'
-    checkout_note_text: 'Objednávky se zpracovávají na hlavním backendu VivaDzen. Doprava, platební metody, sklad i obsah článků jsou sdílené s hlavním systémem, zatímco tento storefront je zaměřený jen na prodej kratomu v Česku.'
+    shipping_payment: 'Doručení a platba'
+    delivery_methods_title: 'Dostupné doručení'
+    payment_methods_title: 'Dostupná platba'
+    delivery_methods_note: 'Přesná cena dopravy se zobrazí v pokladně po výběru způsobu doručení.'
+    payment_methods_note: 'Dostupné platební metody závisejí na zvoleném způsobu doručení v pokladně.'
+    checkout_note: 'Poznámka'
+    checkout_note_text: 'Tento web je určen výhradně pro prodej kratomu v Česku. Pokud hledáte entheogeny, superpotraviny, houby, konopné produkty a další sortiment, navštivte {link}, hlavní obchod VivaDzen, který působí v Česku, na Ukrajině, ve Španělsku a v Německu.'
+    checkout_note_link: 'obchod VivaDzen'
+    adulto_eyebrow: 'Pouze 18+'
+    adulto_title: 'Nákup je dostupný až po potvrzení věku přes ADULTO'
+    adulto_text: 'Tento produkt lze koupit až po potvrzení věku přes plugin ADULTO během objednávky.'
+    adulto_action: 'Zobrazit instrukci'
+    adulto_modal_title: 'Jak správně ověřit věk a vytvořit objednávku'
   checkout:
     eyebrow: 'Objednávka bez registrace'
     text: 'Účet není potřeba. Doprava i platby se načítají ze sdíleného backendu VivaDzen.'

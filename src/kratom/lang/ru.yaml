@@ -264,6 +264,7 @@ form:
     novaposhta_address: Доставка курьером Новая Почта
     packeta_warehouse: Отделение/почтомат Zasilkovna
     packeta_address: Доставка курьером Zasilkovna
+    messenger_address: Доставка курьером Messenger.cz
     default_pickup: Самовывоз
     default_address: Доставка почтой
   payment:
@@ -272,6 +273,7 @@ form:
     default_cash: Оплата при получении заказа
     zasilkovna_cod: Наложенный платеж Zasilkovna
     novaposhta_cod: Наложенный платеж Новая Почта
+    messenger_cod: Наложенный платеж Messenger.cz
     bank_transfer: Банковский перевод
 
 status:
@@ -310,6 +312,9 @@ error:
   required: Поле обязательно для заполнения
   error: Произошла ошибка
   check_fields: Проверьте правильность заполнения полей
+  product_not_found: Товар не найден
+  article_not_found: Статья не найдена
+  order_not_found: Заказ не найден
   auth:
     password:
       require: Пароль должен состоять минимум из 6 символов
@@ -411,6 +416,7 @@ delivery:
   packeta_address: Курьером Zasilkovna
   novaposhta_warehouse: Отделение/почтомат Новой Почты
   novaposhta_address: Курьером Новой Почты
+  messenger_address: Курьером Messenger.cz
   default_pickup: Самовывоз
   from: от
   subtitle: Способы доставки зависят от выбранной страны. Измените страну доставки, чтобы увидеть доступные варианты для вашего региона.
@@ -431,6 +437,9 @@ payments:
     desc: При получении заказа картой или наличными
   novaposhta_cod:
     title: Наложенный платеж Новая Почта
+    desc: При получении заказа картой или наличными
+  messenger_cod:
+    title: Наложенный платеж Messenger.cz
     desc: При получении заказа картой или наличными
   bank_transfer:
     title: Банковский перевод
@@ -528,3 +537,86 @@ affiliate:
   media:
     link_preview_alt: 'Превью партнерской ссылки'
     ttl_image_alt: 'Иллюстрация правила первого клика'
+
+kratom:
+  header:
+    store: 'Магазин kratom'
+  footer:
+    eyebrow: 'Мини-магазин VivaDzen'
+    title: 'Kratom для чешского рынка'
+    text: 'Один специализированный storefront на общем backend и каталожной логике, сфокусированный только на главном: kratom, статьи, оформление заказа и поддержка.'
+    legal: 'Правовая информация'
+  region_switcher:
+    eyebrow: 'Региональные storefronts'
+    title: 'Сейчас вы находитесь в kratom-магазине VivaDzen для Чехии'
+    text: 'Если вы покупаете из другой страны, переключитесь на storefront для своего региона.'
+    dismiss: 'Закрыть окно выбора региона'
+    regions:
+      ua:
+        title: 'VivaDzen Украина'
+        subtitle: 'Версия магазина для покупателей в Украине'
+      es:
+        title: 'VivaDzen Испания'
+        subtitle: 'Версия магазина для покупателей в Испании'
+      de:
+        title: 'VivaDzen Германия'
+        subtitle: 'Версия магазина для покупателей в Германии'
+      cz_other:
+        title: 'VivaDzen энтеогены в Чехии и другое'
+        subtitle: 'Чешский магазин с энтеогенами и другими категориями'
+  product_card:
+    variants: 'варианты'
+    ribbon: 'Сертифицированный kratom'
+    badges_label: 'Метки типа kratom'
+    origin_alt: 'Происхождение kratom'
+    color_alt: 'Цвет kratom'
+  catalog:
+    eyebrow: 'Только для Чешской Республики'
+    text: 'Сфокусированный ассортимент продуктов с kratom для чешского рынка с прямым оформлением заказа и многоязычным контентом.'
+    fulfilment: 'Отправка из Праги'
+    age_verification: 'Проверка возраста при оформлении'
+  product:
+    eyebrow: 'Специализированный магазин'
+    related_title: 'Другой kratom от VivaDzen'
+    choose_variation: 'Выберите вариант'
+    overview: 'Обзор'
+    details: 'Детали'
+    shipping_payment: 'Доставка и оплата'
+    delivery_methods_title: 'Доступная доставка'
+    payment_methods_title: 'Доступная оплата'
+    delivery_methods_note: 'Точная стоимость доставки показывается при оформлении после выбора способа.'
+    payment_methods_note: 'Доступные способы оплаты зависят от выбранного способа доставки при оформлении.'
+    checkout_note: 'Примечание'
+    checkout_note_text: 'Этот сайт предназначен исключительно для продажи кратома в Чехии. Если вас интересуют энтеогены, суперфуды, грибы, каннабис и другие товары, посетите {link} — основной магазин VivaDzen, который работает в Чехии, Украине, Испании и Германии.'
+    checkout_note_link: 'магазин VivaDzen'
+    adulto_eyebrow: 'Только 18+'
+    adulto_title: 'Покупка доступна только после подтверждения возраста через ADULTO'
+    adulto_text: 'Этот товар можно купить только после подтверждения возраста через плагин ADULTO во время оформления заказа.'
+    adulto_action: 'Смотреть инструкцию'
+    adulto_modal_title: 'Как правильно подтвердить возраст и создать заказ'
+  checkout:
+    eyebrow: 'Заказ без регистрации'
+    text: 'Аккаунт не нужен. Доставка и способы оплаты загружаются с общего backend VivaDzen.'
+    empty_prefix: 'Ваша корзина пуста.'
+    empty_action: 'Перейти в каталог'
+    empty_suffix: 'и добавьте товары, чтобы продолжить.'
+    payment_redirect: 'Заказ будет создан на общем backend, после чего вы будете перенаправлены на платежный шлюз.'
+    order_label: 'Заказ №{code}'
+  complete:
+    order: 'Заказ'
+    created: 'Создан'
+    customer: 'Покупатель'
+    delivery: 'Доставка'
+    payment: 'Оплата'
+  blog:
+    eyebrow: 'Статьи'
+    text: 'Статьи, гайды и новости для чешского рынка, опубликованные из того же общего backend.'
+  article:
+    reading_time: 'Время чтения {minutes} мин'
+    content: 'Содержание'
+  contacts:
+    phone: 'Телефон'
+    email: 'Email'
+    address: 'Адрес'
+    social: 'Соцсети'
+    support: 'Поддержка'

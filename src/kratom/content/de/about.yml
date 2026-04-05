@@ -5,11 +5,6 @@ hero:
     - "Wir haben bescheiden begonnen: Wir suchten zuverlässige Lieferanten, testeten die ersten Chargen und bauten eine Philosophie auf, die auf Ehrlichkeit, Transparenz, Qualität und Verantwortung basiert."
     - "Mit der Zeit wuchs unser Team und damit auch unser Sortiment. Wir entdeckten die einzigartigen Eigenschaften von Kräutertees, Bio-Kaffee, Hanfprodukten, Superfoods und Heilpilzen. Jedes dieser Segmente entwickeln wir mit besonderer Liebe zum Detail - vom Anbauort bis zu Zertifizierungen und unabhängigen Labortests."
     - "2022 machten wir einen weiteren wichtigen Schritt und eröffneten unser erstes Geschäft im Herzen Prags. Es wurde zum Symbol unserer Philosophie: Qualität, Offenheit und Liebe zur Natur mit Fürsorge für unsere Kundinnen und Kunden zu verbinden. Heute expandieren wir bereits über Tschechien hinaus und verstärken unsere Präsenz in Europa mit Filialen in Spanien und Deutschland."
-  image:
-    src: "https://vivadzen.com/wp-content/uploads/2024/07/group-kratom-1024x486.png"
-    alt: "VivaDzen Produktauswahl"
-    width: 1024
-    height: 486
 quote:
   title: "Unsere Philosophie"
   text: "VivaDzen begann 2012 mit einem einfachen, aber wichtigen Ziel: hochwertige Naturprodukte für Menschen zugänglich zu machen und sie zu unterstützen, im Alltag für Gesundheit, Harmonie und Balance zu sorgen."
@@ -18,11 +13,6 @@ mediaBlocks:
     title: "Kompromisslose Qualität"
     body:
       - "Wir sind überzeugt, dass Naturprodukte nicht nur wohltuend, sondern auch sicher sein müssen. Jede Charge schicken wir in unabhängige Labore. Wir prüfen den Gehalt an aktiven Wirkstoffen, mögliche Verunreinigungen und Schwermetalle. So erhalten unsere Kundinnen und Kunden die Sicherheit, dass ihr Produkt höchsten Standards entspricht."
-    image:
-      src: "https://vivadzen.com/wp-content/uploads/2024/06/RY1_6552-1.jpg"
-      alt: "Labortests bei VivaDzen"
-      width: 1024
-      height: 684
   - icon: "solar:money-bag-linear"
     title: "Faire Preise"
     body:
@@ -31,11 +21,6 @@ mediaBlocks:
     title: "Schnelle Lieferung und persönlicher Service"
     body:
       - "Wir schätzen Ihre Zeit. Bestellungen bearbeiten wir so schnell wie möglich und liefern in ganz Europa. Wer den persönlichen Kontakt bevorzugt, kann unser Geschäft in Prag oder in Spanien besuchen oder unsere Abholstellen nutzen."
-    image:
-      src: "https://vivadzen.com/wp-content/uploads/2024/07/group-tea2-1024x701.png"
-      alt: "VivaDzen Team für Verpackung und Lieferung"
-      width: 1024
-      height: 701
   - icon: "solar:leaf-outline"
     title: "Verantwortungsbewusst handeln"
     body:
@@ -73,11 +58,6 @@ offer:
           url: "https://vivadzen.com/product-category/mushrooms/"
         - label: "Entheogene"
           url: "https://vivadzen.com/product-category/entheogens/"
-  image:
-    src: "https://vivadzen.com/wp-content/uploads/2024/07/group-cbd-883x1024.png"
-    alt: "Auswahl an VivaDzen Wellness-Produkten"
-    width: 883
-    height: 1024
 values:
   title: "Unsere Werte"
   intro: "VivaDzen ist mehr als nur ein Shop. Es ist eine Philosophie und eine Gemeinschaft von Menschen, die an die Kraft der Natur glauben."
@@ -88,11 +68,6 @@ values:
     - "Sicherheit und Vertrauen."
     - "Ehrlichkeit und Verantwortung."
   description: "Wir veröffentlichen Laborergebnisse und schreiben Artikel sowie Blogbeiträge, die auf echter Forschung und praktischen Erfahrungen realer Menschen basieren. Wir setzen nicht auf aggressive Werbung - nur auf ehrliche Fakten, die allen zugänglich sind."
-  image:
-    src: "https://vivadzen.com/wp-content/uploads/2024/07/group-other-1024x769.png"
-    alt: "VivaDzen Community-Treffen"
-    width: 1024
-    height: 769
 logistics:
   sections:
     - title: "Lieferung in ganz Europa"

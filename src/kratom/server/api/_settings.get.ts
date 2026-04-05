@@ -1,5 +1,5 @@
 import { defineEventHandler, getQuery } from 'h3'
-import { getSettingsSWR } from '~/modules/settings/runtime/server/utils/settings-cache'
+import { ensureSettingsVariant } from '~/modules/settings/runtime/server/utils/settings-cache'
 import { getDatasetEntry } from '~/modules/settings/runtime/utils/settings-helpers'
 
 const pickQueryString = (value: unknown): string | null => {
@@ -33,7 +33,8 @@ export default defineEventHandler(async (event) => {
   const region = requestedRegion ?? fallbackRegion
   const locale = requestedLocale ?? fallbackLocale
 
-  const dataset = await getSettingsSWR()
+  const rawDataset = await ensureSettingsVariant(region, locale).catch(() => ({}))
+  const dataset = rawDataset && typeof rawDataset === 'object' ? rawDataset : {}
   const current = getDatasetEntry(dataset, region, locale)
 
   return {

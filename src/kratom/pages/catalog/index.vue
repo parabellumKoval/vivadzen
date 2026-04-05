@@ -93,53 +93,60 @@ useSeo().setPageSeo(t('title.catalog'))
 
 <style scoped lang="scss">
 .kratom-page-shell {
-  padding-top: 32px;
+  padding-top: 24px;
 }
 
 .kratom-page-hero {
-  margin-bottom: 32px;
-  padding: 28px;
-  border-radius: 32px;
-  background:
-    radial-gradient(circle at top left, rgba(142, 177, 129, 0.22), transparent 35%),
-    linear-gradient(135deg, rgba(255, 247, 236, 0.96), rgba(245, 236, 225, 0.82));
-  border: 1px solid rgba(74, 91, 68, 0.1);
+  margin-bottom: 40px;
+  // padding: 48px 40px;
+  border-radius: 40px;
+  // background:
+  //   radial-gradient(circle at top right, rgba(242, 141, 26, 0.15), transparent 60%),
+  //   linear-gradient(135deg, #18241b, #25382b);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  // box-shadow: 0 40px 100px rgba(24, 36, 27, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .kratom-page-hero__eyebrow {
-  margin-bottom: 12px;
-  font-size: 12px;
-  letter-spacing: 0.12em;
+  margin-bottom: 16px;
+  font-size: 13px;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #8a5a2b;
-  font-weight: 700;
+  color: #f28d1a;
+  font-weight: 800;
 }
 
 .kratom-page-hero__title {
-  margin-bottom: 14px;
-  font-size: 52px;
-  line-height: 0.98;
-  color: #182116;
+  margin-bottom: 18px;
+  font-size: clamp(48px, 6vw, 72px);
+  line-height: 1.05;
+  color: $color-0;
 }
 
 .kratom-page-hero__text {
   max-width: 680px;
-  color: #5f6458;
+  color: $color-3;
   line-height: 1.7;
+  font-size: 18px;
 }
 
 .kratom-page-hero__meta {
-  margin-top: 18px;
+  margin-top: 24px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 
   span {
-    padding: 10px 14px;
+    padding: 10px 18px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.74);
-    border: 1px solid rgba(74, 91, 68, 0.08);
-    color: #334130;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+    border: 1px solid $color-green;
+    color: $color-2;
+    font-weight: 500;
   }
 }
 
@@ -153,6 +160,10 @@ useSeo().setPageSeo(t('title.catalog'))
 
   @include desktop {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @include xld {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
 

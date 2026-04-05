@@ -27,6 +27,11 @@ const resolveLocaleHeader = (regionStore: ReturnType<typeof useRegion>) => {
   return typeof localeValue === 'string' && localeValue.length ? localeValue : null
 }
 
+const resolveStorefrontHeader = () => {
+  const runtimeConfig = useRuntimeConfig()
+  return String(runtimeConfig.public.storefrontCode || 'kratom').trim()
+}
+
 export const useCategoryStore = defineStore('categoryStore', {
   state: () => ({ 
     allState: {
@@ -57,7 +62,8 @@ export const useCategoryStore = defineStore('categoryStore', {
       const regionAlias = regionStore.regionAlias.value
 
       const headers: Record<string, string> = {
-        Accept: 'application/json'
+        Accept: 'application/json',
+        'X-Storefront': resolveStorefrontHeader()
       }
 
       if (typeof localeValue === 'string' && localeValue.length) {
@@ -102,7 +108,8 @@ export const useCategoryStore = defineStore('categoryStore', {
       const regionAlias = regionStore.regionAlias.value
 
       const headers: Record<string, string> = {
-        Accept: 'application/json'
+        Accept: 'application/json',
+        'X-Storefront': resolveStorefrontHeader()
       }
 
       if (typeof localeValue === 'string' && localeValue.length) {
@@ -156,7 +163,8 @@ export const useCategoryStore = defineStore('categoryStore', {
       const regionAlias = regionStore.regionAlias.value
 
       const headers: Record<string, string> = {
-        Accept: 'application/json'
+        Accept: 'application/json',
+        'X-Storefront': resolveStorefrontHeader()
       }
 
       if (typeof localeValue === 'string' && localeValue.length) {

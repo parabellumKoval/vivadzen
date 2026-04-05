@@ -10,7 +10,7 @@ const props = defineProps({
   },
   message: {
     type: String,
-    default: 'Article Not Found'
+    default: ''
   }
 })
 
@@ -28,6 +28,10 @@ if (articlesData.value?.data) {
 const blogPath = computed(() => {
   return regionPath('/blog')
 })
+
+const messageText = computed(() => {
+  return props.message || t('error.article_not_found')
+})
 </script>
 
 <style src="./article.scss" lang="scss" scoped></style>
@@ -36,7 +40,7 @@ const blogPath = computed(() => {
 <template>
   <div class="error error-article">
     <div class="status">{{ error?.statusCode || 404 }}</div>
-    <div class="text">{{ message }}</div>
+    <div class="text">{{ messageText }}</div>
     
     <NuxtLink :to="blogPath" class="button primary action-btn">
       <IconCSS name="iconoir:book" size="20px" class="icon"></IconCSS>

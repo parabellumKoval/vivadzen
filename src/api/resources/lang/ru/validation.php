@@ -212,6 +212,7 @@ return [
                 'novaposhta_warehouse' => '<b>Отделение Nova Poshta</b>',
                 'packeta_address' => '<b>Курьер Zasilkovna</b>',
                 'packeta_warehouse' => '<b>Пункт выдачи Zasilkovna</b>',
+                'messenger_address' => '<b>Курьер Messenger.cz</b>',
                 'default_pickup' => '<b>Самовывоз</b>',
                 'default_address' => '<b>Почтовая доставка</b>',
             ],
@@ -220,6 +221,7 @@ return [
             'method' => [
                 'zasilkovna_cod' => '<b>Наложенный платёж Zasilkovna</b>',
                 'novaposhta_cod' => '<b>Наложенный платёж Nova Poshta</b>',
+                'messenger_cod' => '<b>Наложенный платёж Messenger.cz</b>',
                 'default_cash' => '<b>Оплата при получении</b>',
                 'liqpay_online' => '<b>Онлайн оплата LiqPay</b>',
                 'card_online' => '<b>Оплата картой онлайн</b>',

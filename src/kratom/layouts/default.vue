@@ -3,7 +3,16 @@ const route = useRoute()
 const { htmlAttrs } = useKratomLocaleHead()
 const modal = useModal()
 
-const background = computed(() => route.meta?.bg || '#f8f1e6')
+const background = computed(() => route.meta?.pageBackground || route.meta?.bg || '#f8f1e6')
+const pageTheme = computed(() => route.meta?.pageTheme || 'light')
+const pageThemeStyles = computed(() => ({
+  background: String(background.value),
+  '--kratom-page-theme': String(pageTheme.value),
+  '--kratom-page-background': String(background.value),
+  '--kratom-page-text': pageTheme.value === 'dark' ? '#f7edde' : '#1f2b1d',
+  '--kratom-page-muted': pageTheme.value === 'dark' ? 'rgba(247, 237, 222, 0.72)' : 'rgba(31, 43, 29, 0.68)',
+  '--kratom-page-surface': pageTheme.value === 'dark' ? '#10231e' : '#fff7ec',
+}))
 
 watch(
   () => route.fullPath,
@@ -29,12 +38,13 @@ useSchemaOrg([
 <template>
   <div>
     <Html :lang="htmlAttrs.lang" :dir="htmlAttrs.dir">
-      <Body :style="{ background }">
+      <Body :style="pageThemeStyles" :data-page-theme="pageTheme">
         <SectionLandingHeroHeader />
-        <main class="kratom-main" :style="{ background }">
+        <main class="kratom-main" :style="pageThemeStyles">
           <slot />
         </main>
         <KratomSiteFooter />
+        <lazy-kratom-region-switcher-modal />
         <lazy-modal-noty />
         <modal-transition :is-show="Boolean(modal.active?.show)" mode="out-in">
           <component v-if="modal.active?.component" :is="modal.active.component"></component>

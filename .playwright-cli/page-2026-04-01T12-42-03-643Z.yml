@@ -1,0 +1,167 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - button "logo_alt" [ref=e6] [cursor=pointer]
+      - navigation "Page navigation" [ref=e7]:
+        - link "Catalog" [ref=e8] [cursor=pointer]:
+          - /url: /en/catalog
+        - link "Blog" [ref=e9] [cursor=pointer]:
+          - /url: /en/blog
+        - link "About us" [ref=e10] [cursor=pointer]:
+          - /url: /en/about
+        - link "Contacts" [ref=e11] [cursor=pointer]:
+          - /url: /en/contacts
+      - generic "Language switcher" [ref=e12]:
+        - button "Eng" [ref=e13] [cursor=pointer]:
+          - generic [ref=e14]: Eng
+        - button "Cart" [ref=e16] [cursor=pointer]:
+          - generic [ref=e18]: "0"
+  - main [ref=e19]:
+    - generic [ref=e21]:
+      - list [ref=e23]:
+        - listitem [ref=e24]:
+          - text: ">"
+          - link "Home" [ref=e25] [cursor=pointer]:
+            - /url: /en
+        - listitem:
+          - generic [ref=e26]: Catalog
+      - generic [ref=e27]:
+        - paragraph [ref=e28]: Czech Republic only
+        - heading "Catalog" [level=1] [ref=e29]
+        - paragraph [ref=e30]: Focused range of kratom products available for the Czech market, with direct checkout and multilingual content.
+        - generic [ref=e31]:
+          - generic [ref=e32]: 6 Products
+          - generic [ref=e33]: Prague fulfilment
+          - generic [ref=e34]: Age verification at checkout
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - generic [ref=e38]: premium quality
+          - link "Green Rurut Nano kratom powder - 25g" [ref=e39] [cursor=pointer]:
+            - /url: /en/zeleny-rurut-nano-kratom-prasek-25g
+            - img "Green Rurut Nano kratom powder - 25g" [ref=e41]
+          - generic [ref=e42]:
+            - link "Green Rurut Nano kratom powder - 25g" [ref=e43] [cursor=pointer]:
+              - /url: /en/zeleny-rurut-nano-kratom-prasek-25g
+            - generic [ref=e44]:
+              - button "25g" [ref=e45] [cursor=pointer]
+              - button "50g" [ref=e46] [cursor=pointer]
+            - generic [ref=e47]:
+              - generic [ref=e50]: Kč 140
+              - button "To card" [ref=e51] [cursor=pointer]:
+                - generic [ref=e53]: To card
+        - generic [ref=e54]:
+          - generic [ref=e56]: premium quality
+          - link "White Maeng Da Kratom powder" [ref=e57] [cursor=pointer]:
+            - /url: /en/bila-maeng-da-kratom-prasek-25g
+            - img "White Maeng Da Kratom powder" [ref=e59]
+          - generic [ref=e60]:
+            - link "White Maeng Da Kratom powder" [ref=e61] [cursor=pointer]:
+              - /url: /en/bila-maeng-da-kratom-prasek-25g
+            - generic [ref=e62]:
+              - button "25g" [ref=e63] [cursor=pointer]
+              - button "50g" [ref=e64] [cursor=pointer]
+            - generic [ref=e65]:
+              - generic [ref=e68]: Kč 130
+              - button "To card" [ref=e69] [cursor=pointer]:
+                - generic [ref=e71]: To card
+        - generic [ref=e72]:
+          - generic [ref=e74]: premium quality
+          - link "White Elephant Kratom powder" [ref=e75] [cursor=pointer]:
+            - /url: /en/bily-slon-kratom-prasek-25g
+            - img "White Elephant Kratom powder" [ref=e77]
+          - generic [ref=e78]:
+            - link "White Elephant Kratom powder" [ref=e79] [cursor=pointer]:
+              - /url: /en/bily-slon-kratom-prasek-25g
+            - generic [ref=e80]:
+              - button "25g" [ref=e81] [cursor=pointer]
+              - button "50g" [ref=e82] [cursor=pointer]
+            - generic [ref=e83]:
+              - generic [ref=e86]: Kč 140
+              - button "To card" [ref=e87] [cursor=pointer]:
+                - generic [ref=e89]: To card
+        - generic [ref=e90]:
+          - generic [ref=e92]: premium quality
+          - link "Green Thai Kratom powder" [ref=e93] [cursor=pointer]:
+            - /url: /en/zeleny-thajsky-kratom-prasek-25g
+            - img "Green Thai Kratom powder" [ref=e95]
+          - generic [ref=e96]:
+            - link "Green Thai Kratom powder" [ref=e97] [cursor=pointer]:
+              - /url: /en/zeleny-thajsky-kratom-prasek-25g
+            - generic [ref=e98]:
+              - button "25g" [ref=e99] [cursor=pointer]
+              - button "50g" [ref=e100] [cursor=pointer]
+            - generic [ref=e101]:
+              - generic [ref=e104]: Kč 130
+              - button "To card" [ref=e105] [cursor=pointer]:
+                - generic [ref=e107]: To card
+        - generic [ref=e108]:
+          - generic [ref=e110]: premium quality
+          - link "Red Maeng Da Kratom powder" [ref=e111] [cursor=pointer]:
+            - /url: /en/cervena-maeng-da-kratom-prasek-25g
+            - img "Red Maeng Da Kratom powder" [ref=e113]
+          - generic [ref=e114]:
+            - link "Red Maeng Da Kratom powder" [ref=e115] [cursor=pointer]:
+              - /url: /en/cervena-maeng-da-kratom-prasek-25g
+            - generic [ref=e116]:
+              - button "25g" [ref=e117] [cursor=pointer]
+              - button "50g" [ref=e118] [cursor=pointer]
+            - generic [ref=e119]:
+              - generic [ref=e122]: Kč 130
+              - button "To card" [ref=e123] [cursor=pointer]:
+                - generic [ref=e125]: To card
+        - generic [ref=e126]:
+          - generic [ref=e128]: premium quality
+          - link "Green Maeng Da Kratom powder" [ref=e129] [cursor=pointer]:
+            - /url: /en/zelena-maeng-da-kratom-prasek-25g
+            - img "Green Maeng Da Kratom powder" [ref=e131]
+          - generic [ref=e132]:
+            - link "Green Maeng Da Kratom powder" [ref=e133] [cursor=pointer]:
+              - /url: /en/zelena-maeng-da-kratom-prasek-25g
+            - generic [ref=e134]:
+              - button "25g" [ref=e135] [cursor=pointer]
+              - button "50g" [ref=e136] [cursor=pointer]
+            - generic [ref=e137]:
+              - generic [ref=e140]: Kč 130
+              - button "To card" [ref=e141] [cursor=pointer]:
+                - generic [ref=e143]: To card
+  - contentinfo [ref=e144]:
+    - generic [ref=e145]:
+      - generic [ref=e146]:
+        - paragraph [ref=e147]: VivaDzen mini-store
+        - heading "Kratom curated for the Czech market" [level=2] [ref=e148]
+        - paragraph [ref=e149]: "One focused storefront on the same backend and catalog logic, trimmed down to essentials: kratom, articles, checkout, and support."
+      - generic [ref=e150]:
+        - paragraph [ref=e151]: Catalog
+        - generic [ref=e152]:
+          - link "Catalog" [ref=e153] [cursor=pointer]:
+            - /url: /en/catalog
+          - link "Blog" [ref=e154] [cursor=pointer]:
+            - /url: /en/blog
+          - link "About us" [ref=e155] [cursor=pointer]:
+            - /url: /en/about
+          - link "Contacts" [ref=e156] [cursor=pointer]:
+            - /url: /en/contacts
+      - generic [ref=e157]:
+        - paragraph [ref=e158]: Legal
+        - generic [ref=e159]:
+          - link "Privacy policy" [ref=e160] [cursor=pointer]:
+            - /url: /en/policy
+          - link "Terms of use" [ref=e161] [cursor=pointer]:
+            - /url: /en/terms
+          - link "Return policy" [ref=e162] [cursor=pointer]:
+            - /url: /en/returns
+      - generic [ref=e163]:
+        - paragraph [ref=e164]: Contacts
+        - generic [ref=e165]:
+          - link "+420 605 00 47 47" [ref=e166] [cursor=pointer]:
+            - /url: tel:+420605004747
+          - link "info@vivadzen.com" [ref=e167] [cursor=pointer]:
+            - /url: mailto:[object Object]
+          - generic [ref=e168]: Address EN
+        - generic [ref=e169]:
+          - link [ref=e170] [cursor=pointer]:
+            - /url: https://t.me/vivadzen_shop
+          - link [ref=e172] [cursor=pointer]:
+            - /url: https://wa.me/380957779050
+          - link [ref=e174] [cursor=pointer]:
+            - /url: https://www.instagram.com/viva.dzen/profilecard/?igsh=amJsemR6em42Z3Bj

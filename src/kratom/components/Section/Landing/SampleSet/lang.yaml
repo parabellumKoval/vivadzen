@@ -2,6 +2,8 @@ en:
   subtitle: "Can't decide?"
   title: "Try our Discovery Set — 5 premium varieties in one"
   button: "Get Sample Set"
+  image_alt: "Kratom leaves"
+  product_alt: "Discovery set product {index}"
   modal:
     title: "Get the Sample Set"
     desc: "Leave your email or phone and we'll contact you to confirm the sample set request."
@@ -20,6 +22,8 @@ cs:
   subtitle: "Nemůžete se rozhodnout?"
   title: "Vyzkoušejte náš Discovery Set — 5 prémiových odrůd v jednom"
   button: "Získat vzorový set"
+  image_alt: "Kratomové listy"
+  product_alt: "Produkt vzorového setu {index}"
   modal:
     title: "Získat vzorový set"
     desc: "Zanechte e-mail nebo telefon a ozveme se vám k potvrzení žádosti o vzorový set."
@@ -38,6 +42,8 @@ ru:
   subtitle: "Не хочешь выбирать?"
   title: "Попробуй ознакомительный сет из 5 видов кратома"
   button: "Получить сет"
+  image_alt: "Листья кратома"
+  product_alt: "Продукт набора {index}"
   modal:
     title: "Получить пробный сет"
     desc: "Оставьте email или телефон — мы свяжемся с вами для подтверждения заявки."
@@ -50,4 +56,24 @@ ru:
       submit: "Отправить заявку"
     success_title: "Спасибо!"
     success_message: "Мы получили заявку. В ближайшее время с вами свяжутся."
+    success_button: "Ок"
+
+uk:
+  subtitle: "Не знаєш, що обрати?"
+  title: "Спробуй ознайомчий сет із 5 видів кратому"
+  button: "Отримати сет"
+  image_alt: "Листя кратому"
+  product_alt: "Продукт набору {index}"
+  modal:
+    title: "Отримати пробний сет"
+    desc: "Залиште email або телефон, і ми зв'яжемося з вами для підтвердження заявки."
+    request_note: "Лендінг: заявка на пробний сет"
+    form:
+      email: "Email"
+      email_placeholder: "Введіть ваш email"
+      phone: "Телефон"
+      phone_placeholder: "Введіть ваш телефон"
+      submit: "Надіслати заявку"
+    success_title: "Дякуємо!"
+    success_message: "Ми отримали заявку. Найближчим часом зв'яжемося з вами."
     success_button: "Ок"

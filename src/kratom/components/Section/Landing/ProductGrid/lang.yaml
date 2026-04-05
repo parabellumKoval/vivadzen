@@ -1,0 +1,59 @@
+ru:
+  eyebrow: "Каталог Vivadzen"
+  title: "Безопасная покупка кратома онлайн"
+  description: "Выбирайте товары прямо на главной странице: безопасный заказ на сайте, подтверждение возраста при оформлении, доставка по Чехии и удобный самовывоз."
+  cta: "Перейти в каталог"
+  meta:
+    safe_purchase: "Безопасная покупка на сайте"
+    age_verification: "Подтверждение возраста"
+    delivery: "Доставка по Чехии или самовывоз"
+
+uk:
+  eyebrow: "Каталог Vivadzen"
+  title: "Безпечна покупка кратому онлайн"
+  description: "Обирайте товари прямо на головній сторінці: безпечне замовлення на сайті, підтвердження віку під час оформлення, доставка по Чехії та зручний самовивіз."
+  cta: "Перейти до каталогу"
+  meta:
+    safe_purchase: "Безпечна покупка на сайті"
+    age_verification: "Підтвердження віку"
+    delivery: "Доставка по Чехії або самовивіз"
+
+en:
+  eyebrow: "Vivadzen Catalog"
+  title: "Safe kratom shopping online"
+  description: "Browse products right on the homepage: secure checkout on the site, age verification during purchase, delivery across the Czech Republic, or convenient pickup."
+  cta: "Go to catalog"
+  meta:
+    safe_purchase: "Safe purchase on the site"
+    age_verification: "Age verification"
+    delivery: "Delivery across Czechia or pickup"
+
+cs:
+  eyebrow: "Katalog Vivadzen"
+  title: "Bezpecny nakup kratomu online"
+  description: "Vyberte si produkty primo na hlavni strance: bezpecna objednavka na webu, overeni veku pri nakupu, doruceni po cele Ceske republice nebo pohodlny osobni odber."
+  cta: "Přejít do katalogu"
+  meta:
+    safe_purchase: "Bezpecny nakup na webu"
+    age_verification: "Overeni veku"
+    delivery: "Doruceni po Cesku nebo osobni odber"
+
+de:
+  eyebrow: "Vivadzen Katalog"
+  title: "Sicher Kratom online kaufen"
+  description: "Wahlen Sie Produkte direkt auf der Startseite: sicherer Kauf auf der Website, Altersbestatigung beim Checkout, Lieferung in ganz Tschechien oder bequeme Abholung."
+  cta: "Zum Katalog"
+  meta:
+    safe_purchase: "Sicherer Kauf auf der Website"
+    age_verification: "Altersbestatigung"
+    delivery: "Lieferung in Tschechien oder Abholung"
+
+es:
+  eyebrow: "Catalogo Vivadzen"
+  title: "Compra segura de kratom online"
+  description: "Elige productos directamente en la pagina principal: compra segura en el sitio, verificacion de edad durante el pedido, entrega en toda Chequia o recogida comoda."
+  cta: "Ir al catálogo"
+  meta:
+    safe_purchase: "Compra segura en el sitio"
+    age_verification: "Verificacion de edad"
+    delivery: "Entrega en Chequia o recogida"

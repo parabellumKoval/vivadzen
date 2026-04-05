@@ -19,7 +19,7 @@ const { data, error } = await useAsyncData(
 if (error.value) {
   throw createError({
     statusCode: error.value.statusCode || error.value.status || 404,
-    statusMessage: error.value.statusMessage || error.value.message || 'Order not found',
+    statusMessage: error.value.statusMessage || error.value.message || t('error.order_not_found'),
     fatal: true,
   })
 }
@@ -41,7 +41,7 @@ useCartStore().$reset()
 
 <template>
   <div class="page-base kratom-complete-page">
-    <div class="container kratom-complete-shell">
+    <div class="container kratom-page-container kratom-complete-shell">
       <the-breadcrumbs :crumbs="breadcrumbs" />
       <h1 class="title-common">{{ t('title.checkout_complete') }}</h1>
 
@@ -112,8 +112,7 @@ useCartStore().$reset()
 
 <style scoped lang="scss">
 .kratom-complete-shell {
-  max-width: 1080px;
-  padding-top: 32px;
+  padding-top: 24px;
 }
 
 .kratom-complete-layout {
