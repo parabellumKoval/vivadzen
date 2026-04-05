@@ -297,6 +297,9 @@ export default defineNuxtConfig({
 
   i18n: {
     baseUrl: SITE_URL,
+    compilation: {
+      strictMessage: false,
+    },
     defaultLocale: 'cs',
     lazy: true,
     strategy: 'prefix_except_default',
