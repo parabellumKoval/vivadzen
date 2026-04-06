@@ -243,7 +243,7 @@ const addToCart = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 28px 20px 86px;
+  padding: 28px 20px;
   background-color: #f0f0f0;
   border-radius: inherit;
   overflow: hidden;
@@ -264,7 +264,7 @@ const addToCart = async () => {
   right: clamp(14px, 5cqw, 20px);
   bottom: clamp(14px, 5cqw, 20px);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   gap: 10px;
   z-index: 2;
@@ -392,7 +392,7 @@ const addToCart = async () => {
 
 .kratom-product-card__body {
   // padding: 40px 40px 30px 40px;
-  padding: clamp(20px, 12cqw, 40px);
+  padding: clamp(20px, 10cqw, 30px);
   padding-bottom: clamp(10px, 10cqw, 30px);
   display: flex;
   flex: 1;
