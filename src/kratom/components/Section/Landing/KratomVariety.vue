@@ -112,7 +112,7 @@ const effectsProduct = computed(() => (te('effects_product') ? t('effects_produc
           <div v-for="color in colors" :key="`${color.key}-pair`" class="color-pair">
             <div class="color-item">
               <div class="color-item__image-wrapper">
-                <nuxt-img :src="color.bg" :alt="color.name" class="color-item__image" />
+                <img :src="color.bg" :alt="color.name" class="color-item__image" loading="lazy" />
               </div>
               <p class="color-item__name">
                 <span class="big">{{ color.name }}</span>
@@ -146,7 +146,7 @@ const effectsProduct = computed(() => (te('effects_product') ? t('effects_produc
         <div class="colors-list">
           <div v-for="color in colors" :key="color.key" class="color-item">
             <div class="color-item__image-wrapper">
-              <nuxt-img :src="color.bg" :alt="color.name" class="color-item__image" />
+              <img :src="color.bg" :alt="color.name" class="color-item__image" loading="lazy" />
             </div>
             <p class="color-item__name">
               <span class="big">{{ color.name }}</span>

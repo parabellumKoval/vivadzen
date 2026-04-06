@@ -63,10 +63,11 @@ const mapSrc = computed(() => {
     <div class="kratom-variety-modal">
       <div class="kratom-variety-modal__hero">
         <div class="kratom-variety-modal__image">
-          <nuxt-img
+          <img
             :src="color.bg"
             :alt="`${color.name} ${t('title_suffix')}`"
             class="kratom-variety-modal__image-inner"
+            loading="lazy"
           />
         </div>
         <div class="kratom-variety-modal__content">

@@ -88,6 +88,55 @@ class SiteSettingsRegistrar implements SettingsRegistrarInterface
                     );
                 })
 
+                ->page('Партнеры', function ($page) {
+                    $page->add(Field::make('site.contacts.partners', 'repeatable_pure')
+                        ->label('Партнерские магазины')
+                        ->fields([
+                            [
+                                'name' => 'name',
+                                'label' => 'Название магазина',
+                                'type' => 'text',
+                            ],
+                            [
+                                'name' => 'city',
+                                'label' => 'Город',
+                                'type' => 'text',
+                            ],
+                            [
+                                'name' => 'address',
+                                'label' => 'Адрес',
+                                'type' => 'text',
+                            ],
+                            [
+                                'name' => 'schedule',
+                                'label' => 'Время работы',
+                                'type' => 'text',
+                            ],
+                            [
+                                'name' => 'phone',
+                                'label' => 'Телефон',
+                                'type' => 'text',
+                            ],
+                            [
+                                'name' => 'email',
+                                'label' => 'Email',
+                                'type' => 'email',
+                            ],
+                            [
+                                'name' => 'map',
+                                'label' => 'Google Map',
+                                'type' => 'textarea',
+                            ],
+                        ])
+                        ->newItemLabel('Добавить магазин')
+                        ->hint('Обязательные поля: название магазина, город и адрес. В Google Map можно вставить ссылку или iframe-код.')
+                        ->cast('array')
+                        ->translatable(true)
+                        ->regionable(true)
+                        ->tab('Партнерские магазины')
+                    );
+                })
+
                 ->page('Основное', function ($page) {
                     $page->add(Field::make('site.common.description', 'ckeditor')
                         ->label('Описание')

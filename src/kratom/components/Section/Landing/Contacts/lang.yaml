@@ -7,6 +7,10 @@ ru:
     phone: "Телефон"
     email: "Email"
     schedule: "Часы работы"
+  partners:
+    title: "Партнерские магазины"
+    description: "Вы также можете найти наши товары кратом от VivaDzen в сети партнерских магазинов."
+    map: "Открыть Google Maps"
 
 en:
   title:
@@ -17,6 +21,10 @@ en:
     phone: "Phone"
     email: "Email"
     schedule: "Hours of Operation"
+  partners:
+    title: "Partner Stores"
+    description: "You can also find VivaDzen kratom products in our partner store network."
+    map: "Open Google Maps"
 
 cs:
   title:
@@ -27,6 +35,10 @@ cs:
     phone: "Telefon"
     email: "Email"
     schedule: "Pracovní doba"
+  partners:
+    title: "Partnerske prodejny"
+    description: "Produkty kratomu od VivaDzen najdete take v siti nasich partnerskych prodejen."
+    map: "Otevrít Google Maps"
 
 uk:
   title:
@@ -37,3 +49,7 @@ uk:
     phone: "Телефон"
     email: "Email"
     schedule: "Графік роботи"
+  partners:
+    title: "Партнерські магазини"
+    description: "Ви також можете знайти товари кратому від VivaDzen у мережі партнерських магазинів."
+    map: "Відкрити Google Maps"

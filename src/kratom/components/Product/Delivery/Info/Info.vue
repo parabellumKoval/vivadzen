@@ -114,6 +114,7 @@ const paymentItems = computed(() => {
 
     <div v-if="deliveryItems.length" class="product-delivery-info__section">
       <div class="product-delivery-info__title">{{ t('kratom.product.delivery_methods_title') }}</div>
+      <p class="product-delivery-info__note">{{ t('kratom.product.delivery_methods_note') }}</p>
       <div class="product-delivery-info__list">
         <div v-for="item in deliveryItems" :key="item.key" class="product-delivery-info__item">
           <img
@@ -125,11 +126,11 @@ const paymentItems = computed(() => {
           <span class="product-delivery-info__name">{{ item.title }}</span>
         </div>
       </div>
-      <p class="product-delivery-info__note">{{ t('kratom.product.delivery_methods_note') }}</p>
     </div>
 
     <div v-if="paymentItems.length" class="product-delivery-info__section">
       <div class="product-delivery-info__title">{{ t('kratom.product.payment_methods_title') }}</div>
+      <p class="product-delivery-info__note">{{ t('kratom.product.payment_methods_note') }}</p>
       <div class="product-delivery-info__list">
         <div v-for="item in paymentItems" :key="item.key" class="product-delivery-info__item">
           <img
@@ -141,7 +142,6 @@ const paymentItems = computed(() => {
           <span class="product-delivery-info__name">{{ item.title }}</span>
         </div>
       </div>
-      <p class="product-delivery-info__note">{{ t('kratom.product.payment_methods_note') }}</p>
     </div>
   </section>
 </template>
@@ -149,7 +149,7 @@ const paymentItems = computed(() => {
 <style scoped lang="scss">
 .product-delivery-info {
   display: grid;
-  gap: 18px;
+  gap: 30px;
   padding: 22px 24px;
   border-radius: 32px;
   border: 1px solid rgba(74, 91, 68, 0.08);
@@ -169,7 +169,7 @@ const paymentItems = computed(() => {
 
 .product-delivery-info__section {
   display: grid;
-  gap: 10px;
+  gap: 5px;
 }
 
 .product-delivery-info__title {
@@ -180,16 +180,17 @@ const paymentItems = computed(() => {
 
 .product-delivery-info__list {
   display: grid;
-  gap: 10px;
+  gap: 5px;
 }
 
 .product-delivery-info__item {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-height: 52px;
+  min-height: 40px;
   padding: 10px 12px;
-  border-radius: 18px;
+  border-radius: 9px;
+  font-weight: 600;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(74, 91, 68, 0.08);
 }

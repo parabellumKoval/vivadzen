@@ -212,9 +212,9 @@ const goPayHandler = () => {
         </div>
 
         <div class="sale-footer">
-          <div class="sale-item">
-            <div class="sale-label">{{ t('messages.to_pay') }}</div>
-            <div class="sale-value large">
+          <div class="sale-item sale-item--summary">
+            <div class="sale-label sale-label--summary">{{ t('messages.to_pay') }}</div>
+            <div class="sale-value sale-value--summary large">
               <simple-price :value="finishTotal" class="price price-total"></simple-price>
             </div>
           </div>
@@ -232,6 +232,7 @@ const goPayHandler = () => {
           class="button primary sale-button"
         >
           <span>{{ t('button.pay') }}</span>
+          <IconCSS name="ph:arrow-right" size="22" class="sale-button__icon" />
         </button>
         <button
           v-else
@@ -241,6 +242,7 @@ const goPayHandler = () => {
           class="button primary sale-button"
         >
           <span>{{ t('button.create_order') }}</span>
+          <IconCSS name="ph:arrow-right" size="22" class="sale-button__icon" />
         </button>
       </transition>
     </div>

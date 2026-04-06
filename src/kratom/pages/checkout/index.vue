@@ -148,6 +148,30 @@ cartStore.setPromocode(null)
           <div class="checkout-box kratom-checkout-side__sticky">
             <div class="title-secondary">{{ t('label.total') }}</div>
             <checkout-sale @scroll-to-error="scrollToErrorHandler" @scrollToError="scrollToErrorHandler" />
+            <i18n-t keypath="kratom.checkout.consent_text" tag="p" scope="global" class="kratom-checkout-side__consent">
+              <template #terms>
+                <NuxtLink :to="regionPath('/terms')" class="kratom-checkout-side__consent-link">
+                  {{ t('kratom.checkout.consent_terms_link') }}
+                </NuxtLink>
+              </template>
+              <template #policy>
+                <NuxtLink :to="regionPath('/policy')" class="kratom-checkout-side__consent-link">
+                  {{ t('kratom.checkout.consent_policy_link') }}
+                </NuxtLink>
+              </template>
+            </i18n-t>
+
+            <div class="kratom-checkout-side__trust">
+              <div class="kratom-checkout-side__trust-item">
+                <IconCSS name="ph:shield-check" size="18" class="kratom-checkout-side__trust-icon" />
+                <span>{{ t('kratom.checkout.secure_payment') }}</span>
+              </div>
+              <span class="kratom-checkout-side__trust-dot" aria-hidden="true">&bull;</span>
+              <div class="kratom-checkout-side__trust-item">
+                <IconCSS name="ph:seal-check" size="18" class="kratom-checkout-side__trust-icon" />
+                <span>{{ t('kratom.checkout.quality_guarantee') }}</span>
+              </div>
+            </div>
           </div>
           <checkout-contacts class="kratom-checkout-contacts" />
         </aside>
@@ -247,7 +271,7 @@ cartStore.setPromocode(null)
 }
 
 .kratom-checkout-side__sticky {
-  z-index: 999;
+  z-index: 10;
   background: #fffaf4;
 
   @include desktop {
@@ -256,11 +280,63 @@ cartStore.setPromocode(null)
   }
 }
 
+.kratom-checkout-side__consent {
+  margin: 18px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(74, 91, 68, 0.12);
+  color: #8e96ab;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.kratom-checkout-side__consent-link {
+  color: #6e7f9b;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #4d6285;
+  }
+}
+
+.kratom-checkout-side__trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(74, 91, 68, 0.12);
+  color: #657287;
+  flex-wrap: wrap;
+}
+
+.kratom-checkout-side__trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.kratom-checkout-side__trust-icon {
+  color: #73c56f;
+  flex-shrink: 0;
+}
+
+.kratom-checkout-side__trust-dot {
+  color: rgba(101, 114, 135, 0.55);
+  font-size: 14px;
+}
+
 .kratom-checkout-empty {
   line-height: 1.7;
 }
 
 .kratom-checkout-contacts {
   margin-top: 18px;
+  padding: 24px;
 }
 </style>

@@ -1,10 +1,32 @@
 <script setup lang="ts">
-const { t, tm } = useI18n()
+const { t, tm, rt } = useI18n()
 
-const intro = computed(() => tm('intro') as Record<string, any>)
-const sections = computed(() => tm('sections') as Record<string, any>[])
-const important = computed(() => tm('important') as Record<string, any>)
-const alternative = computed(() => tm('alternative') as Record<string, any>)
+const isMessageAst = (value: unknown): value is { type: number; body: unknown } => {
+  return Boolean(value && typeof value === 'object' && 'type' in value && 'body' in value)
+}
+
+const resolveTranslatedValue = (value: unknown): unknown => {
+  if (Array.isArray(value)) {
+    return value.map(resolveTranslatedValue)
+  }
+
+  if (isMessageAst(value)) {
+    return rt(value)
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, nestedValue]) => [key, resolveTranslatedValue(nestedValue)])
+    )
+  }
+
+  return value
+}
+
+const intro = computed(() => resolveTranslatedValue(tm('intro')) as Record<string, any>)
+const sections = computed(() => resolveTranslatedValue(tm('sections')) as Record<string, any>[])
+const important = computed(() => resolveTranslatedValue(tm('important')) as Record<string, any>)
+const alternative = computed(() => resolveTranslatedValue(tm('alternative')) as Record<string, any>)
 </script>
 
 <style src="./adulto-guide.scss" lang="scss" scoped></style>
@@ -12,7 +34,7 @@ const alternative = computed(() => tm('alternative') as Record<string, any>)
 
 <template>
   <modal-wrapper :title="t('kratom.product.adulto_modal_title')" class="adulto-guide-modal">
-    <article class="adulto-guide">
+    <div class="adulto-guide">
       <header class="adulto-guide__intro">
         <p v-for="(paragraph, index) in intro.paragraphs || []" :key="`intro-${index}`">
           {{ paragraph }}
@@ -59,6 +81,6 @@ const alternative = computed(() => tm('alternative') as Record<string, any>)
           </li>
         </ul>
       </section>
-    </article>
+    </div>
   </modal-wrapper>
 </template>

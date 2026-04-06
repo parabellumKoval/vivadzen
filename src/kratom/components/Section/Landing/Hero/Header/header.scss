@@ -254,8 +254,7 @@
       height: 20px;
     }
 
-    &:hover,
-    &:focus-within {
+    &.is-catalog-open {
       :deep(.catalog-dropdown) {
         opacity: 1;
         visibility: visible;

@@ -131,6 +131,7 @@ useHead({
     </div>
     <div id="contacts" class="page-reveal-section">
       <section-landing-contacts />
+      <section-landing-partner-stores-promo />
     </div>
     <div id="welcome" class="page-reveal-section">
       <section-landing-welcome />

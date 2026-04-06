@@ -1,6 +1,16 @@
 <script setup lang="ts">
+import type { PartnerStore } from '../../../../composables/usePartnerStores'
+import { PARTNER_STORES_HASH } from '../../../../composables/usePartnerStores'
+
 const { t } = useI18n()
+const props = withDefaults(defineProps<{
+  showPartners?: boolean
+}>(), {
+  showPartners: false,
+})
+
 const { get } = useSettings()
+const { partners } = usePartnerStores()
 
 const contactInfo = computed(() => {
   return {
@@ -10,6 +20,21 @@ const contactInfo = computed(() => {
     schedule: get('site.contacts.schedule'),
     map: get('site.contacts.map')
   }
+})
+
+const mapSrc = computed(() => {
+  const raw = contactInfo.value.map
+  if (raw && typeof raw === 'object' && 'value' in raw && typeof raw.value === 'string') {
+    const match = raw.value.match(/src=["']([^"']+)["']/i)
+    return match?.[1]?.trim() || raw.value.trim()
+  }
+
+  if (typeof raw !== 'string') {
+    return ''
+  }
+
+  const match = raw.match(/src=["']([^"']+)["']/i)
+  return match?.[1]?.trim() || raw.trim()
 })
 
 const contacts = computed(() => {
@@ -38,8 +63,28 @@ const contacts = computed(() => {
       label: t('label.schedule'),
       value: contactInfo.value.schedule
     }
-  ]
+  ].filter((item) => item.value)
 })
+
+const partnerFields = (partner: PartnerStore) => {
+  return [
+    {
+      icon: 'iconoir:clock',
+      label: t('label.schedule'),
+      value: partner.schedule,
+    },
+    {
+      icon: 'iconoir:phone',
+      label: t('label.phone'),
+      value: partner.phone,
+    },
+    {
+      icon: 'iconoir:mail',
+      label: t('label.email'),
+      value: partner.email,
+    },
+  ].filter((item) => item.value)
+}
 </script>
 
 <style src="./contacts.scss" lang="scss" scoped></style>
@@ -57,7 +102,7 @@ const contacts = computed(() => {
         </p>
       </div>
 
-      <div>
+      <div v-if="contacts.length">
         <div class="contacts-info-card__list">
           <div
             v-for="contact in contacts"
@@ -97,16 +142,67 @@ const contacts = computed(() => {
         />
       </div>
 
-      <div class="map-wrapper">
+      <div v-if="mapSrc" class="map-wrapper">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.1!2d14.4378!3d50.0755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDA0JzMxLjgiTiAxNMKwMjYnMTYuMSJF!5e0!3m2!1sru!2scz!4v1234567890"
+          :src="mapSrc"
           class="map"
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         ></iframe>
       </div>
-      
+
+      <div
+        v-if="props.showPartners && partners.length"
+        :id="PARTNER_STORES_HASH"
+        class="partner-stores"
+      >
+        <div class="partner-stores__header">
+          <h3 class="partner-stores__title">{{ t('partners.title') }}</h3>
+          <p class="partner-stores__description">{{ t('partners.description') }}</p>
+        </div>
+
+        <div class="partner-stores__grid">
+          <article
+            v-for="partner in partners"
+            :key="`${partner.name}-${partner.city}-${partner.address}`"
+            class="partner-card"
+          >
+            <div class="partner-card__top">
+              <div>
+                <p class="partner-card__city">{{ partner.city }}</p>
+                <h4 class="partner-card__name">{{ partner.name }}</h4>
+              </div>
+
+              <a
+                v-if="partner.mapSrc"
+                :href="partner.mapSrc"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="partner-card__map-link"
+              >
+                {{ t('partners.map') }}
+              </a>
+            </div>
+
+            <p class="partner-card__address">{{ partner.address }}</p>
+
+            <div v-if="partnerFields(partner).length" class="partner-card__meta">
+              <div
+                v-for="item in partnerFields(partner)"
+                :key="`${partner.name}-${item.label}`"
+                class="partner-card__meta-item"
+              >
+                <IconCSS :name="item.icon" class="partner-card__meta-icon" />
+                <div>
+                  <p class="partner-card__meta-label">{{ item.label }}</p>
+                  <p class="partner-card__meta-value">{{ item.value }}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
     </div>
   </section>
 </template>

@@ -1,27 +1,12 @@
+import { normalizeKratomProductImage, normalizeKratomProductImages } from '~/utils/productImage'
+
 export const useCard = (product: Product) => {
 
   const { t } = useI18n({useScope: 'global'})
   const { getLabel: getCampaignLabel, getTimerText, isActive: isCampaignActive } = useCampaignPresentation()
 
   const photos = computed(() => {
-    if(product.images?.length) {
-      return product.images.filter((item) => {
-        return item.src
-      }).map((item) => {
-        return {
-          alt: item?.alt || product.name,
-          title: item?.title || product.name,
-          // src: useImg().folderSrc(item.src, 'products')
-          src: item.src
-        }
-      })
-    }else {
-      return [{
-        alt: product.name,
-        title: product.name,
-        src: useImg().noImage
-      }]
-    }
+    return normalizeKratomProductImages(product.images, product.name)
   })
 
   const mainPhoto = computed(() => {
@@ -41,8 +26,7 @@ export const useCard = (product: Product) => {
   })
 
   const photo = computed(() => {
-    // return useImg().product(product.image)
-    return product.image?.src || mainPhoto.value?.src || useImg().noImage
+    return normalizeKratomProductImage(product.image, product.name)?.src || mainPhoto.value?.src || useImg().noImage
   })
 
   const stock = computed(() => {

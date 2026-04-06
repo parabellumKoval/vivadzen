@@ -580,6 +580,11 @@ kratom:
     empty_suffix: 'und Produkte hinzufügen, um fortzufahren.'
     payment_redirect: 'Die Bestellung wird im gemeinsamen Backend erstellt und anschließend werden Sie zum Zahlungsanbieter weitergeleitet.'
     order_label: 'Bestellung #{code}'
+    consent_text: 'Mit einem Klick auf die Schaltfläche stimmen Sie den {terms} und der {policy} zu.'
+    consent_terms_link: 'Nutzungsbedingungen'
+    consent_policy_link: 'Datenschutzrichtlinie'
+    secure_payment: 'Sichere Zahlung'
+    quality_guarantee: 'Qualitätsgarantie'
   complete:
     order: 'Bestellung'
     created: 'Erstellt'

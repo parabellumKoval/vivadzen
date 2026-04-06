@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import ProductDeliveryInfo from '~/components/Product/Delivery/Info/Info.vue'
+import { normalizeKratomProductImages } from '~/utils/productImage'
+import { formatKratomAttributeValue, useKratomBadges } from '~/utils/kratomBadges'
 
 const route = useRoute()
-const { t, locale } = useI18n()
+const { t, tm, rt, locale } = useI18n()
 const regionPath = useToLocalePath()
 const cartStore = useCartStore()
 const runtimeConfig = useRuntimeConfig()
+const { openCertificatesModal } = useDocumentsModal()
 const quantity = ref(1)
 const galleryIndex = ref(0)
 const adultoGuideModal = defineAsyncComponent(() => import('~/components/Modal/AdultoGuide/AdultoGuide.vue'))
@@ -98,16 +101,13 @@ const { data: catalogProductsData } = await useAsyncData(
 )
 
 const images = computed(() => {
-  const list = Array.isArray(product.value?.images) ? product.value.images : []
-  if (list.length) {
-    return list.filter((item: any) => item?.src)
-  }
-  return [{ src: useImg().noImage, alt: product.value?.name || '', title: product.value?.name || '' }]
+  return normalizeKratomProductImages(product.value?.images, product.value?.name || '')
 })
 
 const activeImage = computed(() => images.value[galleryIndex.value] || images.value[0])
 const modifications = computed(() => Array.isArray(product.value?.modifications) ? product.value.modifications : [])
 const attributes = computed(() => Array.isArray(product.value?.attrs) ? product.value.attrs : [])
+const productBadges = computed(() => useKratomBadges(attributes.value).list)
 const displayPrice = computed(() => {
   const basePrice = product.value?.old_price ?? product.value?.oldPrice ?? product.value?.basePrice
   return basePrice ?? product.value?.price
@@ -119,16 +119,117 @@ const breadcrumbs = computed(() => [
   { name: product.value?.name || '', item: `/${slug.value}` },
 ])
 
+const normalizeInlineHtml = (value: unknown) => {
+  if (typeof value !== 'string') {
+    return null
+  }
+
+  const normalized = value
+    .replace(/\\r\\n|\\n|\\r/g, ' ')
+    .replace(/\r\n|\r|\n/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/([\p{Extended_Pictographic}])([\p{L}\p{N}])/gu, '$1 $2')
+    .replace(/([\p{Extended_Pictographic}])<(strong|b|span|em|i)\b/gu, '$1 <$2')
+    .replace(/([\p{L}\p{N}])<(strong|b|span|em|i)\b/gu, '$1 <$2')
+    .replace(/<\/(strong|b|span|em|i)>([\p{L}\p{N}])/gu, '</$1> $2')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim()
+
+  return normalized || null
+}
+
+const summaryHtml = computed(() => normalizeInlineHtml(product.value?.short_description || product.value?.excerpt))
+
 const descriptionHtml = computed(() => {
   return product.value?.content || product.value?.description || null
 })
 
+const isMessageAst = (value: unknown): value is { type: number; body: unknown } => {
+  return Boolean(value && typeof value === 'object' && 'type' in value && 'body' in value)
+}
+
+const resolveTranslatedValue = (value: unknown): unknown => {
+  if (Array.isArray(value)) {
+    return value.map(resolveTranslatedValue)
+  }
+
+  if (isMessageAst(value)) {
+    return rt(value)
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, nestedValue]) => [key, resolveTranslatedValue(nestedValue)])
+    )
+  }
+
+  return value
+}
+
+const getTranslatedList = (key: string) => {
+  const value = resolveTranslatedValue(tm(key))
+
+  return Array.isArray(value)
+    ? value.map((item) => String(item))
+    : []
+}
+
+const consumerNotice = computed(() => ({
+  eyebrow: t('consumer_notice.eyebrow'),
+  title: t('consumer_notice.title'),
+  lead: t('consumer_notice.lead'),
+  highlights: getTranslatedList('consumer_notice.highlights'),
+  effectsTitle: t('consumer_notice.effects_title'),
+  effects: getTranslatedList('consumer_notice.effects'),
+  warningsTitle: t('consumer_notice.warnings_title'),
+  warnings: getTranslatedList('consumer_notice.warnings'),
+  usageTitle: t('consumer_notice.usage_title'),
+  usage: getTranslatedList('consumer_notice.usage'),
+}))
+
+const formatAttributeValue = (attribute: Record<string, any> | null | undefined) => {
+  return formatKratomAttributeValue(attribute)
+}
+
 const keyFacts = computed(() => {
   const rows = [] as Array<{ label: string; value: string }>
-  if (product.value?.brand?.name) rows.push({ label: t('label.brand'), value: product.value.brand.name })
+  rows.push({ label: t('label.brand'), value: 'Vivadzen' })
   if (product.value?.code) rows.push({ label: t('label.articul'), value: String(product.value.code) })
   if (product.value?.inStock !== undefined) rows.push({ label: t('label.status'), value: product.value.inStock > 0 ? t('label.available') : t('label.not_available') })
   return rows
+})
+
+const productAttributeRows = computed(() => {
+  const factRows = keyFacts.value.map((fact) => ({
+    key: `fact-${fact.label}`,
+    label: fact.label,
+    value: fact.value,
+  }))
+
+  const attributeRows = attributes.value.map((attribute) => ({
+    key: `attribute-${attribute.id || attribute.name}`,
+    label: attribute.name,
+    value: formatAttributeValue(attribute),
+  }))
+
+  return [...factRows, ...attributeRows]
+})
+
+const deliveryHighlights = computed(() => {
+  const isAvailable = product.value?.inStock === undefined || Number(product.value?.inStock) > 0
+
+  return [
+    {
+      icon: isAvailable ? 'ph:check-circle-fill' : 'ph:clock-fill',
+      text: isAvailable
+        ? t('kratom.product.delivery_inline_available')
+        : t('kratom.product.delivery_inline_unavailable'),
+    },
+    {
+      icon: 'ph:truck-fill',
+      text: t('kratom.product.delivery_inline_shipping'),
+    },
+  ]
 })
 
 const relatedProducts = computed(() => {
@@ -155,6 +256,17 @@ const relatedProducts = computed(() => {
 const changeImage = (index: number) => {
   galleryIndex.value = index
 }
+
+watch(images, (nextImages) => {
+  if (!nextImages.length) {
+    galleryIndex.value = 0
+    return
+  }
+
+  if (galleryIndex.value > nextImages.length - 1) {
+    galleryIndex.value = 0
+  }
+}, { immediate: true })
 
 const adjustQuantity = (delta: number) => {
   quantity.value = Math.max(1, quantity.value + delta)
@@ -223,7 +335,6 @@ useHead(() => ({
 
           <div class="kratom-product-adulto">
             <div class="kratom-product-adulto__inner">
-              <span class="kratom-product-adulto__badge">18+</span>
               <p class="kratom-product-adulto__eyebrow">{{ t('kratom.product.adulto_eyebrow') }}</p>
               <h2 class="kratom-product-adulto__title">{{ t('kratom.product.adulto_title') }}</h2>
               <p class="kratom-product-adulto__text">{{ t('kratom.product.adulto_text') }}</p>
@@ -232,39 +343,103 @@ useHead(() => ({
               </button>
             </div>
           </div>
+
+          <div class="kratom-product-legal">
+            <div class="kratom-product-legal__copy">
+              <p class="kratom-product-legal__eyebrow">{{ t('kratom.product.legal_eyebrow') }}</p>
+              <h2 class="kratom-product-legal__title">{{ t('kratom.product.legal_title') }}</h2>
+              <p class="kratom-product-legal__text">{{ t('kratom.product.legal_text') }}</p>
+            </div>
+
+            <div class="kratom-product-legal__media">
+              <nuxt-img
+                src="/images/landing/round-kratom.png"
+                :alt="t('kratom.product.legal_image_alt')"
+                width="220"
+                height="220"
+                sizes="mobile:140px desktop:220px"
+                fit="contain"
+                format="webp"
+                quality="85"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="kratom-product-hero__column kratom-product-hero__column--right">
           <div class="kratom-product-summary">
-            <p class="kratom-product-summary__eyebrow">{{ t('kratom.product.eyebrow') }}</p>
             <h1 class="kratom-product-summary__title">{{ product?.name }}</h1>
-            <p v-if="product?.short_description || product?.excerpt" class="kratom-product-summary__text">
-              {{ product.short_description || product.excerpt }}
-            </p>
+            <div v-if="summaryHtml" class="rich-text kratom-product-summary__text" v-html="summaryHtml"></div>
 
-            <div class="kratom-product-summary__pricing">
-              <simple-price :value="displayPrice" :currency-code="product?.currency" class="kratom-product-summary__price" />
-            </div>
+            <div class="kratom-product-summary__badges">
+              <div
+                v-for="badge in productBadges"
+                :key="`${badge.attribute?.id || badge.attribute?.slug}-${badge.key}`"
+                class="kratom-product-summary__badge"
+              >
+                <nuxt-img
+                  :src="badge.image"
+                  :alt="badge.label"
+                  :title="badge.label"
+                  width="56"
+                  height="56"
+                  sizes="56px"
+                  format="webp"
+                  quality="80"
+                />
+                <div class="kratom-product-summary__badge-copy">
+                  <span>{{ badge.attribute?.name }}</span>
+                  <strong>{{ badge.label }}</strong>
+                </div>
+              </div>
 
-            <div v-if="keyFacts.length" class="kratom-product-summary__facts">
-              <div v-for="fact in keyFacts" :key="fact.label" class="kratom-product-summary__fact">
-                <span>{{ fact.label }}</span>
-                <strong>{{ fact.value }}</strong>
+              <div class="kratom-product-summary__badge kratom-product-summary__badge--brand">
+                <nuxt-img
+                  src="/images/logo/vivadzen.png"
+                  alt="Vivadzen"
+                  title="Vivadzen"
+                  width="56"
+                  height="56"
+                  sizes="56px"
+                  format="webp"
+                  quality="90"
+                />
+                <div class="kratom-product-summary__badge-copy">
+                  <span>{{ t('label.brand') }}</span>
+                  <strong>Vivadzen</strong>
+                </div>
               </div>
             </div>
 
-            <div v-if="modifications.length > 1" class="kratom-product-summary__mods">
-              <p class="kratom-product-summary__mods-title">{{ t('kratom.product.choose_variation') }}</p>
-              <div class="kratom-product-summary__mods-grid">
-                <NuxtLink
-                  v-for="modification in modifications"
-                  :key="modification.id"
-                  :to="regionPath(`/${modification.slug}`)"
-                  class="kratom-product-summary__mod"
-                  :class="{ 'is-active': modification.slug === product?.slug }"
-                >
-                  {{ modification.short_name || modification.name }}
-                </NuxtLink>
+            <div class="kratom-product-summary__delivery">
+              <div
+                v-for="(item, index) in deliveryHighlights"
+                :key="index"
+                class="kratom-product-summary__delivery-item"
+              >
+                <IconCSS :name="item.icon" class="kratom-product-summary__delivery-icon" />
+                <span class="kratom-product-summary__delivery-text">{{ item.text }}</span>
+              </div>
+            </div>
+
+            <div class="kratom-product-summary__commerce">
+              <div v-if="modifications.length > 1" class="kratom-product-summary__mods">
+                <p class="kratom-product-summary__mods-title">{{ t('kratom.product.choose_variation') }}</p>
+                <div class="kratom-product-summary__mods-grid">
+                  <NuxtLink
+                    v-for="modification in modifications"
+                    :key="modification.id"
+                    :to="regionPath(`/${modification.slug}`)"
+                    class="kratom-product-summary__mod"
+                    :class="{ 'is-active': modification.slug === product?.slug }"
+                  >
+                    {{ modification.short_name || modification.name }}
+                  </NuxtLink>
+                </div>
+              </div>
+
+              <div class="kratom-product-summary__pricing">
+                <simple-price :value="displayPrice" :currency-code="product?.currency" class="kratom-product-summary__price" />
               </div>
             </div>
 
@@ -285,21 +460,110 @@ useHead(() => ({
         </div>
       </section>
 
-      <section v-if="descriptionHtml || product?.content_slices?.length || attributes.length" class="kratom-product-stack">
+      <section class="kratom-product-stack">
+        <article class="kratom-product-panel kratom-product-panel--consumer-notice">
+          <div class="kratom-product-consumer-notice">
+            <div class="kratom-product-consumer-notice__hero">
+              <div class="kratom-product-consumer-notice__headline">
+                <p class="kratom-product-panel__eyebrow">{{ consumerNotice.eyebrow }}</p>
+                <h2 class="kratom-product-consumer-notice__title">{{ consumerNotice.title }}</h2>
+              </div>
+              <span class="kratom-product-consumer-notice__badge">18+</span>
+            </div>
+
+            <p class="kratom-product-consumer-notice__lead">{{ consumerNotice.lead }}</p>
+
+            <div class="kratom-product-consumer-notice__highlights">
+              <div
+                v-for="(highlight, index) in consumerNotice.highlights"
+                :key="`notice-highlight-${index}`"
+                class="kratom-product-consumer-notice__highlight"
+              >
+                <IconCSS name="ph:warning-diamond-fill" class="kratom-product-consumer-notice__highlight-icon" />
+                <p>{{ highlight }}</p>
+              </div>
+            </div>
+
+            <div class="kratom-product-consumer-notice__grid">
+              <section class="kratom-product-consumer-notice__section">
+                <h3>{{ consumerNotice.effectsTitle }}</h3>
+                <div class="kratom-product-consumer-notice__copy">
+                  <p v-for="(paragraph, index) in consumerNotice.effects" :key="`effect-${index}`">
+                    {{ paragraph }}
+                  </p>
+                </div>
+              </section>
+
+              <section class="kratom-product-consumer-notice__section">
+                <h3>{{ consumerNotice.warningsTitle }}</h3>
+                <ul class="kratom-product-consumer-notice__list">
+                  <li v-for="(warning, index) in consumerNotice.warnings" :key="`warning-${index}`">
+                    <IconCSS name="ph:warning-circle-fill" class="kratom-product-consumer-notice__list-icon" />
+                    <span>{{ warning }}</span>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="kratom-product-consumer-notice__section kratom-product-consumer-notice__section--full">
+                <h3>{{ consumerNotice.usageTitle }}</h3>
+                <ol class="kratom-product-consumer-notice__steps">
+                  <li v-for="(step, index) in consumerNotice.usage" :key="`usage-${index}`">
+                    {{ step }}
+                  </li>
+                </ol>
+              </section>
+            </div>
+          </div>
+        </article>
+
+        <article class="kratom-product-safety" aria-labelledby="kratom-product-safety-title">
+          <div class="kratom-product-safety__circle">
+            <nuxt-img
+              src="/images/landing/progress/thing-2.png"
+              :alt="t('kratom.product.safety.title')"
+              width="320"
+              height="320"
+              sizes="mobile:220px desktop:260px"
+              fit="contain"
+              format="webp"
+              quality="85"
+              class="kratom-product-safety__image"
+            />
+          </div>
+
+          <div class="kratom-product-safety__content">
+            <h2 id="kratom-product-safety-title" class="kratom-product-safety__title">
+              {{ t('kratom.product.safety.title') }}
+            </h2>
+
+            <p class="kratom-product-safety__description">
+              {{ t('kratom.product.safety.description_prefix') }}
+              <span class="kratom-product-safety__highlight">
+                {{ t('kratom.product.safety.description_highlight') }}
+              </span>
+              {{ t('kratom.product.safety.description_suffix') }}
+            </p>
+
+            <button class="kratom-product-safety__button" type="button" @click="openCertificatesModal">
+              {{ t('kratom.product.safety.button') }}
+            </button>
+          </div>
+        </article>
+
         <article v-if="descriptionHtml || product?.content_slices?.length" class="kratom-product-panel">
           <p class="kratom-product-panel__eyebrow">{{ t('kratom.product.overview') }}</p>
-          <div v-if="product?.content_slices?.length" class="kratom-product-panel__content">
+          <div v-if="product?.content_slices?.length" class="rich-text kratom-product-panel__content">
             <slice-area :slices="product.content_slices" />
           </div>
           <div v-else class="rich-text kratom-product-panel__content" v-html="descriptionHtml"></div>
         </article>
 
-        <article v-if="attributes.length" class="kratom-product-panel">
+        <article v-if="productAttributeRows.length" class="kratom-product-panel">
           <p class="kratom-product-panel__eyebrow">{{ t('kratom.product.details') }}</p>
           <div class="kratom-product-attributes">
-            <div v-for="attribute in attributes" :key="attribute.id || attribute.name" class="kratom-product-attributes__row">
-              <span>{{ attribute.name }}</span>
-              <strong>{{ attribute.value }}</strong>
+            <div v-for="row in productAttributeRows" :key="row.key" class="kratom-product-attributes__row">
+              <span>{{ row.label }}</span>
+              <strong>{{ row.value }}</strong>
             </div>
           </div>
         </article>
@@ -338,6 +602,8 @@ useHead(() => ({
 </template>
 
 <style scoped lang="scss">
+@use '@/assets/scss/rich-text' as *;
+
 .kratom-product-shell {
   padding-top: 24px;
   padding-bottom: 48px;
@@ -368,7 +634,9 @@ useHead(() => ({
 
 .kratom-product-gallery,
 .kratom-product-adulto,
+.kratom-product-legal,
 .kratom-product-summary,
+.kratom-product-safety,
 .kratom-product-panel {
   border-radius: 40px;
   border: 1px solid rgba(74, 91, 68, 0.08);
@@ -434,11 +702,92 @@ useHead(() => ({
   padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 30px;
 }
 
 .kratom-product-delivery-card {
   order: 3;
+}
+
+.kratom-product-safety {
+  position: relative;
+  overflow: hidden;
+  padding: 40px;
+  display: grid;
+  gap: 28px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(247, 170, 61, 0.14), transparent 28%),
+    linear-gradient(145deg, #1a4d41, #12382f);
+  color: #f7f1e8;
+
+  @include tablet {
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+.kratom-product-safety__circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 240px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 15%;
+}
+
+.kratom-product-safety__image {
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  object-fit: contain;
+}
+
+.kratom-product-safety__content {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+
+.kratom-product-safety__title {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.15;
+  color: #fffaf3;
+  font-family: var(--font-display);
+}
+
+.kratom-product-safety__description {
+  margin: 0;
+  max-width: 60ch;
+  color: rgba(247, 241, 232, 0.82);
+  line-height: 1.75;
+}
+
+.kratom-product-safety__highlight {
+  color: #ffd79d;
+  font-weight: 700;
+}
+
+.kratom-product-safety__button {
+  justify-self: start;
+  margin-top: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffd79d;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    color: #fff4de;
+    transform: translateY(-1px);
+  }
 }
 
 .kratom-product-adulto {
@@ -473,20 +822,6 @@ useHead(() => ({
   gap: 14px;
 }
 
-.kratom-product-adulto__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 56px;
-  height: 32px;
-  padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.12);
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
 
 .kratom-product-adulto__eyebrow {
   margin: 0;
@@ -494,12 +829,10 @@ useHead(() => ({
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(247, 241, 232, 0.72);
 }
 
 .kratom-product-adulto__title {
   margin: 0;
-  max-width: 18ch;
   font-size: clamp(24px, 3vw, 32px);
   line-height: 1.08;
   font-family: var(--font-display);
@@ -533,13 +866,66 @@ useHead(() => ({
   }
 }
 
-.kratom-product-summary__eyebrow,
-.kratom-product-panel__eyebrow {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: #f28d1a;
+.kratom-product-legal {
+  order: 5;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  padding: 32px 36px;
+  background:
+    radial-gradient(circle at top left, rgba(242, 141, 26, 0.14), transparent 36%),
+    linear-gradient(180deg, #fffaf1, #f7f0e3);
+}
+
+.kratom-product-legal__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kratom-product-legal__eyebrow {
+  margin: 0;
+  font-size: 12px;
   font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.kratom-product-legal__title {
+  margin: 0;
+  max-width: 20ch;
+  font-size: clamp(24px, 2.4vw, 30px);
+  line-height: 1.12;
+  font-family: var(--font-display);
+  color: #1f2b1d;
+}
+
+.kratom-product-legal__text {
+  margin: 0;
+  max-width: 58ch;
+  line-height: 1.75;
+  color: #55614f;
+}
+
+.kratom-product-legal__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    display: block;
+    width: clamp(140px, 16vw, 220px);
+    height: auto;
+  }
+}
+
+.kratom-product-adulto__eyebrow,
+.kratom-product-legal__eyebrow,
+.kratom-product-summary__eyebrow,
+.kratom-product-panel__eyebrow,
+.kratom-product-related__eyebrow {
+  color: #f28d1a;
 }
 
 .kratom-product-summary__title {
@@ -556,38 +942,125 @@ useHead(() => ({
   line-height: 1.75;
 }
 
+.kratom-product-summary__text {
+  text-align: left !important;
+}
+
+.kratom-product-summary__text :deep(*) {
+  text-align: left !important;
+  white-space: normal;
+}
+
+.kratom-product-summary__text :deep(p),
+.kratom-product-summary__text :deep(ul),
+.kratom-product-summary__text :deep(ol) {
+  margin: 0 !important;
+}
+
+.kratom-product-summary__text :deep(*:first-child) {
+  margin-top: 0;
+}
+
+.kratom-product-summary__text :deep(*:last-child) {
+  margin-bottom: 0;
+}
+
+.kratom-product-summary__badges {
+  display: grid;
+  gap: 12px;
+}
+
+.kratom-product-summary__badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 22px;
+  background: rgba(247, 239, 231, 0.86);
+  border: 1px solid rgba(74, 91, 68, 0.1);
+
+  :deep(img) {
+    border-radius: 16px;
+    flex: 0 0 auto;
+  }
+}
+
+.kratom-product-summary__badge--brand {
+  :deep(img) {
+    background: #fffdf8;
+    object-fit: contain;
+    padding: 6px;
+  }
+}
+
+.kratom-product-summary__badge-copy {
+  display: grid;
+  gap: 3px;
+
+  span {
+    color: #6b7266;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  strong {
+    color: #203019;
+    font-size: 16px;
+    line-height: 1.3;
+  }
+}
+
+.kratom-product-summary__commerce {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 24px;
+}
+
 .kratom-product-summary__pricing {
   display: flex;
   align-items: end;
+  justify-content: flex-end;
   gap: 12px;
+  flex: 0 0 auto;
 }
 
 :deep(.kratom-product-summary__price .value) {
   font-size: 40px;
   font-weight: 800;
+  line-height: 100%;
   color: #162014;
 }
 
-.kratom-product-summary__facts {
-  display: grid;
-  gap: 10px;
+.kratom-product-summary__delivery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
 }
 
-.kratom-product-summary__fact {
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: rgba(247, 239, 231, 0.86);
+.kratom-product-summary__delivery-item {
   display: flex;
-  justify-content: space-between;
-  gap: 14px;
+  align-items: center;
+  gap: 12px;
+}
 
-  span {
-    color: #6b7266;
-  }
+.kratom-product-summary__delivery-icon {
+  flex: 0 0 auto;
+  font-size: 20px;
+  color: #348049;
+}
 
-  strong {
-    color: #203019;
-  }
+.kratom-product-summary__delivery-text {
+  color: #2e6f41;
+  line-height: 1.5;
+}
+
+.kratom-product-summary__mods {
+  flex: 1 1 380px;
 }
 
 .kratom-product-summary__mods-title {
@@ -621,7 +1094,7 @@ useHead(() => ({
   flex-wrap: wrap;
   gap: 16px;
   align-items: center;
-  margin-top: 8px;
+  margin-top: -15px;
 }
 
 .kratom-product-summary__qty {
@@ -685,6 +1158,7 @@ useHead(() => ({
 
 .kratom-product-related-shell {
   padding-bottom: 48px;
+  max-width: 1800px;
 }
 
 .kratom-product-related__intro {
@@ -697,7 +1171,6 @@ useHead(() => ({
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: #f28d1a;
   font-weight: 800;
 }
 
@@ -717,6 +1190,11 @@ useHead(() => ({
   }
 
   @include desktop {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+
+  @include xld {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
@@ -727,6 +1205,13 @@ useHead(() => ({
 
 .kratom-product-panel--notice {
   background: linear-gradient(135deg, rgba(53, 82, 74, 0.08), rgba(138, 90, 43, 0.08));
+}
+
+.kratom-product-panel--consumer-notice {
+  background:
+    radial-gradient(circle at top right, rgba(242, 141, 26, 0.14), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(53, 82, 74, 0.1), transparent 30%),
+    linear-gradient(180deg, #fffaf2, #fffdf9);
 }
 
 .kratom-product-panel__link {
@@ -763,6 +1248,189 @@ useHead(() => ({
   }
 }
 
+.kratom-product-consumer-notice {
+  display: grid;
+  gap: 28px;
+}
+
+.kratom-product-consumer-notice__hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.kratom-product-consumer-notice__headline {
+  display: grid;
+  gap: 12px;
+}
+
+.kratom-product-consumer-notice__title {
+  margin: 0;
+  max-width: 18ch;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.08;
+  color: #1f2b1d;
+  font-family: var(--font-display);
+}
+
+.kratom-product-consumer-notice__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1a4d41, #12382f);
+  color: #fff8ee;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  box-shadow: 0 12px 28px rgba(18, 56, 47, 0.18);
+}
+
+.kratom-product-consumer-notice__lead {
+  margin: 0;
+  max-width: 72ch;
+  font-size: 17px;
+  line-height: 1.8;
+  color: #485346;
+}
+
+.kratom-product-consumer-notice__highlights {
+  display: grid;
+  gap: 14px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.kratom-product-consumer-notice__highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(242, 141, 26, 0.16);
+  background: rgba(255, 247, 236, 0.92);
+
+  p {
+    margin: 0;
+    color: #4f5242;
+    line-height: 1.65;
+  }
+}
+
+.kratom-product-consumer-notice__highlight-icon {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  font-size: 18px;
+  color: #d87a0e;
+}
+
+.kratom-product-consumer-notice__grid {
+  display: grid;
+  gap: 18px;
+
+  @include desktop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.kratom-product-consumer-notice__section {
+  padding: 24px 26px;
+  border-radius: 28px;
+  border: 1px solid rgba(74, 91, 68, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+
+  h3 {
+    margin: 0 0 14px;
+    font-size: 18px;
+    line-height: 1.3;
+    color: #22311d;
+  }
+
+  p {
+    margin: 0;
+    color: #596254;
+    line-height: 1.75;
+  }
+}
+
+.kratom-product-consumer-notice__section--full {
+  @include desktop {
+    grid-column: 1 / -1;
+  }
+}
+
+.kratom-product-consumer-notice__copy {
+  display: grid;
+  gap: 12px;
+}
+
+.kratom-product-consumer-notice__list,
+.kratom-product-consumer-notice__steps {
+  margin: 0;
+  color: #596254;
+}
+
+.kratom-product-consumer-notice__list {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+
+  li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: start;
+    line-height: 1.7;
+  }
+}
+
+.kratom-product-consumer-notice__list-icon {
+  margin-top: 0.22em;
+  font-size: 16px;
+  color: #8f4f12;
+  flex-shrink: 0;
+}
+
+.kratom-product-consumer-notice__steps {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  counter-reset: notice-steps;
+
+  li {
+    counter-increment: notice-steps;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: start;
+    line-height: 1.7;
+
+    &::before {
+      content: counter(notice-steps, decimal-leading-zero);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: rgba(31, 47, 28, 0.08);
+      color: #1f2f1c;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+    }
+  }
+}
+
 @include mobile {
   .kratom-product-shell {
     padding-top: 24px;
@@ -771,6 +1439,7 @@ useHead(() => ({
 
   .kratom-product-gallery,
   .kratom-product-summary,
+  .kratom-product-safety,
   .kratom-product-panel {
     border-radius: 28px;
   }
@@ -779,7 +1448,9 @@ useHead(() => ({
   .kratom-product-summary,
   .kratom-product-panel,
   .kratom-product-adulto,
-  .kratom-product-delivery-card {
+  .kratom-product-legal,
+  .kratom-product-delivery-card,
+  .kratom-product-safety {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -792,7 +1463,9 @@ useHead(() => ({
   .kratom-product-summary,
   .kratom-product-panel,
   .kratom-product-adulto,
-  .kratom-product-delivery-card {
+  .kratom-product-legal,
+  .kratom-product-delivery-card,
+  .kratom-product-safety {
     padding-top: 24px;
     padding-bottom: 24px;
   }
@@ -805,5 +1478,45 @@ useHead(() => ({
   .kratom-product-summary__title {
     font-size: clamp(34px, 10vw, 46px);
   }
+
+  .kratom-product-summary__commerce {
+    align-items: flex-start;
+  }
+
+  .kratom-product-summary__pricing {
+    justify-content: flex-start;
+  }
+
+  .kratom-product-legal {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .kratom-product-consumer-notice__hero {
+    flex-direction: column;
+  }
+
+  .kratom-product-consumer-notice__title,
+  .kratom-product-consumer-notice__lead {
+    max-width: none;
+  }
+
+  .kratom-product-legal__title,
+  .kratom-product-legal__text {
+    max-width: none;
+  }
+
+  .kratom-product-legal__media img {
+    width: 128px;
+  }
+
+  .kratom-product-safety {
+    gap: 20px;
+  }
+
+  .kratom-product-safety__circle {
+    width: min(100%, 220px);
+  }
 }
 </style>
+<i18n src="./lang.yaml" lang="yaml"></i18n>

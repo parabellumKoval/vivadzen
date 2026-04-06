@@ -1,20 +1,8 @@
 <script setup lang="ts">
+import { resolveKratomProductImageSrc } from '~/utils/productImage'
+import { useKratomBadges } from '~/utils/kratomBadges'
+
 type ProductRecord = Record<string, any>
-
-const KRATOM_ORIGIN_BADGES = [
-  '/images/kratom-types/circle3-1.png',
-  '/images/kratom-types/circle3-2.png',
-  '/images/kratom-types/circle3-3.png',
-  '/images/kratom-types/circle3-4.png',
-  '/images/kratom-types/circle3-5.png',
-]
-
-const KRATOM_COLOR_BADGES = [
-  '/images/kratom-types/red.png',
-  '/images/kratom-types/green.png',
-  '/images/kratom-types/white.png',
-  '/images/kratom-types/gold.png',
-]
 
 const props = defineProps<{
   product: ProductRecord
@@ -26,37 +14,14 @@ const modal = useModal()
 const regionPath = useToLocalePath()
 const selectedModification = ref<ProductRecord | null>(null)
 
-const getStableBadgeIndex = (source: string, salt: string, length: number) => {
-  if (!length) {
-    return 0
-  }
-
-  const value = `${source}:${salt}`
-  let hash = 0
-
-  for (const char of value) {
-    hash = ((hash << 5) - hash + char.charCodeAt(0)) | 0
-  }
-
-  return Math.abs(hash) % length
-}
-
 const image = computed(() => {
-  const images = Array.isArray(props.product?.images) ? props.product.images : []
-  return props.product?.image?.src || images[0]?.src || useImg().noImage
+  return resolveKratomProductImageSrc(props.product)
 })
 
-const badgeSeed = computed(() => {
-  return String(props.product?.id ?? props.product?.slug ?? props.product?.name ?? 'kratom-product')
-})
+const attrs = computed(() => Array.isArray(props.product?.attrs) ? props.product.attrs : [])
 
 const badges = computed(() => {
-  const seed = badgeSeed.value
-
-  return {
-    origin: KRATOM_ORIGIN_BADGES[getStableBadgeIndex(seed, 'origin', KRATOM_ORIGIN_BADGES.length)],
-    color: KRATOM_COLOR_BADGES[getStableBadgeIndex(seed, 'color', KRATOM_COLOR_BADGES.length)],
-  }
+  return useKratomBadges(attrs.value).list
 })
 
 const modifications = computed<ProductRecord[]>(() => {
@@ -136,22 +101,12 @@ const addToCart = async () => {
               quality="70"
               fit="contain"
             />
-            <span class="kratom-product-card__badges" :aria-label="t('kratom.product_card.badges_label')">
-              <span class="kratom-product-card__badge">
+            <span v-if="badges.length" class="kratom-product-card__badges" :aria-label="t('kratom.product_card.badges_label')">
+              <span v-for="badge in badges" :key="`${badge.attribute?.id || badge.attribute?.slug}-${badge.key}`" class="kratom-product-card__badge">
                 <nuxt-img
-                  :src="badges.origin"
-                  :alt="t('kratom.product_card.origin_alt')"
-                  width="64"
-                  height="64"
-                  sizes="64px"
-                  format="webp"
-                  quality="80"
-                />
-              </span>
-              <span class="kratom-product-card__badge">
-                <nuxt-img
-                  :src="badges.color"
-                  :alt="t('kratom.product_card.color_alt')"
+                  :src="badge.image"
+                  :alt="badge.label"
+                  :title="badge.label"
                   width="64"
                   height="64"
                   sizes="64px"
@@ -173,8 +128,8 @@ const addToCart = async () => {
             {{ product.name }}
           </NuxtLink>
 
-          <p v-if="product.short_description || product.excerpt" class="kratom-product-card__excerpt">
-            {{ product.short_description || product.excerpt }}
+          <p v-if="product.short_description" class="kratom-product-card__excerpt">
+            {{ product.short_description }}
           </p>
 
           <div v-if="modifications.length" class="kratom-product-card__mods">

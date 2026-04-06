@@ -1,0 +1,27 @@
+ru:
+  eyebrow: "Партнерская сеть"
+  title: "Сеть партнерских магазинов, в которых вы можете приобрести наш товар"
+  description: "Вы также можете найти наши товары в сети партнерских магазинов VivaDzen."
+  citiesPrefix: "В таких городах как:"
+  button: "Смотреть магазины"
+
+en:
+  eyebrow: "Partner network"
+  title: "A network of partner stores where you can buy our products"
+  description: "You can also find VivaDzen products in our partner store network."
+  citiesPrefix: "Available in cities such as:"
+  button: "View stores"
+
+cs:
+  eyebrow: "Partnerska sit"
+  title: "Sit partnerskych prodejen, kde muzete koupit nase produkty"
+  description: "Produkty VivaDzen najdete take v siti nasich partnerskych prodejen."
+  citiesPrefix: "Napriklad ve mestech:"
+  button: "Zobrazit prodejny"
+
+uk:
+  eyebrow: "Партнерська мережа"
+  title: "Мережа партнерських магазинів, у яких ви можете придбати наш товар"
+  description: "Ви також можете знайти товари VivaDzen у мережі наших партнерських магазинів."
+  citiesPrefix: "У таких містах як:"
+  button: "Переглянути магазини"

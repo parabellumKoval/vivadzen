@@ -1,5 +1,22 @@
 import { defineStore } from "pinia";
 
+const resolveKratomProductResource = (target: 'card' | 'detail') => {
+  const runtimeConfig = useRuntimeConfig()
+  const configured = runtimeConfig.public.kratomStore?.productResources?.[target]
+
+  if (typeof configured === 'string' && configured.trim().length) {
+    return configured.trim()
+  }
+
+  return target === 'detail' ? 'kratom_large' : 'kratom_small'
+}
+
+const withKratomResource = (query: Object | null | undefined, target: 'card' | 'detail') => {
+  return {
+    ...(query && typeof query === 'object' ? query : {}),
+    resource: resolveKratomProductResource(target),
+  }
+}
 
 type ProductLarge = {
   id: number,
@@ -51,7 +68,7 @@ export const useProductStore = defineStore('productStore', {
 
     async catalog(query: Object) {
       const url = useRuntimeConfig().public.apiBase + '/catalog'
-      return await useApiFetch(url, query, 'GET', {lazy: false})
+      return await useApiFetch(url, withKratomResource(query, 'card'), 'GET', {lazy: false})
     },
 
     async index(query: Object) {
@@ -118,7 +135,7 @@ export const useProductStore = defineStore('productStore', {
     async show(slug: string) {
       const url = `${useRuntimeConfig().public.apiBase}/catalog/${slug}`;
 
-      return await useApiFetch(url, null, 'GET', {lazy: false})
+      return await useApiFetch(url, withKratomResource(null, 'detail'), 'GET', {lazy: false})
     },
 
   },

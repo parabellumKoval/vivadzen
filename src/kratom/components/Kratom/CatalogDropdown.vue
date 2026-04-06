@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { resolveKratomProductImageSrc } from '~/utils/productImage'
+
 type ProductRecord = Record<string, any>
 
 const props = defineProps<{
   enabled: boolean
+}>()
+const emit = defineEmits<{
+  navigate: []
 }>()
 
 const { t, locale } = useI18n()
@@ -62,8 +67,7 @@ const getCurrencyCode = (product: ProductRecord | null) => {
 }
 
 const getImage = (product: ProductRecord | null) => {
-  const images = Array.isArray(product?.images) ? product.images : []
-  return product?.image?.src || images[0]?.src || useImg().noImage
+  return resolveKratomProductImageSrc(product)
 }
 
 const loadProducts = async () => {
@@ -117,6 +121,10 @@ watch(
   },
   { immediate: true },
 )
+
+const handleNavigate = () => {
+  emit('navigate')
+}
 </script>
 
 <template>
@@ -132,6 +140,7 @@ watch(
           :key="product.id ?? product.slug"
           :to="regionPath(`/${product.slug}`)"
           class="catalog-dropdown__item"
+          @click="handleNavigate"
         >
           <span class="catalog-dropdown__thumb">
             <nuxt-img
@@ -162,7 +171,7 @@ watch(
       </div>
 
       <div class="catalog-dropdown__footer">
-        <NuxtLink :to="regionPath('/catalog')" class="catalog-dropdown__all-link">
+        <NuxtLink :to="regionPath('/catalog')" class="catalog-dropdown__all-link" @click="handleNavigate">
           {{ t('button.view_all') }}
         </NuxtLink>
       </div>

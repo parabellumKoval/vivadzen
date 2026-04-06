@@ -4,6 +4,7 @@ const regionPath = useToLocalePath()
 const route = useRoute()
 const isMenuOpen = ref(false)
 const isDesktopCatalogAvailable = ref(false)
+const isCatalogDropdownOpen = ref(false)
 const cartStore = useCartStore()
 let desktopCatalogMediaQuery: MediaQueryList | null = null
 let cleanupDesktopCatalogMediaQuery: (() => void) | null = null
@@ -47,8 +48,39 @@ function closeMenu() {
   isMenuOpen.value = false
 }
 
+function openCatalogDropdown() {
+  if (!isDesktopCatalogAvailable.value) {
+    return
+  }
+
+  isCatalogDropdownOpen.value = true
+}
+
+function closeCatalogDropdown() {
+  isCatalogDropdownOpen.value = false
+}
+
+function handleCatalogFocusOut(event: FocusEvent) {
+  const currentTarget = event.currentTarget
+  const nextTarget = event.relatedTarget
+
+  if (
+    currentTarget instanceof HTMLElement
+    && nextTarget instanceof Node
+    && currentTarget.contains(nextTarget)
+  ) {
+    return
+  }
+
+  closeCatalogDropdown()
+}
+
 function syncDesktopCatalogAvailability() {
   isDesktopCatalogAvailable.value = Boolean(desktopCatalogMediaQuery?.matches)
+
+  if (!isDesktopCatalogAvailable.value) {
+    closeCatalogDropdown()
+  }
 }
 
 function openCart() {
@@ -57,7 +89,10 @@ function openCart() {
   })
 }
 
-watch(() => route.fullPath, closeMenu)
+watch(() => route.fullPath, () => {
+  closeMenu()
+  closeCatalogDropdown()
+})
 
 onMounted(() => {
   if (typeof window === 'undefined') {
@@ -104,7 +139,14 @@ onBeforeUnmount(() => {
           v-for="item in navItems"
           :key="item.to"
           class="site-header__nav-item"
-          :class="{ 'site-header__nav-item--catalog': item.to === '/catalog' }"
+          :class="{
+            'site-header__nav-item--catalog': item.to === '/catalog',
+            'is-open': item.to === '/catalog' && isCatalogDropdownOpen,
+          }"
+          @mouseenter="item.to === '/catalog' ? openCatalogDropdown() : undefined"
+          @mouseleave="item.to === '/catalog' ? closeCatalogDropdown() : undefined"
+          @focusin="item.to === '/catalog' ? openCatalogDropdown() : undefined"
+          @focusout="item.to === '/catalog' ? handleCatalogFocusOut($event) : undefined"
         >
           <NuxtLink
             :to="regionPath(item.to)"
@@ -116,6 +158,7 @@ onBeforeUnmount(() => {
           <KratomCatalogDropdown
             v-if="item.to === '/catalog'"
             :enabled="isDesktopCatalogAvailable"
+            @navigate="closeCatalogDropdown"
           />
         </div>
       </nav>
@@ -237,8 +280,7 @@ onBeforeUnmount(() => {
   padding-bottom: 18px;
   margin-bottom: -18px;
 
-  &:hover,
-  &:focus-within {
+  &.is-open {
     :deep(.catalog-dropdown) {
       opacity: 1;
       visibility: visible;

@@ -217,6 +217,25 @@ const enableCatalogDropdown = () => {
   isCatalogDropdownEnabled.value = true
 }
 
+const closeCatalogDropdown = () => {
+  isCatalogDropdownEnabled.value = false
+}
+
+const handleCatalogFocusOut = (event) => {
+  const currentTarget = event.currentTarget
+  const nextTarget = event.relatedTarget
+
+  if (
+    currentTarget instanceof HTMLElement
+    && nextTarget instanceof Node
+    && currentTarget.contains(nextTarget)
+  ) {
+    return
+  }
+
+  closeCatalogDropdown()
+}
+
 const handleLogoClick = () => {
   isLangOpen.value = false
   isMoreOpen.value = false
@@ -345,6 +364,7 @@ watch(
   () => {
     isLangOpen.value = false
     isMoreOpen.value = false
+    closeCatalogDropdown()
     closeMenu()
     updateHeaderScrollState()
   }
@@ -409,9 +429,14 @@ watch(
           v-for="item in visibleNav"
           :key="item.id"
           class="hero-header__nav-item"
-          :class="{ 'hero-header__nav-item--catalog': item.id === 'catalog' }"
+          :class="{
+            'hero-header__nav-item--catalog': item.id === 'catalog',
+            'is-catalog-open': item.id === 'catalog' && isCatalogDropdownEnabled,
+          }"
           @mouseenter="item.id === 'catalog' ? enableCatalogDropdown() : undefined"
+          @mouseleave="item.id === 'catalog' ? closeCatalogDropdown() : undefined"
           @focusin="item.id === 'catalog' ? enableCatalogDropdown() : undefined"
+          @focusout="item.id === 'catalog' ? handleCatalogFocusOut($event) : undefined"
         >
           <NuxtLink
             :to="regionPath(item.to)"
@@ -430,6 +455,7 @@ watch(
           <KratomCatalogDropdown
             v-if="item.id === 'catalog'"
             :enabled="isDesktopCatalogAvailable && isCatalogDropdownEnabled"
+            @navigate="closeCatalogDropdown"
           />
         </div>
 

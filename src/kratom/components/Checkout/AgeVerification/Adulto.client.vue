@@ -12,6 +12,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const runtimeConfig = useRuntimeConfig()
+const adultoGuideModal = defineAsyncComponent(() => import('~/components/Modal/AdultoGuide/AdultoGuide.vue'))
 
 const containerId = `adulto-verification-${Math.random().toString(36).slice(2, 10)}`
 const containerRef = ref<HTMLElement | null>(null)
@@ -43,6 +44,13 @@ const getKeyPreview = (key: string) => {
   }
 
   return `${key.slice(0, 4)}...`
+}
+
+const openAdultoGuide = () => {
+  useModal().open(adultoGuideModal, null, null, {
+    width: { min: 320, max: 920 },
+    height: { min: 520, max: 860 },
+  })
 }
 
 const getScriptUrlTemplate = () => {
@@ -489,6 +497,35 @@ onBeforeUnmount(() => {
   color: $color-3;
 }
 
+.adulto-verification__guide {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #e7e0d2;
+  border-radius: 12px;
+  background: #f8f6f1;
+}
+
+.adulto-verification__guide-text {
+  margin: 0;
+  font-size: 13px;
+  color: #645a4f;
+}
+
+.adulto-verification__guide-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #8a5130;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
 .adulto-verification__form {
   margin: 0;
 }
@@ -510,6 +547,8 @@ onBeforeUnmount(() => {
 uk:
   title: "Підтвердження віку 18+"
   description: "Для оформлення цієї корзини в регіоні CZ потрібно пройти перевірку віку через ADULTO.cz."
+  guide_hint: "Ось інструкція з підтвердження віку, якщо потрібна допомога."
+  guide_action: "Відкрити інструкцію"
   verified: "Вік підтверджено."
   loading: "Завантаження віджета..."
   unavailable: "Публічний ключ ADULTO не налаштований."
@@ -518,6 +557,8 @@ uk:
 ru:
   title: "Подтверждение возраста 18+"
   description: "Для оформления этой корзины в регионе CZ нужно пройти проверку возраста через ADULTO.cz."
+  guide_hint: "Вот инструкция по подтверждению возраста, если нужна помощь."
+  guide_action: "Открыть инструкцию"
   verified: "Возраст подтверждён."
   loading: "Загрузка виджета..."
   unavailable: "Публичный ключ ADULTO не настроен."
@@ -526,6 +567,8 @@ ru:
 cs:
   title: "Ověření věku 18+"
   description: "Pro dokončení tohoto košíku v regionu CZ je nutné ověření věku přes ADULTO.cz."
+  guide_hint: "Zde je návod k ověření věku, pokud potřebujete pomoc."
+  guide_action: "Otevřít návod"
   verified: "Věk byl ověřen."
   loading: "Načítání widgetu..."
   unavailable: "Veřejný klíč ADULTO není nastaven."
@@ -534,6 +577,8 @@ cs:
 en:
   title: "Age Verification 18+"
   description: "To place this order in the CZ region, complete age verification via ADULTO.cz."
+  guide_hint: "Here is the age verification guide if you need help."
+  guide_action: "Open guide"
   verified: "Age verified."
   loading: "Loading widget..."
   unavailable: "ADULTO public key is not configured."
@@ -545,6 +590,12 @@ en:
   <div class="adulto-verification">
     <div class="adulto-verification__title">{{ t('title') }}</div>
     <p class="adulto-verification__description">{{ t('description') }}</p>
+    <div class="adulto-verification__guide">
+      <p class="adulto-verification__guide-text">{{ t('guide_hint') }}</p>
+      <button type="button" class="adulto-verification__guide-button" @click="openAdultoGuide">
+        {{ t('guide_action') }}
+      </button>
+    </div>
 
     <form class="adulto-verification__form" @submit.prevent>
       <div :id="containerId" ref="containerRef">

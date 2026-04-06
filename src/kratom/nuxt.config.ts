@@ -58,6 +58,37 @@ export default defineNuxtConfig({
         currency: 'CZK',
         locales: ['cs', 'en', 'ru', 'uk'],
         defaultLocale: 'cs',
+        productResources: {
+          card: 'kratom_small',
+          detail: 'kratom_large',
+        },
+        badgeAttributes: {
+          color: {
+            slugs: ['color', 'kratom-color', 'kratom-colour'],
+            nameHints: ['color', 'colour', 'barva', 'цвет', 'колір'],
+          },
+          origin: {
+            slugs: ['origin', 'region', 'kratom-origin', 'kratom-region'],
+            nameHints: ['origin', 'region', 'puvod', 'původ', 'происх', 'походжен', 'regi'],
+          },
+        },
+        badgeImages: {
+          color: {
+            red: '/images/kratom-types/red.png',
+            green: '/images/kratom-types/green.png',
+            white: '/images/kratom-types/white.png',
+            gold: '/images/kratom-types/gold.png',
+            yellow: '/images/kratom-types/gold.png',
+          },
+          origin: {
+            maengda: '/images/kratom-types/circle3-1.png',
+            'maeng-da': '/images/kratom-types/circle3-1.png',
+            malay: '/images/kratom-types/circle3-2.png',
+            thai: '/images/kratom-types/circle3-3.png',
+            borneo: '/images/kratom-types/circle3-4.png',
+            sumatra: '/images/kratom-types/circle3-5.png',
+          },
+        },
       },
     },
   },
