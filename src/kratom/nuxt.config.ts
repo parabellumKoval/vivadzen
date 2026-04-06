@@ -1,5 +1,4 @@
 import path from 'path'
-import { buildShopRedirectRouteRules } from './config/shopRedirects'
 
 const HOST = process.env.HOST_IP || 'localhost'
 const SITE_URL = process.env.SITE_URL || (process.env.NODE_ENV === 'production' ? `https://${HOST}` : `http://${HOST}:3001`)
@@ -413,7 +412,6 @@ export default defineNuxtConfig({
       '/assets/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/images/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/_nuxt/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
-      ...buildShopRedirectRouteRules(),
     },
     compressPublicAssets: {
       gzip: true,
