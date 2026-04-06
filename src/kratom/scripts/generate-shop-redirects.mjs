@@ -7,7 +7,6 @@ const projectRoot = path.resolve(__dirname, '..')
 const repoRoot = path.resolve(projectRoot, '..', '..')
 
 const API_BASE = (process.env.REDIRECTS_API_BASE || 'https://api.vivadzen.com/api').replace(/\/+$/, '')
-const SHOP_ORIGIN = 'https://shop.vivadzen.com'
 const OUTPUT_FILE = path.join(projectRoot, 'config', 'generatedShopRedirects.ts')
 const FRONT_REDIRECTS_CSV = path.join(repoRoot, 'src', 'front', 'redirects.csv')
 
@@ -88,27 +87,37 @@ function normalizeRegion(value) {
   return LEGACY_REGION_ALIASES[normalized] || normalized
 }
 
-function buildLegacyLocalizedPath(slug, region, locale) {
-  const normalizedRegion = normalizeRegion(region)
-  const normalizedLocale = String(locale || '').trim().toLowerCase()
-  const normalizedSlug = normalizeSlug(slug)
-  const defaultLocale = LEGACY_REGIONS[normalizedRegion]?.[0] || 'en'
-  const segments = []
+function parseLegacyPath(pathname) {
+  const normalized = normalizePath(pathname)
+  const segments = normalized === '/' ? [] : normalized.slice(1).split('/').filter(Boolean)
 
-  if (normalizedRegion && normalizedRegion !== 'global') {
-    segments.push(normalizedRegion)
-    if (normalizedLocale && normalizedLocale !== defaultLocale) {
-      segments.push(normalizedLocale)
+  if (!segments.length) {
+    return null
+  }
+
+  const [rawRegion, maybeLocale, ...rest] = segments
+  const region = normalizeRegion(rawRegion)
+
+  if (!LEGACY_REGIONS[region]) {
+    return null
+  }
+
+  const locales = LEGACY_REGIONS[region]
+  if (maybeLocale && locales.includes(maybeLocale)) {
+    return {
+      region,
+      locale: maybeLocale,
+      remainder: rest.length ? `/${rest.join('/')}` : '/',
+      hasExplicitLocale: true,
     }
-  } else if (normalizedLocale && normalizedLocale !== defaultLocale) {
-    segments.push('global', normalizedLocale)
   }
 
-  if (normalizedSlug) {
-    segments.push(normalizedSlug)
+  return {
+    region,
+    locale: locales[0],
+    remainder: maybeLocale ? `/${[maybeLocale, ...rest].join('/')}` : '/',
+    hasExplicitLocale: false,
   }
-
-  return segments.length ? `/${segments.join('/')}` : '/'
 }
 
 function buildKratomLocalizedPath(slug, locale) {
@@ -125,15 +134,6 @@ function buildKratomLocalizedPath(slug, locale) {
   }
 
   return segments.length ? `/${segments.join('/')}` : '/'
-}
-
-function buildPathVariants(pathname) {
-  const normalized = normalizePath(pathname)
-  return normalized === '/' ? ['/'] : [normalized, `${normalized}/`]
-}
-
-function buildAbsoluteShopUrl(pathname) {
-  return new URL(normalizePath(pathname), `${SHOP_ORIGIN}/`).toString()
 }
 
 function isAvailableInRegion(item, region) {
@@ -155,25 +155,6 @@ function isAvailableInRegion(item, region) {
 function addPathsToSet(set, pathFactory, slug) {
   for (const locale of KRATOM_LOCALES) {
     set.add(pathFactory(slug, locale))
-  }
-}
-
-function addLegacyPathsToSet(set, slug, regions) {
-  const normalizedSlug = normalizeSlug(slug)
-  if (!normalizedSlug && slug !== '/') {
-    return
-  }
-
-  for (const region of regions) {
-    const normalizedRegion = normalizeRegion(region)
-    const locales = LEGACY_REGIONS[normalizedRegion]
-    if (!locales) {
-      continue
-    }
-
-    for (const locale of locales) {
-      set.add(buildLegacyLocalizedPath(normalizedSlug, normalizedRegion, locale))
-    }
   }
 }
 
@@ -211,7 +192,10 @@ async function readManualRedirects() {
       continue
     }
 
-    redirects.push(parsed)
+    redirects.push({
+      source: normalizePath(parsed.source),
+      destination: normalizePath(parsed.destination),
+    })
   }
 
   return redirects
@@ -262,11 +246,27 @@ function buildLiveCurrentPaths(kratomItems) {
   return livePaths
 }
 
-function buildLegacyGeneratedRedirects(mainItems, liveCurrentPaths) {
-  const legacyPaths = new Set()
+function buildRegionOnlyRedirects(mainItems, liveCurrentPaths) {
+  const redirects = new Map()
 
-  for (const staticPath of LEGACY_STATIC_PATHS) {
-    addLegacyPathsToSet(legacyPaths, staticPath, Object.keys(LEGACY_REGIONS))
+  const append = (fullPath) => {
+    const parsed = parseLegacyPath(fullPath)
+    if (!parsed || parsed.hasExplicitLocale) {
+      return
+    }
+
+    if (liveCurrentPaths.has(parsed.remainder)) {
+      return
+    }
+
+    redirects.set(normalizePath(fullPath), parsed.remainder)
+  }
+
+  for (const region of Object.keys(LEGACY_REGIONS)) {
+    for (const staticPath of LEGACY_STATIC_PATHS) {
+      const fullPath = staticPath === '/' ? `/${region}` : `/${region}${staticPath}`
+      append(fullPath)
+    }
   }
 
   for (const item of mainItems) {
@@ -279,54 +279,30 @@ function buildLegacyGeneratedRedirects(mainItems, liveCurrentPaths) {
       ? item.available_regions
       : ['global']
 
-    addLegacyPathsToSet(legacyPaths, slug, regions)
-  }
+    for (const region of regions) {
+      const normalizedRegion = normalizeRegion(region)
+      if (!LEGACY_REGIONS[normalizedRegion]) {
+        continue
+      }
 
-  const generated = new Map()
-
-  for (const legacyPath of legacyPaths) {
-    const normalized = normalizePath(legacyPath)
-    if (liveCurrentPaths.has(normalized)) {
-      continue
-    }
-
-    generated.set(normalized, normalized)
-  }
-
-  return generated
-}
-
-function addRedirectRule(routeRules, sourcePath, destinationPath) {
-  const normalizedSource = normalizePath(sourcePath)
-  const target = destinationPath.startsWith('http://') || destinationPath.startsWith('https://')
-    ? destinationPath
-    : buildAbsoluteShopUrl(destinationPath)
-
-  for (const variant of buildPathVariants(normalizedSource)) {
-    routeRules[variant] = {
-      redirect: {
-        to: target,
-        statusCode: 301,
-      },
+      append(`/${normalizedRegion}/${slug}`)
     }
   }
+
+  return redirects
 }
 
-function serializeRouteRules(routeRules, metadata) {
-  const orderedEntries = Object.entries(routeRules).sort(([left], [right]) => left.localeCompare(right))
-  const body = orderedEntries
-    .map(([source, rule]) => `  ${JSON.stringify(source)}: ${JSON.stringify(rule)}`)
+function serializeStringArray(name, values) {
+  const body = values.map((value) => `  ${JSON.stringify(value)}`).join(',\n')
+  return `export const ${name} = [\n${body}\n] as const\n`
+}
+
+function serializeObject(name, entries) {
+  const body = entries
+    .map(([key, value]) => `  ${JSON.stringify(key)}: ${JSON.stringify(value)}`)
     .join(',\n')
 
-  return `// Generated by scripts/generate-shop-redirects.mjs on ${metadata.generatedAt}
-// Legacy routes: ${metadata.legacyCount}
-// Live kratom routes excluded: ${metadata.liveCount}
-// Manual CSV redirects applied: ${metadata.manualCount}
-
-export const GENERATED_SHOP_REDIRECT_ROUTE_RULES = {
-${body}
-} as const
-`
+  return `export const ${name} = {\n${body}\n} as const\n`
 }
 
 async function main() {
@@ -336,33 +312,30 @@ async function main() {
     readManualRedirects(),
   ])
 
-  const liveCurrentPaths = buildLiveCurrentPaths(kratomItems)
-  const generatedRedirects = buildLegacyGeneratedRedirects(mainItems, liveCurrentPaths)
-  const routeRules = {}
+  const liveCurrentPaths = Array.from(buildLiveCurrentPaths(kratomItems)).sort()
+  const regionOnlyRedirects = Array.from(buildRegionOnlyRedirects(mainItems, new Set(liveCurrentPaths)).entries())
+    .sort(([left], [right]) => left.localeCompare(right))
+  const manualRedirectMap = manualRedirects
+    .filter(({ source }) => !new Set(liveCurrentPaths).has(source))
+    .sort((left, right) => left.source.localeCompare(right.source))
+    .map(({ source, destination }) => [source, destination])
 
-  for (const [source, destination] of generatedRedirects.entries()) {
-    addRedirectRule(routeRules, source, destination)
-  }
+  const file = `// Generated by scripts/generate-shop-redirects.mjs on ${new Date().toISOString()}
+// Live kratom routes: ${liveCurrentPaths.length}
+// Region-only redirects: ${regionOnlyRedirects.length}
+// Manual CSV redirects: ${manualRedirectMap.length}
 
-  for (const { source, destination } of manualRedirects) {
-    const normalizedSource = normalizePath(source)
-    if (liveCurrentPaths.has(normalizedSource)) {
-      continue
-    }
+${serializeStringArray('GENERATED_KRATOM_LIVE_PATHS', liveCurrentPaths)}
 
-    addRedirectRule(routeRules, normalizedSource, destination)
-  }
+${serializeObject('GENERATED_REGION_ONLY_REDIRECTS', regionOnlyRedirects)}
 
-  const output = serializeRouteRules(routeRules, {
-    generatedAt: new Date().toISOString(),
-    legacyCount: generatedRedirects.size,
-    liveCount: liveCurrentPaths.size,
-    manualCount: manualRedirects.length,
-  })
+${serializeObject('GENERATED_MANUAL_REDIRECTS', manualRedirectMap)}
 
-  await writeFile(OUTPUT_FILE, output, 'utf8')
+export const GENERATED_LEGACY_REGIONS = ${JSON.stringify(LEGACY_REGIONS)} as const
+`
 
-  console.log(`Wrote ${Object.keys(routeRules).length} redirect route rules to ${OUTPUT_FILE}`)
+  await writeFile(OUTPUT_FILE, file, 'utf8')
+  console.log(`Wrote redirect manifest to ${OUTPUT_FILE}`)
 }
 
 main().catch((error) => {
