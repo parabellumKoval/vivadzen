@@ -173,7 +173,7 @@ cartStore.setPromocode(null)
               </div>
             </div>
           </div>
-          <checkout-contacts class="kratom-checkout-contacts" />
+          <!-- <checkout-contacts class="kratom-checkout-contacts" /> -->
         </aside>
       </div>
     </div>

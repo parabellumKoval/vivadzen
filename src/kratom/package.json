@@ -3,6 +3,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "generate:redirects": "node ./scripts/generate-shop-redirects.mjs",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "analyze": "nuxt analyze",

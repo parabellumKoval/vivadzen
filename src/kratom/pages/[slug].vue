@@ -33,6 +33,7 @@ const {
     if (response.error.value || !normalized || typeof normalized !== 'object' || !normalized.slug) {
       throw createError({ statusCode: 404, statusMessage: t('error.product_not_found') })
     }
+
     return normalized
   },
   { server: true },
@@ -144,33 +145,19 @@ const descriptionHtml = computed(() => {
   return product.value?.content || product.value?.description || null
 })
 
-const isMessageAst = (value: unknown): value is { type: number; body: unknown } => {
-  return Boolean(value && typeof value === 'object' && 'type' in value && 'body' in value)
-}
-
-const resolveTranslatedValue = (value: unknown): unknown => {
-  if (Array.isArray(value)) {
-    return value.map(resolveTranslatedValue)
+const translateText = (value: unknown) => {
+  if (typeof value === 'string') {
+    return value
   }
 
-  if (isMessageAst(value)) {
-    return rt(value)
-  }
-
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, nestedValue]) => [key, resolveTranslatedValue(nestedValue)])
-    )
-  }
-
-  return value
+  return value ? rt(value as Parameters<typeof rt>[0]) : ''
 }
 
 const getTranslatedList = (key: string) => {
-  const value = resolveTranslatedValue(tm(key))
+  const value = tm(key)
 
   return Array.isArray(value)
-    ? value.map((item) => String(item))
+    ? value.map((item) => translateText(item))
     : []
 }
 

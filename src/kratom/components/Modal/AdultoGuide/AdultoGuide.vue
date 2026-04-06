@@ -1,32 +1,66 @@
 <script setup lang="ts">
 const { t, tm, rt } = useI18n()
 
-const isMessageAst = (value: unknown): value is { type: number; body: unknown } => {
-  return Boolean(value && typeof value === 'object' && 'type' in value && 'body' in value)
+const translateText = (value: unknown) => {
+  if (typeof value === 'string') {
+    return value
+  }
+
+  return value ? rt(value as Parameters<typeof rt>[0]) : ''
 }
 
-const resolveTranslatedValue = (value: unknown): unknown => {
-  if (Array.isArray(value)) {
-    return value.map(resolveTranslatedValue)
-  }
-
-  if (isMessageAst(value)) {
-    return rt(value)
-  }
-
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, nestedValue]) => [key, resolveTranslatedValue(nestedValue)])
-    )
-  }
-
-  return value
+const translateList = (value: unknown) => {
+  return Array.isArray(value) ? value.map((item) => translateText(item)) : []
 }
 
-const intro = computed(() => resolveTranslatedValue(tm('intro')) as Record<string, any>)
-const sections = computed(() => resolveTranslatedValue(tm('sections')) as Record<string, any>[])
-const important = computed(() => resolveTranslatedValue(tm('important')) as Record<string, any>)
-const alternative = computed(() => resolveTranslatedValue(tm('alternative')) as Record<string, any>)
+const intro = computed(() => {
+  const value = tm('intro') as Record<string, unknown>
+
+  return {
+    paragraphs: translateList(value.paragraphs),
+    alert: translateText(value.alert),
+  }
+})
+
+const sections = computed(() => {
+  const value = tm('sections')
+
+  return Array.isArray(value)
+    ? value.map((section) => {
+      const sectionValue = section as Record<string, unknown>
+
+      return {
+        number: translateText(sectionValue.number),
+        title: translateText(sectionValue.title),
+        lead: translateText(sectionValue.lead),
+        steps: translateList(sectionValue.steps),
+        note: translateText(sectionValue.note),
+        tips: translateList(sectionValue.tips),
+      }
+    })
+    : []
+})
+
+const important = computed(() => {
+  const value = tm('important') as Record<string, unknown>
+
+  return {
+    title: translateText(value.title),
+    paragraphs: translateList(value.paragraphs),
+    steps: translateList(value.steps),
+    footer: translateText(value.footer),
+  }
+})
+
+const alternative = computed(() => {
+  const value = tm('alternative') as Record<string, unknown>
+
+  return {
+    title: translateText(value.title),
+    text: translateText(value.text),
+    bullets: translateList(value.bullets),
+  }
+})
 </script>
 
 <style src="./adulto-guide.scss" lang="scss" scoped></style>
