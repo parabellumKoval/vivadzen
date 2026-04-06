@@ -230,11 +230,15 @@ const addToCart = async () => {
 
 .kratom-product-card__media {
   position: relative;
-  aspect-ratio: 1/1;
+  aspect-ratio: 3/2;
   display: block;
   border-radius: 32px 32px 0 0;
   overflow: visible;
   isolation: isolate;
+
+  @include desktop {
+    aspect-ratio: 1/1;
+  }
 }
 
 .kratom-product-card__media-clip {
