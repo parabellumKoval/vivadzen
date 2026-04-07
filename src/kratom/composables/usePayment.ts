@@ -116,7 +116,7 @@ export const usePayment = () => {
       icon: 'iconoir:credit-cards',
       image: '/images/logo/niftipay-logo.svg',
       logo: '/images/logo/niftipay-logo.svg',
-      payments: ['packeta_warehouse', 'packeta_address', 'novaposhta_warehouse', 'novaposhta_address', 'default_address', 'default_pickup']
+      payments: ['packeta_warehouse', 'packeta_address', 'novaposhta_warehouse', 'novaposhta_address', 'default_address', 'default_pickup', 'messenger_address']
     }, 
     {
       key: 'card_online',
@@ -134,7 +134,7 @@ export const usePayment = () => {
       icon: 'iconoir:bank',
       image: '/images/logo/bank.png',
       logo: '/images/logo/company-mini.png',
-      payments: ['packeta_warehouse', 'packeta_address', 'default_address', 'default_pickup']
+      payments: ['packeta_warehouse', 'packeta_address', 'default_address', 'default_pickup', 'messenger_address']
     },
     {
       key: 'messenger_cod',
