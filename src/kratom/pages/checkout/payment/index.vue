@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { usePaymentStore } from '~/store/payment'
+
 const { t } = useI18n()
 const regionPath = useToLocalePath()
 const { orderable } = useAuth()
@@ -18,6 +20,11 @@ const formElement = ref<HTMLFormElement | null>(null)
 const form = ref<{ action?: string | null; data?: string | null; signature?: string | null }>({})
 const isLoading = ref(false)
 
+const paymentProviders: Record<string, string> = {
+  liqpay_online: 'liqpay',
+  niftipay_online: 'niftipay',
+}
+
 watch(formElement, (value) => {
   if (value && form.value.action && form.value.data && form.value.signature) {
     value.submit()
@@ -32,15 +39,25 @@ const submitHandler = async () => {
       throw new Error('Order was not created')
     }
 
-    const liqpayResponse = await useLiqpayStore().getFormData({
+    const provider = paymentProviders[useCartStore().order.payment.method as string] || 'liqpay'
+    const paymentResponse = await usePaymentStore().createPayment(provider, {
       action: 'pay',
       amount: response.price,
-      currency: response.currency || 'CZK',
+      currency: response.currencyCode || response.currency || 'CZK',
       description: t('kratom.checkout.order_label', { code: response.code }),
       order: response.code,
+      email: response.user?.email,
     })
 
-    form.value = liqpayResponse.value || {}
+    if (paymentResponse.value?.type === 'form') {
+      form.value = paymentResponse.value || {}
+      return
+    }
+
+    const paymentUrl = paymentResponse.value?.url || paymentResponse.value?.payUrl
+    if (paymentUrl) {
+      window.location.replace(paymentUrl)
+    }
   } catch (err) {
     useNoty().setNoty({
       title: t('error.error'),

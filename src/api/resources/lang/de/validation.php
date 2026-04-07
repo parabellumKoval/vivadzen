@@ -206,6 +206,7 @@ return [
                 'messenger_cod' => '<b>Messenger.cz-Nachnahme</b>',
                 'default_cash' => '<b>Barzahlung bei Lieferung</b>',
                 'liqpay_online' => '<b>LiqPay Online-Zahlung</b>',
+                'niftipay_online' => '<b>Niftipay-Onlinezahlung</b>',
                 'card_online' => '<b>Kartenzahlung online</b>',
                 'bank_transfer' => '<b>Banküberweisung</b>',
             ],

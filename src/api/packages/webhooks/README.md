@@ -5,7 +5,7 @@
 ## Возможности
 
 - 📦 Виджет `/admin/cache-management` с кнопками прогрева разных частей фронтенда.
-- ⚙️ Единая структура конфигурации `config/webhooks.php` (юниты, события, расписания).
+- ⚙️ Единая структура конфигурации `config/webhooks.php` (юниты, события, расписания, env-driven фронтенды).
 - 🧩 Event-mode: привязка Laravel событий к вебхукам. Каждый юнит может подписываться на любое количество событий, данные события передаются на фронт.
 - 🔁 Placeholder & batching: поддержка URL вида `/api/_categories/refresh/:slug` с автоматической подстановкой slug и объединением массовых изменений в один запрос.
 - ⏰ Schedule-mode: запуск выбранных юнитов по cron (например, автообновление списков на главной каждый 30 минут).
@@ -53,10 +53,26 @@
 
 Основные секции:
 
+- `frontend_urls` — общий список базовых URL фронтендов из `FRONT_URLS` (comma-separated), fallback на `FRONT_URL`.
+- `units.*.frontend_urls` — список базовых URL для конкретного юнита. Каждый существующий юнит читает свою env-переменную, чтобы один сценарий мог отправлять на два фронта, а другой только на один.
 - `units.*.events` — список внутренних событий (keys из `events` блока), на которые реагирует юнит.
 - `units.*.schedules` — ключи расписаний (`schedules` блок).
 - `events` — маппинг внутренних событий на реальные Laravel события + резолвер полезной нагрузки.
 - `schedules` — cron-выражения и список юнитов, которые должны запускаться.
+
+Пример `.env`:
+
+```env
+FRONT_URL=http://localhost:3000
+FRONT_URLS=http://localhost:3000,http://localhost:3001
+WEBHOOK_REFRESH_SETTINGS_FRONT_URLS=http://localhost:3000,http://localhost:3001
+WEBHOOK_REFRESH_CURRENCY_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_CATEGORIES_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_CATEGORY_SLUG_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_HOMEPAGE_LISTS_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_HOMEPAGE_ARTICLES_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_VIDEO_REVIEWS_FRONT_URLS=http://localhost:3000
+```
 
 ## События
 
@@ -103,7 +119,7 @@
 
 ## Интеграция с фронтендом
 
-Бэкенд всегда отправляет POST-запросы на относительные эндпоинты, дополняя их базовым `FRONT_URL`. В теле:
+Бэкенд отправляет POST-запросы на относительные эндпоинты, дополняя их базовыми URL из `units.*.frontend_urls`, `FRONT_URLS` или fallback `FRONT_URL`. В теле:
 
 ```json
 {

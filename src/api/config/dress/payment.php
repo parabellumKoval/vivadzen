@@ -28,6 +28,11 @@ return [
             'label' => 'Оплата LiqPay',
         ],
         [
+            'name' => 'niftipay',
+            'type' => 'online',
+            'label' => 'Оплата Niftipay',
+        ],
+        [
             'name' => 'card',
             'type' => 'online',
             'label' => 'Оплата картой',

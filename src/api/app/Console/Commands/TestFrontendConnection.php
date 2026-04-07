@@ -55,10 +55,10 @@ class TestFrontendConnection extends Command
 
     private function testConfiguredUnits(int $timeout)
     {
-        $frontendUrl = rtrim(config('webhooks.frontend_url'), '/');
+        $frontendUrls = $this->frontendUrls();
         $units = app(WebhookRegistry::class)->all();
 
-        $this->info("Frontend base URL: {$frontendUrl}");
+        $this->info("Frontend base URLs: " . implode(', ', $frontendUrls));
         $this->newLine();
 
         if (empty($units)) {
@@ -67,6 +67,7 @@ class TestFrontendConnection extends Command
         }
 
         foreach ($units as $unit) {
+            $unitFrontendUrls = $this->frontendUrls($unit);
             $this->line("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
             $this->info("Testing unit: <comment>{$unit['title']}</comment>");
             
@@ -81,15 +82,21 @@ class TestFrontendConnection extends Command
                 $this->line("⏱️  Timeout: {$unitTimeout}s");
             }
             
-            foreach ($unitUrls as $index => $unitUrl) {
-                $fullUrl = $frontendUrl . $unitUrl;
-                $urlNumber = count($unitUrls) > 1 ? " (" . ($index + 1) . "/" . count($unitUrls) . ")" : "";
-                $this->testUrl($fullUrl, $unitTimeout, $unit['title'] . $urlNumber);
+            foreach ($unitFrontendUrls as $frontendUrl) {
+                foreach ($unitUrls as $index => $unitUrl) {
+                    $fullUrl = $frontendUrl . $unitUrl;
+                    $urlNumber = count($unitUrls) > 1 ? " (" . ($index + 1) . "/" . count($unitUrls) . ")" : "";
+                    $this->testUrl($fullUrl, $unitTimeout, $unit['title'] . " [{$frontendUrl}]" . $urlNumber);
+                }
             }
         }
 
         // Test alternative URLs for Docker environments
-        if (strpos($frontendUrl, 'localhost') !== false || strpos($frontendUrl, 'host.docker.internal') !== false) {
+        foreach ($frontendUrls as $frontendUrl) {
+            if (strpos($frontendUrl, 'localhost') === false && strpos($frontendUrl, 'host.docker.internal') === false) {
+                continue;
+            }
+
             $this->newLine();
             $this->info('🐳 Testing Docker alternative URLs...');
             $this->line('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -114,6 +121,25 @@ class TestFrontendConnection extends Command
                 }
             }
         }
+    }
+
+    private function frontendUrls(?array $unit = null): array
+    {
+        $urls = $unit['frontend_urls'] ?? config('webhooks.frontend_urls', []);
+
+        if (is_string($urls)) {
+            $urls = explode(',', $urls);
+        }
+
+        if (!is_array($urls) || $urls === []) {
+            $fallback = config('webhooks.frontend_url');
+            $urls = $fallback ? [$fallback] : [];
+        }
+
+        return array_values(array_unique(array_filter(array_map(
+            static fn ($url): string => rtrim(trim((string) $url), '/'),
+            $urls
+        ))));
     }
 
     private function testUrl(string $url, int $timeout, string $description)

@@ -206,6 +206,7 @@ return [
                 'messenger_cod' => '<b>Dobírka Messenger.cz</b>',
                 'default_cash' => '<b>Platba při převzetí</b>',
                 'liqpay_online' => '<b>Online platba LiqPay</b>',
+                'niftipay_online' => '<b>Online platba Niftipay</b>',
                 'card_online' => '<b>Platba kartou online</b>',
                 'bank_transfer' => '<b>Bankovní převod</b>',
             ],

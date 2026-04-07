@@ -1,106 +1,22 @@
 <script setup lang="ts">
 const { t } = useI18n()
-const { get } = useSettings()
-
-const DELIVERY_CATALOG = [
-  {
-    key: 'messenger_address',
-    titleKey: 'delivery.messenger_address',
-    image: '/images/logo/messenger.svg',
-  },
-  {
-    key: 'packeta_warehouse',
-    titleKey: 'delivery.packeta_warehouse',
-    image: '/images/logo/zasilkovna.png',
-  },
-  {
-    key: 'packeta_address',
-    titleKey: 'delivery.packeta_address',
-    image: '/images/logo/zasilkovna.png',
-  },
-  {
-    key: 'default_pickup',
-    titleKey: 'delivery.default_pickup',
-    image: '/images/company.png',
-  },
-]
-
-const PAYMENT_CATALOG = [
-  {
-    key: 'messenger_cod',
-    titleKey: 'payments.messenger_cod.title',
-    image: '/images/logo/messenger.svg',
-  },
-  {
-    key: 'zasilkovna_cod',
-    titleKey: 'payments.zasilkovna_cod.title',
-    image: '/images/logo/zasilkovna.png',
-  },
-  {
-    key: 'default_cash',
-    titleKey: 'payments.default_cash.title',
-    image: '/images/company.png',
-  },
-  {
-    key: 'card_online',
-    titleKey: 'payments.card_online.title',
-    image: '/images/logo/GpayApplepay.png',
-  },
-  {
-    key: 'bank_transfer',
-    titleKey: 'payments.bank_transfer.title',
-    image: '/images/logo/bank.png',
-  },
-]
-
-const DELIVERY_FALLBACK_KEYS = DELIVERY_CATALOG.map((item) => item.key)
-const PAYMENT_FALLBACK_KEYS = PAYMENT_CATALOG.map((item) => item.key)
-
-const normalizeKeys = (value: unknown, fallback: string[]) => {
-  if (Array.isArray(value) && value.length) {
-    return value.map((item) => String(item))
-  }
-
-  if (typeof value === 'string') {
-    try {
-      const parsed = JSON.parse(value)
-      if (Array.isArray(parsed) && parsed.length) {
-        return parsed.map((item) => String(item))
-      }
-    } catch {
-      return fallback
-    }
-  }
-
-  return fallback
-}
-
-const deliveryKeys = computed(() => {
-  return normalizeKeys(get('shipping.methods', null), DELIVERY_FALLBACK_KEYS)
-})
-
-const paymentKeys = computed(() => {
-  return normalizeKeys(get('payment.methods', null), PAYMENT_FALLBACK_KEYS)
-})
+const { methods: deliveryMethods } = useDelivery()
+const { methodsInfo: paymentMethods } = usePayment()
 
 const deliveryItems = computed(() => {
-  return DELIVERY_CATALOG
-    .filter((item) => deliveryKeys.value.includes(item.key))
-    .map((item) => ({
-      key: item.key,
-      title: t(item.titleKey),
-      image: item.image,
-    }))
+  return deliveryMethods.value.map((method) => ({
+    key: method.key,
+    title: method.title || method.label || t(`delivery.${method.key}`),
+    image: method.image || method.logo,
+  }))
 })
 
 const paymentItems = computed(() => {
-  return PAYMENT_CATALOG
-    .filter((item) => paymentKeys.value.includes(item.key))
-    .map((item) => ({
-      key: item.key,
-      title: t(item.titleKey),
-      image: item.image,
-    }))
+  return paymentMethods.value.map((method) => ({
+    key: method.key,
+    title: method.title || method.label || t(`payments.${method.key}.title`),
+    image: method.image || method.logo,
+  }))
 })
 </script>
 
@@ -192,16 +108,21 @@ const paymentItems = computed(() => {
   border-radius: 9px;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(74, 91, 68, 0.08);
+  border: 1px solid $color-border;
+  overflow: hidden;
 }
 
 .product-delivery-info__logo {
   display: block;
-  width: 92px;
-  height: 24px;
+  width: 100px;
+  height: 42px;
   object-fit: contain;
   object-position: left center;
   flex-shrink: 0;
+  background: #f8f8f8;
+  padding: 10px 15px;
+  margin: -10px 0 -10px -12px;
+  border-right: 1px solid #eee;
 }
 
 .product-delivery-info__name {

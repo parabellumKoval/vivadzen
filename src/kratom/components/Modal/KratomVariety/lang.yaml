@@ -2,6 +2,9 @@ cs:
   title_suffix: "kratom"
   properties: "Vlastnosti"
   modifications: "Dostupné varianty"
+  online_order:
+    title: "Kratom všech barev a balení si můžete objednat online s doručením"
+    button: "Koupit kratom online"
   store_message: "Tento druh kratomu si můžete zakoupit v naší prodejně na adrese:"
   messengers: "Chaty"
   open_map: "Otevřít mapu"
@@ -14,6 +17,9 @@ en:
   title_suffix: "kratom"
   properties: "Properties"
   modifications: "Available variations"
+  online_order:
+    title: "Kratom in every color and size is available to order online with delivery"
+    button: "Buy kratom online"
   store_message: "You can buy this kratom variety in our store at the following address:"
   messengers: "Chats"
   open_map: "Open map"
@@ -26,6 +32,9 @@ ru:
   title_suffix: "kratom"
   properties: "Свойства"
   modifications: "Доступные варианты"
+  online_order:
+    title: "Кратом всех цветов и объемов вы можете заказать онлайн с доставкой"
+    button: "Купить кратом онлайн"
   store_message: "Этот вид kratom можно купить в нашем магазине по адресу:"
   messengers: "Чаты"
   open_map: "Открыть карту"
@@ -38,6 +47,9 @@ uk:
   title_suffix: "kratom"
   properties: "Властивості"
   modifications: "Доступні варіанти"
+  online_order:
+    title: "Кратом усіх кольорів та об'ємів ви можете замовити онлайн з доставкою"
+    button: "Купити кратом онлайн"
   store_message: "Цей вид kratom можна придбати в нашому магазині за адресою:"
   messengers: "Чати"
   open_map: "Відкрити мапу"

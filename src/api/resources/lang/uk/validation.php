@@ -224,6 +224,7 @@ return [
                 'messenger_cod' => '<b>Накладений платіж Messenger.cz</b>',
                 'default_cash' => '<b>Оплата при отриманні</b>',
                 'liqpay_online' => '<b>Онлайн-оплата LiqPay</b>',
+                'niftipay_online' => '<b>Онлайн-оплата Niftipay</b>',
                 'card_online' => '<b>Оплата карткою онлайн</b>',
                 'bank_transfer' => '<b>Банківський переказ</b>',
             ],

@@ -123,8 +123,41 @@
 
     @include desktop {
       font-size: 20px;
-      margin: 0 0 30px 0;
     }
+  }
+
+  &__notice {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 760px;
+    margin: 24px auto 0;
+    padding: 24px;
+    border: 1px solid rgba($color-8, 0.18);
+    border-radius: 24px;
+    background: rgba(#071d19, 0.72);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+
+    @include desktop {
+      margin-top: 100px;
+      padding: 30px;
+    }
+  }
+
+  &__notice-text {
+    margin: 0;
+    color: rgba($color-8, 0.76);
+    font-size: 16px;
+    line-height: 1.45;
+
+    @include desktop {
+      font-size: 18px;
+    }
+  }
+
+  &__notice-button {
+    width: fit-content;
   }
 
   &__track {
@@ -169,7 +202,6 @@
       overflow: hidden;
       box-shadow: 0 20px 20px rgba(0, 0, 0, 0.07);
       // color: $color-8;
-      text-align: center;
 
       @include mobile {
         padding: 24px;
@@ -182,6 +214,7 @@
         display: flex;
         justify-content: center;
         background: #206556;
+        text-align: center;
 
         @include mobile {
           grid-column: span 1;

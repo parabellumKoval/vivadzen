@@ -54,7 +54,7 @@ return [
       'rules' => 'array:method,settlement,street,house,room,zip',
       'store_in' => 'info',
       'method' => [
-        'rules' => 'required|in:zasilkovna_cod,novaposhta_cod,messenger_cod,default_cash,liqpay_online,card_online,bank_transfer'
+        'rules' => 'required|in:zasilkovna_cod,novaposhta_cod,messenger_cod,default_cash,liqpay_online,niftipay_online,card_online,bank_transfer'
       ],
       'settlement' => [
         // 

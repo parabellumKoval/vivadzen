@@ -79,6 +79,10 @@ const paymentMethod = computed({
       <div v-else-if="paymentMethod === 'liqpay_online'" class="form-grid">
         <checkout-payment-providers-liqpay-online></checkout-payment-providers-liqpay-online>
       </div>
+      <!-- Niftipay online payment -->
+      <div v-else-if="paymentMethod === 'niftipay_online'" class="form-grid">
+        <checkout-payment-providers-niftipay-online></checkout-payment-providers-niftipay-online>
+      </div>
       <!-- Pickup delivery -->
       <div v-else-if="paymentMethod === 'card_online'" class="form-grid">
         <checkout-payment-providers-card-online></checkout-payment-providers-card-online>

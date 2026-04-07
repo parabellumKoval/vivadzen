@@ -1,5 +1,6 @@
 <script setup>
 const { t } = useI18n()
+const regionPath = useToLocalePath()
 const modal = useModal()
 const contacts = useContacts()
 
@@ -105,6 +106,13 @@ const mapSrc = computed(() => {
             <span class="kratom-variety-modal__mod-price">{{ modification.price }}</span>
           </div>
         </div>
+      </div>
+
+      <div class="kratom-variety-modal__online-order">
+        <div class="kratom-variety-modal__online-order-title">{{ t('online_order.title') }}</div>
+        <NuxtLink :to="regionPath('/catalog')" class="button orange kratom-variety-modal__online-order-button">
+          {{ t('online_order.button') }}
+        </NuxtLink>
       </div>
 
       <div class="kratom-variety-modal__message">

@@ -263,6 +263,7 @@ form:
     default_address: Poštovní doručení
   payment:
     liqpay_online: Online platba LiqPay
+    niftipay_online: Online platba Niftipay
     card_online: Platba kartou online
     default_cash: Platba při převzetí
     zasilkovna_cod: Dobírka Zasilkovna
@@ -419,6 +420,9 @@ payments:
   liqpay_online:
     title: Online platba LiqPay
     desc: Zaplaťte objednávku online
+  niftipay_online:
+    title: Online platba Niftipay
+    desc: Bezpečná online platba přes Niftipay
   card_online:
     title: Platba kartou online
     desc: Zaplaťte objednávku online

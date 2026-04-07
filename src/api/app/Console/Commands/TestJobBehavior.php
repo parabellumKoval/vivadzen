@@ -13,12 +13,11 @@ class TestJobBehavior extends Command
     public function handle()
     {
         $unitUrl = $this->argument('url');
-        $frontendUrl = rtrim(config('webhooks.frontend_url'), '/');
-        $fullUrl = $frontendUrl . $unitUrl;
+        $frontendUrls = $this->frontendUrls();
         $timeout = 30; // Same as in your failing case
         
         $this->info("🔍 Testing Job-identical behavior");
-        $this->line("URL: {$fullUrl}");
+        $this->line("URLs: " . implode(', ', array_map(static fn (string $frontendUrl): string => $frontendUrl . $unitUrl, $frontendUrls)));
         $this->line("Timeout: {$timeout}s");
         $this->newLine();
 
@@ -48,21 +47,25 @@ class TestJobBehavior extends Command
             $startTime = microtime(true);
 
             $this->info("Sending request with EXACT Job setup...");
-            
-            $response = $httpClient->post($fullUrl, [
-                'timestamp' => $timestamp,
-                'source' => 'admin-dashboard'
-            ]);
 
-            $responseTime = microtime(true) - $startTime;
+            foreach ($frontendUrls as $frontendUrl) {
+                $fullUrl = $frontendUrl . $unitUrl;
+                $this->line("URL: {$fullUrl}");
+                $response = $httpClient->post($fullUrl, [
+                    'timestamp' => $timestamp,
+                    'source' => 'admin-dashboard'
+                ]);
 
-            if ($response->successful()) {
-                $this->line("✅ <fg=green>SUCCESS</fg=green> - Status: {$response->status()} - Time: " . round($responseTime, 3) . "s");
-                $this->line("Response size: " . strlen($response->body()) . " bytes");
-                $this->line("Response preview: " . substr($response->body(), 0, 100) . "...");
-            } else {
-                $this->line("❌ <fg=red>HTTP ERROR</fg=red> - Status: {$response->status()} - Time: " . round($responseTime, 3) . "s");
-                $this->line("Response: " . $response->body());
+                $responseTime = microtime(true) - $startTime;
+
+                if ($response->successful()) {
+                    $this->line("✅ <fg=green>SUCCESS</fg=green> - Status: {$response->status()} - Time: " . round($responseTime, 3) . "s");
+                    $this->line("Response size: " . strlen($response->body()) . " bytes");
+                    $this->line("Response preview: " . substr($response->body(), 0, 100) . "...");
+                } else {
+                    $this->line("❌ <fg=red>HTTP ERROR</fg=red> - Status: {$response->status()} - Time: " . round($responseTime, 3) . "s");
+                    $this->line("Response: " . $response->body());
+                }
             }
 
         } catch (\Illuminate\Http\Client\ConnectionException $e) {
@@ -102,5 +105,24 @@ class TestJobBehavior extends Command
         $this->line("Running in CLI: " . (php_sapi_name() === 'cli' ? 'YES' : 'NO'));
         
         return 0;
+    }
+
+    private function frontendUrls(): array
+    {
+        $urls = config('webhooks.frontend_urls', []);
+
+        if (is_string($urls)) {
+            $urls = explode(',', $urls);
+        }
+
+        if (!is_array($urls) || $urls === []) {
+            $fallback = config('webhooks.frontend_url');
+            $urls = $fallback ? [$fallback] : [];
+        }
+
+        return array_values(array_unique(array_filter(array_map(
+            static fn ($url): string => rtrim(trim((string) $url), '/'),
+            $urls
+        ))));
     }
 }

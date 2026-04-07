@@ -261,6 +261,7 @@ form:
     default_address: Envío postal
   payment:
     liqpay_online: Pago online con LiqPay
+    niftipay_online: Pago online con Niftipay
     card_online: Pago con tarjeta online
     default_cash: Pago contra entrega
     zasilkovna_cod: Contra reembolso Zasilkovna
@@ -414,6 +415,9 @@ payments:
   liqpay_online:
     title: Pago en línea con LiqPay
     desc: Paga tu pedido en línea
+  niftipay_online:
+    title: Pago en línea con Niftipay
+    desc: Pago online seguro mediante Niftipay
   card_online:
     title: Pago con tarjeta en línea
     desc: Paga tu pedido en línea

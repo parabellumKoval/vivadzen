@@ -256,6 +256,7 @@ form:
     default_address: Postzustellung
   payment:
     liqpay_online: LiqPay-Onlinezahlung
+    niftipay_online: Niftipay-Onlinezahlung
     card_online: Kartenzahlung online
     default_cash: Nachnahme
     zasilkovna_cod: Zasilkovna-Nachnahme
@@ -409,6 +410,9 @@ payments:
   liqpay_online:
     title: LiqPay-Onlinezahlung
     desc: Bestellung online bezahlen
+  niftipay_online:
+    title: Niftipay-Onlinezahlung
+    desc: Sichere Onlinezahlung über Niftipay
   card_online:
     title: Kartenzahlung online
     desc: Bestellung online bezahlen

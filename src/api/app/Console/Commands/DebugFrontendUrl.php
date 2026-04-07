@@ -36,12 +36,11 @@ class DebugFrontendUrl extends Command
         $timeout = (int) $this->option('timeout');
         $detailed = $this->option('detailed');
         
-        $frontendUrl = rtrim(config('webhooks.frontend_url'), '/');
-        $fullUrl = $frontendUrl . $url;
+        $frontendUrls = $this->frontendUrls();
         
         $this->info("🔍 Debugging Frontend URL");
         $this->line("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        $this->line("URL: <comment>{$fullUrl}</comment>");
+        $this->line("URLs: <comment>" . implode(', ', array_map(static fn (string $frontendUrl): string => $frontendUrl . $url, $frontendUrls)) . "</comment>");
         $this->line("Timeout: <comment>{$timeout}s</comment>");
         $this->newLine();
 
@@ -53,33 +52,57 @@ class DebugFrontendUrl extends Command
             'curl_direct' => 'Direct cURL approach',
         ];
 
-        foreach ($approaches as $key => $description) {
-            $this->line("Testing: <fg=cyan>{$description}</fg=cyan>");
+        foreach ($frontendUrls as $frontendUrl) {
+            $fullUrl = $frontendUrl . $url;
+            $this->line("Frontend: <comment>{$frontendUrl}</comment>");
+
+            foreach ($approaches as $key => $description) {
+                $this->line("Testing: <fg=cyan>{$description}</fg=cyan>");
             
-            try {
-                $startTime = microtime(true);
-                $result = $this->testApproach($key, $fullUrl, $timeout, $detailed);
-                $totalTime = microtime(true) - $startTime;
+                try {
+                    $startTime = microtime(true);
+                    $result = $this->testApproach($key, $fullUrl, $timeout, $detailed);
+                    $totalTime = microtime(true) - $startTime;
                 
-                if ($result['success']) {
-                    $this->line("✅ <fg=green>SUCCESS</fg=green> - Time: " . round($totalTime, 3) . "s - Status: {$result['status']}");
-                    if ($detailed && isset($result['response_preview'])) {
-                        $this->line("   Response preview: " . $result['response_preview']);
+                    if ($result['success']) {
+                        $this->line("✅ <fg=green>SUCCESS</fg=green> - Time: " . round($totalTime, 3) . "s - Status: {$result['status']}");
+                        if ($detailed && isset($result['response_preview'])) {
+                            $this->line("   Response preview: " . $result['response_preview']);
+                        }
+                    } else {
+                        $this->line("❌ <fg=red>FAILED</fg=red> - Time: " . round($totalTime, 3) . "s");
+                        $this->line("   Error: {$result['error']}");
                     }
-                } else {
-                    $this->line("❌ <fg=red>FAILED</fg=red> - Time: " . round($totalTime, 3) . "s");
-                    $this->line("   Error: {$result['error']}");
-                }
                 
-            } catch (\Exception $e) {
-                $this->line("⚠️  <fg=red>EXCEPTION</fg=red>");
-                $this->line("   {$e->getMessage()}");
-            }
+                } catch (\Exception $e) {
+                    $this->line("⚠️  <fg=red>EXCEPTION</fg=red>");
+                    $this->line("   {$e->getMessage()}");
+                }
             
-            $this->newLine();
+                $this->newLine();
+            }
         }
 
         return 0;
+    }
+
+    private function frontendUrls(): array
+    {
+        $urls = config('webhooks.frontend_urls', []);
+
+        if (is_string($urls)) {
+            $urls = explode(',', $urls);
+        }
+
+        if (!is_array($urls) || $urls === []) {
+            $fallback = config('webhooks.frontend_url');
+            $urls = $fallback ? [$fallback] : [];
+        }
+
+        return array_values(array_unique(array_filter(array_map(
+            static fn ($url): string => rtrim(trim((string) $url), '/'),
+            $urls
+        ))));
     }
 
     private function testApproach(string $approach, string $url, int $timeout, bool $detailed): array

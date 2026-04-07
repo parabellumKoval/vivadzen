@@ -9,7 +9,7 @@ export const useLiqpayStore = defineStore('liqpayStore', {
 
   actions: {
     async getFormData(data: Object) {
-      const url = `${useRuntimeConfig().public.apiBase}/liqpay/form`
+      const url = `${useRuntimeConfig().public.apiBase}/payment/liqpay/create`
 
       return await useApiFetch(url, {...data}, 'POST')
         .then(({data, error}) => {

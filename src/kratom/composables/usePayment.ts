@@ -110,6 +110,15 @@ export const usePayment = () => {
       payments: ['packeta_warehouse', 'packeta_address', 'novaposhta_warehouse', 'novaposhta_address', 'default_address', 'default_pickup']
     }, 
     {
+      key: 'niftipay_online',
+      title: t('payments.niftipay_online.title'),
+      label: t('payments.niftipay_online.title'),
+      icon: 'iconoir:credit-cards',
+      image: '/images/logo/niftipay-logo.svg',
+      logo: '/images/logo/niftipay-logo.svg',
+      payments: ['packeta_warehouse', 'packeta_address', 'novaposhta_warehouse', 'novaposhta_address', 'default_address', 'default_pickup']
+    }, 
+    {
       key: 'card_online',
       title: t('payments.card_online.title'),
       label: t('payments.card_online.title'),

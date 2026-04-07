@@ -263,6 +263,7 @@ form:
     default_address: Доставка поштою
   payment:
     liqpay_online: Онлайн-оплата LiqPay
+    niftipay_online: Онлайн-оплата Niftipay
     card_online: Онлайн-оплата карткою
     default_cash: Оплата при отриманні
     zasilkovna_cod: Накладений платіж Zasilkovna
@@ -419,6 +420,9 @@ payments:
   liqpay_online:
     title: Онлайн-оплата LiqPay
     desc: Оплатіть замовлення онлайн
+  niftipay_online:
+    title: Онлайн-оплата Niftipay
+    desc: Безпечна онлайн-оплата через Niftipay
   card_online:
     title: Онлайн-оплата карткою
     desc: Оплатіть замовлення онлайн

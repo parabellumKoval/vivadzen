@@ -118,14 +118,24 @@ const items = computed(() =>
                 <p class="bonus__track-join-description">
                   {{ tp('join.description') }}
                 </p>
-                <NuxtLink :to="regionPath('/contacts')" class="button orange">
+                <a href="https://shop.vivadzen.com/cz/affiliate" class="button orange">
                   {{ tp('join.button') }}
-                </NuxtLink>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="bonus__notice">
+        <p class="bonus__notice-text">
+          {{ tp('header.notice_text') }}
+        </p>
+        <a href="https://shop.vivadzen.com" class="bonus__notice-button button orange">
+          {{ tp('header.notice_button') }}
+        </a>
+      </div>
+
     </div>
   </section>
 </template>

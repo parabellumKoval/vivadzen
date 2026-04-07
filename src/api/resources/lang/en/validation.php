@@ -219,6 +219,7 @@ return [
                 'messenger_cod' => '<b>Messenger.cz cash on delivery</b>',
                 'default_cash' => '<b>Pay on delivery</b>',
                 'liqpay_online' => '<b>LiqPay online payment</b>',
+                'niftipay_online' => '<b>Niftipay online payment</b>',
                 'card_online' => '<b>Card payment online</b>',
                 'bank_transfer' => '<b>Bank transfer</b>',
             ],

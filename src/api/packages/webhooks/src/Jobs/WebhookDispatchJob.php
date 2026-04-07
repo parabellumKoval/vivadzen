@@ -53,7 +53,7 @@ class WebhookDispatchJob implements ShouldQueue
             return;
         }
 
-        $frontendUrl = rtrim(config('webhooks.frontend_url'), '/');
+        $frontendUrls = $this->frontendUrlsForUnit($unit);
         $globalTimeout = config('webhooks.timeout', 30);
         $timeout = $unit['timeout'] ?? $globalTimeout;
         $isUnlimited = ($timeout === 0);
@@ -87,42 +87,59 @@ class WebhookDispatchJob implements ShouldQueue
         $overallSuccess = true;
 
         foreach ($requests as $request) {
-            $urlsToTry = $this->buildConcreteUrls($frontendUrl, $request['url']);
             $currentPayloads = $request['payloads'];
 
-            foreach ($urlsToTry as $tryUrl) {
-                try {
-                    $response = $this->sendRequest($tryUrl, $unit, $timeout, $isUnlimited, $currentPayloads, $request['meta']);
+            foreach ($frontendUrls as $frontendUrl) {
+                $urlsToTry = $this->buildConcreteUrls($frontendUrl, $request['url']);
+                $resultKey = $frontendUrl . $request['url'];
+                $lastFailure = null;
 
-                    if ($response['success']) {
-                        $results[$request['url']] = [
-                            'status' => 'success',
+                foreach ($urlsToTry as $tryUrl) {
+                    try {
+                        $response = $this->sendRequest($tryUrl, $unit, $timeout, $isUnlimited, $currentPayloads, $request['meta']);
+
+                        if ($response['success']) {
+                            $results[$resultKey] = [
+                                'status' => 'success',
+                                'base_url' => $frontendUrl,
+                                'url' => $response['url'],
+                                'status_code' => $response['status'],
+                                'payload_items' => count($currentPayloads),
+                            ];
+                            continue 2;
+                        }
+
+                        $lastFailure = [
+                            'status' => 'failed',
+                            'base_url' => $frontendUrl,
                             'url' => $response['url'],
+                            'error' => $response['error'],
                             'status_code' => $response['status'],
-                            'payload_items' => count($currentPayloads),
                         ];
-                        break;
+                    } catch (\Throwable $e) {
+                        Log::warning('Webhook request failed', [
+                            'unit' => $unit['title'],
+                            'url' => $tryUrl,
+                            'error' => $e->getMessage(),
+                        ]);
+                        $lastFailure = [
+                            'status' => 'failed',
+                            'base_url' => $frontendUrl,
+                            'url' => $tryUrl,
+                            'error' => $e->getMessage(),
+                            'status_code' => null,
+                        ];
                     }
-
-                    $overallSuccess = false;
-                    $results[$request['url']] = [
-                        'status' => 'failed',
-                        'error' => $response['error'],
-                        'status_code' => $response['status'],
-                    ];
-                } catch (\Throwable $e) {
-                    $overallSuccess = false;
-                    Log::warning('Webhook request failed', [
-                        'unit' => $unit['title'],
-                        'url' => $tryUrl,
-                        'error' => $e->getMessage(),
-                    ]);
-                    $results[$request['url']] = [
-                        'status' => 'failed',
-                        'error' => $e->getMessage(),
-                        'status_code' => null,
-                    ];
                 }
+
+                $overallSuccess = false;
+                $results[$resultKey] = $lastFailure ?? [
+                    'status' => 'failed',
+                    'base_url' => $frontendUrl,
+                    'url' => $frontendUrl . $request['url'],
+                    'error' => 'No URLs to try',
+                    'status_code' => null,
+                ];
             }
         }
 
@@ -141,6 +158,25 @@ class WebhookDispatchJob implements ShouldQueue
                 'payload_items' => count($payloads),
             ]);
         }
+    }
+
+    protected function frontendUrlsForUnit(array $unit): array
+    {
+        $urls = $unit['frontend_urls'] ?? config('webhooks.frontend_urls', []);
+
+        if (is_string($urls)) {
+            $urls = explode(',', $urls);
+        }
+
+        if (!is_array($urls) || $urls === []) {
+            $fallback = config('webhooks.frontend_url');
+            $urls = $fallback ? [$fallback] : [];
+        }
+
+        return array_values(array_unique(array_filter(array_map(
+            static fn ($url): string => rtrim(trim((string) $url), '/'),
+            $urls
+        ))));
     }
 
     protected function resolvePayloads(array $unit): array

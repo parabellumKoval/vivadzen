@@ -179,6 +179,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@zadigetvoltaire/nuxt-gtm',
     'nuxt-svgo',
     './modules/auth-bridge',
     './modules/settings',
@@ -302,6 +303,12 @@ export default defineNuxtConfig({
     refreshRoutePath: '/api/_refresh-settings',
     regions: ['cz'],
     locales: ['cs', 'en', 'ru', 'uk'],
+  },
+
+  gtm: {
+    id: process.env.GTM,
+    defer: true,
+    compatibility: true, 
   },
 
   authBridge: {

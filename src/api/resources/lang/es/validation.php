@@ -206,6 +206,7 @@ return [
                 'messenger_cod' => '<b>Contra reembolso Messenger.cz</b>',
                 'default_cash' => '<b>Pago contra entrega</b>',
                 'liqpay_online' => '<b>Pago en línea LiqPay</b>',
+                'niftipay_online' => '<b>Pago en línea Niftipay</b>',
                 'card_online' => '<b>Pago con tarjeta en línea</b>',
                 'bank_transfer' => '<b>Transferencia bancaria</b>',
             ],

@@ -24,6 +24,7 @@ return [
         // ... другие юниты
     ],
     'frontend_url' => env('FRONT_URL', 'http://localhost:3000/'),
+    'frontend_urls' => explode(',', env('FRONT_URLS', env('FRONT_URL', 'http://localhost:3000/'))),
     'timeout' => 30,
     'widget' => [
         'title' => 'Frontend Cache Management',
@@ -37,10 +38,18 @@ return [
 
 ### 2. Настройка .env
 
-Убедитесь что в вашем `.env` файле указан правильный URL фронтенда:
+Убедитесь что в вашем `.env` файле указан правильный URL фронтенда. Для одного фронта достаточно `FRONT_URL`, для нескольких используйте comma-separated список:
 
 ```env
 FRONT_URL=http://localhost:3000/
+FRONT_URLS=http://localhost:3000,http://localhost:3001
+WEBHOOK_REFRESH_SETTINGS_FRONT_URLS=http://localhost:3000,http://localhost:3001
+WEBHOOK_REFRESH_CURRENCY_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_CATEGORIES_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_CATEGORY_SLUG_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_HOMEPAGE_LISTS_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_HOMEPAGE_ARTICLES_FRONT_URLS=http://localhost:3000
+WEBHOOK_REFRESH_VIDEO_REVIEWS_FRONT_URLS=http://localhost:3000
 ```
 
 ### 3. Очереди (рекомендуется)

@@ -438,7 +438,7 @@ useHead(() => ({
               </div>
               <button type="button" class="button primary kratom-product-summary__buy-btn" @click="addToCart">
                 <span>{{ t('button.buy') }}</span>
-                <IconCSS name="ph:shopping-cart-fill" />
+                <IconCSS name="ci:shopping-cart-01" />
               </button>
             </div>
           </div>
@@ -627,7 +627,8 @@ useHead(() => ({
 .kratom-product-panel {
   border-radius: 40px;
   border: 1px solid rgba(74, 91, 68, 0.08);
-  background: rgba(255, 250, 244, 0.96);
+  // background: rgba(255, 250, 244, 0.96);
+  background: #fff;
   box-shadow: 0 32px 80px rgba(39, 49, 36, 0.05);
 }
 
@@ -647,7 +648,7 @@ useHead(() => ({
   overflow: hidden;
   background:
     radial-gradient(circle at top left, rgba(142, 177, 129, 0.15), transparent 45%),
-    linear-gradient(180deg, rgba(243, 233, 221, 0.95), rgba(255, 250, 244, 0.2));
+    linear-gradient(180deg, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.05));
 }
 
 .kratom-product-gallery__stage :deep(img) {
@@ -929,6 +930,16 @@ useHead(() => ({
   line-height: 1.75;
 }
 
+.kratom-product-panel p.kratom-product-panel__eyebrow {
+  margin: 0;
+  color: #f28d1a;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .kratom-product-summary__text {
   text-align: left !important;
 }
@@ -1002,7 +1013,7 @@ useHead(() => ({
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  justify-content: space-between;
+  // justify-content: space-between;
   gap: 20px 24px;
 }
 
@@ -1018,36 +1029,45 @@ useHead(() => ({
   font-size: 40px;
   font-weight: 800;
   line-height: 100%;
-  color: #162014;
+  color: $color-orange;
 }
 
 .kratom-product-summary__delivery {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px 18px;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 .kratom-product-summary__delivery-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  // background: $color-green;
+  background: rgba($color-green, 0.16);
+  height: 40px;
 }
 
 .kratom-product-summary__delivery-icon {
   flex: 0 0 auto;
-  font-size: 20px;
-  color: #348049;
+  font-size: 18px;
+  color: $color-green;
+  // color: rgba(0,0,0,0.6);
 }
 
 .kratom-product-summary__delivery-text {
-  color: #2e6f41;
-  line-height: 1.5;
+  // color: rgba(0,0,0,0.6);
+  color: $color-green;
+  font-size: 16px;
+  // font-weight: 700;
+  line-height: 1.35;
 }
 
 .kratom-product-summary__mods {
-  flex: 1 1 380px;
+  // flex: 1 1 380px;
 }
 
 .kratom-product-summary__mods-title {

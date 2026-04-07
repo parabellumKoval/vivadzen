@@ -1,5 +1,6 @@
 <script setup>
 import {useCartStore} from '~/store/cart'
+import { usePaymentStore } from '~/store/payment'
 
 const {t} = useI18n()
 const regionPath = useToLocalePath()
@@ -137,6 +138,50 @@ const ageVerificationErrorHandler = (message) => {
   }, 7000)
 }
 
+const paymentProviders = {
+  liqpay_online: 'liqpay',
+  niftipay_online: 'niftipay',
+}
+
+const formElement = ref(null)
+const form = ref({})
+const isPaymentLoading = ref(false)
+const onlinePaymentMethods = Object.keys(paymentProviders)
+const isOnlinePayment = computed(() => onlinePaymentMethods.includes(order.value?.payment?.method))
+
+watch(formElement, (value) => {
+  if (value && form.value.action && form.value.data && form.value.signature) {
+    value.submit()
+  }
+})
+
+const redirectToPaymentGateway = async (response) => {
+  const provider = paymentProviders[order.value?.payment?.method] || 'liqpay'
+  const paymentResponse = await usePaymentStore().createPayment(provider, {
+    action: 'pay',
+    amount: response.price,
+    currency: response.currencyCode || response.currency || 'CZK',
+    description: t('kratom.checkout.order_label', { code: response.code }),
+    order: response.code,
+    email: response.user?.email,
+  })
+
+  const payment = paymentResponse?.value || paymentResponse
+
+  if (payment?.type === 'form') {
+    form.value = payment || {}
+    return
+  }
+
+  const paymentUrl = payment?.url || payment?.payUrl
+  if (paymentUrl) {
+    window.location.replace(paymentUrl)
+    return
+  }
+
+  throw new Error('Payment gateway URL was not returned')
+}
+
 // HANDLERS
 const goCompleteHandler = () => {
   if (!ensureAgeVerificationBeforeSubmit()) {
@@ -165,10 +210,11 @@ const goPayHandler = () => {
     return
   }
 
+  isPaymentLoading.value = true
   const payload = { ...orderable.value }
-  useCartStore().validate(payload).then((response) => {
-    if(response) {
-      navigateTo(regionPath('/checkout/payment'))
+  useCartStore().createOrder(payload).then(async (response) => {
+    if(response?.code) {
+      await redirectToPaymentGateway(response)
     }
   }).catch((e) => {
     useNoty().setNoty({
@@ -178,6 +224,8 @@ const goPayHandler = () => {
     }, 7000)
 
     emit('scrollToError')
+  }).finally(() => {
+    isPaymentLoading.value = false
   })
 }
 // WATCHERS
@@ -187,6 +235,18 @@ const goPayHandler = () => {
 
 <template>
   <div class="sale">
+    <form
+      v-if="form.action && form.data && form.signature"
+      ref="formElement"
+      :action="form.action"
+      method="POST"
+      accept-charset="utf-8"
+      hidden
+    >
+      <input type="hidden" name="data" :value="form.data" />
+      <input type="hidden" name="signature" :value="form.signature" />
+    </form>
+
     <div class="sale-list">
       <div class="sale-item">
         <div class="sale-label">{{ productsLength }} {{ t('messages.products_total') }}</div>
@@ -225,10 +285,10 @@ const goPayHandler = () => {
 
       <transition name="fade-in">
         <button
-          v-if="order.payment.method === 'liqpay_online'"
+          v-if="isOnlinePayment"
           @click="goPayHandler"
-          :class="{disabled: actionBlocked}"
-          :disabled="actionBlocked"
+          :class="{disabled: actionBlocked, loading: isPaymentLoading}"
+          :disabled="actionBlocked || isPaymentLoading"
           class="button primary sale-button"
         >
           <span>{{ t('button.pay') }}</span>

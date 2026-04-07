@@ -14,7 +14,7 @@ const scrollToSection = (id) => {
 }
 
 const scrollToKratomVariety = () => {
-  scrollToSection('colors')
+  scrollToSection('store')
 }
 
 const scrollToContacts = () => {

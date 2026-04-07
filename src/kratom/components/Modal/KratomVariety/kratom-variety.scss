@@ -95,6 +95,35 @@
     color: $color-1;
   }
 
+  &__online-order {
+    display: grid;
+    gap: 14px;
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid $color-6;
+    background: $color-8;
+
+    @include tablet {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+  }
+
+  &__online-order-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: $color-1;
+  }
+
+  &__online-order-button {
+    justify-self: start;
+
+    @include tablet {
+      justify-self: end;
+    }
+  }
+
   &__message {
     font-size: 16px;
     line-height: 1.5;
