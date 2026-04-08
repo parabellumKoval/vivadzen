@@ -87,19 +87,11 @@ export default defineEventHandler((event) => {
   }
 
   if (parsed.hasExplicitLocale) {
-    if (LIVE_PATHS.has(parsed.remainder)) {
-      return
-    }
-
     return sendRedirect(event, buildTargetUrl(pathname, requestUrl.search), 301)
   }
 
   const regionOnlyTarget = GENERATED_REGION_ONLY_REDIRECTS[pathname as keyof typeof GENERATED_REGION_ONLY_REDIRECTS]
   if (!regionOnlyTarget) {
-    return
-  }
-
-  if (LIVE_PATHS.has(regionOnlyTarget)) {
     return
   }
 

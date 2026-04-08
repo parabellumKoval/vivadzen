@@ -255,11 +255,7 @@ function buildRegionOnlyRedirects(mainItems, liveCurrentPaths) {
       return
     }
 
-    if (liveCurrentPaths.has(parsed.remainder)) {
-      return
-    }
-
-    redirects.set(normalizePath(fullPath), parsed.remainder)
+    redirects.set(normalizePath(fullPath), normalizePath(fullPath))
   }
 
   for (const region of Object.keys(LEGACY_REGIONS)) {
