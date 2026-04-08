@@ -10,6 +10,7 @@ return [
     'values' => [
         'main' => 'Основной storefront',
         'kratom' => 'Kratom storefront',
+        'telegram' => 'Telegram Mini App storefront',
     ],
 
     'settings_overrides' => [

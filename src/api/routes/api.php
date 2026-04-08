@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\MessengerDeliveryReportController;
 use App\Http\Controllers\Api\NovaposhtaController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\SitemapController;
+use App\Http\Controllers\Api\TgProfileController;
 
 use App\Http\Middleware\AddXRegionHeadersToRequest;
 /*
@@ -53,3 +54,15 @@ Route::prefix('np')->controller(NovaposhtaController::class)->middleware(['api',
 });
 
 Route::post('/delivery-reports/messenger', [MessengerDeliveryReportController::class, 'store'])->middleware('api');
+
+Route::prefix('tg')
+  ->middleware(['api', AddXRegionHeadersToRequest::class])
+  ->controller(TgProfileController::class)
+  ->group(function () {
+    Route::get('/profile', 'show');
+    Route::put('/profile', 'update');
+    Route::post('/profile/addresses', 'storeAddress');
+    Route::put('/profile/addresses/{id}', 'updateAddress');
+    Route::delete('/profile/addresses/{id}', 'destroyAddress');
+    Route::get('/orders', 'orders');
+  });

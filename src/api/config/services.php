@@ -56,4 +56,9 @@ return [
     'messenger' => [
         'delivery_reporting_api_key' => env('MESSENGER_DELIVERY_REPORTING_API_KEY'),
     ],
+
+    'telegram' => [
+        'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+        'init_data_max_age' => (int) env('TELEGRAM_INIT_DATA_MAX_AGE', 604800),
+    ],
 ];

@@ -1,4 +1,5 @@
 import path from 'path'
+import { buildSitemapsOptions } from './utils/sitemap'
 
 const HOST = process.env.HOST_IP || 'localhost'
 const SITE_URL = process.env.SITE_URL || (process.env.NODE_ENV === 'production' ? `https://${HOST}` : `http://${HOST}:3001`)
@@ -262,6 +263,8 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/content',
     'nuxt-schema-org',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots',
   ],
 
   experimental: {
@@ -388,6 +391,31 @@ export default defineNuxtConfig({
 
   schemaOrg: {
     enabled: true,
+  },
+
+  robots: {
+    autoI18n: false,
+    disableNuxtContentIntegration: true,
+    disallow: ['/_ipx', '/.well-known', '/*?*gclid=*'],
+  },
+
+  sitemap: {
+    enabled: true,
+    siteUrl: SITE_URL,
+    cacheMaxAgeSeconds: 3600,
+
+    exclude: [
+      '/checkout/**',
+      '/auth/**',
+    ],
+
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+      lastmod: new Date().toISOString(),
+    },
+
+    sitemaps: buildSitemapsOptions(),
   },
 
   content: {

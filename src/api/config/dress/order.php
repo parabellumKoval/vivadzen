@@ -50,6 +50,16 @@ return [
       'store_in' => 'info'
     ],
 
+    'telegram_user_id' => [
+      'rules' => 'nullable|integer',
+      'store_in' => 'info',
+    ],
+
+    'telegram_user' => [
+      'rules' => 'nullable|array',
+      'store_in' => 'info',
+    ],
+
     'payment' => [
       'rules' => 'array:method,settlement,street,house,room,zip',
       'store_in' => 'info',

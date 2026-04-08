@@ -1,100 +1,32 @@
 import { $fetch } from 'ofetch'
 
-type RegionsOptions = {
-  regions: Record<string, { name: string; locale: string; currency: string; flagClass?: string }>
-  regionAliases?: Record<string, string>
-  localesByRegion: Record<string, string[]>
-  fallbackRegion: string
-  fallbackCurrency?: string
-}
-
-export const REGIONS_MODULE_OPTIONS: RegionsOptions = {
-  regions: {
-    global: { name: 'regions.global', locale: 'en', currency: 'USD', flagClass: 'emojione:globe-showing-europe-africa' },
-    ua: { name: 'regions.ua', locale: 'uk', currency: 'UAH', flagClass: 'emojione:flag-for-ukraine' },
-    cz: { name: 'regions.cz', locale: 'cs', currency: 'CZK', flagClass: 'emojione:flag-for-czechia' },
-    de: { name: 'regions.de', locale: 'de', currency: 'EUR', flagClass: 'emojione:flag-for-germany' },
-    es: { name: 'regions.es', locale: 'es', currency: 'EUR', flagClass: 'emojione:flag-for-spain' }
-  },
-  regionAliases: {
-    global: 'zz'
-  },
-  localesByRegion: {
-    global: ['en', 'de', 'es', 'ru', 'uk','cs'],
-    ua: ['uk', 'ru'],
-    cz: ['cs', 'en', 'ru', 'uk'],
-    de: ['de', 'en', 'ru', 'uk'],
-    es: ['es', 'en', 'ru', 'uk']
-  },
-  fallbackRegion: 'global',
-  fallbackCurrency: 'USD'
-}
+export const SITEMAP_LOCALES = ['cs', 'en', 'ru', 'uk'] as const
+export const SITEMAP_DEFAULT_LOCALE = 'cs'
+export const SITEMAP_COUNTRY = 'cz'
 
 export const SITEMAP_STATIC_ROUTES = [
   '/',
   '/about',
-  '/affiliate',
   '/blog',
-  '/brands',
   '/catalog',
-  '/certificates',
   '/contacts',
-  '/delivery',
-  '/faq',
-  '/guarantees',
-  '/payment',
   '/policy',
   '/returns',
-  '/terms',
-  '/vivapoints',
-  '/search',
-  '/comparison',
-  '/remove-userdata'
+  '/reviews',
+  '/terms'
 ]
 
-export const normalizeRegion = (value?: string | null) => String(value || '').trim().toLowerCase()
 export const normalizeLocale = (value?: string | null) => String(value || '').trim().toLowerCase()
 export const normalizeSlug = (value?: string | null) => String(value || '').trim().replace(/^\/+|\/+$/g, '')
 
-export const invertAliases = (aliases: Record<string, string> = {}) => {
-  const map: Record<string, string> = {}
-  Object.entries(aliases || {}).forEach(([canonical, alias]) => {
-    const normalizedAlias = normalizeRegion(alias)
-    const normalizedCanonical = normalizeRegion(canonical)
-    if (normalizedAlias && normalizedCanonical) {
-      map[normalizedAlias] = normalizedCanonical
-    }
-  })
-  return map
-}
-
-const getDefaultLocaleForRegion = (region: string, localesByRegion: Record<string, string[]>) => {
-  const list = localesByRegion[region] || []
-  return list.length ? normalizeLocale(list[0]) : 'en'
-}
-
-export const buildLocalizedPath = (
-  slug: string,
-  region: string,
-  locale: string,
-  fallbackRegion: string,
-  localesByRegion: Record<string, string[]>
-) => {
-  const normalizedRegion = normalizeRegion(region)
-  const normalizedFallback = normalizeRegion(fallbackRegion)
+export const buildLocalizedPath = (slug: string, locale: string, defaultLocale = SITEMAP_DEFAULT_LOCALE) => {
   const normalizedLocale = normalizeLocale(locale)
-  const defaultLocale = getDefaultLocaleForRegion(normalizedRegion, localesByRegion)
+  const normalizedDefaultLocale = normalizeLocale(defaultLocale)
   const base = normalizeSlug(slug)
-
   const segments: string[] = []
 
-  if (normalizedRegion && normalizedRegion !== normalizedFallback) {
-    segments.push(normalizedRegion)
-    if (normalizedLocale && normalizedLocale !== defaultLocale) {
-      segments.push(normalizedLocale)
-    }
-  } else if (normalizedRegion && normalizedLocale && normalizedLocale !== defaultLocale) {
-    segments.push(normalizedRegion, normalizedLocale)
+  if (normalizedLocale && normalizedLocale !== normalizedDefaultLocale) {
+    segments.push(normalizedLocale)
   }
 
   if (base) {
@@ -104,90 +36,62 @@ export const buildLocalizedPath = (
   return segments.length ? `/${segments.join('/')}` : '/'
 }
 
-const isRegionAllowed = (
-  itemRegions: any,
-  targetRegion: string,
-  aliasToCanonical: Record<string, string>
-) => {
-  const normalizedTarget = normalizeRegion(targetRegion)
+const isCountryAllowed = (itemRegions: any, targetCountry: string) => {
+  const normalizedTarget = String(targetCountry || '').trim().toLowerCase()
+
   if (!Array.isArray(itemRegions) || !itemRegions.length) {
     return true
   }
 
   const normalized = new Set(
     itemRegions
-      .map((value: any) => normalizeRegion(value))
+      .map((value: any) => String(value || '').trim().toLowerCase())
       .filter(Boolean)
   )
 
-  if (normalized.has(normalizedTarget) || normalized.has('global')) {
-    return true
-  }
-
-  const canonical = aliasToCanonical[normalizedTarget]
-  if (canonical && normalized.has(canonical)) {
-    return true
-  }
-
-  for (const [alias, canonicalRegion] of Object.entries(aliasToCanonical)) {
-    if (canonicalRegion === normalizedTarget && normalized.has(alias)) {
-      return true
-    }
-  }
-
-  return false
+  return normalized.has(normalizedTarget) || normalized.has('global')
 }
 
 type GenerateSitemapEntriesOptions = {
-  region: string
   locale: string
   storefront: string
-  fallbackRegion: string
-  localesByRegion: Record<string, string[]>
-  aliasToCanonical: Record<string, string>
+  country: string
   dataEndpoint: string
+  defaultLocale?: string
 }
 
 export const generateSitemapEntries = async ({
-  region,
   locale,
   storefront,
-  fallbackRegion,
-  localesByRegion,
-  aliasToCanonical,
-  dataEndpoint
+  country,
+  dataEndpoint,
+  defaultLocale = SITEMAP_DEFAULT_LOCALE
 }: GenerateSitemapEntriesOptions) => {
-  const normalizedRegion = normalizeRegion(region) || normalizeRegion(fallbackRegion)
-  const normalizedLocale = normalizeLocale(locale) || getDefaultLocaleForRegion(normalizedRegion, localesByRegion)
+  const normalizedLocale = normalizeLocale(locale) || defaultLocale
+  const normalizedCountry = String(country || SITEMAP_COUNTRY).trim().toLowerCase()
 
   try {
     const payload = await $fetch(dataEndpoint, {
       headers: {
         'X-Storefront': storefront,
-        'X-Region': normalizedRegion || region,
+        'X-Region': normalizedCountry,
         'Accept-Language': normalizedLocale || locale,
       },
       query: {
         storefront,
-        country: normalizedRegion || region,
+        country: normalizedCountry,
       },
     }).catch(() => ({ items: [] }))
     const items = Array.isArray((payload as any)?.items) ? (payload as any).items : []
 
     const staticEntries = SITEMAP_STATIC_ROUTES.map((slug) => ({
-      loc: buildLocalizedPath(slug, normalizedRegion, normalizedLocale, fallbackRegion, localesByRegion)
+      loc: buildLocalizedPath(slug, normalizedLocale, defaultLocale)
     }))
 
     const dynamicEntries = items
-      .filter((item) => isRegionAllowed(item?.available_regions ?? item?.availableRegions ?? [], normalizedRegion, aliasToCanonical))
+      .filter((item) => isCountryAllowed(item?.available_regions ?? item?.availableRegions ?? [], normalizedCountry))
       .map((item) => ({
-        loc: buildLocalizedPath(
-          normalizeSlug(item?.slug ?? ''),
-          normalizedRegion,
-          normalizedLocale,
-          fallbackRegion,
-          localesByRegion
-        ),
+        loc: buildLocalizedPath(normalizeSlug(item?.slug ?? ''), normalizedLocale, defaultLocale),
         lastmod: item?.lastmod || undefined
       }))
 
@@ -207,31 +111,22 @@ export const generateSitemapEntries = async ({
   }
 }
 
-export const buildSitemapsOptions = (regionsOptions: RegionsOptions) => {
-  const localesByRegion = regionsOptions.localesByRegion || {}
-  const internalEndpoint = (region: string, locale: string) => `/api/sitemap/${region}/${locale}`
+export const buildSitemapsOptions = (locales: readonly string[] = SITEMAP_LOCALES) => {
+  return locales
+    .map((locale) => normalizeLocale(locale))
+    .filter(Boolean)
+    .reduce<Record<string, any>>((acc, locale) => {
+      const fetchPath = `/api/sitemap/${locale}`
 
-  const pairs = Object.entries(localesByRegion)
-    .flatMap(([region, locales]) => (locales || []).map((locale) => ({
-      region: normalizeRegion(region),
-      locale: normalizeLocale(locale)
-    })))
-    .filter((pair) => pair.region && pair.locale)
+      acc[locale] = {
+        defaults: {
+          changefreq: 'daily',
+          priority: 1,
+          lastmod: new Date().toISOString()
+        },
+        sources: [fetchPath]
+      }
 
-  return pairs.reduce<Record<string, any>>((acc, { region, locale }) => {
-    const sitemapName = `${region}-${locale}`
-
-    const fetchPath = internalEndpoint(region, locale)
-
-    acc[sitemapName] = {
-      defaults: {
-        changefreq: 'daily',
-        priority: 1,
-        lastmod: new Date().toISOString()
-      },
-      sources: [fetchPath]
-    }
-
-    return acc
-  }, {})
+      return acc
+    }, {})
 }

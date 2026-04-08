@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Services\AgeVerification\AdultoClient;
 use App\Services\AgeVerification\AgeVerificationService;
+use App\Services\Telegram\TelegramInitData;
 use Backpack\Store\app\Events\ProductAttachedToOrder;
 use Backpack\Store\app\Events\PromocodeApplied;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderCont
 {
     public function __construct(
         protected AgeVerificationService $ageVerificationService,
-        protected AdultoClient $adultoClient
+        protected AdultoClient $adultoClient,
+        protected TelegramInitData $telegramInitData
     ) {
         parent::__construct();
     }
@@ -23,6 +25,7 @@ class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderCont
     {
         try {
             $data = $this->validateData($request);
+            $data = $this->applyTelegramIdentity($data, $request);
             $products = $this->ensureCartProductsAvailable($data['products'] ?? [], true);
             $this->ensureAgeVerificationIfNeeded($data, $products, $request);
 
@@ -42,6 +45,7 @@ class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderCont
     {
         try {
             $data = $this->validateData($request);
+            $data = $this->applyTelegramIdentity($data, $request);
             $products = $this->ensureCartProductsAvailable($data['products'] ?? [], true);
             $this->ensureAgeVerificationIfNeeded($data, $products, $request);
 
@@ -64,6 +68,48 @@ class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderCont
         }
 
         return response()->json(new self::$resources['order']['large']($order));
+    }
+
+    protected function applyTelegramIdentity(array $data, Request $request): array
+    {
+        $storefront = strtolower(trim((string) (
+            $data['storefront_code']
+            ?? $data['storefront']
+            ?? $request->header('X-Storefront')
+            ?? ''
+        )));
+
+        if ($storefront !== 'telegram') {
+            return $data;
+        }
+
+        $data['storefront'] = 'telegram';
+        $data['storefront_code'] = 'telegram';
+
+        if (!$request->header('X-Telegram-Init-Data')) {
+            unset($data['telegram_user_id'], $data['telegram_user']);
+            return $data;
+        }
+
+        try {
+            $telegram = $this->telegramInitData->fromRequest($request);
+        } catch (\Throwable $exception) {
+            throw new DetailedException(
+                'Telegram authorization failed.',
+                401,
+                $exception,
+                [
+                    'telegram' => ['Telegram authorization failed.'],
+                ]
+            );
+        }
+
+        $user = $telegram['user'];
+
+        $data['telegram_user_id'] = (int) $user['id'];
+        $data['telegram_user'] = $user;
+
+        return $data;
     }
 
     protected function ensureAgeVerificationIfNeeded(array $data, iterable $products, Request $request): void
