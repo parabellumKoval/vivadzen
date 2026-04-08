@@ -13,6 +13,11 @@ const breadcrumbs = computed(() => [
   { name: t('title.checkout'), item: '/checkout' },
 ])
 
+useSeo().setPageSeo('checkout', {
+  fallbackTitle: () => t('title.checkout'),
+  robots: 'noindex, nofollow',
+})
+
 const products = computed(() => cartStore.cart)
 const order = computed(() => cartStore.order)
 const errors = computed(() => cartStore.errors)

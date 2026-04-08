@@ -80,7 +80,7 @@ const addToCart = () => {
   display: flex;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  background: var(--color-white);
+  background: #fafafa;
   box-shadow: var(--shadow-card);
   flex-direction: column;
 }
@@ -89,7 +89,9 @@ const addToCart = () => {
   position: relative;
   display: block;
   aspect-ratio: 1 / 1;
-  background: var(--color-bg-card);
+  /* background: var(--color-bg-card); */
+  background: #fff;
+  border-bottom: 1px solid #eee;
 }
 
 .product-card__image {

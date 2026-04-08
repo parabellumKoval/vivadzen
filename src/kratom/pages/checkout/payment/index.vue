@@ -16,6 +16,11 @@ const breadcrumbs = computed(() => [
   { name: t('title.checkout_payment'), item: '/checkout/payment' },
 ])
 
+useSeo().setPageSeo('checkout_payment', {
+  fallbackTitle: () => t('title.checkout_payment'),
+  robots: 'noindex, nofollow',
+})
+
 const formElement = ref<HTMLFormElement | null>(null)
 const form = ref<{ action?: string | null; data?: string | null; signature?: string | null }>({})
 const isLoading = ref(false)

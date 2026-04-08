@@ -399,6 +399,49 @@ seo:
   page:
     title: "{title} - Vivadzen"
     desc: "{title} on vivadzen.com"
+  pages:
+    home:
+      title: "Buy kratom in Czechia online and in Prague | VivaDzen"
+      description: "Certified kratom for the Czech market from VivaDzen. 18+ online ordering, ADULTO/NIA age verification, Prague pickup, and delivery across the Czech Republic."
+    catalog:
+      title: "Kratom catalog in Czechia{pageSuffix} | VivaDzen"
+      description: "Choose certified VivaDzen kratom for the Czech Republic: green, white, and red kratom with lab control, 18+ verification, and delivery across Czechia."
+    product:
+      title: "Buy {name} in Czechia | VivaDzen"
+      description: "{name} from VivaDzen for the Czech market. Certified kratom with lab control, 18+ purchase after age verification, and delivery across Czechia."
+    blog:
+      title: "Kratom blog and Czech market guides{pageSuffix} | VivaDzen"
+      description: "VivaDzen guides to kratom in Czechia: legislation, safety, age verification, delivery, kratom types, and responsible 18+ purchasing."
+    article:
+      title: "{title} | VivaDzen Kratom Blog"
+      description: "Read \"{title}\" on the VivaDzen blog: kratom information for the Czech market, legislation, safety, and 18+ purchasing."
+    about:
+      title: "About VivaDzen Kratom | Certified seller in Czechia"
+      description: "Learn about VivaDzen, a manufacturer and seller of kratom for the Czech Republic with lab control, certificates, and a Prague physical store."
+    contacts:
+      title: "Contacts and Prague store | VivaDzen Kratom"
+      description: "Contact VivaDzen Kratom, find our Prague store, and get support for kratom orders in the Czech Republic."
+    reviews:
+      title: "Customer reviews | VivaDzen Kratom"
+      description: "Verified VivaDzen customer experiences with kratom, delivery, support, and shopping in the Czech Republic."
+    policy:
+      title: "Privacy Policy | VivaDzen Kratom"
+      description: "Information about personal data processing for VivaDzen Kratom customers during ordering, payment, delivery, and support contact."
+    terms:
+      title: "Terms of Use and Purchase | VivaDzen Kratom"
+      description: "VivaDzen Kratom terms for buying certified kratom in the Czech Republic, including delivery, payment, and 18+ age verification."
+    returns:
+      title: "Returns and claims | VivaDzen Kratom"
+      description: "Return and claim conditions for VivaDzen Kratom orders in the Czech Republic."
+    checkout:
+      title: "Checkout | VivaDzen Kratom"
+      description: "Complete your VivaDzen Kratom order with Czech delivery, secure payment, and mandatory 18+ age verification."
+    checkout_payment:
+      title: "Order payment | VivaDzen Kratom"
+      description: "Secure online payment for a VivaDzen Kratom order. This page is not intended for search engine indexing."
+    checkout_complete:
+      title: "Order {code} completed | VivaDzen Kratom"
+      description: "Summary of a completed VivaDzen Kratom order. This page is private and not intended for search engine indexing."
 
 delivery:
   more: More about delivery

@@ -5,7 +5,7 @@ const router = useRouter()
 const runtimeConfig = useRuntimeConfig()
 const categorySlug = runtimeConfig.public.kratomStore?.categorySlug || 'kratom'
 
-const page = computed(() => Math.max(Number(route.query.page) || 1, 1))
+const page = computed(() => Math.max(Math.floor(Number(route.query.page) || 1), 1))
 
 const { data, pending, error } = await useAsyncData(
   () => `kratom-catalog-${locale.value}-${page.value}`,
@@ -53,7 +53,12 @@ const goToPage = async (nextPage: number) => {
   await router.push({ query })
 }
 
-useSeo().setPageSeo(t('title.catalog'))
+useSeo().setPageSeo('catalog', {
+  params: () => ({
+    pageSuffix: page.value > 1 ? ` - ${t('label.page', { page: page.value })}` : '',
+  }),
+  fallbackTitle: () => t('title.catalog'),
+})
 </script>
 
 <template>

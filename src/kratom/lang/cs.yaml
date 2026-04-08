@@ -394,6 +394,49 @@ seo:
   page:
     title: "{title} - Vivadzen"
     desc: "{title} na vivadzen.com"
+  pages:
+    home:
+      title: "Koupit kratom v Česku online i v Praze | VivaDzen"
+      description: "Certifikovaný kratom pro český trh od VivaDzen. Online objednávka 18+, ověření věku přes ADULTO/NIA, osobní odběr v Praze a doručení po ČR."
+    catalog:
+      title: "Katalog kratomu v Česku{pageSuffix} | VivaDzen"
+      description: "Vyberte si certifikovaný kratom VivaDzen pro Českou republiku: zelený, bílý a červený kratom, laboratorní kontrola, 18+ ověření a doručení po ČR."
+    product:
+      title: "{name} koupit v Česku | VivaDzen"
+      description: "{name} od VivaDzen pro český trh. Certifikovaný kratom s laboratorní kontrolou, nákup pouze 18+ po ověření věku a doručení po ČR."
+    blog:
+      title: "Kratom blog a průvodce pro Česko{pageSuffix} | VivaDzen"
+      description: "Průvodci VivaDzen o kratomu v Česku: legislativa, bezpečnost, ověření věku, doručení, typy kratomu a odpovědný nákup pro 18+."
+    article:
+      title: "{title} | Kratom blog VivaDzen"
+      description: "Přečtěte si článek \"{title}\" na blogu VivaDzen: informace o kratomu pro český trh, legislativě, bezpečnosti a nákupu 18+."
+    about:
+      title: "O VivaDzen Kratom | Certifikovaný prodejce v Česku"
+      description: "Seznamte se s VivaDzen: výrobcem a prodejcem kratomu pro Českou republiku s laboratorní kontrolou, certifikáty a kamennou prodejnou v Praze."
+    contacts:
+      title: "Kontakty a prodejna v Praze | VivaDzen Kratom"
+      description: "Kontaktujte VivaDzen Kratom, najděte naši prodejnu v Praze a podporu pro objednávky kratomu v České republice."
+    reviews:
+      title: "Recenze zákazníků | VivaDzen Kratom"
+      description: "Ověřené zkušenosti zákazníků VivaDzen s kratomem, doručením, podporou a nákupem v České republice."
+    policy:
+      title: "Zásady ochrany osobních údajů | VivaDzen Kratom"
+      description: "Informace o zpracování osobních údajů zákazníků VivaDzen Kratom při objednávce, platbě, doručení a kontaktu s podporou."
+    terms:
+      title: "Podmínky použití a nákupu | VivaDzen Kratom"
+      description: "Obchodní podmínky VivaDzen Kratom pro nákup certifikovaného kratomu v České republice, doručení, platby a věkové ověření 18+."
+    returns:
+      title: "Vrácení zboží a reklamace | VivaDzen Kratom"
+      description: "Podmínky vrácení zboží a reklamací pro objednávky VivaDzen Kratom v České republice."
+    checkout:
+      title: "Pokladna | VivaDzen Kratom"
+      description: "Dokončení objednávky VivaDzen Kratom s doručením v ČR, bezpečnou platbou a povinným ověřením věku 18+."
+    checkout_payment:
+      title: "Platba objednávky | VivaDzen Kratom"
+      description: "Bezpečná online platba za objednávku VivaDzen Kratom. Stránka není určena k indexaci vyhledávači."
+    checkout_complete:
+      title: "Objednávka {code} dokončena | VivaDzen Kratom"
+      description: "Souhrn dokončené objednávky VivaDzen Kratom. Stránka je soukromá a není určena k indexaci vyhledávači."
 
 delivery:
   more: Více o doručení

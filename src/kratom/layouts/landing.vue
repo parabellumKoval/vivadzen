@@ -1,7 +1,9 @@
 <script setup lang="ts">
 const route = useRoute()
+const runtimeConfig = useRuntimeConfig()
 const { htmlAttrs } = useKratomLocaleHead()
 const modal = useModal()
+const siteUrl = String(runtimeConfig.public.site?.url || runtimeConfig.public.siteUrl || 'https://kratom.vivadzen.com').replace(/\/+$/, '')
 
 watch(
   () => route.fullPath,
@@ -14,6 +16,14 @@ watch(
   },
   { immediate: true },
 )
+
+useSchemaOrg([
+  defineWebSite({
+    url: siteUrl,
+    name: 'VivaDzen Kratom',
+  }),
+  defineWebPage(),
+])
 </script>
 
 <template>

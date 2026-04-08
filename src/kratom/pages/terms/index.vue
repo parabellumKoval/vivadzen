@@ -4,6 +4,10 @@ const breadcrumbs = computed(() => [
   { name: t('title.home'), item: '/' },
   { name: t('title.terms'), item: '/terms' },
 ])
+
+useSeo().setPageSeo('terms', {
+  fallbackTitle: () => t('title.terms'),
+})
 </script>
 
 <template>

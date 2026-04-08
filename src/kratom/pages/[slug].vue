@@ -273,15 +273,15 @@ const openAdultoGuide = () => {
   })
 }
 
-useHead(() => ({
-  title: product.value?.seo?.meta_title || product.value?.name,
-  meta: [
-    {
-      name: 'description',
-      content: product.value?.seo?.meta_description || product.value?.short_description || product.value?.name,
-    },
-  ],
-}))
+useSeo().setPageSeo('product', {
+  params: () => ({
+    name: product.value?.name || '',
+  }),
+  title: () => product.value?.seo?.meta_title,
+  description: () => product.value?.seo?.meta_description,
+  image: () => activeImage.value?.src,
+  ogType: 'product',
+})
 </script>
 
 <template>

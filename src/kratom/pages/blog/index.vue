@@ -4,7 +4,7 @@ const route = useRoute()
 const router = useRouter()
 const { $api } = useNuxtApp()
 
-const page = computed(() => Math.max(Number(route.query.page) || 1, 1))
+const page = computed(() => Math.max(Math.floor(Number(route.query.page) || 1), 1))
 
 const { data, error, pending } = await useAsyncData(
   () => `kratom-articles-${locale.value}-${page.value}`,
@@ -41,7 +41,12 @@ const goToPage = async (nextPage: number) => {
   await router.push({ query })
 }
 
-useSeo().setPageSeo(t('title.blog'))
+useSeo().setPageSeo('blog', {
+  params: () => ({
+    pageSuffix: page.value > 1 ? ` - ${t('label.page', { page: page.value })}` : '',
+  }),
+  fallbackTitle: () => t('title.blog'),
+})
 </script>
 
 <template>

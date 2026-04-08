@@ -286,15 +286,15 @@ const breadcrumbs = computed(() => [
   { name: article.value?.title || '', item: `/blog/${slug.value}` },
 ])
 
-useHead(() => ({
-  title: article.value?.seo?.meta_title || article.value?.title,
-  meta: [
-    {
-      name: 'description',
-      content: article.value?.seo?.meta_description || article.value?.excerpt || article.value?.title,
-    },
-  ],
-}))
+useSeo().setPageSeo('article', {
+  params: () => ({
+    title: article.value?.title || '',
+  }),
+  title: () => article.value?.seo?.meta_title,
+  description: () => article.value?.seo?.meta_description,
+  image: () => article.value?.image?.src,
+  ogType: 'article',
+})
 </script>
 
 <template>

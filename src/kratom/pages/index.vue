@@ -78,8 +78,8 @@ onBeforeUnmount(() => {
   revealObservers = []
 })
 
-useHead({
-  title: t('title.czech-republic-kratom'),
+useSeo().setPageSeo('home', {
+  fallbackTitle: () => t('title.czech-republic-kratom'),
 })
 </script>
 

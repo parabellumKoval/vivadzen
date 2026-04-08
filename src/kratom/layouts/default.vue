@@ -1,7 +1,9 @@
 <script setup lang="ts">
 const route = useRoute()
+const runtimeConfig = useRuntimeConfig()
 const { htmlAttrs } = useKratomLocaleHead()
 const modal = useModal()
+const siteUrl = String(runtimeConfig.public.site?.url || runtimeConfig.public.siteUrl || 'https://kratom.vivadzen.com').replace(/\/+$/, '')
 
 const background = computed(() => route.meta?.pageBackground || route.meta?.bg || '#f8f1e6')
 const pageTheme = computed(() => route.meta?.pageTheme || 'light')
@@ -28,7 +30,7 @@ watch(
 
 useSchemaOrg([
   defineWebSite({
-    url: 'https://kratom.vivadzen.com',
+    url: siteUrl,
     name: 'VivaDzen Kratom',
   }),
   defineWebPage(),

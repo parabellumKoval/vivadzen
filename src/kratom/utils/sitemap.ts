@@ -19,6 +19,13 @@ export const SITEMAP_STATIC_ROUTES = [
 export const normalizeLocale = (value?: string | null) => String(value || '').trim().toLowerCase()
 export const normalizeSlug = (value?: string | null) => String(value || '').trim().replace(/^\/+|\/+$/g, '')
 
+type SitemapPayloadItem = {
+  slug?: string | null
+  lastmod?: string | null
+  available_regions?: unknown
+  availableRegions?: unknown
+}
+
 export const buildLocalizedPath = (slug: string, locale: string, defaultLocale = SITEMAP_DEFAULT_LOCALE) => {
   const normalizedLocale = normalizeLocale(locale)
   const normalizedDefaultLocale = normalizeLocale(defaultLocale)
@@ -88,9 +95,9 @@ export const generateSitemapEntries = async ({
       loc: buildLocalizedPath(slug, normalizedLocale, defaultLocale)
     }))
 
-    const dynamicEntries = items
-      .filter((item) => isCountryAllowed(item?.available_regions ?? item?.availableRegions ?? [], normalizedCountry))
-      .map((item) => ({
+    const dynamicEntries = (items as SitemapPayloadItem[])
+      .filter((item: SitemapPayloadItem) => isCountryAllowed(item?.available_regions ?? item?.availableRegions ?? [], normalizedCountry))
+      .map((item: SitemapPayloadItem) => ({
         loc: buildLocalizedPath(normalizeSlug(item?.slug ?? ''), normalizedLocale, defaultLocale),
         lastmod: item?.lastmod || undefined
       }))

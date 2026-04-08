@@ -9,7 +9,9 @@ const breadcrumbs = computed(() => [
   { name: t('title.contacts'), item: '/contacts' },
 ])
 
-useSeo().setPageSeo(t('title.contacts'))
+useSeo().setPageSeo('contacts', {
+  fallbackTitle: () => t('title.contacts'),
+})
 
 const scrollToPartners = async () => {
   if (process.server || route.hash !== `#${PARTNER_STORES_HASH}`) return

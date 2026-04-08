@@ -36,6 +36,14 @@ const breadcrumbs = computed(() => [
   { name: t('title.checkout_complete'), item: `/checkout/complete/${code.value}` },
 ])
 
+useSeo().setPageSeo('checkout_complete', {
+  params: () => ({
+    code: code.value,
+  }),
+  fallbackTitle: () => t('title.checkout_complete'),
+  robots: 'noindex, nofollow',
+})
+
 useCartStore().$reset()
 </script>
 

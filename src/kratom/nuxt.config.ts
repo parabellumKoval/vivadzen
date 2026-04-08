@@ -396,7 +396,18 @@ export default defineNuxtConfig({
   robots: {
     autoI18n: false,
     disableNuxtContentIntegration: true,
-    disallow: ['/_ipx', '/.well-known', '/*?*gclid=*'],
+    disallow: [
+      '/_ipx',
+      '/.well-known',
+      '/api/**',
+      '/checkout/**',
+      '/en/checkout/**',
+      '/ru/checkout/**',
+      '/uk/checkout/**',
+      '/*?*gclid=*',
+      '/*?*fbclid=*',
+      '/*?*utm_*',
+    ],
   },
 
   sitemap: {

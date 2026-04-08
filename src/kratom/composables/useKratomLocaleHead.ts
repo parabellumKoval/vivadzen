@@ -34,6 +34,20 @@ const buildLocalePath = (path: string, locale: string, defaultLocale: string) =>
   return segments.length ? `/${segments.join('/')}` : '/'
 }
 
+const buildCanonicalQuery = (basePath: string, query: Record<string, any>) => {
+  if (!['/catalog', '/blog'].includes(basePath)) {
+    return ''
+  }
+
+  const page = Math.floor(Number(Array.isArray(query.page) ? query.page[0] : query.page))
+
+  if (!Number.isFinite(page) || page <= 1) {
+    return ''
+  }
+
+  return `?page=${page}`
+}
+
 export const useKratomLocaleHead = () => {
   const route = useRoute()
   const runtimeConfig = useRuntimeConfig()
@@ -51,6 +65,7 @@ export const useKratomLocaleHead = () => {
   })
 
   const basePath = computed(() => stripLocaleSegment(route.path || '/', configuredLocales))
+  const canonicalQuery = computed(() => buildCanonicalQuery(basePath.value, route.query as Record<string, any>))
   const htmlAttrs = computed(() => ({
     lang: LANGUAGE_BY_LOCALE[locale.value] || locale.value,
     dir: 'ltr',
@@ -64,19 +79,19 @@ export const useKratomLocaleHead = () => {
     const alternate = configuredLocales.map((code) => ({
       rel: 'alternate',
       hreflang: LANGUAGE_BY_LOCALE[code] || code,
-      href: `${baseUrl}${buildLocalePath(basePath.value, code, defaultLocale)}`,
+      href: `${baseUrl}${buildLocalePath(basePath.value, code, defaultLocale)}${canonicalQuery.value}`,
     }))
 
     return [
       {
         rel: 'canonical',
-        href: `${baseUrl}${buildLocalePath(basePath.value, locale.value, defaultLocale)}`,
+        href: `${baseUrl}${buildLocalePath(basePath.value, locale.value, defaultLocale)}${canonicalQuery.value}`,
       },
       ...alternate,
       {
         rel: 'alternate',
         hreflang: 'x-default',
-        href: `${baseUrl}${buildLocalePath(basePath.value, defaultLocale, defaultLocale)}`,
+        href: `${baseUrl}${buildLocalePath(basePath.value, defaultLocale, defaultLocale)}${canonicalQuery.value}`,
       },
     ]
   })
