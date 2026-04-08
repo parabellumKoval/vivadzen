@@ -3,12 +3,44 @@ const normalizeParam = (value: unknown) => {
   return String(value || '').trim().toLowerCase()
 }
 
+const normalizeApiBase = (value: unknown) => String(value || '').trim().replace(/\/+$/, '')
+
+const isLoopbackHost = (hostname: string) => {
+  const normalized = hostname.toLowerCase()
+  return normalized === 'localhost'
+    || normalized === '127.0.0.1'
+    || normalized === '0.0.0.0'
+    || normalized === '[::1]'
+    || normalized === '::1'
+}
+
+const resolveApiBase = (value: unknown) => {
+  const apiBase = normalizeApiBase(value)
+  if (!process.client || !apiBase) return apiBase
+
+  try {
+    const apiUrl = new URL(apiBase, window.location.origin)
+    const pageIsLocal = isLoopbackHost(window.location.hostname)
+    const apiIsLocal = isLoopbackHost(apiUrl.hostname)
+
+    if (apiIsLocal && !pageIsLocal) {
+      console.error('[tg] Ignoring localhost API base on a public host. Set NUXT_PUBLIC_API_BASE in the deployment environment.')
+      return ''
+    }
+  } catch {
+    return apiBase
+  }
+
+  return apiBase
+}
+
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig()
   const storefrontCode = String(config.public.storefrontCode || 'main').trim()
+  const apiBase = resolveApiBase(config.public.apiBase)
 
   const api = $fetch.create({
-    baseURL: config.public.apiBase,
+    baseURL: apiBase || undefined,
     credentials: 'include',
     onRequest({ options }) {
       const route = (nuxtApp as any).$router?.currentRoute?.value

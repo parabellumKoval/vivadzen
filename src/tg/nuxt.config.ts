@@ -1,16 +1,25 @@
 import path from 'node:path'
 
 const HOST = process.env.HOST_IP || 'localhost'
+const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 const IS_VERCEL = Boolean(process.env.VERCEL)
 const VERCEL_SITE_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ''
 const HOST_URL = process.env.NUXT_PUBLIC_SITE_URL
   || process.env.SITE_URL
   || VERCEL_SITE_URL
-  || (process.env.NODE_ENV === 'production' ? `https://${HOST}` : `http://${HOST}:3001`)
-const SERVER_URL = process.env.SERVER_URL || (IS_VERCEL ? '' : `http://${HOST}:8000`)
-const API_SERVER_URL = process.env.NUXT_PUBLIC_API_BASE
+  || (IS_PRODUCTION ? '' : `http://${HOST}:3001`)
+const SERVER_URL = process.env.SERVER_URL || (IS_PRODUCTION || IS_VERCEL ? '' : `http://${HOST}:8000`)
+const normalizePublicUrl = (value: string) => value.trim().replace(/\/+$/, '')
+const isLoopbackUrl = (value: string) => /^https?:\/\/(?:localhost|127\.0\.0\.1|0\.0\.0\.0|\[?::1\]?)(?::\d+)?(?:\/|$)/i.test(value.trim())
+const API_SERVER_URL = normalizePublicUrl(
+  process.env.NUXT_PUBLIC_API_BASE
   || process.env.API_SERVER_URL
   || (SERVER_URL ? `${SERVER_URL}/api` : '')
+)
+
+if (IS_PRODUCTION && isLoopbackUrl(API_SERVER_URL)) {
+  throw new Error('TG app production build cannot use a localhost API. Set NUXT_PUBLIC_API_BASE to a public HTTPS backend URL.')
+}
 const FRONT_DIR = path.resolve(__dirname, '../front')
 
 const REGIONS = {

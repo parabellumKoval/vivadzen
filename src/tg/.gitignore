@@ -1,5 +1,6 @@
 node_modules/
 .nuxt/
 .output/
+.vercel/
 .data/
 npm-debug.log*
