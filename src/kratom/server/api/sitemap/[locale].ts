@@ -18,8 +18,11 @@ export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig()
   const apiBase = runtimeConfig.public?.apiBase || runtimeConfig.apiBase
   const storefrontCode = String(runtimeConfig.public?.storefrontCode || 'kratom').trim()
-  const country = String(runtimeConfig.public?.kratomStore?.region || SITEMAP_COUNTRY).trim().toLowerCase()
-  const defaultLocale = normalizeLocale(runtimeConfig.public?.kratomStore?.defaultLocale || SITEMAP_DEFAULT_LOCALE)
+  const kratomStore = runtimeConfig.public?.kratomStore || {}
+  const country = String(kratomStore.region || SITEMAP_COUNTRY).trim().toLowerCase()
+  const defaultLocale = normalizeLocale(kratomStore.defaultLocale || SITEMAP_DEFAULT_LOCALE)
+  const categorySlug = String(kratomStore.categorySlug || 'kratom').trim()
+  const productResource = String(kratomStore.productResources?.card || 'kratom_small').trim()
 
   if (!apiBase) {
     throw createError({ statusCode: 500, statusMessage: 'API base URL is not configured' })
@@ -30,7 +33,9 @@ export default defineEventHandler(async (event) => {
     storefront: storefrontCode,
     country,
     defaultLocale,
-    dataEndpoint: `${apiBase}/sitemap/full`
+    categorySlug,
+    productResource,
+    catalogEndpoint: `${apiBase}/catalog`
   })
 
   return { urls }

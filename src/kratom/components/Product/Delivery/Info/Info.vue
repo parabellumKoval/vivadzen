@@ -145,7 +145,6 @@ const paymentItems = computed(() => {
 
   .product-delivery-info__item {
     align-items: flex-start;
-    flex-direction: column;
   }
 
   .product-delivery-info__logo {

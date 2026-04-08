@@ -22,8 +22,8 @@ export const normalizeSlug = (value?: string | null) => String(value || '').trim
 type SitemapPayloadItem = {
   slug?: string | null
   lastmod?: string | null
-  available_regions?: unknown
-  availableRegions?: unknown
+  updated_at?: string | null
+  updatedAt?: string | null
 }
 
 export const buildLocalizedPath = (slug: string, locale: string, defaultLocale = SITEMAP_DEFAULT_LOCALE) => {
@@ -43,63 +43,102 @@ export const buildLocalizedPath = (slug: string, locale: string, defaultLocale =
   return segments.length ? `/${segments.join('/')}` : '/'
 }
 
-const isCountryAllowed = (itemRegions: any, targetCountry: string) => {
-  const normalizedTarget = String(targetCountry || '').trim().toLowerCase()
-
-  if (!Array.isArray(itemRegions) || !itemRegions.length) {
-    return true
-  }
-
-  const normalized = new Set(
-    itemRegions
-      .map((value: any) => String(value || '').trim().toLowerCase())
-      .filter(Boolean)
-  )
-
-  return normalized.has(normalizedTarget) || normalized.has('global')
-}
-
 type GenerateSitemapEntriesOptions = {
   locale: string
   storefront: string
   country: string
-  dataEndpoint: string
+  catalogEndpoint: string
+  categorySlug: string
+  productResource: string
   defaultLocale?: string
+}
+
+const fetchCatalogProducts = async ({
+  catalogEndpoint,
+  storefront,
+  country,
+  locale,
+  categorySlug,
+  productResource
+}: {
+  catalogEndpoint: string
+  storefront: string
+  country: string
+  locale: string
+  categorySlug: string
+  productResource: string
+}) => {
+  const headers = {
+    'X-Storefront': storefront,
+    'X-Region': country,
+    'Accept-Language': locale,
+  }
+  const baseQuery = {
+    with_products: true,
+    category_slug: categorySlug,
+    per_page: 200,
+    cache: true,
+    resource: productResource,
+  }
+  const fetchPage = (page: number) => $fetch(catalogEndpoint, {
+    headers,
+    query: {
+      ...baseQuery,
+      page,
+    },
+  })
+
+  const firstPage = await fetchPage(1).catch(() => null)
+  const firstPageProducts = Array.isArray((firstPage as any)?.products?.data)
+    ? (firstPage as any).products.data
+    : []
+  const lastPage = Number((firstPage as any)?.products?.meta?.last_page || 1)
+
+  if (lastPage <= 1) {
+    return firstPageProducts
+  }
+
+  const restPages = await Promise.all(
+    Array.from({ length: lastPage - 1 }, (_, index) => fetchPage(index + 2).catch(() => null))
+  )
+
+  return [
+    ...firstPageProducts,
+    ...restPages.flatMap((page) => Array.isArray((page as any)?.products?.data) ? (page as any).products.data : [])
+  ]
 }
 
 export const generateSitemapEntries = async ({
   locale,
   storefront,
   country,
-  dataEndpoint,
+  catalogEndpoint,
+  categorySlug,
+  productResource,
   defaultLocale = SITEMAP_DEFAULT_LOCALE
 }: GenerateSitemapEntriesOptions) => {
   const normalizedLocale = normalizeLocale(locale) || defaultLocale
   const normalizedCountry = String(country || SITEMAP_COUNTRY).trim().toLowerCase()
 
   try {
-    const payload = await $fetch(dataEndpoint, {
-      headers: {
-        'X-Storefront': storefront,
-        'X-Region': normalizedCountry,
-        'Accept-Language': normalizedLocale || locale,
-      },
-      query: {
-        storefront,
-        country: normalizedCountry,
-      },
-    }).catch(() => ({ items: [] }))
-    const items = Array.isArray((payload as any)?.items) ? (payload as any).items : []
+    const products = await fetchCatalogProducts({
+      catalogEndpoint,
+      storefront,
+      country: normalizedCountry,
+      locale: normalizedLocale,
+      categorySlug,
+      productResource
+    })
 
     const staticEntries = SITEMAP_STATIC_ROUTES.map((slug) => ({
       loc: buildLocalizedPath(slug, normalizedLocale, defaultLocale)
     }))
 
-    const dynamicEntries = (items as SitemapPayloadItem[])
-      .filter((item: SitemapPayloadItem) => isCountryAllowed(item?.available_regions ?? item?.availableRegions ?? [], normalizedCountry))
+    const dynamicEntries = (products as SitemapPayloadItem[])
+      .filter((item: SitemapPayloadItem) => normalizeSlug(item?.slug ?? ''))
       .map((item: SitemapPayloadItem) => ({
         loc: buildLocalizedPath(normalizeSlug(item?.slug ?? ''), normalizedLocale, defaultLocale),
-        lastmod: item?.lastmod || undefined
+        lastmod: item?.lastmod || item?.updated_at || item?.updatedAt || undefined
       }))
 
     const seen = new Set<string>()

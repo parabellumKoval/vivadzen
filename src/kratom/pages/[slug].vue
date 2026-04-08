@@ -460,15 +460,31 @@ useSeo().setPageSeo('product', {
 
             <p class="kratom-product-consumer-notice__lead">{{ consumerNotice.lead }}</p>
 
-            <div class="kratom-product-consumer-notice__highlights">
-              <div
-                v-for="(highlight, index) in consumerNotice.highlights"
-                :key="`notice-highlight-${index}`"
-                class="kratom-product-consumer-notice__highlight"
-              >
-                <IconCSS name="ph:warning-diamond-fill" class="kratom-product-consumer-notice__highlight-icon" />
-                <p>{{ highlight }}</p>
+            <div class="kratom-product-consumer-notice__top">
+              <div class="kratom-product-consumer-notice__highlights">
+                <div
+                  v-for="(highlight, index) in consumerNotice.highlights"
+                  :key="`notice-highlight-${index}`"
+                  class="kratom-product-consumer-notice__highlight"
+                >
+                  <IconCSS name="ph:warning-diamond-fill" class="kratom-product-consumer-notice__highlight-icon" />
+                  <p>{{ highlight }}</p>
+                </div>
               </div>
+
+              <section
+                v-if="productAttributeRows.length"
+                class="kratom-product-consumer-notice__details"
+                aria-labelledby="kratom-product-details-title"
+              >
+                <p id="kratom-product-details-title" class="kratom-product-panel__eyebrow">{{ t('kratom.product.details') }}</p>
+                <div class="kratom-product-attributes">
+                  <div v-for="row in productAttributeRows" :key="row.key" class="kratom-product-attributes__row">
+                    <span>{{ row.label }}</span>
+                    <strong>{{ row.value }}</strong>
+                  </div>
+                </div>
+              </section>
             </div>
 
             <div class="kratom-product-consumer-notice__grid">
@@ -545,16 +561,6 @@ useSeo().setPageSeo('product', {
           <div v-else class="rich-text kratom-product-panel__content" v-html="descriptionHtml"></div>
         </article>
 
-        <article v-if="productAttributeRows.length" class="kratom-product-panel">
-          <p class="kratom-product-panel__eyebrow">{{ t('kratom.product.details') }}</p>
-          <div class="kratom-product-attributes">
-            <div v-for="row in productAttributeRows" :key="row.key" class="kratom-product-attributes__row">
-              <span>{{ row.label }}</span>
-              <strong>{{ row.value }}</strong>
-            </div>
-          </div>
-        </article>
-
         <article class="kratom-product-panel kratom-product-panel--notice">
           <p class="kratom-product-panel__eyebrow">{{ t('kratom.product.checkout_note') }}</p>
           <i18n-t keypath="kratom.product.checkout_note_text" tag="p" scope="global">
@@ -599,12 +605,13 @@ useSeo().setPageSeo('product', {
 .kratom-product-hero {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 15px;
 
   @include desktop {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
     align-items: start;
+    gap: 32px;
   }
 }
 
@@ -870,6 +877,11 @@ useSeo().setPageSeo('product', {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  order: 2;
+
+  @include desktop {
+    order: 1;
+  }
 }
 
 .kratom-product-legal__eyebrow {
@@ -900,6 +912,11 @@ useSeo().setPageSeo('product', {
   display: flex;
   align-items: center;
   justify-content: center;
+  order: 1;
+
+  @include desktop {
+    order: 2;
+  }
 
   img {
     display: block;
@@ -1048,7 +1065,7 @@ useSeo().setPageSeo('product', {
   border-radius: 999px;
   // background: $color-green;
   background: rgba($color-green, 0.16);
-  height: 40px;
+  min-height: 40px;
 }
 
 .kratom-product-summary__delivery-icon {
@@ -1114,7 +1131,7 @@ useSeo().setPageSeo('product', {
 
   button,
   span {
-    width: 56px;
+    width: 44px;
     height: 56px;
     display: inline-flex;
     align-items: center;
@@ -1122,12 +1139,20 @@ useSeo().setPageSeo('product', {
     background: #fffdf8;
     border: 0;
     cursor: pointer;
+
+    @include desktop {
+      width: 56px;
+    }
   }
 
   span {
-    width: 64px;
+    width: 36px;
     font-weight: 800;
     cursor: default;
+
+    @include desktop {
+      width: 64px;
+    }
   }
 }
 
@@ -1145,6 +1170,10 @@ useSeo().setPageSeo('product', {
   font-size: 18px;
   font-weight: 700;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  @include mobile {
+    padding: 0 20px;
+  }
 }
 
 .kratom-product-summary__buy-btn:hover {
@@ -1260,6 +1289,17 @@ useSeo().setPageSeo('product', {
   gap: 28px;
 }
 
+.kratom-product-consumer-notice__top {
+  display: grid;
+  gap: 24px;
+
+  @include desktop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 32px;
+  }
+}
+
 .kratom-product-consumer-notice__hero {
   display: flex;
   align-items: flex-start;
@@ -1314,6 +1354,14 @@ useSeo().setPageSeo('product', {
   }
 }
 
+.kratom-product-consumer-notice__top > .kratom-product-consumer-notice__highlights {
+  grid-template-columns: minmax(0, 1fr);
+
+  @include mobile {
+    order: 2;
+  }
+}
+
 .kratom-product-consumer-notice__highlight {
   display: flex;
   align-items: flex-start;
@@ -1335,6 +1383,18 @@ useSeo().setPageSeo('product', {
   margin-top: 2px;
   font-size: 18px;
   color: #d87a0e;
+}
+
+.kratom-product-consumer-notice__details {
+  min-width: 0;
+  padding: 24px 26px;
+  border-radius: 28px;
+  border: 1px solid rgba(74, 91, 68, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+
+  @include mobile {
+    order: 1;
+  }
 }
 
 .kratom-product-consumer-notice__grid {
@@ -1440,8 +1500,16 @@ useSeo().setPageSeo('product', {
 
 @include mobile {
   .kratom-product-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     padding-top: 24px;
     padding-bottom: 40px;
+  }
+
+  .kratom-product-hero,
+  .kratom-product-stack {
+    display: contents;
   }
 
   .kratom-product-gallery,
@@ -1486,17 +1554,41 @@ useSeo().setPageSeo('product', {
     font-size: clamp(34px, 10vw, 46px);
   }
 
-  .kratom-product-summary__commerce {
-    align-items: flex-start;
-  }
-
   .kratom-product-summary__pricing {
     justify-content: flex-start;
   }
 
+  .kratom-product-gallery {
+    order: 1;
+  }
+
+  .kratom-product-summary {
+    order: 2;
+  }
+
   .kratom-product-legal {
     grid-template-columns: 1fr;
-    justify-items: start;
+    order: 3;
+  }
+
+  .kratom-product-panel--consumer-notice {
+    order: 4;
+  }
+
+  .kratom-product-adulto {
+    order: 5;
+  }
+
+  .kratom-product-delivery-card {
+    order: 6;
+  }
+
+  .kratom-product-safety {
+    order: 7;
+  }
+
+  .kratom-product-stack > .kratom-product-panel:not(.kratom-product-panel--consumer-notice) {
+    order: 8;
   }
 
   .kratom-product-consumer-notice__hero {

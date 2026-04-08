@@ -530,6 +530,10 @@ onBeforeUnmount(() => {
   margin: 0;
 }
 
+.adulto-verification__form :deep(.adulto-cz > div:not([class])) {
+  z-index: 1 !important;
+}
+
 .adulto-verification__status {
   font-size: 13px;
 }
