@@ -8,9 +8,27 @@ return [
     'apply_unassigned_to_default' => true,
 
     'values' => [
-        'main' => 'Основной storefront',
-        'kratom' => 'Kratom storefront',
-        'telegram' => 'Telegram Mini App storefront',
+        'main' => [
+            'label' => 'Основной storefront',
+            'badge' => [
+                'background' => '#E5E7EB',
+                'color' => '#111827',
+            ],
+        ],
+        'kratom' => [
+            'label' => 'Kratom storefront',
+            'badge' => [
+                'background' => '#DCFCE7',
+                'color' => '#166534',
+            ],
+        ],
+        'telegram' => [
+            'label' => 'Telegram Mini App storefront',
+            'badge' => [
+                'background' => '#DBEAFE',
+                'color' => '#1D4ED8',
+            ],
+        ],
     ],
 
     'settings_overrides' => [

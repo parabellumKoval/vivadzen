@@ -53,6 +53,39 @@ export interface GoogleReviewsQueryParams {
   include_inactive?: boolean
 }
 
+const collectFiniteNumbers = (value: unknown): number[] => {
+  if (Array.isArray(value)) {
+    return value.flatMap(collectFiniteNumbers)
+  }
+
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? [value] : []
+  }
+
+  if (typeof value === 'string') {
+    const parsed = Number(value)
+    return Number.isFinite(parsed) ? [parsed] : []
+  }
+
+  return []
+}
+
+const normalizeMeta = (meta: unknown): GoogleReviewsMeta | null => {
+  if (!meta || typeof meta !== 'object') {
+    return null
+  }
+
+  const rawMeta = meta as Record<string, unknown>
+  const totalValues = collectFiniteNumbers(rawMeta.total)
+  const avgRatingValues = collectFiniteNumbers(rawMeta.avg_rating)
+
+  return {
+    ...rawMeta,
+    total: totalValues.length ? Math.max(...totalValues) : 0,
+    avg_rating: avgRatingValues.length ? avgRatingValues[0] : null,
+  } as GoogleReviewsMeta
+}
+
 export const useGoogleReviewsStore = defineStore('googleReviewsStore', {
   state: (): GoogleReviewsState => ({
     reviews: [],
@@ -66,8 +99,8 @@ export const useGoogleReviewsStore = defineStore('googleReviewsStore', {
     getMeta: (state) => state.meta,
     isLoading: (state) => state.loading,
     getError: (state) => state.error,
-    getAverageRating: (state) => state.meta?.avg_rating || null,
-    getTotalCount: (state) => state.meta?.total || 0
+    getAverageRating: (state) => state.meta?.avg_rating ?? null,
+    getTotalCount: (state) => state.meta?.total ?? 0
   },
 
   actions: {
@@ -113,7 +146,7 @@ export const useGoogleReviewsStore = defineStore('googleReviewsStore', {
         if (data.value) {
           const response = data.value as any
           this.reviews = response.data || []
-          this.meta = response.meta || null
+          this.meta = normalizeMeta(response.meta)
         }
 
         return { reviews: this.reviews, meta: this.meta }

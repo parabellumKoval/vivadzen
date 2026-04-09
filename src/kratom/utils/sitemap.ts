@@ -48,10 +48,17 @@ type GenerateSitemapEntriesOptions = {
   storefront: string
   country: string
   catalogEndpoint: string
+  articlesEndpoint: string
   categorySlug: string
   productResource: string
   defaultLocale?: string
 }
+
+const buildSitemapHeaders = (storefront: string, country: string, locale: string) => ({
+  'X-Storefront': storefront,
+  'X-Region': country,
+  'Accept-Language': locale,
+})
 
 const fetchCatalogProducts = async ({
   catalogEndpoint,
@@ -68,11 +75,7 @@ const fetchCatalogProducts = async ({
   categorySlug: string
   productResource: string
 }) => {
-  const headers = {
-    'X-Storefront': storefront,
-    'X-Region': country,
-    'Accept-Language': locale,
-  }
+  const headers = buildSitemapHeaders(storefront, country, locale)
   const baseQuery = {
     with_products: true,
     category_slug: categorySlug,
@@ -108,11 +111,55 @@ const fetchCatalogProducts = async ({
   ]
 }
 
+const fetchBlogArticles = async ({
+  articlesEndpoint,
+  storefront,
+  country,
+  locale
+}: {
+  articlesEndpoint: string
+  storefront: string
+  country: string
+  locale: string
+}) => {
+  const headers = buildSitemapHeaders(storefront, country, locale)
+  const baseQuery = {
+    per_page: 200,
+  }
+  const fetchPage = (page: number) => $fetch(articlesEndpoint, {
+    headers,
+    query: {
+      ...baseQuery,
+      page,
+    },
+  })
+
+  const firstPage = await fetchPage(1).catch(() => null)
+  const firstPageArticles = Array.isArray((firstPage as any)?.data)
+    ? (firstPage as any).data
+    : []
+  const lastPage = Number((firstPage as any)?.meta?.last_page || 1)
+
+  if (lastPage <= 1) {
+    return firstPageArticles
+  }
+
+  const restPages = await Promise.all(
+    Array.from({ length: lastPage - 1 }, (_, index) => fetchPage(index + 2).catch(() => null))
+  )
+
+  return [
+    ...firstPageArticles,
+    ...restPages.flatMap((page) => Array.isArray((page as any)?.data) ? (page as any).data : [])
+  ]
+}
+
 export const generateSitemapEntries = async ({
   locale,
   storefront,
   country,
   catalogEndpoint,
+  articlesEndpoint,
   categorySlug,
   productResource,
   defaultLocale = SITEMAP_DEFAULT_LOCALE
@@ -129,22 +176,35 @@ export const generateSitemapEntries = async ({
       categorySlug,
       productResource
     })
+    const articles = await fetchBlogArticles({
+      articlesEndpoint,
+      storefront,
+      country: normalizedCountry,
+      locale: normalizedLocale
+    })
 
     const staticEntries = SITEMAP_STATIC_ROUTES.map((slug) => ({
       loc: buildLocalizedPath(slug, normalizedLocale, defaultLocale)
     }))
 
-    const dynamicEntries = (products as SitemapPayloadItem[])
+    const productEntries = (products as SitemapPayloadItem[])
       .filter((item: SitemapPayloadItem) => normalizeSlug(item?.slug ?? ''))
       .map((item: SitemapPayloadItem) => ({
         loc: buildLocalizedPath(normalizeSlug(item?.slug ?? ''), normalizedLocale, defaultLocale),
         lastmod: item?.lastmod || item?.updated_at || item?.updatedAt || undefined
       }))
 
+    const articleEntries = (articles as SitemapPayloadItem[])
+      .filter((item: SitemapPayloadItem) => normalizeSlug(item?.slug ?? ''))
+      .map((item: SitemapPayloadItem) => ({
+        loc: buildLocalizedPath(`blog/${normalizeSlug(item?.slug ?? '')}`, normalizedLocale, defaultLocale),
+        lastmod: item?.lastmod || item?.updated_at || item?.updatedAt || undefined
+      }))
+
     const seen = new Set<string>()
     const merged: Array<{ loc: string; lastmod?: string }> = []
 
-    for (const entry of [...staticEntries, ...dynamicEntries]) {
+    for (const entry of [...staticEntries, ...productEntries, ...articleEntries]) {
       const loc = entry.loc || '/'
       if (seen.has(loc)) continue
       seen.add(loc)

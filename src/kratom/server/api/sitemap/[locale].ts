@@ -35,7 +35,8 @@ export default defineEventHandler(async (event) => {
     defaultLocale,
     categorySlug,
     productResource,
-    catalogEndpoint: `${apiBase}/catalog`
+    catalogEndpoint: `${apiBase}/catalog`,
+    articlesEndpoint: `${apiBase}/articles`
   })
 
   return { urls }

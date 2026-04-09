@@ -279,6 +279,25 @@ export default defineNuxtConfig({
     carriers: ['packeta'],
   },
 
+  snapCarousel: {
+    screens: {
+      mobile: 0,
+      tablet: 768,
+      desktop: 1024,
+      ld: 1441,
+      xld: 1920,
+    },
+    defaults: {
+      mode: 'page',
+      loop: true,
+      gap: { mobile: 10, tablet: 10, desktop: 15, ld: 15, xld: 15 },
+      showArrows: true,
+      showDots: true,
+      snapStop: 'normal',
+      itemsPerPage: { mobile: 2, tablet: 4, desktop: 5, ld: 6, xld: 7 },
+    },
+  },
+
   categoryModule: {
     slugsEndpoint: '/company-category/slugs-simple',
     detailsEndpoint: '/category_cached/:slug',
