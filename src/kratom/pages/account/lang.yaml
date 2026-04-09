@@ -1,0 +1,30 @@
+ru:
+  eyebrow: Личный кабинет
+  text: Управляйте заказами, контактными данными и сохранёнными адресами доставки для kratom storefront.
+  logout_title: Выход из аккаунта
+  logout_desc: Вы точно хотите выйти из аккаунта?
+uk:
+  eyebrow: Особистий кабінет
+  text: Керуйте замовленнями, контактними даними та збереженими адресами доставки для kratom storefront.
+  logout_title: Вихід з облікового запису
+  logout_desc: Ви точно хочете вийти з облікового запису?
+de:
+  eyebrow: Konto
+  text: Verwalten Sie Bestellungen, Kontaktdaten und gespeicherte Lieferadressen für den Kratom-Storefront.
+  logout_title: Abmeldung vom Konto
+  logout_desc: Möchten Sie sich wirklich abmelden?
+es:
+  eyebrow: Cuenta
+  text: Gestiona pedidos, datos de contacto y direcciones de entrega guardadas para el storefront de kratom.
+  logout_title: Cerrar sesión
+  logout_desc: ¿Seguro que desea cerrar la sesión?
+cs:
+  eyebrow: Účet
+  text: Spravujte objednávky, kontaktní údaje a uložené doručovací adresy pro kratom storefront.
+  logout_title: Odhlášení z účtu
+  logout_desc: Opravdu se chcete odhlásit?
+en:
+  eyebrow: Account
+  text: Manage orders, contact details, and saved delivery addresses for the kratom storefront.
+  logout_title: Log out of the account
+  logout_desc: Are you sure you want to log out?

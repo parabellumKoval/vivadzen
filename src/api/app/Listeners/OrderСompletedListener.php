@@ -35,6 +35,8 @@ class OrderСompletedListener
                 'user_id'  => $order->orderable_id,
                 'total'    => $order->price,
                 'currency' => $order->currency,
+                'storefront' => $order->storefront_code,
+                'storefront_code' => $order->storefront_code,
             ];
 
             \Profile::trigger('store.order_paid', null, $payload, $order->orderable_id, ['subject_type' => $order->getMorphClass(), 'subject_id' => $order->id]);

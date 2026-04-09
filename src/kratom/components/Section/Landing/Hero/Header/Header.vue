@@ -48,6 +48,11 @@ const activeLanguage = computed(() => {
 })
 
 const cartCount = computed(() => useCartStore().cartLength)
+const entheogensStoreUrl = computed(() => {
+  const localeCode = String(locale.value || 'cs').toLowerCase()
+  const localeSuffix = localeCode === 'cs' ? '' : `/${localeCode}`
+  return `https://shop.vivadzen.com/cz${localeSuffix}`
+})
 
 const navItems = computed(() => [
   { id: 'catalog', to: '/catalog', title: t('title.catalog'), priority: 40 },
@@ -375,6 +380,19 @@ watch(
 
 <template>
   <header ref="headerRef" class="hero-header" :class="{ 'hero-header--scrolled': isHeaderScrolled }">
+    <div class="hero-header__promo-strip">
+      <div class="hero-header__promo-strip-inner container">
+        <a
+          :href="entheogensStoreUrl"
+          class="hero-header__promo-mobile-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ t('cta.entheogens') }}
+        </a>
+      </div>
+    </div>
+
     <div class="hero-header__inner container">
       <nuxt-img
         v-if="$device.isDesktop"
@@ -500,6 +518,14 @@ watch(
             {{ t('nav.more') }}
           </span>
         </div>
+        <a
+          :href="entheogensStoreUrl"
+          class="hero-header__promo-cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ t('cta.entheogens') }}
+        </a>
       </nav>
 
       <div ref="langRef" class="hero-header__lang" :aria-label="t('lang.label')" @click.stop>

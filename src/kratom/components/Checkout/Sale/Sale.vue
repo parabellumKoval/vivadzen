@@ -12,7 +12,15 @@ const { get: getSetting } = useSettings()
 const props = defineProps({
   cart: {
     type: Object
-  }
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  disabledMessage: {
+    type: String,
+    default: '',
+  },
 })
 
 const emit = defineEmits(['scrollToError'])
@@ -79,6 +87,10 @@ const ageVerificationUnavailable = computed(() => {
 })
 
 const actionBlocked = computed(() => {
+  if (props.disabled) {
+    return true
+  }
+
   if (isDefaultRegion.value) {
     return true
   }
@@ -184,6 +196,19 @@ const redirectToPaymentGateway = async (response) => {
 
 // HANDLERS
 const goCompleteHandler = () => {
+  if (props.disabled) {
+    if (props.disabledMessage) {
+      useNoty().setNoty({
+        title: t('error.error'),
+        content: props.disabledMessage,
+        type: 'warning',
+      }, 6000)
+    }
+
+    emit('scrollToError')
+    return
+  }
+
   if (!ensureAgeVerificationBeforeSubmit()) {
     return
   }
@@ -206,6 +231,19 @@ const goCompleteHandler = () => {
 }
 
 const goPayHandler = () => {
+  if (props.disabled) {
+    if (props.disabledMessage) {
+      useNoty().setNoty({
+        title: t('error.error'),
+        content: props.disabledMessage,
+        type: 'warning',
+      }, 6000)
+    }
+
+    emit('scrollToError')
+    return
+  }
+
   if (!ensureAgeVerificationBeforeSubmit()) {
     return
   }
@@ -281,6 +319,10 @@ const goPayHandler = () => {
         </div>
 
         
+      </div>
+
+      <div v-if="disabledMessage && disabled" class="sale-block-note">
+        {{ disabledMessage }}
       </div>
 
       <transition name="fade-in">

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import FloatingButtons from '~/components/Section/Landing/FloatingButtons/FloatingButtons.vue'
+
 const route = useRoute()
 const runtimeConfig = useRuntimeConfig()
 const { htmlAttrs } = useKratomLocaleHead()
@@ -45,6 +47,7 @@ useSchemaOrg([
         <main class="kratom-main" :style="pageThemeStyles">
           <slot />
         </main>
+        <FloatingButtons />
         <KratomSiteFooter />
         <lazy-kratom-region-switcher-modal />
         <lazy-modal-noty />
@@ -58,8 +61,8 @@ useSchemaOrg([
 
 <style scoped lang="scss">
 .kratom-main {
-  min-height: calc(100vh - 60px);
-  padding-top: 60px;
+  min-height: calc(100vh - 108px);
+  padding-top: 108px;
 
   @include desktop {
     min-height: calc(100vh - 80px);

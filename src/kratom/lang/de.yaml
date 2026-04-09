@@ -578,7 +578,7 @@ kratom:
     adulto_modal_title: 'So bestätigen Sie Ihr Alter und erstellen eine Bestellung'
   checkout:
     eyebrow: 'Gastbestellung'
-    text: 'Kein Konto erforderlich. Versand- und Zahlungsmethoden werden aus dem gemeinsamen VivaDzen-Backend geladen.'
+    text: 'Sie können die Bestellung sowohl als Gast als auch als angemeldeter Kunde abschließen.'
     empty_prefix: 'Ihr Warenkorb ist leer.'
     empty_action: 'Zum Katalog'
     empty_suffix: 'und Produkte hinzufügen, um fortzufahren.'

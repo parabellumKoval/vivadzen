@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import FloatingButtons from '~/components/Section/Landing/FloatingButtons/FloatingButtons.vue'
+
 const route = useRoute()
 const runtimeConfig = useRuntimeConfig()
 const { htmlAttrs } = useKratomLocaleHead()
@@ -31,6 +33,7 @@ useSchemaOrg([
     <Html :lang="htmlAttrs.lang" :dir="htmlAttrs.dir">
       <Body>
         <slot />
+        <FloatingButtons />
         <KratomSiteFooter />
         <lazy-kratom-region-switcher-modal />
         <lazy-modal-noty />

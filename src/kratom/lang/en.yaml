@@ -586,6 +586,7 @@ affiliate:
 kratom:
   header:
     store: 'Kratom Store'
+    entheogens_cta: 'Our entheogens store'
   footer:
     eyebrow: 'VivaDzen mini-store'
     title: 'Kratom curated for the Czech market'
@@ -648,7 +649,7 @@ kratom:
     legal_image_alt: 'Illustration of a certified kratom product'
   checkout:
     eyebrow: 'Guest checkout'
-    text: 'No account required. Delivery and payment methods are loaded from the shared VivaDzen backend.'
+    text: 'You can place an order either as a guest or as a signed-in customer.'
     empty_prefix: 'Your cart is empty.'
     empty_action: 'Go to catalog'
     empty_suffix: 'and add products to continue.'

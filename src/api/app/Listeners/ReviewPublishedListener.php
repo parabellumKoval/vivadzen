@@ -7,6 +7,7 @@ use App\Services\Referral\Triggers\ReviewVideoPublished;
 use App\Services\Referral\Triggers\ReviewPhotoPublished;
 use App\Support\ReviewRewardContext;
 use Backpack\Reviews\app\Events\ReviewPublished;
+use Backpack\Store\app\Services\Store;
 
 class ReviewPublishedListener
 {
@@ -52,7 +53,10 @@ class ReviewPublishedListener
         $triggerAlias = $this->resolveTriggerAlias($reviewType);
 
         // Give bonus money for review
-        \Profile::trigger($triggerAlias, null, [], $review->owner_id, [
+        \Profile::trigger($triggerAlias, null, [
+            'storefront' => Store::storefront(),
+            'storefront_code' => Store::storefront(),
+        ], $review->owner_id, [
             'subject_type' => $review->getMorphClass(),
             'subject_id' => $review->id,
         ]);

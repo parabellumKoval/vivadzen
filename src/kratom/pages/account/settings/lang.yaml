@@ -1,0 +1,120 @@
+ru:
+  personal_data: Персональные данные
+  security: Безопасность
+  change_email: Изменить email для входа
+  change_pass: Изменить пароль
+  delivery_data: Сохранённые адреса доставки
+  saved_addresses: Адреса доставки
+  add_address: Добавить адрес
+  no_saved_addresses: У вас пока нет сохранённых адресов доставки.
+  delivery_method: Способ доставки
+  address_title: Название адреса
+  warehouse: Пункт выдачи / отделение
+  house: Дом
+  flat: Квартира
+  current_password: Текущий пароль
+  address_fields:
+    country: Страна
+    city: Город
+    address_1: Адрес
+    postcode: Индекс
+uk:
+  personal_data: Персональні дані
+  security: Безпека
+  change_email: Змінити email для входу
+  change_pass: Змінити пароль
+  delivery_data: Збережені адреси доставки
+  saved_addresses: Адреси доставки
+  add_address: Додати адресу
+  no_saved_addresses: У вас поки немає збережених адрес доставки.
+  delivery_method: Спосіб доставки
+  address_title: Назва адреси
+  warehouse: Пункт видачі / відділення
+  house: Будинок
+  flat: Квартира
+  current_password: Поточний пароль
+  address_fields:
+    country: Країна
+    city: Місто
+    address_1: Адреса
+    postcode: Індекс
+de:
+  personal_data: Persönliche Daten
+  security: Sicherheit
+  change_email: Login-E-Mail ändern
+  change_pass: Passwort ändern
+  delivery_data: Gespeicherte Lieferadressen
+  saved_addresses: Lieferadressen
+  add_address: Adresse hinzufügen
+  no_saved_addresses: Sie haben noch keine gespeicherten Lieferadressen.
+  delivery_method: Versandart
+  address_title: Adresstitel
+  warehouse: Abholpunkt / Filiale
+  house: Hausnummer
+  flat: Wohnung
+  current_password: Aktuelles Passwort
+  address_fields:
+    country: Land
+    city: Stadt
+    address_1: Adresse
+    postcode: Postleitzahl
+es:
+  personal_data: Datos personales
+  security: Seguridad
+  change_email: Cambiar el correo de acceso
+  change_pass: Cambiar la contraseña
+  delivery_data: Direcciones de entrega guardadas
+  saved_addresses: Direcciones de entrega
+  add_address: Añadir dirección
+  no_saved_addresses: Aún no tienes direcciones de entrega guardadas.
+  delivery_method: Método de entrega
+  address_title: Nombre de la dirección
+  warehouse: Punto de entrega / sucursal
+  house: Casa
+  flat: Apartamento
+  current_password: Contraseña actual
+  address_fields:
+    country: País
+    city: Ciudad
+    address_1: Dirección
+    postcode: Código postal
+cs:
+  personal_data: Osobní údaje
+  security: Zabezpečení
+  change_email: Změnit přihlašovací e-mail
+  change_pass: Změnit heslo
+  delivery_data: Uložené doručovací adresy
+  saved_addresses: Doručovací adresy
+  add_address: Přidat adresu
+  no_saved_addresses: Zatím nemáte uložené žádné doručovací adresy.
+  delivery_method: Způsob doručení
+  address_title: Název adresy
+  warehouse: Výdejní místo / pobočka
+  house: Číslo domu
+  flat: Byt
+  current_password: Aktuální heslo
+  address_fields:
+    country: Země
+    city: Město
+    address_1: Adresa
+    postcode: PSČ
+en:
+  personal_data: Personal data
+  security: Security
+  change_email: Change login email
+  change_pass: Change password
+  delivery_data: Saved delivery addresses
+  saved_addresses: Delivery addresses
+  add_address: Add address
+  no_saved_addresses: You do not have any saved delivery addresses yet.
+  delivery_method: Delivery method
+  address_title: Address title
+  warehouse: Pickup point / warehouse
+  house: House
+  flat: Apartment
+  current_password: Current password
+  address_fields:
+    country: Country
+    city: City
+    address_1: Address
+    postcode: Postal code

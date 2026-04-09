@@ -80,6 +80,16 @@
     background: $color-border;
   }
 
+  &-block-note {
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: rgba(255, 248, 235, 0.92);
+    border: 1px solid rgba(138, 90, 43, 0.14);
+    color: #6b573f;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
   &-age-verification {
     display: grid;
     gap: 8px;

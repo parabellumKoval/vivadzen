@@ -1,0 +1,172 @@
+cs:
+  auth:
+    eyebrow: Osobní účet
+    login_title: Přihlášení
+    register_title: Registrace
+    verify_title: Potvrďte email
+    reset_title: Nové heslo
+    login_text: Přihlaste se do účtu, sledujte objednávky a používejte uložené údaje při další objednávce.
+    register_text: Vytvořte účet, aby se kontaktní údaje a doručovací adresy vyplňovaly automaticky.
+    verify_text: Na email jsme poslali potvrzovací odkaz. Po potvrzení se budete moci přihlásit a používat účet.
+    reset_text: Nastavte nové heslo a přihlaste se zpět do svého účtu.
+    benefits:
+      orders_title: Historie objednávek
+      orders_text: Všechny objednávky, stavy a podrobnosti na jednom místě.
+      addresses_title: Uložené adresy
+      addresses_text: Vyberte si při checkoutu doručovací adresu jedním kliknutím.
+      profile_title: Profil a bezpečnost
+      profile_text: Spravujte kontakty, email i heslo bez podpory.
+    email_label: Email
+    password_label: Heslo
+    password_new_label: Nové heslo
+    password_confirm_label: Potvrzení hesla
+    enter_with: Přihlásit se pomocí
+    remember_text: Nemáte účet?
+    have_account: Už účet máte?
+    guest_text: Nebo pokračujte jako host při checkoutu.
+    agree_prefix: Souhlasím s
+    agree_link: podmínkami a zásadami ochrany osobních údajů
+    verify_resend_hint: Pokud dopis nevidíte, zkontrolujte spam nebo odešlete odkaz znovu.
+    verify_logged_in: Odeslat znovu pro aktuální účet
+    verify_guest: Odeslat znovu na email
+    back_to_login: Zpět na přihlášení
+    back_to_home: Na hlavní stránku
+    go_register: Vytvořit účet
+    go_login: Přihlásit se
+    forgot_toggle: Nepamatujete si heslo?
+    forgot_text: Pošleme odkaz pro nastavení nového hesla.
+    reset_submit: Uložit nové heslo
+    recovery_submit: Odeslat odkaz
+    verification_sent: Potvrzovací email byl odeslán znovu.
+    reset_sent: Odkaz na změnu hesla byl odeslán.
+    reset_success: Heslo bylo změněno.
+    redirect_after_login: Po přihlášení budete vráceni k objednávce.
+en:
+  auth:
+    eyebrow: Personal account
+    login_title: Sign in
+    register_title: Create account
+    verify_title: Verify your email
+    reset_title: New password
+    login_text: Sign in to manage your orders and reuse saved details during the next checkout.
+    register_text: Create an account so your contact details and delivery addresses fill in automatically.
+    verify_text: We sent a verification link to your email. Confirm it to sign in and use your account.
+    reset_text: Set a new password and sign back in to your account.
+    benefits:
+      orders_title: Order history
+      orders_text: All purchases, statuses, and details in one place.
+      addresses_title: Saved addresses
+      addresses_text: Reuse delivery addresses in checkout with one click.
+      profile_title: Profile and security
+      profile_text: Update contacts, email, and password without support.
+    email_label: Email
+    password_label: Password
+    password_new_label: New password
+    password_confirm_label: Confirm password
+    enter_with: Sign in with
+    remember_text: No account yet?
+    have_account: Already have an account?
+    guest_text: Or continue checkout as a guest.
+    agree_prefix: I agree with the
+    agree_link: terms and privacy policy
+    verify_resend_hint: If you do not see the email, check spam or resend the link.
+    verify_logged_in: Resend for current account
+    verify_guest: Resend to email
+    back_to_login: Back to sign in
+    back_to_home: Go to home
+    go_register: Create account
+    go_login: Sign in
+    forgot_toggle: Forgot your password?
+    forgot_text: We will email you a reset link.
+    reset_submit: Save new password
+    recovery_submit: Send link
+    verification_sent: Verification email sent again.
+    reset_sent: Password reset link sent.
+    reset_success: Password has been updated.
+    redirect_after_login: After sign in you will be returned to checkout.
+ru:
+  auth:
+    eyebrow: Личный кабинет
+    login_title: Вход
+    register_title: Регистрация
+    verify_title: Подтвердите email
+    reset_title: Новый пароль
+    login_text: Войдите в аккаунт, чтобы управлять заказами и использовать сохраненные данные при следующем оформлении.
+    register_text: Создайте аккаунт, чтобы контакты и адреса доставки подставлялись автоматически.
+    verify_text: Мы отправили письмо со ссылкой для подтверждения. После подтверждения вы сможете войти и пользоваться аккаунтом.
+    reset_text: Установите новый пароль и снова войдите в личный кабинет.
+    benefits:
+      orders_title: История заказов
+      orders_text: Все покупки, статусы и детали в одном месте.
+      addresses_title: Сохраненные адреса
+      addresses_text: Выбирайте адрес доставки в checkout в один клик.
+      profile_title: Профиль и безопасность
+      profile_text: Обновляйте контакты, email и пароль без обращения в поддержку.
+    email_label: Email
+    password_label: Пароль
+    password_new_label: Новый пароль
+    password_confirm_label: Подтверждение пароля
+    enter_with: Войти с помощью
+    remember_text: Нет аккаунта?
+    have_account: Уже есть аккаунт?
+    guest_text: Или продолжайте оформление как гость.
+    agree_prefix: Я согласен с
+    agree_link: правилами и политикой конфиденциальности
+    verify_resend_hint: Если письмо не видно, проверьте спам или отправьте ссылку повторно.
+    verify_logged_in: Отправить повторно для текущего аккаунта
+    verify_guest: Отправить повторно на email
+    back_to_login: Назад ко входу
+    back_to_home: На главную
+    go_register: Создать аккаунт
+    go_login: Войти
+    forgot_toggle: Забыли пароль?
+    forgot_text: Мы отправим письмо для сброса пароля.
+    reset_submit: Сохранить новый пароль
+    recovery_submit: Отправить ссылку
+    verification_sent: Письмо с подтверждением отправлено повторно.
+    reset_sent: Ссылка для смены пароля отправлена.
+    reset_success: Пароль успешно обновлен.
+    redirect_after_login: После входа вы вернетесь к оформлению заказа.
+uk:
+  auth:
+    eyebrow: Особистий кабінет
+    login_title: Вхід
+    register_title: Реєстрація
+    verify_title: Підтвердьте email
+    reset_title: Новий пароль
+    login_text: Увійдіть в акаунт, щоб керувати замовленнями та використовувати збережені дані під час наступного checkout.
+    register_text: Створіть акаунт, щоб контакти й адреси доставки підставлялися автоматично.
+    verify_text: Ми надіслали лист із посиланням для підтвердження. Після підтвердження ви зможете увійти та користуватися акаунтом.
+    reset_text: Встановіть новий пароль і знову увійдіть до особистого кабінету.
+    benefits:
+      orders_title: Історія замовлень
+      orders_text: Усі покупки, статуси та деталі в одному місці.
+      addresses_title: Збережені адреси
+      addresses_text: Обирайте адресу доставки в checkout в один клік.
+      profile_title: Профіль і безпека
+      profile_text: Оновлюйте контакти, email і пароль без звернення в підтримку.
+    email_label: Email
+    password_label: Пароль
+    password_new_label: Новий пароль
+    password_confirm_label: Підтвердження пароля
+    enter_with: Увійти за допомогою
+    remember_text: Немає акаунта?
+    have_account: Уже є акаунт?
+    guest_text: Або продовжуйте оформлення як гість.
+    agree_prefix: Я погоджуюся з
+    agree_link: правилами та політикою конфіденційності
+    verify_resend_hint: Якщо листа не видно, перевірте спам або надішліть посилання повторно.
+    verify_logged_in: Надіслати повторно для поточного акаунта
+    verify_guest: Надіслати повторно на email
+    back_to_login: Назад до входу
+    back_to_home: На головну
+    go_register: Створити акаунт
+    go_login: Увійти
+    forgot_toggle: Забули пароль?
+    forgot_text: Ми надішлемо лист для скидання пароля.
+    reset_submit: Зберегти новий пароль
+    recovery_submit: Надіслати посилання
+    verification_sent: Лист із підтвердженням надіслано повторно.
+    reset_sent: Посилання для зміни пароля надіслано.
+    reset_success: Пароль успішно оновлено.
+    redirect_after_login: Після входу ви повернетеся до оформлення замовлення.

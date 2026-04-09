@@ -583,7 +583,7 @@ kratom:
     adulto_modal_title: 'Cómo verificar la edad y crear un pedido'
   checkout:
     eyebrow: 'Compra como invitado'
-    text: 'No hace falta una cuenta. Los métodos de entrega y pago se cargan desde el backend compartido de VivaDzen.'
+    text: 'Puedes realizar el pedido tanto como invitado como con una cuenta autorizada.'
     empty_prefix: 'Tu carrito está vacío.'
     empty_action: 'Ir al catálogo'
     empty_suffix: 'y añade productos para continuar.'

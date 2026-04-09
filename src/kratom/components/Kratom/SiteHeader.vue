@@ -2,6 +2,7 @@
 const { t, locale, locales } = useI18n()
 const regionPath = useToLocalePath()
 const route = useRoute()
+const { user, isAuthenticated, init } = useAuth()
 const isMenuOpen = ref(false)
 const isDesktopCatalogAvailable = ref(false)
 const isCatalogDropdownOpen = ref(false)
@@ -25,6 +26,19 @@ const localeItems = computed(() => {
 })
 
 const cartCount = computed(() => cartStore.cartLength)
+const accountLabel = computed(() => {
+  if (isAuthenticated.value) {
+    return user.value?.first_name || t('title.account.account')
+  }
+
+  return t('button.login')
+})
+
+const entheogensStoreUrl = computed(() => {
+  const localeCode = String(locale.value || 'cs').toLowerCase()
+  const localeSuffix = localeCode === 'cs' ? '' : `/${localeCode}`
+  return `https://shop.vivadzen.com/cz${localeSuffix}`
+})
 
 function stripLocale(path: string) {
   const fullPath = String(path || '/')
@@ -94,6 +108,8 @@ watch(() => route.fullPath, () => {
 })
 
 onMounted(() => {
+  init().catch(() => {})
+
   if (typeof window === 'undefined') {
     return
   }
@@ -124,6 +140,19 @@ onBeforeUnmount(() => {
 
 <template>
   <header class="site-header">
+    <div class="site-header__promo-strip">
+      <div class="site-header__promo-strip-inner container">
+        <a
+          :href="entheogensStoreUrl"
+          class="site-header__promo-mobile-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ t('kratom.header.entheogens_cta') }}
+        </a>
+      </div>
+    </div>
+
     <div class="site-header__bar container">
       <NuxtLink :to="regionPath('/')" class="site-header__brand" @click="closeMenu">
         <span class="site-header__brand-mark">VD</span>
@@ -133,34 +162,45 @@ onBeforeUnmount(() => {
         </span>
       </NuxtLink>
 
-      <nav class="site-header__nav" aria-label="Primary navigation">
-        <div
-          v-for="item in navItems"
-          :key="item.to"
-          class="site-header__nav-item"
-          :class="{
-            'site-header__nav-item--catalog': item.to === '/catalog',
-            'is-open': item.to === '/catalog' && isCatalogDropdownOpen,
-          }"
-          @mouseenter="item.to === '/catalog' ? openCatalogDropdown() : undefined"
-          @mouseleave="item.to === '/catalog' ? closeCatalogDropdown() : undefined"
-          @focusin="item.to === '/catalog' ? openCatalogDropdown() : undefined"
-          @focusout="item.to === '/catalog' ? handleCatalogFocusOut($event) : undefined"
-        >
-          <NuxtLink
-            :to="regionPath(item.to)"
-            class="site-header__nav-link"
+      <div class="site-header__center">
+        <nav class="site-header__nav" aria-label="Primary navigation">
+          <div
+            v-for="item in navItems"
+            :key="item.to"
+            class="site-header__nav-item"
+            :class="{
+              'site-header__nav-item--catalog': item.to === '/catalog',
+              'is-open': item.to === '/catalog' && isCatalogDropdownOpen,
+            }"
+            @mouseenter="item.to === '/catalog' ? openCatalogDropdown() : undefined"
+            @mouseleave="item.to === '/catalog' ? closeCatalogDropdown() : undefined"
+            @focusin="item.to === '/catalog' ? openCatalogDropdown() : undefined"
+            @focusout="item.to === '/catalog' ? handleCatalogFocusOut($event) : undefined"
           >
-            {{ item.label }}
-          </NuxtLink>
+            <NuxtLink
+              :to="regionPath(item.to)"
+              class="site-header__nav-link"
+            >
+              {{ item.label }}
+            </NuxtLink>
 
-          <KratomCatalogDropdown
-            v-if="item.to === '/catalog'"
-            :enabled="isDesktopCatalogAvailable"
-            @navigate="closeCatalogDropdown"
-          />
-        </div>
-      </nav>
+            <KratomCatalogDropdown
+              v-if="item.to === '/catalog'"
+              :enabled="isDesktopCatalogAvailable"
+              @navigate="closeCatalogDropdown"
+            />
+          </div>
+        </nav>
+
+        <a
+          :href="entheogensStoreUrl"
+          class="site-header__promo-cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ t('kratom.header.entheogens_cta') }}
+        </a>
+      </div>
 
       <div class="site-header__actions">
         <div class="site-header__locales">
@@ -175,6 +215,11 @@ onBeforeUnmount(() => {
           </NuxtLink>
         </div>
 
+        <NuxtLink :to="regionPath(isAuthenticated ? '/account/orders' : '/auth/login')" class="site-header__account">
+          <IconCSS :name="isAuthenticated ? 'ph:user-circle-fill' : 'ph:sign-in'" />
+          <span>{{ accountLabel }}</span>
+        </NuxtLink>
+
         <button type="button" class="site-header__cart" @click="openCart">
           <IconCSS name="ph:shopping-cart-fill" />
           <span class="site-header__cart-count">{{ cartCount }}</span>
@@ -187,8 +232,15 @@ onBeforeUnmount(() => {
     </div>
 
     <transition name="fade-in">
-      <div v-if="isMenuOpen" class="site-header__mobile">
+        <div v-if="isMenuOpen" class="site-header__mobile">
         <div class="site-header__mobile-card container">
+          <NuxtLink
+            :to="regionPath(isAuthenticated ? '/account/orders' : '/auth/login')"
+            class="site-header__mobile-link"
+            @click="closeMenu"
+          >
+            {{ accountLabel }}
+          </NuxtLink>
           <NuxtLink
             v-for="item in navItems"
             :key="`${item.to}-mobile`"
@@ -214,12 +266,73 @@ onBeforeUnmount(() => {
   border-bottom: 1px solid rgba(74, 91, 68, 0.12);
 }
 
+.site-header__promo-mobile-btn,
+.site-header__promo-cta {
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    }
+}
+
+.site-header__promo-strip {
+  background: rgba(50, 58, 74, 0.96);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  @include desktop {
+    display: none;
+  }
+}
+
+.site-header__promo-strip-inner {
+  min-height: 48px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-header__promo-mobile-btn {
+  min-height: 34px;
+  padding: 8px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: $color-orange;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  text-align: center;
+}
+
 .site-header__bar {
   min-height: 78px;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 20px;
+}
+
+.site-header__center {
+  display: none;
+
+  @include desktop {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 18px;
+  }
 }
 
 .site-header__brand {
@@ -262,6 +375,7 @@ onBeforeUnmount(() => {
 
 .site-header__nav {
   display: none;
+  grid-column: 2;
   justify-content: center;
   gap: 26px;
 
@@ -306,6 +420,48 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
+}
+
+.site-header__promo-cta {
+  display: none;
+
+  @include desktop {
+    grid-column: 3;
+    min-height: 44px;
+    padding: 0 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: $color-orange;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+}
+
+.site-header__account {
+  min-height: 44px;
+  max-width: 180px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(74, 91, 68, 0.12);
+  color: #1f2b1d;
+  font-size: 14px;
+  font-weight: 700;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .site-header__locales {

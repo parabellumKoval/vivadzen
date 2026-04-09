@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 use Backpack\Profile\app\Models\Traits\HasProfile;
 use Backpack\Profile\app\Models\Profile as ProfileModel;
+use Backpack\Profile\app\Support\StorefrontFeatureGate;
 use Backpack\Helpers\Traits\FormatsUniqAttribute;
+use Backpack\Store\app\Services\Store;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -136,6 +138,75 @@ class User extends Authenticatable implements MustVerifyEmail
         return $normalized;
     }
 
+    public function preferredStorefrontCode(?string $fallback = null): ?string
+    {
+        if (method_exists($this, 'relationLoaded') && method_exists($this, 'loadMissing') && !$this->relationLoaded('profile')) {
+            $this->loadMissing('profile');
+        }
+
+        $profileStorefront = Store::normalizeStorefrontCode(
+            data_get($this->profile?->getMetaOther(), 'preferred_storefront')
+        );
+
+        if ($profileStorefront) {
+            return $profileStorefront;
+        }
+
+        $requestStorefront = Store::normalizeStorefrontCode(
+            $fallback
+            ?? request()->header(Store::storefrontHeaderName())
+            ?? request()->get(Store::storefrontRequestKey())
+        );
+
+        return $requestStorefront;
+    }
+
+    public function rememberPreferredStorefront(?string $storefront = null): void
+    {
+        if (method_exists($this, 'relationLoaded') && method_exists($this, 'loadMissing') && !$this->relationLoaded('profile')) {
+            $this->loadMissing('profile');
+        }
+
+        if (!$this->profile) {
+            return;
+        }
+
+        $resolvedStorefront = $this->preferredStorefrontCode($storefront);
+
+        if (!$resolvedStorefront) {
+            return;
+        }
+
+        $other = $this->profile->getMetaOther();
+        $current = Store::normalizeStorefrontCode($other['preferred_storefront'] ?? null);
+
+        if ($current === $resolvedStorefront) {
+            return;
+        }
+
+        $other['preferred_storefront'] = $resolvedStorefront;
+        $this->profile->mergeMeta(['other' => $other]);
+        $this->profile->save();
+    }
+
+    public static function storefrontFrontendUrl(?string $storefront = null, ?string $fallback = null): ?string
+    {
+        $resolvedStorefront = Store::normalizeStorefrontCode($storefront);
+        $configured = is_string($resolvedStorefront)
+            ? data_get(config('dress.storefront.values', []), "{$resolvedStorefront}.frontend_url")
+            : null;
+
+        if (is_string($configured) && trim($configured) !== '') {
+            return rtrim(trim($configured), '/');
+        }
+
+        if (is_string($fallback) && trim($fallback) !== '') {
+            return rtrim(trim($fallback), '/');
+        }
+
+        return null;
+    }
+
     public function toArray(): array
     {
         $profile = $this->profile;
@@ -145,13 +216,14 @@ class User extends Authenticatable implements MustVerifyEmail
             ? ProfileModel::fillAddress($profile->getMetaSection('billing'))
             : ProfileModel::fillAddress([]);
         $shipping = $profile
-            ? ProfileModel::fillAddress($profile->getMetaSection('shipping'))
+            ? ProfileModel::fillAddress($profile->shipping)
             : ProfileModel::fillAddress([]);
 
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'email_verified_at' => optional($this->email_verified_at)?->toIso8601String(),
             'first_name' => $profile?->first_name,
             'last_name' => $profile?->last_name,
             'phone' => $profile?->phone,
@@ -166,6 +238,8 @@ class User extends Authenticatable implements MustVerifyEmail
             'personal_discount_percent' => $this->personal_discount_percent,
             'billing' => $billing,
             'shipping' => $shipping,
+            'saved_delivery_addresses' => $profile?->savedDeliveryAddresses() ?? [],
+            'storefront' => $this->preferredStorefrontCode($profile?->currentStorefrontCode()),
             'meta' => $profile?->metaWithoutOther() ?? [],
         ];
     }
@@ -187,10 +261,12 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function toOrderArray() {
+        $profile = $this->profile;
+
         return [
-            'first_name' => $this->name,
-            'last_name' => $this->name, 
-            'phone' => null, 
+            'first_name' => $profile?->first_name ?: $this->name,
+            'last_name' => $profile?->last_name,
+            'phone' => $profile?->phone,
             'email' => $this->email
         ];
     }
@@ -201,6 +277,10 @@ class User extends Authenticatable implements MustVerifyEmail
             get: function () {
                 if (method_exists($this, 'relationLoaded') && method_exists($this, 'loadMissing') && !$this->relationLoaded('profile')) {
                     $this->loadMissing('profile');
+                }
+
+                if (!app(StorefrontFeatureGate::class)->featureEnabled('profile.users.allow_personal_discount', true, null, [], null)) {
+                    return 0.0;
                 }
 
                 $percent = $this->profile->discount_percent ?? 0.0;

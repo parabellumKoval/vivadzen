@@ -18,6 +18,8 @@ ru:
     title: "Навигация"
     close: "Закрыть"
     contacts_title: "Контакты"
+  cta:
+    entheogens: "Наш сайт с энтеогенами"
   info:
     title: "Информация"
     certificates: "Сертификаты продавца"
@@ -52,6 +54,8 @@ uk:
     title: "Навігація"
     close: "Закрити"
     contacts_title: "Контакти"
+  cta:
+    entheogens: "Наш сайт з ентеогенами"
   info:
     title: "Інформація"
     certificates: "Сертифікати продавця"
@@ -86,6 +90,8 @@ en:
     title: "Navigation"
     close: "Close"
     contacts_title: "Contacts"
+  cta:
+    entheogens: "Our entheogens store"
   info:
     title: "Information"
     certificates: "Seller certificates"
@@ -120,6 +126,8 @@ cs:
     title: "Navigace"
     close: "Zavřít"
     contacts_title: "Kontakty"
+  cta:
+    entheogens: "Náš web s entheogeny"
   info:
     title: "Informace"
     certificates: "Certifikáty prodejce"

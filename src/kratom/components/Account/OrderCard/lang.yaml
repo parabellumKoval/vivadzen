@@ -1,0 +1,30 @@
+ru:
+  number: Номер
+  created_at: Дата и время
+  amount: Сумма
+  recipient: Получатель
+uk:
+  number: Номер
+  created_at: Дата та час
+  amount: Сума
+  recipient: Одержувач
+de:
+  number: Nummer
+  created_at: Datum und Uhrzeit
+  amount: Betrag
+  recipient: Empfänger
+es:
+  number: Número
+  created_at: Fecha y hora
+  amount: Importe
+  recipient: Destinatario
+cs:
+  number: Číslo
+  created_at: Datum a čas
+  amount: Částka
+  recipient: Příjemce
+en:
+  number: Number
+  created_at: Date and time
+  amount: Amount
+  recipient: Recipient

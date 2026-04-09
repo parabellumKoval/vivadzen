@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import FloatingButtons from '~/components/Section/Landing/FloatingButtons/FloatingButtons.vue'
-
 const { t } = useI18n()
 const pageRoot = ref<HTMLElement | null>(null)
 const isRevealReady = ref(false)
@@ -136,8 +134,6 @@ useSeo().setPageSeo('home', {
     <div id="welcome" class="page-reveal-section">
       <section-landing-welcome />
     </div>
-
-    <FloatingButtons />
   </div>
 </template>
 

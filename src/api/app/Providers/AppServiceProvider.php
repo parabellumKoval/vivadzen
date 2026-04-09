@@ -8,6 +8,8 @@ use App\Services\AgeVerification\AgeVerificationService;
 use App\Support\RegionalContext;
 use App\Support\ReviewRewardContext;
 use App\Support\StorefrontSettings;
+use App\Models\User;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
 
 use \Backpack\Store\app\Models\Order;
@@ -64,6 +66,25 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+      ResetPassword::createUrlUsing(function ($user, string $token) {
+        $storefront = method_exists($user, 'preferredStorefrontCode')
+            ? $user->preferredStorefrontCode()
+            : null;
+        $storefrontBaseUrl = method_exists(User::class, 'storefrontFrontendUrl')
+            ? User::storefrontFrontendUrl($storefront)
+            : null;
+        $apiPath = route('password.reset', [
+            'token' => $token,
+            'email' => $user->getEmailForPasswordReset(),
+        ], false);
+
+        if ($storefrontBaseUrl) {
+            return url($apiPath . (str_contains($apiPath, '?') ? '&' : '?') . 'storefront=' . urlencode($storefront));
+        }
+
+        return url($apiPath);
+      });
+
       \View::composer(['backpack::inc.topbar_left_content', 'backpack::inc.sidebar_content'], function ($view) {
 		    $orders = Order::where('status','new')->count();
 		    $reviews = Review::where('is_moderated', 0)->count();

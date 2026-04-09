@@ -2,12 +2,13 @@
   position: fixed;
   top: 0;
   left: 50%;
-  height: 60px;
+  min-height: 60px;
   width: 100vw;
   margin: 0 auto;
   transform: translateX(-50%);
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   color: $color-8;
   z-index: 100;
   transition: all 0.6s ease;
@@ -28,6 +29,7 @@
   }
 
   @include desktop {
+    min-height: 80px;
     background-color: transparent;
   }
 
@@ -49,22 +51,80 @@
   }
 
   @include desktop {
-    height: 80px;
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 24px;
+  }
+
+  &__promo-mobile-btn,
+  &__promo-cta {
+    text-decoration: none;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  &__promo-strip {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    background: rgba(50, 58, 74, 0.96);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    @include desktop {
+      display: none;
+    }
+  }
+
+  &__promo-strip-inner {
+    position: relative;
+    z-index: 1;
+    min-height: 48px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__promo-mobile-btn {
+    position: relative;
+    z-index: 1;
+    min-height: 34px;
+    padding: 8px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: $color-orange;
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(255, 142, 61, 0.28);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
   }
 
   &__inner {
     position: relative;
     z-index: 1;
+    min-height: 60px;
     display: grid;
     grid-template-columns: 1fr 44px 1fr;
     align-items: center;
     gap: 16px;
 
     @include desktop {
+      min-height: 80px;
       display: grid;
-      grid-template-columns: 180px 1fr 180px;
+      grid-template-columns: 180px minmax(0, 1fr) 180px;
       gap: 24px;
     }
   }
@@ -92,7 +152,8 @@
       order: 1;
       width: 180px;
       height: 56px;
-      grid-column: auto;
+      grid-column: 1;
+      justify-self: start;
     }
   }
 
@@ -191,6 +252,7 @@
     justify-content: center;
     gap: 22px;
     position: relative;
+    grid-column: 2;
     white-space: nowrap;
     min-width: 0;
     overflow: visible;
@@ -345,10 +407,37 @@
     order: 3;
 
     @include desktop {
-      grid-column: auto;
+      grid-column: 3;
       justify-self: end;
       // opacity: 1;
       // transform: translateY(-100%);
+    }
+  }
+
+  &__promo-cta {
+    display: none;
+
+    @include desktop {
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 18px);
+      min-height: 44px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: $color-orange;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      transform: translateY(-50%);
+
+      &:hover {
+        transform: translateY(calc(-50% - 1px));
+      }
     }
   }
 
@@ -402,6 +491,7 @@
     &__nav {
       display: flex;
       justify-content: center;
+      justify-self: center;
     }
 
     &__menu {

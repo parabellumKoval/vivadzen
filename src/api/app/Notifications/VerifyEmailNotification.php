@@ -63,13 +63,23 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
      */
     protected function verificationUrl($notifiable): string
     {
+        $storefront = method_exists($notifiable, 'preferredStorefrontCode')
+            ? $notifiable->preferredStorefrontCode()
+            : null;
+
+        $parameters = [
+            'id' => $notifiable->getKey(),
+            'hash' => sha1($notifiable->getEmailForVerification()),
+        ];
+
+        if ($storefront) {
+            $parameters['storefront'] = $storefront;
+        }
+
         return \URL::temporarySignedRoute(
             'verification.verify',
             now()->addMinutes(60),
-            [
-                'id' => $notifiable->getKey(),
-                'hash' => sha1($notifiable->getEmailForVerification()),
-            ]
+            $parameters
         );
     }
 }
