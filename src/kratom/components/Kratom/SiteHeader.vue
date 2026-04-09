@@ -11,7 +11,6 @@ let cleanupDesktopCatalogMediaQuery: (() => void) | null = null
 
 const navItems = computed(() => [
   { to: '/catalog', label: t('title.catalog') },
-  { to: '/blog', label: t('title.blog') },
   { to: '/reviews', label: t('title.reviews') },
   { to: '/about', label: t('title.about') },
   { to: '/contacts', label: t('title.contacts') },

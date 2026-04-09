@@ -51,7 +51,6 @@ const cartCount = computed(() => useCartStore().cartLength)
 
 const navItems = computed(() => [
   { id: 'catalog', to: '/catalog', title: t('title.catalog'), priority: 40 },
-  { id: 'blog', to: '/blog', title: t('title.blog'), priority: 30 },
   { id: 'reviews', to: '/reviews', title: t('title.reviews'), priority: 25 },
   { id: 'about', to: '/about', title: t('title.about'), priority: 20 },
   { id: 'contacts', to: '/contacts', title: t('title.contacts'), priority: 50 }

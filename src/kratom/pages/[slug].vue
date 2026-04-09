@@ -139,11 +139,11 @@ const normalizeInlineHtml = (value: unknown) => {
   return normalized || null
 }
 
-const summaryHtml = computed(() => normalizeInlineHtml(product.value?.short_description || product.value?.excerpt))
+// const summaryHtml = computed(() => normalizeInlineHtml(product.value?.short_description || product.value?.excerpt))
 
-const descriptionHtml = computed(() => {
-  return product.value?.content || product.value?.description || null
-})
+// const descriptionHtml = computed(() => {
+//   return product.value?.content || product.value?.description || null
+// })
 
 const translateText = (value: unknown) => {
   if (typeof value === 'string') {
@@ -356,7 +356,7 @@ useSeo().setPageSeo('product', {
         <div class="kratom-product-hero__column kratom-product-hero__column--right">
           <div class="kratom-product-summary">
             <h1 class="kratom-product-summary__title">{{ product?.name }}</h1>
-            <div v-if="summaryHtml" class="rich-text kratom-product-summary__text" v-html="summaryHtml"></div>
+            <!-- <div v-if="summaryHtml" class="rich-text kratom-product-summary__text" v-html="summaryHtml"></div> -->
 
             <div class="kratom-product-summary__badges">
               <div
@@ -553,13 +553,13 @@ useSeo().setPageSeo('product', {
           </div>
         </article>
 
-        <article v-if="descriptionHtml || product?.content_slices?.length" class="kratom-product-panel">
+        <!-- <article v-if="descriptionHtml || product?.content_slices?.length" class="kratom-product-panel">
           <p class="kratom-product-panel__eyebrow">{{ t('kratom.product.overview') }}</p>
           <div v-if="product?.content_slices?.length" class="rich-text kratom-product-panel__content">
             <slice-area :slices="product.content_slices" />
           </div>
           <div v-else class="rich-text kratom-product-panel__content" v-html="descriptionHtml"></div>
-        </article>
+        </article> -->
 
         <article class="kratom-product-panel kratom-product-panel--notice">
           <p class="kratom-product-panel__eyebrow">{{ t('kratom.product.checkout_note') }}</p>
