@@ -191,6 +191,9 @@
 
     &.is-open {
       background: rgba(0, 0, 0, 0.62);
+      position: fixed;
+      top: calc(env(safe-area-inset-top) + 10px);
+      left: calc(env(safe-area-inset-left) + 15px);
     }
   }
 
@@ -486,6 +489,14 @@
   @include desktop {
     &__logo {
       justify-self: start;
+    }
+
+    &__menu-btn {
+      &.is-open {
+        position: relative;
+        top: auto;
+        left: auto;
+      }
     }
 
     &__nav {
