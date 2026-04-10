@@ -2,10 +2,11 @@
 const { t, locale, locales } = useI18n()
 const regionPath = useToLocalePath()
 const route = useRoute()
-const { user, isAuthenticated, init } = useAuth()
+const { user, isAuthenticated, init, avatar } = useAuth()
 const isMenuOpen = ref(false)
 const isDesktopCatalogAvailable = ref(false)
 const isCatalogDropdownOpen = ref(false)
+const accountAvatarFailed = ref(false)
 const cartStore = useCartStore()
 let desktopCatalogMediaQuery: MediaQueryList | null = null
 let cleanupDesktopCatalogMediaQuery: (() => void) | null = null
@@ -26,12 +27,23 @@ const localeItems = computed(() => {
 })
 
 const cartCount = computed(() => cartStore.cartLength)
+const accountAvatarSrc = computed(() => {
+  if (!isAuthenticated.value || accountAvatarFailed.value) {
+    return null
+  }
+
+  return avatar.value || null
+})
 const accountLabel = computed(() => {
   if (isAuthenticated.value) {
     return user.value?.first_name || t('title.account.account')
   }
 
   return t('button.login')
+})
+
+watch(avatar, () => {
+  accountAvatarFailed.value = false
 })
 
 const entheogensStoreUrl = computed(() => {
@@ -216,7 +228,15 @@ onBeforeUnmount(() => {
         </div>
 
         <NuxtLink :to="regionPath(isAuthenticated ? '/account/orders' : '/auth/login')" class="site-header__account">
-          <IconCSS :name="isAuthenticated ? 'ph:user-circle-fill' : 'ph:sign-in'" />
+          <img
+            v-if="accountAvatarSrc"
+            :src="accountAvatarSrc"
+            :alt="accountLabel"
+            class="site-header__account-avatar"
+            loading="lazy"
+            @error="accountAvatarFailed = true"
+          >
+          <IconCSS v-else :name="isAuthenticated ? 'ph:user-circle-fill' : 'ph:sign-in'" class="site-header__account-icon" />
           <span>{{ accountLabel }}</span>
         </NuxtLink>
 
@@ -442,6 +462,21 @@ onBeforeUnmount(() => {
   }
 }
 
+.site-header__cart,
+.site-header__menu-btn {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #1f2b1d;
+  color: #fff7ec;
+  position: relative;
+  cursor: pointer;
+}
+
 .site-header__account {
   min-height: 44px;
   max-width: 180px;
@@ -462,6 +497,20 @@ onBeforeUnmount(() => {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+}
+
+.site-header__account-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  object-fit: cover;
+  background: rgba(53, 82, 74, 0.12);
+  flex: 0 0 auto;
+}
+
+.site-header__account-icon {
+  font-size: 24px;
+  flex: 0 0 auto;
 }
 
 .site-header__locales {
@@ -492,21 +541,6 @@ onBeforeUnmount(() => {
     color: #fff7ec;
     border-color: #35524a;
   }
-}
-
-.site-header__cart,
-.site-header__menu-btn {
-  width: 44px;
-  height: 44px;
-  border: 0;
-  border-radius: 14px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #1f2b1d;
-  color: #fff7ec;
-  position: relative;
-  cursor: pointer;
 }
 
 .site-header__menu-btn {

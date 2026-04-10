@@ -171,7 +171,8 @@ class User extends Authenticatable implements MustVerifyEmail
             return;
         }
 
-        $resolvedStorefront = $this->preferredStorefrontCode($storefront);
+        $resolvedStorefront = Store::normalizeStorefrontCode($storefront)
+            ?? $this->preferredStorefrontCode();
 
         if (!$resolvedStorefront) {
             return;

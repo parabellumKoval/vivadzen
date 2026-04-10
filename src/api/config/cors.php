@@ -1,5 +1,16 @@
 <?php
 
+$configuredOrigins = array_filter(array_map('trim', explode(',', (string) env('CORS_ORIGINS', ''))));
+
+$defaultOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:3001',
+    'http://192.168.0.144:3000',
+    'http://192.168.0.144:3001',
+];
+
 return [
 
     /*
@@ -19,7 +30,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => array_filter(array_map('trim', explode(',', env('CORS_ORIGINS', '*')))),
+    'allowed_origins' => array_values(array_unique(array_merge($defaultOrigins, $configuredOrigins))),
 
     'allowed_origins_patterns' => [],
 

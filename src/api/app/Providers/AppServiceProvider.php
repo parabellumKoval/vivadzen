@@ -11,6 +11,7 @@ use App\Support\StorefrontSettings;
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
+use Backpack\Store\app\Services\Store;
 
 use \Backpack\Store\app\Models\Order;
 use \Backpack\Store\app\Http\Controllers\Api\OrderController as StoreOrderController;
@@ -67,12 +68,48 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
       ResetPassword::createUrlUsing(function ($user, string $token) {
-        $storefront = method_exists($user, 'preferredStorefrontCode')
-            ? $user->preferredStorefrontCode()
-            : null;
+        $requestStorefront = Store::normalizeStorefrontCode(
+            request()->input('storefront')
+            ?? request()->header(Store::storefrontHeaderName())
+            ?? request()->get(Store::storefrontRequestKey())
+        );
+        $storefront = $requestStorefront
+            ?: (method_exists($user, 'preferredStorefrontCode')
+                ? $user->preferredStorefrontCode()
+                : null);
+        $defaultResetUrl = \Settings::get('profile.reset_password_redirect', config('profile.reset_password_redirect'));
         $storefrontBaseUrl = method_exists(User::class, 'storefrontFrontendUrl')
             ? User::storefrontFrontendUrl($storefront)
             : null;
+        $requestedFrontendUrl = request()->input('frontend_url') ?? request()->header('X-Frontend-Url');
+        $requestedFrontendUrl = is_string($requestedFrontendUrl) ? trim($requestedFrontendUrl) : null;
+
+        if (
+            $requestedFrontendUrl
+            && filter_var($requestedFrontendUrl, FILTER_VALIDATE_URL)
+            && in_array(parse_url($requestedFrontendUrl, PHP_URL_SCHEME), ['http', 'https'], true)
+        ) {
+            $requestedFrontendUrl = rtrim($requestedFrontendUrl, '/');
+        } else {
+            $requestedFrontendUrl = null;
+        }
+
+        $frontendResetUrl = $requestedFrontendUrl
+            ? $requestedFrontendUrl . '/new-password'
+            : ($storefrontBaseUrl
+                ? rtrim($storefrontBaseUrl, '/') . '/new-password'
+                : (is_string($defaultResetUrl) && trim($defaultResetUrl) !== '' ? rtrim(trim($defaultResetUrl), '/') : null));
+
+        if ($frontendResetUrl) {
+            $separator = str_contains($frontendResetUrl, '?') ? '&' : '?';
+
+            return $frontendResetUrl . $separator . http_build_query([
+                'newpassword' => 'true',
+                't' => $token,
+                'email' => $user->getEmailForPasswordReset(),
+            ]);
+        }
+
         $apiPath = route('password.reset', [
             'token' => $token,
             'email' => $user->getEmailForPasswordReset(),

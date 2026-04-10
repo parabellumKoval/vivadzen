@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8106c98932ab675b6b641612d56220c2",
+    "content-hash": "43ec7ad6707b64093002fd8680a0981c",
     "packages": [
         {
             "name": "backpack/basset",
@@ -5186,10 +5186,16 @@
         {
             "name": "parabellumkoval/backpack-profile",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-profile.git",
+                "reference": "1013b14acd0cc67e0fa7ddce2fe276b131ee3389"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/profile",
-                "reference": "8b7f879a09782ba10f9592067539ddf9cb7cd708"
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/1013b14acd0cc67e0fa7ddce2fe276b131ee3389",
+                "reference": "1013b14acd0cc67e0fa7ddce2fe276b131ee3389",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0",
@@ -5198,6 +5204,7 @@
                 "ozh/phpass": "^1.4",
                 "php": "^8.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5207,36 +5214,15 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "src/app/helpers.php"
+                ],
                 "psr-4": {
                     "Backpack\\Profile\\": "src/",
                     "Backpack\\Profile\\Database\\Factories\\": "database/factories"
-                },
-                "files": [
-                    "src/app/helpers.php"
-                ]
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Backpack\\Profile\\Tests\\": "tests"
                 }
             },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php ./vendor/bin/testbench package:discover --ansi"
-                ],
-                "analyse": [
-                    "vendor/bin/phpstan analyse"
-                ],
-                "test": [
-                    "vendor/bin/pest"
-                ],
-                "test-coverage": [
-                    "vendor/bin/pest --coverage"
-                ],
-                "format": [
-                    "vendor/bin/pint"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5257,10 +5243,11 @@
                 "profile",
                 "user"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-profile/issues",
+                "source": "https://github.com/parabellumKoval/backpack-profile/tree/main"
+            },
+            "time": "2026-04-10T15:04:48+00:00"
         },
         {
             "name": "parabellumkoval/backpack-reviews",

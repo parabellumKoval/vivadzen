@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const { t } = useI18n()
+const route = useRoute()
+const regionPath = useToLocalePath()
+const { init, isAuthenticated } = useAuth()
 const orderStore = useOrderStore()
 
 definePageMeta({
@@ -38,12 +41,44 @@ const loadMore = async () => {
   }
 }
 
-await useAsyncData('kratom-account-orders', async () => {
+const handleLoadFailure = async (error: any) => {
+  const statusCode = Number(error?.statusCode || error?.status || error?.data?.status || 0)
+
+  if (statusCode === 401) {
+    await init()
+
+    if (isAuthenticated.value) {
+      try {
+        await loadOrders(1)
+        return
+      } catch (retryError: any) {
+        const retryStatusCode = Number(retryError?.statusCode || retryError?.status || retryError?.data?.status || 0)
+
+        if (retryStatusCode !== 401) {
+          throw retryError
+        }
+      }
+    }
+
+    await navigateTo({
+      path: regionPath('/auth/login'),
+      query: { redirect: route.fullPath },
+    }, { replace: true })
+    return
+  }
+
+  throw error
+}
+
+await init()
+
+try {
   await loadOrders(1)
-  return true
-}).finally(() => {
+} catch (error) {
+  await handleLoadFailure(error)
+} finally {
   isInitLoading.value = false
-})
+}
 </script>
 
 <template>

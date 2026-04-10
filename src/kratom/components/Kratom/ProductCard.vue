@@ -132,21 +132,33 @@ const addToCart = async () => {
             {{ product.short_description }}
           </p>
 
-          <div v-if="modifications.length" class="kratom-product-card__mods">
-            <button
-              v-for="(modification, index) in modifications"
-              :key="modification.id ?? modification.slug ?? index"
-              type="button"
-              class="kratom-product-card__mod"
-              :class="{ 'is-active': getModificationKey(selectedModification) === getModificationKey(modification) }"
-              @click="selectModification(modification)"
-            >
-              {{ modification.short_name || modification.name }}
-            </button>
+          <div class="kratom-product-card__mods-row">
+            <div v-if="modifications.length" class="kratom-product-card__mods">
+              <button
+                v-for="(modification, index) in modifications"
+                :key="modification.id ?? modification.slug ?? index"
+                type="button"
+                class="kratom-product-card__mod"
+                :class="{ 'is-active': getModificationKey(selectedModification) === getModificationKey(modification) }"
+                @click="selectModification(modification)"
+              >
+                {{ modification.short_name || modification.name }}
+              </button>
+            </div>
+
+            <div class="kratom-product-card__price kratom-product-card__price--mobile">
+              <simple-price
+                v-if="displayOldPrice && Number(displayOldPrice) > Number(displayPrice)"
+                :value="displayOldPrice"
+                :currency-code="currencyCode"
+                class="kratom-product-card__old-price"
+              />
+              <simple-price :value="displayPrice" :currency-code="currencyCode" class="kratom-product-card__current-price" />
+            </div>
           </div>
 
           <div class="kratom-product-card__footer">
-            <div class="kratom-product-card__price">
+            <div class="kratom-product-card__price kratom-product-card__price--desktop">
               <simple-price
                 v-if="displayOldPrice && Number(displayOldPrice) > Number(displayPrice)"
                 :value="displayOldPrice"
@@ -366,6 +378,10 @@ const addToCart = async () => {
   gap: 10px;
 }
 
+.kratom-product-card__mods-row {
+  display: block;
+}
+
 .kratom-product-card__mod {
   min-height: 30px;
   padding: 0 16px;
@@ -446,6 +462,10 @@ const addToCart = async () => {
   gap: 6px;
 }
 
+.kratom-product-card__price--mobile {
+  display: none;
+}
+
 // :deep(.kratom-product-card__old-price .value) {
 //   font-size: 15px;
 //   color: #8b9284;
@@ -480,6 +500,35 @@ const addToCart = async () => {
 
   &-icon {
     font-size: clamp(12px, 7.5cqw, 20px);
+  }
+}
+
+@media (max-width: 767px) {
+  .kratom-product-card__mods-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .kratom-product-card__mods {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .kratom-product-card__price--mobile {
+    display: grid;
+    flex: 0 0 auto;
+    text-align: right;
+    justify-items: end;
+  }
+
+  .kratom-product-card__price--desktop {
+    display: none;
+  }
+
+  .kratom-product-card__footer {
+    justify-content: flex-start;
   }
 }
 </style>

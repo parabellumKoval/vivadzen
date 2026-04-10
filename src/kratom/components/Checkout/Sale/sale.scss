@@ -63,12 +63,13 @@
     padding: 0 28px;
     font-size: 18px;
     font-weight: 800;
-    background: linear-gradient(180deg, #7ed97a 0%, #63bb5f 100%);
-    box-shadow: 0 18px 36px rgba(115, 197, 111, 0.34), 0 6px 14px rgba(61, 116, 57, 0.16);
+    color: $color-8;
+    background: linear-gradient(180deg, rgb(41 251 180) 0%, #17b781 55%, rgb(21.56 160.68 113.7) 100%);
+    box-shadow: 0 18px 36px rgba(23, 183, 129, 0.34), 0 6px 14px rgba(21, 161, 114, 0.18);
 
     &:hover {
-      background: linear-gradient(180deg, #8be386 0%, #6ec96a 100%);
-      box-shadow: 0 20px 38px rgba(115, 197, 111, 0.4), 0 8px 16px rgba(61, 116, 57, 0.18);
+      background: linear-gradient(180deg, rgb(64 255 191) 0%, rgb(24 194 136) 55%, rgb(18 146 103) 100%);
+      box-shadow: 0 20px 38px rgba(23, 183, 129, 0.4), 0 8px 16px rgba(21, 161, 114, 0.22);
     }
   }
   &-button__icon {

@@ -15,7 +15,7 @@ import ChatSupportButton from './ChatSupportButton.vue'
   position: fixed;
   right: clamp(10px, 2vw, 28px);
   bottom: clamp(12px, 2.4vw, 30px);
-  z-index: 90;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   gap: 12px;

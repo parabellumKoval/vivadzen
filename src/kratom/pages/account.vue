@@ -53,6 +53,12 @@ const menuItems = computed(() => [
     link: '/account/settings',
   },
   {
+    key: 'addresses',
+    label: t('title.account.addresses'),
+    icon: 'ph:map-pin-line',
+    link: '/account/addresses',
+  },
+  {
     key: 'logout',
     label: t('button.logout'),
     icon: 'ph:sign-out',

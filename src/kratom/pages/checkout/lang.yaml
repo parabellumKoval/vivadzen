@@ -13,8 +13,10 @@ cs:
     auth_text: Uložíme kontakty a adresy, ale objednávku můžete dokončit i jako host.
     use_account_data: Použít údaje z účtu
     manage_profile: Spravovat profil
+    manage_addresses: Spravovat adresy
     saved_addresses_title: Doručovací adresy
     saved_addresses_text: Vyberte uloženou adresu nebo vyplňte novou.
+    saved_addresses_select: Vyberte uloženou adresu
     new_address: Nová adresa
     payment_hint: Po výběru způsobu platby můžete objednávku ihned odeslat.
     payment_ready: Hotovo
@@ -34,8 +36,10 @@ de:
     auth_text: Wir speichern Kontakte und Adressen, aber Sie können auch als Gast bestellen.
     use_account_data: Kontodaten verwenden
     manage_profile: Profil verwalten
+    manage_addresses: Adressen verwalten
     saved_addresses_title: Lieferadressen
     saved_addresses_text: Wählen Sie eine gespeicherte Adresse oder geben Sie eine neue ein.
+    saved_addresses_select: Gespeicherte Adresse auswählen
     new_address: Neue Adresse
     payment_hint: Nach Auswahl der Zahlungsart können Sie die Bestellung sofort absenden.
     payment_ready: Fertig
@@ -55,8 +59,10 @@ en:
     auth_text: We will save your contacts and addresses, but you can also order as a guest.
     use_account_data: Use account data
     manage_profile: Manage profile
+    manage_addresses: Manage addresses
     saved_addresses_title: Delivery addresses
     saved_addresses_text: Choose a saved address or enter a new one.
+    saved_addresses_select: Select a saved address
     new_address: New address
     payment_hint: After selecting a payment method you can place the order immediately.
     payment_ready: Ready
@@ -76,8 +82,10 @@ es:
     auth_text: Guardaremos tus contactos y direcciones, pero también puedes comprar como invitado.
     use_account_data: Usar datos de la cuenta
     manage_profile: Gestionar perfil
+    manage_addresses: Gestionar direcciones
     saved_addresses_title: Direcciones de entrega
     saved_addresses_text: Elige una dirección guardada o introduce una nueva.
+    saved_addresses_select: Selecciona una dirección guardada
     new_address: Nueva dirección
     payment_hint: Después de elegir el método de pago podrás enviar el pedido de inmediato.
     payment_ready: Listo
@@ -97,8 +105,10 @@ ru:
     auth_text: Мы сохраним контакты и адреса, но оформить заказ можно и как гость.
     use_account_data: Использовать данные аккаунта
     manage_profile: Управлять профилем
+    manage_addresses: Управлять адресами
     saved_addresses_title: Адреса доставки
     saved_addresses_text: Выберите сохраненный адрес или заполните новый.
+    saved_addresses_select: Выберите сохраненный адрес
     new_address: Новый адрес
     payment_hint: После выбора способа оплаты заказ можно сразу отправлять.
     payment_ready: Готово
@@ -118,8 +128,10 @@ uk:
     auth_text: Ми збережемо контакти й адреси, але оформити замовлення можна і як гість.
     use_account_data: Використати дані акаунта
     manage_profile: Керувати профілем
+    manage_addresses: Керувати адресами
     saved_addresses_title: Адреси доставки
     saved_addresses_text: Оберіть збережену адресу або заповніть нову.
+    saved_addresses_select: Оберіть збережену адресу
     new_address: Нова адреса
     payment_hint: Після вибору способу оплати замовлення можна одразу надсилати.
     payment_ready: Готово

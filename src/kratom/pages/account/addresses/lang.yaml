@@ -1,0 +1,90 @@
+ru:
+  delivery_data: Управляйте сохранёнными адресами доставки и редактируйте их отдельно от настроек профиля.
+  saved_addresses: Адреса доставки
+  add_address: Добавить адрес
+  no_saved_addresses: У вас пока нет сохранённых адресов доставки.
+  delivery_method: Способ доставки
+  address_title: Название адреса
+  warehouse: Пункт выдачи / отделение
+  house: Дом
+  flat: Квартира
+  address_fields:
+    country: Страна
+    city: Город
+    address_1: Адрес
+    postcode: Индекс
+uk:
+  delivery_data: Керуйте збереженими адресами доставки та редагуйте їх окремо від налаштувань профілю.
+  saved_addresses: Адреси доставки
+  add_address: Додати адресу
+  no_saved_addresses: У вас поки немає збережених адрес доставки.
+  delivery_method: Спосіб доставки
+  address_title: Назва адреси
+  warehouse: Пункт видачі / відділення
+  house: Будинок
+  flat: Квартира
+  address_fields:
+    country: Країна
+    city: Місто
+    address_1: Адреса
+    postcode: Індекс
+de:
+  delivery_data: Verwalten Sie gespeicherte Lieferadressen separat von den Profileinstellungen.
+  saved_addresses: Lieferadressen
+  add_address: Adresse hinzufügen
+  no_saved_addresses: Sie haben noch keine gespeicherten Lieferadressen.
+  delivery_method: Versandart
+  address_title: Adresstitel
+  warehouse: Abholpunkt / Filiale
+  house: Hausnummer
+  flat: Wohnung
+  address_fields:
+    country: Land
+    city: Stadt
+    address_1: Adresse
+    postcode: Postleitzahl
+es:
+  delivery_data: Gestiona las direcciones de entrega guardadas por separado de la configuración del perfil.
+  saved_addresses: Direcciones de entrega
+  add_address: Añadir dirección
+  no_saved_addresses: Aún no tienes direcciones de entrega guardadas.
+  delivery_method: Método de entrega
+  address_title: Nombre de la dirección
+  warehouse: Punto de entrega / sucursal
+  house: Casa
+  flat: Apartamento
+  address_fields:
+    country: País
+    city: Ciudad
+    address_1: Dirección
+    postcode: Código postal
+cs:
+  delivery_data: Spravujte uložené doručovací adresy odděleně od nastavení profilu.
+  saved_addresses: Doručovací adresy
+  add_address: Přidat adresu
+  no_saved_addresses: Zatím nemáte uložené žádné doručovací adresy.
+  delivery_method: Způsob doručení
+  address_title: Název adresy
+  warehouse: Výdejní místo / pobočka
+  house: Číslo domu
+  flat: Byt
+  address_fields:
+    country: Země
+    city: Město
+    address_1: Adresa
+    postcode: PSČ
+en:
+  delivery_data: Manage saved delivery addresses separately from profile settings.
+  saved_addresses: Delivery addresses
+  add_address: Add address
+  no_saved_addresses: You do not have any saved delivery addresses yet.
+  delivery_method: Delivery method
+  address_title: Address title
+  warehouse: Pickup point / warehouse
+  house: House
+  flat: Apartment
+  address_fields:
+    country: Country
+    city: City
+    address_1: Address
+    postcode: Postal code

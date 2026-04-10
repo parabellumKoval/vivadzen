@@ -62,7 +62,7 @@ useSchemaOrg([
 <style scoped lang="scss">
 .kratom-main {
   min-height: calc(100vh - 108px);
-  padding-top: 108px;
+  padding-top: 60px;
 
   @include desktop {
     min-height: calc(100vh - 80px);

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { resolveKratomProductImageSrc } from '~/utils/productImage'
+
 const { t, d } = useI18n()
 const regionPath = useToLocalePath()
 
@@ -37,6 +39,24 @@ const payment = computed(() => {
 })
 
 const productCount = computed(() => Array.isArray(props.order?.products) ? props.order.products.length : 0)
+
+const orderDate = computed(() => {
+  if (!props.order?.created_at) {
+    return ''
+  }
+
+  const value = new Date(props.order.created_at)
+  return Number.isNaN(value.getTime()) ? '' : d(value, 'short')
+})
+
+const getProductLink = (product: Record<string, any>) => {
+  const slug = typeof product?.slug === 'string' ? product.slug.trim() : ''
+  return slug ? regionPath(`/${slug}`) : regionPath('/account/orders')
+}
+
+const getProductImage = (product: Record<string, any>) => {
+  return resolveKratomProductImageSrc(product)
+}
 </script>
 
 <i18n src="./lang.yaml" lang="yaml"></i18n>
@@ -46,7 +66,7 @@ const productCount = computed(() => Array.isArray(props.order?.products) ? props
     <header class="order-card__header">
       <div>
         <div class="order-card__code">#{{ order.code }}</div>
-        <div class="order-card__date">{{ d(new Date(order.created_at), 'short') }}</div>
+        <div class="order-card__date">{{ orderDate }}</div>
       </div>
 
       <div class="order-card__summary">
@@ -59,11 +79,11 @@ const productCount = computed(() => Array.isArray(props.order?.products) ? props
       <NuxtLink
         v-for="product in order.products || []"
         :key="`${order.id}-${product.id}`"
-        :to="regionPath(`/${product.slug}`)"
+        :to="getProductLink(product)"
         class="order-card__product"
       >
         <nuxt-img
-          :src="product.image || '/images/noimage.png'"
+          :src="getProductImage(product)"
           width="56"
           height="72"
           fit="contain"

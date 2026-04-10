@@ -4,6 +4,7 @@ const regionStore = useRegion()
 const contacts = useContacts()
 const regionPath = useToLocalePath()
 const route = useRoute()
+const { isAuthenticated, avatar } = useAuth()
 
 const HEADER_SCROLL_TRIGGER = 100
 
@@ -21,6 +22,7 @@ const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 const isDesktopCatalogAvailable = ref(false)
 const isCatalogDropdownEnabled = ref(false)
+const accountAvatarFailed = ref(false)
 let desktopCatalogMediaQuery = null
 let cleanupDesktopCatalogMediaQuery = null
 
@@ -48,10 +50,23 @@ const activeLanguage = computed(() => {
 })
 
 const cartCount = computed(() => useCartStore().cartLength)
+const accountLink = computed(() => regionPath(isAuthenticated.value ? '/account/orders' : '/auth/login'))
+const accountLabel = computed(() => isAuthenticated.value ? t('title.account.account') : t('button.login'))
+const accountAvatarSrc = computed(() => {
+  if (!isAuthenticated.value || accountAvatarFailed.value) {
+    return null
+  }
+
+  return avatar.value || null
+})
 const entheogensStoreUrl = computed(() => {
   const localeCode = String(locale.value || 'cs').toLowerCase()
   const localeSuffix = localeCode === 'cs' ? '' : `/${localeCode}`
   return `https://shop.vivadzen.com/cz${localeSuffix}`
+})
+
+watch(avatar, () => {
+  accountAvatarFailed.value = false
 })
 
 const navItems = computed(() => [
@@ -59,6 +74,11 @@ const navItems = computed(() => [
   { id: 'reviews', to: '/reviews', title: t('title.reviews'), priority: 25 },
   { id: 'about', to: '/about', title: t('title.about'), priority: 20 },
   { id: 'contacts', to: '/contacts', title: t('title.contacts'), priority: 50 }
+])
+
+const mobileNavItems = computed(() => [
+  { id: 'home', to: '/', title: t('nav.home') },
+  ...navItems.value
 ])
 
 const visibleNav = ref(navItems.value)
@@ -76,6 +96,7 @@ const stripLocalePrefix = (path) => {
 }
 
 const isHomeRoute = computed(() => stripLocalePrefix(route.path) === '/')
+const showPromoStrip = computed(() => stripLocalePrefix(route.path) !== '/checkout')
 const isHeaderScrolled = computed(() => !isHomeRoute.value || isScrolled.value)
 
 const resetMeasureRefs = () => {
@@ -380,19 +401,6 @@ watch(
 
 <template>
   <header ref="headerRef" class="hero-header" :class="{ 'hero-header--scrolled': isHeaderScrolled }">
-    <div class="hero-header__promo-strip">
-      <div class="hero-header__promo-strip-inner container">
-        <a
-          :href="entheogensStoreUrl"
-          class="hero-header__promo-mobile-btn"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {{ t('cta.entheogens') }}
-        </a>
-      </div>
-    </div>
-
     <div class="hero-header__inner container">
       <nuxt-img
         v-if="$device.isDesktop"
@@ -524,7 +532,8 @@ watch(
           target="_blank"
           rel="noopener noreferrer"
         >
-          {{ t('cta.entheogens') }}
+          <IconCSS name="fluent:flash-24-regular" class="hero-header__promo-cta-icon" />
+          <span>{{ t('cta.entheogens') }}</span>
         </a>
       </nav>
 
@@ -554,6 +563,24 @@ watch(
           </button>
         </div>
 
+        <NuxtLink
+          :to="accountLink"
+          class="hero-header__account"
+          :aria-label="accountLabel"
+          :title="accountLabel"
+          @click="handleNavLinkClick({ closeMenu: false, closeLang: true })"
+        >
+          <img
+            v-if="accountAvatarSrc"
+            :src="accountAvatarSrc"
+            :alt="accountLabel"
+            class="hero-header__account-avatar"
+            loading="lazy"
+            @error="accountAvatarFailed = true"
+          >
+          <IconCSS v-else name="ph:user-circle-fill" class="hero-header__account-icon" />
+        </NuxtLink>
+
         <button
           type="button"
           class="hero-header__cart"
@@ -571,7 +598,7 @@ watch(
           <div class="hero-mobile-menu__content">
             <nav class="hero-mobile-menu__nav" :aria-label="t('nav.label')">
               <NuxtLink
-                v-for="item in navItems"
+                v-for="item in mobileNavItems"
                 :key="item.id"
                 :to="regionPath(item.to)"
                 class="hero-mobile-menu__link"
@@ -604,4 +631,19 @@ watch(
       </div>
     </div>
   </header>
+
+  <div v-if="showPromoStrip" class="hero-header__promo-strip">
+    <div class="hero-header__promo-strip-inner container">
+      <a
+        :href="entheogensStoreUrl"
+        class="hero-header__promo-mobile-btn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <IconCSS name="fluent:flash-24-regular" class="icon" />
+        <span class="hero-header__promo-mobile-btn-title">{{ t('cta.entheogens') }}</span>
+        <!-- <span class="hero-header__promo-mobile-btn-caption">shop.vivadzen.com</span> -->
+      </a>
+    </div>
+  </div>
 </template>

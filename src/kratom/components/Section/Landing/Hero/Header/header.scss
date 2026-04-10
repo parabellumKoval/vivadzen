@@ -70,11 +70,12 @@
   }
 
   &__promo-strip {
-    position: relative;
-    z-index: 1;
+    position: fixed;
+    right: 0;
+    bottom: clamp(12px, 2.4vw, 30px);
+    left: 0;
+    z-index: 95;
     width: 100%;
-    background: rgba(50, 58, 74, 0.96);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
     @include desktop {
       display: none;
@@ -85,30 +86,53 @@
     position: relative;
     z-index: 1;
     min-height: 48px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    // padding-top: 7px;
+    // padding-bottom: calc(7px + env(safe-area-inset-bottom));
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   &__promo-mobile-btn {
     position: relative;
     z-index: 1;
-    min-height: 34px;
-    padding: 8px 20px;
+    min-height: 52px;
+    padding: 6px 20px;
     display: inline-flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     border-radius: 999px;
-    background: $color-orange;
+    gap: 7px;
+    // background: $color-orange;
+    background: #17b781;
     color: #fff;
     box-shadow: 0 10px 24px rgba(255, 142, 61, 0.28);
-    font-size: 12px;
-    font-weight: 800;
+    text-align: left;
+
+    .icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+  }
+
+  &__promo-mobile-btn-title {
+    font-size: 20px;
+    font-weight: 700;
     letter-spacing: 0.01em;
     line-height: 1;
     white-space: nowrap;
+  }
+
+  &__promo-mobile-btn-caption {
+    margin-top: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.62);
+    white-space: nowrap;
+    align-self: center;
     text-align: center;
   }
 
@@ -116,10 +140,9 @@
     position: relative;
     z-index: 1;
     min-height: 60px;
-    display: grid;
-    grid-template-columns: 1fr 44px 1fr;
+    display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 
     @include desktop {
       min-height: 80px;
@@ -132,12 +155,12 @@
   &__logo {
     width: 44px;
     height: 44px;
-    grid-column: 2;
+    align-self: center;
     justify-self: start;
     object-fit: contain;
     cursor: pointer;
     transition: all 0.6s;
-    order: 2;
+    order: 0;
     opacity: 0;
     transform: translateY(-100%);
     outline: none;
@@ -162,7 +185,8 @@
     z-index: 60;
     display: flex;
     align-items: center;
-    grid-column: 1;
+    align-self: center;
+    order: 1;
     justify-self: start;
   }
 
@@ -404,12 +428,13 @@
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
-    grid-column: 3;
+    margin-left: auto;
     justify-self: end;
     transition: all 0.6s;
     order: 3;
 
     @include desktop {
+      margin-left: 0;
       grid-column: 3;
       justify-self: end;
       // opacity: 1;
@@ -429,6 +454,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       border-radius: 999px;
       background: $color-orange;
       color: #fff;
@@ -444,6 +470,12 @@
     }
   }
 
+  &__promo-cta-icon {
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+
+  &__account,
   &__cart {
     position: relative;
     justify-self: end;
@@ -458,6 +490,7 @@
     color: $color-8;
     cursor: pointer;
     transition: background 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
 
     &:hover {
       background: rgba(0, 0, 0, 0.5);
@@ -465,8 +498,17 @@
     }
   }
 
+  &__account-icon,
   &__cart-icon {
     font-size: 30px;
+  }
+
+  &__account-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    object-fit: cover;
+    background: rgba(255, 255, 255, 0.12);
   }
 
   &__cart-count {

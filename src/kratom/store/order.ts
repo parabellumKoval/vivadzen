@@ -24,33 +24,25 @@ export const useOrderStore = defineStore('orderStore', {
     },
 
     async getOrder(code: string) {
-      const url = `${useRuntimeConfig().public.apiBase}/order/${code}`
+      const { $api } = useNuxtApp()
 
-      return await useServerApiFetch(url)
-        .then(({data, error}) => {
-          if(data) {
-            return data
-          }
-
-          if(error) {
-            throw error
-          }
-        })
+      return await $api(`/order/${code}`, {
+        method: 'GET',
+      })
     },
 
     async getOrders(data = null, refresh = true) {
-      const runtimeConfig = useRuntimeConfig()
-      const url = `${runtimeConfig.public.apiBase}/order/get`
+      const { $api } = useNuxtApp()
 
-      return await useApiFetch(url, data, 'POST')
-        .then(({data, error}) => {
-          if(data.value) {
-            return data.value
-          }
+      const response = await $api('/order/get', {
+        method: 'POST',
+        body: data ? JSON.parse(JSON.stringify(data)) : undefined,
+      })
 
-          if(error)
-            throw error
-        })
+      this.ordersState.data = Array.isArray((response as any)?.data) ? (response as any).data : []
+      this.ordersState.meta = (response as any)?.meta || null
+
+      return response
     },
 
   },

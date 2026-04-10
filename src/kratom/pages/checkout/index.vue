@@ -7,11 +7,13 @@ const regionPath = useToLocalePath()
 const cartStore = useCartStore()
 const {
   user: authUser,
+  avatar,
   token,
   isAuthenticated,
   init,
   me,
 } = useAuth()
+const { syncContactDetails, syncDeliveryAddress } = useCheckoutProfileSync()
 const { methods: deliveryMethods } = useDelivery()
 const { methods: paymentMethods } = usePayment()
 const {
@@ -22,6 +24,10 @@ const {
   requiresHouse,
   requiresZip,
   buildAddressSummary,
+  addressSelectLabel,
+  addressesEqual,
+  clearDeliveryState,
+  preferredSavedAddress,
   applyAddressToDelivery,
 } = useSavedDeliveryAddresses()
 
@@ -49,6 +55,7 @@ const errors = computed(() => cartStore.errors)
 const activeStep = ref(1)
 const selectedSavedAddressKey = ref('')
 const isApplyingSavedAddress = ref(false)
+const checkoutAvatarFailed = ref(false)
 
 const savedAddresses = computed<SavedDeliveryAddress[]>(() => {
   if (!Array.isArray(authUser.value?.saved_delivery_addresses)) {
@@ -66,6 +73,15 @@ const selectedDeliveryMethod = computed(() => {
 
 const selectedPaymentMethod = computed(() => {
   return paymentMethods.value.find((item) => item.key === order.value.payment.method) || null
+})
+
+const savedAddressOptions = computed(() => {
+  return savedAddresses.value.map((address, index) => ({
+    key: deliveryAddressIdentity(address, index),
+    label: addressSelectLabel(address),
+    address,
+    index,
+  }))
 })
 
 const userErrors = computed(() => Boolean(errors.value.user && Object.keys(errors.value.user).length))
@@ -163,6 +179,30 @@ const ensureStepErrors = (scope: 'user' | 'delivery' | 'payment') => {
 
 const clearStepErrors = (scope: 'user' | 'delivery' | 'payment') => {
   errors.value[scope] = {}
+}
+
+const syncUserProfileFromCheckout = async () => {
+  if (!isAuthenticated.value) {
+    return
+  }
+
+  try {
+    await syncContactDetails(order.value.user)
+  } catch (error) {
+    console.error('[kratom-checkout] Failed to sync contact details', error)
+  }
+}
+
+const syncDeliveryProfileFromCheckout = async () => {
+  if (!isAuthenticated.value || !isDeliveryStepComplete.value) {
+    return
+  }
+
+  try {
+    await syncDeliveryAddress(order.value.delivery, { makeMain: false })
+  } catch (error) {
+    console.error('[kratom-checkout] Failed to sync delivery address', error)
+  }
 }
 
 const validateUserStep = () => {
@@ -287,7 +327,7 @@ const openStep = (step: number) => {
   nextTick(() => scrollToStep(step))
 }
 
-const continueStep = (step: number) => {
+const continueStep = async (step: number) => {
   if (isStepLocked(step)) {
     activeStep.value = firstIncompleteStep()
     nextTick(() => scrollToStep(activeStep.value))
@@ -297,6 +337,14 @@ const continueStep = (step: number) => {
   if (!validateStep(step)) {
     nextTick(() => scrollToStep(step))
     return
+  }
+
+  if (step === 1) {
+    await syncUserProfileFromCheckout()
+  }
+
+  if (step === 2) {
+    await syncDeliveryProfileFromCheckout()
   }
 
   if (step < 3) {
@@ -356,6 +404,21 @@ const syncSelectedAddress = () => {
   selectedSavedAddressKey.value = index >= 0 ? deliveryAddressIdentity(savedAddresses.value[index], index) : ''
 }
 
+const selectSavedAddress = (key: string, activateStep = true) => {
+  if (!key) {
+    startNewAddress()
+    return
+  }
+
+  const match = savedAddressOptions.value.find((item) => item.key === key)
+
+  if (!match) {
+    return
+  }
+
+  applySavedAddressSelection(match.address, activateStep, match.index)
+}
+
 const applySavedAddressSelection = (address: SavedDeliveryAddress, activateStep = true, index = -1) => {
   isApplyingSavedAddress.value = true
   applyAddressToDelivery(address, order.value.delivery as Record<string, any>)
@@ -376,23 +439,7 @@ const startNewAddress = () => {
   isApplyingSavedAddress.value = true
   selectedSavedAddressKey.value = ''
 
-  Object.assign(order.value.delivery, {
-    method: null,
-    settlement: null,
-    settlementRef: null,
-    region: null,
-    area: null,
-    street: null,
-    streetRef: null,
-    type: null,
-    house: null,
-    room: null,
-    zip: null,
-    warehouse: null,
-    warehouseRef: null,
-    price: null,
-    priceCurrency: null,
-  })
+  clearDeliveryState(order.value.delivery as Record<string, any>)
 
   clearStepErrors('delivery')
 
@@ -426,8 +473,11 @@ const hydrateOrderFromProfile = () => {
     order.value.user.email = authUser.value.email
   }
 
-  if (!order.value.delivery.method && savedAddresses.value.length) {
-    applySavedAddressSelection(savedAddresses.value[0], false, 0)
+  const mainAddress = preferredSavedAddress(savedAddresses.value)
+
+  if (!order.value.delivery.method && mainAddress) {
+    const index = savedAddresses.value.findIndex((item) => addressesEqual(item, mainAddress))
+    applySavedAddressSelection(mainAddress, false, index)
   } else {
     syncSelectedAddress()
   }
@@ -456,6 +506,14 @@ watch(
     hydrateOrderFromProfile()
   },
   { immediate: true, deep: true },
+)
+
+watch(
+  avatar,
+  () => {
+    checkoutAvatarFailed.value = false
+  },
+  { immediate: true },
 )
 
 watch(
@@ -566,7 +624,18 @@ hydrateOrderFromProfile()
 
             <div v-else-if="activeStep === 1" class="kratom-checkout-step__body">
               <div v-if="isAuthenticated" class="kratom-checkout-auth-state">
-                <div class="kratom-checkout-auth-state__icon">
+                <nuxt-img
+                  v-if="avatar && !checkoutAvatarFailed"
+                  :src="avatar"
+                  width="42"
+                  height="42"
+                  format="webp"
+                  quality="70"
+                  fit="cover"
+                  class="kratom-checkout-auth-state__avatar"
+                  @error="checkoutAvatarFailed = true"
+                />
+                <div v-else class="kratom-checkout-auth-state__icon">
                   <IconCSS name="ph:user-circle-fill" size="22" />
                 </div>
                 <div>
@@ -578,7 +647,7 @@ hydrateOrderFromProfile()
                 </NuxtLink>
               </div>
 
-              <!--
+              
               <div v-else class="kratom-checkout-auth-gate">
                 <div>
                   <div class="kratom-checkout-auth-gate__title">{{ t('checkout.auth_title') }}</div>
@@ -593,7 +662,7 @@ hydrateOrderFromProfile()
                   </NuxtLink>
                 </div>
               </div>
-              -->
+             
 
               <div class="form-grid">
                 <form-text
@@ -656,22 +725,41 @@ hydrateOrderFromProfile()
                     <div class="kratom-checkout-addresses__title">{{ t('checkout.saved_addresses_title') }}</div>
                     <div class="kratom-checkout-addresses__text">{{ t('checkout.saved_addresses_text') }}</div>
                   </div>
-                  <button type="button" class="auth-text-button" @click="startNewAddress">
-                    {{ t('checkout.new_address') }}
-                  </button>
+                  <div class="kratom-checkout-addresses__actions">
+                    <NuxtLink :to="regionPath('/account/addresses')" class="auth-text-button">
+                      {{ t('checkout.manage_addresses') }}
+                    </NuxtLink>
+                    <button type="button" class="auth-text-button" @click="startNewAddress">
+                      {{ t('checkout.new_address') }}
+                    </button>
+                  </div>
                 </div>
+
+                <label class="kratom-checkout-addresses__select-wrapper">
+                  <span>{{ t('checkout.saved_addresses_select') }}</span>
+                  <select v-model="selectedSavedAddressKey" class="kratom-checkout-addresses__select" @change="selectSavedAddress(selectedSavedAddressKey)">
+                    <option value="">{{ t('checkout.new_address') }}</option>
+                    <option
+                      v-for="item in savedAddressOptions"
+                      :key="item.key"
+                      :value="item.key"
+                    >
+                      {{ item.label }}
+                    </option>
+                  </select>
+                </label>
 
                 <div class="kratom-checkout-addresses__grid">
                   <button
-                    v-for="(address, index) in savedAddresses"
-                    :key="deliveryAddressIdentity(address, index)"
+                    v-for="item in savedAddressOptions"
+                    :key="item.key"
                     type="button"
                     class="kratom-checkout-address"
-                    :class="{ 'is-active': selectedSavedAddressKey === deliveryAddressIdentity(address, index) }"
-                    @click="applySavedAddressSelection(address, true, index)"
+                    :class="{ 'is-active': selectedSavedAddressKey === item.key }"
+                    @click="applySavedAddressSelection(item.address, true, item.index)"
                   >
-                    <strong>{{ address.title || methodTitle(address.method) }}</strong>
-                    <span>{{ buildAddressSummary(address) }}</span>
+                    <strong>{{ item.address.title || methodTitle(item.address.method) }}</strong>
+                    <span>{{ buildAddressSummary(item.address) }}</span>
                   </button>
                 </div>
               </div>
@@ -971,6 +1059,14 @@ hydrateOrderFromProfile()
   color: #35524a;
 }
 
+.kratom-checkout-auth-state__avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  object-fit: cover;
+  background: rgba(53, 82, 74, 0.08);
+}
+
 .kratom-checkout-addresses {
   display: grid;
   gap: 16px;
@@ -981,6 +1077,28 @@ hydrateOrderFromProfile()
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
+}
+
+.kratom-checkout-addresses__actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.kratom-checkout-addresses__select-wrapper {
+  display: grid;
+  gap: 8px;
+  color: #667160;
+  font-size: 14px;
+}
+
+.kratom-checkout-addresses__select {
+  min-height: 56px;
+  padding: 0 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(74, 91, 68, 0.16);
+  background: #fffdf9;
+  color: #1f2b1d;
 }
 
 .kratom-checkout-addresses__grid {

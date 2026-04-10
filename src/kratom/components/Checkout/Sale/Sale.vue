@@ -4,7 +4,8 @@ import { usePaymentStore } from '~/store/payment'
 
 const {t} = useI18n()
 const regionPath = useToLocalePath()
-const { orderable } = useAuth()
+const { orderable, isAuthenticated } = useAuth()
+const { syncContactDetails, syncDeliveryAddress } = useCheckoutProfileSync()
 const { region, fallbackRegion } = useRegion()
 const runtimeConfig = useRuntimeConfig()
 const { get: getSetting } = useSettings()
@@ -194,8 +195,38 @@ const redirectToPaymentGateway = async (response) => {
   throw new Error('Payment gateway URL was not returned')
 }
 
+const syncProfileBeforeSubmit = async () => {
+  if (!isAuthenticated.value) {
+    return
+  }
+
+  try {
+    await syncContactDetails(order.value?.user)
+  } catch (error) {
+    console.error('[kratom-checkout] Failed to sync user profile before submit', error)
+  }
+
+  try {
+    await syncDeliveryAddress(order.value?.delivery, { makeMain: false })
+  } catch (error) {
+    console.error('[kratom-checkout] Failed to sync delivery address before submit', error)
+  }
+}
+
+const markCurrentAddressAsMain = async () => {
+  if (!isAuthenticated.value) {
+    return
+  }
+
+  try {
+    await syncDeliveryAddress(order.value?.delivery, { makeMain: true })
+  } catch (error) {
+    console.error('[kratom-checkout] Failed to promote delivery address to main', error)
+  }
+}
+
 // HANDLERS
-const goCompleteHandler = () => {
+const goCompleteHandler = async () => {
   if (props.disabled) {
     if (props.disabledMessage) {
       useNoty().setNoty({
@@ -213,9 +244,12 @@ const goCompleteHandler = () => {
     return
   }
 
+  await syncProfileBeforeSubmit()
+
   const payload = { ...orderable.value }
-  useCartStore().createOrder(payload).then((response) => {
+  useCartStore().createOrder(payload).then(async (response) => {
     if(response?.code) {
+      await markCurrentAddressAsMain()
       useCartStore().$reset()
       navigateTo(regionPath('/checkout/complete/' + response.code))
     }
@@ -230,7 +264,7 @@ const goCompleteHandler = () => {
   })
 }
 
-const goPayHandler = () => {
+const goPayHandler = async () => {
   if (props.disabled) {
     if (props.disabledMessage) {
       useNoty().setNoty({
@@ -248,10 +282,13 @@ const goPayHandler = () => {
     return
   }
 
+  await syncProfileBeforeSubmit()
+
   isPaymentLoading.value = true
   const payload = { ...orderable.value }
   useCartStore().createOrder(payload).then(async (response) => {
     if(response?.code) {
+      await markCurrentAddressAsMain()
       await redirectToPaymentGateway(response)
     }
   }).catch((e) => {
