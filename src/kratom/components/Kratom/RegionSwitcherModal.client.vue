@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const isOpen = ref(false)
 const storageKey = 'kratom-region-switcher-modal-dismissed-v1'
+const desktopMediaQuery = '(min-width: 1024px)'
 
 let timer: ReturnType<typeof window.setTimeout> | null = null
 
@@ -10,7 +11,7 @@ const close = () => {
 }
 
 onMounted(() => {
-  if (sessionStorage.getItem(storageKey)) {
+  if (sessionStorage.getItem(storageKey) || !window.matchMedia(desktopMediaQuery).matches) {
     return
   }
 

@@ -35,7 +35,8 @@ onMounted(async () => {
   const sections = Array.from(pageRoot.value?.querySelectorAll('.page-reveal-section') ?? [])
   if (!sections.length) return
 
-  const initialViewportThreshold = window.innerHeight * 0.9
+  const isMobileViewport = window.matchMedia('(max-width: 767px)').matches
+  const initialViewportThreshold = window.innerHeight * (isMobileViewport ? 1.35 : 0.9)
   sections.forEach((section) => {
     if (section.getBoundingClientRect().top <= initialViewportThreshold) {
       activateSection(section, true)
@@ -65,10 +66,15 @@ onMounted(async () => {
     revealObservers.push(observer)
   }
 
-  registerObserver(sections, {
-    threshold: 0.12,
-    rootMargin: '0px 0px 8% 0px',
-  })
+  registerObserver(sections, isMobileViewport
+    ? {
+        threshold: 0.04,
+        rootMargin: '0px 0px 32% 0px',
+      }
+    : {
+        threshold: 0.12,
+        rootMargin: '0px 0px 8% 0px',
+      })
 })
 
 onBeforeUnmount(() => {
@@ -93,11 +99,11 @@ useSeo().setPageSeo('home', {
     <div id="ticker" class="page-reveal-section">
       <section-landing-marquee-ticker :items="marqueeItems" />
     </div>
-    <div id="legal" class="page-reveal-section">
-      <section-landing-legal-market />
-    </div>
     <div id="store" class="page-reveal-section">
       <section-landing-product-grid />
+    </div>
+    <div id="legal" class="page-reveal-section">
+      <section-landing-legal-market />
     </div>
     <div id="timeline" class="page-reveal-section">
       <section-landing-timeline-section />

@@ -1512,11 +1512,26 @@ useSeo().setPageSeo('product', {
     display: contents;
   }
 
-  .kratom-product-gallery,
-  .kratom-product-summary,
   .kratom-product-safety,
   .kratom-product-panel {
     border-radius: 28px;
+  }
+
+  .kratom-product-gallery {
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .kratom-product-summary {
+    margin-top: -15px;
+    position: relative;
+    z-index: 1;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
   }
 
   .kratom-product-gallery,

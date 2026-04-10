@@ -96,7 +96,11 @@ const stripLocalePrefix = (path) => {
 }
 
 const isHomeRoute = computed(() => stripLocalePrefix(route.path) === '/')
-const showPromoStrip = computed(() => stripLocalePrefix(route.path) !== '/checkout')
+const isAccountRoute = computed(() => stripLocalePrefix(route.path).startsWith('/account'))
+const showPromoStrip = computed(() => {
+  const normalizedPath = stripLocalePrefix(route.path)
+  return normalizedPath !== '/checkout' && !isAccountRoute.value
+})
 const isHeaderScrolled = computed(() => !isHomeRoute.value || isScrolled.value)
 
 const resetMeasureRefs = () => {

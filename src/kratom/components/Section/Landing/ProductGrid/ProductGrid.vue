@@ -87,7 +87,7 @@ const products = computed(() => data.value || [])
       </div>
 
       <div v-if="!pending && products.length" class="landing-product-grid__actions">
-        <NuxtLink :to="regionPath('/catalog')" class="button orange">
+        <NuxtLink :to="regionPath('/catalog')" class="button secondary">
           {{ t('cta') }}
         </NuxtLink>
       </div>
@@ -98,7 +98,7 @@ const products = computed(() => data.value || [])
 <style scoped lang="scss">
 .landing-product-grid {
   padding: 88px 0;
-  background-color: $color-8;
+  background-color: $color-bg;
 }
 
 .landing-product-grid__container {

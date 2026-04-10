@@ -23,11 +23,11 @@ const stampFontSize = computed(() => {
 
 <template>
   <section class="legal-wrapper">
-    <div class="legal-flag">
+    <!-- <div class="legal-flag">
       <div class="legal-flag__top"></div>
       <div class="legal-flag__bottom"></div>
       <div class="legal-flag__triangle"></div>
-    </div>
+    </div> -->
 
     <div class="container">
       <div class="legal-inner">

@@ -3,6 +3,10 @@
     position: relative;
     padding: 60px 0 90px;
     overflow: hidden;
+    // background-color: #fdf9f3;
+    // background-color: $color-bg-2;
+    // background-color: #FAF7F0;
+    background-color: #fff;
 
     @include desktop {
       padding: 100px 120px 100px 0;

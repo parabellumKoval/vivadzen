@@ -119,7 +119,7 @@ const saveAddresses = async () => {
               <div class="address-card__title">{{ address.title || buildAddressSummary(address) }}</div>
               <div class="address-card__summary">{{ buildAddressSummary(address) }}</div>
             </div>
-            <button type="button" class="button text-link" @click="removeAddress(index)">{{ t('button.delete') }}</button>
+            <button type="button" class="button color-dark" @click="removeAddress(index)">{{ t('button.delete') }}</button>
           </header>
 
           <div class="account-addresses__grid">
@@ -226,8 +226,12 @@ const saveAddresses = async () => {
 .address-card__header {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
   gap: 16px;
+  width: 100%;
+
+  @include desktop {
+    justify-content: space-between;
+  }
 }
 
 .address-card__title {
