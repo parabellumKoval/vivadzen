@@ -59,6 +59,7 @@ return [
             'title' => 'Обновить категории',
             'desc' => 'Обновить категории на сайте',
             'url' => [
+                '/api/_categories/refresh/all',
                 '/api/_categories/refresh/slugs',
                 '/api/_categories/refresh/list',
                 '/api/_categories/refresh/main',

@@ -5432,12 +5432,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "d8259210ec2cf5c92221503679df43312a1c554d"
+                "reference": "0a2949ac6377cd9cebe21ff6ba6afb94e7e4f04c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/d8259210ec2cf5c92221503679df43312a1c554d",
-                "reference": "d8259210ec2cf5c92221503679df43312a1c554d",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/0a2949ac6377cd9cebe21ff6ba6afb94e7e4f04c",
+                "reference": "0a2949ac6377cd9cebe21ff6ba6afb94e7e4f04c",
                 "shasum": ""
             },
             "require": {
@@ -5498,7 +5498,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/multistore"
             },
-            "time": "2026-04-16T16:19:51+00:00"
+            "time": "2026-04-16T16:50:25+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",
@@ -5958,12 +5958,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/webhooks.git",
-                "reference": "7321f5e33d2f463a32d2f3e4ac40e2730019c9f8"
+                "reference": "74afd06e4cf8df9c676194a63f54fdaf9da8b2df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/webhooks/zipball/7321f5e33d2f463a32d2f3e4ac40e2730019c9f8",
-                "reference": "7321f5e33d2f463a32d2f3e4ac40e2730019c9f8",
+                "url": "https://api.github.com/repos/parabellumKoval/webhooks/zipball/74afd06e4cf8df9c676194a63f54fdaf9da8b2df",
+                "reference": "74afd06e4cf8df9c676194a63f54fdaf9da8b2df",
                 "shasum": ""
             },
             "require": {
@@ -6000,7 +6000,7 @@
                 "issues": "https://github.com/parabellumKoval/webhooks/issues",
                 "source": "https://github.com/parabellumKoval/webhooks/tree/main"
             },
-            "time": "2026-04-07T13:58:31+00:00"
+            "time": "2026-04-16T16:52:11+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
