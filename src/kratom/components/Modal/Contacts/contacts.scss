@@ -29,12 +29,27 @@
   }
 }
 .map {
+  &-item {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   &-title {
-    margin-bottom: 20px;
     font-weight: 500;
     font-size: 14px;
     text-transform: uppercase;
     color: $color-dark-2;
+  }
+
+  &-address,
+  &-schedule {
+    color: $color-dark-2;
+    line-height: 1.5;
   }
 
   &-container {

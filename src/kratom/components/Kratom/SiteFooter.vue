@@ -1,10 +1,14 @@
 <script setup lang="ts">
 const { t } = useI18n()
+const route = useRoute()
 const regionPath = useToLocalePath()
-const contacts = useContacts()
+const { phone, email, addressLines } = useContacts()
 const { messengers, networks } = useSocial()
+const isFlushTop = computed(() => Boolean(route.meta?.footerFlushTop))
 
 const legalLinks = computed(() => [
+  { to: '/delivery', label: t('title.delivery') },
+  { to: '/payment', label: t('title.payment') },
   { to: '/policy', label: t('title.policy') },
   { to: '/terms', label: t('title.terms') },
   { to: '/returns', label: t('title.returns') },
@@ -19,7 +23,7 @@ const infoLinks = computed(() => [
 </script>
 
 <template>
-  <footer class="site-footer">
+  <footer class="site-footer" :class="{ 'site-footer--flush-top': isFlushTop }">
     <div class="container">
       <KratomRegionSwitcher class="site-footer__region-switcher" />
 
@@ -47,9 +51,9 @@ const infoLinks = computed(() => [
         <div>
           <p class="site-footer__title">{{ t('title.contacts') }}</p>
           <div class="site-footer__contacts">
-            <a :href="`tel:${String(contacts.phone.value || '').replace(/\s+/g, '')}`">{{ contacts.phone }}</a>
-            <a :href="`mailto:${contacts.email}`">{{ contacts.email }}</a>
-            <span>{{ contacts.address }}</span>
+            <a :href="`tel:${String(phone || '').replace(/\s+/g, '')}`">{{ phone }}</a>
+            <a :href="`mailto:${email}`">{{ email }}</a>
+            <span v-for="(line, index) in addressLines" :key="`footer-address-${index}`">{{ line }}</span>
           </div>
           <div class="site-footer__socials">
             <a v-for="item in [...messengers, ...networks]" :key="item.key" :href="item.link" target="_blank" rel="noopener">
@@ -64,12 +68,15 @@ const infoLinks = computed(() => [
 
 <style scoped lang="scss">
 .site-footer {
-  margin-top: 80px;
   padding: 50px 0 60px;
   background:
     radial-gradient(circle at top left, rgba(138, 90, 43, 0.2), transparent 35%),
     linear-gradient(180deg, #1e241f, #0f1410);
   color: rgba(255, 247, 236, 0.8);
+}
+
+.site-footer--flush-top {
+  margin-top: 0;
 }
 
 .site-footer__region-switcher {

@@ -9,60 +9,39 @@ const props = withDefaults(defineProps<{
   showPartners: false,
 })
 
-const { get } = useSettings()
+const contactInfo = useContacts()
 const { partners } = usePartnerStores()
 
-const contactInfo = computed(() => {
-  return {
-    address: get('site.contacts.address'),
-    phone: get('site.contacts.phone'),
-    email: get('site.contacts.email'),
-    schedule: get('site.contacts.schedule'),
-    map: get('site.contacts.map')
-  }
-})
-
-const mapSrc = computed(() => {
-  const raw = contactInfo.value.map
-  if (raw && typeof raw === 'object' && 'value' in raw && typeof raw.value === 'string') {
-    const match = raw.value.match(/src=["']([^"']+)["']/i)
-    return match?.[1]?.trim() || raw.value.trim()
-  }
-
-  if (typeof raw !== 'string') {
-    return ''
-  }
-
-  const match = raw.match(/src=["']([^"']+)["']/i)
-  return match?.[1]?.trim() || raw.trim()
-})
+const mapLocations = computed(() => contactInfo.mapLocations.value)
 
 const contacts = computed(() => {
   return [
-    {
-      icon: 'iconoir:map',
-      colorClass: 'contact-item--address',
-      label: t('label.address'),
-      value: contactInfo.value.address
-    },
+    // {
+    //   icon: 'iconoir:map',
+    //   colorClass: 'contact-item--address',
+    //   label: t('label.address'),
+    //   value: contactInfo.addressSummary.value,
+    //   lines: contactInfo.addressLines.value
+    // },
     {
       icon: 'iconoir:phone',
       colorClass: 'contact-item--phone',
       label: t('label.phone'),
-      value: contactInfo.value.phone
+      value: contactInfo.phone.value
     },
     {
       icon: 'iconoir:mail',
       colorClass: 'contact-item--email',
       label: t('label.email'),
-      value: contactInfo.value.email
+      value: contactInfo.email.value
     },
-    {
-      icon: 'iconoir:clock',
-      colorClass: 'contact-item--schedule',
-      label: t('label.schedule'),
-      value: contactInfo.value.schedule
-    }
+    // {
+    //   icon: 'iconoir:clock',
+    //   colorClass: 'contact-item--schedule',
+    //   label: t('label.schedule'),
+    //   value: contactInfo.scheduleSummary.value,
+    //   lines: contactInfo.scheduleLines.value
+    // }
   ].filter((item) => item.value)
 })
 
@@ -115,7 +94,16 @@ const partnerFields = (partner: PartnerStore) => {
             </div>
             <div class="contact-item__content">
               <p class="contact-item__label">{{ contact.label }}</p>
-              <p class="contact-item__value">{{ contact.value }}</p>
+              <p class="contact-item__value">
+                <template v-if="contact.lines?.length">
+                  <template v-for="(line, index) in contact.lines" :key="`${contact.label}-${index}`">
+                    <template v-if="index"><br></template>{{ line }}
+                  </template>
+                </template>
+                <template v-else>
+                  {{ contact.value }}
+                </template>
+              </p>
             </div>
           </div>
         </div>
@@ -142,14 +130,25 @@ const partnerFields = (partner: PartnerStore) => {
         />
       </div>
 
-      <div v-if="mapSrc" class="map-wrapper">
-        <iframe
-          :src="mapSrc"
-          class="map"
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
+      <div v-if="mapLocations.length" class="map-list">
+        <div
+          v-for="location in mapLocations"
+          :key="location.id"
+          class="map-card"
+        >
+          <p class="map-card__title">{{ location.title || location.address }}</p>
+          <p v-if="location.title" class="map-card__subtitle">{{ location.address }}</p>
+          <p v-if="location.schedule" class="map-card__schedule">{{ location.schedule }}</p>
+          <div class="map-wrapper">
+            <iframe
+              :src="location.mapSrc"
+              class="map"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
       </div>
 
       <div

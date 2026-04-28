@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { t } = useI18n()
 const route = useRoute()
+const { needsAddress, needsPickupLocation, needsWarehouse } = useSavedDeliveryAddresses()
 
 definePageMeta({
   bg: '#f3ece2',
@@ -29,6 +30,49 @@ const user = computed(() => order.value?.user || null)
 const delivery = computed(() => order.value?.delivery || null)
 const payment = computed(() => order.value?.payment || null)
 const products = computed(() => order.value?.products || [])
+
+const normalizeDeliveryLine = (value: unknown) => {
+  return String(value ?? '').replace(/\s+/g, ' ').trim()
+}
+
+const uniqueDeliveryLines = (values: Array<unknown>) => {
+  const seen = new Set<string>()
+
+  return values
+    .map(normalizeDeliveryLine)
+    .filter((line) => {
+      if (!line || seen.has(line)) {
+        return false
+      }
+
+      seen.add(line)
+      return true
+    })
+}
+
+const deliveryLines = computed(() => {
+  if (!delivery.value) {
+    return []
+  }
+
+  const streetLine = [delivery.value.street, delivery.value.house, delivery.value.room]
+    .filter(Boolean)
+    .join(' ')
+
+  if (needsPickupLocation(delivery.value.method)) {
+    return uniqueDeliveryLines([delivery.value.warehouse || streetLine])
+  }
+
+  if (needsWarehouse(delivery.value.method)) {
+    return uniqueDeliveryLines([delivery.value.settlement, delivery.value.warehouse])
+  }
+
+  if (needsAddress(delivery.value.method)) {
+    return uniqueDeliveryLines([delivery.value.settlement, streetLine, delivery.value.zip])
+  }
+
+  return uniqueDeliveryLines([delivery.value.settlement, delivery.value.warehouse, streetLine, delivery.value.zip])
+})
 
 const breadcrumbs = computed(() => [
   { name: t('title.home'), item: '/' },
@@ -88,10 +132,7 @@ useCartStore().$reset()
           <h2 class="title-secondary">{{ t('kratom.complete.delivery') }}</h2>
           <div class="kratom-complete-stack">
             <div v-if="delivery?.method">{{ $t(`form.delivery.${delivery.method}`) }}</div>
-            <div v-if="delivery?.settlement">{{ delivery.settlement }}</div>
-            <div v-if="delivery?.warehouse">{{ delivery.warehouse }}</div>
-            <div v-if="delivery?.street">{{ delivery.street }} {{ delivery.house }}</div>
-            <div v-if="delivery?.zip">{{ delivery.zip }}</div>
+            <div v-for="(line, index) in deliveryLines" :key="`delivery-line-${index}`">{{ line }}</div>
           </div>
         </section>
 
@@ -121,6 +162,7 @@ useCartStore().$reset()
 <style scoped lang="scss">
 .kratom-complete-shell {
   padding-top: 24px;
+  padding-bottom: 48px;
 }
 
 .kratom-complete-layout {

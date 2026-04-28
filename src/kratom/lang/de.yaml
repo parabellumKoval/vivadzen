@@ -407,6 +407,7 @@ delivery:
   subtitle: Liefermethoden hängen vom gewählten Land ab. Ändern Sie das Lieferland, um verfügbare Optionen zu sehen.
 
 payments:
+  more: Mehr über Zahlung
   subtitle: Zahlungsmethoden hängen vom gewählten Land ab. Ändern Sie das Lieferland, um verfügbare Optionen zu sehen.
   liqpay_online:
     title: LiqPay-Onlinezahlung
@@ -533,7 +534,7 @@ kratom:
     eyebrow: 'VivaDzen Mini-Store'
     title: 'Kratom für den tschechischen Markt'
     text: 'Ein fokussierter Store auf derselben Backend- und Kataloglogik, reduziert auf das Wesentliche: Kratom, Artikel, Checkout und Support.'
-    legal: 'Rechtliches'
+    legal: 'Informationen'
   region_switcher:
     eyebrow: 'Regionale Storefronts'
     title: 'Sie befinden sich gerade im VivaDzen-Kratom-Store für Tschechien'

@@ -1,6 +1,7 @@
 <script setup>
 const {t} = useI18n()
 const { messengers, networks } = useSocial()
+const { phone, email, pickupLocations, map, addressSummary } = useContacts()
 
 </script>
 
@@ -31,18 +32,32 @@ const { messengers, networks } = useSocial()
         <div class="phones">
           <a href="/" class="button color-dark contacts-btn">
             <IconCSS name="iconoir:phone" class="icon"></IconCSS>
-            <span class="text">{{ useContacts().phone }}</span>
+            <span class="text">{{ phone }}</span>
           </a>
           <a href="/" class="button color-dark contacts-btn email-btn">
             <IconCSS name="iconoir:mail-opened" class="icon"></IconCSS>
-            <span class="text">{{ useContacts().email }}</span>
+            <span class="text">{{ email }}</span>
           </a>
         </div>
       </div>
       <div class="divide"></div>
       <div class="map">
-        <div class="map-title">{{ useContacts().address }}</div>
-        <div class="map-container" v-html="useContacts().map.value"></div>
+        <template v-if="pickupLocations.length">
+          <div
+            v-for="location in pickupLocations"
+            :key="location.id"
+            class="map-item"
+          >
+            <div class="map-title">{{ location.title || location.address }}</div>
+            <div v-if="location.title" class="map-address">{{ location.address }}</div>
+            <div v-if="location.schedule" class="map-schedule">{{ location.schedule }}</div>
+            <div v-if="location.map" class="map-container" v-html="location.map"></div>
+          </div>
+        </template>
+        <template v-else-if="map">
+          <div class="map-title">{{ addressSummary }}</div>
+          <div class="map-container" v-html="map"></div>
+        </template>
       </div>
     </div>
   </modal-wrapper>

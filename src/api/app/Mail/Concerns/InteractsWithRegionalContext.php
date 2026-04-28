@@ -120,7 +120,7 @@ trait InteractsWithRegionalContext
             return $resolved !== '' ? $resolved : $fallback;
         };
 
-        $address = $value('site.contacts.address', __('contacts.address'));
+        $address = $this->resolvePickupAddress($context) ?: $value('site.contacts.address', __('contacts.address'));
         $phone = $value('site.contacts.phone', __('contacts.phone'));
         $email = $value('site.contacts.email', __('contacts.email'));
 
@@ -137,6 +137,33 @@ trait InteractsWithRegionalContext
             'email' => $email,
             'social' => $social,
         ];
+    }
+
+    protected function resolvePickupAddress(array $context): ?string
+    {
+        $raw = \Settings::get('site.contacts.pickup_locations', [], $context);
+        $locations = is_array($raw) ? $raw : [];
+
+        foreach ($locations as $location) {
+            if (is_string($location) && trim($location) !== '') {
+                return trim($location);
+            }
+
+            if (!is_array($location)) {
+                continue;
+            }
+
+            $title = trim((string) ($location['title'] ?? $location['name'] ?? ''));
+            $address = trim((string) ($location['address'] ?? $location['value'] ?? ''));
+
+            if ($address === '') {
+                continue;
+            }
+
+            return $title !== '' ? sprintf('%s, %s', $title, $address) : $address;
+        }
+
+        return null;
     }
 
     protected function normalizeLocale(?string $locale): ?string

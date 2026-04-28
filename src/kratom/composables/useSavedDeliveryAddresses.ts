@@ -76,6 +76,7 @@ const FULL_ADDRESS_METHODS = ['novaposhta_address', 'packeta_address', 'messenge
 const HOUSE_REQUIRED_METHODS = ['novaposhta_address', 'messenger_address', 'default_address']
 const ZIP_REQUIRED_METHODS = ['novaposhta_address', 'packeta_address', 'messenger_address']
 const WAREHOUSE_METHODS = ['novaposhta_warehouse', 'packeta_warehouse']
+const PICKUP_SELECTION_METHODS = ['default_pickup']
 
 const normalizeBoolean = (value: unknown): boolean => {
   if (typeof value === 'boolean') return value
@@ -120,6 +121,7 @@ export const useSavedDeliveryAddresses = () => {
   }
 
   const needsWarehouse = (method: string | null | undefined) => WAREHOUSE_METHODS.includes(String(method || ''))
+  const needsPickupLocation = (method: string | null | undefined) => PICKUP_SELECTION_METHODS.includes(String(method || ''))
   const needsAddress = (method: string | null | undefined) => FULL_ADDRESS_METHODS.includes(String(method || ''))
   const requiresHouse = (method: string | null | undefined) => HOUSE_REQUIRED_METHODS.includes(String(method || ''))
   const requiresZip = (method: string | null | undefined) => ZIP_REQUIRED_METHODS.includes(String(method || ''))
@@ -153,6 +155,10 @@ export const useSavedDeliveryAddresses = () => {
 
   const buildAddressSummary = (value: Partial<SavedDeliveryAddress> | null | undefined) => {
     const address = normalizeAddress(value)
+    if (needsPickupLocation(address.method)) {
+      return address.warehouse || address.street || address.title || methodTitle(address.method)
+    }
+
     const detailLine = needsWarehouse(address.method)
       ? [address.settlement, address.warehouse].filter(Boolean).join(', ')
       : [
@@ -340,6 +346,7 @@ export const useSavedDeliveryAddresses = () => {
     normalizeAddress,
     methodTitle,
     needsWarehouse,
+    needsPickupLocation,
     needsAddress,
     requiresHouse,
     requiresZip,

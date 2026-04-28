@@ -11,7 +11,7 @@ const { t } = useTgI18n()
 const { pathFor, region } = useTgRouting()
 const { user: telegramUser, webApp, haptic } = useTelegram()
 const { formatMoney } = useTgProductUtils()
-const { loadSettings, deliveryMethods, paymentMethodsFor } = useTgCheckoutOptions()
+const { loadSettings, deliveryMethods, pickupLocations, paymentMethodsFor } = useTgCheckoutOptions()
 const {
   loadProfile: loadBackendProfile,
   saveProfile: saveBackendProfile,
@@ -39,6 +39,7 @@ const selectedPayment = computed(() => {
 
 const phonePlaceholder = computed(() => region.value === 'ua' ? '+380' : '+420')
 const needsWarehouse = computed(() => String(order.delivery.method || '').includes('warehouse'))
+const needsPickupLocation = computed(() => String(order.delivery.method || '') === 'default_pickup')
 const needsAddress = computed(() => String(order.delivery.method || '').includes('address'))
 const needsHouse = computed(() => ['novaposhta_address', 'messenger_address', 'default_address'].includes(String(order.delivery.method || '')))
 const needsZip = computed(() => ['novaposhta_address', 'packeta_address', 'messenger_address'].includes(String(order.delivery.method || '')))
@@ -75,6 +76,7 @@ const isPaymentStepComplete = computed(() => Boolean(
 ))
 const isDeliveryStepComplete = computed(() => {
   if (!order.delivery.method) return false
+  if (needsPickupLocation.value) return Boolean(order.delivery.warehouse)
   if (needsWarehouse.value) return Boolean(order.delivery.settlement && order.delivery.warehouse)
   if (needsAddress.value) {
     return Boolean(
@@ -117,6 +119,7 @@ const addPaymentErrors = () => {
 
 const addDeliveryErrors = () => {
   if (!order.delivery.method) errors.delivery = t('select_delivery')
+  if (needsPickupLocation.value && !order.delivery.warehouse) errors.warehouse = t('required')
   if (needsWarehouse.value && !order.delivery.settlement) errors.settlement = t('required')
   if (needsWarehouse.value && !order.delivery.warehouse) errors.warehouse = t('required')
   if (needsAddress.value && !order.delivery.settlement) errors.settlement = t('required')
@@ -284,6 +287,40 @@ const savedAddressLine = (address: TgSavedAddress) => {
   return [address.settlement, address.warehouse || streetLine || address.zip].filter(Boolean).join(', ') || address.title
 }
 
+const selectedPickupLocationId = computed(() => {
+  const current = String(order.delivery.warehouse || '').trim()
+  if (!current) return ''
+  return pickupLocations.value.find((item) => item.label === current || item.address === current)?.id || ''
+})
+
+const applyPickupLocation = (location: { id: string; title: string; address: string; label: string }) => {
+  order.delivery.warehouse = location.label || location.address
+  order.delivery.street = location.address || null
+  delete errors.warehouse
+}
+
+const syncPickupSelection = () => {
+  if (order.delivery.method !== 'default_pickup') {
+    return
+  }
+
+  if (!pickupLocations.value.length) {
+    order.delivery.warehouse = null
+    order.delivery.street = null
+    return
+  }
+
+  const current = pickupLocations.value.find((item) => item.id === selectedPickupLocationId.value)
+  if (current) {
+    applyPickupLocation(current)
+    return
+  }
+
+  if (!order.delivery.warehouse) {
+    applyPickupLocation(pickupLocations.value[0])
+  }
+}
+
 const deliveryMethodTitle = (key: string | null) => {
   return deliveryMethods.value.find((method) => method.key === key)?.title || key || t('delivery')
 }
@@ -294,8 +331,15 @@ const setInitialStep = () => {
 
 watch(() => order.delivery.method, () => {
   syncDeliveryPrice()
+  syncPickupSelection()
   resetInvalidPayment()
   applySavedPayment()
+})
+
+watch(pickupLocations, () => {
+  syncPickupSelection()
+}, {
+  immediate: true
 })
 
 watch(paymentMethods, () => {
@@ -327,6 +371,7 @@ onMounted(async () => {
   }
 
   syncDeliveryPrice()
+  syncPickupSelection()
   resetInvalidPayment()
   applySavedPayment()
   setInitialStep()
@@ -487,6 +532,22 @@ const submit = async () => {
             <small v-if="errors.delivery" class="tg-error">{{ errors.delivery }}</small>
 
             <div v-if="order.delivery.method" class="checkout-step__fields">
+              <div v-if="needsPickupLocation" class="saved-addresses">
+                <strong>{{ t('warehouse') }}</strong>
+                <button
+                  v-for="location in pickupLocations"
+                  :key="location.id"
+                  type="button"
+                  class="saved-address"
+                  :class="{ 'saved-address--active': selectedPickupLocationId === location.id }"
+                  @click="applyPickupLocation(location)"
+                >
+                  <span>{{ location.label }}</span>
+                  <small v-if="location.schedule">{{ location.schedule }}</small>
+                </button>
+                <small v-if="errors.warehouse" class="tg-error">{{ errors.warehouse }}</small>
+              </div>
+
               <label v-if="needsWarehouse || needsAddress">
                 <span>{{ t('city') }}</span>
                 <input v-model="order.delivery.settlement" class="tg-field" :class="{ 'tg-field--error': errors.settlement }">

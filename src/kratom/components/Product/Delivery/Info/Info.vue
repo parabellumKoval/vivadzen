@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n()
+const regionPath = useToLocalePath()
 const { methods: deliveryMethods } = useDelivery()
 const { methodsInfo: paymentMethods } = usePayment()
 
@@ -42,6 +43,9 @@ const paymentItems = computed(() => {
           <span class="product-delivery-info__name">{{ item.title }}</span>
         </div>
       </div>
+      <NuxtLink :to="regionPath('/delivery')" class="product-delivery-info__link">
+        {{ t('delivery.more') }}
+      </NuxtLink>
     </div>
 
     <div v-if="paymentItems.length" class="product-delivery-info__section">
@@ -58,6 +62,9 @@ const paymentItems = computed(() => {
           <span class="product-delivery-info__name">{{ item.title }}</span>
         </div>
       </div>
+      <NuxtLink :to="regionPath('/payment')" class="product-delivery-info__link">
+        {{ t('payments.more') }}
+      </NuxtLink>
     </div>
   </section>
 </template>
@@ -66,7 +73,7 @@ const paymentItems = computed(() => {
 .product-delivery-info {
   display: grid;
   gap: 30px;
-  padding: 22px 24px;
+  padding: 32px 36px;
   border-radius: 32px;
   border: 1px solid rgba(74, 91, 68, 0.08);
   background:
@@ -137,9 +144,26 @@ const paymentItems = computed(() => {
   line-height: 1.6;
 }
 
+.product-delivery-info__link {
+  margin-top: 10px;
+  justify-self: start;
+  color: #111;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color .2s ease;
+
+  &:hover {
+    color: #111;
+  }
+}
+
 @include mobile {
   .product-delivery-info {
-    padding: 20px;
+    padding: 32px 36px;
     border-radius: 28px;
   }
 

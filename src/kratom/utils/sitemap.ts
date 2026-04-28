@@ -10,6 +10,8 @@ export const SITEMAP_STATIC_ROUTES = [
   '/blog',
   '/catalog',
   '/contacts',
+  '/delivery',
+  '/payment',
   '/policy',
   '/returns',
   '/reviews',

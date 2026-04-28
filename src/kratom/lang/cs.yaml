@@ -429,6 +429,12 @@ seo:
     returns:
       title: "Vrácení zboží a reklamace | VivaDzen Kratom"
       description: "Podmínky vrácení zboží a reklamací pro objednávky VivaDzen Kratom v České republice."
+    delivery:
+      title: "Doručení | VivaDzen Kratom"
+      description: "Způsoby doručení objednávek VivaDzen Kratom v České republice, dopravci, termíny a důležité podmínky převzetí."
+    payment:
+      title: "Platba | VivaDzen Kratom"
+      description: "Platební metody pro objednávky VivaDzen Kratom včetně online plateb, dobírky a bankovního převodu."
     checkout:
       title: "Pokladna | VivaDzen Kratom"
       description: "Dokončení objednávky VivaDzen Kratom s doručením v ČR, bezpečnou platbou a povinným ověřením věku 18+."
@@ -460,6 +466,7 @@ delivery:
   subtitle: Způsoby doručení závisí na zvolené zemi. Změňte zemi doručení a zobrazte dostupné možnosti pro váš region.
 
 payments:
+  more: Více o platbě
   subtitle: Platební metody závisí na zvolené zemi. Změňte zemi doručení a zobrazte dostupné možnosti.
   liqpay_online:
     title: Online platba LiqPay
@@ -587,7 +594,7 @@ kratom:
     eyebrow: 'VivaDzen mini-store'
     title: 'Kratom pro český trh'
     text: 'Jeden specializovaný obchod na stejném backendu a katalogové logice, zúžený jen na to podstatné: kratom, články, objednávku a podporu.'
-    legal: 'Právní informace'
+    legal: 'Informace'
   region_switcher:
     eyebrow: 'Regionální obchody'
     title: 'Právě jste v internetovém obchodě s kratomem VivaDzen v Česku'

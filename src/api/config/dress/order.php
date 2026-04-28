@@ -91,7 +91,7 @@ return [
         'rules' => 'required|in:novaposhta_address,novaposhta_warehouse,packeta_address,packeta_warehouse,messenger_address,default_pickup,default_address'
       ],
       'warehouse' => [
-        'rules' => 'required_if:delivery.method,novaposhta_warehouse,packeta_warehouse|nullable|string|min:1|max:500'
+        'rules' => 'required_if:delivery.method,novaposhta_warehouse,packeta_warehouse,default_pickup|nullable|string|min:1|max:500'
       ],
       'warehouseRef' => [
         'rules' => 'nullable|string|min:1|max:500'

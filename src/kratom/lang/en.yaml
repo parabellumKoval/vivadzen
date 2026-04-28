@@ -434,6 +434,12 @@ seo:
     returns:
       title: "Returns and claims | VivaDzen Kratom"
       description: "Return and claim conditions for VivaDzen Kratom orders in the Czech Republic."
+    delivery:
+      title: "Delivery | VivaDzen Kratom"
+      description: "Delivery methods for VivaDzen Kratom orders in the Czech Republic, including carriers, timelines, and pickup details."
+    payment:
+      title: "Payment | VivaDzen Kratom"
+      description: "Payment methods for VivaDzen Kratom orders, including secure online payment, cash on delivery, and bank transfer."
     checkout:
       title: "Checkout | VivaDzen Kratom"
       description: "Complete your VivaDzen Kratom order with Czech delivery, secure payment, and mandatory 18+ age verification."
@@ -465,6 +471,7 @@ delivery:
   subtitle: Delivery methods depend on the selected country. Change the delivery country to see options for your region.
 
 payments:
+  more: More about payment
   subtitle: Payment methods depend on the selected country. Change the delivery country to see the options for your region.
   liqpay_online:
     title: LiqPay online payment
@@ -592,7 +599,7 @@ kratom:
     eyebrow: 'VivaDzen mini-store'
     title: 'Kratom curated for the Czech market'
     text: 'One focused storefront on the same backend and catalog logic, trimmed down to essentials: kratom, articles, checkout, and support.'
-    legal: 'Legal'
+    legal: 'Information'
   region_switcher:
     eyebrow: 'Regional storefronts'
     title: 'You are in the VivaDzen kratom store for Czechia'

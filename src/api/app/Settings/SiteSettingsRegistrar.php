@@ -28,26 +28,61 @@ class SiteSettingsRegistrar implements SettingsRegistrarInterface
                         ->tab('Основное')
                     );
                     
+                    $page->add(Field::make('site.contacts.pickup_locations', 'repeatable_pure')
+                        ->label('Точки самовывоза')
+                        ->fields([
+                            [
+                                'name' => 'title',
+                                'label' => 'Название магазина',
+                                'type' => 'text',
+                            ],
+                            [
+                                'name' => 'address',
+                                'label' => 'Адрес',
+                                'type' => 'text',
+                            ],
+                            [
+                                'name' => 'schedule',
+                                'label' => 'График работы',
+                                'type' => 'text',
+                            ],
+                            [
+                                'name' => 'map',
+                                'label' => 'Код карты',
+                                'type' => 'textarea',
+                            ],
+                        ])
+                        ->newItemLabel('Добавить точку')
+                        ->hint('Используется в checkout и на фронтах для самовывоза.')
+                        ->cast('array')
+                        ->regionable(true)
+                        ->translatable(true)
+                        ->tab('Основное')
+                    );
+
                     $page->add(Field::make('site.contacts.address', 'text')
-                        ->label('Адрес')
+                        ->label('Legacy адрес')
                         ->cast('string')
                         ->regionable(true)
                         ->translatable(true)
+                        ->wrapper(['class' => 'form-group col-sm-12 d-none'])
                         ->tab('Основное')
                     );
 
                     $page->add(Field::make('site.contacts.schedule', 'text')
-                        ->label('График работы')
+                        ->label('Legacy график работы')
                         ->cast('string')
                         ->regionable(true)
                         ->translatable(true)
+                        ->wrapper(['class' => 'form-group col-sm-12 d-none'])
                         ->tab('Основное')
                     );
 
-                    $page->add(Field::make('site.contacts.map', 'text')
-                        ->label('Код карты')
+                    $page->add(Field::make('site.contacts.map', 'textarea')
+                        ->label('Legacy код карты')
                         ->cast('string')
                         ->regionable(true)
+                        ->wrapper(['class' => 'form-group col-sm-12 d-none'])
                         ->tab('Основное')
                     );
                     $page->add(Field::make('site.contacts.social.viber', 'text')

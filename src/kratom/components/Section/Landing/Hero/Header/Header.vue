@@ -71,9 +71,11 @@ watch(avatar, () => {
 
 const navItems = computed(() => [
   { id: 'catalog', to: '/catalog', title: t('title.catalog'), priority: 40 },
+  { id: 'delivery', to: '/delivery', title: t('title.delivery'), priority: 48 },
+  { id: 'payment', to: '/payment', title: t('title.payment'), priority: 46 },
   { id: 'reviews', to: '/reviews', title: t('title.reviews'), priority: 25 },
   { id: 'about', to: '/about', title: t('title.about'), priority: 20 },
-  { id: 'contacts', to: '/contacts', title: t('title.contacts'), priority: 50 }
+  { id: 'contacts', to: '/contacts', title: t('title.contacts'), priority: 18 }
 ])
 
 const mobileNavItems = computed(() => [
@@ -303,14 +305,14 @@ const contactItems = computed(() => {
     {
       id: 'address',
       label: t('contacts.address'),
-      value: contacts.address.value,
+      value: contacts.addressSummary.value,
       href: null,
       icon: 'mynaui:location'
     },
     {
       id: 'schedule',
       label: t('contacts.schedule'),
-      value: contacts.schedule.value,
+      value: contacts.scheduleSummary.value,
       href: null,
       icon: 'mynaui:clock-4'
     }

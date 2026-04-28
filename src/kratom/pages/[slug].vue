@@ -441,9 +441,25 @@ useSeo().setPageSeo('product', {
                 <IconCSS name="ci:shopping-cart-01" />
               </button>
             </div>
+
           </div>
 
           <ProductDeliveryInfo class="kratom-product-delivery-card" />
+
+          <div class="kratom-product-age-warning" :aria-label="t('kratom.product.age_warning.aria_label')">
+            <div class="kratom-product-age-warning__sign" role="img" aria-hidden="true">
+              <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" r="53" fill="#fff" stroke="#e1251b" stroke-width="10" />
+                <text x="60" y="78" text-anchor="middle" font-size="58" font-weight="700" fill="#111" font-family="Arial, sans-serif">18</text>
+                <line x1="24" y1="24" x2="96" y2="96" stroke="#e1251b" stroke-width="12" stroke-linecap="round" />
+              </svg>
+            </div>
+
+            <div class="kratom-product-age-warning__copy">
+              <p>{{ t('kratom.product.age_warning.line_1') }}</p>
+              <p>{{ t('kratom.product.age_warning.line_2') }}</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -630,6 +646,7 @@ useSeo().setPageSeo('product', {
 .kratom-product-adulto,
 .kratom-product-legal,
 .kratom-product-summary,
+.kratom-product-age-warning,
 .kratom-product-safety,
 .kratom-product-panel {
   border-radius: 40px;
@@ -1121,6 +1138,48 @@ useSeo().setPageSeo('product', {
   margin-top: -15px;
 }
 
+.kratom-product-age-warning {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: center;
+  order: 4;
+  padding: 32px 36px;
+  border-radius: 40px;
+  border: 1px solid rgba(225, 37, 27, 0.16);
+  box-shadow: 0 32px 80px rgba(39, 49, 36, 0.05);
+  background: #fff;
+}
+
+.kratom-product-age-warning__sign {
+  width: 88px;
+  height: 88px;
+  flex: 0 0 88px;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.kratom-product-age-warning__copy {
+  display: grid;
+  gap: 6px;
+
+  p {
+    margin: 0;
+    color: #3a231e;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  p:first-child {
+    font-weight: 700;
+  }
+}
+
 .kratom-product-summary__qty {
   display: inline-flex;
   align-items: center;
@@ -1539,6 +1598,7 @@ useSeo().setPageSeo('product', {
   .kratom-product-panel,
   .kratom-product-adulto,
   .kratom-product-legal,
+  .kratom-product-age-warning,
   .kratom-product-delivery-card,
   .kratom-product-safety {
     padding-left: 20px;
@@ -1546,14 +1606,15 @@ useSeo().setPageSeo('product', {
   }
 
   .kratom-product-gallery {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    margin-top: -15px;
+    padding: 0;
   }
 
   .kratom-product-summary,
   .kratom-product-panel,
   .kratom-product-adulto,
   .kratom-product-legal,
+  .kratom-product-age-warning,
   .kratom-product-delivery-card,
   .kratom-product-safety {
     padding-top: 24px;
@@ -1562,7 +1623,7 @@ useSeo().setPageSeo('product', {
 
   .kratom-product-gallery__stage {
     height: 360px;
-    border-radius: 24px;
+    border-radius: 24px 24px 0 0;
   }
 
   .kratom-product-summary__title {
@@ -1581,29 +1642,33 @@ useSeo().setPageSeo('product', {
     order: 2;
   }
 
-  .kratom-product-legal {
-    grid-template-columns: 1fr;
+  .kratom-product-age-warning {
     order: 3;
   }
 
-  .kratom-product-panel--consumer-notice {
+  .kratom-product-legal {
+    grid-template-columns: 1fr;
     order: 4;
   }
 
-  .kratom-product-adulto {
+  .kratom-product-panel--consumer-notice {
     order: 5;
   }
 
-  .kratom-product-delivery-card {
+  .kratom-product-adulto {
     order: 6;
   }
 
-  .kratom-product-safety {
+  .kratom-product-delivery-card {
     order: 7;
   }
 
-  .kratom-product-stack > .kratom-product-panel:not(.kratom-product-panel--consumer-notice) {
+  .kratom-product-safety {
     order: 8;
+  }
+
+  .kratom-product-stack > .kratom-product-panel:not(.kratom-product-panel--consumer-notice) {
+    order: 9;
   }
 
   .kratom-product-consumer-notice__hero {

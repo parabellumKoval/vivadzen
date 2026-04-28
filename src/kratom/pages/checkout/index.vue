@@ -20,6 +20,7 @@ const {
   normalizeAddress,
   methodTitle,
   needsWarehouse,
+  needsPickupLocation,
   needsAddress,
   requiresHouse,
   requiresZip,
@@ -115,6 +116,10 @@ const isUserStepComplete = computed(() => Boolean(
 
 const isDeliveryStepComplete = computed(() => {
   if (!order.value.delivery.method) return false
+
+  if (needsPickupLocation(order.value.delivery.method)) {
+    return Boolean(order.value.delivery.warehouse)
+  }
 
   if (needsWarehouse(order.value.delivery.method)) {
     return Boolean(order.value.delivery.settlement && order.value.delivery.warehouse)
@@ -223,6 +228,10 @@ const validateDeliveryStep = () => {
 
   if (!order.value.delivery.method) {
     stepErrors.method = t('error.required')
+  }
+
+  if (needsPickupLocation(order.value.delivery.method) && !order.value.delivery.warehouse) {
+    stepErrors.warehouse = t('error.required')
   }
 
   if (needsWarehouse(order.value.delivery.method) || needsAddress(order.value.delivery.method)) {
@@ -846,6 +855,7 @@ hydrateOrderFromProfile()
 <style scoped lang="scss">
 .kratom-checkout-shell {
   padding-top: 24px;
+  padding-bottom: 40px;
 }
 
 .kratom-checkout-hero {
@@ -1183,6 +1193,10 @@ hydrateOrderFromProfile()
 }
 
 @media (max-width: 767px) {
+  .kratom-checkout-shell {
+    padding-bottom: 28px;
+  }
+
   .kratom-checkout-hero__title {
     font-size: 38px;
   }

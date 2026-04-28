@@ -1,5 +1,13 @@
 import type { TgDeliveryMethod, TgPaymentMethod } from '~/types/tg'
 
+type TgPickupLocation = {
+  id: string
+  title: string
+  address: string
+  schedule: string
+  label: string
+}
+
 const getByPath = (root: Record<string, any> | null, path: string, fallback?: any) => {
   if (!root) return fallback
   return path.split('.').reduce((current, segment) => {
@@ -28,6 +36,18 @@ const minRatePrice = (value: unknown) => {
   const rates = normalizeRates(value)
   const prices = rates.map((rate) => Number(rate?.price)).filter(Number.isFinite)
   return prices.length ? Math.min(...prices) : null
+}
+
+const normalizeText = (value: unknown) => {
+  if (typeof value === 'string') {
+    return value.trim()
+  }
+
+  if (value && typeof value === 'object' && 'value' in value && typeof (value as { value?: unknown }).value === 'string') {
+    return String((value as { value: string }).value).trim()
+  }
+
+  return ''
 }
 
 export const useTgCheckoutOptions = () => {
@@ -142,6 +162,61 @@ export const useTgCheckoutOptions = () => {
       }))
   })
 
+  const pickupLocations = computed<TgPickupLocation[]>(() => {
+    const raw = getByPath(settings.value, 'site.contacts.pickup_locations', null)
+    const fallbackAddress = normalizeText(getByPath(settings.value, 'site.contacts.address', null))
+    const fallbackSchedule = normalizeText(getByPath(settings.value, 'site.contacts.schedule', null))
+    const rows = Array.isArray(raw) ? raw : []
+
+    const normalized = rows.map((item, index) => {
+      if (typeof item === 'string') {
+        const address = normalizeText(item)
+        if (!address) return null
+
+        return {
+          id: `pickup-${index + 1}`,
+          title: '',
+          address,
+          schedule: index === 0 ? fallbackSchedule : '',
+          label: address
+        }
+      }
+
+      if (!item || typeof item !== 'object') {
+        return null
+      }
+
+      const address = normalizeText((item as Record<string, unknown>).address ?? (item as Record<string, unknown>).value)
+      if (!address) return null
+
+      const title = normalizeText((item as Record<string, unknown>).title ?? (item as Record<string, unknown>).name ?? (item as Record<string, unknown>).label)
+
+      return {
+        id: normalizeText((item as Record<string, unknown>).id) || `pickup-${index + 1}`,
+        title,
+        address,
+        schedule: normalizeText((item as Record<string, unknown>).schedule) || (index === 0 ? fallbackSchedule : ''),
+        label: [title, address].filter(Boolean).join(', ')
+      }
+    }).filter(Boolean) as TgPickupLocation[]
+
+    if (normalized.length) {
+      return normalized
+    }
+
+    if (!fallbackAddress) {
+      return []
+    }
+
+    return [{
+      id: 'pickup-1',
+      title: '',
+      address: fallbackAddress,
+      schedule: fallbackSchedule,
+      label: fallbackAddress
+    }]
+  })
+
   const allPaymentMethods = computed<TgPaymentMethod[]>(() => [
     {
       key: 'zasilkovna_cod',
@@ -215,6 +290,7 @@ export const useTgCheckoutOptions = () => {
     settingsLoading,
     loadSettings,
     deliveryMethods,
+    pickupLocations,
     paymentMethodsFor
   }
 }

@@ -4,6 +4,10 @@ cs:
     licenses: 'Licence'
   kratom:
     product:
+      age_warning:
+        aria_label: 'Upozornění 18+'
+        line_1: 'Není určeno osobám mladším 18 let!'
+        line_2: 'Ukládat mimo dosah osob mladších 18 let!'
       safety:
         title: 'Bezpečnost'
         description_prefix: 'Produkt prochází dvoustupňovou kontrolou v nezávislých laboratořích'
@@ -43,6 +47,10 @@ en:
     licenses: 'Licenses'
   kratom:
     product:
+      age_warning:
+        aria_label: '18+ warning'
+        line_1: 'Not intended for persons under 18 years of age!'
+        line_2: 'Keep out of reach of persons under 18 years of age!'
       safety:
         title: 'Safety'
         description_prefix: 'The product undergoes a two-stage inspection in independent laboratories of'
@@ -82,6 +90,10 @@ ru:
     licenses: 'Лицензии'
   kratom:
     product:
+      age_warning:
+        aria_label: 'Предупреждение 18+'
+        line_1: 'Не предназначено для лиц младше 18 лет!'
+        line_2: 'Хранить в недоступном месте для лиц младше 18 лет!'
       safety:
         title: 'Безопасность'
         description_prefix: 'Продукт проходит двухэтапную проверку в независимых лабораториях'
@@ -121,6 +133,10 @@ uk:
     licenses: 'Ліцензії'
   kratom:
     product:
+      age_warning:
+        aria_label: 'Попередження 18+'
+        line_1: 'Не призначено для осіб молодших 18 років!'
+        line_2: 'Зберігати в недоступному для осіб молодших 18 років місці!'
       safety:
         title: 'Безпека'
         description_prefix: 'Продукт проходить двоетапну перевірку в незалежних лабораторіях'

@@ -33,41 +33,148 @@ export const useContacts = () => {
     return get('site.contacts.email')
   })
 
-  const address = computed(() => {
-    return get('site.contacts.address')
-  })
-
-  const map = computed(() => {
+  const legacyMap = computed(() => {
     return get('site.contacts.map')
   })
 
-  const mapSrc = computed(() => {
-    return extractMapSrc(map.value)
-  })
-
-  const schedule = computed(() => {
+  const legacySchedule = computed(() => {
     return get('site.contacts.schedule')
   })
 
+  const legacyAddress = computed(() => {
+    return get('site.contacts.address')
+  })
 
-  const all = computed(() => {
-    return {
-      phone: phone.value,
-      email: email.value,
-      address: address.value,
-      schedule: schedule.value,
-      map: map.value,
-      mapSrc: mapSrc.value
+  const pickupLocations = computed(() => {
+    const rawValue = get('site.contacts.pickup_locations')
+    const fallbackAddress = normalizeText(legacyAddress.value)
+    const fallbackSchedule = normalizeText(legacySchedule.value)
+    const fallbackMap = normalizeText(legacyMap.value)
+
+    const rows = Array.isArray(rawValue) ? rawValue : []
+    const normalized = rows.map((item, index) => {
+      if (typeof item === 'string') {
+        const address = normalizeText(item)
+        if (!address) return null
+
+        return {
+          id: `pickup-${index + 1}`,
+          title: '',
+          address,
+          schedule: index === 0 ? fallbackSchedule : '',
+          map: index === 0 ? fallbackMap : '',
+          mapSrc: index === 0 ? extractMapSrc(fallbackMap) : '',
+          label: address,
+        }
+      }
+
+      if (!item || typeof item !== 'object') {
+        return null
+      }
+
+      const address = normalizeText((item as Record<string, unknown>).address ?? (item as Record<string, unknown>).value)
+      if (!address) return null
+
+      const title = normalizeText((item as Record<string, unknown>).title ?? (item as Record<string, unknown>).name ?? (item as Record<string, unknown>).label)
+      const itemSchedule = normalizeText((item as Record<string, unknown>).schedule) || (index === 0 ? fallbackSchedule : '')
+      const itemMap = normalizeText((item as Record<string, unknown>).map) || (index === 0 ? fallbackMap : '')
+
+      return {
+        id: normalizeText((item as Record<string, unknown>).id) || `pickup-${index + 1}`,
+        title,
+        address,
+        schedule: itemSchedule,
+        map: itemMap,
+        mapSrc: extractMapSrc(itemMap),
+        label: [title, address].filter(Boolean).join(', '),
+      }
+    }).filter(Boolean) as Array<{
+      id: string
+      title: string
+      address: string
+      schedule: string
+      map: string
+      mapSrc: string
+      label: string
+    }>
+
+    if (normalized.length) {
+      return normalized
     }
+
+    if (!fallbackAddress) {
+      return []
+    }
+
+    return [{
+      id: 'pickup-1',
+      title: '',
+      address: fallbackAddress,
+      schedule: fallbackSchedule,
+      map: fallbackMap,
+      mapSrc: extractMapSrc(fallbackMap),
+      label: fallbackAddress,
+    }]
+  })
+
+  const address = computed(() => {
+    return pickupLocations.value[0]?.address || normalizeText(legacyAddress.value)
+  })
+
+  const schedule = computed(() => {
+    return pickupLocations.value[0]?.schedule || normalizeText(legacySchedule.value)
+  })
+
+  const scheduleLines = computed(() => {
+    const hasManyLocations = pickupLocations.value.length > 1
+
+    return pickupLocations.value
+      .map((item) => {
+        if (!item.schedule) {
+          return ''
+        }
+
+        return hasManyLocations ? `${item.label}: ${item.schedule}` : item.schedule
+      })
+      .filter(Boolean)
+  })
+
+  const scheduleSummary = computed(() => {
+    return scheduleLines.value.join(' | ') || schedule.value
+  })
+
+  const mapLocations = computed(() => {
+    return pickupLocations.value.filter((item) => item.map)
+  })
+
+  const map = computed(() => {
+    return mapLocations.value[0]?.map || normalizeText(legacyMap.value)
+  })
+
+  const mapSrc = computed(() => {
+    return mapLocations.value[0]?.mapSrc || extractMapSrc(legacyMap.value)
+  })
+
+  const addressSummary = computed(() => {
+    return pickupLocations.value.map((item) => item.label).join(' | ')
+  })
+
+  const addressLines = computed(() => {
+    return pickupLocations.value.map((item) => item.label)
   })
 
   return {
     phone,
     email,
     address,
+    addressSummary,
+    addressLines,
+    pickupLocations,
     map,
+    mapLocations,
     mapSrc,
     schedule,
-    all
+    scheduleLines,
+    scheduleSummary
   }
 }

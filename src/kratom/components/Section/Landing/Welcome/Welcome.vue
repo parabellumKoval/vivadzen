@@ -174,8 +174,8 @@ const handleInfoLink = (action) => {
 }
 
 const info = computed(() => [
-  { action: 'certificates', title: t('info.certificates') },
-  { action: 'licenses', title: t('info.labs') },
+  { action: 'licenses', title: t('info.certificates') },
+  { action: 'certificates', title: t('info.labs') },
   { action: 'store', title: t('info.store') }
 ])
 </script>
