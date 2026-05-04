@@ -1,9 +1,9 @@
 <script setup lang="ts">
 definePageMeta({
-  key: (route) => `${route.params.region}-${route.params.locale}-catalog`
+  key: (route) => `${route.params.region}-${route.params.locale}-home`
 })
 </script>
 
 <template>
-  <TgCatalogPage />
+  <TgHomePage />
 </template>

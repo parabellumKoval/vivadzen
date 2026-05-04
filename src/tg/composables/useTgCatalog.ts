@@ -1,7 +1,7 @@
 import type { TgCategory, TgProduct } from '~/types/tg'
 import { useTgUiStore } from '~/stores/ui'
 
-const asArray = <T = any>(value: any): T[] => {
+export const asArray = <T = any>(value: any): T[] => {
   if (Array.isArray(value)) return value
   if (Array.isArray(value?.data)) return value.data
   if (Array.isArray(value?.categories)) return value.categories
@@ -9,7 +9,7 @@ const asArray = <T = any>(value: any): T[] => {
   return []
 }
 
-const normalizeCatalog = (payload: any) => {
+export const normalizeCatalog = (payload: any) => {
   const root = payload?.data?.products ? payload.data : payload
   const productsNode = root?.products || root
   const products = Array.isArray(productsNode?.data)
@@ -24,11 +24,69 @@ const normalizeCatalog = (payload: any) => {
   }
 }
 
+export const normalizeCategoryId = (value: unknown) => {
+  if (value === null || value === undefined || value === '') return null
+  return String(value).trim()
+}
+
+export const normalizeCategorySlug = (value: unknown) => {
+  const normalized = String(value || '').trim().toLowerCase()
+  return normalized || null
+}
+
+export const getCategoryChildren = (category: TgCategory | null | undefined) => {
+  return Array.isArray(category?.children) ? category.children : []
+}
+
+export const findCategoryInTree = (
+  categories: TgCategory[],
+  predicate: (category: TgCategory) => boolean
+): TgCategory | null => {
+  for (const category of categories) {
+    if (predicate(category)) return category
+
+    const nested = findCategoryInTree(getCategoryChildren(category), predicate)
+    if (nested) return nested
+  }
+
+  return null
+}
+
+export const resolveScopedCategoryRoot = (
+  categoryTree: TgCategory[],
+  baseCategoryId: string | null,
+  baseCategorySlug: string | null
+) => {
+  if (!baseCategoryId && !baseCategorySlug) return null
+
+  return findCategoryInTree(categoryTree, (category) => {
+    const categoryId = normalizeCategoryId(category.id)
+    const categoryTreeSlug = normalizeCategorySlug(category.slug)
+
+    return (baseCategoryId && categoryId === baseCategoryId)
+      || (baseCategorySlug && categoryTreeSlug === baseCategorySlug)
+  })
+}
+
+export const resolveScopedCatalogCategories = (
+  categoryTree: TgCategory[],
+  baseCategoryId: string | null,
+  baseCategorySlug: string | null
+) => {
+  const scopedRoot = resolveScopedCategoryRoot(categoryTree, baseCategoryId, baseCategorySlug)
+  return scopedRoot ? getCategoryChildren(scopedRoot) : categoryTree
+}
+
 export const useTgCatalog = (categorySlug: Ref<string | null> | ComputedRef<string | null>) => {
   const { $api } = useNuxtApp()
+  const config = useRuntimeConfig()
   const { t } = useTgI18n()
   const ui = useTgUiStore()
+  const tgCatalogConfig = (config.public.tg as any)?.catalog || {}
+  const baseCategoryId = normalizeCategoryId(tgCatalogConfig.baseCategoryId)
+  const baseCategorySlug = normalizeCategorySlug(tgCatalogConfig.baseCategorySlug)
 
+  const categoryTree = ref<TgCategory[]>([])
   const categories = ref<TgCategory[]>([])
   const products = ref<TgProduct[]>([])
   const meta = ref<Record<string, any>>({})
@@ -38,8 +96,17 @@ export const useTgCatalog = (categorySlug: Ref<string | null> | ComputedRef<stri
   const error = ref<unknown>(null)
   const perPage = 12
 
+  const scopedCategoryRoot = computed(() => {
+    return resolveScopedCategoryRoot(categoryTree.value, baseCategoryId, baseCategorySlug)
+  })
+
+  const scopedCategoryTree = computed(() => {
+    return scopedCategoryRoot.value ? [scopedCategoryRoot.value] : categoryTree.value
+  })
+
   const activeCategory = computed(() => {
-    return categories.value.find((category) => category.slug === categorySlug.value) || null
+    if (!categorySlug.value) return null
+    return findCategoryInTree(scopedCategoryTree.value, (category) => category.slug === categorySlug.value) || null
   })
 
   const hasMore = computed(() => {
@@ -58,8 +125,10 @@ export const useTgCatalog = (categorySlug: Ref<string | null> | ComputedRef<stri
           with_count: true
         }
       })
-      categories.value = asArray<TgCategory>(response)
+      categoryTree.value = asArray<TgCategory>(response)
+      categories.value = resolveScopedCatalogCategories(categoryTree.value, baseCategoryId, baseCategorySlug)
     } catch (err) {
+      categoryTree.value = []
       categories.value = []
       ui.showToast(t('loading_error'), 'error')
     } finally {
@@ -76,6 +145,23 @@ export const useTgCatalog = (categorySlug: Ref<string | null> | ComputedRef<stri
     }
 
     try {
+      const requestedCategorySlug = categorySlug.value
+      const selectedBaseRoot = scopedCategoryRoot.value
+      const isBaseRootRoute = Boolean(
+        requestedCategorySlug
+        && baseCategorySlug
+        && requestedCategorySlug.toLowerCase() === baseCategorySlug
+      )
+
+      if (requestedCategorySlug && selectedBaseRoot && !isBaseRootRoute) {
+        const selectedCategory = findCategoryInTree([selectedBaseRoot], (category) => category.slug === requestedCategorySlug)
+        if (!selectedCategory) {
+          products.value = []
+          meta.value = {}
+          return
+        }
+      }
+
       const response = await $api('/catalog', {
         method: 'GET',
         query: {
@@ -83,7 +169,12 @@ export const useTgCatalog = (categorySlug: Ref<string | null> | ComputedRef<stri
           per_page: perPage,
           page: page.value,
           cache: true,
-          ...(categorySlug.value ? { category_slug: categorySlug.value } : {})
+          ...(requestedCategorySlug && !isBaseRootRoute
+            ? { category_slug: requestedCategorySlug }
+            : {
+                ...(baseCategoryId ? { category_id: baseCategoryId } : {}),
+                ...(baseCategorySlug ? { category_slug: baseCategorySlug } : {})
+              })
         }
       })
       const normalized = normalizeCatalog(response)
@@ -105,10 +196,8 @@ export const useTgCatalog = (categorySlug: Ref<string | null> | ComputedRef<stri
   }
 
   const refresh = async () => {
-    await Promise.all([
-      loadCategories(),
-      loadProducts(true)
-    ])
+    await loadCategories()
+    await loadProducts(true)
   }
 
   return {

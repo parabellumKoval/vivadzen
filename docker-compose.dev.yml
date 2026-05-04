@@ -178,8 +178,12 @@ services:
     volumes:
       - ./src/api:/var/www/html
     depends_on:
-      - redis
-      - mysql
+      redis:
+        condition: service_started
+      mysql:
+        condition: service_started
+      meilisearch:
+        condition: service_started
     networks:
       - api
     restart: always
@@ -226,6 +230,7 @@ services:
       - meili_data:/meili_data
     networks:
       - api
+    restart: unless-stopped
 
       
 volumes:

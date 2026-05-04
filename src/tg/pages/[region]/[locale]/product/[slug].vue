@@ -8,7 +8,7 @@ const cart = useTgCartStore()
 const ui = useTgUiStore()
 const { t } = useTgI18n()
 const { haptic } = useTelegram()
-const { pathFor } = useTgRouting()
+const { catalogPath } = useTgRouting()
 const {
   imagesOf,
   variantsOf,
@@ -46,7 +46,7 @@ watch(product, (value) => {
 watch(error, async (value) => {
   if (!value) return
   ui.showToast(t('loading_error'), 'error')
-  await navigateTo(pathFor(), { replace: true })
+  await navigateTo(catalogPath(), { replace: true })
 }, { immediate: true })
 
 const variants = computed(() => variantsOf(product.value))

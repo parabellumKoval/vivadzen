@@ -13,6 +13,23 @@ const translateList = (value: unknown) => {
   return Array.isArray(value) ? value.map((item) => translateText(item)) : []
 }
 
+const sectionImagesByNumber: Record<string, Array<{ src: string, width: number, height: number }>> = {
+  '1': [
+    { src: '/images/adulto/1.jpg', width: 1280, height: 745 },
+  ],
+  '2': [
+    { src: '/images/adulto/2.jpg', width: 1166, height: 1264 },
+  ],
+  '3': [
+    { src: '/images/adulto/3.jpg', width: 1280, height: 727 },
+    { src: '/images/adulto/4.jpg', width: 1280, height: 1231 },
+  ],
+  '4': [
+    { src: '/images/adulto/5.jpg', width: 588, height: 881 },
+    { src: '/images/adulto/6.jpg', width: 515, height: 1000 },
+  ],
+}
+
 const intro = computed(() => {
   const value = tm('intro') as Record<string, unknown>
 
@@ -28,14 +45,16 @@ const sections = computed(() => {
   return Array.isArray(value)
     ? value.map((section) => {
       const sectionValue = section as Record<string, unknown>
+      const sectionNumber = translateText(sectionValue.number)
 
       return {
-        number: translateText(sectionValue.number),
+        number: sectionNumber,
         title: translateText(sectionValue.title),
         lead: translateText(sectionValue.lead),
         steps: translateList(sectionValue.steps),
         note: translateText(sectionValue.note),
         tips: translateList(sectionValue.tips),
+        images: sectionImagesByNumber[sectionNumber] || [],
       }
     })
     : []
@@ -89,6 +108,25 @@ const alternative = computed(() => {
         <ol class="adulto-guide__steps">
           <li v-for="(step, index) in section.steps || []" :key="`${section.number}-${index}`" v-html="step"></li>
         </ol>
+        <div
+          v-if="section.images.length"
+          class="adulto-guide__images"
+          :class="{ 'adulto-guide__images--stacked': section.number === '3' }"
+        >
+          <nuxt-img
+            v-for="(image, index) in section.images"
+            :key="image.src"
+            :src="image.src"
+            :alt="`${section.title} ${index + 1}`"
+            :title="section.title"
+            :width="image.width"
+            :height="image.height"
+            sizes="mobile:88vw tablet:360px desktop:800px"
+            format="webp"
+            quality="85"
+            class="adulto-guide__image"
+          />
+        </div>
         <p v-if="section.note" class="adulto-guide__note">{{ section.note }}</p>
         <div v-if="section.tips?.length" class="adulto-guide__tip-list">
           <p v-for="(tip, index) in section.tips" :key="`${section.number}-tip-${index}`">{{ tip }}</p>

@@ -43,8 +43,15 @@ export const useTgRouting = () => {
     return cleanPath ? `${basePath.value}/${cleanPath}` : basePath.value
   }
 
+  const homePath = () => pathFor()
+
+  const catalogPath = (path = '') => {
+    const cleanPath = String(path || '').replace(/^\/+/, '')
+    return cleanPath ? pathFor(`catalog/${cleanPath}`) : pathFor('catalog')
+  }
+
   const categoryPath = (slug?: string | null) => {
-    return slug ? pathFor(slug) : pathFor()
+    return slug ? catalogPath(slug) : catalogPath()
   }
 
   const productPath = (slug?: string | null) => {
@@ -77,6 +84,8 @@ export const useTgRouting = () => {
     getDefaultLocaleFor,
     basePath,
     pathFor,
+    homePath,
+    catalogPath,
     categoryPath,
     productPath,
     switchLocale

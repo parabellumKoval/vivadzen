@@ -8,7 +8,7 @@ const ui = useTgUiStore()
 const userStore = useTgUserStore()
 const { $api } = useNuxtApp()
 const { t } = useTgI18n()
-const { pathFor, region } = useTgRouting()
+const { pathFor, catalogPath, region } = useTgRouting()
 const { user: telegramUser, webApp, haptic } = useTelegram()
 const { formatMoney } = useTgProductUtils()
 const { loadSettings, deliveryMethods, pickupLocations, paymentMethodsFor } = useTgCheckoutOptions()
@@ -431,7 +431,7 @@ const submit = async () => {
         <div>
           <div class="tg-empty__icon">□</div>
           <p class="tg-empty__title">{{ t('cart_empty') }}</p>
-          <NuxtLink :to="pathFor()" class="tg-btn checkout-page__empty-btn">{{ t('back_to_catalog') }}</NuxtLink>
+          <NuxtLink :to="catalogPath()" class="tg-btn checkout-page__empty-btn">{{ t('back_to_catalog') }}</NuxtLink>
         </div>
       </div>
 

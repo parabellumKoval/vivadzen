@@ -38,6 +38,11 @@ const LOCALES_BY_REGION = {
   es: ['es', 'en', 'ru', 'uk']
 }
 
+const TG_BASE_CATEGORY_ID = process.env.NUXT_PUBLIC_TG_BASE_CATEGORY_ID
+  ? Number.parseInt(process.env.NUXT_PUBLIC_TG_BASE_CATEGORY_ID, 10)
+  : 118
+const TG_BASE_CATEGORY_SLUG = (process.env.NUXT_PUBLIC_TG_BASE_CATEGORY_SLUG || 'basic').trim()
+
 export default defineNuxtConfig({
   ssr: false,
 
@@ -95,10 +100,14 @@ export default defineNuxtConfig({
     public: {
       siteUrl: HOST_URL,
       apiBase: API_SERVER_URL,
-      storefrontCode: process.env.NUXT_PUBLIC_STOREFRONT_CODE || 'main',
+      storefrontCode: process.env.NUXT_PUBLIC_STOREFRONT_CODE || 'telegram',
       noimage: '/images/noimage.png',
       tg: {
         fallbackRegion: 'cz',
+        catalog: {
+          baseCategoryId: Number.isFinite(TG_BASE_CATEGORY_ID) ? TG_BASE_CATEGORY_ID : null,
+          baseCategorySlug: TG_BASE_CATEGORY_SLUG || null,
+        },
         regionAliases: {
           global: 'zz'
         },

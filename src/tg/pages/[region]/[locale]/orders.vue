@@ -2,7 +2,7 @@
 import type { TgOrder } from '~/types/tg'
 
 const { t } = useTgI18n()
-const { pathFor } = useTgRouting()
+const { catalogPath } = useTgRouting()
 const { formatMoney } = useTgProductUtils()
 const { orders, loading, loadOrders } = useTgOrders()
 
@@ -62,7 +62,7 @@ const orderTotal = (order: TgOrder) => {
         <div>
           <div class="tg-empty__icon">□</div>
           <p class="tg-empty__title">{{ t('no_orders') }}</p>
-          <NuxtLink :to="pathFor()" class="tg-btn orders-page__btn">{{ t('back_to_catalog') }}</NuxtLink>
+          <NuxtLink :to="catalogPath()" class="tg-btn orders-page__btn">{{ t('back_to_catalog') }}</NuxtLink>
         </div>
       </div>
     </section>

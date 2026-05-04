@@ -15,32 +15,22 @@ export const usePayment = () => {
       id: 1,
       logo: '/images/logo/google-pay.png',
       title: 'Google Pay',
-      countries: ['ua', 'de', 'es', 'cz']
+      countries: ['cz']
     },{
       id: 2,
       logo: '/images/logo/apple-pay.png',
       title: 'Apple Pay',
-      countries: ['ua', 'de', 'es', 'cz']
-    },{
-      id: 3,
-      logo: '/images/logo/24-pay.png',
-      title: '24 Pay',
-      countries: ['ua']
-    },{
-      id: 4,
-      logo: '/images/logo/mono-mini.png',
-      title: 'Monobank',
-      countries: ['ua']
+      countries: ['cz']
     },{
       id: 5,
       logo: '/images/logo/visa.png',
       title: 'Visa',
-      countries: ['ua', 'de', 'es', 'cz']
+      countries: ['cz']
     },{
       id: 6,
       logo: '/images/logo/mastercard.png',
       title: 'Mastercard',
-      countries: ['ua', 'de', 'es', 'cz']
+      countries: ['cz']
     }
   ])
 
@@ -114,8 +104,10 @@ export const usePayment = () => {
       title: t('payments.niftipay_online.title'),
       label: t('payments.niftipay_online.title'),
       icon: 'iconoir:credit-cards',
-      image: '/images/logo/niftipay-logo.svg',
-      logo: '/images/logo/niftipay-logo.svg',
+      // image: '/images/logo/niftipay-logo.svg',
+      // logo: '/images/logo/niftipay-logo.svg',
+      image: '/images/logo/online-payments.png',
+      logo: '/images/logo/online-payments.png',
       payments: ['packeta_warehouse', 'packeta_address', 'novaposhta_warehouse', 'novaposhta_address', 'default_address', 'default_pickup', 'messenger_address']
     }, 
     {

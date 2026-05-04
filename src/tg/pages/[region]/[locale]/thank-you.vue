@@ -4,7 +4,7 @@ import { useTgCartStore } from '~/stores/cart'
 const route = useRoute()
 const cart = useTgCartStore()
 const { t } = useTgI18n()
-const { pathFor } = useTgRouting()
+const { pathFor, catalogPath } = useTgRouting()
 const { haptic, showAlert } = useTelegram()
 
 const orderCode = computed(() => {
@@ -26,7 +26,7 @@ onMounted(() => {
       <p>{{ t('order_success_text') }}</p>
       <div class="thank-page__actions">
         <NuxtLink :to="pathFor('orders')" class="tg-btn">{{ t('go_to_orders') }}</NuxtLink>
-        <NuxtLink :to="pathFor()" class="tg-btn tg-btn--ghost">{{ t('back_to_catalog') }}</NuxtLink>
+        <NuxtLink :to="catalogPath()" class="tg-btn tg-btn--ghost">{{ t('back_to_catalog') }}</NuxtLink>
       </div>
     </section>
   </TgLayout>

@@ -209,8 +209,12 @@ services:
       - /mnt/images:/var/www/html/public/images
       - /mnt/invoices:/var/www/html/public/invoices
     depends_on:
-      - redis
-      - mysql
+      redis:
+        condition: service_started
+      mysql:
+        condition: service_started
+      meilisearch:
+        condition: service_started
     networks:
       - api
     restart: always
@@ -244,6 +248,7 @@ services:
       - meili_data:/meili_data
     networks:
       - api
+    restart: unless-stopped
 
 volumes:
   meili_data:

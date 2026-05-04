@@ -4,6 +4,7 @@ const route = useRoute()
 const regionPath = useToLocalePath()
 const { phone, email, addressLines } = useContacts()
 const { messengers, networks } = useSocial()
+const { vendors: paymentVendors } = usePayment()
 const isFlushTop = computed(() => Boolean(route.meta?.footerFlushTop))
 
 const legalLinks = computed(() => [
@@ -32,6 +33,18 @@ const infoLinks = computed(() => [
           <p class="site-footer__eyebrow">{{ t('kratom.footer.eyebrow') }}</p>
           <h2>{{ t('kratom.footer.title') }}</h2>
           <p>{{ t('kratom.footer.text') }}</p>
+          <div v-if="paymentVendors.length" class="site-footer__payments" :aria-label="t('title.payment')">
+            <span v-for="vendor in paymentVendors" :key="vendor.id" class="site-footer__payment">
+              <nuxt-img
+                :src="vendor.logo"
+                :alt="vendor.title"
+                width="150"
+                height="90"
+                fit="outside"
+                loading="lazy"
+              />
+            </span>
+          </div>
         </div>
 
         <div>
@@ -111,6 +124,30 @@ const infoLinks = computed(() => [
 
 .site-footer__intro p {
   line-height: 1.7;
+}
+
+.site-footer__payments {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.site-footer__payment {
+  width: 58px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 247, 236, 0.12);
+  border-radius: 6px;
+  background: rgba(255, 247, 236, 1);
+
+  img {
+    max-width: 42px;
+    max-height: 24px;
+    object-fit: contain;
+  }
 }
 
 .site-footer__links,

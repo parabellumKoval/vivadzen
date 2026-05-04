@@ -121,7 +121,7 @@ const paymentItems = computed(() => {
 
 .product-delivery-info__logo {
   display: block;
-  width: 100px;
+  width: 160px;
   height: 42px;
   object-fit: contain;
   object-position: left center;

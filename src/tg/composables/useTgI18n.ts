@@ -1,5 +1,8 @@
 const messages: Record<string, Record<string, string>> = {
   en: {
+    home: 'Home',
+    home_title: 'Shop by category',
+    home_subtitle: 'Browse each category as a standalone product section, then jump into the full catalog when needed.',
     catalog: 'Catalog',
     all: 'All',
     cart: 'Cart',
@@ -39,6 +42,7 @@ const messages: Record<string, Record<string, string>> = {
     order_success_text: 'We will contact you soon with the next steps.',
     go_to_orders: 'Order history',
     back_to_catalog: 'Back to catalog',
+    open_category: 'Open category',
     language: 'Language',
     change_language: 'Change language',
     order_history: 'Order history',
@@ -75,6 +79,9 @@ const messages: Record<string, Record<string, string>> = {
     address_deleted: 'Address deleted'
   },
   ru: {
+    home: 'Главная',
+    home_title: 'Подборки по категориям',
+    home_subtitle: 'На главной собраны все категории и товары, а полный каталог открыт отдельно.',
     catalog: 'Каталог',
     all: 'Все',
     cart: 'Корзина',
@@ -114,6 +121,7 @@ const messages: Record<string, Record<string, string>> = {
     order_success_text: 'Мы скоро свяжемся с вами и уточним следующие шаги.',
     go_to_orders: 'Перейти в историю заказов',
     back_to_catalog: 'Вернуться в каталог',
+    open_category: 'Открыть категорию',
     language: 'Язык',
     change_language: 'Сменить язык',
     order_history: 'История заказов',
@@ -150,6 +158,9 @@ const messages: Record<string, Record<string, string>> = {
     address_deleted: 'Адрес удалён'
   },
   uk: {
+    home: 'Головна',
+    home_title: 'Добірки за категоріями',
+    home_subtitle: 'На головній зібрані всі категорії й товари, а повний каталог відкривається окремо.',
     catalog: 'Каталог',
     all: 'Усі',
     cart: 'Кошик',
@@ -189,6 +200,7 @@ const messages: Record<string, Record<string, string>> = {
     order_success_text: "Ми скоро зв'яжемося з вами та уточнимо наступні кроки.",
     go_to_orders: 'Перейти до історії замовлень',
     back_to_catalog: 'Повернутися в каталог',
+    open_category: 'Відкрити категорію',
     language: 'Мова',
     change_language: 'Змінити мову',
     order_history: 'Історія замовлень',
@@ -225,6 +237,9 @@ const messages: Record<string, Record<string, string>> = {
     address_deleted: 'Адресу видалено'
   },
   cs: {
+    home: 'Domů',
+    home_title: 'Výběr podle kategorií',
+    home_subtitle: 'Na hlavní stránce jsou všechny kategorie i produkty, zatímco celý katalog je zvlášť.',
     catalog: 'Katalog',
     all: 'Vše',
     cart: 'Košík',
@@ -264,6 +279,7 @@ const messages: Record<string, Record<string, string>> = {
     order_success_text: 'Brzy vás kontaktujeme s dalšími kroky.',
     go_to_orders: 'Historie objednávek',
     back_to_catalog: 'Zpět do katalogu',
+    open_category: 'Otevřít kategorii',
     language: 'Jazyk',
     change_language: 'Změnit jazyk',
     order_history: 'Historie objednávek',

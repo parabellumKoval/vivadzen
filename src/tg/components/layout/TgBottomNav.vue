@@ -6,15 +6,22 @@ const route = useRoute()
 const ui = useTgUiStore()
 const cart = useTgCartStore()
 const { t } = useTgI18n()
-const { pathFor } = useTgRouting()
+const { homePath, catalogPath, pathFor } = useTgRouting()
 
 const items = computed(() => [
+  {
+    key: 'home',
+    label: t('home'),
+    icon: '◐',
+    to: homePath(),
+    active: route.name?.toString().includes('region-locale-index')
+  },
   {
     key: 'catalog',
     label: t('catalog'),
     icon: '⌂',
-    to: pathFor(),
-    active: route.name?.toString().includes('region-locale-index') || route.name?.toString().includes('region-locale-category')
+    to: catalogPath(),
+    active: route.name?.toString().includes('region-locale-catalog')
   },
   {
     key: 'orders',
@@ -36,13 +43,15 @@ const items = computed(() => [
 <template>
   <nav class="tg-bottom-nav" aria-label="Main navigation">
     <NuxtLink
-      :to="items[0].to"
+      v-for="item in items.slice(0, 2)"
+      :key="item.key"
+      :to="item.to"
       class="tg-bottom-nav__item"
-      :class="{ active: items[0].active }"
+      :class="{ active: item.active }"
       :prefetch="false"
     >
-      <span class="tg-bottom-nav__icon">{{ items[0].icon }}</span>
-      <span class="tg-bottom-nav__label">{{ items[0].label }}</span>
+      <span class="tg-bottom-nav__icon">{{ item.icon }}</span>
+      <span class="tg-bottom-nav__label">{{ item.label }}</span>
     </NuxtLink>
 
     <button
@@ -57,7 +66,7 @@ const items = computed(() => [
     </button>
 
     <NuxtLink
-      v-for="item in items.slice(1)"
+      v-for="item in items.slice(2)"
       :key="item.key"
       :to="item.to"
       class="tg-bottom-nav__item"
@@ -78,7 +87,7 @@ const items = computed(() => [
   bottom: 0;
   left: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   width: 100%;
   max-width: 480px;
   height: calc(56px + env(safe-area-inset-bottom));
