@@ -87,6 +87,8 @@ const count = computed(() => Number(meta.value?.total || products.value.length |
         {{ t('load_more') }}
       </button>
     </section>
+
+    <TgGoogleReviewsSlider class="catalog-page__reviews" />
   </TgLayout>
 </template>
 
@@ -103,5 +105,10 @@ const count = computed(() => Number(meta.value?.total || products.value.length |
 
 .catalog-page__more {
   margin-top: 4px;
+}
+
+.catalog-page__reviews {
+  margin-top: 8px;
+  padding-bottom: 16px;
 }
 </style>
