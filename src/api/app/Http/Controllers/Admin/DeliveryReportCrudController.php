@@ -8,16 +8,16 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 class DeliveryReportCrudController extends CrudController
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 
     public function setup(): void
     {
         CRUD::setModel(\App\Models\DeliveryReport::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/delivery-report');
+        CRUD::setRoute(config('backpack.base.route_prefix').'/delivery-report');
         CRUD::setEntityNameStrings('отчет доставки', 'отчеты доставки');
         CRUD::orderBy('id', 'desc');
     }
@@ -135,24 +135,21 @@ class DeliveryReportCrudController extends CrudController
         CRUD::addField([
             'name' => 'customer_signature',
             'label' => 'Подпись клиента',
-            'type' => 'textarea',
-            'attributes' => ['rows' => 4],
+            'type' => 'image',
+            'crop' => false,
+            'hint' => 'PNG-файл подписи. Callback Messenger присылает base64, сервер сохраняет его в /uploads.',
+            'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         CRUD::addField([
             'name' => 'seller_signature',
             'label' => 'Подпись курьера',
-            'type' => 'textarea',
-            'attributes' => ['rows' => 4],
+            'type' => 'image',
+            'crop' => false,
+            'hint' => 'PNG-файл подписи. Callback Messenger присылает base64, сервер сохраняет его в /uploads.',
+            'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
-        CRUD::addField([
-            'name' => 'payload',
-            'label' => 'Payload JSON',
-            'type' => 'textarea',
-            'attributes' => ['rows' => 8],
-            'hint' => 'Необязательно. Можно вставить JSON объекта callback.',
-        ]);
     }
 
     protected function setupUpdateOperation(): void

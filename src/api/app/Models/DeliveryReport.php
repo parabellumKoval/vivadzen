@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\DeliveryReports\MessengerSignatureStorageService;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\Store\app\Models\Order;
 use Illuminate\Database\Eloquent\Model;
@@ -77,6 +78,16 @@ class DeliveryReport extends Model
         );
     }
 
+    public function setCustomerSignatureAttribute($value): void
+    {
+        $this->attributes['customer_signature'] = $this->storeSignatureIfNeeded($value, 'customer');
+    }
+
+    public function setSellerSignatureAttribute($value): void
+    {
+        $this->attributes['seller_signature'] = $this->storeSignatureIfNeeded($value, 'seller');
+    }
+
     protected function renderSignaturePreview(?string $value): string
     {
         if (! is_string($value) || trim($value) === '') {
@@ -87,5 +98,33 @@ class DeliveryReport extends Model
             '<img src="%s" alt="signature" style="max-width:320px;max-height:180px;border:1px solid #d8dbe0;border-radius:6px;background:#fff;">',
             e($value)
         );
+    }
+
+    protected function storeSignatureIfNeeded($value, string $type): ?string
+    {
+        if (! is_string($value) || trim($value) === '') {
+            return null;
+        }
+
+        if (! str_starts_with($value, 'data:image/png;base64,')) {
+            return $this->normalizeSignaturePath($value);
+        }
+
+        return app(MessengerSignatureStorageService::class)->storeDataUri(
+            $value,
+            (string) ($this->order_number ?? 'order'),
+            $type
+        );
+    }
+
+    protected function normalizeSignaturePath(string $value): string
+    {
+        $path = parse_url($value, PHP_URL_PATH);
+
+        if (is_string($path) && str_starts_with($path, '/uploads/')) {
+            return $path;
+        }
+
+        return $value;
     }
 }

@@ -153,6 +153,7 @@
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('scheduled-publication') }}"><i class="nav-icon la la-clock"></i> <span>Планировщик публикаций</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('search-queries') }}"><i class="nav-icon la la-search"></i> <span>Поиск</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('currency-rates') }}"><i class="nav-icon la la-exchange"></i> <span>Курсы валют</span></a></li>
+		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('delivery-report') }}"><i class="nav-icon la la-truck"></i> <span>Отчеты доставки</span></a></li>
 		<li class="nav-item"><a class="nav-link" href="{{ backpack_url('dumper') }}"><i class="nav-icon la la-database"></i> <span>Резервные копии</span></a></li>
 	</ul>
 </li>

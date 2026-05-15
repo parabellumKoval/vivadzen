@@ -6,6 +6,7 @@ use App\Models\DeliveryReport;
 use Backpack\Store\app\Models\Order;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class MessengerDeliveryReportControllerTest extends TestCase
@@ -71,6 +72,8 @@ class MessengerDeliveryReportControllerTest extends TestCase
         \Settings::set('shipping.messenger.reporting.apply_delivery_status', true, ['cast' => 'bool']);
         \Settings::set('shipping.messenger.reporting.apply_pay_status', true, ['cast' => 'bool']);
         \Settings::set('shipping.messenger.reporting.apply_order_status', true, ['cast' => 'bool']);
+
+        Storage::fake('uploads');
     }
 
     public function test_webhook_stores_report_and_updates_order_statuses(): void
@@ -89,6 +92,12 @@ class MessengerDeliveryReportControllerTest extends TestCase
 
         $this->assertNotNull($report);
         $this->assertSame('202600005', $report->order_number);
+        $this->assertStringStartsWith('/uploads/delivery-reports/messenger/signatures/', $report->customer_signature);
+        $this->assertStringStartsWith('/uploads/delivery-reports/messenger/signatures/', $report->seller_signature);
+        $this->assertSame($report->customer_signature, $report->payload['customer_signature']);
+        $this->assertSame($report->seller_signature, $report->payload['seller_signature']);
+        Storage::disk('uploads')->assertExists(ltrim(str_replace('/uploads/', '', $report->customer_signature), '/'));
+        Storage::disk('uploads')->assertExists(ltrim(str_replace('/uploads/', '', $report->seller_signature), '/'));
         $this->assertTrue($report->order_found);
         $this->assertTrue($report->delivery_status_applied);
         $this->assertTrue($report->pay_status_applied);
@@ -180,6 +189,46 @@ class MessengerDeliveryReportControllerTest extends TestCase
         $response->assertOk()
             ->assertJsonPath('status', 'ok')
             ->assertJsonPath('accepted', 1);
+    }
+
+    public function test_delivery_report_model_converts_data_uri_signatures_to_files(): void
+    {
+        $report = DeliveryReport::query()->create([
+            'provider' => 'messenger',
+            'order_number' => '202600010',
+            'recipient_fullname' => 'Frantisek Klika',
+            'id_card_number' => 'OP123456789',
+            'id_card_type' => 'op',
+            'handover_place' => 'Praha, Libinska 1',
+            'handover_datetime' => '2026-03-18 15:45:00',
+            'sender_fullname' => 'Tomas Kral',
+            'customer_signature' => 'data:image/png;base64,'.base64_encode('customer-signature'),
+            'seller_signature' => 'data:image/png;base64,'.base64_encode('seller-signature'),
+        ]);
+
+        $this->assertStringStartsWith('/uploads/delivery-reports/messenger/signatures/', $report->customer_signature);
+        $this->assertStringStartsWith('/uploads/delivery-reports/messenger/signatures/', $report->seller_signature);
+        Storage::disk('uploads')->assertExists(ltrim(str_replace('/uploads/', '', $report->customer_signature), '/'));
+        Storage::disk('uploads')->assertExists(ltrim(str_replace('/uploads/', '', $report->seller_signature), '/'));
+    }
+
+    public function test_delivery_report_model_keeps_admin_image_field_values_as_upload_paths(): void
+    {
+        $report = DeliveryReport::query()->create([
+            'provider' => 'messenger',
+            'order_number' => '202600011',
+            'recipient_fullname' => 'Frantisek Klika',
+            'id_card_number' => 'OP123456789',
+            'id_card_type' => 'op',
+            'handover_place' => 'Praha, Libinska 1',
+            'handover_datetime' => '2026-03-18 15:45:00',
+            'sender_fullname' => 'Tomas Kral',
+            'customer_signature' => 'http://localhost:8000/uploads/delivery-reports/messenger/signatures/2026/05/customer.png',
+            'seller_signature' => 'https://dashboard.vivadzen.com/uploads/delivery-reports/messenger/signatures/2026/05/seller.png',
+        ]);
+
+        $this->assertSame('/uploads/delivery-reports/messenger/signatures/2026/05/customer.png', $report->customer_signature);
+        $this->assertSame('/uploads/delivery-reports/messenger/signatures/2026/05/seller.png', $report->seller_signature);
     }
 
     protected function createOrder(string $code): Order

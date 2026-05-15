@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeliveryReport;
+use App\Services\DeliveryReports\MessengerSignatureStorageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -99,6 +100,7 @@ class MessengerDeliveryReportController extends Controller
         $isTest = $this->isTestRun($request);
         $accepted = [];
         $skipped = [];
+        $signatureStorage = app(MessengerSignatureStorageService::class);
 
         foreach ($validator->validated()['reports'] as $index => $reportData) {
             $exists = DeliveryReport::query()
@@ -116,19 +118,32 @@ class MessengerDeliveryReportController extends Controller
                 continue;
             }
 
+            $storedReportData = array_replace($reportData, [
+                'customer_signature' => $signatureStorage->storeDataUri(
+                    $reportData['customer_signature'],
+                    $reportData['order_number'],
+                    'customer'
+                ),
+                'seller_signature' => $signatureStorage->storeDataUri(
+                    $reportData['seller_signature'],
+                    $reportData['order_number'],
+                    'seller'
+                ),
+            ]);
+
             $report = DeliveryReport::query()->create([
                 'provider' => 'messenger',
-                'order_number' => $reportData['order_number'],
-                'recipient_fullname' => $reportData['recipient_fullname'],
-                'recipient_actual_fullname' => $reportData['recipient_actual_fullname'] ?? null,
-                'id_card_number' => $reportData['id_card_number'],
-                'id_card_type' => $reportData['id_card_type'],
-                'handover_place' => $reportData['handover_place'],
-                'handover_datetime' => $reportData['handover_datetime'],
-                'sender_fullname' => $reportData['sender_fullname'],
-                'customer_signature' => $reportData['customer_signature'],
-                'seller_signature' => $reportData['seller_signature'],
-                'payload' => $reportData,
+                'order_number' => $storedReportData['order_number'],
+                'recipient_fullname' => $storedReportData['recipient_fullname'],
+                'recipient_actual_fullname' => $storedReportData['recipient_actual_fullname'] ?? null,
+                'id_card_number' => $storedReportData['id_card_number'],
+                'id_card_type' => $storedReportData['id_card_type'],
+                'handover_place' => $storedReportData['handover_place'],
+                'handover_datetime' => $storedReportData['handover_datetime'],
+                'sender_fullname' => $storedReportData['sender_fullname'],
+                'customer_signature' => $storedReportData['customer_signature'],
+                'seller_signature' => $storedReportData['seller_signature'],
+                'payload' => $storedReportData,
                 'is_test' => $isTest,
             ]);
 
