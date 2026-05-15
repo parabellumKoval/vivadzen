@@ -314,20 +314,23 @@ PACKAGE ?=
 # make pkg.local
 # make pkg.local PACKAGE=parabellumkoval/backpack-schedule
 pkg.local:
-	docker compose -f ${COMPOSE_FILE} exec api sh -lc '\
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps api sh -lc '\
 		set -e; \
 			cd /var/www/html; \
-			composer config repositories.local path "packages/*"; \
-			if [ -n "${PACKAGE}" ]; then \
-				packages="${PACKAGE}"; \
-			else \
-				packages=$$(PKG_VENDOR="${PKG_VENDOR}" php -r '\''$$vendor=getenv("PKG_VENDOR") ?: "parabellumkoval/"; $$data=json_decode(file_get_contents("composer.json"), true); foreach (($$data["require"] ?? []) as $$name => $$_) { if (str_starts_with($$name, $$vendor)) echo $$name, " "; }'\''); \
-			fi; \
+			composer config repositories.local --json '\''{"type":"path","url":"packages/*","options":{"symlink":true}}'\''; \
+		if [ -n "${PACKAGE}" ]; then \
+			packages="${PACKAGE}"; \
+		else \
+			packages=$$(PKG_VENDOR="${PKG_VENDOR}" php -r '\''$$vendor=getenv("PKG_VENDOR") ?: "parabellumkoval/"; $$data=json_decode(file_get_contents("composer.json"), true); foreach (($$data["require"] ?? []) as $$name => $$_) { if (str_starts_with($$name, $$vendor)) echo $$name, " "; }'\''); \
+		fi; \
 		if [ -z "$$packages" ]; then \
 			echo "No matching packages found in composer.json"; \
 			exit 1; \
 		fi; \
-		composer update $$packages --no-scripts; \
+			for package in $$packages; do \
+				rm -rf "vendor/$${package%/*}/$${package#*/}"; \
+			done; \
+			composer update $$packages --minimal-changes --no-scripts; \
 		composer dump-autoload; \
 		php artisan optimize:clear; \
 		php artisan package:discover --ansi'
@@ -337,21 +340,24 @@ pkg.local:
 # make pkg.remote
 # make pkg.remote PACKAGE=parabellumkoval/backpack-schedule
 pkg.remote:
-	docker compose -f ${COMPOSE_FILE} exec api sh -lc '\
+	docker compose -f ${COMPOSE_FILE} run --rm --no-deps api sh -lc '\
 		set -e; \
 			cd /var/www/html; \
 			composer config --unset repositories.local || true; \
-			if [ -n "${PACKAGE}" ]; then \
-				packages="${PACKAGE}"; \
-			else \
-				packages=$$(PKG_VENDOR="${PKG_VENDOR}" php -r '\''$$vendor=getenv("PKG_VENDOR") ?: "parabellumkoval/"; $$data=json_decode(file_get_contents("composer.json"), true); foreach (($$data["require"] ?? []) as $$name => $$_) { if (str_starts_with($$name, $$vendor)) echo $$name, " "; }'\''); \
-			fi; \
+		if [ -n "${PACKAGE}" ]; then \
+			packages="${PACKAGE}"; \
+		else \
+			packages=$$(PKG_VENDOR="${PKG_VENDOR}" php -r '\''$$vendor=getenv("PKG_VENDOR") ?: "parabellumkoval/"; $$data=json_decode(file_get_contents("composer.json"), true); foreach (($$data["require"] ?? []) as $$name => $$_) { if (str_starts_with($$name, $$vendor)) echo $$name, " "; }'\''); \
+		fi; \
 		if [ -z "$$packages" ]; then \
 			echo "No matching packages found in composer.json"; \
 			exit 1; \
 		fi; \
-		composer clear-cache; \
-		composer update $$packages --prefer-dist --no-scripts; \
+			for package in $$packages; do \
+				rm -rf "vendor/$${package%/*}/$${package#*/}"; \
+			done; \
+			composer clear-cache; \
+			composer update $$packages --minimal-changes --prefer-dist --no-scripts; \
 		composer dump-autoload; \
 		php artisan optimize:clear; \
 		php artisan package:discover --ansi'
