@@ -18,9 +18,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <TgLayout :title="t('thank_you')">
+  <TgLayout :title="t('thank_you')" :show-lang="true">
     <section class="thank-page">
-      <div class="thank-page__icon">✓</div>
+      <div class="thank-page__icon"><TgIcon name="check" :size="38" :stroke="3" /></div>
       <h1>{{ t('order_success') }}</h1>
       <p v-if="orderCode" class="thank-page__code">#{{ orderCode }}</p>
       <p>{{ t('order_success_text') }}</p>
@@ -43,15 +43,15 @@ onMounted(() => {
 
 .thank-page__icon {
   display: grid;
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   margin: 0 auto 18px;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-full);
-  background: var(--color-primary);
-  color: var(--color-white);
+  background: var(--color-lime);
+  color: var(--color-ink);
   place-items: center;
-  font-size: 42px;
-  font-weight: 800;
+  box-shadow: var(--shadow-card);
 }
 
 .thank-page h1 {

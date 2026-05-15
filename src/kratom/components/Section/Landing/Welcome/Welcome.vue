@@ -150,6 +150,7 @@ const nav = computed(() => [
   { link: '#colors', title: t('nav.colors') },
   { link: '#origins', title: t('nav.origins') },
   { link: '#bonus', title: t('nav.bonus') },
+  { link: regionPath('/age-verification'), title: t('title.age_verification') },
   { link: regionPath('/reviews'), title: t('title.reviews') },
   { link: '#contacts', title: t('nav.contacts') }
 ])

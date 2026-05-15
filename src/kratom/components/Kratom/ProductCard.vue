@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { resolveKratomProductImageSrc } from '~/utils/productImage'
 import { useKratomBadges } from '~/utils/kratomBadges'
+import { isProductAvailable } from '~/utils/productAvailability'
 
 type ProductRecord = Record<string, any>
 
@@ -56,6 +57,10 @@ const getModificationKey = (modification: ProductRecord | null) => {
   return modification.id ?? modification.slug ?? modification.short_name ?? modification.name ?? null
 }
 
+const getDefaultModification = (list: ProductRecord[]) => {
+  return list.find((modification) => isProductAvailable(modification)) ?? list[0] ?? null
+}
+
 watch(modifications, (list) => {
   if (!list.length) {
     selectedModification.value = null
@@ -64,14 +69,22 @@ watch(modifications, (list) => {
 
   const currentKey = getModificationKey(selectedModification.value)
   const current = list.find((modification) => getModificationKey(modification) === currentKey)
-  selectedModification.value = current ?? list[0]
+  selectedModification.value = current ?? getDefaultModification(list)
 }, { immediate: true, deep: true })
 
 const selectModification = (modification: ProductRecord) => {
   selectedModification.value = modification
 }
 
+const isActiveProductAvailable = computed(() => {
+  return isProductAvailable(activeProduct.value)
+})
+
 const addToCart = async () => {
+  if (!isActiveProductAvailable.value) {
+    return
+  }
+
   await cartStore.add({ ...props.product, ...activeProduct.value, amount: 1 })
   modal.open(resolveComponent('ModalCart'), null, null, {
     width: { min: 968, max: 968 },
@@ -80,7 +93,7 @@ const addToCart = async () => {
 </script>
 
 <template>
-  <div class="kratom-product-card-frame">
+  <div class="kratom-product-card-frame" :class="{ 'is-unavailable': !isActiveProductAvailable }">
     <div class="kratom-product-card-shell">
       <div class="kratom-product-card">
         <span class="kratom-product-card__ribbon" aria-hidden="true">
@@ -168,10 +181,18 @@ const addToCart = async () => {
               <simple-price :value="displayPrice" :currency-code="currencyCode" class="kratom-product-card__current-price" />
             </div>
 
-            <button type="button" class="button primary kratom-product-card__action" @click="addToCart">
+            <button
+              v-if="isActiveProductAvailable"
+              type="button"
+              class="button primary kratom-product-card__action"
+              @click="addToCart"
+            >
               <IconCSS name="ci:shopping-cart-01" class="kratom-product-card__action-icon" />
               <span>{{ t('button.to_cart') }}</span>
             </button>
+            <span v-else class="kratom-product-card__availability">
+              {{ t('label.not_available') }}
+            </span>
           </div>
         </div>
       </div>
@@ -204,6 +225,22 @@ const addToCart = async () => {
 
     :deep(img) {
       transform: scale(1.08) translateY(-4px);
+    }
+  }
+
+  &.is-unavailable {
+    opacity: 0.58;
+
+    &:hover {
+      transform: none;
+
+      &::before {
+        box-shadow: 0 24px 60px rgba(43, 55, 41, 0.05);
+      }
+
+      :deep(img) {
+        transform: none;
+      }
     }
   }
 }
@@ -501,6 +538,20 @@ const addToCart = async () => {
   &-icon {
     font-size: clamp(12px, 7.5cqw, 20px);
   }
+}
+
+.kratom-product-card__availability {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: rgba(90, 99, 86, 0.12);
+  color: rgba(56, 62, 53, 0.8);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 767px) {

@@ -9,6 +9,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Artisan;
+use ParabellumKoval\AiContentGenerator\Services\ContentGenerator;
+use ParabellumKoval\AiContentGenerator\Services\DriverRegistry;
 use Symfony\Component\Console\Exception\InvalidOptionException;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Throwable;
@@ -39,6 +41,7 @@ class RunGenerationCommand implements ShouldQueue
         }
 
         $run->markRunning();
+        $this->refreshRuntimeConfiguration();
 
         $output = new BufferedOutput();
         $arguments = $this->normalizeArguments($run);
@@ -112,6 +115,50 @@ class RunGenerationCommand implements ShouldQueue
             unset($arguments['--run-id']);
 
             return Artisan::call($command, $arguments, $output);
+        }
+    }
+
+    protected function refreshRuntimeConfiguration(): void
+    {
+        $this->invalidateSettingsCache();
+
+        foreach ([ContentGenerator::class, DriverRegistry::class] as $abstract) {
+            app()->forgetInstance($abstract);
+        }
+    }
+
+    protected function invalidateSettingsCache(): void
+    {
+        try {
+            $settings = app('backpack.settings');
+        } catch (Throwable) {
+            return;
+        }
+
+        if (! method_exists($settings, 'invalidate')) {
+            return;
+        }
+
+        $keys = [
+            'ai_content_generator',
+            'ai_content_generator.default_driver',
+            'ai_content_generator.providers',
+        ];
+
+        foreach (array_keys((array) config('ai-content-generator.drivers', [])) as $driver) {
+            $prefix = "ai_content_generator.providers.{$driver}";
+            $keys[] = $prefix;
+            $keys[] = "{$prefix}.enabled";
+            $keys[] = "{$prefix}.api_key";
+            $keys[] = "{$prefix}.model";
+        }
+
+        foreach (array_values(array_unique($keys)) as $key) {
+            try {
+                $settings->invalidate($key);
+            } catch (Throwable) {
+                // A generation run should not fail just because cache invalidation is unavailable.
+            }
         }
     }
 

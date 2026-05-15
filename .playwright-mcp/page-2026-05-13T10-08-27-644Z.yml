@@ -1,0 +1,139 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "logo_alt" [ref=e6] [cursor=pointer]:
+        - /url: /ru
+        - img "logo_alt" [ref=e7]
+      - navigation "Навигация по странице" [ref=e8]:
+        - link "Каталог" [ref=e10] [cursor=pointer]:
+          - /url: /ru/catalog
+          - generic [ref=e11]: Каталог
+        - link "Доставка" [ref=e14] [cursor=pointer]:
+          - /url: /ru/delivery
+          - generic [ref=e15]: Доставка
+        - link "Оплата" [ref=e17] [cursor=pointer]:
+          - /url: /ru/payment
+          - generic [ref=e18]: Оплата
+        - link "Проверка возраста" [ref=e20] [cursor=pointer]:
+          - /url: /ru/age-verification
+          - generic [ref=e21]: Проверка возраста
+        - link "Отзывы" [ref=e23] [cursor=pointer]:
+          - /url: /ru/reviews
+          - generic [ref=e24]: Отзывы
+        - link "О Нас" [ref=e26] [cursor=pointer]:
+          - /url: /ru/about
+          - generic [ref=e27]: О Нас
+        - link "Контакты" [ref=e29] [cursor=pointer]:
+          - /url: /ru/contacts
+          - generic [ref=e30]: Контакты
+        - link "Наш сайт с энтеогенами" [ref=e31] [cursor=pointer]:
+          - /url: https://shop.vivadzen.com/cz/ru
+          - generic [ref=e33]: Наш сайт с энтеогенами
+      - generic "Выбор языка" [ref=e34]:
+        - button "Рус" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: Рус
+        - link "button.login" [ref=e38] [cursor=pointer]:
+          - /url: /ru/auth/login
+        - button "Корзина" [ref=e40] [cursor=pointer]:
+          - generic [ref=e42]: "0"
+  - main [ref=e43]:
+    - generic [ref=e45]:
+      - list [ref=e47]:
+        - listitem [ref=e48]:
+          - text: ">"
+          - link "Главная" [ref=e49] [cursor=pointer]:
+            - /url: /ru
+        - listitem:
+          - generic [ref=e50]: Условия возврата товара
+      - heading "Условия возврата товара" [level=1] [ref=e51]
+      - generic [ref=e52]:
+        - heading "Отказ от договора" [level=2] [ref=e53]
+        - list [ref=e54]:
+          - listitem [ref=e55]: Покупатель, заключивший договор купли-продажи вне своей предпринимательской деятельности как потребитель, имеет право отказаться от договора.
+          - listitem [ref=e56]: Срок отказа составляет 14 дней со дня получения товара.
+          - listitem [ref=e57]:
+            - text: "Покупатель не может отказаться от договора купли-продажи, если:"
+            - list [ref=e58]:
+              - listitem [ref=e59]: оказание услуги началось с его предварительного явного согласия до истечения срока отказа, и продавец заранее сообщил, что в таком случае право на отказ утрачивается;
+              - listitem [ref=e60]: цена товара или услуги зависит от колебаний на финансовом рынке, которые не поддаются контролю продавца в течение срока отказа;
+              - listitem [ref=e61]: поставляются алкогольные напитки, которые могут быть доставлены по истечении 30 дней и цена которых зависит от колебаний финансового рынка, не зависящих от продавца;
+              - listitem [ref=e62]: товар был изготовлен по индивидуальному заказу покупателя или явно персонализирован;
+              - listitem [ref=e63]: поставляются скоропортящиеся товары или товары, которые после доставки были безвозвратно смешаны с другими;
+              - listitem [ref=e64]: поставляется товар в герметичной упаковке, который по соображениям гигиены и санитарии не подлежит возврату и был распечатан покупателем;
+              - listitem [ref=e65]: поставляются аудио- или видеозаписи либо программное обеспечение с повреждённой оригинальной упаковкой;
+              - listitem [ref=e66]: поставляются газеты, периодические издания или журналы;
+              - listitem [ref=e67]: поставляется цифровой контент, не записанный на материальном носителе, по явному согласию покупателя до окончания срока отказа и после уведомления о потере права на отказ;
+              - listitem [ref=e68]: действуют иные случаи, предусмотренные статьёй 1837 Гражданского кодекса.
+          - listitem [ref=e69]: Чтобы соблюсти срок отказа, покупатель должен отправить уведомление об отказе до его истечения.
+          - listitem [ref=e70]: Для отказа от договора купли-продажи покупатель может воспользоваться формой, предоставленной продавцом, и отправить её на электронный или почтовый адрес, указанный в настоящих Условиях; продавец обязан незамедлительно подтвердить получение.
+          - listitem [ref=e71]: Покупатель, отказавшийся от договора, обязан вернуть товар продавцу в течение 14 дней с момента отказа и несёт расходы по возврату, даже если товар невозможно отправить обычной почтой ввиду его особенностей.
+          - listitem [ref=e72]: При отказе покупателя от договора продавец обязан без неоправданной задержки, но не позднее 14 дней с момента уведомления, вернуть все полученные платежи, включая стоимость доставки, тем же способом оплаты, если только покупатель не согласится на иной способ без дополнительных расходов.
+          - listitem [ref=e73]: Если покупатель выбрал способ доставки дороже, чем самый экономичный вариант продавца, продавец возмещает расходы на доставку лишь в размере стоимости этого самого дешёвого варианта.
+          - listitem [ref=e74]: Продавец не обязан возвращать деньги до тех пор, пока товар не будет получен обратно или пока покупатель не предоставит доказательство отправки.
+          - listitem [ref=e75]: Покупатель обязан вернуть товар невредимым, неношеным, чистым и, по возможности, в оригинальной упаковке; продавец вправе зачесть требование о возмещении ущерба в счёт суммы возврата.
+          - listitem [ref=e76]: Продавец вправе отказаться от договора купли-продажи в случае отсутствия товара на складе, недоступности товара или прекращения его производства либо импорта производителем, импортёром или поставщиком; он обязан немедленно уведомить об этом покупателя и вернуть все полученные средства, включая стоимость доставки, в течение 14 дней тем же способом либо другим согласованным способом.
+  - generic "Landing quick actions" [ref=e77]:
+    - button "Прокрутить страницу вверх"
+    - button "Открыть онлайн-чат" [ref=e78] [cursor=pointer]
+  - contentinfo [ref=e83]:
+    - generic [ref=e84]:
+      - generic [ref=e85]:
+        - generic [ref=e86]:
+          - paragraph [ref=e87]: VivaDzen kratom
+          - heading "Отборный сертифицированный кратом" [level=2] [ref=e88]
+          - paragraph [ref=e89]: Легальный кратом VivaDzen — это тщательно отобранные сорта, сертифицированная продукция, стабильное качество и проверенное происхождение каждой партии.
+          - generic "Оплата" [ref=e90]:
+            - img "Google Pay" [ref=e92]
+            - img "Apple Pay" [ref=e94]
+            - img "Visa" [ref=e96]
+            - img "Mastercard" [ref=e98]
+        - generic [ref=e99]:
+          - paragraph [ref=e100]: Каталог
+          - generic [ref=e101]:
+            - link "Каталог" [ref=e102] [cursor=pointer]:
+              - /url: /ru/catalog
+            - link "Отзывы" [ref=e103] [cursor=pointer]:
+              - /url: /ru/reviews
+            - link "О Нас" [ref=e104] [cursor=pointer]:
+              - /url: /ru/about
+            - link "Контакты" [ref=e105] [cursor=pointer]:
+              - /url: /ru/contacts
+        - generic [ref=e106]:
+          - paragraph [ref=e107]: Информация
+          - generic [ref=e108]:
+            - link "Доставка" [ref=e109] [cursor=pointer]:
+              - /url: /ru/delivery
+            - link "Оплата" [ref=e110] [cursor=pointer]:
+              - /url: /ru/payment
+            - link "Проверка возраста" [ref=e111] [cursor=pointer]:
+              - /url: /ru/age-verification
+            - link "Условия возврата товара" [ref=e112] [cursor=pointer]:
+              - /url: /ru/returns
+        - generic [ref=e113]:
+          - paragraph [ref=e114]: Контакты
+          - generic [ref=e115]:
+            - link "+420 605 00 47 47" [ref=e116] [cursor=pointer]:
+              - /url: tel:+420605004747
+            - link "info@vivadzen.com" [ref=e117] [cursor=pointer]:
+              - /url: mailto:info@vivadzen.com
+            - generic [ref=e118]: Na Bojišti 1471/22, 120 00 Новый Город, Прага 2, Чехия
+          - generic [ref=e119]:
+            - link [ref=e120] [cursor=pointer]:
+              - /url: https://t.me/vivadzen_shop
+            - link [ref=e122] [cursor=pointer]:
+              - /url: https://wa.me/+420605004747
+            - link [ref=e124] [cursor=pointer]:
+              - /url: https://www.instagram.com/viva_dzen/
+            - link [ref=e126] [cursor=pointer]:
+              - /url: https://www.facebook.com/vivadzen/
+            - link [ref=e128] [cursor=pointer]:
+              - /url: https://www.youtube.com/@Vivadzen
+      - generic [ref=e130]:
+        - generic [ref=e131]:
+          - generic [ref=e132]: © 2026 VivaDzen. Все права защищены.
+          - generic [ref=e133]: Все цены на сайте указаны с учетом НДС.
+        - generic [ref=e134]:
+          - link "Политика конфиденциальности" [ref=e135] [cursor=pointer]:
+            - /url: /ru/policy
+          - link "Пользовательское соглашение" [ref=e136] [cursor=pointer]:
+            - /url: /ru/terms

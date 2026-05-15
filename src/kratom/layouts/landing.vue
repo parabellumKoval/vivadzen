@@ -35,7 +35,7 @@ useSchemaOrg([
         <slot />
         <FloatingButtons />
         <KratomSiteFooter />
-        <lazy-kratom-region-switcher-modal />
+        <!-- <lazy-kratom-region-switcher-modal /> -->
         <lazy-modal-noty />
         <modal-transition :is-show="Boolean(modal.active?.show)" mode="out-in">
           <component v-if="modal.active?.component" :is="modal.active.component"></component>

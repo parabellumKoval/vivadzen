@@ -6,34 +6,45 @@ use App\Http\Controllers\Controller;
 use App\Models\DeliveryReport;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class MessengerDeliveryReportController extends Controller
 {
     public function store(Request $request): JsonResponse
     {
-        $expectedApiKey = (string) \Settings::get(
-            'shipping.messenger.reporting.api_key',
-            (string) config('services.messenger.delivery_reporting_api_key', '')
-        );
+        $expectedApiKeys = $this->expectedApiKeys();
 
-        if ($expectedApiKey === '') {
+        if ($expectedApiKeys === []) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Messenger delivery reporting API key is not configured.',
             ], 503);
         }
 
-        $providedApiKey = (string) $request->header('X-API-KEY', '');
+        $providedApiKey = $this->normalizeApiKey($request->header('X-API-KEY', ''));
 
-        if (! hash_equals($expectedApiKey, $providedApiKey)) {
+        if (! $this->apiKeyMatches($providedApiKey, $expectedApiKeys)) {
+            Log::warning('Messenger delivery report rejected: invalid API key.', [
+                'provided_key' => $this->apiKeyFingerprint($providedApiKey),
+                'expected_keys' => array_map(fn (string $key): string => $this->apiKeyFingerprint($key), $expectedApiKeys),
+                'ip' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'content_type' => $request->header('Content-Type'),
+                'is_test_run' => $this->isTestRun($request),
+            ]);
+
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid API key.',
             ], 401);
         }
 
-        $payload = $request->all();
+        $payload = $request->json()->all();
+
+        if ($payload === []) {
+            $payload = $request->all();
+        }
 
         if ($payload === []) {
             $decoded = json_decode((string) $request->getContent(), true);
@@ -43,9 +54,11 @@ class MessengerDeliveryReportController extends Controller
             }
         }
 
-        if (isset($payload['reports']) && is_array($payload['reports']) && array_is_list($payload['reports'])) {
-            $payload = $payload['reports'];
+        if (isset($payload['_json']) && is_array($payload['_json'])) {
+            $payload = $payload['_json'];
         }
+
+        $payload = $this->reportsPayload($payload);
 
         if (! is_array($payload) || ! array_is_list($payload) || $payload === []) {
             return response()->json([
@@ -99,6 +112,7 @@ class MessengerDeliveryReportController extends Controller
                     'order_number' => $reportData['order_number'],
                     'reason' => 'duplicate',
                 ];
+
                 continue;
             }
 
@@ -162,6 +176,7 @@ class MessengerDeliveryReportController extends Controller
     {
         if (! is_string($value) || ! str_starts_with($value, 'data:image/png;base64,')) {
             $fail(sprintf('The %s field must be a PNG data URI.', $attribute));
+
             return;
         }
 
@@ -170,5 +185,87 @@ class MessengerDeliveryReportController extends Controller
         if ($encoded === '' || base64_decode($encoded, true) === false) {
             $fail(sprintf('The %s field must contain valid base64 PNG data.', $attribute));
         }
+    }
+
+    protected function reportsPayload(mixed $payload): mixed
+    {
+        if (! is_array($payload)) {
+            return $payload;
+        }
+
+        if (isset($payload['reports']) && is_array($payload['reports']) && array_is_list($payload['reports'])) {
+            return $payload['reports'];
+        }
+
+        if (array_is_list($payload)) {
+            return $payload;
+        }
+
+        $reports = [];
+
+        foreach ($payload as $key => $value) {
+            if ((is_int($key) || ctype_digit((string) $key)) && is_array($value)) {
+                $reports[] = $value;
+            }
+        }
+
+        return $reports !== [] ? $reports : $payload;
+    }
+
+    /**
+     * Accept both settings and env/config keys so production can rotate secrets
+     * without stale DB settings immediately breaking Messenger callbacks.
+     *
+     * @return array<int, string>
+     */
+    protected function expectedApiKeys(): array
+    {
+        $rawKeys = [
+            \Settings::get('shipping.messenger.reporting.api_key', null),
+            config('services.messenger.delivery_reporting_api_key'),
+        ];
+
+        $keys = [];
+
+        foreach ($rawKeys as $rawKey) {
+            foreach (explode(',', (string) $rawKey) as $candidate) {
+                $key = $this->normalizeApiKey($candidate);
+
+                if ($key !== '') {
+                    $keys[] = $key;
+                }
+            }
+        }
+
+        return array_values(array_unique($keys));
+    }
+
+    protected function apiKeyMatches(string $providedApiKey, array $expectedApiKeys): bool
+    {
+        if ($providedApiKey === '') {
+            return false;
+        }
+
+        foreach ($expectedApiKeys as $expectedApiKey) {
+            if (hash_equals($expectedApiKey, $providedApiKey)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function normalizeApiKey(mixed $apiKey): string
+    {
+        return trim((string) $apiKey);
+    }
+
+    protected function apiKeyFingerprint(string $apiKey): string
+    {
+        if ($apiKey === '') {
+            return 'missing';
+        }
+
+        return sprintf('sha256:%s length:%d', substr(hash('sha256', $apiKey), 0, 12), strlen($apiKey));
     }
 }

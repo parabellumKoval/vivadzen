@@ -22,40 +22,19 @@ const LEGACY_REGION_ALIASES = {
   zz: 'global',
 }
 
-const LEGACY_STATIC_PATHS = [
-  '/',
-  '/about',
-  '/affiliate',
-  '/blog',
-  '/brands',
-  '/catalog',
-  '/certificates',
-  '/comparison',
-  '/contacts',
-  '/delivery',
-  '/faq',
-  '/guarantees',
-  '/payment',
-  '/policy',
-  '/remove-userdata',
-  '/returns',
-  '/reviews',
-  '/reviews/products',
-  '/reviews/shop',
-  '/search',
-  '/terms',
-  '/vivapoints',
-]
-
 const KRATOM_LOCALES = ['cs', 'en', 'ru', 'uk']
 const KRATOM_DEFAULT_LOCALE = 'cs'
 const KRATOM_REGION = 'cz'
+const KRATOM_CATEGORY_SLUG = 'kratom'
+const KRATOM_CATALOG_PER_PAGE = 48
 const KRATOM_STATIC_PATHS = [
   '/',
   '/about',
   '/blog',
   '/catalog',
   '/contacts',
+  '/delivery',
+  '/payment',
   '/policy',
   '/returns',
   '/reviews',
@@ -64,7 +43,7 @@ const KRATOM_STATIC_PATHS = [
   '/checkout/payment',
 ]
 
-const LIVE_KRATOM_ITEM_TYPES = new Set(['article', 'product', 'category'])
+const LIVE_KRATOM_ITEM_TYPES = new Set(['article', 'product'])
 
 function normalizePath(value) {
   const raw = String(value || '').trim()
@@ -85,39 +64,6 @@ function normalizeSlug(value) {
 function normalizeRegion(value) {
   const normalized = String(value || '').trim().toLowerCase()
   return LEGACY_REGION_ALIASES[normalized] || normalized
-}
-
-function parseLegacyPath(pathname) {
-  const normalized = normalizePath(pathname)
-  const segments = normalized === '/' ? [] : normalized.slice(1).split('/').filter(Boolean)
-
-  if (!segments.length) {
-    return null
-  }
-
-  const [rawRegion, maybeLocale, ...rest] = segments
-  const region = normalizeRegion(rawRegion)
-
-  if (!LEGACY_REGIONS[region]) {
-    return null
-  }
-
-  const locales = LEGACY_REGIONS[region]
-  if (maybeLocale && locales.includes(maybeLocale)) {
-    return {
-      region,
-      locale: maybeLocale,
-      remainder: rest.length ? `/${rest.join('/')}` : '/',
-      hasExplicitLocale: true,
-    }
-  }
-
-  return {
-    region,
-    locale: locales[0],
-    remainder: maybeLocale ? `/${[maybeLocale, ...rest].join('/')}` : '/',
-    hasExplicitLocale: false,
-  }
 }
 
 function buildKratomLocalizedPath(slug, locale) {
@@ -202,6 +148,16 @@ async function readManualRedirects() {
 }
 
 async function fetchSitemapItems(storefront) {
+  const fileOverride = {
+    main: process.env.REDIRECTS_MAIN_SITEMAP_FILE,
+    kratom: process.env.REDIRECTS_KRATOM_SITEMAP_FILE,
+  }[storefront]
+
+  if (fileOverride) {
+    const payload = JSON.parse(await readFile(fileOverride, 'utf8'))
+    return Array.isArray(payload?.items) ? payload.items : []
+  }
+
   const url = `${API_BASE}/sitemap/full?storefront=${encodeURIComponent(storefront)}&country=cz`
   const response = await fetch(url, {
     headers: {
@@ -217,6 +173,59 @@ async function fetchSitemapItems(storefront) {
 
   const payload = await response.json()
   return Array.isArray(payload?.items) ? payload.items : []
+}
+
+function extractCatalogProducts(payload) {
+  if (Array.isArray(payload)) {
+    return payload
+  }
+
+  if (Array.isArray(payload?.products?.data)) {
+    return payload.products.data
+  }
+
+  return []
+}
+
+async function fetchKratomCatalogProducts() {
+  const fileOverride = process.env.REDIRECTS_KRATOM_CATALOG_FILE
+
+  if (fileOverride) {
+    const payload = JSON.parse(await readFile(fileOverride, 'utf8'))
+    return extractCatalogProducts(payload)
+  }
+
+  const products = []
+  let page = 1
+  let lastPage = 1
+
+  do {
+    const params = new URLSearchParams({
+      with_products: 'true',
+      category_slug: KRATOM_CATEGORY_SLUG,
+      per_page: String(KRATOM_CATALOG_PER_PAGE),
+      page: String(page),
+      resource: 'kratom_small',
+    })
+    const response = await fetch(`${API_BASE}/catalog?${params.toString()}`, {
+      headers: {
+        'X-Storefront': 'kratom',
+        'X-Region': KRATOM_REGION,
+        'Accept-Language': KRATOM_DEFAULT_LOCALE,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch kratom catalog products: ${response.status} ${response.statusText}`)
+    }
+
+    const payload = await response.json()
+    products.push(...extractCatalogProducts(payload))
+    lastPage = Math.max(1, Number(payload?.products?.meta?.last_page || 1))
+    page += 1
+  } while (page <= lastPage)
+
+  return products
 }
 
 function buildLiveCurrentPaths(kratomItems) {
@@ -246,46 +255,32 @@ function buildLiveCurrentPaths(kratomItems) {
   return livePaths
 }
 
-function buildRegionOnlyRedirects(mainItems, liveCurrentPaths) {
-  const redirects = new Map()
-
-  const append = (fullPath) => {
-    const parsed = parseLegacyPath(fullPath)
-    if (!parsed || parsed.hasExplicitLocale) {
-      return
-    }
-
-    redirects.set(normalizePath(fullPath), normalizePath(fullPath))
+function addCatalogProductSlug(slugs, product) {
+  const slug = normalizeSlug(product?.slug)
+  if (slug) {
+    slugs.add(slug)
   }
 
-  for (const region of Object.keys(LEGACY_REGIONS)) {
-    for (const staticPath of LEGACY_STATIC_PATHS) {
-      const fullPath = staticPath === '/' ? `/${region}` : `/${region}${staticPath}`
-      append(fullPath)
-    }
+  if (!Array.isArray(product?.modifications)) {
+    return
   }
 
-  for (const item of mainItems) {
-    const slug = normalizeSlug(item?.slug)
-    if (!slug) {
-      continue
-    }
-
-    const regions = Array.isArray(item?.available_regions) && item.available_regions.length
-      ? item.available_regions
-      : ['global']
-
-    for (const region of regions) {
-      const normalizedRegion = normalizeRegion(region)
-      if (!LEGACY_REGIONS[normalizedRegion]) {
-        continue
-      }
-
-      append(`/${normalizedRegion}/${slug}`)
+  for (const modification of product.modifications) {
+    const modificationSlug = normalizeSlug(modification?.slug)
+    if (modificationSlug) {
+      slugs.add(modificationSlug)
     }
   }
+}
 
-  return redirects
+function buildLiveKratomProductSlugs(catalogProducts) {
+  const slugs = new Set()
+
+  for (const product of catalogProducts) {
+    addCatalogProductSlug(slugs, product)
+  }
+
+  return slugs
 }
 
 function serializeStringArray(name, values) {
@@ -302,28 +297,33 @@ function serializeObject(name, entries) {
 }
 
 async function main() {
-  const [mainItems, kratomItems, manualRedirects] = await Promise.all([
-    fetchSitemapItems('main'),
+  const [kratomItems, catalogProducts, manualRedirects] = await Promise.all([
     fetchSitemapItems('kratom'),
+    fetchKratomCatalogProducts(),
     readManualRedirects(),
   ])
 
-  const liveCurrentPaths = Array.from(buildLiveCurrentPaths(kratomItems)).sort()
-  const regionOnlyRedirects = Array.from(buildRegionOnlyRedirects(mainItems, new Set(liveCurrentPaths)).entries())
-    .sort(([left], [right]) => left.localeCompare(right))
+  const liveProductSlugs = Array.from(buildLiveKratomProductSlugs(catalogProducts)).sort()
+  const liveCurrentPathSet = buildLiveCurrentPaths(kratomItems)
+  for (const slug of liveProductSlugs) {
+    addPathsToSet(liveCurrentPathSet, buildKratomLocalizedPath, slug)
+  }
+
+  const liveCurrentPaths = Array.from(liveCurrentPathSet).sort()
   const manualRedirectMap = manualRedirects
-    .filter(({ source }) => !new Set(liveCurrentPaths).has(source))
+    .filter(({ source }) => !liveCurrentPathSet.has(source))
     .sort((left, right) => left.source.localeCompare(right.source))
     .map(({ source, destination }) => [source, destination])
 
   const file = `// Generated by scripts/generate-shop-redirects.mjs on ${new Date().toISOString()}
 // Live kratom routes: ${liveCurrentPaths.length}
-// Region-only redirects: ${regionOnlyRedirects.length}
+// Live kratom products: ${liveProductSlugs.length}
 // Manual CSV redirects: ${manualRedirectMap.length}
+// Region/path pattern redirects are handled in server/middleware/legacy-shop-redirect.ts.
 
 ${serializeStringArray('GENERATED_KRATOM_LIVE_PATHS', liveCurrentPaths)}
 
-${serializeObject('GENERATED_REGION_ONLY_REDIRECTS', regionOnlyRedirects)}
+${serializeStringArray('GENERATED_KRATOM_PRODUCT_SLUGS', liveProductSlugs)}
 
 ${serializeObject('GENERATED_MANUAL_REDIRECTS', manualRedirectMap)}
 

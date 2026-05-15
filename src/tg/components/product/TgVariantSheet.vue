@@ -17,6 +17,7 @@ const { haptic } = useTelegram()
 const {
   variantsOf,
   imageOf,
+  productNameOf,
   priceOf,
   oldPriceOf,
   currencyOf,
@@ -28,6 +29,7 @@ const {
 const selectedVariant = ref<TgProductVariant | null>(null)
 
 const variants = computed(() => props.product ? variantsOf(props.product) : [])
+const productName = computed(() => productNameOf(props.product))
 
 watch(() => props.modelValue, (open) => {
   if (!open) return
@@ -35,7 +37,7 @@ watch(() => props.modelValue, (open) => {
 })
 
 const addSelected = () => {
-  if (!props.product || !selectedVariant.value) return
+  if (!props.product || !selectedVariant.value || !isInStock(selectedVariant.value)) return
   cart.addItem(props.product, selectedVariant.value)
   haptic('light')
   emit('update:modelValue', false)
@@ -50,9 +52,20 @@ const addSelected = () => {
   >
     <div v-if="product" class="variant-sheet">
       <div class="variant-sheet__product">
-        <img :src="imageOf(product)" :alt="product.name" class="variant-sheet__image">
+        <NuxtImg
+          :src="imageOf(product)"
+          :alt="productName"
+          class="variant-sheet__image"
+          width="144"
+          height="144"
+          densities="1x 2x"
+          format="webp"
+          quality="76"
+          loading="lazy"
+          decoding="async"
+        />
         <div>
-          <div class="variant-sheet__name">{{ product.name }}</div>
+          <div class="variant-sheet__name">{{ productName }}</div>
           <div class="variant-sheet__price">
             <span v-if="selectedVariant && oldPriceOf(selectedVariant)" class="variant-sheet__old">
               {{ formatMoney(oldPriceOf(selectedVariant), currencyOf(selectedVariant)) }}
@@ -76,7 +89,7 @@ const addSelected = () => {
       <button
         type="button"
         class="tg-btn tg-btn--accent"
-        :disabled="!selectedVariant"
+        :disabled="!selectedVariant || !isInStock(selectedVariant)"
         @click="addSelected"
       >
         {{ t('add_to_cart') }}

@@ -130,8 +130,11 @@ class ScheduleMorphClassRegressionTest extends TestCase
             $publishAt->format('Y-m-d H:i:s'),
             $fields['schedule_publish_at']['default'] ?? null
         );
+        $this->assertSame('1', $fields['schedule_publish_at']['attributes']['step'] ?? null);
         $this->assertArrayHasKey('schedule_info', $fields->all());
         $this->assertArrayHasKey('schedule_cancel', $fields->all());
+        $this->assertStringContainsString('data-cancel-url', $fields['schedule_cancel']['value'] ?? '');
+        $this->assertStringContainsString('cancel-scheduled-publication', $fields['schedule_cancel']['value'] ?? '');
     }
 
     protected function createReview(): Review

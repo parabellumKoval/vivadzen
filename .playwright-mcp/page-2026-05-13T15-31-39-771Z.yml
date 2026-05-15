@@ -1,0 +1,189 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "logo_alt" [ref=e6] [cursor=pointer]:
+        - /url: /ru
+        - img "logo_alt" [ref=e7]
+      - navigation "Навигация по странице" [ref=e8]:
+        - link "Каталог" [ref=e10] [cursor=pointer]:
+          - /url: /ru/catalog
+          - generic [ref=e11]: Каталог
+        - link "Доставка" [ref=e14] [cursor=pointer]:
+          - /url: /ru/delivery
+          - generic [ref=e15]: Доставка
+        - link "Оплата" [ref=e17] [cursor=pointer]:
+          - /url: /ru/payment
+          - generic [ref=e18]: Оплата
+        - link "Проверка возраста" [ref=e20] [cursor=pointer]:
+          - /url: /ru/age-verification
+          - generic [ref=e21]: Проверка возраста
+        - link "Отзывы" [ref=e23] [cursor=pointer]:
+          - /url: /ru/reviews
+          - generic [ref=e24]: Отзывы
+        - link "О Нас" [ref=e26] [cursor=pointer]:
+          - /url: /ru/about
+          - generic [ref=e27]: О Нас
+        - link "Контакты" [ref=e29] [cursor=pointer]:
+          - /url: /ru/contacts
+          - generic [ref=e30]: Контакты
+        - link "Наш сайт с энтеогенами" [ref=e31] [cursor=pointer]:
+          - /url: https://shop.vivadzen.com/cz/ru
+          - generic [ref=e33]: Наш сайт с энтеогенами
+      - generic "Выбор языка" [ref=e34]:
+        - button "Рус" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: Рус
+        - link "button.login" [ref=e38] [cursor=pointer]:
+          - /url: /ru/auth/login
+        - button "Корзина" [ref=e40] [cursor=pointer]:
+          - generic [ref=e42]: "0"
+  - main [ref=e43]:
+    - generic [ref=e44]:
+      - generic [ref=e45]:
+        - img "О нас" [ref=e46]
+        - generic [ref=e47]:
+          - list [ref=e49]:
+            - listitem [ref=e50]:
+              - text: ">"
+              - link "Главная" [ref=e51] [cursor=pointer]:
+                - /url: /ru
+            - listitem:
+              - generic [ref=e52]: О Нас
+          - generic [ref=e53]:
+            - paragraph [ref=e54]: Природная гармония с 2012 года
+            - heading "О нас" [level=1] [ref=e55]
+            - generic [ref=e56]:
+              - paragraph [ref=e57]: "Мы начинали скромно: искали надежных поставщиков, тестировали первые партии и выстраивали философию на честности, прозрачности, качестве и ответственности."
+              - paragraph [ref=e58]: Со временем наша команда росла, а вместе с ней и ассортимент. Мы открыли уникальные свойства травяных чаев, органического кофе, конопляных продуктов, суперфудов и лекарственных грибов. Каждый из этих направлений мы развиваем с особым вниманием к деталям - от места выращивания до сертификации и независимых лабораторных анализов.
+              - paragraph [ref=e59]: "В 2022 году мы сделали еще один важный шаг - открыли первый магазин в центре Праги. Он стал символом нашей философии: объединять качество, открытость и любовь к природе с заботой о клиентах. Сегодня мы уже выходим за пределы Чехии и усиливаем присутствие в Европе, открывая филиалы в Испании и Германии."
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - paragraph [ref=e63]: Региональные онлайн-магазины
+            - heading "Сейчас вы находитесь в kratom-магазине VivaDzen для Чехии" [level=2] [ref=e64]
+            - paragraph [ref=e65]: Если вы покупаете из другой страны, переключитесь на онлайн-магазин для своего региона.
+          - generic [ref=e66]:
+            - link "VivaDzen Украина Версия магазина для покупателей в Украине" [ref=e67] [cursor=pointer]:
+              - /url: https://shop.vivadzen.com/ua
+              - img [ref=e69]
+              - generic [ref=e72]:
+                - generic [ref=e73]: VivaDzen Украина
+                - generic [ref=e74]: Версия магазина для покупателей в Украине
+            - link "VivaDzen Испания Версия магазина для покупателей в Испании" [ref=e76] [cursor=pointer]:
+              - /url: https://shop.vivadzen.com/es
+              - img [ref=e78]
+              - generic [ref=e111]:
+                - generic [ref=e112]: VivaDzen Испания
+                - generic [ref=e113]: Версия магазина для покупателей в Испании
+            - link "VivaDzen Германия Версия магазина для покупателей в Германии" [ref=e115] [cursor=pointer]:
+              - /url: https://shop.vivadzen.com/de
+              - img [ref=e117]
+              - generic [ref=e121]:
+                - generic [ref=e122]: VivaDzen Германия
+                - generic [ref=e123]: Версия магазина для покупателей в Германии
+            - link "VivaDzen энтеогены в Чехии и другое Чешский магазин с энтеогенами и другими категориями" [ref=e125] [cursor=pointer]:
+              - /url: https://shop.vivadzen.com/cz
+              - img [ref=e127]
+              - generic [ref=e131]:
+                - generic [ref=e132]: VivaDzen энтеогены в Чехии и другое
+                - generic [ref=e133]: Чешский магазин с энтеогенами и другими категориями
+        - generic [ref=e135]:
+          - paragraph [ref=e136]: Наша философия
+          - blockquote [ref=e137]: "VivaDzen начал свой путь в 2012 году с простой, но важной целью: сделать высококачественные натуральные продукты доступными и помогать людям заботиться о здоровье, гармонии и балансе в повседневной жизни."
+        - generic [ref=e138]:
+          - article [ref=e139]:
+            - img "Без компромиссов к качеству" [ref=e141]
+            - generic [ref=e142]:
+              - paragraph [ref=e143]: "01"
+              - heading "Без компромиссов к качеству" [level=2] [ref=e144]
+              - paragraph [ref=e146]: Мы уверены, что натуральные продукты должны быть не только полезными, но и безопасными. Каждую партию мы отправляем на независимые лабораторные испытания. Проверяем содержание активных веществ, возможные примеси и тяжелые металлы. Это дает нашим клиентам уверенность, что выбранный продукт соответствует самым высоким стандартам.
+          - article [ref=e147]:
+            - img "Честные цены" [ref=e149]
+            - generic [ref=e150]:
+              - paragraph [ref=e151]: "02"
+              - heading "Честные цены" [level=2] [ref=e152]
+              - paragraph [ref=e154]: Мы работаем по принципам социального предпринимательства. Наша цель - не максимальная прибыль, а развитие сообщества и доступность натуральных продуктов для каждого. Мы предлагаем честные цены, прозрачную систему скидок и создаем реферальную программу, которая позволит вам стать частью нашего дела и зарабатывать вместе с нами.
+          - article [ref=e155]:
+            - img "Быстрая доставка и персональный сервис" [ref=e157]
+            - generic [ref=e158]:
+              - paragraph [ref=e159]: "03"
+              - heading "Быстрая доставка и персональный сервис" [level=2] [ref=e160]
+              - paragraph [ref=e162]: Мы ценим ваше время. Заказы обрабатываются максимально оперативно, а доставка осуществляется по всей Европе. Тем, кто ценит личный контакт, мы предлагаем посетить наш магазин в Праге или в Испании либо воспользоваться пунктами самовывоза.
+          - article [ref=e163]:
+            - img "Ответственное отношение" [ref=e165]
+            - generic [ref=e166]:
+              - paragraph [ref=e167]: "04"
+              - heading "Ответственное отношение" [level=2] [ref=e168]
+              - generic [ref=e169]:
+                - paragraph [ref=e170]: Мы заботимся не только о здоровье клиентов, но и об окружающей среде.
+                - paragraph [ref=e171]: В работе мы выбираем экодружественную упаковку, отказываемся от лишнего пластика и поддерживаем производителей, которые относятся к природе с уважением.
+          - article [ref=e172]:
+            - img "Программа лояльности" [ref=e174]
+            - generic [ref=e175]:
+              - paragraph [ref=e176]: "05"
+              - heading "Программа лояльности" [level=2] [ref=e177]
+              - paragraph [ref=e179]: Постоянные клиенты получают дополнительные преимущества - скидки, бонусы и специальные предложения. Для нас важно, чтобы каждый человек чувствовал себя частью сообщества VivaDzen.
+  - generic "Landing quick actions" [ref=e180]:
+    - button "Прокрутить страницу вверх"
+    - button "Открыть онлайн-чат" [ref=e181] [cursor=pointer]
+  - contentinfo [ref=e186]:
+    - generic [ref=e187]:
+      - generic [ref=e188]:
+        - generic [ref=e189]:
+          - paragraph [ref=e190]: VivaDzen kratom
+          - heading "Отборный сертифицированный кратом" [level=2] [ref=e191]
+          - paragraph [ref=e192]: Легальный кратом VivaDzen — это тщательно отобранные сорта, сертифицированная продукция, стабильное качество и проверенное происхождение каждой партии.
+          - generic "Оплата" [ref=e193]:
+            - img "Google Pay" [ref=e195]
+            - img "Apple Pay" [ref=e197]
+            - img "Visa" [ref=e199]
+            - img "Mastercard" [ref=e201]
+        - generic [ref=e202]:
+          - paragraph [ref=e203]: Каталог
+          - generic [ref=e204]:
+            - link "Каталог" [ref=e205] [cursor=pointer]:
+              - /url: /ru/catalog
+            - link "Отзывы" [ref=e206] [cursor=pointer]:
+              - /url: /ru/reviews
+            - link "О Нас" [ref=e207] [cursor=pointer]:
+              - /url: /ru/about
+            - link "Контакты" [ref=e208] [cursor=pointer]:
+              - /url: /ru/contacts
+        - generic [ref=e209]:
+          - paragraph [ref=e210]: Информация
+          - generic [ref=e211]:
+            - link "Доставка" [ref=e212] [cursor=pointer]:
+              - /url: /ru/delivery
+            - link "Оплата" [ref=e213] [cursor=pointer]:
+              - /url: /ru/payment
+            - link "Проверка возраста" [ref=e214] [cursor=pointer]:
+              - /url: /ru/age-verification
+            - link "Условия возврата товара" [ref=e215] [cursor=pointer]:
+              - /url: /ru/returns
+        - generic [ref=e216]:
+          - paragraph [ref=e217]: Контакты
+          - generic [ref=e218]:
+            - link "+420 605 00 47 47" [ref=e219] [cursor=pointer]:
+              - /url: tel:+420605004747
+            - link "info@vivadzen.com" [ref=e220] [cursor=pointer]:
+              - /url: mailto:info@vivadzen.com
+            - generic [ref=e221]: Na Bojišti 1471/22, 120 00 Новый Город, Прага 2, Чехия
+          - generic [ref=e222]:
+            - link [ref=e223] [cursor=pointer]:
+              - /url: https://t.me/vivadzen_shop
+            - link [ref=e225] [cursor=pointer]:
+              - /url: https://wa.me/+420605004747
+            - link [ref=e227] [cursor=pointer]:
+              - /url: https://www.instagram.com/viva_dzen/
+            - link [ref=e229] [cursor=pointer]:
+              - /url: https://www.facebook.com/vivadzen/
+            - link [ref=e231] [cursor=pointer]:
+              - /url: https://www.youtube.com/@Vivadzen
+      - generic [ref=e233]:
+        - generic [ref=e234]:
+          - generic [ref=e235]: © 2026 VivaDzen. Все права защищены.
+          - generic [ref=e236]: Все цены на сайте указаны с учетом НДС.
+        - generic [ref=e237]:
+          - link "Политика конфиденциальности" [ref=e238] [cursor=pointer]:
+            - /url: /ru/policy
+          - link "Пользовательское соглашение" [ref=e239] [cursor=pointer]:
+            - /url: /ru/terms

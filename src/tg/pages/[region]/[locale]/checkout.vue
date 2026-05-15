@@ -12,6 +12,7 @@ const { pathFor, catalogPath, region } = useTgRouting()
 const { user: telegramUser, webApp, haptic } = useTelegram()
 const { formatMoney } = useTgProductUtils()
 const { loadSettings, deliveryMethods, pickupLocations, paymentMethodsFor } = useTgCheckoutOptions()
+const { pickPudo: pickPacketaPoint, isConfigured: packetaConfigured } = useTgPacketa()
 const {
   loadProfile: loadBackendProfile,
   saveProfile: saveBackendProfile,
@@ -43,6 +44,9 @@ const needsPickupLocation = computed(() => String(order.delivery.method || '') =
 const needsAddress = computed(() => String(order.delivery.method || '').includes('address'))
 const needsHouse = computed(() => ['novaposhta_address', 'messenger_address', 'default_address'].includes(String(order.delivery.method || '')))
 const needsZip = computed(() => ['novaposhta_address', 'packeta_address', 'messenger_address'].includes(String(order.delivery.method || '')))
+const isPacketaWarehouse = computed(() => order.delivery.method === 'packeta_warehouse')
+const usesManualWarehouseFields = computed(() => needsWarehouse.value && !isPacketaWarehouse.value)
+const packetaPickerLoading = ref(false)
 
 const recipientName = computed(() => {
   return [order.user.first_name, order.user.last_name].filter(Boolean).join(' ')
@@ -299,6 +303,28 @@ const applyPickupLocation = (location: { id: string; title: string; address: str
   delete errors.warehouse
 }
 
+const choosePacketaPoint = async () => {
+  if (packetaPickerLoading.value) return
+  packetaPickerLoading.value = true
+  try {
+    const point = await pickPacketaPoint()
+    if (!point) return
+    order.delivery.warehouse = point.name || ''
+    order.delivery.settlement = point.city || ''
+    order.delivery.street = point.street || ''
+    order.delivery.zip = point.zip || ''
+    delete errors.warehouse
+    delete errors.settlement
+    haptic('success')
+  } catch (error) {
+    console.error('Packeta widget failed', error)
+    ui.showToast(t('packeta_loading_error'), 'error')
+    haptic('error')
+  } finally {
+    packetaPickerLoading.value = false
+  }
+}
+
 const syncPickupSelection = () => {
   if (order.delivery.method !== 'default_pickup') {
     return
@@ -425,11 +451,11 @@ const submit = async () => {
 </script>
 
 <template>
-  <TgLayout :title="t('checkout')" :show-back="true">
+  <TgLayout :title="t('checkout')" :show-back="true" :show-lang="true">
     <form class="tg-page checkout-page" @submit.prevent="submit">
       <div v-if="!cart.items.length" class="tg-empty">
         <div>
-          <div class="tg-empty__icon">□</div>
+          <div class="tg-empty__icon"><TgIcon name="bag" :size="32" :stroke="2.2" /></div>
           <p class="tg-empty__title">{{ t('cart_empty') }}</p>
           <NuxtLink :to="catalogPath()" class="tg-btn checkout-page__empty-btn">{{ t('back_to_catalog') }}</NuxtLink>
         </div>
@@ -439,24 +465,39 @@ const submit = async () => {
         <section class="checkout-card">
           <button type="button" class="checkout-card__summary" @click="expandedCart = !expandedCart">
             <span>{{ cart.totalQty }} · {{ formatMoney(cart.totalPrice, cart.items[0]?.currency) }}</span>
-            <span>{{ expandedCart ? '↑' : '↓' }}</span>
+            <TgIcon :name="expandedCart ? 'chevron-up' : 'chevron-down'" :size="18" :stroke="2.4" />
           </button>
           <div v-if="expandedCart" class="checkout-card__items">
             <div v-for="item in cart.items" :key="`${item.productId}-${item.variantId}`" class="checkout-item">
-              <img :src="item.image" :alt="item.name">
+              <NuxtImg
+                :src="item.image"
+                :alt="item.name"
+                width="84"
+                height="84"
+                densities="1x 2x"
+                format="webp"
+                quality="70"
+                loading="lazy"
+                decoding="async"
+              />
               <span>{{ item.name }} × {{ item.quantity }}</span>
               <strong>{{ formatMoney(item.price * item.quantity, item.currency) }}</strong>
             </div>
           </div>
+          <TgFreeDeliveryProgress :total="cart.totalPrice" />
         </section>
 
         <section class="checkout-step" :class="stepClass(1)">
           <button type="button" class="checkout-step__header" @click="openStep(1)">
-            <span class="checkout-step__number">1</span>
-            <span>
+            <span class="checkout-step__number">
+              <TgIcon v-if="isStepComplete(1) && activeStep !== 1" name="check" :size="16" :stroke="3" />
+              <template v-else>1</template>
+            </span>
+            <span class="checkout-step__title">
               <strong>{{ t('step_user') }}</strong>
               <small>{{ stepStatusLabel(1) }}</small>
             </span>
+            <span v-if="isStepComplete(1) && activeStep !== 1" class="checkout-step__badge">{{ t('done') }}</span>
           </button>
 
           <div v-if="showSummary(1)" class="checkout-summary">
@@ -491,11 +532,15 @@ const submit = async () => {
 
         <section class="checkout-step" :class="stepClass(2)">
           <button type="button" class="checkout-step__header" @click="openStep(2)">
-            <span class="checkout-step__number">2</span>
-            <span>
+            <span class="checkout-step__number">
+              <TgIcon v-if="isStepComplete(2) && activeStep !== 2" name="check" :size="16" :stroke="3" />
+              <template v-else>2</template>
+            </span>
+            <span class="checkout-step__title">
               <strong>{{ t('step_delivery') }}</strong>
               <small>{{ stepStatusLabel(2) }}</small>
             </span>
+            <span v-if="isStepComplete(2) && activeStep !== 2" class="checkout-step__badge">{{ t('done') }}</span>
           </button>
 
           <div v-if="showSummary(2)" class="checkout-summary">
@@ -520,9 +565,14 @@ const submit = async () => {
             </div>
 
             <div class="radio-list">
-              <label v-for="method in deliveryMethods" :key="method.key" class="radio-card">
+              <label
+                v-for="method in deliveryMethods"
+                :key="method.key"
+                class="radio-card"
+                :class="{ 'radio-card--active': order.delivery.method === method.key }"
+              >
                 <input v-model="order.delivery.method" type="radio" :value="method.key">
-                <span>
+                <span class="radio-card__title">
                   <strong>{{ method.title }}</strong>
                   <small>{{ method.label }}</small>
                 </span>
@@ -548,13 +598,32 @@ const submit = async () => {
                 <small v-if="errors.warehouse" class="tg-error">{{ errors.warehouse }}</small>
               </div>
 
-              <label v-if="needsWarehouse || needsAddress">
+              <div v-if="isPacketaWarehouse" class="packeta-picker">
+                <button
+                  type="button"
+                  class="tg-btn tg-btn--lime packeta-picker__btn"
+                  :disabled="packetaPickerLoading || !packetaConfigured"
+                  @click="choosePacketaPoint"
+                >
+                  <TgIcon name="package" :size="18" :stroke="2.4" />
+                  {{ packetaPickerLoading ? t('loading') : (order.delivery.warehouse ? t('change') : t('choose_pickup_point')) }}
+                </button>
+                <div v-if="order.delivery.warehouse" class="packeta-picker__point">
+                  <strong>{{ order.delivery.warehouse }}</strong>
+                  <small v-if="order.delivery.settlement || order.delivery.street || order.delivery.zip">
+                    {{ [order.delivery.street, order.delivery.settlement, order.delivery.zip].filter(Boolean).join(', ') }}
+                  </small>
+                </div>
+                <small v-if="errors.warehouse" class="tg-error">{{ errors.warehouse }}</small>
+              </div>
+
+              <label v-if="usesManualWarehouseFields || needsAddress">
                 <span>{{ t('city') }}</span>
                 <input v-model="order.delivery.settlement" class="tg-field" :class="{ 'tg-field--error': errors.settlement }">
                 <small v-if="errors.settlement" class="tg-error">{{ errors.settlement }}</small>
               </label>
 
-              <label v-if="needsWarehouse">
+              <label v-if="usesManualWarehouseFields">
                 <span>{{ t('warehouse') }}</span>
                 <input v-model="order.delivery.warehouse" class="tg-field" :class="{ 'tg-field--error': errors.warehouse }">
                 <small v-if="errors.warehouse" class="tg-error">{{ errors.warehouse }}</small>
@@ -576,7 +645,7 @@ const submit = async () => {
                   <input v-model="order.delivery.room" class="tg-field">
                 </label>
                 <label v-if="needsZip">
-                  <span>ZIP</span>
+                  <span>{{ t('zip') }}</span>
                   <input v-model="order.delivery.zip" class="tg-field" :class="{ 'tg-field--error': errors.zip }">
                   <small v-if="errors.zip" class="tg-error">{{ errors.zip }}</small>
                 </label>
@@ -589,11 +658,15 @@ const submit = async () => {
 
         <section class="checkout-step" :class="stepClass(3)">
           <button type="button" class="checkout-step__header" @click="openStep(3)">
-            <span class="checkout-step__number">3</span>
-            <span>
+            <span class="checkout-step__number">
+              <TgIcon v-if="isStepComplete(3) && activeStep !== 3" name="check" :size="16" :stroke="3" />
+              <template v-else>3</template>
+            </span>
+            <span class="checkout-step__title">
               <strong>{{ t('step_payment') }}</strong>
               <small>{{ stepStatusLabel(3) }}</small>
             </span>
+            <span v-if="isStepComplete(3) && activeStep !== 3" class="checkout-step__badge">{{ t('done') }}</span>
           </button>
 
           <div v-if="showSummary(3)" class="checkout-summary">
@@ -603,9 +676,14 @@ const submit = async () => {
 
           <div v-else-if="activeStep === 3" class="checkout-step__body">
             <div class="radio-list">
-              <label v-for="method in paymentMethods" :key="method.key" class="radio-card">
+              <label
+                v-for="method in paymentMethods"
+                :key="method.key"
+                class="radio-card"
+                :class="{ 'radio-card--active': order.payment.method === method.key }"
+              >
                 <input v-model="order.payment.method" type="radio" :value="method.key">
-                <span>
+                <span class="radio-card__title">
                   <strong>{{ method.title }}</strong>
                 </span>
               </label>
@@ -618,7 +696,7 @@ const submit = async () => {
         <section class="checkout-step" :class="stepClass(4)">
           <button type="button" class="checkout-step__header" @click="openStep(4)">
             <span class="checkout-step__number">4</span>
-            <span>
+            <span class="checkout-step__title">
               <strong>{{ t('step_confirm') }}</strong>
               <small>{{ stepStatusLabel(4) }}</small>
             </span>
@@ -643,7 +721,7 @@ const submit = async () => {
               </div>
               <div>
                 <span>{{ t('delivery') }}</span>
-                <strong>{{ settingsReady ? formatMoney(cart.deliveryPrice, cart.items[0]?.currency) : '...' }}</strong>
+                <strong>{{ settingsReady ? formatMoney(cart.deliveryPrice, cart.items[0]?.currency) : t('loading') }}</strong>
               </div>
               <div class="checkout-total__final">
                 <span>{{ t('total') }}</span>
@@ -652,7 +730,7 @@ const submit = async () => {
             </section>
 
             <button type="submit" class="tg-btn tg-btn--accent" :disabled="loading">
-              {{ loading ? '...' : t('place_order') }}
+              {{ loading ? t('loading') : t('place_order') }}
             </button>
           </div>
         </section>
@@ -672,10 +750,12 @@ const submit = async () => {
 .checkout-total {
   display: grid;
   gap: 12px;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-lg);
   background: var(--color-white);
   padding: 14px;
   box-shadow: var(--shadow-card);
+  transition: border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
 }
 
 .checkout-card__summary,
@@ -692,25 +772,34 @@ const submit = async () => {
 }
 
 .checkout-card__summary {
-  font-size: 14px;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .checkout-step__header {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
-  gap: 10px;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
 }
 
 .checkout-step__number {
   display: grid;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-full);
   background: var(--color-bg-card);
-  color: var(--color-text-muted);
+  color: var(--color-ink);
   place-items: center;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+
+.checkout-step__title {
+  display: grid;
 }
 
 .checkout-step__header strong,
@@ -719,15 +808,35 @@ const submit = async () => {
 }
 
 .checkout-step__header strong {
-  font-size: 16px;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .checkout-step__header small {
-  margin-top: 2px;
+  margin-top: 3px;
   color: var(--color-text-muted);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.checkout-step__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-lime);
+  color: var(--color-ink);
+  padding: 4px 10px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .checkout-step--active .checkout-step__number {
@@ -735,13 +844,23 @@ const submit = async () => {
   color: var(--color-white);
 }
 
+.checkout-step--complete {
+  border-color: var(--color-primary-dark);
+  background: linear-gradient(0deg, rgba(24, 184, 90, 0.06), rgba(24, 184, 90, 0.06)), var(--color-white);
+  box-shadow: 4px 4px 0 0 var(--color-primary-dark);
+}
+
 .checkout-step--complete .checkout-step__number {
-  background: var(--color-accent);
+  background: var(--color-primary);
   color: var(--color-white);
 }
 
+.checkout-step--complete.checkout-step--active {
+  background: var(--color-white);
+}
+
 .checkout-step--locked {
-  opacity: 0.58;
+  opacity: 0.55;
 }
 
 .checkout-step--locked .checkout-step__header {
@@ -757,20 +876,25 @@ const submit = async () => {
   gap: 10px;
 }
 
-.checkout-step__body label {
+.checkout-step__body label,
+.checkout-step__fields label {
   display: grid;
   gap: 6px;
-  font-size: 13px;
+  font-family: var(--font-display);
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
 }
 
 .checkout-summary,
 .checkout-confirm {
   display: grid;
   gap: 8px;
-  border: 1.5px solid var(--color-border);
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-md);
-  background: #fffaf3;
+  background: var(--color-bg-input);
   padding: 12px;
 }
 
@@ -779,7 +903,7 @@ const submit = async () => {
   margin: 0;
   color: var(--color-text);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.4;
 }
 
@@ -789,18 +913,13 @@ const submit = async () => {
   background: transparent;
   color: var(--color-primary-dark);
   padding: 0;
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.checkout-page :deep(.tg-field) {
-  border-color: #d8d8d8;
-  background: var(--color-white);
-}
-
-.checkout-page :deep(.tg-field:focus) {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(115, 197, 111, 0.16);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
 .checkout-item {
@@ -810,17 +929,20 @@ const submit = async () => {
   align-items: center;
   color: var(--color-text-muted);
   font-size: 12px;
+  font-weight: 600;
 }
 
 .checkout-item img {
   width: 42px;
   height: 42px;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-sm);
   background: var(--color-bg-card);
   object-fit: contain;
 }
 
 .checkout-item strong {
+  font-family: var(--font-display);
   color: var(--color-accent);
 }
 
@@ -828,12 +950,25 @@ const submit = async () => {
   display: grid !important;
   grid-template-columns: 22px minmax(0, 1fr) auto;
   min-height: 56px;
-  border: 1.5px solid #d8d8d8;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-md);
   background: var(--color-white);
-  padding: 10px;
+  padding: 12px;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: var(--shadow-card-sm);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease;
+}
+
+.radio-card:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 0 var(--color-ink);
+}
+
+.radio-card--active {
+  background: var(--color-lime);
+  box-shadow: 3px 3px 0 0 var(--color-ink);
 }
 
 .radio-card input {
@@ -842,54 +977,109 @@ const submit = async () => {
   accent-color: var(--color-primary);
 }
 
-.radio-card small {
+.radio-card__title strong {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.radio-card__title small {
   display: block;
-  margin-top: 2px;
+  margin-top: 3px;
   color: var(--color-text-muted);
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .radio-card em {
-  color: var(--color-accent);
-  font-size: 12px;
+  font-family: var(--font-display);
+  color: var(--color-accent-dark);
+  font-size: 13px;
   font-style: normal;
-  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 .saved-addresses > strong {
-  font-size: 13px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .saved-address {
   display: grid;
-  gap: 3px;
-  border: 1.5px solid #d8d8d8;
+  gap: 4px;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-md);
   background: var(--color-white);
-  padding: 10px 12px;
+  padding: 12px;
   text-align: left;
+  box-shadow: var(--shadow-card-sm);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease;
+}
+
+.saved-address:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 0 var(--color-ink);
 }
 
 .saved-address--active {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(115, 197, 111, 0.14);
+  background: var(--color-lime);
+  box-shadow: 3px 3px 0 0 var(--color-ink);
 }
 
 .saved-address span {
   color: var(--color-text);
+  font-family: var(--font-display);
   font-size: 13px;
-  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .saved-address small {
   color: var(--color-text-muted);
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.packeta-picker {
+  display: grid;
+  gap: 10px;
+}
+
+.packeta-picker__btn {
+  width: 100%;
+}
+
+.packeta-picker__point {
+  display: grid;
+  gap: 4px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-md);
+  background: var(--color-lime);
+  padding: 12px;
+  box-shadow: var(--shadow-card-sm);
+}
+
+.packeta-picker__point strong {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.packeta-picker__point small {
+  color: var(--color-ink);
+  font-size: 11px;
   font-weight: 600;
 }
 
 .checkout-total {
-  box-shadow: none;
+  background: var(--color-bg-input);
 }
 
 .checkout-total div {
@@ -898,6 +1088,7 @@ const submit = async () => {
   justify-content: space-between;
   color: var(--color-text-muted);
   font-size: 14px;
+  font-weight: 600;
 }
 
 .checkout-total strong {
@@ -905,15 +1096,22 @@ const submit = async () => {
 }
 
 .checkout-total__final {
-  border-top: 1px solid var(--color-border);
+  border-top: 2px solid var(--color-ink);
   padding-top: 12px;
   color: var(--color-text) !important;
-  font-weight: 800;
+}
+
+.checkout-total__final span,
+.checkout-total__final strong {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .checkout-total__final strong {
   color: var(--color-accent);
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .checkout-page__empty-btn {

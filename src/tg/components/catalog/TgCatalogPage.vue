@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { normalizeCategorySlug } from '~/composables/useTgCatalog'
+
 const props = withDefaults(defineProps<{
   category?: string | null
 }>(), {
   category: null
 })
 
-const categorySlug = computed(() => props.category || null)
+const routeCategorySlug = computed(() => normalizeCategorySlug(props.category))
+const selectedCategorySlug = ref<string | null>(routeCategorySlug.value)
+const categorySlug = computed(() => selectedCategorySlug.value)
 const { t } = useTgI18n()
 const catalog = useTgCatalog(categorySlug)
 const {
@@ -34,6 +38,10 @@ onMounted(() => {
   void refreshCatalog()
 })
 
+watch(routeCategorySlug, (value) => {
+  selectedCategorySlug.value = value
+})
+
 watch(categorySlug, async () => {
   if (initialLoading.value) return
   initialLoading.value = true
@@ -46,11 +54,18 @@ watch(categorySlug, async () => {
 
 const title = computed(() => activeCategory.value?.name || t('catalog'))
 const count = computed(() => Number(meta.value?.total || products.value.length || 0))
+
+const selectCategory = (slug: string | null) => {
+  selectedCategorySlug.value = normalizeCategorySlug(slug)
+}
 </script>
 
 <template>
   <TgLayout :title="title" :show-lang="true">
-    <TgCategoryBar :categories="categories" :active-category="categorySlug" />
+    <TgCategoryBar
+      :categories="categories"
+      @select="selectCategory"
+    />
 
     <section class="tg-page catalog-page">
       <div class="catalog-page__head">
@@ -72,7 +87,7 @@ const count = computed(() => Number(meta.value?.total || products.value.length |
 
       <div v-else class="tg-empty">
         <div>
-          <div class="tg-empty__icon">□</div>
+          <div class="tg-empty__icon"><TgIcon name="search" :size="32" :stroke="2.2" /></div>
           <p class="tg-empty__title">{{ t('empty_catalog') }}</p>
         </div>
       </div>

@@ -1,18 +1,42 @@
-.adulto-guide-modal {
-  :deep(.modal-inner) {
-    padding: 24px;
-
-    @include desktop {
-      padding: 32px;
-    }
-  }
-}
-
 .adulto-guide {
   display: grid;
   gap: 20px;
   width: min(100%, 820px);
   color: #203019;
+}
+
+.adulto-guide--page {
+  width: 100%;
+}
+
+.adulto-guide__tabs {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid rgba(32, 48, 25, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 253, 249, 0.86);
+}
+
+.adulto-guide__tab {
+  flex: 1 1 0;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #41513d;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+
+  &.is-active {
+    background: #12382f;
+    color: #fff8ef;
+    box-shadow: 0 8px 18px rgba(18, 56, 47, 0.16);
+  }
 }
 
 .adulto-guide__intro,
@@ -57,13 +81,32 @@
   }
 }
 
+.adulto-guide--short {
+  gap: 14px;
+
+  .adulto-guide__intro,
+  .adulto-guide__section {
+    padding: 18px;
+  }
+
+  .adulto-guide__section {
+    h2 {
+      font-size: 22px;
+    }
+  }
+
+  .adulto-guide__section-head {
+    margin-bottom: 12px;
+  }
+}
+
 .adulto-guide__section--accent {
   background: linear-gradient(145deg, rgba(26, 77, 65, 0.12), rgba(242, 141, 26, 0.08));
 }
 
 .adulto-guide__section-head {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 14px;
   margin-bottom: 18px;
 
@@ -83,10 +126,15 @@
 }
 
 .adulto-guide__lead,
-.adulto-guide__note {
+.adulto-guide__note,
+.adulto-guide__text {
   margin: 14px 0 0;
   line-height: 1.75;
   color: #556252;
+}
+
+.adulto-guide__text {
+  margin-top: 0;
 }
 
 .adulto-guide__note {
@@ -132,11 +180,17 @@
 }
 
 .adulto-guide__steps--compact {
-  margin-top: 12px;
+  margin-top: 0;
 }
 
 .adulto-guide__bullets {
   list-style: disc;
+}
+
+.adulto-guide__summary-body {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
 }
 
 .adulto-guide__tip-list {
@@ -154,17 +208,47 @@
   }
 }
 
-.adulto-guide a {
-  color: #175648;
+.adulto-guide :deep(a) {
+  color: #0f5a48;
   font-weight: 700;
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(15, 90, 72, 0.42);
   text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.adulto-guide :deep(a:hover),
+.adulto-guide :deep(a:focus-visible) {
+  color: #0a4035;
+  text-decoration-color: currentColor;
+}
+
+.adulto-guide :deep(a:focus-visible) {
+  outline: 2px solid rgba(15, 90, 72, 0.24);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.adulto-guide :deep(strong) {
+  color: #000;
+  font-weight: 500;
 }
 
 @include mobile {
-  .adulto-guide-modal {
-    :deep(.modal-inner) {
-      padding: 20px 16px;
-    }
+  .adulto-guide {
+    gap: 16px;
+  }
+
+  .adulto-guide__tabs {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .adulto-guide__tab {
+    min-height: 40px;
+    padding: 9px 10px;
   }
 
   .adulto-guide__intro,

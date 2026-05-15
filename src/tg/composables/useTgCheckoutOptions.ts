@@ -110,13 +110,13 @@ export const useTgCheckoutOptions = () => {
     },
     {
       key: 'novaposhta_warehouse',
-      title: 'Нова пошта',
+      title: t('delivery_novaposhta_title'),
       label: t('warehouse'),
       price: priceFromSettings('novaposhta_warehouse')
     },
     {
       key: 'novaposhta_address',
-      title: 'Нова пошта',
+      title: t('delivery_novaposhta_title'),
       label: t('address'),
       price: priceFromSettings('novaposhta_address')
     },
@@ -220,17 +220,17 @@ export const useTgCheckoutOptions = () => {
   const allPaymentMethods = computed<TgPaymentMethod[]>(() => [
     {
       key: 'zasilkovna_cod',
-      title: 'Dobírka Zasilkovna',
+      title: t('payment_zasilkovna_cod'),
       payments: ['packeta_warehouse', 'packeta_address']
     },
     {
       key: 'novaposhta_cod',
-      title: 'Післяплата Нова пошта',
+      title: t('payment_novaposhta_cod'),
       payments: ['novaposhta_warehouse', 'novaposhta_address']
     },
     {
       key: 'default_cash',
-      title: 'Cash',
+      title: t('payment_default_cash'),
       payments: ['default_pickup']
     },
     {
@@ -245,17 +245,17 @@ export const useTgCheckoutOptions = () => {
     },
     {
       key: 'card_online',
-      title: 'Card online',
+      title: t('payment_card_online'),
       payments: ['packeta_warehouse', 'packeta_address', 'novaposhta_warehouse', 'novaposhta_address', 'default_address', 'default_pickup']
     },
     {
       key: 'bank_transfer',
-      title: 'Bank transfer',
+      title: t('payment_bank_transfer'),
       payments: ['packeta_warehouse', 'packeta_address', 'default_address', 'default_pickup']
     },
     {
       key: 'messenger_cod',
-      title: 'Messenger COD',
+      title: t('payment_messenger_cod'),
       payments: ['messenger_address']
     }
   ])

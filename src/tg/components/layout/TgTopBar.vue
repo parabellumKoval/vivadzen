@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
       aria-label="Back"
       @click="goBack"
     >
-      ←
+      <TgIcon name="arrow-left" :size="22" :stroke="2.4" />
     </button>
     <div v-else class="tg-topbar__spacer" />
 
@@ -87,23 +87,23 @@ onBeforeUnmount(() => {
 .tg-topbar {
   position: fixed;
   z-index: 100;
-  top: 0;
+  top: var(--tg-supheader-height);
   right: 0;
   left: 0;
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  grid-template-columns: 52px minmax(0, 1fr) 52px;
   align-items: center;
   width: 100%;
   max-width: 480px;
-  height: 56px;
+  height: var(--tg-topbar-height);
   margin: 0 auto;
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-white);
-  padding: 0 4px;
+  border-bottom: 2px solid var(--color-ink);
+  background: var(--color-bg);
+  padding: 0 6px;
 }
 
 .tg-topbar--transparent {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 245, 225, 0.92);
   backdrop-filter: blur(12px);
 }
 
@@ -114,11 +114,12 @@ onBeforeUnmount(() => {
 }
 
 .tg-topbar__btn {
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--color-text);
-  font-size: 22px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-white);
+  color: var(--color-ink);
   line-height: 1;
 }
 
@@ -127,7 +128,9 @@ onBeforeUnmount(() => {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 17px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 </style>

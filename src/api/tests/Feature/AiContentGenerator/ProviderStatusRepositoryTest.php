@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\AiContentGenerator;
 
+use Backpack\Settings\Events\SettingsGroupChanged;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use ParabellumKoval\AiContentGenerator\Models\AiProviderStatus;
@@ -62,5 +63,29 @@ class ProviderStatusRepositoryTest extends TestCase
         $this->assertSame('timeout', $status->error_code);
         $this->assertNotNull($status->blocked_until);
         $this->assertTrue($status->blocked_until->greaterThan(now()));
+    }
+
+    public function test_ai_content_settings_change_clears_provider_status(): void
+    {
+        AiProviderStatus::query()->create([
+            'driver' => 'openai',
+            'status' => AiProviderStatus::STATUS_INVALID_KEY,
+            'message' => 'Invalid API key',
+            'error_code' => 'invalid_key',
+        ]);
+
+        event(new SettingsGroupChanged('ai-content', [], [], [
+            'ai_content_generator.providers.openai.api_key' => [
+                'old' => 'old-key',
+                'new' => 'new-key',
+            ],
+        ]));
+
+        $status = AiProviderStatus::query()->where('driver', 'openai')->first();
+
+        $this->assertNotNull($status);
+        $this->assertSame(AiProviderStatus::STATUS_AVAILABLE, $status->status);
+        $this->assertNull($status->error_code);
+        $this->assertNull($status->message);
     }
 }

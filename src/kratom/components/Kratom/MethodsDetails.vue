@@ -38,6 +38,60 @@ const deliveryDescription = (key: string) => {
   return description
 }
 
+const normalizeMeta = (method: Record<string, any>) => {
+  if (method?.isMetaPriceObject && method?.meta?.amount !== undefined) {
+    return {
+      kind: 'price' as const,
+      amount: Number(method.meta.amount),
+      currency: String(method.meta.currency || ''),
+    }
+  }
+
+  if (method?.meta) {
+    return {
+      kind: 'text' as const,
+      text: String(method.meta),
+    }
+  }
+
+  return null
+}
+
+const pageIntro = computed(() => {
+  if (props.section !== 'delivery') {
+    return null
+  }
+
+  const title = content?.page_intro_title
+  const text = content?.page_intro_text
+
+  if (!title && !text) {
+    return null
+  }
+
+  return {
+    title: title || '',
+    text: text || '',
+  }
+})
+
+const messengerSections = computed(() => {
+  if (props.section !== 'delivery') {
+    return []
+  }
+
+  return [
+    {
+      title: content?.messenger_age_title || '',
+      text: content?.messenger_age_text || '',
+    },
+    {
+      title: content?.messenger_delivery_title || '',
+      text: content?.messenger_delivery_text || '',
+    }
+  ].filter((section) => section.title || section.text)
+})
+
 const items = computed(() => {
   if (props.section === 'delivery') {
     return deliveryMethods.value.map((method) => ({
@@ -45,6 +99,8 @@ const items = computed(() => {
       title: method.title || method.label || t(`delivery.${method.key}`),
       image: method.image || method.logo,
       description: deliveryDescription(method.key),
+      meta: normalizeMeta(method),
+      sections: method.key === 'messenger_address' ? messengerSections.value : [],
     }))
   }
 
@@ -53,6 +109,8 @@ const items = computed(() => {
     title: method.title || method.label || t(`payments.${method.key}.title`),
     image: method.image || method.logo,
     description: content?.[method.key] || '',
+    meta: normalizeMeta(method),
+    sections: [],
   }))
 })
 
@@ -88,6 +146,11 @@ const note = computed(() => {
       <p class="kratom-methods-details__subtitle">{{ subtitle }}</p>
     </div>
 
+    <div v-if="pageIntro" class="kratom-methods-details__intro">
+      <h3 v-if="pageIntro.title" class="kratom-methods-details__intro-title">{{ pageIntro.title }}</h3>
+      <p v-if="pageIntro.text" class="kratom-methods-details__intro-text">{{ pageIntro.text }}</p>
+    </div>
+
     <div class="kratom-methods-details__list">
       <article
         v-for="item in items"
@@ -102,13 +165,36 @@ const note = computed(() => {
               class="kratom-methods-details__logo"
             >
           </div>
-          <h3 class="kratom-methods-details__card-title">{{ item.title }}</h3>
+          <div class="kratom-methods-details__card-copy">
+            <h3 class="kratom-methods-details__card-title">{{ item.title }}</h3>
+            <div v-if="item.meta" class="kratom-methods-details__meta">
+              <simple-price
+                v-if="item.meta.kind === 'price'"
+                :value="item.meta.amount"
+                :currency-code="item.meta.currency"
+                class="kratom-methods-details__meta-price"
+              />
+              <template v-else>
+                {{ item.meta.text }}
+              </template>
+            </div>
+          </div>
         </div>
         <p
           v-if="item.description"
           class="kratom-methods-details__description"
           v-html="item.description"
         />
+        <div v-if="item.sections?.length" class="kratom-methods-details__sections">
+          <div
+            v-for="(section, index) in item.sections"
+            :key="`${item.key}-${index}`"
+            class="kratom-methods-details__section"
+          >
+            <div v-if="section.title" class="kratom-methods-details__section-title">{{ section.title }}</div>
+            <p v-if="section.text" class="kratom-methods-details__section-text">{{ section.text }}</p>
+          </div>
+        </div>
       </article>
     </div>
 
@@ -158,6 +244,29 @@ const note = computed(() => {
   gap: 16px;
 }
 
+.kratom-methods-details__intro {
+  display: grid;
+  gap: 10px;
+  padding: 24px 26px;
+  border-radius: 24px;
+  border: 1px solid rgba(74, 91, 68, 0.1);
+  background: rgba(255, 252, 247, 0.96);
+}
+
+.kratom-methods-details__intro-title {
+  margin: 0;
+  color: #21321f;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.kratom-methods-details__intro-text {
+  margin: 0;
+  color: #4d5848;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
 .kratom-methods-details__card {
   display: grid;
   gap: 16px;
@@ -173,6 +282,11 @@ const note = computed(() => {
   display: flex;
   align-items: center;
   gap: 18px;
+}
+
+.kratom-methods-details__card-copy {
+  display: grid;
+  gap: 6px;
 }
 
 .kratom-methods-details__logo-wrap {
@@ -201,6 +315,18 @@ const note = computed(() => {
   line-height: 1.25;
 }
 
+.kratom-methods-details__meta {
+  color: #7e8679;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+:deep(.kratom-methods-details__meta-price .value) {
+  font-size: 13px;
+  font-weight: 700;
+  color: #70796a;
+}
+
 .kratom-methods-details__description {
   margin: 0;
   color: #465142;
@@ -215,6 +341,24 @@ const note = computed(() => {
   :deep(li) {
     margin-top: 8px;
   }
+}
+
+.kratom-methods-details__sections {
+  display: grid;
+  gap: 14px;
+}
+
+.kratom-methods-details__section-title {
+  font-weight: 700;
+  color: #21321f;
+  margin-bottom: 6px;
+}
+
+.kratom-methods-details__section-text {
+  margin: 0;
+  color: #465142;
+  font-size: 15px;
+  line-height: 1.75;
 }
 
 .kratom-methods-details__note {

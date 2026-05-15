@@ -146,6 +146,42 @@ class MessengerDeliveryReportControllerTest extends TestCase
         $this->assertSame(1, DeliveryReport::query()->count());
     }
 
+    public function test_webhook_accepts_documented_json_array_payload_and_trims_configured_key(): void
+    {
+        \Settings::set('shipping.messenger.reporting.api_key', '  test-messenger-key  ', ['cast' => 'string']);
+
+        $response = $this->withHeaders([
+            'X-API-KEY' => 'test-messenger-key',
+        ])->postJson('/api/delivery-reports/messenger', [
+            $this->payload('202600008'),
+        ]);
+
+        $response->assertOk()
+            ->assertJsonPath('status', 'ok')
+            ->assertJsonPath('accepted', 1);
+
+        $this->assertDatabaseHas('ak_delivery_reports', [
+            'provider' => 'messenger',
+            'order_number' => '202600008',
+        ]);
+    }
+
+    public function test_webhook_accepts_env_config_key_when_settings_key_is_stale(): void
+    {
+        \Settings::set('shipping.messenger.reporting.api_key', 'stale-db-key', ['cast' => 'string']);
+        config()->set('services.messenger.delivery_reporting_api_key', 'env-config-key');
+
+        $response = $this->withHeaders([
+            'X-API-KEY' => 'env-config-key',
+        ])->postJson('/api/delivery-reports/messenger', [
+            $this->payload('202600009'),
+        ]);
+
+        $response->assertOk()
+            ->assertJsonPath('status', 'ok')
+            ->assertJsonPath('accepted', 1);
+    }
+
     protected function createOrder(string $code): Order
     {
         return Order::withoutEvents(function () use ($code) {
@@ -186,8 +222,8 @@ class MessengerDeliveryReportControllerTest extends TestCase
             'handover_place' => 'Praha, Libinska 1',
             'handover_datetime' => '2026-03-18 15:45:00',
             'sender_fullname' => 'Tomas Kral',
-            'customer_signature' => 'data:image/png;base64,' . base64_encode('customer-signature'),
-            'seller_signature' => 'data:image/png;base64,' . base64_encode('seller-signature'),
+            'customer_signature' => 'data:image/png;base64,'.base64_encode('customer-signature'),
+            'seller_signature' => 'data:image/png;base64,'.base64_encode('seller-signature'),
         ];
     }
 

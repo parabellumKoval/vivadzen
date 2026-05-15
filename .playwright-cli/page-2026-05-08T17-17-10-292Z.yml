@@ -1,0 +1,78 @@
+- generic [ref=e3]:
+  - generic [ref=e7]:
+    - img [ref=e8]
+    - img [ref=e9]
+    - img [ref=e10]
+    - img [ref=e11]
+  - banner [ref=e12]:
+    - generic [ref=e14]: Vivadzen
+    - button "Změnit jazyk" [ref=e15] [cursor=pointer]:
+      - img [ref=e16]
+      - text: CS
+  - main [ref=e20]:
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - img [ref=e24]
+        - text: Nový drop · 24/7
+      - heading "Hi-vibe street shop" [level=1] [ref=e26]:
+        - text: Hi-vibe
+        - text: street shop
+      - paragraph [ref=e27]: CBD, houby a entheogeny na jednom místě pro lepší náladu.
+      - generic [ref=e28]:
+        - link "Otevřít katalog" [ref=e29] [cursor=pointer]:
+          - /url: /cz/cs/catalog
+          - img [ref=e30]
+          - text: Otevřít katalog
+        - link "Co je v trendu" [ref=e35] [cursor=pointer]:
+          - /url: /cz/cs/catalog
+          - img [ref=e36]
+          - text: Co je v trendu
+      - generic [ref=e38]:
+        - generic [ref=e39]: ★ Čerstvé
+        - generic [ref=e40]: ★ Rychle
+        - generic [ref=e41]: ★ Bezpečně
+        - generic [ref=e42]: ★ Čerstvé
+        - generic [ref=e43]: ★ Rychle
+        - generic [ref=e44]: ★ Bezpečně
+    - generic [ref=e45]:
+      - article [ref=e46]
+      - article [ref=e79]
+      - article [ref=e112]
+    - generic [ref=e145]:
+      - heading "Proč my" [level=2] [ref=e146]
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - img [ref=e150]
+          - generic [ref=e155]:
+            - strong [ref=e156]: Diskrétní doprava
+            - paragraph [ref=e157]: Všechny objednávky balíme neutrálně a bez stop.
+        - generic [ref=e158]:
+          - img [ref=e160]
+          - generic [ref=e163]:
+            - strong [ref=e164]: Laboratorně testováno
+            - paragraph [ref=e165]: Pouze ověřené šarže. Certifikáty na vyžádání.
+        - generic [ref=e166]:
+          - img [ref=e168]
+          - generic [ref=e170]:
+            - strong [ref=e171]: Čerstvé novinky
+            - paragraph [ref=e172]: Novinky každý týden. Nepropásněte drop.
+  - navigation "Main navigation" [ref=e173]:
+    - link "Domů" [ref=e174] [cursor=pointer]:
+      - /url: /cz/cs
+      - img [ref=e176]
+      - generic [ref=e179]: Domů
+    - link "Katalog" [ref=e180] [cursor=pointer]:
+      - /url: /cz/cs/catalog
+      - img [ref=e182]
+      - generic [ref=e187]: Katalog
+    - button "Košík" [ref=e188] [cursor=pointer]:
+      - img [ref=e190]
+      - generic [ref=e193]: Košík
+    - link "Objednávky" [ref=e194] [cursor=pointer]:
+      - /url: /cz/cs/orders
+      - img [ref=e196]
+      - generic [ref=e199]: Objednávky
+    - link "Účet" [ref=e200] [cursor=pointer]:
+      - /url: /cz/cs/account
+      - img [ref=e202]
+      - generic [ref=e205]: Účet

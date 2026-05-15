@@ -3,6 +3,7 @@ const { t, locale } = useI18n()
 definePageMeta({
   pageBackground: '#071d19',
   pageTheme: 'dark',
+  footerTopSpacing: false,
 })
 
 const text = await queryContent('about').locale(locale.value).findOne()
@@ -80,6 +81,8 @@ useSeo().setPageSeo('about', {
     </section>
 
     <div class="container kratom-page-container kratom-about-page__content">
+      <KratomRegionSwitcher class="kratom-about-region-switcher" />
+
       <section v-if="text?.quote" class="kratom-about-quote">
         <p class="kratom-about-quote__eyebrow">{{ text.quote.title }}</p>
         <blockquote>{{ text.quote.text }}</blockquote>
@@ -117,6 +120,10 @@ useSeo().setPageSeo('about', {
 .kratom-about-page__content {
   padding-top: 32px;
   padding-bottom: 48px;
+}
+
+.kratom-about-region-switcher {
+  margin-bottom: 32px;
 }
 
 .kratom-about-hero {
@@ -197,7 +204,6 @@ useSeo().setPageSeo('about', {
 
 .kratom-about-quote {
   margin: 0 auto 32px;
-  max-width: 960px;
   padding: 32px;
   border: 1px solid rgba(255, 247, 236, 0.1);
   border-radius: 32px;

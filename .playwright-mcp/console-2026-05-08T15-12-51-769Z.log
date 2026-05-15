@@ -1,0 +1,100 @@
+[   13083ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ http://localhost:3001/cz/ru:0
+[   13141ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ http://localhost:3001/cz/ru:0
+[   13225ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ http://localhost:3001/favicon.ico:0
+[   14229ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ http://localhost:3001/cz/ru:0
+[   15232ms] [ERROR] Failed to load resource: the server responded with a status of 503 (Service Unavailable) @ http://localhost:3001/cz/ru:0
+[   16545ms] [LOG] [Telegram.WebView] > postEvent web_app_set_header_color {color_key: bg_color} @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   16547ms] [LOG] [Telegram.WebView] > postEvent web_app_set_bottom_bar_color {color: #ffffff} @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   16547ms] [LOG] [Telegram.WebView] > postEvent web_app_request_theme  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   16547ms] [LOG] [Telegram.WebView] > postEvent web_app_request_viewport  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   16547ms] [LOG] [Telegram.WebView] > postEvent web_app_request_safe_area  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   16547ms] [LOG] [Telegram.WebView] > postEvent web_app_request_content_safe_area  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   16646ms] [LOG] [Telegram.WebView] > postEvent web_app_expand  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   16646ms] [LOG] [Telegram.WebView] > postEvent web_app_ready  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   16646ms] [WARNING] [Telegram.WebApp] Header color is not supported in version 6.0 @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:687
+[   16646ms] [WARNING] [Telegram.WebApp] Background color is not supported in version 6.0 @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:737
+[   16655ms] [INFO] <Suspense> is an experimental feature and its API will likely change. @ http://localhost:3001/_nuxt/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=abfb2e8d:7234
+[   16669ms] [WARNING] [Telegram.WebApp] BackButton is not supported in version 6.0 @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:898
+[   20499ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3001/_nuxt/@vite/client:963
+[   20500ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   21504ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   22507ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   23511ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   24514ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   25517ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   26520ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   27523ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   28527ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   29533ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   30539ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   31547ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   32558ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   33572ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   34587ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   35612ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   36631ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   37669ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   38742ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   39793ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   40944ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   42012ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   43206ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   44332ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   45748ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   46975ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   48643ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   50240ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   52975ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   55635ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   60506ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   64871ms] [LOG] [Telegram.WebView] > postEvent web_app_set_header_color {color_key: bg_color} @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   64871ms] [LOG] [Telegram.WebView] > postEvent web_app_set_bottom_bar_color {color: #ffffff} @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   64871ms] [LOG] [Telegram.WebView] > postEvent web_app_request_theme  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   64871ms] [LOG] [Telegram.WebView] > postEvent web_app_request_viewport  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   64871ms] [LOG] [Telegram.WebView] > postEvent web_app_request_safe_area  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   64871ms] [LOG] [Telegram.WebView] > postEvent web_app_request_content_safe_area  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   65066ms] [LOG] [Telegram.WebView] > postEvent web_app_expand  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   65066ms] [LOG] [Telegram.WebView] > postEvent web_app_ready  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[   65066ms] [WARNING] [Telegram.WebApp] Header color is not supported in version 6.0 @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:687
+[   65066ms] [WARNING] [Telegram.WebApp] Background color is not supported in version 6.0 @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:737
+[   65071ms] [INFO] <Suspense> is an experimental feature and its API will likely change. @ http://localhost:3001/_nuxt/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=abfb2e8d:7234
+[   65076ms] [WARNING] [Telegram.WebApp] BackButton is not supported in version 6.0 @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:898
+[   79042ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3001/_nuxt/@vite/client:963
+[   79049ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   80089ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   81111ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   82126ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   83162ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   84220ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   85300ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   86339ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   87420ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   88524ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   89660ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   90712ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   91865ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   93170ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   94451ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   95693ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   96788ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   98268ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[   99737ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[  100973ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[  102203ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[  103558ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[  105747ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[  107568ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[  109061ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[  111368ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_nuxt/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/_nuxt/@vite/client:1034
+[  114922ms] [LOG] [Telegram.WebView] > postEvent web_app_set_header_color {color_key: bg_color} @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[  114922ms] [LOG] [Telegram.WebView] > postEvent web_app_set_bottom_bar_color {color: #ffffff} @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[  114922ms] [LOG] [Telegram.WebView] > postEvent web_app_request_theme  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[  114922ms] [LOG] [Telegram.WebView] > postEvent web_app_request_viewport  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[  114922ms] [LOG] [Telegram.WebView] > postEvent web_app_request_safe_area  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[  114922ms] [LOG] [Telegram.WebView] > postEvent web_app_request_content_safe_area  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[  115055ms] [LOG] [Telegram.WebView] > postEvent web_app_expand  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[  115055ms] [LOG] [Telegram.WebView] > postEvent web_app_ready  @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[  115055ms] [WARNING] [Telegram.WebApp] Header color is not supported in version 6.0 @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:687
+[  115055ms] [WARNING] [Telegram.WebApp] Background color is not supported in version 6.0 @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:737
+[  115060ms] [INFO] <Suspense> is an experimental feature and its API will likely change. @ http://localhost:3001/_nuxt/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=abfb2e8d:7234
+[  115068ms] [WARNING] [Telegram.WebApp] BackButton is not supported in version 6.0 @ http://localhost:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:898

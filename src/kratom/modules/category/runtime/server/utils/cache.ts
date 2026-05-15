@@ -3,7 +3,7 @@ import { ofetch } from 'ofetch'
 import type { FetchError } from 'ofetch'
 import { joinURL } from 'ufo'
 import { getHeader, type H3Event } from 'h3'
-import { useRuntimeConfig, useStorage } from '#imports'
+import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 
 type MaybeString = string | null | undefined
 

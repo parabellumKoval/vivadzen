@@ -14,6 +14,7 @@ withDefaults(defineProps<{
 
 <template>
   <div class="tg-layout">
+    <TgSupheader />
     <TgTopBar
       :title="title"
       :show-back="showBack"
@@ -37,7 +38,7 @@ withDefaults(defineProps<{
 
 .tg-main {
   min-height: var(--tg-viewport-height, 100dvh);
-  padding-top: 56px;
-  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  padding-top: var(--tg-chrome-height);
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
 }
 </style>

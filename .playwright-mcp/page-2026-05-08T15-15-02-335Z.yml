@@ -1,0 +1,37 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]: Каталог
+    - button "Сменить язык" [ref=e7] [cursor=pointer]:
+      - img [ref=e8]
+      - text: RU
+  - main [ref=e12]:
+    - generic [ref=e13]:
+      - link "Все" [ref=e14] [cursor=pointer]:
+        - /url: /cz/ru/catalog
+      - link "Мухоморы" [ref=e15] [cursor=pointer]:
+        - /url: /cz/ru/catalog/muhomory
+      - link "Канабис" [ref=e16] [cursor=pointer]:
+        - /url: /cz/ru/catalog/kanabis
+    - generic [ref=e18]:
+      - heading "Каталог" [level=1] [ref=e19]
+      - paragraph [ref=e20]: 0 товаров
+  - navigation "Main navigation" [ref=e50]:
+    - link "Главная" [ref=e51] [cursor=pointer]:
+      - /url: /cz/ru
+      - img [ref=e53]
+      - generic [ref=e56]: Главная
+    - link "Каталог" [ref=e57] [cursor=pointer]:
+      - /url: /cz/ru/catalog
+      - img [ref=e59]
+      - generic [ref=e64]: Каталог
+    - button "Корзина" [ref=e65] [cursor=pointer]:
+      - img [ref=e67]
+      - generic [ref=e70]: Корзина
+    - link "Заказы" [ref=e71] [cursor=pointer]:
+      - /url: /cz/ru/orders
+      - img [ref=e73]
+      - generic [ref=e76]: Заказы
+    - link "Аккаунт" [ref=e77] [cursor=pointer]:
+      - /url: /cz/ru/account
+      - img [ref=e79]
+      - generic [ref=e82]: Аккаунт

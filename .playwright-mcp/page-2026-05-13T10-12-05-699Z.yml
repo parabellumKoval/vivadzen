@@ -1,0 +1,326 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "logo_alt" [ref=e6] [cursor=pointer]:
+        - /url: /ru
+        - img "logo_alt" [ref=e7]
+      - navigation "Навигация по странице" [ref=e8]:
+        - link "Каталог" [ref=e10] [cursor=pointer]:
+          - /url: /ru/catalog
+          - generic [ref=e11]: Каталог
+        - link "Доставка" [ref=e14] [cursor=pointer]:
+          - /url: /ru/delivery
+          - generic [ref=e15]: Доставка
+        - link "Оплата" [ref=e17] [cursor=pointer]:
+          - /url: /ru/payment
+          - generic [ref=e18]: Оплата
+        - link "Проверка возраста" [ref=e20] [cursor=pointer]:
+          - /url: /ru/age-verification
+          - generic [ref=e21]: Проверка возраста
+        - link "Отзывы" [ref=e23] [cursor=pointer]:
+          - /url: /ru/reviews
+          - generic [ref=e24]: Отзывы
+        - link "О Нас" [ref=e26] [cursor=pointer]:
+          - /url: /ru/about
+          - generic [ref=e27]: О Нас
+        - link "Контакты" [ref=e29] [cursor=pointer]:
+          - /url: /ru/contacts
+          - generic [ref=e30]: Контакты
+        - link "Наш сайт с энтеогенами" [ref=e31] [cursor=pointer]:
+          - /url: https://shop.vivadzen.com/cz/ru
+          - generic [ref=e33]: Наш сайт с энтеогенами
+      - generic "Выбор языка" [ref=e34]:
+        - button "Рус" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: Рус
+        - link "button.login" [ref=e38] [cursor=pointer]:
+          - /url: /ru/auth/login
+        - button "Корзина" [ref=e40] [cursor=pointer]:
+          - generic [ref=e42]: "0"
+  - main [ref=e43]:
+    - generic [ref=e45]:
+      - list [ref=e47]:
+        - listitem [ref=e48]:
+          - text: ">"
+          - link "Главная" [ref=e49] [cursor=pointer]:
+            - /url: /ru
+        - listitem:
+          - generic [ref=e50]: Проверка возраста
+      - generic [ref=e51]:
+        - paragraph [ref=e52]: Только 18+
+        - heading "Проверка возраста" [level=1] [ref=e53]
+        - paragraph [ref=e54]: Этот товар можно купить только после подтверждения возраста через плагин ADULTO во время оформления заказа.
+      - generic [ref=e56]:
+        - tablist [ref=e57]:
+          - tab "Кратко" [ref=e58] [cursor=pointer]
+          - tab "Полная" [selected] [ref=e59] [cursor=pointer]
+        - generic [ref=e60]:
+          - paragraph [ref=e61]: Согласно действующему законодательству Чехии vivadzen s.r.o. как продавец психомодулирующих веществ обязан проверять возраст каждого покупателя.
+          - paragraph [ref=e62]:
+            - text: Процесс проходит через государственный сервис
+            - strong [ref=e63]: Mobilní klíč eGovernmentu
+            - text: или другие средства
+            - strong [ref=e64]: Identity občana
+            - text: .
+          - generic [ref=e65]: ВАШИ ДАННЫЕ В БЕЗОПАСНОСТИ. МЫ ПОЛУЧАЕМ ТОЛЬКО ИНФОРМАЦИЮ О ТОМ, ЧТО ВАМ ЕСТЬ 18+ ЛЕТ. Никакие персональные данные к нам не передаются и не хранятся.
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - generic [ref=e68]: "1"
+            - heading "Установка приложения Mobilní klíč eGovernmentu" [level=2] [ref=e69]:
+              - text: Установка приложения
+              - strong [ref=e70]: Mobilní klíč eGovernmentu
+          - list [ref=e71]:
+            - listitem [ref=e72]:
+              - strong [ref=e73]: Скачайте приложение.
+              - text: Установите приложение
+              - strong [ref=e74]: Mobilní klíč eGovernmentu
+              - text: из
+              - link "App Store" [ref=e75] [cursor=pointer]:
+                - /url: https://apps.apple.com/cz/app/mobiln%C3%AD-kl%C3%AD%C4%8D-egovernmentu/id1466762017
+              - text: или
+              - link "Google Play" [ref=e76] [cursor=pointer]:
+                - /url: https://play.google.com/store/apps/details?id=cz.mojedatovaschranka.mobilniklic
+              - text: . Оно бесплатно доступно для Android и iOS и официально выпускается государственными органами Чехии.
+            - listitem [ref=e77]:
+              - strong [ref=e78]: Откройте сайт Identity občana.
+              - text: На компьютере или другом устройстве перейдите на
+              - link "www.identita.gov.cz" [ref=e79] [cursor=pointer]:
+                - /url: https://www.identita.gov.cz
+                - strong [ref=e80]: www.identita.gov.cz
+              - text: . Позже в разделе способов входа на портале
+              - strong [ref=e81]: Identity občana
+              - text: вы добавите
+              - strong [ref=e82]: Mobilní klíč eGovernmentu
+              - text: .
+          - img "Установка приложения Mobilní klíč eGovernmentu 1" [ref=e84]
+        - generic [ref=e85]:
+          - generic [ref=e86]:
+            - generic [ref=e87]: "2"
+            - heading "Вход в Identity občana" [level=2] [ref=e88]:
+              - text: Вход в
+              - strong [ref=e89]: Identity občana
+          - list [ref=e90]:
+            - listitem [ref=e91]:
+              - text: На сайте
+              - link "identita.gov.cz" [ref=e92] [cursor=pointer]:
+                - /url: https://www.identita.gov.cz
+                - strong [ref=e93]: identita.gov.cz
+              - text: выберите
+              - strong [ref=e94]: Войти в Identity občana
+              - text: .
+            - listitem [ref=e95]:
+              - text: В качестве рекомендуемого варианта выберите
+              - strong [ref=e96]: Bankovní identitu
+              - text: ", например свой банк, где у вас уже есть интернет-банкинг."
+            - listitem [ref=e97]: Это самый быстрый и удобный вариант.
+            - listitem [ref=e98]: Авторизуйтесь так же, как входите в интернет-банкинг.
+            - listitem [ref=e99]:
+              - text: После успешного входа вы попадёте в управление своим профилем на портале
+              - strong [ref=e100]: Identity občana
+              - text: .
+          - img "Вход в Identity občana 1" [ref=e102]
+          - paragraph [ref=e103]:
+            - text: Авторизация проходит через
+            - strong [ref=e104]: Identity občana
+            - text: и сервис
+            - strong [ref=e105]: NIA
+            - text: .
+        - generic [ref=e106]:
+          - generic [ref=e107]:
+            - generic [ref=e108]: "3"
+            - heading "Связка приложения с вашим профилем" [level=2] [ref=e109]
+          - paragraph [ref=e110]:
+            - text: После входа вы увидите список способов авторизации. Здесь и нужно добавить
+            - strong [ref=e111]: Mobilní klíč eGovernmentu
+            - text: .
+          - list [ref=e112]:
+            - listitem [ref=e113]:
+              - text: На портале
+              - strong [ref=e114]: Identity občana
+              - text: перейдите в раздел
+              - strong [ref=e115]: Способы входа
+              - text: в левом меню.
+            - listitem [ref=e116]:
+              - text: В списке найдите
+              - strong [ref=e117]: Mobilní klíč eGovernmentu
+              - text: и нажмите значок плюс, чтобы добавить новый ключ.
+            - listitem [ref=e118]: На экране компьютера появится QR-код для активации приложения на телефоне.
+            - listitem [ref=e119]: QR-код действует ограниченное время, обычно около 5 минут. Если не успеете, вы всегда можете сгенерировать новый.
+          - generic [ref=e120]:
+            - img "Связка приложения с вашим профилем 1" [ref=e121]
+            - img "Связка приложения с вашим профилем 2" [ref=e122]
+          - paragraph [ref=e123]:
+            - text: QR-код используется только для привязки приложения к вашей
+            - strong [ref=e124]: Identity občana
+            - text: .
+        - generic [ref=e125]:
+          - generic [ref=e126]:
+            - generic [ref=e127]: "4"
+            - heading "Активация Mobilní klíč" [level=2] [ref=e128]:
+              - text: Активация
+              - strong [ref=e129]: Mobilní klíč
+          - list [ref=e130]:
+            - listitem [ref=e131]:
+              - text: Откройте приложение
+              - strong [ref=e132]: Mobilní klíč eGovernmentu
+              - text: на телефоне.
+            - listitem [ref=e133]:
+              - text: На стартовом экране выберите
+              - strong [ref=e134]: Активация ключа для Identity občana
+              - text: .
+            - listitem [ref=e135]:
+              - text: На следующем шаге нажмите
+              - strong [ref=e136]: Готово, считать код для подключения
+              - text: .
+            - listitem [ref=e137]: Наведите камеру телефона на QR-код, показанный на мониторе компьютера.
+            - listitem [ref=e138]:
+              - text: Телефон предложит настроить PIN или биометрический вход. После этого привязка приложения к вашей
+              - strong [ref=e139]: Identity občana
+              - text: будет завершена.
+          - generic [ref=e140]:
+            - img "Активация Mobilní klíč 1" [ref=e141]
+            - img "Активация Mobilní klíč 2" [ref=e142]
+          - generic [ref=e143]:
+            - paragraph [ref=e144]:
+              - text: В приложении выберите «
+              - strong [ref=e145]: Активация ключа для Identity občana
+              - text: », чтобы начать привязку к аккаунту
+              - strong [ref=e146]: Identity občana
+              - text: .
+            - paragraph [ref=e147]:
+              - text: Когда QR-код появится на компьютере, нажмите в приложении «
+              - strong [ref=e148]: Готово, считать код для подключения
+              - text: » и отсканируйте код.
+        - generic [ref=e149]:
+          - generic [ref=e150]:
+            - generic [ref=e151]: "5"
+            - heading "Проверка возраста при покупке" [level=2] [ref=e152]
+          - paragraph [ref=e153]:
+            - text: После первой настройки
+            - strong [ref=e154]: Mobilní klíč
+            - text: каждая следующая проверка возраста занимает всего несколько секунд.
+          - list [ref=e155]:
+            - listitem [ref=e156]: Добавьте нужные товары в корзину на нашем сайте и перейдите к оформлению заказа.
+            - listitem [ref=e157]:
+              - text: В корзине или во время оформления выберите проверку возраста через
+              - strong [ref=e158]: Mobilní klíč eGovernmentu
+              - text: .
+            - listitem [ref=e159]: На экране магазина появится QR-код для проверки возраста.
+            - listitem [ref=e160]:
+              - text: Откройте приложение
+              - strong [ref=e161]: Mobilní klíč eGovernmentu
+              - text: на телефоне, отсканируйте QR-код и подтвердите отправку информации о возрасте.
+            - listitem [ref=e162]: Приложение передаёт только факт, что вам больше 18 лет. Дата рождения, адрес и другие чувствительные данные не передаются.
+            - listitem [ref=e163]: После подтверждения вы вернётесь в корзину и сможете завершить заказ.
+        - generic [ref=e164]:
+          - heading "Важно" [level=2] [ref=e165]
+          - generic [ref=e166]:
+            - paragraph [ref=e167]:
+              - text: Весь процесс активации
+              - strong [ref=e168]: Mobilní klíč
+              - text: вы проходите только один раз.
+            - paragraph [ref=e169]: "При следующих заказах нужно лишь:"
+            - list [ref=e170]:
+              - listitem [ref=e171]:
+                - text: открыть приложение
+                - strong [ref=e172]: Mobilní klíč eGovernmentu
+                - text: ","
+              - listitem [ref=e173]: отсканировать QR-код в корзине,
+              - listitem [ref=e174]: подтвердить проверку возраста.
+            - paragraph [ref=e175]: Вся проверка занимает всего несколько секунд, после чего можно сразу завершить покупку.
+        - generic [ref=e176]:
+          - 'heading "Альтернатива: MojeID" [level=2] [ref=e177]':
+            - text: "Альтернатива:"
+            - strong [ref=e178]: MojeID
+          - generic [ref=e179]:
+            - paragraph [ref=e180]:
+              - text: Если
+              - strong [ref=e181]: Mobilní klíč
+              - text: вам не подходит, можно использовать сервис
+              - link "MojeID" [ref=e182] [cursor=pointer]:
+                - /url: https://www.mojeid.cz/
+                - strong [ref=e183]: MojeID
+              - text: .
+            - list [ref=e184]:
+              - listitem [ref=e185]:
+                - text: Аккаунт
+                - strong [ref=e186]: MojeID
+                - text: можно связать с
+                - strong [ref=e187]: Identity občana
+                - text: онлайн, например снова через
+                - strong [ref=e188]: Bankovní identitu
+                - text: .
+              - listitem [ref=e189]:
+                - text: Уровень идентификации и возраст можно также подтвердить лично в любом отделении
+                - link "Czech POINT" [ref=e190] [cursor=pointer]:
+                  - /url: https://www.czechpoint.cz/public/
+                  - strong [ref=e191]: Czech POINT
+                - text: .
+              - listitem [ref=e192]:
+                - text: После успешной связки проверка возраста в магазине работает аналогично
+                - strong [ref=e193]: Mobilní klíč
+                - text: . Магазин только проверяет, что вам есть 18+.
+  - generic "Landing quick actions" [ref=e194]:
+    - button "Прокрутить страницу вверх"
+    - button "Открыть онлайн-чат" [ref=e195] [cursor=pointer]
+  - contentinfo [ref=e200]:
+    - generic [ref=e201]:
+      - generic [ref=e202]:
+        - generic [ref=e203]:
+          - paragraph [ref=e204]: VivaDzen kratom
+          - heading "Отборный сертифицированный кратом" [level=2] [ref=e205]
+          - paragraph [ref=e206]: Легальный кратом VivaDzen — это тщательно отобранные сорта, сертифицированная продукция, стабильное качество и проверенное происхождение каждой партии.
+          - generic "Оплата" [ref=e207]:
+            - img "Google Pay" [ref=e209]
+            - img "Apple Pay" [ref=e211]
+            - img "Visa" [ref=e213]
+            - img "Mastercard" [ref=e215]
+        - generic [ref=e216]:
+          - paragraph [ref=e217]: Каталог
+          - generic [ref=e218]:
+            - link "Каталог" [ref=e219] [cursor=pointer]:
+              - /url: /ru/catalog
+            - link "Отзывы" [ref=e220] [cursor=pointer]:
+              - /url: /ru/reviews
+            - link "О Нас" [ref=e221] [cursor=pointer]:
+              - /url: /ru/about
+            - link "Контакты" [ref=e222] [cursor=pointer]:
+              - /url: /ru/contacts
+        - generic [ref=e223]:
+          - paragraph [ref=e224]: Информация
+          - generic [ref=e225]:
+            - link "Доставка" [ref=e226] [cursor=pointer]:
+              - /url: /ru/delivery
+            - link "Оплата" [ref=e227] [cursor=pointer]:
+              - /url: /ru/payment
+            - link "Проверка возраста" [ref=e228] [cursor=pointer]:
+              - /url: /ru/age-verification
+            - link "Условия возврата товара" [ref=e229] [cursor=pointer]:
+              - /url: /ru/returns
+        - generic [ref=e230]:
+          - paragraph [ref=e231]: Контакты
+          - generic [ref=e232]:
+            - link "+420 605 00 47 47" [ref=e233] [cursor=pointer]:
+              - /url: tel:+420605004747
+            - link "info@vivadzen.com" [ref=e234] [cursor=pointer]:
+              - /url: mailto:info@vivadzen.com
+            - generic [ref=e235]: Na Bojišti 1471/22, 120 00 Новый Город, Прага 2, Чехия
+          - generic [ref=e236]:
+            - link [ref=e237] [cursor=pointer]:
+              - /url: https://t.me/vivadzen_shop
+            - link [ref=e239] [cursor=pointer]:
+              - /url: https://wa.me/+420605004747
+            - link [ref=e241] [cursor=pointer]:
+              - /url: https://www.instagram.com/viva_dzen/
+            - link [ref=e243] [cursor=pointer]:
+              - /url: https://www.facebook.com/vivadzen/
+            - link [ref=e245] [cursor=pointer]:
+              - /url: https://www.youtube.com/@Vivadzen
+      - generic [ref=e247]:
+        - generic [ref=e248]:
+          - generic [ref=e249]: © 2026 VivaDzen. Все права защищены.
+          - generic [ref=e250]: Все цены на сайте указаны с учетом НДС.
+        - generic [ref=e251]:
+          - link "Политика конфиденциальности" [ref=e252] [cursor=pointer]:
+            - /url: /ru/policy
+          - link "Пользовательское соглашение" [ref=e253] [cursor=pointer]:
+            - /url: /ru/terms

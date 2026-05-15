@@ -17,6 +17,32 @@ const imageSrc = (image: TgImage): string => {
   return image.src || image.url || ''
 }
 
+const stringValue = (value: unknown) => String(value || '').trim()
+
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+const stripVariantSuffix = (name: string, product?: TgProduct | null) => {
+  const labels = Array.isArray(product?.modifications)
+    ? product.modifications
+        .flatMap((variant) => [
+          variant?.short_name,
+          variant?.shortName,
+          variant?.name
+        ])
+        .map(stringValue)
+        .filter(Boolean)
+        .sort((a, b) => b.length - a.length)
+    : []
+
+  return labels.reduce((value, label) => {
+    if (!label || label === value) return value
+    return value
+      .replace(new RegExp(`\\s*[-–—]\\s*${escapeRegExp(label)}\\s*$`, 'i'), '')
+      .replace(new RegExp(`\\s*[,/|]\\s*${escapeRegExp(label)}\\s*$`, 'i'), '')
+      .trim()
+  }, name)
+}
+
 export const useTgProductUtils = () => {
   const config = useRuntimeConfig()
   const { currency } = useTgRouting()
@@ -47,6 +73,19 @@ export const useTgProductUtils = () => {
     return Array.isArray(product?.modifications)
       ? product.modifications.filter((variant) => variant && variant.id)
       : []
+  }
+
+  const productNameOf = (product?: TgProduct | null) => {
+    const explicitName = stringValue(
+      product?.parentName
+      || product?.parent_name
+      || product?.productName
+      || product?.product_name
+      || product?.baseName
+      || product?.base_name
+    )
+
+    return explicitName || stripVariantSuffix(stringValue(product?.name), product)
   }
 
   const priceOf = (product?: TgProduct | TgProductVariant | null) => numberValue(product?.price)
@@ -87,8 +126,16 @@ export const useTgProductUtils = () => {
   }
 
   const isInStock = (product?: TgProduct | TgProductVariant | null) => {
+    if (product && Array.isArray((product as TgProduct).modifications) && (product as TgProduct).modifications?.length) {
+      return variantsOf(product as TgProduct).some((variant) => isInStock(variant))
+    }
+
     const stock = product?.inStock ?? product?.in_stock
     return stock === undefined || stock === null || Number(stock) > 0
+  }
+
+  const sortByStock = <T extends TgProduct>(products: T[]) => {
+    return [...products].sort((a, b) => Number(isInStock(b)) - Number(isInStock(a)))
   }
 
   return {
@@ -96,6 +143,7 @@ export const useTgProductUtils = () => {
     imagesOf,
     imageOf,
     variantsOf,
+    productNameOf,
     priceOf,
     oldPriceOf,
     currencyOf,
@@ -103,6 +151,7 @@ export const useTgProductUtils = () => {
     variantLabel,
     formatMoney,
     descriptionOf,
-    isInStock
+    isInStock,
+    sortByStock
   }
 }

@@ -35,7 +35,11 @@ const props = defineProps({
   },
   regions: {
     type: Array as PropType<string[]>,
-    default: () => (['ua', 'cz', 'de', 'es'])
+    default: () => ([
+      'cz', 'sk', 'pl', 'de', 'at', 'ua', 'hu', 'si', 'hr', 'ro',
+      'it', 'es', 'fr', 'nl', 'be', 'lu', 'ch', 'gb', 'ie', 'pt',
+      'dk', 'se', 'no', 'fi', 'ee', 'lv', 'lt', 'bg', 'gr', 'cy', 'mt',
+    ])
   },
   masks: {
     type: Object as PropType<Record<string, PhoneMaskConfig>>,

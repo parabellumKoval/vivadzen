@@ -22,6 +22,5 @@ useSeo().setPageSeo('returns', {
 </template>
 
 <style scoped lang="scss">
-.kratom-content-shell { padding-top: 24px; }
-.kratom-content-card { padding: 28px; border-radius: 32px; background: rgba(255,250,244,.92); border: 1px solid rgba(74,91,68,.1); }
+@use '@/assets/scss/content-page-rich-text' as *;
 </style>

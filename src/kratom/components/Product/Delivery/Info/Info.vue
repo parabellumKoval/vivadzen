@@ -1,11 +1,47 @@
 <script setup lang="ts">
+import { roundDownShippingAmount } from '~/utils/shipping-pricing'
+
+type MethodRecord = Record<string, any>
+type QuoteRecord = {
+  currency?: string
+  amount?: number
+  breakdown?: Record<string, any>
+} | null
+
+const props = withDefaults(defineProps<{
+  subtotal?: number
+}>(), {
+  subtotal: 0,
+})
+
 const { t } = useI18n()
 const regionPath = useToLocalePath()
+const runtimeConfig = useRuntimeConfig()
 const { methods: deliveryMethods } = useDelivery()
 const { methodsInfo: paymentMethods } = usePayment()
+const { region } = useRegion()
+
+const deliveryQuotes = ref<Record<string, QuoteRecord>>({})
+const paymentQuotes = ref<Record<string, QuoteRecord>>({})
+
+const calculableDeliveryKeys = new Set([
+  'packeta_warehouse',
+  'packeta_address',
+  'novaposhta_warehouse',
+  'novaposhta_address',
+  'messenger_address',
+])
+
+const destinationCountry = computed(() => String(region.value || '').trim().toUpperCase())
+
+const normalizeSubtotal = computed(() => {
+  const value = Number(props.subtotal || 0)
+  return Number.isFinite(value) ? Math.max(0, Number(value.toFixed(2))) : 0
+})
 
 const deliveryItems = computed(() => {
-  return deliveryMethods.value.map((method) => ({
+  return deliveryMethods.value.map((method: MethodRecord) => ({
+    ...method,
     key: method.key,
     title: method.title || method.label || t(`delivery.${method.key}`),
     image: method.image || method.logo,
@@ -13,12 +49,154 @@ const deliveryItems = computed(() => {
 })
 
 const paymentItems = computed(() => {
-  return paymentMethods.value.map((method) => ({
+  return paymentMethods.value.map((method: MethodRecord) => ({
+    ...method,
     key: method.key,
     title: method.title || method.label || t(`payments.${method.key}.title`),
     image: method.image || method.logo,
   }))
 })
+
+const isCodPaymentMethod = (methodKey: string) => methodKey.endsWith('_cod')
+
+const buildQuotePayload = (methodKey: string, codEnabled = false) => ({
+  methodKey,
+  destinationCountry: destinationCountry.value,
+  weightG: 1000,
+  codEnabled: codEnabled ? 1 : 0,
+  codAmount: codEnabled ? normalizeSubtotal.value : 0,
+  meta: {
+    subtotal: normalizeSubtotal.value,
+    promocode_discount: 0,
+    bonus_discount: 0,
+    personal_discount: 0,
+    cod_payment_type: 'cash',
+  },
+})
+
+const fetchQuote = async (methodKey: string, codEnabled = false): Promise<QuoteRecord> => {
+  if (!destinationCountry.value || !calculableDeliveryKeys.has(methodKey)) {
+    return null
+  }
+
+  try {
+    return await $fetch<QuoteRecord>(`${runtimeConfig.public.apiBase}/shipping/quote`, {
+      method: 'POST',
+      body: buildQuotePayload(methodKey, codEnabled),
+    })
+  } catch (error) {
+    console.error('[kratom-product-delivery-info] Failed to load quote', methodKey, error)
+    return null
+  }
+}
+
+const resolvePaymentDeliveryKey = (method: MethodRecord) => {
+  if (!Array.isArray(method?.payments)) {
+    return null
+  }
+
+  return method.payments.find((deliveryKey: string) => {
+    return deliveryItems.value.some((item) => item.key === deliveryKey && calculableDeliveryKeys.has(item.key))
+  }) || null
+}
+
+const refreshQuotes = async () => {
+  const nextDeliveryQuotes = {} as Record<string, QuoteRecord>
+  const nextPaymentQuotes = {} as Record<string, QuoteRecord>
+
+  await Promise.all(deliveryItems.value.map(async (item) => {
+    nextDeliveryQuotes[item.key] = await fetchQuote(item.key)
+  }))
+
+  await Promise.all(paymentItems.value.map(async (item) => {
+    if (!isCodPaymentMethod(item.key)) {
+      nextPaymentQuotes[item.key] = null
+      return
+    }
+
+    const deliveryKey = resolvePaymentDeliveryKey(item)
+    nextPaymentQuotes[item.key] = deliveryKey ? await fetchQuote(deliveryKey, true) : null
+  }))
+
+  deliveryQuotes.value = nextDeliveryQuotes
+  paymentQuotes.value = nextPaymentQuotes
+}
+
+const deliveryQuoteKey = computed(() => JSON.stringify({
+  country: destinationCountry.value,
+  subtotal: normalizeSubtotal.value,
+  delivery: deliveryItems.value.map((item) => item.key),
+  payment: paymentItems.value.map((item) => item.key),
+}))
+
+if (import.meta.client) {
+  watch(deliveryQuoteKey, () => {
+    refreshQuotes()
+  }, { immediate: true })
+}
+
+const isValidQuote = (quote: QuoteRecord) => {
+  const amount = Number(quote?.amount)
+  return Boolean(quote?.currency && quote.currency !== 'XXX' && Number.isFinite(amount))
+}
+
+const deliveryMeta = (item: MethodRecord) => {
+  const quote = deliveryQuotes.value[item.key]
+
+  if (isValidQuote(quote)) {
+    return {
+      kind: 'price' as const,
+      amount: roundDownShippingAmount(Number(quote?.amount)),
+      currency: String(quote?.currency || ''),
+    }
+  }
+
+  if (item?.isPriceObject && item?.price?.amount !== undefined) {
+    return {
+      kind: 'price' as const,
+      amount: roundDownShippingAmount(Number(item.price.amount)),
+      currency: String(item.price.currency || ''),
+    }
+  }
+
+  if (item?.price) {
+    return {
+      kind: 'text' as const,
+      text: String(item.price),
+    }
+  }
+
+  return {
+    kind: 'text' as const,
+    text: t('kratom.product.calculated_at_checkout'),
+  }
+}
+
+const paymentMeta = (item: MethodRecord) => {
+  if (!isCodPaymentMethod(item.key)) {
+    return {
+      kind: 'text' as const,
+      text: t('kratom.product.no_fees'),
+    }
+  }
+
+  const quote = paymentQuotes.value[item.key]
+  const codAmount = Number(quote?.breakdown?.cod_gross)
+  const currency = String(quote?.currency || '')
+
+  if (currency && currency !== 'XXX' && Number.isFinite(codAmount) && codAmount > 0) {
+    return {
+      kind: 'price' as const,
+      amount: roundDownShippingAmount(codAmount),
+      currency,
+    }
+  }
+
+  return {
+    kind: 'text' as const,
+    text: t('kratom.product.calculated_at_checkout'),
+  }
+}
 </script>
 
 <template>
@@ -41,6 +219,18 @@ const paymentItems = computed(() => {
             class="product-delivery-info__logo"
           >
           <span class="product-delivery-info__name">{{ item.title }}</span>
+          <span class="product-delivery-info__meta">
+            <template v-if="deliveryMeta(item).kind === 'price'">
+              <simple-price
+                :value="deliveryMeta(item).amount"
+                :currency-code="deliveryMeta(item).currency"
+                class="product-delivery-info__meta-price"
+              />
+            </template>
+            <template v-else>
+              {{ deliveryMeta(item).text }}
+            </template>
+          </span>
         </div>
       </div>
       <NuxtLink :to="regionPath('/delivery')" class="product-delivery-info__link">
@@ -60,6 +250,19 @@ const paymentItems = computed(() => {
             class="product-delivery-info__logo"
           >
           <span class="product-delivery-info__name">{{ item.title }}</span>
+          <span class="product-delivery-info__meta">
+            <template v-if="paymentMeta(item).kind === 'price'">
+              <span class="product-delivery-info__meta-label">{{ t('kratom.product.cod_fee') }}</span>
+              <simple-price
+                :value="paymentMeta(item).amount"
+                :currency-code="paymentMeta(item).currency"
+                class="product-delivery-info__meta-price"
+              />
+            </template>
+            <template v-else>
+              {{ paymentMeta(item).text }}
+            </template>
+          </span>
         </div>
       </div>
       <NuxtLink :to="regionPath('/payment')" class="product-delivery-info__link">
@@ -137,6 +340,29 @@ const paymentItems = computed(() => {
   line-height: 1.4;
 }
 
+.product-delivery-info__meta {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  color: #7e8679;
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.product-delivery-info__meta-label {
+  color: #8c9388;
+}
+
+:deep(.product-delivery-info__meta-price .value) {
+  font-size: 12px;
+  font-weight: 700;
+  color: #70796a;
+}
+
 .product-delivery-info__note {
   margin: 0;
   color: #687162;
@@ -169,10 +395,18 @@ const paymentItems = computed(() => {
 
   .product-delivery-info__item {
     align-items: flex-start;
+    flex-wrap: wrap;
   }
 
   .product-delivery-info__logo {
     width: 104px;
+  }
+
+  .product-delivery-info__meta {
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+    text-align: left;
   }
 }
 </style>

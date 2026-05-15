@@ -31,6 +31,8 @@ class GenerateProductReviewsSelectionTest extends TestCase
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->boolean('is_active')->default(true);
             $table->json('name')->nullable();
+            $table->json('excerpt')->nullable();
+            $table->json('content')->nullable();
             $table->string('slug')->nullable();
             $table->timestamps();
         });
@@ -177,5 +179,98 @@ class GenerateProductReviewsSelectionTest extends TestCase
 
         $this->assertFalse($method->invoke($command, '0', true));
         $this->assertTrue($method->invoke($command, '1', false));
+    }
+
+    public function test_product_description_combines_excerpt_and_full_content(): void
+    {
+        $now = now();
+
+        DB::table('ak_products')->insert([
+            'id' => 10,
+            'parent_id' => null,
+            'brand_id' => null,
+            'is_active' => true,
+            'name' => json_encode(['cs' => 'Kava'], JSON_UNESCAPED_UNICODE),
+            'excerpt' => json_encode(['cs' => 'Krátký benefit\\nJasná mysl'], JSON_UNESCAPED_UNICODE),
+            'content' => json_encode(['cs' => 'Fallback content should not be first.'], JSON_UNESCAPED_UNICODE),
+            'slug' => 'kava',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        DB::table('ak_product_regional_contents')->insert([
+            'product_id' => 10,
+            'country_code' => 'cz',
+            'excerpt' => json_encode(['cs' => 'Regionální krátký text\\nRelax'], JSON_UNESCAPED_UNICODE),
+            'content' => json_encode(['cs' => 'Plný&nbsp;popis<br>Chuť, příprava a večerní použití.'], JSON_UNESCAPED_UNICODE),
+            'merchant_content' => null,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        $command = app(GenerateProductReviews::class);
+        $method = new ReflectionMethod($command, 'resolveProductDescription');
+        $method->setAccessible(true);
+
+        $product = \App\Models\Product::query()->with('regionalContents')->findOrFail(10);
+        $description = $method->invoke($command, $product, 'cs', 'CZ');
+
+        $this->assertStringContainsString('Regionální krátký text Relax', $description);
+        $this->assertStringContainsString('Plný popis Chuť, příprava a večerní použití.', $description);
+        $this->assertStringNotContainsString('\\n', $description);
+        $this->assertStringNotContainsString('&nbsp;', $description);
+    }
+
+    public function test_review_briefs_are_created_per_user_with_distinct_angles(): void
+    {
+        $command = app(GenerateProductReviews::class);
+        $method = new ReflectionMethod($command, 'buildReviewBriefs');
+        $method->setAccessible(true);
+
+        $briefs = $method->invoke($command, 5);
+
+        $this->assertCount(5, $briefs);
+        $this->assertCount(5, collect($briefs)->pluck('angle')->unique());
+        $this->assertSame(
+            'do not use a repeated contrast formula like "good, but ..." unless the angle explicitly requires a minor flaw',
+            $briefs[0]['avoid_patterns'][1]
+        );
+    }
+
+    public function test_generated_reviews_are_post_processed_into_distinct_styles(): void
+    {
+        $command = app(GenerateProductReviews::class);
+
+        $briefs = [
+            ['style_mode' => 'one_word'],
+            ['style_mode' => 'emoji_spam'],
+            ['style_mode' => 'sloppy_lowercase'],
+            ['style_mode' => 'camel_case'],
+            ['style_mode' => 'punctuation_spam'],
+            ['style_mode' => 'typo_heavy'],
+        ];
+        $reviews = array_map(
+            fn (int $index) => [
+                'user_index' => $index,
+                'text' => 'Product is good and effective, but the taste is specific and I needed time to get used to it.',
+                'advantages' => ['good'],
+                'flaws' => ['taste'],
+            ],
+            range(0, 5)
+        );
+
+        $method = new ReflectionMethod($command, 'styleGeneratedReviews');
+        $method->setAccessible(true);
+
+        $styled = $method->invoke($command, $reviews, $briefs, 'en');
+
+        $this->assertLessThanOrEqual(2, str_word_count($styled[0]['text']));
+        $this->assertMatchesRegularExpression('/😍|🔥|:D|😅|💚|\\)\\)\\)\\)/u', $styled[1]['text']);
+        $this->assertSame(mb_strtolower($styled[2]['text']), $styled[2]['text']);
+        $this->assertMatchesRegularExpression('/^[a-z]+[A-Z]/', $styled[3]['text']);
+        $this->assertMatchesRegularExpression('/!!!|\\?\\?\\)|\\.\\.\\.!!!|\\)\\)\\)$/', $styled[4]['text']);
+        $this->assertStringContainsString('))', $styled[5]['text']);
+        $this->assertSame([], $styled[0]['advantages']);
+        $this->assertSame([], $styled[1]['flaws']);
     }
 }

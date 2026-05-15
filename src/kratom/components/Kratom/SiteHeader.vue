@@ -15,6 +15,7 @@ const navItems = computed(() => [
   { to: '/catalog', label: t('title.catalog') },
   { to: '/delivery', label: t('title.delivery') },
   { to: '/payment', label: t('title.payment') },
+  { to: '/age-verification', label: t('title.age_verification') },
   { to: '/reviews', label: t('title.reviews') },
   { to: '/about', label: t('title.about') },
   { to: '/contacts', label: t('title.contacts') },

@@ -22,6 +22,7 @@ title:
   blog: Blog
   delivery: Doručení
   payment: Platba
+  age_verification: Ověření věku
   guarantees: Záruky
   qa: FAQ
   about: O nás
@@ -435,6 +436,9 @@ seo:
     payment:
       title: "Platba | VivaDzen Kratom"
       description: "Platební metody pro objednávky VivaDzen Kratom včetně online plateb, dobírky a bankovního převodu."
+    age_verification:
+      title: "Ověření věku ADULTO | VivaDzen Kratom"
+      description: "Návod k ověření věku 18+ přes Mobilní klíč eGovernmentu, Identitu občana nebo MojeID při nákupu kratomu VivaDzen v Česku."
     checkout:
       title: "Pokladna | VivaDzen Kratom"
       description: "Dokončení objednávky VivaDzen Kratom s doručením v ČR, bezpečnou platbou a povinným ověřením věku 18+."
@@ -591,10 +595,19 @@ kratom:
     store: 'Kratom obchod'
     entheogens_cta: 'Náš web s entheogeny'
   footer:
-    eyebrow: 'VivaDzen mini-store'
-    title: 'Kratom pro český trh'
-    text: 'Jeden specializovaný obchod na stejném backendu a katalogové logice, zúžený jen na to podstatné: kratom, články, objednávku a podporu.'
+    eyebrow: 'VivaDzen kratom'
+    title: 'Výběrový certifikovaný kratom'
+    text: 'Legální kratom VivaDzen znamená pečlivě vybrané odrůdy, certifikované produkty, stálou kvalitu a ověřený původ každé šarže.'
     legal: 'Informace'
+    rights: 'Všechna práva vyhrazena.'
+    vat_note: 'Všechny ceny na webu jsou uvedeny včetně DPH.'
+    quality_marks:
+      vscht:
+        title: 'AKREDITOVANÁ LABORATOŘ'
+        description: 'Testování čistoty a obsahu látek v akreditované laboratoři VŠCHT Praha dle normy ISO 17025.'
+      mzcz:
+        title: 'AUTORIZOVANÝ PRODEJCE PML'
+        description: 'Činnost pod přímým dohledem a licencí Ministerstva zdravotnictví České republiky.'
   region_switcher:
     eyebrow: 'Regionální obchody'
     title: 'Právě jste v internetovém obchodě s kratomem VivaDzen v Česku'
@@ -621,6 +634,7 @@ kratom:
     color_alt: 'Barva kratomu'
   catalog:
     eyebrow: 'Pouze pro Českou republiku'
+    all_kratom: 'Všechen kratom'
     text: 'Zaměřená nabídka kratomových produktů pro český trh s přímou objednávkou a vícejazyčným obsahem.'
     fulfilment: 'Expedice z Prahy'
     age_verification: 'Ověření věku při objednávce'
@@ -638,6 +652,11 @@ kratom:
     payment_methods_title: 'Dostupná platba'
     delivery_methods_note: 'Přesná cena dopravy se zobrazí v pokladně po výběru způsobu doručení.'
     payment_methods_note: 'Dostupné platební metody závisejí na zvoleném způsobu doručení v pokladně.'
+    vat_included: 'Cena je uvedena včetně {rate}% DPH.'
+    price_without_vat: 'Cena bez DPH:'
+    no_fees: 'Bez poplatků'
+    cod_fee: 'Poplatek za dobírku'
+    calculated_at_checkout: 'Vypočítá se při objednávce'
     checkout_note: 'Poznámka'
     checkout_note_text: 'Tento web je určen výhradně pro prodej kratomu v Česku. Pokud hledáte entheogeny, superpotraviny, houby, konopné produkty a další sortiment, navštivte {link}, hlavní obchod VivaDzen, který působí v Česku, na Ukrajině, ve Španělsku a v Německu.'
     checkout_note_link: 'obchod VivaDzen'

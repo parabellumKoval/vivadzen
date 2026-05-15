@@ -1,0 +1,143 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "logo_alt" [ref=e6] [cursor=pointer]:
+        - /url: /ru
+        - img "logo_alt" [ref=e7]
+      - navigation "Навигация по странице" [ref=e8]:
+        - link "Каталог" [ref=e10] [cursor=pointer]:
+          - /url: /ru/catalog
+          - generic [ref=e11]: Каталог
+        - link "Доставка" [ref=e14] [cursor=pointer]:
+          - /url: /ru/delivery
+          - generic [ref=e15]: Доставка
+        - link "Оплата" [ref=e17] [cursor=pointer]:
+          - /url: /ru/payment
+          - generic [ref=e18]: Оплата
+        - link "Проверка возраста" [ref=e20] [cursor=pointer]:
+          - /url: /ru/age-verification
+          - generic [ref=e21]: Проверка возраста
+        - link "Отзывы" [ref=e23] [cursor=pointer]:
+          - /url: /ru/reviews
+          - generic [ref=e24]: Отзывы
+        - link "О Нас" [ref=e26] [cursor=pointer]:
+          - /url: /ru/about
+          - generic [ref=e27]: О Нас
+        - link "Контакты" [ref=e29] [cursor=pointer]:
+          - /url: /ru/contacts
+          - generic [ref=e30]: Контакты
+        - link "Наш сайт с энтеогенами" [ref=e31] [cursor=pointer]:
+          - /url: https://shop.vivadzen.com/cz/ru
+          - generic [ref=e33]: Наш сайт с энтеогенами
+      - generic "Выбор языка" [ref=e34]:
+        - button "Рус" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: Рус
+        - link "button.login" [ref=e38] [cursor=pointer]:
+          - /url: /ru/auth/login
+        - button "Корзина" [ref=e40] [cursor=pointer]:
+          - generic [ref=e42]: "0"
+  - main [ref=e43]:
+    - generic [ref=e45]:
+      - list [ref=e47]:
+        - listitem [ref=e48]:
+          - text: ">"
+          - link "Главная" [ref=e49] [cursor=pointer]:
+            - /url: /ru
+        - listitem:
+          - generic [ref=e50]: Доставка
+      - heading "Доставка" [level=1] [ref=e51]
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - paragraph [ref=e55]: Доставка и оплата
+          - heading "Доступная доставка" [level=2] [ref=e56]
+          - paragraph [ref=e57]: Способы доставки зависят от выбранной страны. Измените страну доставки, чтобы увидеть доступные варианты для вашего региона.
+        - generic [ref=e58]:
+          - heading "Почему мы используем специализированную доставку" [level=3] [ref=e59]
+          - paragraph [ref=e60]: Из-за действующих требований к оформлению документов при доставке отправлений стандартные перевозчики, такие как Zásilkovna, PPL, DPD, GLS и другие, не могут гарантировать выполнение всех обязательных процедур при вручении. Поэтому для таких заказов мы работаем со специализированным перевозчиком, который соответствует этим законодательным требованиям.
+        - generic [ref=e61]:
+          - article [ref=e62]:
+            - generic [ref=e63]:
+              - img "Самовывоз" [ref=e65]
+              - generic [ref=e66]:
+                - heading "Самовывоз" [level=3] [ref=e67]
+                - generic [ref=e68]: из магазина
+            - paragraph [ref=e69]: Самовывоз в течение дня. Перед приездом необходимо согласовать наличие товара и точное время получения с менеджером. Пункт выдачи расположен по указанному адресу, товар резервируется после подтверждения.
+          - article [ref=e70]:
+            - generic [ref=e71]:
+              - img "Курьером Messenger.cz" [ref=e73]
+              - generic [ref=e74]:
+                - heading "Курьером Messenger.cz" [level=3] [ref=e75]
+                - generic [ref=e78]: 175 Kč
+            - paragraph [ref=e79]: Доставка специализированным курьером Messenger.cz по Чехии. Этот способ используется для отправлений, при вручении которых требуется обязательная идентификация получателя и подтверждение получения. Стоимость рассчитывается автоматически с учётом действующих тарифов.
+            - generic [ref=e80]:
+              - generic [ref=e81]:
+                - generic [ref=e82]: Проверка возраста при получении
+                - paragraph [ref=e83]: Согласно действующим правилам, посылку может принять только получатель старше 18 лет. При передаче отправления курьер зафиксирует номер вашего документа, а получение нужно будет подтвердить подписью. Если номер документа и подпись получить невозможно, доставку выполнить нельзя.
+              - generic [ref=e84]:
+                - generic [ref=e85]: Срок доставки
+                - paragraph [ref=e86]: Обычно курьер доставляет посылку на следующий рабочий день.
+  - generic "Landing quick actions" [ref=e87]:
+    - button "Прокрутить страницу вверх"
+    - button "Открыть онлайн-чат" [ref=e88] [cursor=pointer]
+  - contentinfo [ref=e93]:
+    - generic [ref=e94]:
+      - generic [ref=e95]:
+        - generic [ref=e96]:
+          - paragraph [ref=e97]: VivaDzen kratom
+          - heading "Отборный сертифицированный кратом" [level=2] [ref=e98]
+          - paragraph [ref=e99]: Легальный кратом VivaDzen — это тщательно отобранные сорта, сертифицированная продукция, стабильное качество и проверенное происхождение каждой партии.
+          - generic "Оплата" [ref=e100]:
+            - img "Google Pay" [ref=e102]
+            - img "Apple Pay" [ref=e104]
+            - img "Visa" [ref=e106]
+            - img "Mastercard" [ref=e108]
+        - generic [ref=e109]:
+          - paragraph [ref=e110]: Каталог
+          - generic [ref=e111]:
+            - link "Каталог" [ref=e112] [cursor=pointer]:
+              - /url: /ru/catalog
+            - link "Отзывы" [ref=e113] [cursor=pointer]:
+              - /url: /ru/reviews
+            - link "О Нас" [ref=e114] [cursor=pointer]:
+              - /url: /ru/about
+            - link "Контакты" [ref=e115] [cursor=pointer]:
+              - /url: /ru/contacts
+        - generic [ref=e116]:
+          - paragraph [ref=e117]: Информация
+          - generic [ref=e118]:
+            - link "Доставка" [ref=e119] [cursor=pointer]:
+              - /url: /ru/delivery
+            - link "Оплата" [ref=e120] [cursor=pointer]:
+              - /url: /ru/payment
+            - link "Проверка возраста" [ref=e121] [cursor=pointer]:
+              - /url: /ru/age-verification
+            - link "Условия возврата товара" [ref=e122] [cursor=pointer]:
+              - /url: /ru/returns
+        - generic [ref=e123]:
+          - paragraph [ref=e124]: Контакты
+          - generic [ref=e125]:
+            - link "+420 605 00 47 47" [ref=e126] [cursor=pointer]:
+              - /url: tel:+420605004747
+            - link "info@vivadzen.com" [ref=e127] [cursor=pointer]:
+              - /url: mailto:info@vivadzen.com
+            - generic [ref=e128]: Na Bojišti 1471/22, 120 00 Новый Город, Прага 2, Чехия
+          - generic [ref=e129]:
+            - link [ref=e130] [cursor=pointer]:
+              - /url: https://t.me/vivadzen_shop
+            - link [ref=e132] [cursor=pointer]:
+              - /url: https://wa.me/+420605004747
+            - link [ref=e134] [cursor=pointer]:
+              - /url: https://www.instagram.com/viva_dzen/
+            - link [ref=e136] [cursor=pointer]:
+              - /url: https://www.facebook.com/vivadzen/
+            - link [ref=e138] [cursor=pointer]:
+              - /url: https://www.youtube.com/@Vivadzen
+      - generic [ref=e140]:
+        - generic [ref=e141]:
+          - generic [ref=e142]: © 2026 VivaDzen. Все права защищены.
+          - generic [ref=e143]: Все цены на сайте указаны с учетом НДС.
+        - generic [ref=e144]:
+          - link "Политика конфиденциальности" [ref=e145] [cursor=pointer]:
+            - /url: /ru/policy
+          - link "Пользовательское соглашение" [ref=e146] [cursor=pointer]:
+            - /url: /ru/terms

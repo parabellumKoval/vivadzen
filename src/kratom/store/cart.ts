@@ -1,4 +1,6 @@
 
+import { isProductAvailable } from '~/utils/productAvailability'
+
 type ProductSmall = {
   id: number,
   name: string,
@@ -223,6 +225,10 @@ export const useCartStore = defineStore('cartStore', {
     },
 
     add(product: Product) {
+      if (!isProductAvailable(product)) {
+        return Promise.resolve(false)
+      }
+
       if(this.cartIdAmounts[product.id]) {
         this.cartIdAmounts[product.id] += product.amount || 1
       }else{

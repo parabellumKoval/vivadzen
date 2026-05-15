@@ -1,0 +1,113 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "logo_alt" [ref=e6] [cursor=pointer]:
+        - /url: /ru
+        - img "logo_alt" [ref=e7]
+      - navigation "Навигация по странице" [ref=e8]:
+        - link "Каталог" [ref=e10] [cursor=pointer]:
+          - /url: /ru/catalog
+          - generic [ref=e11]: Каталог
+        - link "Доставка" [ref=e14] [cursor=pointer]:
+          - /url: /ru/delivery
+          - generic [ref=e15]: Доставка
+        - link "Оплата" [ref=e17] [cursor=pointer]:
+          - /url: /ru/payment
+          - generic [ref=e18]: Оплата
+        - link "Проверка возраста" [ref=e20] [cursor=pointer]:
+          - /url: /ru/age-verification
+          - generic [ref=e21]: Проверка возраста
+        - link "Отзывы" [ref=e23] [cursor=pointer]:
+          - /url: /ru/reviews
+          - generic [ref=e24]: Отзывы
+        - link "О Нас" [ref=e26] [cursor=pointer]:
+          - /url: /ru/about
+          - generic [ref=e27]: О Нас
+        - link "Контакты" [ref=e29] [cursor=pointer]:
+          - /url: /ru/contacts
+          - generic [ref=e30]: Контакты
+        - link "Наш сайт с энтеогенами" [ref=e31] [cursor=pointer]:
+          - /url: https://shop.vivadzen.com/cz/ru
+          - generic [ref=e33]: Наш сайт с энтеогенами
+      - generic "Выбор языка" [ref=e34]:
+        - button "Рус" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: Рус
+        - link "button.login" [ref=e38] [cursor=pointer]:
+          - /url: /ru/auth/login
+        - button "Корзина" [ref=e40] [cursor=pointer]:
+          - generic [ref=e42]: "0"
+  - link "Наш сайт с энтеогенами" [ref=e45] [cursor=pointer]:
+    - /url: https://shop.vivadzen.com/cz/ru
+    - generic [ref=e47]: Наш сайт с энтеогенами
+  - main [ref=e48]:
+    - generic [ref=e50]:
+      - generic [ref=e51]: "500"
+      - generic [ref=e52]: "Failed to fetch dynamically imported module: http://localhost:3001/_nuxt/pages/index.vue?t=1778667123328"
+      - link "Перейти на главную" [ref=e53] [cursor=pointer]:
+        - /url: /ru
+        - generic [ref=e55]: Перейти на главную
+  - generic "Landing quick actions" [ref=e56]:
+    - button "Прокрутить страницу вверх"
+    - button "Открыть онлайн-чат" [ref=e57] [cursor=pointer]
+  - contentinfo [ref=e62]:
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - paragraph [ref=e66]: VivaDzen kratom
+          - heading "Отборный сертифицированный кратом" [level=2] [ref=e67]
+          - paragraph [ref=e68]: Легальный кратом VivaDzen — это тщательно отобранные сорта, сертифицированная продукция, стабильное качество и проверенное происхождение каждой партии.
+          - generic "Оплата" [ref=e69]:
+            - img "Google Pay" [ref=e71]
+            - img "Apple Pay" [ref=e73]
+            - img "Visa" [ref=e75]
+            - img "Mastercard" [ref=e77]
+        - generic [ref=e78]:
+          - paragraph [ref=e79]: Каталог
+          - generic [ref=e80]:
+            - link "Каталог" [ref=e81] [cursor=pointer]:
+              - /url: /ru/catalog
+            - link "Отзывы" [ref=e82] [cursor=pointer]:
+              - /url: /ru/reviews
+            - link "О Нас" [ref=e83] [cursor=pointer]:
+              - /url: /ru/about
+            - link "Контакты" [ref=e84] [cursor=pointer]:
+              - /url: /ru/contacts
+        - generic [ref=e85]:
+          - paragraph [ref=e86]: Информация
+          - generic [ref=e87]:
+            - link "Доставка" [ref=e88] [cursor=pointer]:
+              - /url: /ru/delivery
+            - link "Оплата" [ref=e89] [cursor=pointer]:
+              - /url: /ru/payment
+            - link "Проверка возраста" [ref=e90] [cursor=pointer]:
+              - /url: /ru/age-verification
+            - link "Условия возврата товара" [ref=e91] [cursor=pointer]:
+              - /url: /ru/returns
+        - generic [ref=e92]:
+          - paragraph [ref=e93]: Контакты
+          - generic [ref=e94]:
+            - link "+420 605 00 47 47" [ref=e95] [cursor=pointer]:
+              - /url: tel:+420605004747
+            - link "info@vivadzen.com" [ref=e96] [cursor=pointer]:
+              - /url: mailto:info@vivadzen.com
+            - generic [ref=e97]: Na Bojišti 1471/22, 120 00 Новый Город, Прага 2, Чехия
+          - generic [ref=e98]:
+            - link [ref=e99] [cursor=pointer]:
+              - /url: https://t.me/vivadzen_shop
+            - link [ref=e101] [cursor=pointer]:
+              - /url: https://wa.me/+420605004747
+            - link [ref=e103] [cursor=pointer]:
+              - /url: https://www.instagram.com/viva_dzen/
+            - link [ref=e105] [cursor=pointer]:
+              - /url: https://www.facebook.com/vivadzen/
+            - link [ref=e107] [cursor=pointer]:
+              - /url: https://www.youtube.com/@Vivadzen
+      - generic [ref=e109]:
+        - generic [ref=e110]:
+          - generic [ref=e111]: © 2026 VivaDzen. Все права защищены.
+          - generic [ref=e112]: Все цены на сайте указаны с учетом НДС.
+        - generic [ref=e113]:
+          - link "Политика конфиденциальности" [ref=e114] [cursor=pointer]:
+            - /url: /ru/policy
+          - link "Пользовательское соглашение" [ref=e115] [cursor=pointer]:
+            - /url: /ru/terms

@@ -95,6 +95,7 @@ class GenerateBotUsersCommandTest extends TestCase
             '--language' => ['ua'],
             '--country' => ['UA'],
             '--password' => 'secret-pass-123',
+            '--without-avatars' => true,
         ])->assertExitCode(0);
 
         $profiles = Profile::query()->where('role', 'bot')->orderBy('id')->get();

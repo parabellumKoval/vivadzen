@@ -531,28 +531,30 @@ kratom:
   header:
     store: 'Kratom Shop'
   footer:
-    eyebrow: 'VivaDzen Mini-Store'
-    title: 'Kratom für den tschechischen Markt'
-    text: 'Ein fokussierter Store auf derselben Backend- und Kataloglogik, reduziert auf das Wesentliche: Kratom, Artikel, Checkout und Support.'
+    eyebrow: 'VivaDzen kratom'
+    title: 'Ausgewählter zertifizierter Kratom'
+    text: 'Legal erhältlicher VivaDzen Kratom steht für sorgfältig ausgewählte Sorten, zertifizierte Produkte, konstante Qualität und geprüfte Herkunft jeder Charge.'
     legal: 'Informationen'
+    rights: 'Alle Rechte vorbehalten.'
+    vat_note: 'Alle Preise auf der Website verstehen sich inklusive MwSt.'
   region_switcher:
-    eyebrow: 'Regionale Storefronts'
+    eyebrow: 'Regionale Online-Shops'
     title: 'Sie befinden sich gerade im VivaDzen-Kratom-Store für Tschechien'
-    text: 'Wenn Sie sich in einem anderen Land befinden, wechseln Sie zur passenden Storefront für Ihre Region.'
-    dismiss: 'Popup für regionale Storefronts schließen'
+    text: 'Wenn Sie sich in einem anderen Land befinden, wechseln Sie zum passenden Online-Shop für Ihre Region.'
+    dismiss: 'Popup für regionale Online-Shops schließen'
     regions:
       ua:
         title: 'VivaDzen Ukraine'
-        subtitle: 'Storefront für Kundinnen und Kunden in der Ukraine'
+        subtitle: 'Online-Shop für Kundinnen und Kunden in der Ukraine'
       es:
         title: 'VivaDzen Spanien'
-        subtitle: 'Storefront für Kundinnen und Kunden in Spanien'
+        subtitle: 'Online-Shop für Kundinnen und Kunden in Spanien'
       de:
         title: 'VivaDzen Deutschland'
-        subtitle: 'Storefront für Kundinnen und Kunden in Deutschland'
+        subtitle: 'Online-Shop für Kundinnen und Kunden in Deutschland'
       cz_other:
         title: 'VivaDzen Entheogene in Tschechien (und mehr)'
-        subtitle: 'Tschechische Storefront mit Entheogenen und weiteren Kategorien'
+        subtitle: 'Tschechischer Online-Shop mit Entheogenen und weiteren Kategorien'
   product_card:
     variants: 'Varianten'
   catalog:
@@ -571,6 +573,11 @@ kratom:
     payment_methods_title: 'Verfügbare Zahlung'
     delivery_methods_note: 'Der genaue Versandpreis wird im Checkout angezeigt, nachdem Sie die Versandart gewählt haben.'
     payment_methods_note: 'Die verfügbaren Zahlungsarten hängen von der gewählten Versandart im Checkout ab.'
+    vat_included: 'Der Preis enthält {rate}% MwSt.'
+    price_without_vat: 'Preis ohne MwSt.:'
+    no_fees: 'Keine Gebühren'
+    cod_fee: 'Nachnahmegebühr'
+    calculated_at_checkout: 'Wird im Checkout berechnet'
     checkout_note: 'Hinweis zur Bestellung'
     checkout_note_text: 'Bestellungen werden über das Haupt-Backend von VivaDzen verarbeitet. Versand, Zahlungsmethoden, Lagerbestand und Artikelinhalte werden mit dem Hauptsystem geteilt, während sich dieser Store ausschließlich auf Kratom-Verkäufe in Tschechien konzentriert.'
     adulto_eyebrow: 'Nur 18+'

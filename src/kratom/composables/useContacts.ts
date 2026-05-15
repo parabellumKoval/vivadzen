@@ -1,6 +1,23 @@
 export const useContacts = () => {
   const {get} = useSettings()
 
+  const normalizeRows = (value: unknown) => {
+    if (Array.isArray(value)) {
+      return value
+    }
+
+    if (typeof value === 'string') {
+      try {
+        const parsed = JSON.parse(value)
+        return Array.isArray(parsed) ? parsed : []
+      } catch {
+        return []
+      }
+    }
+
+    return []
+  }
+
   const normalizeText = (value: unknown) => {
     if (typeof value === 'string') {
       return value.trim()
@@ -51,7 +68,7 @@ export const useContacts = () => {
     const fallbackSchedule = normalizeText(legacySchedule.value)
     const fallbackMap = normalizeText(legacyMap.value)
 
-    const rows = Array.isArray(rawValue) ? rawValue : []
+    const rows = normalizeRows(rawValue)
     const normalized = rows.map((item, index) => {
       if (typeof item === 'string') {
         const address = normalizeText(item)

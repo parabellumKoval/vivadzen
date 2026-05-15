@@ -13,10 +13,12 @@ const { productPath } = useTgRouting()
 const {
   imageOf,
   variantsOf,
+  productNameOf,
   priceOf,
   oldPriceOf,
   currencyOf,
   hasSale,
+  isInStock,
   formatMoney
 } = useTgProductUtils()
 
@@ -25,9 +27,14 @@ const variantSheetOpen = ref(false)
 const productId = computed(() => props.product.id || '')
 const variants = computed(() => variantsOf(props.product))
 const hasVariants = computed(() => variants.value.length > 0)
+const productName = computed(() => productNameOf(props.product))
+const productAvailable = computed(() => isInStock(props.product))
+const productHasSale = computed(() => hasSale(props.product))
 const qty = computed(() => cart.getQty(productId.value))
 
 const addToCart = () => {
+  if (!productAvailable.value) return
+
   if (hasVariants.value) {
     variantSheetOpen.value = true
     return
@@ -39,35 +46,55 @@ const addToCart = () => {
 </script>
 
 <template>
-  <article class="product-card">
+  <article class="product-card" :class="{ 'product-card--unavailable': !productAvailable }">
     <NuxtLink :to="productPath(product.slug)" class="product-card__image-wrap" :prefetch="false">
-      <span v-if="hasSale(product)" class="product-card__badge">SALE</span>
-      <img :src="imageOf(product)" :alt="product.name" class="product-card__image">
+      <span v-if="productHasSale" class="product-card__badge">{{ t('sale') }}</span>
+      <span v-if="!productAvailable" class="product-card__stock">{{ t('out_of_stock') }}</span>
+      <NuxtImg
+        :src="imageOf(product)"
+        :alt="productName"
+        class="product-card__image"
+        width="320"
+        height="320"
+        sizes="160px sm:180px md:220px"
+        densities="1x 2x"
+        format="webp"
+        quality="78"
+        loading="lazy"
+        decoding="async"
+      />
     </NuxtLink>
 
     <div class="product-card__body">
       <NuxtLink :to="productPath(product.slug)" class="product-card__name" :prefetch="false">
-        {{ product.name }}
+        {{ productName }}
       </NuxtLink>
 
       <div class="product-card__price-row">
         <span v-if="oldPriceOf(product)" class="product-card__price-old">
           {{ formatMoney(oldPriceOf(product), currencyOf(product)) }}
         </span>
-        <span class="product-card__price">
+        <span class="product-card__price" :class="{ 'product-card__price--sale': productHasSale }">
           {{ formatMoney(priceOf(product), currencyOf(product)) }}
         </span>
       </div>
 
       <TgQtyCounter
-        v-if="!hasVariants && qty"
+        v-if="productAvailable && !hasVariants && qty"
         class="product-card__counter"
         :model-value="qty"
         @update:model-value="cart.updateQty(productId, null, $event)"
       />
 
-      <button v-else type="button" class="product-card__btn" @click="addToCart">
-        + {{ t('add') }}
+      <button
+        v-else
+        type="button"
+        class="product-card__btn"
+        :disabled="!productAvailable"
+        @click="addToCart"
+      >
+        <TgIcon name="plus" :size="14" :stroke="2.6" />
+        {{ productAvailable ? t('add') : t('out_of_stock') }}
       </button>
     </div>
 
@@ -79,19 +106,34 @@ const addToCart = () => {
 .product-card {
   display: flex;
   overflow: hidden;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-lg);
-  background: #fafafa;
-  box-shadow: var(--shadow-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card-sm);
   flex-direction: column;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.product-card:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-card);
+}
+
+.product-card--unavailable {
+  opacity: 0.48;
+}
+
+.product-card--unavailable:hover {
+  transform: none;
+  box-shadow: var(--shadow-card-sm);
 }
 
 .product-card__image-wrap {
   position: relative;
   display: block;
   aspect-ratio: 1 / 1;
-  /* background: var(--color-bg-card); */
-  background: #fff;
-  border-bottom: 1px solid #eee;
+  background: var(--color-bg-input);
+  border-bottom: 2px solid var(--color-ink);
 }
 
 .product-card__image {
@@ -105,12 +147,31 @@ const addToCart = () => {
   position: absolute;
   top: 8px;
   left: 8px;
-  border-radius: var(--radius-sm);
-  background: var(--color-danger);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-magenta);
   color: var(--color-white);
-  padding: 3px 7px;
+  padding: 3px 9px;
+  font-family: var(--font-display);
   font-size: 10px;
-  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transform: rotate(-6deg);
+}
+
+.product-card__stock {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-white);
+  color: var(--color-ink);
+  padding: 3px 9px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .product-card__body {
@@ -124,17 +185,17 @@ const addToCart = () => {
   display: -webkit-box;
   overflow: hidden;
   flex: 1;
-  color: var(--color-text);
+  color: var(--color-ink);
   font-size: 13px;
-  font-weight: 500;
-  line-height: 1.4;
+  font-weight: 600;
+  line-height: 1.35;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
 
 .product-card__price-row {
   display: flex;
-  margin-top: 6px;
+  margin-top: 8px;
   align-items: baseline;
   gap: 6px;
   flex-wrap: wrap;
@@ -147,21 +208,43 @@ const addToCart = () => {
 }
 
 .product-card__price {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.product-card__price--sale {
   color: var(--color-accent);
-  font-size: 15px;
-  font-weight: 700;
 }
 
 .product-card__btn {
+  display: inline-flex;
   width: 100%;
-  min-height: 34px;
+  min-height: 36px;
   margin-top: 10px;
-  border: 0;
-  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-lime);
+  color: var(--color-ink);
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.product-card__btn:hover {
   background: var(--color-primary);
   color: var(--color-white);
-  font-size: 13px;
-  font-weight: 600;
+}
+
+.product-card__btn:disabled {
+  cursor: not-allowed;
+  background: var(--color-white);
+  color: var(--color-text-muted);
 }
 
 .product-card__counter {

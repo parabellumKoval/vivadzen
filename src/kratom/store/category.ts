@@ -5,31 +5,50 @@ type Category = {
   children: object[]
 };
 
-const resolveLocaleHeader = (regionStore: ReturnType<typeof useRegion>) => {
-  const locale = useNuxtApp().$i18n?.locale
-  let localeValue = locale?.value || locale
+const resolveLocaleHeader = (
+  locale: unknown,
+  fallbackLocale: unknown = null,
+  forcedLocale: unknown = null,
+) => {
+  let localeValue = (locale as { value?: unknown } | null)?.value ?? locale
 
-  if (process.server) {
-    const event = useRequestEvent()
-    const forcedLocale =
-      typeof event?.context?.forcedLocale === 'string' ? event.context.forcedLocale : null
-
-    if (forcedLocale && forcedLocale.length) {
-      localeValue = forcedLocale
-    } else if (typeof regionStore?.getDefaultLocaleFor === 'function') {
-      const fallback = regionStore.getDefaultLocaleFor(regionStore.region.value)
-      if (fallback && fallback.length) {
-        localeValue = fallback
-      }
-    }
+  if (typeof forcedLocale === 'string' && forcedLocale.length) {
+    localeValue = forcedLocale
+  } else if (typeof fallbackLocale === 'string' && fallbackLocale.length) {
+    localeValue = fallbackLocale
   }
 
   return typeof localeValue === 'string' && localeValue.length ? localeValue : null
 }
 
-const resolveStorefrontHeader = () => {
-  const runtimeConfig = useRuntimeConfig()
-  return String(runtimeConfig.public.storefrontCode || 'kratom').trim()
+const resolveStorefrontHeader = (storefrontCode: unknown) => {
+  return String(storefrontCode || 'kratom').trim()
+}
+
+const buildCategoryHeaders = ({
+  localeValue,
+  regionAlias,
+  storefrontCode,
+}: {
+  localeValue: string | null
+  regionAlias: unknown
+  storefrontCode: unknown
+}) => {
+  const headers: Record<string, string> = {
+    Accept: 'application/json',
+    'X-Storefront': resolveStorefrontHeader(storefrontCode),
+  }
+
+  if (typeof localeValue === 'string' && localeValue.length) {
+    headers['Accept-Language'] = localeValue
+  }
+
+  const regionValue = (regionAlias as { value?: unknown } | null)?.value ?? regionAlias
+  if (typeof regionValue === 'string' && regionValue.length) {
+    headers['X-Region'] = regionValue
+  }
+
+  return headers
 }
 
 export const useCategoryStore = defineStore('categoryStore', {
@@ -57,23 +76,23 @@ export const useCategoryStore = defineStore('categoryStore', {
       const routePath =
         runtimeConfig.public?.categoryModule?.listRoutePath || '/api/_categories/list'
 
+      const nuxtApp = useNuxtApp()
       const regionStore = useRegion()
-      const localeValue = resolveLocaleHeader(regionStore)
+      const event = process.server ? useRequestEvent() : null
+      const fallbackLocale =
+        typeof regionStore?.getDefaultLocaleFor === 'function'
+          ? regionStore.getDefaultLocaleFor(regionStore.region.value)
+          : null
+      const forcedLocale =
+        typeof event?.context?.forcedLocale === 'string' ? event.context.forcedLocale : null
+      const localeValue = resolveLocaleHeader(nuxtApp.$i18n?.locale, fallbackLocale, forcedLocale)
       const regionAlias = regionStore.regionAlias.value
 
-      const headers: Record<string, string> = {
-        Accept: 'application/json',
-        'X-Storefront': resolveStorefrontHeader()
-      }
-
-      if (typeof localeValue === 'string' && localeValue.length) {
-        headers['Accept-Language'] = localeValue
-      }
-
-      const regionValue = regionAlias?.value || regionAlias
-      if (typeof regionValue === 'string' && regionValue.length) {
-        headers['X-Region'] = regionValue
-      }
+      const headers = buildCategoryHeaders({
+        localeValue,
+        regionAlias,
+        storefrontCode: runtimeConfig.public.storefrontCode,
+      })
 
       const queryPayload = query ? JSON.parse(JSON.stringify(query)) : undefined
       let params: Record<string, any> | undefined = queryPayload
@@ -103,23 +122,23 @@ export const useCategoryStore = defineStore('categoryStore', {
       const routePath =
         runtimeConfig.public?.categoryModule?.mainListRoutePath || '/api/_categories/main'
 
+      const nuxtApp = useNuxtApp()
       const regionStore = useRegion()
-      const localeValue = resolveLocaleHeader(regionStore)
+      const event = process.server ? useRequestEvent() : null
+      const fallbackLocale =
+        typeof regionStore?.getDefaultLocaleFor === 'function'
+          ? regionStore.getDefaultLocaleFor(regionStore.region.value)
+          : null
+      const forcedLocale =
+        typeof event?.context?.forcedLocale === 'string' ? event.context.forcedLocale : null
+      const localeValue = resolveLocaleHeader(nuxtApp.$i18n?.locale, fallbackLocale, forcedLocale)
       const regionAlias = regionStore.regionAlias.value
 
-      const headers: Record<string, string> = {
-        Accept: 'application/json',
-        'X-Storefront': resolveStorefrontHeader()
-      }
-
-      if (typeof localeValue === 'string' && localeValue.length) {
-        headers['Accept-Language'] = localeValue
-      }
-
-      const regionValue = regionAlias?.value || regionAlias
-      if (typeof regionValue === 'string' && regionValue.length) {
-        headers['X-Region'] = regionValue
-      }
+      const headers = buildCategoryHeaders({
+        localeValue,
+        regionAlias,
+        storefrontCode: runtimeConfig.public.storefrontCode,
+      })
 
       const params = force ? { force: '1' } : undefined
 
@@ -158,23 +177,23 @@ export const useCategoryStore = defineStore('categoryStore', {
         ? template.replace(':slug', encodeURIComponent(slug))
         : `${template}/${encodeURIComponent(slug)}`
 
+      const nuxtApp = useNuxtApp()
       const regionStore = useRegion()
-      const localeValue = resolveLocaleHeader(regionStore)
+      const event = process.server ? useRequestEvent() : null
+      const fallbackLocale =
+        typeof regionStore?.getDefaultLocaleFor === 'function'
+          ? regionStore.getDefaultLocaleFor(regionStore.region.value)
+          : null
+      const forcedLocale =
+        typeof event?.context?.forcedLocale === 'string' ? event.context.forcedLocale : null
+      const localeValue = resolveLocaleHeader(nuxtApp.$i18n?.locale, fallbackLocale, forcedLocale)
       const regionAlias = regionStore.regionAlias.value
 
-      const headers: Record<string, string> = {
-        Accept: 'application/json',
-        'X-Storefront': resolveStorefrontHeader()
-      }
-
-      if (typeof localeValue === 'string' && localeValue.length) {
-        headers['Accept-Language'] = localeValue
-      }
-
-      const regionValue = regionAlias?.value || regionAlias
-      if (typeof regionValue === 'string' && regionValue.length) {
-        headers['X-Region'] = regionValue
-      }
+      const headers = buildCategoryHeaders({
+        localeValue,
+        regionAlias,
+        storefrontCode: runtimeConfig.public.storefrontCode,
+      })
 
       try {
         const data = await $fetch(targetPath, { headers })

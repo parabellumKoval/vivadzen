@@ -93,6 +93,7 @@ trait HasScheduleFields
             ]),
             'attributes' => [
                 'min' => Carbon::now()->format('Y-m-d\TH:i'),
+                'step' => '1',
             ],
         ]);
 
@@ -114,14 +115,82 @@ trait HasScheduleFields
             $this->crud->addField([
                 'name' => 'schedule_cancel',
                 'type' => 'custom_html',
-                'value' => '<button type="button" class="btn btn-outline-danger btn-sm" id="cancel-scheduled-publication" 
-                    data-publication-id="' . $scheduledPublication->id . '">
-                    <i class="la la-times"></i> Отменить запланированную публикацию
-                </button>',
+                'value' => $this->getScheduleCancelHtml($scheduledPublication),
                 'tab' => $tab,
                 'wrapper' => $wrapper,
             ]);
         }
+    }
+
+    /**
+     * Получить HTML для кнопки отмены запланированной публикации
+     */
+    protected function getScheduleCancelHtml(ScheduledPublication $publication): string
+    {
+        $url = e(route('scheduled-publication.cancel', $publication->id));
+        $confirmText = e('Отменить запланированную публикацию?');
+        $successFallback = e('Публикация отменена');
+        $errorFallback = e('Не удалось отменить публикацию');
+
+        return <<<HTML
+        <button type="button" class="btn btn-outline-danger btn-sm" id="cancel-scheduled-publication"
+            data-publication-id="{$publication->id}" data-cancel-url="{$url}">
+            <i class="la la-times"></i> Отменить запланированную публикацию
+        </button>
+        <script>
+        (function () {
+            var button = document.getElementById('cancel-scheduled-publication');
+            if (!button || button.dataset.scheduleCancelBound === '1') {
+                return;
+            }
+
+            button.dataset.scheduleCancelBound = '1';
+
+            function notify(type, text) {
+                if (window.Noty) {
+                    new Noty({type: type, text: text}).show();
+                    return;
+                }
+
+                alert(text);
+            }
+
+            button.addEventListener('click', function () {
+                if (!confirm('{$confirmText}')) {
+                    return;
+                }
+
+                button.disabled = true;
+                var csrfMeta = document.querySelector('meta[name="csrf-token"]');
+
+                fetch(button.dataset.cancelUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfMeta ? csrfMeta.content : '',
+                        'Accept': 'application/json',
+                    },
+                })
+                .then(function (response) {
+                    return response.json().then(function (data) {
+                        if (!response.ok) {
+                            throw data;
+                        }
+
+                        return data;
+                    });
+                })
+                .then(function (data) {
+                    notify('success', data.message || '{$successFallback}');
+                    window.location.reload();
+                })
+                .catch(function (error) {
+                    button.disabled = false;
+                    notify('error', error.message || '{$errorFallback}');
+                });
+            });
+        })();
+        </script>
+        HTML;
     }
 
     /**

@@ -9,6 +9,7 @@
     "typecheck": "nuxi typecheck"
   },
   "dependencies": {
+    "@nuxt/image": "1.10.0",
     "@pinia/nuxt": "^0.4.8",
     "@twa-dev/sdk": "^8.0.2",
     "nuxt": "3.17.0",

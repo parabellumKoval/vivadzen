@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import type { TgCategory } from '~/types/tg'
+import { normalizeCategorySlug } from '~/composables/useTgCatalog'
 
 const props = defineProps<{
   categories: TgCategory[]
-  activeCategory?: string | null
+}>()
+
+const emit = defineEmits<{
+  select: [slug: string | null]
 }>()
 
 const { t } = useTgI18n()
@@ -12,6 +16,10 @@ const { categoryPath } = useTgRouting()
 const countOf = (category: TgCategory) => {
   return category.count ?? category.products_count ?? category.productsCount ?? category.meta?.products_count ?? null
 }
+
+const select = (slug: string | null) => {
+  emit('select', normalizeCategorySlug(slug))
+}
 </script>
 
 <template>
@@ -19,8 +27,8 @@ const countOf = (category: TgCategory) => {
     <NuxtLink
       :to="categoryPath()"
       class="category-bar__pill"
-      :class="{ active: !activeCategory }"
       :prefetch="false"
+      @click="select(null)"
     >
       {{ t('all') }}
     </NuxtLink>
@@ -30,8 +38,8 @@ const countOf = (category: TgCategory) => {
       :key="category.slug || category.id"
       :to="categoryPath(category.slug)"
       class="category-bar__pill"
-      :class="{ active: category.slug === activeCategory }"
       :prefetch="false"
+      @click="select(category.slug)"
     >
       {{ category.name }}
       <span v-if="countOf(category) !== null" class="category-bar__count">{{ countOf(category) }}</span>
@@ -43,12 +51,14 @@ const countOf = (category: TgCategory) => {
 .category-bar {
   position: sticky;
   z-index: 50;
-  top: 56px;
+  top: var(--tg-chrome-height);
   display: flex;
+  height: var(--tg-category-bar-height);
   gap: 8px;
   overflow-x: auto;
   background: var(--color-bg);
-  padding: 12px 16px;
+  padding: 7px 16px;
+  align-items: center;
   scrollbar-width: none;
 }
 
@@ -59,27 +69,40 @@ const countOf = (category: TgCategory) => {
 .category-bar__pill {
   display: inline-flex;
   flex-shrink: 0;
-  border: 1.5px solid var(--color-border);
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-full);
   background: var(--color-white);
-  color: var(--color-text-muted);
-  padding: 7px 14px;
+  color: var(--color-ink);
+  padding: 8px 14px;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   white-space: nowrap;
-  font-size: 13px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.category-bar__pill.active {
-  border-color: var(--color-primary);
-  background: var(--color-primary);
-  color: var(--color-white);
+.category-bar__pill.router-link-exact-active {
+  background: var(--color-ink);
+  color: var(--color-lime);
+  box-shadow: var(--shadow-card-sm);
 }
 
 .category-bar__count {
-  opacity: 0.8;
-  font-size: 11px;
-  font-weight: 400;
+  display: inline-grid;
+  min-width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--color-lime);
+  color: var(--color-ink);
+  padding: 0 5px;
+  place-items: center;
+  font-size: 10px;
+}
+
+.category-bar__pill.router-link-exact-active .category-bar__count {
+  background: var(--color-accent);
+  color: var(--color-white);
 }
 </style>

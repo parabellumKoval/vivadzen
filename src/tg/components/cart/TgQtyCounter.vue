@@ -20,9 +20,13 @@ const setValue = (value: number) => {
 
 <template>
   <div class="qty-counter">
-    <button type="button" class="qty-counter__btn" @click="setValue(modelValue - 1)">−</button>
+    <button type="button" class="qty-counter__btn" aria-label="Decrease" @click="setValue(modelValue - 1)">
+      <TgIcon name="minus" :size="16" :stroke="2.6" />
+    </button>
     <span class="qty-counter__value">{{ modelValue }}</span>
-    <button type="button" class="qty-counter__btn" @click="setValue(modelValue + 1)">+</button>
+    <button type="button" class="qty-counter__btn" aria-label="Increase" @click="setValue(modelValue + 1)">
+      <TgIcon name="plus" :size="16" :stroke="2.6" />
+    </button>
   </div>
 </template>
 
@@ -30,29 +34,31 @@ const setValue = (value: number) => {
 .qty-counter {
   display: inline-flex;
   min-height: 36px;
-  border-radius: var(--radius-sm);
-  background: var(--color-bg-card);
-  padding: 4px 6px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-white);
+  padding: 3px;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
 }
 
 .qty-counter__btn {
+  display: grid;
   width: 28px;
   height: 28px;
   border: 0;
   border-radius: var(--radius-full);
-  background: var(--color-primary);
+  background: var(--color-ink);
   color: var(--color-white);
-  font-size: 18px;
+  place-items: center;
   line-height: 1;
 }
 
 .qty-counter__value {
-  min-width: 20px;
+  min-width: 22px;
   text-align: center;
+  font-family: var(--font-display);
   font-size: 14px;
-  font-weight: 700;
 }
 </style>

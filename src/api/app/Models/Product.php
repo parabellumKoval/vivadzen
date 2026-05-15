@@ -11,6 +11,7 @@ use Backpack\Reviews\app\Traits\Reviewable;
 use Backpack\Tag\app\Traits\Taggable;
 
 use Backpack\Reviews\app\Models\Review;
+use Backpack\Store\app\Models\Category;
 use Dress\Translator\app\Interfaces\TranslatableInterface;
 use Dress\Translator\app\Traits\TranslatableTrait;
 
@@ -36,6 +37,49 @@ class Product extends BaseProduct implements TranslatableInterface
         'extras_trans->custom_attrs',
         'extras_trans->faq_items',
     ];
+
+    /**
+     * Variants inherit category visibility from the base product.
+     */
+    public function getAllCategoryIds($countryCode = null): array
+    {
+        $categoryIds = [];
+        $country = $this->resolveCountryCode(is_string($countryCode) ? $countryCode : null);
+        $categories = collect($this->categories);
+
+        if (!empty($this->parent_id)) {
+            $parent = $this->relationLoaded('parent')
+                ? $this->getRelation('parent')
+                : $this->parent()->with('categories')->first();
+
+            if ($parent instanceof BaseProduct) {
+                $categories = $categories->merge($parent->categories);
+            }
+        }
+
+        foreach ($categories->unique('id') as $category) {
+            if (!$category instanceof Category) {
+                continue;
+            }
+
+            if ($country && !$this->isCategoryBranchAvailableForCountry($category, $country)) {
+                continue;
+            }
+
+            $ancestors = $category
+                ->getParentNode($category, null, $country)
+                ->pluck('id')
+                ->toArray();
+
+            if (!in_array($category->id, $ancestors, true)) {
+                $ancestors[] = $category->id;
+            }
+
+            $categoryIds = array_merge($categoryIds, $ancestors);
+        }
+
+        return array_values(array_unique($categoryIds));
+    }
 
     public static function setupTranslatableSettings(): void
     {

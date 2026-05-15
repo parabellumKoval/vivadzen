@@ -1,4 +1,10 @@
 
+import {
+  normalizeStructuredArray,
+  resolveCurrencyCode,
+  resolveRateDisplayPrice,
+} from '~/utils/shipping-pricing'
+
 export const useDelivery = () => {
   const {t} = useI18n()
   const {get} = useSettings()
@@ -45,59 +51,60 @@ export const useDelivery = () => {
 
   const providerTariffsLabel = computed(() => t('delivery.provider_tariffs'))
   const fromShopLabel = computed(() => t('delivery.from_shop'))
-
-  const resolveCurrency = (value: unknown) => {
-    if (typeof value === 'string' && value.trim()) {
-      return value.trim().toUpperCase()
-    }
-    if (currency.value) {
-      return String(currency.value).toUpperCase()
-    }
-    return null
-  }
-
-  const buildPrice = (ratesValue: unknown, currencyValue: unknown) => {
-    const rates = normalizeRates(ratesValue)
-    const amount = minRatePrice(rates)
-    if (amount === null) return null
-    const currencyCode = resolveCurrency(currencyValue)
-    if (!currencyCode) return null
-    return { amount, currency: currencyCode }
-  }
+  const fallbackCurrency = computed(() => resolveCurrencyCode(currency.value, 'USD'))
 
   const packetaPickupPrice = computed(() => {
-    return buildPrice(
-      get('shipping.zasilkovna.pickup_rates'),
-      get('shipping.zasilkovna.currency')
-    )
+    return resolveRateDisplayPrice({
+      rates: get('shipping.zasilkovna.pickup_rates'),
+      currency: get('shipping.zasilkovna.currency'),
+      fallbackCurrency: fallbackCurrency.value,
+      vatRate: get('shipping.zasilkovna.vat_rate'),
+      vatIncluded: get('shipping.zasilkovna.vat_included'),
+    })
   })
 
   const packetaHomePrice = computed(() => {
-    return buildPrice(
-      get('shipping.zasilkovna.home_rates'),
-      get('shipping.zasilkovna.currency')
-    )
+    return resolveRateDisplayPrice({
+      rates: get('shipping.zasilkovna.home_rates'),
+      currency: get('shipping.zasilkovna.currency'),
+      fallbackCurrency: fallbackCurrency.value,
+      vatRate: get('shipping.zasilkovna.vat_rate'),
+      vatIncluded: get('shipping.zasilkovna.vat_included'),
+    })
   })
 
   const novaposhtaWarehousePrice = computed(() => {
-    const branchRates = normalizeRates(get('shipping.novaposhta.branch_rates'))
-    const lockerRates = normalizeRates(get('shipping.novaposhta.locker_rates'))
-    const rates = [...branchRates, ...lockerRates]
-    return buildPrice(rates, get('shipping.novaposhta.currency'))
+    const branchRates = normalizeStructuredArray(get('shipping.novaposhta.branch_rates'))
+    const lockerRates = normalizeStructuredArray(get('shipping.novaposhta.locker_rates'))
+
+    return resolveRateDisplayPrice({
+      rates: [...branchRates, ...lockerRates],
+      currency: get('shipping.novaposhta.currency'),
+      fallbackCurrency: fallbackCurrency.value,
+      vatRate: get('shipping.novaposhta.vat_rate'),
+      vatIncluded: get('shipping.novaposhta.vat_included'),
+    })
   })
 
   const novaposhtaCourierPrice = computed(() => {
-    return buildPrice(
-      get('shipping.novaposhta.courier_rates'),
-      get('shipping.novaposhta.currency')
-    )
+    return resolveRateDisplayPrice({
+      rates: get('shipping.novaposhta.courier_rates'),
+      currency: get('shipping.novaposhta.currency'),
+      fallbackCurrency: fallbackCurrency.value,
+      vatRate: get('shipping.novaposhta.vat_rate'),
+      vatIncluded: get('shipping.novaposhta.vat_included'),
+    })
   })
 
   const messengerAddressPrice = computed(() => {
-    return buildPrice(
-      get('shipping.messenger.address_rates'),
-      get('shipping.messenger.currency')
-    )
+    return resolveRateDisplayPrice({
+      rates: get('shipping.messenger.address_rates'),
+      currency: get('shipping.messenger.currency'),
+      fallbackCurrency: fallbackCurrency.value,
+      vatRate: get('shipping.messenger.vat_rate'),
+      vatIncluded: get('shipping.messenger.vat_included'),
+      fuelPercent: get('shipping.messenger.fuel_surcharge_percent'),
+    })
   })
 
   const defaultPrice = (methodKey = 'pickup') => {
@@ -175,7 +182,9 @@ export const useDelivery = () => {
         image: '/images/company.png',
         logo: '/images/logo/company-mini.png',
         price: fromShopLabel.value,
-        isPriceObject: false
+        isPriceObject: false,
+        meta: fromShopLabel.value,
+        isMetaPriceObject: false
       }, 
       {
         key: 'messenger_address',
@@ -185,7 +194,9 @@ export const useDelivery = () => {
         image: '/images/logo/messenger.svg',
         logo: '/images/logo/messenger.svg',
         price: messengerAddress || providerTariffsLabel.value,
-        isPriceObject: !!messengerAddress
+        isPriceObject: !!messengerAddress,
+        meta: messengerAddress || providerTariffsLabel.value,
+        isMetaPriceObject: !!messengerAddress
       },
       {
         key: 'default_address',
@@ -195,9 +206,15 @@ export const useDelivery = () => {
         image: '/images/company.png',
         logo: '/images/logo/company-mini.png',
         price: providerTariffsLabel.value,
-        isPriceObject: false
+        isPriceObject: false,
+        meta: providerTariffsLabel.value,
+        isMetaPriceObject: false
       }
-    ]
+    ].map((method) => ({
+      ...method,
+      meta: method.meta ?? method.price,
+      isMetaPriceObject: method.isMetaPriceObject ?? method.isPriceObject
+    }))
   })
 
   const deliveryMethods = computed(() => {
@@ -215,27 +232,4 @@ export const useDelivery = () => {
     methods: deliveryMethods,
     defaultPrice
   }
-}
-
-const normalizeRates = (value: unknown): Array<Record<string, any>> => {
-  if (!value) return []
-  if (Array.isArray(value)) return value as Array<Record<string, any>>
-  if (typeof value === 'string') {
-    try {
-      const parsed = JSON.parse(value)
-      if (Array.isArray(parsed)) return parsed as Array<Record<string, any>>
-    } catch {
-      return []
-    }
-  }
-  return []
-}
-
-const minRatePrice = (rates: Array<Record<string, any>>): number | null => {
-  if (!rates.length) return null
-  const prices = rates
-    .map((rate) => Number(rate?.price))
-    .filter((price) => Number.isFinite(price))
-  if (!prices.length) return null
-  return Math.min(...prices)
 }

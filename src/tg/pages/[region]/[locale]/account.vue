@@ -131,7 +131,7 @@ const saveAddressForm = async () => {
     warehouse: addressForm.warehouse || null,
     price: null,
     priceCurrency: null,
-    title: addressForm.title || [addressForm.settlement, addressForm.warehouse || addressForm.street || addressForm.zip].filter(Boolean).join(', ') || 'Address',
+    title: addressForm.title || [addressForm.settlement, addressForm.warehouse || addressForm.street || addressForm.zip].filter(Boolean).join(', ') || t('fallback_address_title'),
     updatedAt: new Date().toISOString()
   }
 
@@ -183,15 +183,15 @@ onMounted(async () => {
           {{ (userStore.fullName || 'V').slice(0, 1).toUpperCase() }}
         </div>
         <div>
-          <h1>{{ userStore.fullName || 'Telegram' }}</h1>
-          <p>{{ userStore.usernameLabel || 'Mini App' }}</p>
+          <h1>{{ userStore.fullName || t('telegram_user') }}</h1>
+          <p>{{ userStore.usernameLabel || t('mini_app') }}</p>
         </div>
       </div>
 
       <form class="account-section" @submit.prevent="saveProfileForm">
         <div class="account-section__header">
           <h2>{{ t('recipient') }}</h2>
-          <small v-if="profileLoading">...</small>
+          <small v-if="profileLoading">{{ t('loading') }}</small>
         </div>
 
         <div class="account-form">
@@ -214,7 +214,7 @@ onMounted(async () => {
         </div>
 
         <button type="submit" class="tg-btn" :disabled="savingProfile">
-          {{ savingProfile ? '...' : t('save') }}
+          {{ savingProfile ? t('loading') : t('save') }}
         </button>
       </form>
 
@@ -276,7 +276,7 @@ onMounted(async () => {
               <input v-model="addressForm.room" class="tg-field">
             </label>
             <label>
-              <span>ZIP</span>
+              <span>{{ t('zip') }}</span>
               <input v-model="addressForm.zip" class="tg-field">
             </label>
           </template>
@@ -288,7 +288,7 @@ onMounted(async () => {
 
           <div class="account-actions">
             <button type="submit" class="tg-btn" :disabled="savingAddress || !addressForm.deliveryMethod">
-              {{ savingAddress ? '...' : t('save') }}
+              {{ savingAddress ? t('loading') : t('save') }}
             </button>
             <button v-if="editingAddressId" type="button" class="tg-btn tg-btn--ghost" @click="resetAddressForm">
               {{ t('cancel') }}
@@ -299,16 +299,25 @@ onMounted(async () => {
 
       <div class="settings-list">
         <div class="settings-list__row">
-          <span>{{ t('language') }}</span>
+          <span class="settings-list__label">
+            <span class="settings-list__icon"><TgIcon name="globe" :size="18" :stroke="2.2" /></span>
+            {{ t('language') }}
+          </span>
           <strong>{{ locale.toUpperCase() }}</strong>
         </div>
         <NuxtLink :to="pathFor('orders')" class="settings-list__row">
-          <span>{{ t('order_history') }}</span>
-          <strong>›</strong>
+          <span class="settings-list__label">
+            <span class="settings-list__icon"><TgIcon name="package" :size="18" :stroke="2.2" /></span>
+            {{ t('order_history') }}
+          </span>
+          <TgIcon name="chevron-right" :size="18" :stroke="2.4" />
         </NuxtLink>
         <NuxtLink :to="pathFor('about')" class="settings-list__row">
-          <span>{{ t('about') }}</span>
-          <strong>›</strong>
+          <span class="settings-list__label">
+            <span class="settings-list__icon"><TgIcon name="info" :size="18" :stroke="2.2" /></span>
+            {{ t('about') }}
+          </span>
+          <TgIcon name="chevron-right" :size="18" :stroke="2.4" />
         </NuxtLink>
       </div>
     </section>
@@ -326,6 +335,7 @@ onMounted(async () => {
 
 .account-card,
 .account-section {
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-lg);
   background: var(--color-white);
   padding: 16px;
@@ -342,17 +352,18 @@ onMounted(async () => {
 .account-card__avatar {
   width: 64px;
   height: 64px;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-full);
   object-fit: cover;
 }
 
 .account-card__avatar--fallback {
   display: grid;
-  background: var(--color-bg-card);
-  color: var(--color-primary);
+  background: var(--color-lime);
+  color: var(--color-ink);
   place-items: center;
+  font-family: var(--font-display);
   font-size: 24px;
-  font-weight: 800;
 }
 
 .account-card h1,
@@ -395,18 +406,16 @@ onMounted(async () => {
 .account-form label {
   display: grid;
   gap: 6px;
-  color: var(--color-text);
-  font-size: 13px;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 11px;
   font-weight: 700;
-}
-
-.account-form :deep(.tg-field) {
-  border-color: #d8d8d8;
-  background: var(--color-white);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .account-form--address {
-  border-top: 1px solid var(--color-border);
+  border-top: 2px solid var(--color-ink);
   padding-top: 14px;
 }
 
@@ -414,10 +423,12 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 12px;
-  border: 1.5px solid #d8d8d8;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-md);
+  background: var(--color-bg-input);
   padding: 12px;
   align-items: center;
+  box-shadow: var(--shadow-card-sm);
 }
 
 .address-card strong,
@@ -427,7 +438,10 @@ onMounted(async () => {
 }
 
 .address-card strong {
+  font-family: var(--font-display);
   font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .address-card span,
@@ -455,8 +469,13 @@ onMounted(async () => {
   background: transparent;
   color: var(--color-primary-dark);
   padding: 0;
-  font-size: 12px;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
 .account-link--danger {
@@ -465,27 +484,48 @@ onMounted(async () => {
 
 .settings-list {
   overflow: hidden;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-lg);
   background: var(--color-white);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card-sm);
 }
 
 .settings-list__row {
   display: flex;
-  min-height: 52px;
-  border-bottom: 1px solid var(--color-border);
+  min-height: 56px;
+  border-bottom: 2px solid var(--color-ink);
   padding: 0 16px;
   align-items: center;
   justify-content: space-between;
-  font-size: 14px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .settings-list__row:last-child {
   border-bottom: 0;
 }
 
+.settings-list__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-list__icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-lime);
+  color: var(--color-ink);
+  place-items: center;
+}
+
 .settings-list__row strong {
-  color: var(--color-primary);
+  font-family: var(--font-display);
+  color: var(--color-accent-dark);
 }
 </style>

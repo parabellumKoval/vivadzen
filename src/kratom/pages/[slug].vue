@@ -2,9 +2,17 @@
 import ProductDeliveryInfo from '~/components/Product/Delivery/Info/Info.vue'
 import { normalizeKratomProductImages } from '~/utils/productImage'
 import { formatKratomAttributeValue, useKratomBadges } from '~/utils/kratomBadges'
+import { isProductAvailable as getIsProductAvailable } from '~/utils/productAvailability'
+
+type ProductCategoryBranch = {
+  id?: number | string
+  name?: string
+  slug?: string
+  parent?: ProductCategoryBranch | null
+}
 
 const route = useRoute()
-const { t, tm, rt, locale } = useI18n()
+const { t, tm, locale } = useI18n()
 const regionPath = useToLocalePath()
 const cartStore = useCartStore()
 const runtimeConfig = useRuntimeConfig()
@@ -15,6 +23,7 @@ const adultoGuideModal = defineAsyncComponent(() => import('~/components/Modal/A
 const categorySlug = runtimeConfig.public.kratomStore?.categorySlug || 'kratom'
 const catalogPerPage = 48
 const mainStoreUrl = 'https://vivadzen.com'
+const VAT_RATE = 21
 
 const slug = computed(() => String(route.params.slug || ''))
 
@@ -110,15 +119,107 @@ const modifications = computed(() => Array.isArray(product.value?.modifications)
 const attributes = computed(() => Array.isArray(product.value?.attrs) ? product.value.attrs : [])
 const productBadges = computed(() => useKratomBadges(attributes.value).list)
 const displayPrice = computed(() => {
-  const basePrice = product.value?.old_price ?? product.value?.oldPrice ?? product.value?.basePrice
-  return basePrice ?? product.value?.price
+  return product.value?.price ?? 0
 })
 
-const breadcrumbs = computed(() => [
-  { name: t('title.home'), item: '/' },
-  { name: t('title.catalog'), item: '/catalog' },
-  { name: product.value?.name || '', item: `/${slug.value}` },
-])
+const displayOldPrice = computed(() => {
+  const basePrice = product.value?.old_price ?? product.value?.oldPrice ?? product.value?.basePrice
+  return Number(basePrice) > Number(displayPrice.value) ? basePrice : null
+})
+
+const normalizeCategorySlug = (value: unknown) => {
+  if (typeof value !== 'string') {
+    return null
+  }
+
+  const normalized = value.trim().toLowerCase()
+  return normalized.length ? normalized : null
+}
+
+const productCategories = computed<ProductCategoryBranch[]>(() => {
+  return Array.isArray(product.value?.categories)
+    ? product.value.categories.filter((category): category is ProductCategoryBranch => Boolean(category && typeof category === 'object'))
+    : []
+})
+
+const catalogParentCategorySlug = computed(() => {
+  return (
+    normalizeCategorySlug(runtimeConfig.public.kratomStore?.catalogParentCategorySlug)
+    || normalizeCategorySlug(runtimeConfig.public.kratomStore?.categorySlug)
+  )
+})
+
+const categoryBelongsToCatalog = (category: ProductCategoryBranch, parentSlug: string | null) => {
+  if (!parentSlug) {
+    return false
+  }
+
+  let current: ProductCategoryBranch | null | undefined = category
+
+  while (current) {
+    const currentSlug = normalizeCategorySlug(current.slug)
+
+    if (currentSlug === parentSlug) {
+      return current !== category
+    }
+
+    current = current.parent
+  }
+
+  return false
+}
+
+const breadcrumbCategory = computed<ProductCategoryBranch | null>(() => {
+  const parentSlug = catalogParentCategorySlug.value
+
+  if (!parentSlug) {
+    return null
+  }
+
+  return productCategories.value.find((category) => {
+    const categorySlug = normalizeCategorySlug(category.slug)
+
+    return categorySlug && categorySlug !== parentSlug && categoryBelongsToCatalog(category, parentSlug)
+  }) || null
+})
+
+const priceWithoutVat = computed(() => {
+  const gross = Number(displayPrice.value || 0)
+  if (!Number.isFinite(gross) || gross <= 0) {
+    return null
+  }
+
+  return Number((gross / (1 + VAT_RATE / 100)).toFixed(2))
+})
+
+const productSubtotal = computed(() => {
+  const gross = Number(displayPrice.value || 0)
+  const amount = Number(quantity.value || 1)
+
+  if (!Number.isFinite(gross) || !Number.isFinite(amount)) {
+    return 0
+  }
+
+  return Number((gross * Math.max(1, amount)).toFixed(2))
+})
+
+const breadcrumbs = computed(() => {
+  const items = [
+    { name: t('title.home'), item: '/' },
+    { name: t('title.catalog'), item: '/catalog' },
+  ]
+
+  if (breadcrumbCategory.value?.name && breadcrumbCategory.value?.slug) {
+    items.push({
+      name: breadcrumbCategory.value.name,
+      item: `/catalog/${breadcrumbCategory.value.slug}`,
+    })
+  }
+
+  items.push({ name: product.value?.name || '', item: `/${slug.value}` })
+
+  return items
+})
 
 const normalizeInlineHtml = (value: unknown) => {
   if (typeof value !== 'string') {
@@ -145,19 +246,11 @@ const normalizeInlineHtml = (value: unknown) => {
 //   return product.value?.content || product.value?.description || null
 // })
 
-const translateText = (value: unknown) => {
-  if (typeof value === 'string') {
-    return value
-  }
-
-  return value ? rt(value as Parameters<typeof rt>[0]) : ''
-}
-
 const getTranslatedList = (key: string) => {
   const value = tm(key)
 
   return Array.isArray(value)
-    ? value.map((item) => translateText(item))
+    ? value.map((_, index) => t(`${key}.${index}`))
     : []
 }
 
@@ -202,19 +295,31 @@ const productAttributeRows = computed(() => {
   return [...factRows, ...attributeRows]
 })
 
+const isProductAvailable = computed(() => {
+  return getIsProductAvailable(product.value)
+})
+
 const deliveryHighlights = computed(() => {
-  const isAvailable = product.value?.inStock === undefined || Number(product.value?.inStock) > 0
+  if (!isProductAvailable.value) {
+    return [
+      {
+        icon: 'ph:x-circle-fill',
+        text: t('label.not_available'),
+        unavailable: true,
+      },
+    ]
+  }
 
   return [
     {
-      icon: isAvailable ? 'ph:check-circle-fill' : 'ph:clock-fill',
-      text: isAvailable
-        ? t('kratom.product.delivery_inline_available')
-        : t('kratom.product.delivery_inline_unavailable'),
+      icon: 'ph:check-circle-fill',
+      text: t('kratom.product.delivery_inline_available'),
+      unavailable: false,
     },
     {
       icon: 'ph:truck-fill',
       text: t('kratom.product.delivery_inline_shipping'),
+      unavailable: false,
     },
   ]
 })
@@ -260,6 +365,10 @@ const adjustQuantity = (delta: number) => {
 }
 
 const addToCart = async () => {
+  if (!isProductAvailable.value) {
+    return
+  }
+
   await cartStore.add({ ...product.value, amount: quantity.value })
   useModal().open(resolveComponent('ModalCart'), null, null, {
     width: { min: 968, max: 968 },
@@ -403,6 +512,7 @@ useSeo().setPageSeo('product', {
                 v-for="(item, index) in deliveryHighlights"
                 :key="index"
                 class="kratom-product-summary__delivery-item"
+                :class="{ 'is-unavailable': item.unavailable }"
               >
                 <IconCSS :name="item.icon" class="kratom-product-summary__delivery-icon" />
                 <span class="kratom-product-summary__delivery-text">{{ item.text }}</span>
@@ -426,11 +536,30 @@ useSeo().setPageSeo('product', {
               </div>
 
               <div class="kratom-product-summary__pricing">
+                <simple-price
+                  v-if="displayOldPrice"
+                  :value="displayOldPrice"
+                  :currency-code="product?.currency"
+                  class="kratom-product-summary__old-price"
+                />
                 <simple-price :value="displayPrice" :currency-code="product?.currency" class="kratom-product-summary__price" />
+                <div class="kratom-product-summary__vat">
+                  <p class="kratom-product-summary__vat-line">
+                    {{ t('kratom.product.vat_included', { rate: VAT_RATE }) }}
+                  </p>
+                  <div v-if="priceWithoutVat !== null" class="kratom-product-summary__vat-line">
+                    <span>{{ t('kratom.product.price_without_vat') }}</span>
+                    <simple-price
+                      :value="priceWithoutVat"
+                      :currency-code="product?.currency"
+                      class="kratom-product-summary__vat-price"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="kratom-product-summary__buy-box">
+            <div v-if="isProductAvailable" class="kratom-product-summary__buy-box">
               <div class="kratom-product-summary__qty">
                 <button type="button" @click="adjustQuantity(-1)">-</button>
                 <span>{{ quantity }}</span>
@@ -444,7 +573,7 @@ useSeo().setPageSeo('product', {
 
           </div>
 
-          <ProductDeliveryInfo class="kratom-product-delivery-card" />
+          <ProductDeliveryInfo :subtotal="productSubtotal" class="kratom-product-delivery-card" />
 
           <div class="kratom-product-age-warning" :aria-label="t('kratom.product.age_warning.aria_label')">
             <div class="kratom-product-age-warning__sign" role="img" aria-hidden="true">
@@ -1053,10 +1182,20 @@ useSeo().setPageSeo('product', {
 
 .kratom-product-summary__pricing {
   display: flex;
-  align-items: end;
+  flex-direction: row;
+  align-items: flex-end;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 15px;
   flex: 0 0 auto;
+}
+
+:deep(.kratom-product-summary__old-price .value) {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(73, 85, 70, 0.48);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
 }
 
 :deep(.kratom-product-summary__price .value) {
@@ -1064,6 +1203,28 @@ useSeo().setPageSeo('product', {
   font-weight: 800;
   line-height: 100%;
   color: $color-orange;
+}
+
+.kratom-product-summary__vat {
+  display: grid;
+  gap: 3px;
+}
+
+.kratom-product-summary__vat-line {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: rgba(73, 85, 70, 0.72);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+:deep(.kratom-product-summary__vat-price .value) {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(73, 85, 70, 0.88);
 }
 
 .kratom-product-summary__delivery {
@@ -1083,6 +1244,15 @@ useSeo().setPageSeo('product', {
   // background: $color-green;
   background: rgba($color-green, 0.16);
   min-height: 40px;
+
+  &.is-unavailable {
+    background: rgba(109, 117, 106, 0.16);
+
+    .kratom-product-summary__delivery-icon,
+    .kratom-product-summary__delivery-text {
+      color: rgba(73, 85, 70, 0.72);
+    }
+  }
 }
 
 .kratom-product-summary__delivery-icon {
@@ -1631,6 +1801,8 @@ useSeo().setPageSeo('product', {
   }
 
   .kratom-product-summary__pricing {
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: flex-start;
   }
 

@@ -41,24 +41,27 @@ const close = () => emit('update:modelValue', false)
   max-height: 85vh;
   margin: 0 auto;
   overflow-y: auto;
-  border-radius: 20px 20px 0 0;
-  background: var(--color-white);
+  border-top: 2px solid var(--color-ink);
+  border-radius: 24px 24px 0 0;
+  background: var(--color-bg);
   box-shadow: var(--shadow-modal);
-  padding: 16px 16px calc(20px + env(safe-area-inset-bottom));
+  padding: 14px 16px calc(20px + env(safe-area-inset-bottom));
 }
 
 .sheet__handle {
-  width: 36px;
-  height: 4px;
+  width: 48px;
+  height: 5px;
   margin: 0 auto 16px;
-  border-radius: 2px;
-  background: var(--color-border);
+  border-radius: 999px;
+  background: var(--color-ink);
 }
 
 .sheet__title {
   margin-bottom: 16px;
-  font-size: 17px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
 .sheet-enter-active,

@@ -1,0 +1,12 @@
+[     234ms] [LOG] [Telegram.WebView] > postEvent web_app_set_header_color {color_key: bg_color} @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[     236ms] [LOG] [Telegram.WebView] > postEvent web_app_set_bottom_bar_color {color: #ffffff} @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[     236ms] [LOG] [Telegram.WebView] > postEvent web_app_request_theme  @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[     236ms] [LOG] [Telegram.WebView] > postEvent web_app_request_viewport  @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[     236ms] [LOG] [Telegram.WebView] > postEvent web_app_request_safe_area  @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[     236ms] [LOG] [Telegram.WebView] > postEvent web_app_request_content_safe_area  @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[     470ms] [LOG] [Telegram.WebView] > postEvent web_app_expand  @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[     471ms] [LOG] [Telegram.WebView] > postEvent web_app_ready  @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:130
+[     471ms] [WARNING] [Telegram.WebApp] Header color is not supported in version 6.0 @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:687
+[     471ms] [WARNING] [Telegram.WebApp] Background color is not supported in version 6.0 @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:737
+[     506ms] [INFO] <Suspense> is an experimental feature and its API will likely change. @ http://127.0.0.1:3001/_nuxt/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=abfb2e8d:7234
+[     526ms] [WARNING] [Telegram.WebApp] BackButton is not supported in version 6.0 @ http://127.0.0.1:3001/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=abfb2e8d:898

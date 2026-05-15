@@ -50,6 +50,7 @@ const activeLanguage = computed(() => {
 })
 
 const cartCount = computed(() => useCartStore().cartLength)
+const homeLink = computed(() => regionPath('/'))
 const accountLink = computed(() => regionPath(isAuthenticated.value ? '/account/orders' : '/auth/login'))
 const accountLabel = computed(() => isAuthenticated.value ? t('title.account.account') : t('button.login'))
 const accountAvatarSrc = computed(() => {
@@ -73,6 +74,7 @@ const navItems = computed(() => [
   { id: 'catalog', to: '/catalog', title: t('title.catalog'), priority: 40 },
   { id: 'delivery', to: '/delivery', title: t('title.delivery'), priority: 48 },
   { id: 'payment', to: '/payment', title: t('title.payment'), priority: 46 },
+  { id: 'age-verification', to: '/age-verification', title: t('title.age_verification'), priority: 42 },
   { id: 'reviews', to: '/reviews', title: t('title.reviews'), priority: 25 },
   { id: 'about', to: '/about', title: t('title.about'), priority: 20 },
   { id: 'contacts', to: '/contacts', title: t('title.contacts'), priority: 18 }
@@ -267,11 +269,17 @@ const handleCatalogFocusOut = (event) => {
   closeCatalogDropdown()
 }
 
-const handleLogoClick = () => {
+const handleLogoClick = async () => {
   isLangOpen.value = false
   isMoreOpen.value = false
   closeMenu()
-  navigateTo(regionPath('/'))
+
+  if (process.client) {
+    window.location.assign(homeLink.value)
+    return
+  }
+
+  await navigateTo(homeLink.value)
 }
 
 const phoneLink = computed(() => {
@@ -408,30 +416,22 @@ watch(
 <template>
   <header ref="headerRef" class="hero-header" :class="{ 'hero-header--scrolled': isHeaderScrolled }">
     <div class="hero-header__inner container">
-      <nuxt-img
-        v-if="$device.isDesktop"
-        src="/images/company-white-color.png"
-        sizes="mobile: 160px"
-        class="hero-header__logo"
-        :alt="t('logo_alt')"
-        role="button"
-        tabindex="0"
-        @click="handleLogoClick"
-        @keydown.enter.prevent="handleLogoClick"
-        @keydown.space.prevent="handleLogoClick"
-      />
-      <nuxt-img
-        v-else
-        src="/images/logo/vivadzen.png"
-        sizes="mobile: 240px"
-        class="hero-header__logo"
-        :alt="t('logo_alt')"
-        role="button"
-        tabindex="0"
-        @click="handleLogoClick"
-        @keydown.enter.prevent="handleLogoClick"
-        @keydown.space.prevent="handleLogoClick"
-      />
+      <NuxtLink :to="homeLink" class="hero-header__logo-link" @click.prevent="handleLogoClick">
+        <nuxt-img
+          v-if="$device.isDesktop"
+          src="/images/company-white-color.png"
+          sizes="mobile: 160px"
+          class="hero-header__logo"
+          :alt="t('logo_alt')"
+        />
+        <nuxt-img
+          v-else
+          src="/images/logo/vivadzen.png"
+          sizes="mobile: 240px"
+          class="hero-header__logo"
+          :alt="t('logo_alt')"
+        />
+      </NuxtLink>
       <div ref="menuRef" class="hero-header__menu">
         <button
           type="button"

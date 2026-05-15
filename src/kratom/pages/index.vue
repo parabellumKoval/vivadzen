@@ -6,7 +6,7 @@ let revealObservers: IntersectionObserver[] = []
 
 definePageMeta({
   layout: 'landing',
-  footerFlushTop: true,
+  footerTopSpacing: false,
 })
 
 const marqueeItems = computed(() => [t('marquee.items.0'), t('marquee.items.1')])

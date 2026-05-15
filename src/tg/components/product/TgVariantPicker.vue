@@ -41,8 +41,11 @@ const { variantLabel, formatMoney, priceOf, currencyOf, isInStock } = useTgProdu
 }
 
 .variant-picker__label {
-  font-size: 13px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 
 .variant-picker__items {
@@ -53,30 +56,42 @@ const { variantLabel, formatMoney, priceOf, currencyOf, isInStock } = useTgProdu
 
 .variant-chip {
   display: inline-grid;
-  min-height: 44px;
-  border: 1.5px solid var(--color-border);
+  min-height: 46px;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-md);
   background: var(--color-white);
   padding: 8px 14px;
-  color: var(--color-text);
+  color: var(--color-ink);
   gap: 2px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: var(--shadow-card-sm);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.variant-chip:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 0 var(--color-ink);
 }
 
 .variant-chip small {
   color: var(--color-text-muted);
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .variant-chip.active {
-  border-color: var(--color-primary);
-  background: rgba(115, 197, 111, 0.1);
-  color: var(--color-primary);
+  background: var(--color-lime);
+  color: var(--color-ink);
+}
+
+.variant-chip.active small {
+  color: var(--color-ink);
 }
 
 .variant-chip.disabled {
-  opacity: 0.45;
+  opacity: 0.4;
+  text-decoration: line-through;
+  box-shadow: none;
 }
 </style>

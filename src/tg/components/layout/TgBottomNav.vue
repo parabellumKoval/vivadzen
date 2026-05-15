@@ -12,28 +12,28 @@ const items = computed(() => [
   {
     key: 'home',
     label: t('home'),
-    icon: '◐',
+    icon: 'home',
     to: homePath(),
     active: route.name?.toString().includes('region-locale-index')
   },
   {
     key: 'catalog',
     label: t('catalog'),
-    icon: '⌂',
+    icon: 'grid',
     to: catalogPath(),
     active: route.name?.toString().includes('region-locale-catalog')
   },
   {
     key: 'orders',
     label: t('orders'),
-    icon: '☰',
+    icon: 'package',
     to: pathFor('orders'),
     active: route.path.endsWith('/orders')
   },
   {
     key: 'account',
     label: t('account'),
-    icon: '○',
+    icon: 'user',
     to: pathFor('account'),
     active: route.path.endsWith('/account')
   }
@@ -50,7 +50,9 @@ const items = computed(() => [
       :class="{ active: item.active }"
       :prefetch="false"
     >
-      <span class="tg-bottom-nav__icon">{{ item.icon }}</span>
+      <span class="tg-bottom-nav__icon">
+        <TgIcon :name="item.icon" :size="22" :stroke="2.2" />
+      </span>
       <span class="tg-bottom-nav__label">{{ item.label }}</span>
     </NuxtLink>
 
@@ -60,7 +62,9 @@ const items = computed(() => [
       :class="{ active: ui.cartOpen }"
       @click="ui.openCart()"
     >
-      <span class="tg-bottom-nav__icon">□</span>
+      <span class="tg-bottom-nav__cart-disk">
+        <TgIcon name="bag" :size="26" :stroke="2.4" />
+      </span>
       <span v-if="cart.totalQty" class="tg-bottom-nav__badge">{{ cart.totalQty }}</span>
       <span class="tg-bottom-nav__label">{{ t('cart') }}</span>
     </button>
@@ -73,7 +77,9 @@ const items = computed(() => [
       :class="{ active: item.active }"
       :prefetch="false"
     >
-      <span class="tg-bottom-nav__icon">{{ item.icon }}</span>
+      <span class="tg-bottom-nav__icon">
+        <TgIcon :name="item.icon" :size="22" :stroke="2.2" />
+      </span>
       <span class="tg-bottom-nav__label">{{ item.label }}</span>
     </NuxtLink>
   </nav>
@@ -90,9 +96,9 @@ const items = computed(() => [
   grid-template-columns: repeat(5, 1fr);
   width: 100%;
   max-width: 480px;
-  height: calc(56px + env(safe-area-inset-bottom));
+  height: calc(64px + env(safe-area-inset-bottom));
   margin: 0 auto;
-  border-top: 1px solid var(--color-border);
+  border-top: 2px solid var(--color-ink);
   background: var(--color-white);
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -103,22 +109,36 @@ const items = computed(() => [
   min-width: 0;
   border: 0;
   background: transparent;
-  color: var(--color-text-light);
+  color: #555;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  gap: 2px;
-  font-size: 11px;
-  font-weight: 600;
+  gap: 3px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .tg-bottom-nav__item.active {
-  color: var(--color-primary);
+  color: var(--color-ink);
 }
 
 .tg-bottom-nav__icon {
-  font-size: 20px;
-  line-height: 1;
+  display: grid;
+  place-items: center;
+  height: 24px;
+}
+
+.tg-bottom-nav__item.active .tg-bottom-nav__icon::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  width: 32px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-lime);
+  z-index: -1;
 }
 
 .tg-bottom-nav__label {
@@ -129,18 +149,40 @@ const items = computed(() => [
   white-space: nowrap;
 }
 
-.tg-bottom-nav__badge {
-  position: absolute;
-  top: 7px;
-  right: calc(50% - 22px);
-  min-width: 18px;
-  height: 18px;
+.tg-bottom-nav__cart {
+  position: relative;
+}
+
+.tg-bottom-nav__cart-disk {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  margin-top: -22px;
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius-full);
   background: var(--color-accent);
   color: var(--color-white);
+  place-items: center;
+  box-shadow: var(--shadow-card-sm);
+}
+
+.tg-bottom-nav__cart.active .tg-bottom-nav__cart-disk {
+  background: var(--color-ink);
+}
+
+.tg-bottom-nav__badge {
+  position: absolute;
+  top: -28px;
+  right: calc(50% - 28px);
+  min-width: 22px;
+  height: 22px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-lime);
+  color: var(--color-ink);
   padding: 0 5px;
-  font-size: 10px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 11px;
   line-height: 18px;
 }
 </style>

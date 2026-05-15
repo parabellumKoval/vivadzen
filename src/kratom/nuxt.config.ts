@@ -24,6 +24,16 @@ const parseBooleanEnv = (value: string | undefined, defaultValue: boolean) => {
   return defaultValue
 }
 
+const parseIntegerEnv = (value: string | undefined) => {
+  if (value == null || value.trim() === '') {
+    return null
+  }
+
+  const parsed = Number.parseInt(value.trim(), 10)
+
+  return Number.isFinite(parsed) ? parsed : null
+}
+
 export default defineNuxtConfig({
   srcDir: process.env.SRC_DIR || '',
   rootDir: process.env.ROOT_DIR || '',
@@ -55,6 +65,8 @@ export default defineNuxtConfig({
       },
       kratomStore: {
         categorySlug: 'kratom',
+        catalogParentCategorySlug: process.env.NUXT_PUBLIC_KRATOM_CATALOG_PARENT_CATEGORY_SLUG || '',
+        catalogParentCategoryId: parseIntegerEnv(process.env.NUXT_PUBLIC_KRATOM_CATALOG_PARENT_CATEGORY_ID),
         region: 'cz',
         currency: 'CZK',
         locales: ['cs', 'en', 'ru', 'uk'],
@@ -145,7 +157,12 @@ export default defineNuxtConfig({
     server: {
       fs: {
         strict: true,
-        allow: [process.cwd()],
+        allow: [
+          process.cwd(),
+          __dirname,
+          path.resolve(__dirname, '..'),
+          path.resolve(__dirname, '../front/node_modules'),
+        ],
       },
       watch: {
         ignored: [
