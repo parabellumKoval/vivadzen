@@ -305,6 +305,57 @@ cu: composer.update
 composer.outdated:
 	docker compose -f ${COMPOSE_FILE} exec api composer outdated
 
+# Local package vendor prefix and optional single-package override
+PKG_VENDOR ?= parabellumkoval/
+PACKAGE ?=
+
+# Switch project packages to local path repositories.
+# Usage:
+# make pkg.local
+# make pkg.local PACKAGE=parabellumkoval/backpack-schedule
+pkg.local:
+	docker compose -f ${COMPOSE_FILE} exec api sh -lc '\
+		set -e; \
+			cd /var/www/html; \
+			composer config repositories.local path "packages/*"; \
+			if [ -n "${PACKAGE}" ]; then \
+				packages="${PACKAGE}"; \
+			else \
+				packages=$$(PKG_VENDOR="${PKG_VENDOR}" php -r '\''$$vendor=getenv("PKG_VENDOR") ?: "parabellumkoval/"; $$data=json_decode(file_get_contents("composer.json"), true); foreach (($$data["require"] ?? []) as $$name => $$_) { if (str_starts_with($$name, $$vendor)) echo $$name, " "; }'\''); \
+			fi; \
+		if [ -z "$$packages" ]; then \
+			echo "No matching packages found in composer.json"; \
+			exit 1; \
+		fi; \
+		composer update $$packages --no-scripts; \
+		composer dump-autoload; \
+		php artisan optimize:clear; \
+		php artisan package:discover --ansi'
+
+# Switch project packages back to remote repositories.
+# Usage:
+# make pkg.remote
+# make pkg.remote PACKAGE=parabellumkoval/backpack-schedule
+pkg.remote:
+	docker compose -f ${COMPOSE_FILE} exec api sh -lc '\
+		set -e; \
+			cd /var/www/html; \
+			composer config --unset repositories.local || true; \
+			if [ -n "${PACKAGE}" ]; then \
+				packages="${PACKAGE}"; \
+			else \
+				packages=$$(PKG_VENDOR="${PKG_VENDOR}" php -r '\''$$vendor=getenv("PKG_VENDOR") ?: "parabellumkoval/"; $$data=json_decode(file_get_contents("composer.json"), true); foreach (($$data["require"] ?? []) as $$name => $$_) { if (str_starts_with($$name, $$vendor)) echo $$name, " "; }'\''); \
+			fi; \
+		if [ -z "$$packages" ]; then \
+			echo "No matching packages found in composer.json"; \
+			exit 1; \
+		fi; \
+		composer clear-cache; \
+		composer update $$packages --prefer-dist --no-scripts; \
+		composer dump-autoload; \
+		php artisan optimize:clear; \
+		php artisan package:discover --ansi'
+
 # PHP composer autoload command
 composer.autoload:
 	docker compose -f ${COMPOSE_FILE} exec api composer dump-autoload
