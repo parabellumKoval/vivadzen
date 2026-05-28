@@ -132,6 +132,28 @@ services:
     networks:
       - api
 
+  tg:
+    build:
+      context: .
+      dockerfile: .docker/prod/tg/Dockerfile
+    container_name: tg
+    hostname: tg
+    ports:
+      - "3001:3000"
+    env_file:
+      - ./src/tg/.env
+    environment:
+      NODE_ENV: production
+      NUXT_PUBLIC_SITE_URL: ${TG_PUBLIC_SITE_URL:-https://telegram-mini-app.example.com}
+      NUXT_PUBLIC_API_BASE: ${TG_PUBLIC_API_BASE:-https://api.vivadzen.com/api}
+      NUXT_PUBLIC_STOREFRONT_CODE: ${TG_STOREFRONT_CODE:-telegram}
+      NUXT_TELEMETRY_DISABLED: "1"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - api
+    restart: unless-stopped
+
   mysql:
     build:
       dockerfile: .docker/prod/mysql/Dockerfile
@@ -200,6 +222,7 @@ services:
       args:
         IMAGE_REGISTRY: ${IMAGE_REGISTRY}
         IMAGE_TAG: ${IMAGE_TAG}
+    profiles: ["legacy-queue"]
     extra_hosts:
         - "mail.vivadzen.com:78.140.162.187"
     volumes:
@@ -218,6 +241,31 @@ services:
     networks:
       - api
     restart: always
+
+  horizon:
+    build:
+      dockerfile: .docker/prod/queue/Dockerfile
+      args:
+        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+        IMAGE_TAG: ${IMAGE_TAG}
+    command: ["php", "artisan", "horizon"]
+    extra_hosts:
+        - "mail.vivadzen.com:78.140.162.187"
+    volumes:
+      - ./storage_horizon:/var/www/html/storage
+      - /mnt/uploads:/var/www/html/public/uploads
+      - /mnt/images:/var/www/html/public/images
+      - /mnt/invoices:/var/www/html/public/invoices
+    depends_on:
+      redis:
+        condition: service_started
+      mysql:
+        condition: service_started
+      meilisearch:
+        condition: service_started
+    networks:
+      - api
+    restart: unless-stopped
 
   schedule:
     build:

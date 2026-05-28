@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Mail\Concerns\InteractsWithRegionalContext;
+use App\Mail\Concerns\RoutesToEmailQueue;
 use Backpack\Profile\app\Models\Reward;
 use Backpack\Profile\app\Models\RewardEvent;
 use Backpack\Profile\app\Models\WalletLedger;
@@ -15,6 +16,7 @@ use Illuminate\Queue\SerializesModels;
 class RewardLedgerEntryNotification extends Mailable
 {
     use InteractsWithRegionalContext;
+    use RoutesToEmailQueue;
     use Queueable;
     use SerializesModels;
 
@@ -32,6 +34,7 @@ class RewardLedgerEntryNotification extends Mailable
         $this->triggerMeta = TriggerLabels::resolve($event->trigger);
         $this->payload = is_array($event->payload) ? $event->payload : [];
 
+        $this->routeToEmailQueue();
         $this->initializeRegionalContext($regionalContext);
 
         if (! $this->hasRegionalLocale()) {

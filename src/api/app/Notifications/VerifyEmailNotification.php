@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Mail\Concerns\InteractsWithRegionalContext;
+use App\Mail\Concerns\RoutesToEmailQueue;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -11,6 +12,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 class VerifyEmailNotification extends Notification implements ShouldQueue
 {
     use InteractsWithRegionalContext;
+    use RoutesToEmailQueue;
     use Queueable;
 
     /**
@@ -18,6 +20,7 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
      */
     public function __construct(?array $regionalContext = null)
     {
+        $this->routeToEmailQueue();
         $this->initializeRegionalContext($regionalContext);
 
         if (!$this->hasRegionalLocale()) {

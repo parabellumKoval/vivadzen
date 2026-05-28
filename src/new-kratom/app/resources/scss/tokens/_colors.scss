@@ -1,0 +1,115 @@
+// =============================================================
+// VIVADZEN — COLOR TOKENS
+// Источник: 01_DESIGN_SYSTEM.md §2
+// Single source of truth. Не использовать HEX в компонентах.
+// =============================================================
+
+// --- Forest (brand dark) ---
+$forest-900: #0F2419;
+$forest-800: #142E22;
+$forest-700: #1B3A2D; // = brand.forest
+$forest-600: #2A5640;
+$forest-500: #3D6F54;
+$forest-300: #6D9482;
+$forest-100: #C8D8CF;
+
+// --- Cream (light surfaces) ---
+$cream-50:   #FBF8F0;
+$cream-100:  #F9F4EC; // = brand.ivory
+$cream-200:  #F5EDD8; // = brand.cream
+$cream-300:  #ECE0C2;
+$cream-400:  #D9C998;
+
+// --- Grass (brand accent green) ---
+$grass-700:  #4F9E2D;
+$grass-500:  #7EC855; // = brand.grass
+$grass-300:  #B9E198;
+
+// --- Amber (primary CTA) ---
+$amber-700:  #C77808;
+$amber-500:  #F4A020; // = accent.amber
+$amber-300:  #FCD27A;
+
+// --- Terracotta (secondary CTA / urgency) ---
+$terracotta-700: #A8431B;
+$terracotta-500: #D45C2B; // = accent.terracotta
+
+// --- Ink (warm neutrals — НЕ чисто-чёрный) ---
+$ink-900: #14201B;
+$ink-700: #2B3A33;
+$ink-500: #5C6A63;
+$ink-300: #A8B2AC;
+$ink-100: #E5E8E4;
+
+// --- Status ---
+$danger-500:  #C1311E;
+$warning-500: #E08A14;
+$success-500: #4F9E2D; // = grass.700
+$info-500:    #2F6FAF;
+
+// =============================================================
+// CSS Custom Properties — для рантайма (Alpine, темизация)
+// =============================================================
+:root {
+    // raw
+    --c-forest-900: #{$forest-900};
+    --c-forest-800: #{$forest-800};
+    --c-forest-700: #{$forest-700};
+    --c-forest-600: #{$forest-600};
+    --c-forest-500: #{$forest-500};
+    --c-forest-300: #{$forest-300};
+    --c-forest-100: #{$forest-100};
+
+    --c-cream-50:  #{$cream-50};
+    --c-cream-100: #{$cream-100};
+    --c-cream-200: #{$cream-200};
+    --c-cream-300: #{$cream-300};
+    --c-cream-400: #{$cream-400};
+
+    --c-grass-700: #{$grass-700};
+    --c-grass-500: #{$grass-500};
+    --c-grass-300: #{$grass-300};
+
+    --c-amber-700: #{$amber-700};
+    --c-amber-500: #{$amber-500};
+    --c-amber-300: #{$amber-300};
+
+    --c-terracotta-700: #{$terracotta-700};
+    --c-terracotta-500: #{$terracotta-500};
+
+    --c-ink-900: #{$ink-900};
+    --c-ink-700: #{$ink-700};
+    --c-ink-500: #{$ink-500};
+    --c-ink-300: #{$ink-300};
+    --c-ink-100: #{$ink-100};
+
+    --c-danger:  #{$danger-500};
+    --c-warning: #{$warning-500};
+    --c-success: #{$success-500};
+    --c-info:    #{$info-500};
+
+    // semantic
+    --surface-primary:    var(--c-forest-700);
+    --surface-elevated:   var(--c-forest-600);
+    --surface-muted:      var(--c-forest-800);
+    --surface-light:      var(--c-cream-100);
+    --surface-light-warm: var(--c-cream-200);
+    --surface-light-hover: var(--c-cream-300);
+
+    --text-on-dark-primary:    var(--c-cream-100);
+    --text-on-dark-secondary:  rgba(245, 237, 216, 0.75);
+    --text-on-dark-accent:     var(--c-grass-500);
+
+    --text-on-light-primary:   var(--c-ink-900);
+    --text-on-light-secondary: var(--c-ink-500);
+    --text-on-light-accent:    var(--c-forest-700);
+
+    --border-on-dark:  rgba(249, 244, 236, 0.12);
+    --border-on-light: var(--c-ink-100);
+    --divider-on-dark: rgba(249, 244, 236, 0.08);
+    --divider-on-light: var(--c-ink-100);
+
+    --cta-primary-bg:       var(--c-amber-500);
+    --cta-primary-bg-hover: var(--c-amber-700);
+    --cta-primary-text:     var(--c-ink-900);
+}

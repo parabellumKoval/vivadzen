@@ -1,0 +1,24 @@
+# FrankenPHP Caddyfile: статика, кеш-хедеры, Brotli, gzip.
+# Octane передаёт динамические запросы напрямую в worker-mode PHP.
+
+{
+	frankenphp
+	order php_server before file_server
+	# В dev оставляем http без TLS — TLS прозрачен в prod
+	auto_https off
+}
+
+:8000 {
+	root * /var/www/html/public
+
+	encode br zstd gzip
+
+	# Долговременный кеш для статических ассетов с hash в имени (Vite manifest)
+	@hashed path_regexp \.(css|js|woff2|woff|jpe?g|png|webp|avif|svg|ico)$
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+
+	# Запрет на индексацию dev-стенда
+	header X-Robots-Tag "noindex, nofollow"
+
+	php_server
+}

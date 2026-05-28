@@ -21,15 +21,6 @@ services:
       # - api
       - dashboard
 
-  image-selector:
-      build:
-        dockerfile: .docker/dev/image-selector/Dockerfile
-      volumes:
-      - ./src/image-selector:/app
-      ports:
-        - "8888:8000"
-      networks:
-        - api
   libretranslate:
     image: libretranslate/libretranslate
     container_name: libretranslate
@@ -104,6 +95,164 @@ services:
     networks:
       - api
 
+  tg:
+    build:
+      context: .
+      dockerfile: .docker/dev/tg/Dockerfile
+    container_name: vivadzen_tg
+    hostname: tg
+    ports:
+      - "3001:3000"
+    env_file:
+      - ./src/tg/.env
+    environment:
+      NODE_ENV: development
+      NUXT_PUBLIC_SITE_URL: http://localhost:3001
+      NUXT_PUBLIC_API_BASE: http://localhost:8000/api
+      NUXT_PUBLIC_STOREFRONT_CODE: telegram
+      CHOKIDAR_USEPOLLING: "true"
+      NUXT_TELEMETRY_DISABLED: "1"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./src/tg:/workspace/src/tg
+      - ./src/front:/workspace/src/front
+      - tg_node_modules:/workspace/src/tg/node_modules
+      - tg_nuxt:/workspace/src/tg/.nuxt
+    networks:
+      - api
+    restart: unless-stopped
+
+  # ────────────────────────────────────────────────────────────────────
+  # new-kratom: FrankenPHP + Laravel Octane (worker mode).
+  # Laravel загружается один раз и обслуживает все запросы из памяти
+  # → 5-10× быстрее vs php-fpm. Caddy внутри FrankenPHP отдаёт статику
+  # с Brotli/HTTP/3. Фронт читает ТОЛЬКО из Redis (Repository pattern).
+  # ────────────────────────────────────────────────────────────────────
+  new-kratom:
+    build:
+      context: .
+      dockerfile: .docker/dev/new-kratom/Dockerfile
+    container_name: vivadzen_new_kratom
+    hostname: new-kratom
+    ports:
+      - "8002:8000"
+    environment:
+      APP_URL: http://localhost:8002
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: kratom
+      DB_USERNAME: kratom
+      DB_PASSWORD: kratom_secret
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      CACHE_STORE: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      OCTANE_SERVER: frankenphp
+    volumes:
+      - ./src/new-kratom/app:/var/www/html
+      - new_kratom_vendor:/var/www/html/vendor
+      - new_kratom_node_modules:/var/www/html/node_modules
+    working_dir: /var/www/html
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - api
+    restart: unless-stopped
+    depends_on:
+      - mysql
+      - redis
+
+  # Vite dev-сервер для HMR. В prod build статика собирается в /public/build
+  # и отдаётся напрямую Caddy → ноды в prod не нужно.
+  new-kratom-vite:
+    image: node:22-alpine
+    container_name: vivadzen_new_kratom_vite
+    hostname: new-kratom-vite
+    working_dir: /var/www/html
+    ports:
+      - "5173:5173"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      VITE_DEV_SERVER_HOST: localhost
+      VITE_DEV_SERVER_PORT: "5173"
+    volumes:
+      - ./src/new-kratom/app:/var/www/html
+      - new_kratom_node_modules:/var/www/html/node_modules
+    command: >
+      sh -lc '
+        npm install &&
+        npm run dev -- --host 0.0.0.0 --port 5173
+      '
+    depends_on:
+      - new-kratom
+    networks:
+      - api
+    restart: unless-stopped
+
+  # Horizon worker — фоновые задачи (создание заказов, прогрев Redis,
+  # генерация AVIF/WebP, email). Тот же codebase + ENV что у фронта.
+  new-kratom-horizon:
+    build:
+      context: .
+      dockerfile: .docker/dev/new-kratom-horizon/Dockerfile
+    container_name: vivadzen_new_kratom_horizon
+    hostname: new-kratom-horizon
+    environment:
+      APP_URL: http://localhost:8002
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: kratom
+      DB_USERNAME: kratom
+      DB_PASSWORD: kratom_secret
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      CACHE_STORE: redis
+      QUEUE_CONNECTION: redis
+    volumes:
+      - ./src/new-kratom/app:/var/www/html
+      - new_kratom_vendor:/var/www/html/vendor
+    working_dir: /var/www/html
+    networks:
+      - api
+    restart: unless-stopped
+    depends_on:
+      - mysql
+      - redis
+      - new-kratom
+
+  # Nuxt 4 admin — отдельный SPA с собственным контейнером.
+  # Ходит в Laravel admin API (/admin-api/*) на той же сети.
+  new-kratom-admin:
+    build:
+      context: .
+      dockerfile: .docker/dev/new-kratom-admin/Dockerfile
+    container_name: vivadzen_new_kratom_admin
+    hostname: new-kratom-admin
+    ports:
+      - "3002:3000"
+    working_dir: /app
+    environment:
+      NODE_ENV: development
+      NUXT_PUBLIC_API_BASE: http://localhost:8002/admin-api
+      NUXT_PUBLIC_SITE_BASE: http://localhost:8002
+      CHOKIDAR_USEPOLLING: "true"
+      NUXT_TELEMETRY_DISABLED: "1"
+    volumes:
+      - ./src/new-kratom-admin:/app
+      - new_kratom_admin_node_modules:/app/node_modules
+      - new_kratom_admin_nuxt:/app/.nuxt
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - api
+    restart: unless-stopped
+    depends_on:
+      - new-kratom
+
   mysql:
     build:
       dockerfile: .docker/dev/mysql/Dockerfile
@@ -112,10 +261,12 @@ services:
     tty: true
     ports: 
         - "3307:3306"
-    volumes: 
+    volumes:
         - ./mysql/lib:/var/lib/mysql
         - ./mysql/logs:/var/log/mysql
         - ./mysql/dumps:/var/dumps
+        # init-скрипты выполняются только при создании пустого data-dir
+        - ./.docker/dev/mysql/init:/docker-entrypoint-initdb.d:ro
     environment: 
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_USER: ${DB_USERNAME}
@@ -175,6 +326,7 @@ services:
       args:
         IMAGE_REGISTRY: ${IMAGE_REGISTRY}
         IMAGE_TAG: ${IMAGE_TAG}
+    profiles: ["legacy-queue"]
     volumes:
       - ./src/api:/var/www/html
     depends_on:
@@ -187,6 +339,28 @@ services:
     networks:
       - api
     restart: always
+
+  horizon:
+    build:
+      dockerfile: .docker/dev/queue/Dockerfile
+      args:
+        IMAGE_REGISTRY: ${IMAGE_REGISTRY}
+        IMAGE_TAG: ${IMAGE_TAG}
+    command: ["php", "artisan", "horizon"]
+    volumes:
+      - ./src/api:/var/www/html
+    container_name: vivadzen_horizon
+    hostname: horizon
+    depends_on:
+      redis:
+        condition: service_started
+      mysql:
+        condition: service_started
+      meilisearch:
+        condition: service_started
+    networks:
+      - api
+    restart: unless-stopped
 
   schedule:
     build:
@@ -201,24 +375,6 @@ services:
       - mysql
     networks:
       - api
-    restart: unless-stopped
-
-  opensearch:
-    image: opensearchproject/opensearch:2.11.1
-    container_name: opensearch
-    environment:
-      - discovery.type=single-node
-      - plugins.security.disabled=true
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    networks:
-      - api
-    volumes:
-      - opensearch-data:/usr/share/opensearch/data
-    ports:
-      - 9200:9200
     restart: unless-stopped
 
   meilisearch:
@@ -236,8 +392,17 @@ services:
 volumes:
   meili_data:
 
-  opensearch-data:
-    driver: local
+  new_kratom_node_modules:
+
+  new_kratom_vendor:
+
+  new_kratom_admin_node_modules:
+
+  new_kratom_admin_nuxt:
+
+  tg_node_modules:
+
+  tg_nuxt:
 
   backups:
     driver: local

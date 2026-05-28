@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { font-family: 'Inter', system-ui, sans-serif; }
+  body { @apply bg-cream-50 text-ink-900 antialiased; }
+  h1, h2, h3 { font-family: 'Playfair Display', serif; }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+  .btn-primary { @apply btn bg-moss-700 text-cream-50 hover:bg-moss-900; }
+  .btn-ghost   { @apply btn text-moss-700 hover:bg-moss-50; }
+  .btn-danger  { @apply btn text-terracotta-700 hover:bg-terracotta-500/10; }
+
+  .field-label { @apply block text-sm font-medium text-ink-700 mb-1; }
+  .field-input { @apply w-full rounded-lg border border-ink-700/20 bg-white px-3 py-2 text-sm focus:border-moss-500 focus:outline-none focus:ring-1 focus:ring-moss-500; }
+
+  .card { @apply bg-white rounded-xl shadow-sm border border-ink-700/5 p-6; }
+
+  .table-th { @apply px-4 py-3 text-left text-xs font-semibold text-ink-700/70 uppercase tracking-wider; }
+  .table-td { @apply px-4 py-3 text-sm text-ink-900; }
+  .table-row-hover:hover { @apply bg-cream-50; }
+}

@@ -11,6 +11,7 @@
         "bunnycdn/storage": "^3.4",
         "dompdf/dompdf": "^2.0",
         "laravel/framework": "^12.0",
+        "laravel/horizon": "^5.47",
         "laravel/octane": "^2.12",
         "laravel/sanctum": "^4.2",
         "laravel/tinker": "^2.10.1",
@@ -101,5 +102,13 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [{
+        "name": "local",
+        "type": "path",
+        "url": "packages/*",
+        "options": {
+            "symlink": true
+        }
+    }]
 }

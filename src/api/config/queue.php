@@ -76,6 +76,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Named Queues
+    |--------------------------------------------------------------------------
+    |
+    | Centralized queue names used by application jobs, notifications and
+    | Horizon supervisors. Keep these names aligned with your deployment env.
+    |
+    */
+
+    'names' => [
+        'default' => env('QUEUE_DEFAULT_NAME', 'default'),
+        'ak_catalog' => env('QUEUE_AK_CATALOG', 'ak_catalog'),
+        'frontend_cache' => env('QUEUE_FRONTEND_CACHE', env('WEBHOOK_QUEUE', 'frontend_cache')),
+        'emails' => env('QUEUE_EMAILS', 'emails'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Job Batching
     |--------------------------------------------------------------------------
     |

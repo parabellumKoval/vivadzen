@@ -1,0 +1,122 @@
+// =============================================================
+// Базовая типографика + utility-классы шкалы.
+// Соответствует 01_DESIGN_SYSTEM.md §3.
+// =============================================================
+
+body { font-size: var(--fs-body-md); }
+
+// --- Display ---
+.t-display-xl {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-display-xl);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.01em;
+}
+.t-display-xl--italic { font-style: italic; }
+
+.t-display-lg {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-display-lg);
+    line-height: var(--lh-snug);
+    letter-spacing: -0.005em;
+}
+
+.t-display-md {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-bold);
+    font-style: italic;
+    font-size: var(--fs-display-md);
+    line-height: var(--lh-snug);
+}
+
+// --- Headings ---
+.t-heading-xl {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-heading-xl);
+    line-height: var(--lh-snug);
+    letter-spacing: -0.005em;
+}
+
+.t-heading-lg {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-heading-lg);
+    line-height: var(--lh-snug);
+}
+
+.t-heading-md {
+    font-family: var(--ff-sans);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-heading-md);
+    line-height: var(--lh-snug);
+}
+
+.t-heading-sm {
+    font-family: var(--ff-sans);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-heading-sm);
+    line-height: var(--lh-snug);
+}
+
+// --- Body ---
+.t-body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-relaxed); }
+.t-body-md { font-size: var(--fs-body-md); line-height: var(--lh-normal); }
+.t-body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-normal); }
+
+// --- Meta ---
+.t-caption {
+    font-size: var(--fs-caption);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    line-height: var(--lh-snug);
+}
+
+.t-overline {
+    font-size: var(--fs-overline);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: var(--lh-snug);
+}
+
+// --- Metric (числа в hero) ---
+.t-metric-lg {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-bold);
+    font-size: 36px;
+    line-height: 1.1;
+
+    @media (max-width: 768px) { font-size: 28px; }
+}
+
+.t-metric-sm {
+    font-family: var(--ff-sans);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-body-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+// --- Двух-цветный hero heading ---
+.t-two-tone {
+    .t-two-tone__line-1 { color: var(--text-on-dark-primary); display: block; }
+    .t-two-tone__line-2 {
+        color: var(--text-on-dark-accent);
+        font-style: italic;
+        display: block;
+    }
+}
+
+// --- Цветовые утилиты для текста ---
+.t-on-dark         { color: var(--text-on-dark-primary); }
+.t-on-dark-2       { color: var(--text-on-dark-secondary); }
+.t-on-dark-accent  { color: var(--text-on-dark-accent); }
+.t-on-light        { color: var(--text-on-light-primary); }
+.t-on-light-2      { color: var(--text-on-light-secondary); }
+.t-on-light-accent { color: var(--text-on-light-accent); }
+.t-amber           { color: var(--c-amber-500); }
+.t-terra           { color: var(--c-terracotta-500); }

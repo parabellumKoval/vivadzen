@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480" fill="none">
+    <defs>
+        <g id="leaf">
+            <path d="M0 60 C20 40, 40 20, 60 0 C50 30, 35 55, 0 60 Z" fill="currentColor"/>
+            <path d="M5 55 L40 25" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+        </g>
+    </defs>
+    <g fill="currentColor" opacity="0.5">
+        <use href="#leaf" transform="translate(40 60) rotate(15)"/>
+        <use href="#leaf" transform="translate(180 30) rotate(-25)"/>
+        <use href="#leaf" transform="translate(330 90) rotate(45)"/>
+        <use href="#leaf" transform="translate(80 220) rotate(-50)"/>
+        <use href="#leaf" transform="translate(260 200) rotate(80)"/>
+        <use href="#leaf" transform="translate(400 250) rotate(120)"/>
+        <use href="#leaf" transform="translate(50 360) rotate(195)"/>
+        <use href="#leaf" transform="translate(220 380) rotate(-110)"/>
+        <use href="#leaf" transform="translate(360 400) rotate(160)"/>
+    </g>
+</svg>

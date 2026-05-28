@@ -1,0 +1,116 @@
+- generic [ref=e556]:
+  - generic [ref=e560]:
+    - img [ref=e561]
+    - img [ref=e562]
+    - img [ref=e563]
+    - img [ref=e564]
+  - banner [ref=e565]:
+    - link "Vivadzen" [ref=e567] [cursor=pointer]:
+      - /url: /cz/ru
+      - generic [ref=e568]: VIVADZEN
+    - button "Сменить язык" [ref=e569] [cursor=pointer]:
+      - img [ref=e570]
+      - text: RU
+  - main [ref=e574]:
+    - generic [ref=e575]:
+      - link "Все" [ref=e576] [cursor=pointer]:
+        - /url: /cz/ru/catalog
+      - link "Мухоморы" [ref=e577] [cursor=pointer]:
+        - /url: /cz/ru/catalog/muhomory
+      - link "Канабис" [ref=e578] [cursor=pointer]:
+        - /url: /cz/ru/catalog/kanabis
+      - link "Кава Кава" [ref=e579] [cursor=pointer]:
+        - /url: /cz/ru/catalog/kava-kava
+      - link "Канна" [ref=e580] [cursor=pointer]:
+        - /url: /cz/ru/catalog/kanna
+      - link "Акуамма" [ref=e581] [cursor=pointer]:
+        - /url: /cz/ru/catalog/akuamma
+      - link "Каапи" [ref=e582] [cursor=pointer]:
+        - /url: /cz/ru/catalog/kaapi
+      - link "Гавайская Роза" [ref=e583] [cursor=pointer]:
+        - /url: /cz/ru/catalog/gavayskaya-roza
+      - link "Коридалис" [ref=e584] [cursor=pointer]:
+        - /url: /cz/ru/catalog/koridalis
+    - generic [ref=e585]:
+      - generic [ref=e586]:
+        - heading "Мухоморы" [level=1] [ref=e587]
+        - paragraph [ref=e588]: 5 товаров
+      - generic [ref=e589]:
+        - article [ref=e590]:
+          - link "Пантерный мухомор (Amanita Pantherina), порошок" [ref=e591] [cursor=pointer]:
+            - /url: /cz/ru/product/muchomurka-tygrovana-amanita-pantherina-prasek-10g?fromCategory=muhomory
+            - img "Пантерный мухомор (Amanita Pantherina), порошок" [ref=e592]
+          - generic [ref=e593]:
+            - link "Пантерный мухомор (Amanita Pantherina), порошок" [ref=e594] [cursor=pointer]:
+              - /url: /cz/ru/product/muchomurka-tygrovana-amanita-pantherina-prasek-10g?fromCategory=muhomory
+            - generic [ref=e596]: 350 CZK
+            - button "Добавить" [ref=e597] [cursor=pointer]:
+              - img [ref=e598]
+              - text: Добавить
+        - article [ref=e599]:
+          - link "Ежовик Гребенчатый, целый гриб" [ref=e600] [cursor=pointer]:
+            - /url: /cz/ru/product/koralovec-jezaty-cela-houba-100g?fromCategory=muhomory
+            - img "Ежовик Гребенчатый, целый гриб" [ref=e601]
+          - generic [ref=e602]:
+            - link "Ежовик Гребенчатый, целый гриб" [ref=e603] [cursor=pointer]:
+              - /url: /cz/ru/product/koralovec-jezaty-cela-houba-100g?fromCategory=muhomory
+            - generic [ref=e605]: 149 CZK
+            - button "Добавить" [ref=e606] [cursor=pointer]:
+              - img [ref=e607]
+              - text: Добавить
+        - article [ref=e608]:
+          - link "Нет в наличии Красный мухомор (Amanita Muscaria), порошок" [ref=e609] [cursor=pointer]:
+            - /url: /cz/ru/product/muchomurka-cervena-amanita-muscaria-prasek-50g?fromCategory=muhomory
+            - generic [ref=e610]: Нет в наличии
+            - img "Красный мухомор (Amanita Muscaria), порошок" [ref=e611]
+          - generic [ref=e612]:
+            - link "Красный мухомор (Amanita Muscaria), порошок" [ref=e613] [cursor=pointer]:
+              - /url: /cz/ru/product/muchomurka-cervena-amanita-muscaria-prasek-50g?fromCategory=muhomory
+            - generic [ref=e615]: 350 CZK
+            - button "Нет в наличии" [disabled] [ref=e616]:
+              - img [ref=e617]
+              - text: Нет в наличии
+        - article [ref=e618]:
+          - link "Нет в наличии Красный мухомор (Amanita muscaria), сушеные шляпки" [ref=e619] [cursor=pointer]:
+            - /url: /cz/ru/product/muchomurka-cervena-amanita-muscaria-susene-cepicky-25g?fromCategory=muhomory
+            - generic [ref=e620]: Нет в наличии
+            - img "Красный мухомор (Amanita muscaria), сушеные шляпки" [ref=e621]
+          - generic [ref=e622]:
+            - link "Красный мухомор (Amanita muscaria), сушеные шляпки" [ref=e623] [cursor=pointer]:
+              - /url: /cz/ru/product/muchomurka-cervena-amanita-muscaria-susene-cepicky-25g?fromCategory=muhomory
+            - generic [ref=e625]: 200 CZK
+            - button "Нет в наличии" [disabled] [ref=e626]:
+              - img [ref=e627]
+              - text: Нет в наличии
+        - article [ref=e628]:
+          - link "Нет в наличии Королевский мухомор (Amanita regalis), порошок" [ref=e629] [cursor=pointer]:
+            - /url: /cz/ru/product/muchomurka-kralovska-amanita-regalis-prasek-25g?fromCategory=muhomory
+            - generic [ref=e630]: Нет в наличии
+            - img "Королевский мухомор (Amanita regalis), порошок" [ref=e631]
+          - generic [ref=e632]:
+            - link "Королевский мухомор (Amanita regalis), порошок" [ref=e633] [cursor=pointer]:
+              - /url: /cz/ru/product/muchomurka-kralovska-amanita-regalis-prasek-25g?fromCategory=muhomory
+            - generic [ref=e635]: 450 CZK
+            - button "Нет в наличии" [disabled] [ref=e636]:
+              - img [ref=e637]
+              - text: Нет в наличии
+  - navigation "Main navigation" [ref=e638]:
+    - link "Главная" [ref=e639] [cursor=pointer]:
+      - /url: /cz/ru
+      - img [ref=e641]
+      - generic [ref=e644]: Главная
+    - link "Каталог" [ref=e645] [cursor=pointer]:
+      - /url: /cz/ru/catalog
+      - img [ref=e647]
+      - generic [ref=e652]: Каталог
+    - button "Корзина" [ref=e653] [cursor=pointer]:
+      - img [ref=e655]
+      - generic [ref=e658]: Корзина
+    - link "Заказы" [ref=e659] [cursor=pointer]:
+      - /url: /cz/ru/orders
+      - img [ref=e661]
+      - generic [ref=e664]: Заказы
+    - link "Аккаунт" [ref=e665] [cursor=pointer]:
+      - /url: /cz/ru/account
+      - img [ref=e667]
+      - generic [ref=e670]: Аккаунт

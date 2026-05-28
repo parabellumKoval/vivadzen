@@ -1,0 +1,54 @@
+// =============================================================
+// CategoryGlyphCard — 04_HOMEPAGE.md §7.2 (Image 3 reference)
+// =============================================================
+
+.cat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--c-cream-200);
+    border-radius: var(--r-xl);
+    padding: var(--sp-5) var(--sp-4);
+    transition: transform var(--dur-base) var(--ease-standard),
+                background var(--dur-base) var(--ease-standard),
+                box-shadow var(--dur-base) var(--ease-standard);
+    color: inherit;
+    text-decoration: none;
+    min-height: 196px;
+
+    &:hover, &:focus-visible {
+        background: var(--c-cream-300);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    &:active { transform: scale(0.98); }
+
+    &__glyph {
+        width: 96px;
+        height: 96px;
+        border-radius: var(--r-circle);
+        background: var(--c-cream-300);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        margin-bottom: var(--sp-4);
+
+        img, svg { width: 64px; height: 64px; object-fit: contain; }
+    }
+
+    &__title {
+        font-family: var(--ff-sans);
+        font-weight: var(--fw-semibold);
+        font-size: 16px;
+        color: var(--c-forest-900);
+        margin-bottom: 4px;
+    }
+
+    &__subtitle {
+        font-size: 12px;
+        color: rgba(20, 32, 27, 0.65);
+        line-height: 1.35;
+    }
+}

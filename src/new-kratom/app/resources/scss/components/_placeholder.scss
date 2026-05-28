@@ -1,0 +1,94 @@
+// =============================================================
+// Placeholder — заглушка для будущих картинок / ассетов.
+// Используется во всех местах, где должны быть Nano Banana / фото / SVG.
+// =============================================================
+
+.placeholder {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background:
+        linear-gradient(135deg, rgba(126, 200, 85, 0.06) 0%, rgba(244, 160, 32, 0.05) 100%),
+        repeating-linear-gradient(
+            45deg,
+            var(--c-cream-200),
+            var(--c-cream-200) 12px,
+            var(--c-cream-300) 12px,
+            var(--c-cream-300) 24px
+        );
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    color: var(--c-forest-700);
+
+    &--dark {
+        background:
+            linear-gradient(135deg, rgba(126, 200, 85, 0.06) 0%, rgba(244, 160, 32, 0.05) 100%),
+            repeating-linear-gradient(
+                45deg,
+                var(--c-forest-800),
+                var(--c-forest-800) 12px,
+                var(--c-forest-700) 12px,
+                var(--c-forest-700) 24px
+            );
+        color: var(--c-cream-100);
+    }
+
+    &--square { aspect-ratio: 1 / 1; }
+    &--portrait { aspect-ratio: 4 / 5; }
+    &--wide { aspect-ratio: 16 / 9; }
+    &--hero { aspect-ratio: 4 / 5; border-radius: var(--r-xl); }
+
+    &__inner {
+        text-align: center;
+        padding: var(--sp-4);
+        max-width: 80%;
+    }
+
+    &__icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto var(--sp-3);
+        opacity: 0.6;
+    }
+
+    &__label {
+        font-family: var(--ff-sans);
+        font-weight: var(--fw-semibold);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        line-height: 1.4;
+        opacity: 0.85;
+    }
+
+    &__hint {
+        font-size: 12px;
+        color: rgba(20, 32, 27, 0.55);
+        margin-top: var(--sp-1);
+        line-height: 1.4;
+    }
+}
+
+// Inline-glyph placeholder (для category icons)
+.glyph-placeholder {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--r-circle);
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--c-grass-300) 0%, var(--c-grass-500) 100%);
+    color: var(--c-forest-900);
+    font-family: var(--ff-display);
+    font-weight: var(--fw-bold);
+    font-size: 24px;
+
+    &--red    { background: linear-gradient(135deg, #E0816A 0%, #B0331E 100%); color: #fff; }
+    &--green  { background: linear-gradient(135deg, #B9E198 0%, #4F9E2D 100%); color: var(--c-forest-900); }
+    &--white  { background: linear-gradient(135deg, #FBF8F0 0%, #D9C998 100%); color: var(--c-forest-700); }
+    &--yellow { background: linear-gradient(135deg, #FCD27A 0%, #E0B43A 100%); color: var(--c-forest-900); }
+    &--amber  { background: linear-gradient(135deg, #FCD27A 0%, #F4A020 100%); color: var(--c-forest-900); }
+    &--terra  { background: linear-gradient(135deg, #E89373 0%, #D45C2B 100%); color: #fff; }
+    &--forest { background: linear-gradient(135deg, #3D6F54 0%, #1B3A2D 100%); color: var(--c-cream-100); }
+}

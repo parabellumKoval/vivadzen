@@ -112,6 +112,65 @@ class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderCont
         return $data;
     }
 
+    protected function setRequestFields($model, array $data)
+    {
+        $configFields = $this->getFields();
+
+        foreach ($data as $fieldName => $fieldValue) {
+            $field = $this->resolveConfiguredOrderField($configFields, (string) $fieldName);
+
+            if ($field === null) {
+                $this->storeFallbackTelegramField($model, (string) $fieldName, $fieldValue, $data);
+                continue;
+            }
+
+            if (!empty($field['hidden'])) {
+                continue;
+            }
+
+            if (isset($field['store_in'])) {
+                $fieldOldValue = (array) ($model->{$field['store_in']} ?? []);
+                $fieldOldValue[$fieldName] = $fieldValue;
+                $model->{$field['store_in']} = $fieldOldValue;
+                continue;
+            }
+
+            $model->{$fieldName} = $fieldValue;
+        }
+
+        return $model;
+    }
+
+    protected function resolveConfiguredOrderField(array $configFields, string $fieldName): ?array
+    {
+        if (array_key_exists($fieldName, $configFields)) {
+            return $configFields[$fieldName];
+        }
+
+        $wildcardKey = $fieldName . '.*';
+
+        if (array_key_exists($wildcardKey, $configFields)) {
+            return $configFields[$wildcardKey];
+        }
+
+        return null;
+    }
+
+    protected function storeFallbackTelegramField($model, string $fieldName, mixed $fieldValue, array $data): void
+    {
+        if ($this->resolveStorefrontCode($data) !== 'telegram') {
+            return;
+        }
+
+        if (!in_array($fieldName, ['telegram_user_id', 'telegram_user'], true)) {
+            return;
+        }
+
+        $info = (array) ($model->info ?? []);
+        $info[$fieldName] = $fieldValue;
+        $model->info = $info;
+    }
+
     protected function ensureAgeVerificationIfNeeded(array $data, iterable $products, Request $request): void
     {
         $country = strtolower((string) ($request->get('country') ?? \Store::country() ?? ''));

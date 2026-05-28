@@ -3,19 +3,32 @@
 namespace Backpack\CRUD\app\Notifications;
 
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class ResetPasswordNotification extends ResetPassword
+class ResetPasswordNotification extends ResetPassword implements ShouldQueue
 {
+    use Queueable;
+
+    protected ?string $email = null;
+
+    public function __construct($token, ?string $email = null)
+    {
+        parent::__construct($token);
+
+        $this->email = $email;
+        $this->onQueue((string) config('queue.names.emails', 'emails'));
+    }
+
     /**
      * Build the mail representation of the notification.
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable, $email = null)
+    public function toMail($notifiable)
     {
-        $email = $email ?? $notifiable->getEmailForPasswordReset();
+        $email = $this->email ?? $notifiable->getEmailForPasswordReset();
 
         return (new MailMessage())
             ->subject(trans('backpack::base.password_reset.subject'))

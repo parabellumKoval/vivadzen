@@ -2,7 +2,7 @@
 -include .env
 
 # Define default values for variables
-COMPOSE_FILE ?= docker compose.dev.yml
+COMPOSE_FILE ?= docker-compose.dev.yml
 BASE_IMAGE_DOCKERFILE ?= .docker/dev/base/Dockerfile
 IMAGE_REGISTRY ?= dev
 IMAGE_TAG ?= latest
@@ -419,9 +419,17 @@ or: octane.reload
 # Queue
 #-----------------------------------------------------------
 
-# Restart the queue process
+# Restart the legacy queue worker
 queue.restart:
 	docker compose -f ${COMPOSE_FILE} exec queue php artisan queue:restart
+
+# Show Horizon status
+horizon.status:
+	docker compose -f ${COMPOSE_FILE} exec horizon php artisan horizon:status
+
+# Gracefully restart Horizon workers
+horizon.terminate:
+	docker compose -f ${COMPOSE_FILE} exec horizon php artisan horizon:terminate
 
 #-----------------------------------------------------------
 # Testing (only for development environment)

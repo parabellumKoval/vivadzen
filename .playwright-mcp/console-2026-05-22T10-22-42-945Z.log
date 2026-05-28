@@ -1,0 +1,37 @@
+[     467ms] [LOG] [Telegram.WebView] > postEvent web_app_set_header_color {color_key: bg_color} @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:130
+[     471ms] [LOG] [Telegram.WebView] > postEvent web_app_set_bottom_bar_color {color: #ffffff} @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:130
+[     472ms] [LOG] [Telegram.WebView] > postEvent web_app_request_theme  @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:130
+[     472ms] [LOG] [Telegram.WebView] > postEvent web_app_request_viewport  @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:130
+[     472ms] [LOG] [Telegram.WebView] > postEvent web_app_request_safe_area  @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:130
+[     472ms] [LOG] [Telegram.WebView] > postEvent web_app_request_content_safe_area  @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:130
+[    1417ms] [LOG] [Telegram.WebView] > postEvent web_app_expand  @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:130
+[    1417ms] [LOG] [Telegram.WebView] > postEvent web_app_ready  @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:130
+[    1418ms] [WARNING] [Telegram.WebApp] Header color is not supported in version 6.0 @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:687
+[    1418ms] [WARNING] [Telegram.WebApp] Background color is not supported in version 6.0 @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:737
+[    1442ms] [INFO] <Suspense> is an experimental feature and its API will likely change. @ http://127.0.0.1:3002/_nuxt/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=294db133:7234
+[    1454ms] [WARNING] [Vue warn]: Extraneous non-props attributes (class) were passed to component but could not be automatically inherited because component renders fragment or text or teleport root nodes. 
+  at <TgLangSwitcher key=4 class="tg-topbar__lang" > 
+  at <TgTopBar title="" show-back=false back-to=null  ... > 
+  at <TgLayout logo=true show-lang=true > 
+  at <TgCatalogPage> 
+  at <Catalog onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > > 
+  at <RouteProvider key="cz-ru-catalog" vnode= {__v_isVNode: true, __v_skip: true, type: Object, props: Object, key: null} route= {fullPath: /cz/ru/catalog/muhomory, hash: , query: Object, name: region-locale-catalog-category, path: /cz/ru/catalog/muhomory}  ... > 
+  at <RouterView name=undefined route=undefined > 
+  at <NuxtPage> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://127.0.0.1:3002/_nuxt/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=294db133:49
+[    1465ms] [WARNING] [Telegram.WebApp] BackButton is not supported in version 6.0 @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:898
+[   41967ms] [WARNING] [Telegram.WebApp] BackButton is not supported in version 6.0 @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:898
+[   41968ms] [WARNING] [Telegram.WebApp] BackButton is not supported in version 6.0 @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:898
+[   41975ms] [WARNING] [Vue warn]: Extraneous non-props attributes (class) were passed to component but could not be automatically inherited because component renders fragment or text or teleport root nodes. 
+  at <TgLangSwitcher key=4 class="tg-topbar__lang" > 
+  at <TgTopBar title="" show-back=false back-to=null  ... > 
+  at <TgLayout logo=true show-lang=true > 
+  at <TgCatalogPage> 
+  at <Catalog onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< Proxy(Object) > > 
+  at <RouteProvider key="cz-ru-catalog" vnode= {__v_isVNode: true, __v_skip: true, type: Object, props: Object, key: null} route= {fullPath: /cz/ru/catalog/muhomory, hash: , query: Object, name: region-locale-catalog-category, path: /cz/ru/catalog/muhomory}  ... > 
+  at <RouterView name=undefined route=undefined > 
+  at <NuxtPage> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://127.0.0.1:3002/_nuxt/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=294db133:49
+[   41978ms] [WARNING] [Telegram.WebApp] BackButton is not supported in version 6.0 @ http://127.0.0.1:3002/_nuxt/node_modules/.cache/vite/client/deps/@twa-dev_sdk.js?v=294db133:898

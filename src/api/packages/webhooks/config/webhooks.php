@@ -19,7 +19,7 @@ return [
     'frontend_url' => $defaultFrontendUrl,
     'frontend_urls' => $defaultFrontendUrls,
     'timeout' => 30,
-    'queue' => env('WEBHOOK_QUEUE'),
+    'queue' => env('WEBHOOK_QUEUE', env('QUEUE_FRONTEND_CACHE', 'frontend_cache')),
     'retry' => [
         'times' => 2,
         'sleep' => 1000,

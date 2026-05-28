@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Mail\Concerns\InteractsWithRegionalContext;
+use App\Mail\Concerns\RoutesToEmailQueue;
 use Backpack\Profile\app\Models\WithdrawalRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -11,6 +12,7 @@ use Illuminate\Queue\SerializesModels;
 abstract class WithdrawalNotification extends Mailable
 {
     use InteractsWithRegionalContext;
+    use RoutesToEmailQueue;
     use Queueable;
     use SerializesModels;
 
@@ -21,6 +23,7 @@ abstract class WithdrawalNotification extends Mailable
         ?array $regionalContext = null
     ) {
         $this->withdrawal->loadMissing('user.profile');
+        $this->routeToEmailQueue();
         $this->initializeRegionalContext($regionalContext);
 
         if (! $this->hasRegionalLocale()) {

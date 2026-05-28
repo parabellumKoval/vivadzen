@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Mail\Concerns\InteractsWithRegionalContext;
+use App\Mail\Concerns\RoutesToEmailQueue;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,6 +12,7 @@ use Illuminate\Support\Str;
 class Order extends Mailable
 {
     use InteractsWithRegionalContext;
+    use RoutesToEmailQueue;
     use Queueable, SerializesModels;
 
     public $order;
@@ -38,6 +40,7 @@ class Order extends Mailable
     public function __construct($order, ?array $regionalContext = null)
     {
         $this->order = $order;
+        $this->routeToEmailQueue();
         $this->initializeRegionalContext($regionalContext);
 
         if (! $this->hasRegionalLocale()) {

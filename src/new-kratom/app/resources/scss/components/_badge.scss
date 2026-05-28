@@ -1,0 +1,88 @@
+// =============================================================
+// Badge / Chip — small status indicators.
+// Соответствует 01_DESIGN_SYSTEM.md §2.3 (badge.*).
+// =============================================================
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    font-family: var(--ff-sans);
+    font-size: 11px;
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+
+    &--age {
+        background: var(--c-terracotta-500);
+        color: var(--c-cream-100);
+    }
+
+    &--lab {
+        background: var(--c-forest-600);
+        color: var(--c-cream-100);
+        border: 1px solid var(--c-grass-500);
+    }
+
+    &--licence {
+        background: var(--c-forest-600);
+        color: var(--c-cream-100);
+        border: 1px solid var(--c-amber-500);
+    }
+
+    &--sale {
+        background: var(--c-terracotta-500);
+        color: var(--c-cream-100);
+    }
+
+    &--out {
+        background: var(--c-ink-500);
+        color: var(--c-cream-100);
+    }
+
+    &--subscription {
+        background: var(--c-grass-500);
+        color: var(--c-forest-900);
+    }
+
+    &--express {
+        background: var(--c-amber-500);
+        color: var(--c-ink-900);
+    }
+
+    // Tag-chip для категорий контента
+    &--tag {
+        background: rgba(126, 200, 85, 0.18);
+        color: var(--c-grass-700);
+    }
+
+    &--tag-amber {
+        background: rgba(244, 160, 32, 0.18);
+        color: var(--c-amber-700);
+    }
+
+    &--tag-terra {
+        background: rgba(212, 92, 43, 0.15);
+        color: var(--c-terracotta-700);
+    }
+}
+
+// Vein color circle (цветной кружок жилки)
+.vein-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: var(--r-circle);
+    border: 1px solid rgba(20, 32, 27, 0.15);
+    flex-shrink: 0;
+
+    &--red    { background: #B0331E; }
+    &--green  { background: #4F9E2D; }
+    &--white  { background: #F5EDD8; border-color: rgba(20, 32, 27, 0.3); }
+    &--yellow { background: #E0B43A; }
+    &--mix    { background: linear-gradient(135deg, #4F9E2D 0%, #B0331E 100%); }
+}

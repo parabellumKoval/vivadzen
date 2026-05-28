@@ -1,0 +1,39 @@
+- generic [ref=e3]:
+  - generic [ref=e7]:
+    - img [ref=e8]
+    - img [ref=e9]
+    - img [ref=e10]
+    - img [ref=e11]
+  - banner [ref=e12]:
+    - link "Vivadzen" [ref=e14] [cursor=pointer]:
+      - /url: /cz/ru
+      - generic [ref=e15]: VIVADZEN
+    - button "Сменить язык" [ref=e16] [cursor=pointer]:
+      - img [ref=e17]
+      - text: RU
+  - main [ref=e21]:
+    - link "Все" [ref=e23] [cursor=pointer]:
+      - /url: /cz/ru/catalog
+    - generic [ref=e25]:
+      - heading "Каталог" [level=1] [ref=e26]
+      - paragraph [ref=e27]: 0 товаров
+  - navigation "Main navigation" [ref=e57]:
+    - link "Главная" [ref=e58] [cursor=pointer]:
+      - /url: /cz/ru
+      - img [ref=e60]
+      - generic [ref=e63]: Главная
+    - link "Каталог" [ref=e64] [cursor=pointer]:
+      - /url: /cz/ru/catalog
+      - img [ref=e66]
+      - generic [ref=e71]: Каталог
+    - button "Корзина" [ref=e72] [cursor=pointer]:
+      - img [ref=e74]
+      - generic [ref=e77]: Корзина
+    - link "Заказы" [ref=e78] [cursor=pointer]:
+      - /url: /cz/ru/orders
+      - img [ref=e80]
+      - generic [ref=e83]: Заказы
+    - link "Аккаунт" [ref=e84] [cursor=pointer]:
+      - /url: /cz/ru/account
+      - img [ref=e86]
+      - generic [ref=e89]: Аккаунт

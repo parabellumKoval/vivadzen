@@ -1,0 +1,298 @@
+- generic [ref=e148]:
+  - generic [ref=e152]:
+    - img [ref=e153]
+    - img [ref=e154]
+    - img [ref=e155]
+    - img [ref=e156]
+  - banner [ref=e157]:
+    - button "Назад" [ref=e158] [cursor=pointer]:
+      - img [ref=e159]
+      - generic [ref=e161]: Назад
+    - link "Vivadzen" [ref=e162] [cursor=pointer]:
+      - /url: /cz/ru
+      - generic [ref=e163]: VIVADZEN
+    - button "Сменить язык" [ref=e164] [cursor=pointer]:
+      - img [ref=e165]
+      - text: RU
+  - main [ref=e169]:
+    - article [ref=e170]:
+      - img "Muchomůrka tygrovaná (Amanita Pantherina), prášek" [ref=e173]
+      - generic [ref=e174]:
+        - generic [ref=e175]:
+          - generic [ref=e176]:
+            - img [ref=e177]
+            - text: В наличии
+          - generic [ref=e179]:
+            - img [ref=e180]
+            - text: Свежий товар
+          - generic [ref=e186]:
+            - img [ref=e187]
+            - text: Безопасная оплата
+        - heading "Muchomůrka tygrovaná (Amanita Pantherina), prášek" [level=1] [ref=e190]
+        - strong [ref=e193]: 350 CZK
+        - generic [ref=e194]:
+          - generic [ref=e195]: Выберите вариант
+          - generic [ref=e196]:
+            - button "10g 350 CZK" [ref=e197] [cursor=pointer]:
+              - generic [ref=e198]: 10g
+              - generic [ref=e199]: 350 CZK
+            - button "25g 720 CZK" [ref=e200] [cursor=pointer]:
+              - generic [ref=e201]: 25g
+              - generic [ref=e202]: 720 CZK
+        - generic [ref=e203]:
+          - generic [ref=e204]:
+            - img [ref=e205]
+            - generic [ref=e210]: Доставка и оплата
+          - generic [ref=e211]:
+            - img [ref=e212]
+            - generic [ref=e214]: Прага · от 45 минут до 2 часов · Вся Чехия · на следующий день
+          - generic [ref=e215]:
+            - img [ref=e216]
+            - generic [ref=e222]: Бесплатно от 2 000 CZK
+          - list [ref=e223]:
+            - listitem [ref=e224]:
+              - generic [ref=e225]: Zásilkovna · Отделение
+              - generic [ref=e226]: от 62 CZK
+            - listitem [ref=e227]:
+              - generic [ref=e228]: Zasilkovna · Адрес
+              - generic [ref=e229]: от 89 CZK
+            - listitem [ref=e230]:
+              - generic [ref=e231]: Доставка · Отделение
+              - generic [ref=e232]: —
+          - generic [ref=e233]:
+            - strong [ref=e234]: "Оплата:"
+            - generic [ref=e235]: Наложенный платёж Zasilkovna · Наличные · NiftiPay
+          - button "Подробнее" [ref=e236] [cursor=pointer]
+        - generic [ref=e237]:
+          - generic [ref=e239]:
+            - paragraph [ref=e240]:
+              - strong [ref=e241]: 🍄 Тигровая поганка (Amanita pantherina) - порошок
+            - list [ref=e242]:
+              - listitem [ref=e243]:
+                - paragraph [ref=e244]:
+                  - text: ⚗️
+                  - strong [ref=e245]: "Форма:"
+                  - text: тонкоизмельченный порошок высушенных плодов.
+              - listitem [ref=e246]:
+                - paragraph [ref=e247]:
+                  - text: 🏺
+                  - strong [ref=e248]: "Традиционный контекст:"
+                  - text: используется в этномикологии и при изучении древних культур.
+              - listitem [ref=e249]:
+                - paragraph [ref=e250]:
+                  - strong [ref=e251]: "📚 Научное значение:"
+                  - text: ценный материал для микологии, фармакологии и нейронаучных исследований.
+              - listitem [ref=e252]:
+                - paragraph [ref=e253]:
+                  - strong [ref=e254]: "💊 Состав:"
+                  - text: иботеновая кислота и мусцимол.
+              - listitem [ref=e255]:
+                - paragraph [ref=e256]:
+                  - text: ⚠️
+                  - strong [ref=e257]: "Предупреждение о безопасности:"
+                - list [ref=e258]:
+                  - listitem [ref=e259]:
+                    - paragraph [ref=e260]:
+                      - text: Amanita pantherina -
+                      - strong [ref=e261]: ядовитый гриб
+                      - text: .
+                  - listitem [ref=e262]:
+                    - paragraph [ref=e263]: Порошок не предназначен для внутреннего применения или нанесения на тело.
+                  - listitem [ref=e264]:
+                    - paragraph [ref=e265]: С ним следует обращаться осторожно и хранить в недоступном для детей и животных месте.
+            - paragraph [ref=e266]:
+              - strong [ref=e267]: Предмет коллекционирования - не для употребления!
+          - button "Читать далее" [ref=e268] [cursor=pointer]
+      - generic [ref=e269]:
+        - generic [ref=e270]:
+          - generic [ref=e271]:
+            - heading "Что говорят свои" [level=2] [ref=e272]
+            - paragraph [ref=e273]: 99 подтверждённых отзывов в Google · средняя 4.7
+          - generic "Google 4.7" [ref=e274]:
+            - img [ref=e275]
+            - generic [ref=e280]: "4.7"
+        - generic [ref=e281]:
+          - article [ref=e282]:
+            - generic [ref=e283]:
+              - img "Stepan Nemec" [ref=e285]
+              - generic [ref=e286]:
+                - generic [ref=e287]: Stepan Nemec
+                - generic [ref=e288]: 2 мар. 2026 г.
+            - generic "5/5" [ref=e289]:
+              - img [ref=e290]
+              - img [ref=e292]
+              - img [ref=e294]
+              - img [ref=e296]
+              - img [ref=e298]
+            - paragraph [ref=e300]: (Translated by Google) Great mud ☝️☝️ (Original) Skvele blaticko☝️☝️
+          - article [ref=e301]:
+            - generic [ref=e302]:
+              - img "Tadeáš Malý" [ref=e304]
+              - generic [ref=e305]:
+                - generic [ref=e306]: Tadeáš Malý
+                - generic [ref=e307]: 1 мар. 2026 г.
+            - generic "5/5" [ref=e308]:
+              - img [ref=e309]
+              - img [ref=e311]
+              - img [ref=e313]
+              - img [ref=e315]
+              - img [ref=e317]
+            - paragraph [ref=e319]: Good
+          - article [ref=e320]:
+            - generic [ref=e321]:
+              - img "Emil Navrátil" [ref=e323]
+              - generic [ref=e324]:
+                - generic [ref=e325]: Emil Navrátil
+                - generic [ref=e326]: 26 февр. 2026 г.
+            - generic "5/5" [ref=e327]:
+              - img [ref=e328]
+              - img [ref=e330]
+              - img [ref=e332]
+              - img [ref=e334]
+              - img [ref=e336]
+            - paragraph [ref=e338]: (Translated by Google) Great shop and package pickup (Original) Super shop i vyzvednuti baliku
+          - article [ref=e339]:
+            - generic [ref=e340]:
+              - img "alex" [ref=e342]
+              - generic [ref=e343]:
+                - generic [ref=e344]: alex
+                - generic [ref=e345]: 25 февр. 2026 г.
+            - generic "5/5" [ref=e346]:
+              - img [ref=e347]
+              - img [ref=e349]
+              - img [ref=e351]
+              - img [ref=e353]
+              - img [ref=e355]
+            - paragraph [ref=e357]: Отличное обслуживание. Отдельно бы хотел похвалить Лизу (Translated by Google) Excellent service. I'd like to give a special shout out to Lisa.
+          - article [ref=e358]:
+            - generic [ref=e359]:
+              - img "Egor Kuznetsov" [ref=e361]
+              - generic [ref=e362]:
+                - generic [ref=e363]: Egor Kuznetsov
+                - generic [ref=e364]: 17 февр. 2026 г.
+            - generic "5/5" [ref=e365]:
+              - img [ref=e366]
+              - img [ref=e368]
+              - img [ref=e370]
+              - img [ref=e372]
+              - img [ref=e374]
+            - paragraph [ref=e376]: zupeeer kraaa
+          - article [ref=e377]:
+            - generic [ref=e378]:
+              - img "Adam Kryštof" [ref=e380]
+              - generic [ref=e381]:
+                - generic [ref=e382]: Adam Kryštof
+                - generic [ref=e383]: 8 февр. 2026 г.
+            - generic "5/5" [ref=e384]:
+              - img [ref=e385]
+              - img [ref=e387]
+              - img [ref=e389]
+              - img [ref=e391]
+              - img [ref=e393]
+            - paragraph [ref=e395]: (Translated by Google) Great assortment and prices, I can recommend (Original) Super sortiment i ceny, můžu doporučit
+          - article [ref=e396]:
+            - generic [ref=e397]:
+              - img "Jeroným B" [ref=e399]
+              - generic [ref=e400]:
+                - generic [ref=e401]: Jeroným B
+                - generic [ref=e402]: 4 февр. 2026 г.
+            - generic "5/5" [ref=e403]:
+              - img [ref=e404]
+              - img [ref=e406]
+              - img [ref=e408]
+              - img [ref=e410]
+              - img [ref=e412]
+            - paragraph [ref=e414]: (Translated by Google) Great company and good kratom (Original) Super firma a dobrý kratom
+          - article [ref=e415]:
+            - generic [ref=e416]:
+              - img "Václav Kodým" [ref=e418]
+              - generic [ref=e419]:
+                - generic [ref=e420]: Václav Kodým
+                - generic [ref=e421]: 29 янв. 2026 г.
+            - generic "5/5" [ref=e422]:
+              - img [ref=e423]
+              - img [ref=e425]
+              - img [ref=e427]
+              - img [ref=e429]
+              - img [ref=e431]
+            - paragraph [ref=e433]: (Translated by Google) Pleasant shop and staff (Original) Příjemný obchod i personál
+          - article [ref=e434]:
+            - generic [ref=e435]:
+              - img "Kryštof Rejzek" [ref=e437]
+              - generic [ref=e438]:
+                - generic [ref=e439]: Kryštof Rejzek
+                - generic [ref=e440]: 21 янв. 2026 г.
+            - generic "5/5" [ref=e441]:
+              - img [ref=e442]
+              - img [ref=e444]
+              - img [ref=e446]
+              - img [ref=e448]
+              - img [ref=e450]
+            - paragraph [ref=e452]: (Translated by Google) Good stock and nice service, thank you (Original) Dobrá zásoba a milá obsluha děkuji
+          - article [ref=e453]:
+            - generic [ref=e454]:
+              - img "Kubisss" [ref=e456]
+              - generic [ref=e457]:
+                - generic [ref=e458]: Kubisss
+                - generic [ref=e459]: 20 янв. 2026 г.
+            - generic "5/5" [ref=e460]:
+              - img [ref=e461]
+              - img [ref=e463]
+              - img [ref=e465]
+              - img [ref=e467]
+              - img [ref=e469]
+            - paragraph [ref=e471]: (Translated by Google) Pecka shop great staff and products are really high quality I would recommend coming back (Original) Pecka obchod skvělý personál a produkty jsou opravdu kvalitní rad se vrátím
+          - article [ref=e472]:
+            - generic [ref=e473]:
+              - img "Soukieu" [ref=e475]
+              - generic [ref=e476]:
+                - generic [ref=e477]: Soukieu
+                - generic [ref=e478]: 16 янв. 2026 г.
+            - generic "5/5" [ref=e479]:
+              - img [ref=e480]
+              - img [ref=e482]
+              - img [ref=e484]
+              - img [ref=e486]
+              - img [ref=e488]
+            - paragraph [ref=e490]: (Translated by Google) Best shop (Original) Nejlepsi obchod
+          - article [ref=e491]:
+            - generic [ref=e492]:
+              - img "Tomáš Kubů" [ref=e494]
+              - generic [ref=e495]:
+                - generic [ref=e496]: Tomáš Kubů
+                - generic [ref=e497]: 5 янв. 2026 г.
+            - generic "5/5" [ref=e498]:
+              - img [ref=e499]
+              - img [ref=e501]
+              - img [ref=e503]
+              - img [ref=e505]
+              - img [ref=e507]
+            - paragraph [ref=e509]: (Translated by Google) Great store, pleasant service. 10/10. (Original) Skvely obchod, prijemna obsluha.10/10.
+        - link "Оставить отзыв в Google" [ref=e510] [cursor=pointer]:
+          - /url: https://www.google.com/maps/place//data=!4m3!3m2!1s0x470bed1ef43dd475:0xd571b66414b9e18a!12e1?source=g.page.m.nr._&laa=nmx-review-solicitation-recommendation-card
+          - img [ref=e511]
+          - text: Оставить отзыв в Google
+          - img [ref=e516]
+      - button "Добавить в корзину" [ref=e519] [cursor=pointer]:
+        - img [ref=e520]
+        - text: Добавить в корзину
+  - navigation "Main navigation" [ref=e523]:
+    - link "Главная" [ref=e524] [cursor=pointer]:
+      - /url: /cz/ru
+      - img [ref=e526]
+      - generic [ref=e529]: Главная
+    - link "Каталог" [ref=e530] [cursor=pointer]:
+      - /url: /cz/ru/catalog
+      - img [ref=e532]
+      - generic [ref=e537]: Каталог
+    - button "Корзина" [ref=e538] [cursor=pointer]:
+      - img [ref=e540]
+      - generic [ref=e543]: Корзина
+    - link "Заказы" [ref=e544] [cursor=pointer]:
+      - /url: /cz/ru/orders
+      - img [ref=e546]
+      - generic [ref=e549]: Заказы
+    - link "Аккаунт" [ref=e550] [cursor=pointer]:
+      - /url: /cz/ru/account
+      - img [ref=e552]
+      - generic [ref=e555]: Аккаунт

@@ -1,0 +1,43 @@
+// =============================================================
+// VIVADZEN — главный entry SCSS.
+//
+// Порядок:
+//   1) tokens — все CSS-переменные и Sass-константы
+//   2) base   — reset, типографика, утилиты layout
+//   3) components — UI и глобальные компоненты
+//   4) sections — стили секций главной (и др. страниц)
+//   5) utils
+//
+// Никогда не подключать tokens дважды. Никогда не писать HEX
+// внутри компонентов — только токены через var(--c-*).
+// =============================================================
+
+@use 'tokens' as *;
+
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/layout';
+
+@use 'utils/a11y';
+
+@use 'components/button';
+@use 'components/badge';
+@use 'components/input';
+@use 'components/card';
+@use 'components/product-card';
+@use 'components/category-card';
+@use 'components/review-card';
+@use 'components/accordion';
+@use 'components/placeholder';
+@use 'components/header';
+@use 'components/footer';
+@use 'components/cart-modal';
+
+@use 'sections/hero';
+@use 'sections/sections';
+
+@use 'pages/catalog';
+@use 'pages/product';
+@use 'pages/cart';
+@use 'pages/checkout';
+@use 'pages/static';

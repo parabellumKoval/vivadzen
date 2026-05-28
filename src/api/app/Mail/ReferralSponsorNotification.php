@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Mail\Concerns\InteractsWithRegionalContext;
+use App\Mail\Concerns\RoutesToEmailQueue;
 use Backpack\Profile\app\Models\Profile;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -11,6 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class ReferralSponsorNotification extends Mailable
 {
     use InteractsWithRegionalContext;
+    use RoutesToEmailQueue;
     use Queueable;
     use SerializesModels;
 
@@ -19,6 +21,7 @@ class ReferralSponsorNotification extends Mailable
         protected Profile $referral,
         ?array $regionalContext = null
     ) {
+        $this->routeToEmailQueue();
         $this->initializeRegionalContext($regionalContext);
 
         if (! $this->hasRegionalLocale()) {

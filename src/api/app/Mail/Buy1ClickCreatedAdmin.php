@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Mail\Concerns\InteractsWithRegionalContext;
+use App\Mail\Concerns\RoutesToEmailQueue;
 use Backpack\Feedback\app\Models\Feedback;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -12,6 +13,7 @@ class Buy1ClickCreatedAdmin extends Mailable
 {
     use Queueable, SerializesModels;
     use InteractsWithRegionalContext;
+    use RoutesToEmailQueue;
 
     public Feedback $feedback;
     public array $contactLines = [];
@@ -21,6 +23,7 @@ class Buy1ClickCreatedAdmin extends Mailable
     public function __construct(Feedback $feedback)
     {
         $this->feedback = $feedback;
+        $this->routeToEmailQueue();
         $this->initializeRegionalContext([
             'locale' => 'ru',
             'accept_language' => 'ru',

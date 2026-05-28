@@ -1,0 +1,206 @@
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e10]: Internal Server Error
+    - button "Copy as Markdown" [ref=e11] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: Copy as Markdown
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - heading "ErrorException" [level=1] [ref=e20]
+      - generic [ref=e22]: resources/views/components/catalog/product-grid.blade.php:46
+      - paragraph [ref=e23]: Undefined array key "vein"
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: LARAVEL
+          - generic [ref=e28]: 12.61.0
+        - generic [ref=e29]:
+          - generic [ref=e30]: PHP
+          - generic [ref=e31]: 8.4.21
+      - generic [ref=e32]:
+        - img [ref=e33]
+        - text: UNHANDLED
+      - generic [ref=e36]: CODE 0
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - img [ref=e40]
+        - text: "500"
+      - generic [ref=e43]:
+        - img [ref=e44]
+        - text: GET
+      - generic [ref=e47]: http://localhost:8002/ru/kratom
+      - button [ref=e48] [cursor=pointer]:
+        - img [ref=e49]
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - img [ref=e57]
+        - heading "Exception trace" [level=3] [ref=e60]
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63] [cursor=pointer]:
+            - generic [ref=e66]:
+              - code [ref=e70]:
+                - generic [ref=e71]: "Illuminate\\Foundation\\Bootstrap\\HandleExceptions->{closure:Illuminate\\Foundation\\Bootstrap\\HandleExceptions::forwardsTo():257}(integer, string, string, integer)"
+              - generic [ref=e73]: resources/views/components/catalog/product-grid.blade.php:46
+            - button [ref=e75]:
+              - img [ref=e76]
+          - code [ref=e84]:
+            - generic [ref=e85]: 41 @endif
+            - generic [ref=e86]: "42"
+            - generic [ref=e87]: 43 <div class="product-grid" id="grid">
+            - generic [ref=e88]: 44 @foreach($products as $p)
+            - generic [ref=e89]: "45 <div data-color=\"{{ $p['color'] ?? '' }}\" data-strain=\"{{ $p['strain'] ?? '' }}\" data-form=\"{{ $p['form'] ?? '' }}\">"
+            - generic [ref=e90]: 46 <x-ui.product-card
+            - generic [ref=e91]: 47 :name="$p['name']"
+            - generic [ref=e92]: 48 :strainLabel="$p['colorLabel'] . ' · ' . $p['strainLabel']"
+            - generic [ref=e93]: 49 :vein="$p['vein']"
+            - generic [ref=e94]: 50 :mitragynin="$p['mitragynin'] . ' % · ' . $p['grind']"
+            - generic [ref=e95]: 51 :price25="$p['price25']"
+            - generic [ref=e96]: 52 :price50="$p['price50']"
+            - generic [ref=e97]: 53 :rating="$p['rating']"
+            - generic [ref=e98]: 54 :reviewsCount="$p['reviewsCount'] . ' recenzí'"
+            - generic [ref=e99]: 55 :badge="$p['badge']"
+            - generic [ref=e100]: 56 :href="\App\Support\Locale::url('/kratom/' . $p['slug'])"
+            - generic [ref=e101]: 57 :image="asset(ltrim($p['image'], '/'))"
+            - generic [ref=e102]: "58"
+        - generic [ref=e104] [cursor=pointer]:
+          - img [ref=e105]
+          - generic [ref=e109]: 8 vendor frames
+          - button [ref=e110]:
+            - img [ref=e111]
+        - generic [ref=e116] [cursor=pointer]:
+          - generic [ref=e119]:
+            - code [ref=e123]:
+              - generic [ref=e124]: Illuminate\View\Factory->renderComponent()
+            - generic [ref=e126]: resources/views/components/catalog/main.blade.php:21
+          - button [ref=e128]:
+            - img [ref=e129]
+        - generic [ref=e134] [cursor=pointer]:
+          - img [ref=e135]
+          - generic [ref=e139]: 8 vendor frames
+          - button [ref=e140]:
+            - img [ref=e141]
+        - generic [ref=e146] [cursor=pointer]:
+          - generic [ref=e149]:
+            - code [ref=e153]:
+              - generic [ref=e154]: Illuminate\View\Factory->renderComponent()
+            - generic [ref=e156]: resources/views/pages/catalog/index.blade.php:139
+          - button [ref=e158]:
+            - img [ref=e159]
+        - generic [ref=e164] [cursor=pointer]:
+          - img [ref=e165]
+          - generic [ref=e169]: 13 vendor frames
+          - button [ref=e170]:
+            - img [ref=e171]
+        - generic [ref=e176] [cursor=pointer]:
+          - generic [ref=e179]:
+            - code [ref=e183]:
+              - generic [ref=e184]: "Illuminate\\Pipeline\\Pipeline->{closure:Illuminate\\Pipeline\\Pipeline::prepareDestination():178}(object(Illuminate\\Http\\Request))"
+            - generic [ref=e186]: app/Http/Middleware/SetResponseCache.php:41
+          - button [ref=e188]:
+            - img [ref=e189]
+        - generic [ref=e194] [cursor=pointer]:
+          - img [ref=e195]
+          - generic [ref=e199]: 1 vendor frame
+          - button [ref=e200]:
+            - img [ref=e201]
+        - generic [ref=e206] [cursor=pointer]:
+          - generic [ref=e209]:
+            - code [ref=e213]:
+              - generic [ref=e214]: "Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():194}:195}(object(Illuminate\\Http\\Request))"
+            - generic [ref=e216]: app/Http/Middleware/SetLocale.php:24
+          - button [ref=e218]:
+            - img [ref=e219]
+        - generic [ref=e224] [cursor=pointer]:
+          - img [ref=e225]
+          - generic [ref=e229]: 46 vendor frames
+          - button [ref=e230]:
+            - img [ref=e231]
+        - generic [ref=e236] [cursor=pointer]:
+          - generic [ref=e239]:
+            - code [ref=e243]:
+              - generic [ref=e244]: require(string)
+            - generic [ref=e246]: public/frankenphp-worker.php:7
+          - button [ref=e248]:
+            - img [ref=e249]
+    - generic [ref=e253]:
+      - generic [ref=e255]:
+        - img [ref=e257]
+        - heading "Queries" [level=3] [ref=e259]
+      - generic [ref=e261]: // No queries executed
+  - generic [ref=e263]:
+    - generic [ref=e264]:
+      - heading "Headers" [level=2] [ref=e265]
+      - generic [ref=e266]:
+        - generic [ref=e267]:
+          - generic [ref=e268]: host
+          - generic [ref=e270]: localhost:8002
+        - generic [ref=e271]:
+          - generic [ref=e272]: accept-encoding
+          - generic [ref=e274]: gzip, deflate, br, zstd
+        - generic [ref=e275]:
+          - generic [ref=e276]: cookie
+          - generic [ref=e278]: appVersion=1.0.0; _gcl_au=1.1.489715150.1778666907; _ga=GA1.1.1034419728.1778666907; _fbp=fb.0.1778666907216.972224322778988080; _clck=8i6r5h%5E2%5Eg60%5E0%5E2324; _ga_Q70PR4584K=GS2.1.s1778686297$o2$g1$t1778688678$j60$l0$h768879891; XSRF-TOKEN=eyJpdiI6IlcxMlUwcEVRYlRkSmJIS01yNWRrbnc9PSIsInZhbHVlIjoicmdkTU1VU0phTTZUc3FLQ3N4bTlEcEpkdFgxYnlrelJVM0gyMFowMnc4MzVTcWVXQ05WVzdRODM5a01YckVaZjN3TlNWY0M4cTcyajJDcnpTa29WWUpkdi82ekN2Z2xlWUJJSHoxOXZ3RWdjZlY3LzVMcTlCYWJwU3JucWIxT0QiLCJtYWMiOiIyZWVkYjE4YzVjZThiNmQwMGE0Y2IyZjg3MzQwOTg4YWUyM2JkMWM2N2I0MDMyMDVmMjU3MzU3M2NhY2FlNmQwIiwidGFnIjoiIn0%3D; laravel-session=eyJpdiI6IlQvYnZuaGtORjE1cXl4VW1lTkl6RXc9PSIsInZhbHVlIjoidmpRcjNOenIwOWZidGZ2emhJQXFxNjh4dXcyZlBCQm1KRVhmcUYzdHBycVoxNEorc0lXRXVLOVNwRG5sSUx6NmVZMUtxNytoL0M4RkNVeWRvZmpUbUZOclZiUWJ2cHg4a3QydmFHRDd4OWxPVkZvdUY5R1RyWTcxeDRldnV3S1oiLCJtYWMiOiI4MDBiM2E4Yjk1NWRjM2E2MDhkY2IxYjRhOTdiOTIxYzg2NmYzNDFjOGVhMmU5NzFkMTkxODUwOTk5MjM2ZDIxIiwidGFnIjoiIn0%3D
+        - generic [ref=e279]:
+          - generic [ref=e280]: sec-ch-ua
+          - generic [ref=e282]: "\"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\""
+        - generic [ref=e283]:
+          - generic [ref=e284]: sec-ch-ua-mobile
+          - generic [ref=e286]: "?0"
+        - generic [ref=e287]:
+          - generic [ref=e288]: sec-fetch-site
+          - generic [ref=e290]: none
+        - generic [ref=e291]:
+          - generic [ref=e292]: sec-fetch-user
+          - generic [ref=e294]: "?1"
+        - generic [ref=e295]:
+          - generic [ref=e296]: sec-fetch-dest
+          - generic [ref=e298]: document
+        - generic [ref=e299]:
+          - generic [ref=e300]: connection
+          - generic [ref=e302]: keep-alive
+        - generic [ref=e303]:
+          - generic [ref=e304]: sec-ch-ua-platform
+          - generic [ref=e306]: "\"macOS\""
+        - generic [ref=e307]:
+          - generic [ref=e308]: upgrade-insecure-requests
+          - generic [ref=e310]: "1"
+        - generic [ref=e311]:
+          - generic [ref=e312]: user-agent
+          - generic [ref=e314]: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+        - generic [ref=e315]:
+          - generic [ref=e316]: accept-language
+          - generic [ref=e318]: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+        - generic [ref=e319]:
+          - generic [ref=e320]: accept
+          - generic [ref=e322]: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        - generic [ref=e323]:
+          - generic [ref=e324]: sec-fetch-mode
+          - generic [ref=e326]: navigate
+    - generic [ref=e327]:
+      - heading "Body" [level=2] [ref=e328]
+      - generic [ref=e329]: // No request body
+    - generic [ref=e330]:
+      - heading "Routing" [level=2] [ref=e331]
+      - generic [ref=e332]:
+        - generic [ref=e333]:
+          - generic [ref=e334]: controller
+          - generic [ref=e336]: Closure
+        - generic [ref=e337]:
+          - generic [ref=e338]: route name
+          - generic [ref=e340]: catalog
+        - generic [ref=e341]:
+          - generic [ref=e342]: middleware
+          - generic [ref=e344]: web
+    - generic [ref=e345]:
+      - heading "Routing parameters" [level=2] [ref=e346]
+      - code [ref=e351]:
+        - generic [ref=e352]: "{"
+        - generic [ref=e353]: "\"locale\": \"ru\""
+        - generic [ref=e354]: "}"
+  - generic [ref=e357]:
+    - img [ref=e359]
+    - img [ref=e3397]

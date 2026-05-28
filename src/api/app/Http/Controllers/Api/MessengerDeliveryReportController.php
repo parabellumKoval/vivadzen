@@ -62,6 +62,17 @@ class MessengerDeliveryReportController extends Controller
         $payload = $this->reportsPayload($payload);
 
         if (! is_array($payload) || ! array_is_list($payload) || $payload === []) {
+            Log::warning('Messenger delivery report rejected: invalid payload shape.', [
+                'provided_key' => $this->apiKeyFingerprint($providedApiKey),
+                'ip' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'content_type' => $request->header('Content-Type'),
+                'body_size' => strlen((string) $request->getContent()),
+                'payload_type' => gettype($payload),
+                'payload_keys' => is_array($payload) ? array_slice(array_map('strval', array_keys($payload)), 0, 20) : null,
+                'is_test_run' => $this->isTestRun($request),
+            ]);
+
             return response()->json([
                 'status' => 'error',
                 'message' => 'Expected a non-empty JSON array.',
@@ -90,6 +101,17 @@ class MessengerDeliveryReportController extends Controller
         );
 
         if ($validator->fails()) {
+            Log::warning('Messenger delivery report rejected: validation failed.', [
+                'provided_key' => $this->apiKeyFingerprint($providedApiKey),
+                'ip' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'content_type' => $request->header('Content-Type'),
+                'reports_count' => count($payload),
+                'order_numbers' => $this->payloadOrderNumbers($payload),
+                'errors' => $validator->errors()->toArray(),
+                'is_test_run' => $this->isTestRun($request),
+            ]);
+
             return response()->json([
                 'status' => 'error',
                 'message' => 'Validation failed.',
@@ -225,6 +247,18 @@ class MessengerDeliveryReportController extends Controller
         }
 
         return $reports !== [] ? $reports : $payload;
+    }
+
+    /**
+     * @param  array<int, mixed>  $payload
+     * @return array<int, string>
+     */
+    protected function payloadOrderNumbers(array $payload): array
+    {
+        return array_values(array_filter(array_map(
+            fn (mixed $report): ?string => is_array($report) && isset($report['order_number']) ? (string) $report['order_number'] : null,
+            $payload
+        )));
     }
 
     /**

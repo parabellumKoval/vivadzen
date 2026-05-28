@@ -3,7 +3,7 @@
 namespace App\Mail;
 
 use App\Mail\Concerns\InteractsWithRegionalContext;
-use Illuminate\Auth\Notifications\VerifyEmail as BaseVerifyEmail;
+use App\Mail\Concerns\RoutesToEmailQueue;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
 class VerifyEmailNotification extends Mailable
 {
     use InteractsWithRegionalContext;
+    use RoutesToEmailQueue;
     use Queueable, SerializesModels;
 
     /**
@@ -38,6 +39,7 @@ class VerifyEmailNotification extends Mailable
     {
         $this->user = $user;
         $this->contextOverrides = $regionalContext;
+        $this->routeToEmailQueue();
         $this->initializeRegionalContext($regionalContext);
 
         if (!$this->hasRegionalLocale()) {

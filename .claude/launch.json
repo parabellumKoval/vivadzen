@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "new-kratom",
+      "runtimeExecutable": "php",
+      "runtimeArgs": ["-d", "memory_limit=512M", "artisan", "serve", "--host=127.0.0.1", "--port=8765"],
+      "port": 8765,
+      "cwd": "src/new-kratom/app"
+    }
+  ]
+}

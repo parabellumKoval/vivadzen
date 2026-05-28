@@ -1,0 +1,210 @@
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e10]: Internal Server Error
+    - button "Copy as Markdown" [ref=e11] [cursor=pointer]:
+      - img [ref=e12]
+      - generic [ref=e15]: Copy as Markdown
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - heading "Error" [level=1] [ref=e20]
+      - generic [ref=e22]: app/Repositories/RedisProductRepository.php:91
+      - paragraph [ref=e23]: Call to undefined method App\Support\Locale::translate()
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: LARAVEL
+          - generic [ref=e28]: 12.61.0
+        - generic [ref=e29]:
+          - generic [ref=e30]: PHP
+          - generic [ref=e31]: 8.4.21
+      - generic [ref=e32]:
+        - img [ref=e33]
+        - text: UNHANDLED
+      - generic [ref=e36]: CODE 0
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - img [ref=e40]
+        - text: "500"
+      - generic [ref=e43]:
+        - img [ref=e44]
+        - text: GET
+      - generic [ref=e47]: http://localhost:8002/ru/kratom
+      - button [ref=e48] [cursor=pointer]:
+        - img [ref=e49]
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - img [ref=e57]
+        - heading "Exception trace" [level=3] [ref=e60]
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - generic [ref=e63] [cursor=pointer]:
+            - generic [ref=e66]:
+              - code [ref=e70]:
+                - generic [ref=e71]: App\Repositories\RedisProductRepository->localizeProduct(array)
+              - generic [ref=e73]: app/Repositories/RedisProductRepository.php:91
+            - button [ref=e75]:
+              - img [ref=e76]
+          - code [ref=e84]:
+            - generic [ref=e85]: "86 }"
+            - generic [ref=e86]: "87"
+            - generic [ref=e87]: 88 /** @param array<string, mixed> $product */
+            - generic [ref=e88]: "89 private function localizeProduct(array $product): array"
+            - generic [ref=e89]: "90 {"
+            - generic [ref=e90]: 91 $product['name'] = $this->translateField($product['name_i18n'] ?? $product['name'] ?? null);
+            - generic [ref=e91]: 92 $product['short'] = $this->translateField($product['short_i18n'] ?? $product['short'] ?? null);
+            - generic [ref=e92]: 93 $product['description'] = $this->translateField($product['description_i18n'] ?? $product['description'] ?? null);
+            - generic [ref=e93]: 94 $product['origin'] = $this->translateField($product['origin_i18n'] ?? $product['origin'] ?? null);
+            - generic [ref=e94]: 95 $product['grind'] = $this->translateField($product['grind_i18n'] ?? $product['grind'] ?? null);
+            - generic [ref=e95]: 96 $product['colorLabel'] = $this->translateField($product['colorLabel_i18n'] ?? $product['colorLabel'] ?? null);
+            - generic [ref=e96]: 97 $product['strainLabel'] = $this->translateField($product['strainLabel_i18n'] ?? $product['strainLabel'] ?? null);
+            - generic [ref=e97]: 98 $product['formLabel'] = $this->translateField($product['formLabel_i18n'] ?? $product['formLabel'] ?? null);
+            - generic [ref=e98]: "99"
+            - generic [ref=e99]: 100 return $product;
+            - generic [ref=e100]: "101 }"
+            - generic [ref=e101]: "102"
+            - generic [ref=e102]: "103"
+        - generic [ref=e104] [cursor=pointer]:
+          - generic [ref=e107]:
+            - code [ref=e111]:
+              - generic [ref=e112]: App\Repositories\RedisProductRepository->localizeProduct(array)
+            - generic [ref=e114]: app/Repositories/RedisProductRepository.php:82
+          - button [ref=e116]:
+            - img [ref=e117]
+        - generic [ref=e122] [cursor=pointer]:
+          - generic [ref=e125]:
+            - code [ref=e129]:
+              - generic [ref=e130]: App\Repositories\RedisProductRepository->hydrateList(array)
+            - generic [ref=e132]: app/Repositories/RedisProductRepository.php:18
+          - button [ref=e134]:
+            - img [ref=e135]
+        - generic [ref=e140] [cursor=pointer]:
+          - generic [ref=e143]:
+            - code [ref=e147]:
+              - generic [ref=e148]: App\Repositories\RedisProductRepository->all()
+            - generic [ref=e150]: app/Support/Catalog.php:23
+          - button [ref=e152]:
+            - img [ref=e153]
+        - generic [ref=e158] [cursor=pointer]:
+          - generic [ref=e161]:
+            - code [ref=e165]:
+              - generic [ref=e166]: App\Support\Catalog::products()
+            - generic [ref=e168]: resources/views/pages/catalog/index.blade.php:6
+          - button [ref=e170]:
+            - img [ref=e171]
+        - generic [ref=e176] [cursor=pointer]:
+          - img [ref=e177]
+          - generic [ref=e181]: 13 vendor frames
+          - button [ref=e182]:
+            - img [ref=e183]
+        - generic [ref=e188] [cursor=pointer]:
+          - generic [ref=e191]:
+            - code [ref=e195]:
+              - generic [ref=e196]: "Illuminate\\Pipeline\\Pipeline->{closure:Illuminate\\Pipeline\\Pipeline::prepareDestination():178}(object(Illuminate\\Http\\Request))"
+            - generic [ref=e198]: app/Http/Middleware/SetResponseCache.php:41
+          - button [ref=e200]:
+            - img [ref=e201]
+        - generic [ref=e206] [cursor=pointer]:
+          - img [ref=e207]
+          - generic [ref=e211]: 1 vendor frame
+          - button [ref=e212]:
+            - img [ref=e213]
+        - generic [ref=e218] [cursor=pointer]:
+          - generic [ref=e221]:
+            - code [ref=e225]:
+              - generic [ref=e226]: "Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():194}:195}(object(Illuminate\\Http\\Request))"
+            - generic [ref=e228]: app/Http/Middleware/SetLocale.php:24
+          - button [ref=e230]:
+            - img [ref=e231]
+        - generic [ref=e236] [cursor=pointer]:
+          - img [ref=e237]
+          - generic [ref=e241]: 46 vendor frames
+          - button [ref=e242]:
+            - img [ref=e243]
+        - generic [ref=e248] [cursor=pointer]:
+          - generic [ref=e251]:
+            - code [ref=e255]:
+              - generic [ref=e256]: require(string)
+            - generic [ref=e258]: public/frankenphp-worker.php:7
+          - button [ref=e260]:
+            - img [ref=e261]
+    - generic [ref=e265]:
+      - generic [ref=e267]:
+        - img [ref=e269]
+        - heading "Queries" [level=3] [ref=e271]
+      - generic [ref=e273]: // No queries executed
+  - generic [ref=e275]:
+    - generic [ref=e276]:
+      - heading "Headers" [level=2] [ref=e277]
+      - generic [ref=e278]:
+        - generic [ref=e279]:
+          - generic [ref=e280]: host
+          - generic [ref=e282]: localhost:8002
+        - generic [ref=e283]:
+          - generic [ref=e284]: connection
+          - generic [ref=e286]: keep-alive
+        - generic [ref=e287]:
+          - generic [ref=e288]: accept
+          - generic [ref=e290]: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        - generic [ref=e291]:
+          - generic [ref=e292]: accept-language
+          - generic [ref=e294]: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+        - generic [ref=e295]:
+          - generic [ref=e296]: user-agent
+          - generic [ref=e298]: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+        - generic [ref=e299]:
+          - generic [ref=e300]: sec-fetch-site
+          - generic [ref=e302]: none
+        - generic [ref=e303]:
+          - generic [ref=e304]: sec-fetch-mode
+          - generic [ref=e306]: navigate
+        - generic [ref=e307]:
+          - generic [ref=e308]: sec-fetch-user
+          - generic [ref=e310]: "?1"
+        - generic [ref=e311]:
+          - generic [ref=e312]: accept-encoding
+          - generic [ref=e314]: gzip, deflate, br, zstd
+        - generic [ref=e315]:
+          - generic [ref=e316]: cookie
+          - generic [ref=e318]: appVersion=1.0.0; _gcl_au=1.1.489715150.1778666907; _ga=GA1.1.1034419728.1778666907; _fbp=fb.0.1778666907216.972224322778988080; _clck=8i6r5h%5E2%5Eg60%5E0%5E2324; _ga_Q70PR4584K=GS2.1.s1778686297$o2$g1$t1778688678$j60$l0$h768879891
+        - generic [ref=e319]:
+          - generic [ref=e320]: sec-ch-ua
+          - generic [ref=e322]: "\"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\""
+        - generic [ref=e323]:
+          - generic [ref=e324]: sec-ch-ua-mobile
+          - generic [ref=e326]: "?0"
+        - generic [ref=e327]:
+          - generic [ref=e328]: sec-ch-ua-platform
+          - generic [ref=e330]: "\"macOS\""
+        - generic [ref=e331]:
+          - generic [ref=e332]: upgrade-insecure-requests
+          - generic [ref=e334]: "1"
+        - generic [ref=e335]:
+          - generic [ref=e336]: sec-fetch-dest
+          - generic [ref=e338]: document
+    - generic [ref=e339]:
+      - heading "Body" [level=2] [ref=e340]
+      - generic [ref=e341]: // No request body
+    - generic [ref=e342]:
+      - heading "Routing" [level=2] [ref=e343]
+      - generic [ref=e344]:
+        - generic [ref=e345]:
+          - generic [ref=e346]: controller
+          - generic [ref=e348]: Closure
+        - generic [ref=e349]:
+          - generic [ref=e350]: route name
+          - generic [ref=e352]: catalog
+        - generic [ref=e353]:
+          - generic [ref=e354]: middleware
+          - generic [ref=e356]: web
+    - generic [ref=e357]:
+      - heading "Routing parameters" [level=2] [ref=e358]
+      - code [ref=e363]:
+        - generic [ref=e364]: "{"
+        - generic [ref=e365]: "\"locale\": \"ru\""
+        - generic [ref=e366]: "}"
+  - generic [ref=e369]:
+    - img [ref=e371]
+    - img [ref=e3409]

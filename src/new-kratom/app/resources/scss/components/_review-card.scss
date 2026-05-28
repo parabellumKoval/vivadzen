@@ -1,0 +1,60 @@
+// =============================================================
+// InternalReviewCard — 04_HOMEPAGE.md §11.2 (dark variant on forest)
+// =============================================================
+
+.review-card {
+    background: var(--c-forest-800);
+    border-radius: var(--r-xl);
+    padding: var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    color: var(--c-cream-100);
+    min-height: 260px;
+
+    &__stars {
+        color: var(--c-amber-500);
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+
+    &__quote {
+        font-size: 14px;
+        line-height: 1.6;
+        color: rgba(245, 237, 216, 0.9);
+        flex: 1;
+    }
+
+    &__footer {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+    }
+
+    &__avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--r-circle);
+        background: var(--c-cream-200);
+        color: var(--c-forest-900);
+        display: grid;
+        place-items: center;
+        font-weight: var(--fw-bold);
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+
+    &__name {
+        font-weight: var(--fw-semibold);
+        font-size: 14px;
+    }
+
+    &__date {
+        font-size: 12px;
+        color: rgba(245, 237, 216, 0.6);
+    }
+
+    &__chip {
+        margin-top: var(--sp-1);
+    }
+}

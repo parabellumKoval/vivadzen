@@ -1,0 +1,735 @@
+- generic [active] [ref=e1]:
+  - link "Přeskočit na obsah" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - region "Oznámení" [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e5]
+      - generic [ref=e7]:
+        - text: EXPRESS doručení do 180 minut v Praze a Ostravě ·
+        - link "Podrobnosti →" [ref=e8] [cursor=pointer]:
+          - /url: /doruceni
+    - button "Skrýt oznámení" [ref=e9] [cursor=pointer]:
+      - img [ref=e10]
+  - banner [ref=e12]:
+    - generic [ref=e13]:
+      - link "Vivadzen" [ref=e14] [cursor=pointer]:
+        - /url: /ru
+        - img "Vivadzen" [ref=e15]
+      - navigation "Hlavní navigace" [ref=e16]:
+        - link "Кратом" [ref=e17] [cursor=pointer]:
+          - /url: /ru/kratom
+        - link "Maeng Da" [ref=e18] [cursor=pointer]:
+          - /url: /ru/kratom/maeng-da
+        - link "Экстракт" [ref=e19] [cursor=pointer]:
+          - /url: /ru/kratom/extrakt
+        - link "Подписка" [ref=e20] [cursor=pointer]:
+          - /url: /ru/predplatne
+        - link "Лаб. тесты" [ref=e21] [cursor=pointer]:
+          - /url: /ru/laboratorni-testy
+        - link "Магазины" [ref=e22] [cursor=pointer]:
+          - /url: /ru/prodejny
+        - link "Гид" [ref=e23] [cursor=pointer]:
+          - /url: /ru/pruvodce
+      - generic [ref=e24]:
+        - button "Язык" [ref=e26] [cursor=pointer]:
+          - img [ref=e28]
+          - generic [ref=e31]: RU
+          - img [ref=e32]
+        - link "Аккаунт" [ref=e34] [cursor=pointer]:
+          - /url: /ru/ucet
+          - img [ref=e35]
+        - link "Корзина" [ref=e38] [cursor=pointer]:
+          - /url: /ru/kosik
+          - img [ref=e39]
+          - generic [ref=e42]: "0"
+  - note [ref=e43]:
+    - generic [ref=e44]:
+      - img [ref=e45]
+      - generic [ref=e48]: Pouze 18+
+      - generic [ref=e49]: ·
+      - generic [ref=e50]: Autorizovaný prodejce PML (MZ ČR)
+      - generic [ref=e51]: PML
+      - generic [ref=e52]: ·
+      - generic [ref=e53]: Akreditovaná lab. VŠCHT
+      - generic [ref=e54]: LAB
+  - main [ref=e55]:
+    - navigation "Drobečková navigace" [ref=e56]:
+      - list [ref=e58]:
+        - listitem [ref=e59]:
+          - link "Domů" [ref=e60] [cursor=pointer]:
+            - /url: /ru
+          - generic [ref=e61]: ›
+        - listitem [ref=e62]:
+          - generic [ref=e63]: Kratom
+    - region "Kratom — prášek a extrakt" [ref=e64]:
+      - generic [ref=e65]:
+        - generic [ref=e66]:
+          - paragraph [ref=e67]: KATALOG · PML SORTIMENT
+          - heading "Kratom — prášek a extrakt" [level=1] [ref=e68]
+          - paragraph [ref=e69]: Specializovaný sortiment licencovaného PML prodejce. Každá šarže testovaná v akreditované laboratoři VŠCHT Praha.
+          - generic [ref=e70]:
+            - link "Procházet všechny odrůdy" [ref=e71] [cursor=pointer]:
+              - /url: "#grid"
+              - text: Procházet všechny odrůdy
+              - img [ref=e73]
+            - link "Co je kratom?" [ref=e75] [cursor=pointer]:
+              - /url: /ru/pruvodce
+              - text: Co je kratom?
+              - img [ref=e77]
+        - complementary "NAŠE STANDARDY" [ref=e79]:
+          - paragraph [ref=e80]: NAŠE STANDARDY
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - term [ref=e83]: Šarží testovaných
+              - definition [ref=e84]: 100 %
+            - generic [ref=e85]:
+              - term [ref=e86]: Aktivních odrůd
+              - definition [ref=e87]: "8"
+            - generic [ref=e88]:
+              - term [ref=e89]: Prodejen v Praze
+              - definition [ref=e90]: "2"
+            - generic [ref=e91]:
+              - term [ref=e92]: COA dostupných
+              - definition [ref=e93]: ANO
+    - tablist "Rychlý filtr" [ref=e96]:
+      - tab "Vše" [selected] [ref=e97] [cursor=pointer]
+      - tab "Zelený" [ref=e98] [cursor=pointer]
+      - tab "Bílý" [ref=e99] [cursor=pointer]
+      - tab "Červený" [ref=e100] [cursor=pointer]
+      - tab "Žlutý" [ref=e101] [cursor=pointer]
+      - tab "Maeng Da" [ref=e102] [cursor=pointer]
+      - tab "Extrakt" [ref=e103] [cursor=pointer]
+    - generic [ref=e105]:
+      - complementary "Filtry produktů" [ref=e107]:
+        - generic [ref=e108]:
+          - heading "FILTRY" [level=2] [ref=e109]
+          - button "Vyčistit" [ref=e110] [cursor=pointer]
+        - group [ref=e111]:
+          - generic "Barva žilky" [ref=e112] [cursor=pointer]:
+            - generic [ref=e113]: Barva žilky
+            - img [ref=e115]
+          - list [ref=e118]:
+            - listitem [ref=e119]:
+              - generic [ref=e120] [cursor=pointer]:
+                - checkbox "Zelený (5)" [ref=e121]
+                - generic [ref=e122]: Zelený
+                - generic [ref=e124]: (5)
+            - listitem [ref=e125]:
+              - generic [ref=e126] [cursor=pointer]:
+                - checkbox "Bílý (2)" [ref=e127]
+                - generic [ref=e128]: Bílý
+                - generic [ref=e130]: (2)
+            - listitem [ref=e131]:
+              - generic [ref=e132] [cursor=pointer]:
+                - checkbox "Červený (1)" [ref=e133]
+                - generic [ref=e134]: Červený
+                - generic [ref=e136]: (1)
+            - listitem [ref=e137]:
+              - generic [ref=e138] [cursor=pointer]:
+                - checkbox "Žlutý (0)" [disabled] [ref=e139]
+                - generic [ref=e140]: Žlutý
+                - generic [ref=e142]: (0)
+        - group [ref=e143]:
+          - generic "Odrůda" [ref=e144] [cursor=pointer]:
+            - generic [ref=e145]: Odrůda
+            - img [ref=e147]
+          - list [ref=e150]:
+            - listitem [ref=e151]:
+              - generic [ref=e152] [cursor=pointer]:
+                - checkbox "Maeng Da (4)" [ref=e153]
+                - generic [ref=e154]: Maeng Da
+                - generic [ref=e155]: (4)
+            - listitem [ref=e156]:
+              - generic [ref=e157] [cursor=pointer]:
+                - checkbox "Sumatra (1)" [ref=e158]
+                - generic [ref=e159]: Sumatra
+                - generic [ref=e160]: (1)
+            - listitem [ref=e161]:
+              - generic [ref=e162] [cursor=pointer]:
+                - checkbox "Thajský (1)" [ref=e163]
+                - generic [ref=e164]: Thajský
+                - generic [ref=e165]: (1)
+            - listitem [ref=e166]:
+              - generic [ref=e167] [cursor=pointer]:
+                - checkbox "Slon (1)" [ref=e168]
+                - generic [ref=e169]: Slon
+                - generic [ref=e170]: (1)
+            - listitem [ref=e171]:
+              - generic [ref=e172] [cursor=pointer]:
+                - checkbox "Borneo (0)" [disabled] [ref=e173]
+                - generic [ref=e174]: Borneo
+                - generic [ref=e175]: (0)
+            - listitem [ref=e176]:
+              - generic [ref=e177] [cursor=pointer]:
+                - checkbox "Rurut (1)" [ref=e178]
+                - generic [ref=e179]: Rurut
+                - generic [ref=e180]: (1)
+        - group [ref=e181]:
+          - generic "Forma" [ref=e182] [cursor=pointer]:
+            - generic [ref=e183]: Forma
+            - img [ref=e185]
+        - group [ref=e187]:
+          - generic "Balení" [ref=e188] [cursor=pointer]:
+            - generic [ref=e189]: Balení
+            - img [ref=e191]
+        - group [ref=e193]:
+          - generic "Mitragynin %" [ref=e194] [cursor=pointer]:
+            - generic [ref=e195]: Mitragynin %
+            - img [ref=e197]
+        - group [ref=e199]:
+          - generic "Dostupnost" [ref=e200] [cursor=pointer]:
+            - generic [ref=e201]: Dostupnost
+            - img [ref=e203]
+          - list [ref=e206]:
+            - listitem [ref=e207]:
+              - generic [ref=e208] [cursor=pointer]:
+                - checkbox "Skladem (8)" [ref=e209]
+                - generic [ref=e210]: Skladem
+                - generic [ref=e211]: (8)
+            - listitem [ref=e212]:
+              - generic [ref=e213] [cursor=pointer]:
+                - checkbox "Připravujeme (6)" [ref=e214]
+                - generic [ref=e215]: Připravujeme
+                - generic [ref=e216]: (6)
+        - group [ref=e217]:
+          - generic "Cena (Kč)" [ref=e218] [cursor=pointer]:
+            - generic [ref=e219]: Cena (Kč)
+            - img [ref=e221]
+        - group [ref=e223]:
+          - generic "Hodnocení" [ref=e224] [cursor=pointer]:
+            - generic [ref=e225]: Hodnocení
+            - img [ref=e227]
+      - region "Produkty" [ref=e230]:
+        - heading "Produkty" [level=2] [ref=e231]
+        - generic [ref=e232]:
+          - paragraph [ref=e233]:
+            - text: Zobrazujeme
+            - strong [ref=e234]: 8 z 8 produktů
+          - generic [ref=e235]:
+            - generic [ref=e236]: Řazení
+            - combobox "Řazení" [ref=e237] [cursor=pointer]:
+              - option "Doporučené" [selected]
+              - 'option "Cena: nejlevnější"'
+              - 'option "Cena: nejdražší"'
+              - option "Nejnovější"
+              - option "Mitragynin %"
+              - option "Hodnocení"
+            - generic:
+              - img
+        - generic [ref=e238]:
+          - article [ref=e240]:
+            - link "Červená Maeng Da" [ref=e241] [cursor=pointer]:
+              - /url: /ru/kratom/cervena-maeng-da
+              - img "Červená Maeng Da" [ref=e242]
+              - generic [ref=e244]: −10 %
+            - generic [ref=e245]:
+              - paragraph [ref=e246]: ·
+              - heading "Červená Maeng Da" [level=3] [ref=e248]:
+                - link "Červená Maeng Da" [ref=e249] [cursor=pointer]:
+                  - /url: /ru/kratom/cervena-maeng-da
+              - paragraph [ref=e250]: Mitragynin 1.42 % · jemně mletý
+              - group "Velikost balení" [ref=e251]:
+                - button "25 g" [pressed] [ref=e252] [cursor=pointer]
+                - button "50 g" [ref=e253] [cursor=pointer]
+              - generic [ref=e254]:
+                - generic [ref=e255]:
+                  - generic [ref=e256]: 290 Kč
+                  - generic [ref=e257]: 11.6 Kč / g
+                - generic [ref=e258]:
+                  - img [ref=e260]
+                  - generic [ref=e262]: "4.9"
+                  - generic [ref=e263]: · 124 recenzí
+              - button "Přidat do košíku" [ref=e264] [cursor=pointer]:
+                - img [ref=e266]
+                - text: Přidat do košíku
+          - article [ref=e270]:
+            - link "Zelená Maeng Da" [ref=e271] [cursor=pointer]:
+              - /url: /ru/kratom/zelena-maeng-da
+              - img "Zelená Maeng Da" [ref=e272]
+            - generic [ref=e273]:
+              - paragraph [ref=e274]: ·
+              - heading "Zelená Maeng Da" [level=3] [ref=e276]:
+                - link "Zelená Maeng Da" [ref=e277] [cursor=pointer]:
+                  - /url: /ru/kratom/zelena-maeng-da
+              - paragraph [ref=e278]: Mitragynin 1.38 % · jemně mletý
+              - group "Velikost balení" [ref=e279]:
+                - button "25 g" [pressed] [ref=e280] [cursor=pointer]
+                - button "50 g" [ref=e281] [cursor=pointer]
+              - generic [ref=e282]:
+                - generic [ref=e283]:
+                  - generic [ref=e284]: 280 Kč
+                  - generic [ref=e285]: 11.2 Kč / g
+                - generic [ref=e286]:
+                  - img [ref=e288]
+                  - generic [ref=e290]: "4.8"
+                  - generic [ref=e291]: · 96 recenzí
+              - button "Přidat do košíku" [ref=e292] [cursor=pointer]:
+                - img [ref=e294]
+                - text: Přidat do košíku
+          - article [ref=e298]:
+            - link "Bílá Maeng Da" [ref=e299] [cursor=pointer]:
+              - /url: /ru/kratom/bila-maeng-da
+              - img "Bílá Maeng Da" [ref=e300]
+              - generic [ref=e302]: Předplatné
+            - generic [ref=e303]:
+              - paragraph [ref=e304]: ·
+              - heading "Bílá Maeng Da" [level=3] [ref=e306]:
+                - link "Bílá Maeng Da" [ref=e307] [cursor=pointer]:
+                  - /url: /ru/kratom/bila-maeng-da
+              - paragraph [ref=e308]: Mitragynin 1.55 % · jemně mletý
+              - group "Velikost balení" [ref=e309]:
+                - button "25 g" [pressed] [ref=e310] [cursor=pointer]
+                - button "50 g" [ref=e311] [cursor=pointer]
+              - generic [ref=e312]:
+                - generic [ref=e313]:
+                  - generic [ref=e314]: 310 Kč
+                  - generic [ref=e315]: 12.4 Kč / g
+                - generic [ref=e316]:
+                  - img [ref=e318]
+                  - generic [ref=e320]: "4.9"
+                  - generic [ref=e321]: · 186 recenzí
+              - button "Přidat do košíku" [ref=e322] [cursor=pointer]:
+                - img [ref=e324]
+                - text: Přidat do košíku
+          - article [ref=e328]:
+            - link "Zelená Sumatra" [ref=e329] [cursor=pointer]:
+              - /url: /ru/kratom/zelena-sumatra
+              - img "Zelená Sumatra" [ref=e330]
+            - generic [ref=e331]:
+              - paragraph [ref=e332]: ·
+              - heading "Zelená Sumatra" [level=3] [ref=e334]:
+                - link "Zelená Sumatra" [ref=e335] [cursor=pointer]:
+                  - /url: /ru/kratom/zelena-sumatra
+              - paragraph [ref=e336]: Mitragynin 1.32 % · jemně mletý
+              - group "Velikost balení" [ref=e337]:
+                - button "25 g" [pressed] [ref=e338] [cursor=pointer]
+                - button "50 g" [ref=e339] [cursor=pointer]
+              - generic [ref=e340]:
+                - generic [ref=e341]:
+                  - generic [ref=e342]: 270 Kč
+                  - generic [ref=e343]: 10.8 Kč / g
+                - generic [ref=e344]:
+                  - img [ref=e346]
+                  - generic [ref=e348]: "4.8"
+                  - generic [ref=e349]: · 98 recenzí
+              - button "Přidat do košíku" [ref=e350] [cursor=pointer]:
+                - img [ref=e352]
+                - text: Přidat do košíku
+          - article [ref=e356]:
+            - link "Zelený thajský" [ref=e357] [cursor=pointer]:
+              - /url: /ru/kratom/zeleny-thajsky
+              - img "Zelený thajský" [ref=e358]
+            - generic [ref=e359]:
+              - paragraph [ref=e360]: ·
+              - heading "Zelený thajský" [level=3] [ref=e362]:
+                - link "Zelený thajský" [ref=e363] [cursor=pointer]:
+                  - /url: /ru/kratom/zeleny-thajsky
+              - paragraph [ref=e364]: Mitragynin 1.28 % · jemně mletý
+              - group "Velikost balení" [ref=e365]:
+                - button "25 g" [pressed] [ref=e366] [cursor=pointer]
+                - button "50 g" [ref=e367] [cursor=pointer]
+              - generic [ref=e368]:
+                - generic [ref=e369]:
+                  - generic [ref=e370]: 260 Kč
+                  - generic [ref=e371]: 10.4 Kč / g
+                - generic [ref=e372]:
+                  - img [ref=e374]
+                  - generic [ref=e376]: "4.7"
+                  - generic [ref=e377]: · 58 recenzí
+              - button "Přidat do košíku" [ref=e378] [cursor=pointer]:
+                - img [ref=e380]
+                - text: Přidat do košíku
+          - article [ref=e384]:
+            - link "Zelený Rurut Nano" [ref=e385] [cursor=pointer]:
+              - /url: /ru/kratom/zeleny-rurut-nano
+              - img "Zelený Rurut Nano" [ref=e386]
+              - generic [ref=e388]: NANO
+            - generic [ref=e389]:
+              - paragraph [ref=e390]: ·
+              - heading "Zelený Rurut Nano" [level=3] [ref=e392]:
+                - link "Zelený Rurut Nano" [ref=e393] [cursor=pointer]:
+                  - /url: /ru/kratom/zeleny-rurut-nano
+              - paragraph [ref=e394]: Mitragynin 1.46 % · nano (≤ 50 μm)
+              - group "Velikost balení" [ref=e395]:
+                - button "25 g" [pressed] [ref=e396] [cursor=pointer]
+                - button "50 g" [ref=e397] [cursor=pointer]
+              - generic [ref=e398]:
+                - generic [ref=e399]:
+                  - generic [ref=e400]: 360 Kč
+                  - generic [ref=e401]: 14.4 Kč / g
+                - generic [ref=e402]:
+                  - img [ref=e404]
+                  - generic [ref=e406]: "4.8"
+                  - generic [ref=e407]: · 41 recenzí
+              - button "Přidat do košíku" [ref=e408] [cursor=pointer]:
+                - img [ref=e410]
+                - text: Přidat do košíku
+          - article [ref=e414]:
+            - link "Bílý slon" [ref=e415] [cursor=pointer]:
+              - /url: /ru/kratom/bily-slon
+              - img "Bílý slon" [ref=e416]
+            - generic [ref=e417]:
+              - paragraph [ref=e418]: ·
+              - heading "Bílý slon" [level=3] [ref=e420]:
+                - link "Bílý slon" [ref=e421] [cursor=pointer]:
+                  - /url: /ru/kratom/bily-slon
+              - paragraph [ref=e422]: Mitragynin 1.49 % · jemně mletý
+              - group "Velikost balení" [ref=e423]:
+                - button "25 g" [pressed] [ref=e424] [cursor=pointer]
+                - button "50 g" [ref=e425] [cursor=pointer]
+              - generic [ref=e426]:
+                - generic [ref=e427]:
+                  - generic [ref=e428]: 320 Kč
+                  - generic [ref=e429]: 12.8 Kč / g
+                - generic [ref=e430]:
+                  - img [ref=e432]
+                  - generic [ref=e434]: "4.8"
+                  - generic [ref=e435]: · 67 recenzí
+              - button "Přidat do košíku" [ref=e436] [cursor=pointer]:
+                - img [ref=e438]
+                - text: Přidat do košíku
+          - article [ref=e442]:
+            - link "Kratom Extrakt 10 ml zelený" [ref=e443] [cursor=pointer]:
+              - /url: /ru/kratom/kratom-extrakt-10ml-zeleny
+              - img "Kratom Extrakt 10 ml zelený" [ref=e444]
+              - generic [ref=e446]: EXPRESS 180
+            - generic [ref=e447]:
+              - paragraph [ref=e448]: ·
+              - heading "Kratom Extrakt 10 ml zelený" [level=3] [ref=e450]:
+                - link "Kratom Extrakt 10 ml zelený" [ref=e451] [cursor=pointer]:
+                  - /url: /ru/kratom/kratom-extrakt-10ml-zeleny
+              - paragraph [ref=e452]: Mitragynin 12.00 % · vodný extrakt
+              - generic [ref=e453]:
+                - generic [ref=e455]: 0 Kč
+                - generic [ref=e456]:
+                  - img [ref=e458]
+                  - generic [ref=e460]: "4.7"
+                  - generic [ref=e461]: · 74 recenzí
+              - button "Přidat do košíku" [ref=e462] [cursor=pointer]:
+                - img [ref=e464]
+                - text: Přidat do košíku
+    - region "Brzy doplníme do sortimentu" [ref=e467]:
+      - generic [ref=e468]:
+        - generic [ref=e469]:
+          - paragraph [ref=e470]: PŘIPRAVUJEME
+          - heading "Brzy doplníme do sortimentu" [level=2] [ref=e471]
+          - paragraph [ref=e472]: Tyto odrůdy procházejí licencováním a laboratorními testy. Přihlaste se k notifikaci a budete první.
+        - generic [ref=e473]:
+          - article [ref=e474]:
+            - generic [ref=e475]:
+              - img [ref=e476]
+              - generic [ref=e479]: BRZY
+            - generic [ref=e480]:
+              - paragraph [ref=e481]: Prášek 25 g
+              - heading "Zelená Bali" [level=3] [ref=e483]
+              - paragraph [ref=e484]: Mitragynin — TBD
+              - button "Upozornit při naskladnění" [ref=e485] [cursor=pointer]
+          - article [ref=e486]:
+            - generic [ref=e487]:
+              - img [ref=e488]
+              - generic [ref=e491]: BRZY
+            - generic [ref=e492]:
+              - paragraph [ref=e493]: Prášek 50 g
+              - heading "Červený Borneo" [level=3] [ref=e495]
+              - paragraph [ref=e496]: Mitragynin — TBD
+              - button "Upozornit při naskladnění" [ref=e497] [cursor=pointer]
+          - article [ref=e498]:
+            - generic [ref=e499]:
+              - img [ref=e500]
+              - generic [ref=e503]: BRZY
+            - generic [ref=e504]:
+              - paragraph [ref=e505]: Prášek 25 g
+              - heading "Žlutý Vietnam" [level=3] [ref=e507]
+              - paragraph [ref=e508]: Mitragynin — TBD
+              - button "Upozornit při naskladnění" [ref=e509] [cursor=pointer]
+          - article [ref=e510]:
+            - generic [ref=e511]:
+              - img [ref=e512]
+              - generic [ref=e515]: BRZY
+            - generic [ref=e516]:
+              - paragraph [ref=e517]: Prášek 50 g
+              - heading "Bílá Thai Elephant" [level=3] [ref=e519]
+              - paragraph [ref=e520]: Mitragynin — TBD
+              - button "Upozornit při naskladnění" [ref=e521] [cursor=pointer]
+          - article [ref=e522]:
+            - generic [ref=e523]:
+              - img [ref=e524]
+              - generic [ref=e527]: BRZY
+            - generic [ref=e528]:
+              - paragraph [ref=e529]: Lim. edice
+              - heading "Extrakt 30 ml červený" [level=3] [ref=e531]
+              - paragraph [ref=e532]: Mitragynin — TBD
+              - button "Upozornit při naskladnění" [ref=e533] [cursor=pointer]
+          - article [ref=e534]:
+            - generic [ref=e535]:
+              - img [ref=e536]
+              - generic [ref=e539]: BRZY
+            - generic [ref=e540]:
+              - paragraph [ref=e541]: Jemně mletý
+              - heading "Sumatra Nano" [level=3] [ref=e543]
+              - paragraph [ref=e544]: Mitragynin — TBD
+              - button "Upozornit při naskladnění" [ref=e545] [cursor=pointer]
+        - generic [ref=e546]:
+          - heading "Přidejte se na seznam" [level=3] [ref=e547]
+          - paragraph [ref=e548]: Dáme vám vědět o všech nových šaržích.
+          - generic [ref=e549]:
+            - textbox "váš email" [ref=e551]
+            - button "Přihlásit se" [ref=e552] [cursor=pointer]
+          - generic [ref=e553] [cursor=pointer]:
+            - checkbox "Souhlasím s podmínkami GDPR." [ref=e554]
+            - generic [ref=e555]: Souhlasím s podmínkami GDPR.
+    - region "Procházejte podle" [ref=e556]:
+      - generic [ref=e557]:
+        - heading "Procházejte podle" [level=2] [ref=e558]
+        - generic [ref=e559]:
+          - paragraph [ref=e560]: PODLE BARVY ŽILKY
+          - heading "Podle barvy žilky" [level=3] [ref=e561]
+          - paragraph [ref=e562]: 4 kategorie podle profilu mitragyninu
+          - generic [ref=e563]:
+            - link "Zelený 5 produktů" [ref=e564] [cursor=pointer]:
+              - /url: /ru/kratom/zeleny
+              - generic [ref=e566]: Zelený
+              - generic [ref=e567]: 5 produktů
+            - link "Bílý 2 produktů" [ref=e568] [cursor=pointer]:
+              - /url: /ru/kratom/bily
+              - generic [ref=e570]: Bílý
+              - generic [ref=e571]: 2 produktů
+            - link "Červený 1 produktů" [ref=e572] [cursor=pointer]:
+              - /url: /ru/kratom/cerveny
+              - generic [ref=e574]: Červený
+              - generic [ref=e575]: 1 produktů
+            - link "Žlutý Připravujeme" [disabled]:
+              - /url: "#"
+              - generic: Žlutý
+              - generic: Připravujeme
+        - generic [ref=e576]:
+          - paragraph [ref=e577]: PODLE ODRŮDY
+          - heading "Podle odrůdy" [level=3] [ref=e578]
+          - paragraph [ref=e579]: 6 odrůd s vlastní genetikou
+          - generic [ref=e580]:
+            - link "Maeng Da Indonésie · klasická" [ref=e581] [cursor=pointer]:
+              - /url: /ru/kratom/maeng-da
+              - img [ref=e583]
+              - generic [ref=e586]: Maeng Da
+              - generic [ref=e587]: Indonésie · klasická
+            - link "Sumatra Indonésie · ostrov" [ref=e588] [cursor=pointer]:
+              - /url: /ru/kratom/sumatra
+              - img [ref=e590]
+              - generic [ref=e593]: Sumatra
+              - generic [ref=e594]: Indonésie · ostrov
+            - link "Thajský Thajsko · tradiční" [ref=e595] [cursor=pointer]:
+              - /url: /ru/kratom/thajsky
+              - img [ref=e597]
+              - generic [ref=e600]: Thajský
+              - generic [ref=e601]: Thajsko · tradiční
+            - link "Slon Borneo · Elephant" [ref=e602] [cursor=pointer]:
+              - /url: /ru/kratom/slon
+              - img [ref=e604]
+              - generic [ref=e607]: Slon
+              - generic [ref=e608]: Borneo · Elephant
+            - link "Borneo Borneo · region Připravujeme" [disabled] [ref=e609] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e611]
+              - generic [ref=e614]: Borneo
+              - generic [ref=e615]: Borneo · region
+              - generic [ref=e616]: Připravujeme
+            - link "Rurut Borneo · speciální" [ref=e617] [cursor=pointer]:
+              - /url: /ru/kratom/rurut
+              - img [ref=e619]
+              - generic [ref=e622]: Rurut
+              - generic [ref=e623]: Borneo · speciální
+    - region "Vše o našem kratom sortimentu" [ref=e624]:
+      - generic [ref=e625]:
+        - generic [ref=e626]:
+          - paragraph [ref=e627]: KATALOG · KOMPLETNÍ INFORMACE
+          - heading "Vše o našem kratom sortimentu" [level=2] [ref=e628]
+        - article [ref=e629]:
+          - paragraph [ref=e630]: Vivadzen je licencovaný specializovaný e-shop kratomu (Mitragyna speciosa) pod režimem psychomodulačních látek (PML). Náš katalog pokrývá 8 aktivních odrůd ve více barvách žilky a třech formách — prášek, extrakt a nano.
+          - heading "Co najdete v našem katalogu?" [level=3] [ref=e631]
+          - paragraph [ref=e632]:
+            - text: Sortiment Vivadzen vznikl ve spolupráci s pěstiteli z Indonésie, Thajska a Vietnamu. Pracujeme pouze s tradičními pěstiteli a odrůdami s ověřenou genetikou. Každá šarže je nezávisle testována v
+            - link "akreditované laboratoři VŠCHT Praha" [ref=e633] [cursor=pointer]:
+              - /url: /ru/laboratorni-testy
+            - text: .
+          - heading "Podle barvy žilky" [level=3] [ref=e634]
+          - paragraph [ref=e635]:
+            - text: Barva žilky listu je hlavním botanickým ukazatelem. Nabízíme
+            - link "zelený" [ref=e636] [cursor=pointer]:
+              - /url: /ru/kratom/zeleny
+            - text: ","
+            - link "bílý" [ref=e637] [cursor=pointer]:
+              - /url: /ru/kratom/bily
+            - text: a
+            - link "červený" [ref=e638] [cursor=pointer]:
+              - /url: /ru/kratom/cerveny
+            - text: kratom;
+            - link "žlutý" [ref=e639] [cursor=pointer]:
+              - /url: /ru/kratom/zluty
+            - text: připravujeme.
+          - heading "Podle odrůdy a původu" [level=3] [ref=e640]
+          - paragraph [ref=e641]:
+            - text: Najdete u nás klasické odrůdy
+            - link "Maeng Da" [ref=e642] [cursor=pointer]:
+              - /url: /ru/kratom/maeng-da
+            - text: ","
+            - link "Sumatra" [ref=e643] [cursor=pointer]:
+              - /url: /ru/kratom/sumatra
+            - text: ","
+            - link "thajský" [ref=e644] [cursor=pointer]:
+              - /url: /ru/kratom/thajsky
+            - text: ","
+            - link "Slon" [ref=e645] [cursor=pointer]:
+              - /url: /ru/kratom/slon
+            - text: i speciální
+            - link "Rurut" [ref=e646] [cursor=pointer]:
+              - /url: /ru/kratom/rurut
+            - text: .
+            - link "Borneo" [ref=e647] [cursor=pointer]:
+              - /url: /ru/kratom/borneo
+            - text: je v přípravě.
+          - heading "Forma — prášek, extrakt, nano" [level=3] [ref=e648]
+          - paragraph [ref=e649]:
+            - text: Standardní formou je
+            - link "prášek" [ref=e650] [cursor=pointer]:
+              - /url: /ru/kratom/prasek
+            - text: . Koncentrované
+            - link "extrakty" [ref=e651] [cursor=pointer]:
+              - /url: /ru/kratom/extrakt
+            - text: obsahují 10× vyšší koncentraci mitragyninu.
+            - link "Nano" [ref=e652] [cursor=pointer]:
+              - /url: /ru/kratom/nano
+            - text: je jemně mletý prášek (≤ 50 μm).
+          - heading "Jak vybrat ten správný kratom?" [level=3] [ref=e653]
+          - paragraph [ref=e654]: Vybírejte podle dostupných údajů — botanického původu, šarže a profilu mitragyninu. Vždy konzultujte návod k použití na obalu a nepřekračujte doporučené denní dávky.
+          - heading "Naše standardy kvality" [level=3] [ref=e655]
+          - paragraph [ref=e656]: Každá šarže prochází kontrolou obsahu mitragyninu, 7-hydroxymitragyninu, mikrobiologie, čistoty a obsahu těžkých kovů (Pb, Cd, Hg, As). COA je dostupné ke stažení u každého produktu.
+          - heading "Doručení a osobní odběr" [level=3] [ref=e657]
+          - paragraph [ref=e658]:
+            - text: V Praze a Ostravě nabízíme Express doručení do 180 minut. Po celé ČR — 1–3 pracovní dny prostřednictvím
+            - link "Zásilkovny, PPL nebo České pošty" [ref=e659] [cursor=pointer]:
+              - /url: /ru/doruceni
+            - text: . Osobní odběr v Praze — zdarma.
+          - blockquote [ref=e660]:
+            - strong [ref=e661]: "Upozornění:"
+            - text: Tento výrobek není potravinou. Není určen osobám mladším 18 let. Užívejte v souladu s návodem k použití. Více v sekci
+            - link "časté dotazy" [ref=e662] [cursor=pointer]:
+              - /url: "#faq"
+            - text: nebo na stránce produktu.
+    - region "O našem katalogu" [ref=e663]:
+      - generic [ref=e665]:
+        - generic [ref=e666]:
+          - paragraph [ref=e667]: ČASTÉ DOTAZY
+          - heading "O našem katalogu" [level=2] [ref=e668]
+          - paragraph [ref=e669]: Pokud nenajdete odpověď, napište nám na podporu.
+          - link "Kontaktovat podporu" [ref=e671] [cursor=pointer]:
+            - /url: /ru/podpora
+            - text: Kontaktovat podporu
+            - img [ref=e673]
+        - generic [ref=e675]:
+          - group [ref=e676]:
+            - generic "Jaké odrůdy kratomu nabízíte?" [ref=e677] [cursor=pointer]:
+              - generic [ref=e678]: Jaké odrůdy kratomu nabízíte?
+              - img [ref=e680]
+          - group [ref=e682]:
+            - generic "Co znamená barva žilky — zelený, bílý, červený?" [ref=e683] [cursor=pointer]:
+              - generic [ref=e684]: Co znamená barva žilky — zelený, bílý, červený?
+              - img [ref=e686]
+          - group [ref=e688]:
+            - generic "Které odrůdy jsou pro začátečníky?" [ref=e689] [cursor=pointer]:
+              - generic [ref=e690]: Které odrůdy jsou pro začátečníky?
+              - img [ref=e692]
+          - group [ref=e694]:
+            - generic "Jaký je rozdíl mezi práškem a extraktem?" [ref=e695] [cursor=pointer]:
+              - generic [ref=e696]: Jaký je rozdíl mezi práškem a extraktem?
+              - img [ref=e698]
+          - group [ref=e700]:
+            - generic "Jak se dostanu k laboratorním testům?" [ref=e701] [cursor=pointer]:
+              - generic [ref=e702]: Jak se dostanu k laboratorním testům?
+              - img [ref=e704]
+          - group [ref=e706]:
+            - generic "Mohu objednat bez registrace?" [ref=e707] [cursor=pointer]:
+              - generic [ref=e708]: Mohu objednat bez registrace?
+              - img [ref=e710]
+    - region "Aktuální šarže, novinky o regulaci PML a edukace" [ref=e712]:
+      - generic [ref=e713]:
+        - heading "Aktuální šarže, novinky o regulaci PML a edukace" [level=2] [ref=e714]
+        - paragraph [ref=e715]: 1× měsíčně, žádný spam. Můžete kdykoliv odhlásit.
+        - generic [ref=e716]:
+          - textbox "vase.email@example.cz" [ref=e718]
+          - button "Přihlásit se" [ref=e719] [cursor=pointer]:
+            - generic [ref=e720]: Přihlásit se
+        - paragraph [ref=e721]:
+          - img [ref=e722]
+          - text: Vaše údaje chráníme dle GDPR. Žádný spam.
+  - contentinfo [ref=e725]:
+    - generic [ref=e726]:
+      - generic [ref=e727]:
+        - generic [ref=e728]:
+          - img "Vivadzen" [ref=e730]
+          - paragraph [ref=e731]: Licencovaný specializovaný e-shop kratomu pod režimem PML. Každá šarže testovaná v akreditované laboratoři VŠCHT Praha. Dvě kamenné prodejny v Praze.
+          - generic [ref=e732]:
+            - generic [ref=e733]:
+              - img [ref=e734]
+              - text: Akreditovaná laboratoř
+            - generic [ref=e736]:
+              - img [ref=e737]
+              - text: Autorizovaný prodejce PML
+            - generic [ref=e740]: 18+
+        - generic [ref=e741]:
+          - paragraph [ref=e742]: Sortiment
+          - navigation "Sortiment" [ref=e743]:
+            - link "Všechny odrůdy" [ref=e744] [cursor=pointer]:
+              - /url: /kratom
+            - link "Zelený kratom" [ref=e745] [cursor=pointer]:
+              - /url: /kratom/zeleny
+            - link "Bílý kratom" [ref=e746] [cursor=pointer]:
+              - /url: /kratom/bily
+            - link "Červený kratom" [ref=e747] [cursor=pointer]:
+              - /url: /kratom/cerveny
+            - link "Maeng Da" [ref=e748] [cursor=pointer]:
+              - /url: /kratom/maeng-da
+            - link "Extrakt 10 ml" [ref=e749] [cursor=pointer]:
+              - /url: /kratom/extrakt
+            - link "Předplatné" [ref=e750] [cursor=pointer]:
+              - /url: /predplatne
+        - generic [ref=e751]:
+          - paragraph [ref=e752]: Pomoc & info
+          - navigation "Pomoc" [ref=e753]:
+            - link "Doručení a platba" [ref=e754] [cursor=pointer]:
+              - /url: /doruceni
+            - link "Laboratorní testy" [ref=e755] [cursor=pointer]:
+              - /url: /laboratorni-testy
+            - link "Licence MZ ČR" [ref=e756] [cursor=pointer]:
+              - /url: /licence
+            - link "Prodejny v Praze" [ref=e757] [cursor=pointer]:
+              - /url: /prodejny
+            - link "Reklamace a vrácení" [ref=e758] [cursor=pointer]:
+              - /url: /reklamace
+            - link "Časté dotazy" [ref=e759] [cursor=pointer]:
+              - /url: /podpora
+            - link "Kontakt" [ref=e760] [cursor=pointer]:
+              - /url: /kontakt
+        - generic [ref=e761]:
+          - paragraph [ref=e762]: Novinky a šarže
+          - paragraph [ref=e763]: 1× měsíčně. Žádný spam.
+          - generic [ref=e764]:
+            - textbox "vase.email@example.cz" [ref=e766]
+            - button "Přihlásit" [ref=e767] [cursor=pointer]
+          - generic [ref=e768]:
+            - link "Facebook" [ref=e769] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e770]
+            - link "Instagram" [ref=e773] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e774]
+            - link "Mapa prodejen" [ref=e776] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e777]
+      - generic [ref=e780]:
+        - generic [ref=e781]: © 2026 Vivadzen s.r.o. · IČO 00000000 · DIČ CZ00000000
+        - generic "Platební metody" [ref=e782]:
+          - generic [ref=e783]: VISA
+          - generic [ref=e784]: MC
+          - generic [ref=e785]: APAY
+          - generic [ref=e786]: GPAY
+          - generic [ref=e787]: QR

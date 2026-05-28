@@ -6,6 +6,14 @@
 /src/api/storage
 /src/api/vendor
 /src/api/node_modules
+/src/front/.git
+/src/front/node_modules
+/src/front/.nuxt
+/src/front/.output
+/src/tg/.git
+/src/tg/node_modules
+/src/tg/.nuxt
+/src/tg/.output
 /bootstrap/cache/*
 /storage/app/*
 /storage/framework/views/*
@@ -32,6 +40,12 @@ Makefile
 !/.docker/*/dashboard/conf.d
 !/.docker/*/dashboard/php-fpm.d
 !/.docker/*/mysql/
+!/.docker/dev/new-kratom/
+!/.docker/dev/new-kratom/*
+!/.docker/dev/new-kratom-admin/
+!/.docker/dev/new-kratom-admin/*
+!/.docker/dev/new-kratom-horizon/
+!/.docker/dev/new-kratom-horizon/*
 !/.docker/*/schedule/cron.d
 !/.docker/*/nginx/nginx.conf
 !/.docker/*/nginx/snippets

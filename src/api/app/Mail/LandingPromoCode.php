@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Mail\Concerns\InteractsWithRegionalContext;
+use App\Mail\Concerns\RoutesToEmailQueue;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,6 +12,7 @@ class LandingPromoCode extends Mailable
 {
     use Queueable, SerializesModels;
     use InteractsWithRegionalContext;
+    use RoutesToEmailQueue;
 
     public string $promoCode;
     public ?string $ctaUrl;
@@ -19,6 +21,7 @@ class LandingPromoCode extends Mailable
     {
         $this->promoCode = $promoCode;
         $this->ctaUrl = $ctaUrl;
+        $this->routeToEmailQueue();
         $this->initializeRegionalContext();
     }
 
