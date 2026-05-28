@@ -8,6 +8,8 @@ use App\Services\Telegram\TelegramInitData;
 use Backpack\Store\app\Models\Order;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class TgProfileController extends Controller
 {
@@ -111,7 +113,13 @@ class TgProfileController extends Controller
 
     public function orders(Request $request)
     {
-        $profile = $this->profileFromRequest($request);
+        $telegram = $this->telegramUserFromRequest($request);
+
+        if (!$this->tgProfilesTableExists()) {
+            return $this->legacyOrdersResponse((string) ((int) $telegram['id']), $request);
+        }
+
+        $profile = $this->profileFromTelegramUser($telegram);
         $this->bindLegacyOrdersToProfile($profile);
 
         $orders = Order::query()
@@ -126,9 +134,11 @@ class TgProfileController extends Controller
 
     protected function profileFromRequest(Request $request): TgProfile
     {
-        $telegram = $this->telegramInitData->fromRequest($request);
-        $user = $telegram['user'];
+        return $this->profileFromTelegramUser($this->telegramUserFromRequest($request));
+    }
 
+    protected function profileFromTelegramUser(array $user): TgProfile
+    {
         $profile = TgProfile::firstOrNew([
             'telegram_user_id' => (int) $user['id'],
         ]);
@@ -263,6 +273,46 @@ class TgProfileController extends Controller
             'orderable_type' => TgProfile::class,
             'orderable_id' => (string) $profile->getKey(),
         ]);
+    }
+
+    protected function legacyOrdersResponse(string $telegramUserId, Request $request)
+    {
+        $orders = Order::query()
+            ->where('storefront_code', 'telegram');
+
+        $driver = $orders->getConnection()->getDriverName();
+
+        if ($driver === 'sqlite') {
+            $orders->where(function ($query) use ($telegramUserId) {
+                $query
+                    ->whereRaw("CAST(json_extract(info, '$.telegram_user_id') AS TEXT) = ?", [$telegramUserId])
+                    ->orWhereRaw("CAST(json_extract(info, '$.telegram_user.id') AS TEXT) = ?", [$telegramUserId]);
+            });
+        } else {
+            $orders->where(function ($query) use ($telegramUserId) {
+                $query
+                    ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(info, '$.telegram_user_id')) = ?", [$telegramUserId])
+                    ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(info, '$.telegram_user.id')) = ?", [$telegramUserId]);
+            });
+        }
+
+        return \Backpack\Store\app\Http\Resources\OrderLargeResource::collection(
+            $orders
+                ->orderBy('created_at', 'desc')
+                ->paginate((int) $request->get('per_page', 12))
+        );
+    }
+
+    protected function telegramUserFromRequest(Request $request): array
+    {
+        $telegram = $this->telegramInitData->fromRequest($request);
+
+        return $telegram['user'];
+    }
+
+    protected function tgProfilesTableExists(): bool
+    {
+        return Schema::hasTable((new TgProfile())->getTable());
     }
 
     protected function clean($value): ?string

@@ -88,6 +88,29 @@ class TelegramOrderFieldFallbackTest extends TestCase
         $this->assertSame((string) $profile->getKey(), (string) $result->orderable_id);
     }
 
+    public function test_set_user_data_does_not_fail_when_tg_profiles_table_is_missing(): void
+    {
+        Schema::dropIfExists('ak_tg_profiles');
+
+        /** @var OrderController $controller */
+        $controller = app(OrderController::class);
+        $order = new StoreOrder();
+
+        $result = $this->invokeSetUserData($controller, $order, [
+            'provider' => 'data',
+            'storefront' => 'telegram',
+            'storefront_code' => 'telegram',
+            'telegram_user_id' => 463516676,
+            'telegram_user' => [
+                'id' => 463516676,
+                'username' => 'doubleSilver',
+            ],
+        ]);
+
+        $this->assertNull($result->orderable_type);
+        $this->assertNull($result->orderable_id);
+    }
+
     protected function invokeSetRequestFields(OrderController $controller, StoreOrder $order, array $data): StoreOrder
     {
         $method = new ReflectionMethod($controller, 'setRequestFields');

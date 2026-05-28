@@ -163,6 +163,39 @@ class TgOrdersFallbackLookupTest extends TestCase
         $this->assertSame('222222', $response['data'][0]['code']);
     }
 
+    public function test_orders_work_without_tg_profiles_table_via_legacy_compatibility_path(): void
+    {
+        Schema::dropIfExists('ak_tg_profiles');
+
+        DB::table('ak_orders')->insert([
+            'id' => 4,
+            'code' => '333333',
+            'status' => 'new',
+            'pay_status' => 'waiting',
+            'delivery_status' => 'waiting',
+            'price' => 490,
+            'currency_code' => 'CZK',
+            'country_code' => 'cz',
+            'storefront_code' => 'telegram',
+            'info' => json_encode([
+                'storefront' => 'telegram',
+                'telegram_user_id' => 463516676,
+                'telegram_user' => [
+                    'id' => 463516676,
+                ],
+                'products' => [],
+            ]),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $response = $this->fetchOrders();
+
+        $this->assertCount(1, $response['data']);
+        $this->assertSame(4, $response['data'][0]['id']);
+        $this->assertSame('333333', $response['data'][0]['code']);
+    }
+
     protected function fetchOrders(): array
     {
         $controller = app(TgProfileController::class);

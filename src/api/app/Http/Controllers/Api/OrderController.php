@@ -10,6 +10,7 @@ use Backpack\Store\app\Events\ProductAttachedToOrder;
 use Backpack\Store\app\Events\PromocodeApplied;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Rd\app\Exceptions\DetailedException;
 
 class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderController
@@ -153,6 +154,10 @@ class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderCont
         $telegramUserId = (string) ((int) ($data['telegram_user_id'] ?? data_get($data, 'telegram_user.id') ?? 0));
 
         if ($telegramUserId === '' || $telegramUserId === '0') {
+            return $order;
+        }
+
+        if (!Schema::hasTable((new TgProfile())->getTable())) {
             return $order;
         }
 
