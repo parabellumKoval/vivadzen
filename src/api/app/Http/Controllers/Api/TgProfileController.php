@@ -113,15 +113,27 @@ class TgProfileController extends Controller
     public function orders(Request $request)
     {
         $profile = $this->profileFromRequest($request);
+        $phone = $this->clean($profile->phone);
+        $email = $this->clean($profile->email);
 
         $orders = Order::query()
             ->where('storefront_code', 'telegram')
-            ->where(function ($query) use ($profile) {
+            ->where(function ($query) use ($profile, $phone, $email) {
                 $id = (int) $profile->telegram_user_id;
+
                 $query->where('info->telegram_user_id', $id)
                     ->orWhere('info->telegram_user_id', (string) $id)
                     ->orWhere('info->telegram_user->id', $id)
                     ->orWhere('info->telegram_user->id', (string) $id);
+
+                if ($phone !== null) {
+                    $this->orWhereOrderInfoValue($query, '$.user.phone', $phone);
+                }
+
+                if ($email !== null) {
+                    $this->orWhereOrderInfoValue($query, '$.user.email', $email);
+                    $this->orWhereOrderInfoValue($query, '$.user.email', Str::lower($email));
+                }
             })
             ->orderBy('created_at', 'desc')
             ->paginate((int) $request->get('per_page', 12));
@@ -232,6 +244,18 @@ class TgProfileController extends Controller
         return collect([$address['settlement'] ?? null, $pointLine])
             ->filter()
             ->implode(', ') ?: 'Address';
+    }
+
+    protected function orWhereOrderInfoValue($query, string $path, string $value): void
+    {
+        $driver = $query->getConnection()->getDriverName();
+
+        if ($driver === 'sqlite') {
+            $query->orWhereRaw("json_extract(info, '{$path}') = ?", [$value]);
+            return;
+        }
+
+        $query->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(info, '{$path}')) = ?", [$value]);
     }
 
     protected function clean($value): ?string
