@@ -141,6 +141,26 @@ class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderCont
         return $model;
     }
 
+    protected function setUserData($order, array $data, $user_model = null)
+    {
+        $order = parent::setUserData($order, $data, $user_model);
+
+        if ($this->resolveStorefrontCode($data) !== 'telegram') {
+            return $order;
+        }
+
+        $telegramUserId = (string) ((int) ($data['telegram_user_id'] ?? data_get($data, 'telegram_user.id') ?? 0));
+
+        if ($telegramUserId === '' || $telegramUserId === '0') {
+            return $order;
+        }
+
+        $order->orderable_type = 'telegram';
+        $order->orderable_id = $telegramUserId;
+
+        return $order;
+    }
+
     protected function resolveConfiguredOrderField(array $configFields, string $fieldName): ?array
     {
         if (array_key_exists($fieldName, $configFields)) {

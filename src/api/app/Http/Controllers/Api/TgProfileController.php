@@ -113,27 +113,18 @@ class TgProfileController extends Controller
     public function orders(Request $request)
     {
         $profile = $this->profileFromRequest($request);
-        $phone = $this->clean($profile->phone);
-        $email = $this->clean($profile->email);
+        $telegramUserId = (string) ((int) $profile->telegram_user_id);
 
         $orders = Order::query()
             ->where('storefront_code', 'telegram')
-            ->where(function ($query) use ($profile, $phone, $email) {
-                $id = (int) $profile->telegram_user_id;
+            ->where(function ($query) use ($telegramUserId) {
+                $query->where(function ($ownedQuery) use ($telegramUserId) {
+                    $ownedQuery->where('orderable_type', 'telegram')
+                        ->where('orderable_id', $telegramUserId);
+                });
 
-                $query->where('info->telegram_user_id', $id)
-                    ->orWhere('info->telegram_user_id', (string) $id)
-                    ->orWhere('info->telegram_user->id', $id)
-                    ->orWhere('info->telegram_user->id', (string) $id);
-
-                if ($phone !== null) {
-                    $this->orWhereOrderInfoValue($query, '$.user.phone', $phone);
-                }
-
-                if ($email !== null) {
-                    $this->orWhereOrderInfoValue($query, '$.user.email', $email);
-                    $this->orWhereOrderInfoValue($query, '$.user.email', Str::lower($email));
-                }
+                $this->orWhereOrderInfoValue($query, '$.telegram_user_id', $telegramUserId);
+                $this->orWhereOrderInfoValue($query, '$.telegram_user.id', $telegramUserId);
             })
             ->orderBy('created_at', 'desc')
             ->paginate((int) $request->get('per_page', 12));
@@ -251,7 +242,7 @@ class TgProfileController extends Controller
         $driver = $query->getConnection()->getDriverName();
 
         if ($driver === 'sqlite') {
-            $query->orWhereRaw("json_extract(info, '{$path}') = ?", [$value]);
+            $query->orWhereRaw("CAST(json_extract(info, '{$path}') AS TEXT) = ?", [$value]);
             return;
         }
 

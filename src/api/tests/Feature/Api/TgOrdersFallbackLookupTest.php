@@ -3,10 +3,10 @@
 namespace Tests\Feature\Api;
 
 use App\Http\Controllers\Api\TgProfileController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 class TgOrdersFallbackLookupTest extends TestCase
@@ -40,65 +40,55 @@ class TgOrdersFallbackLookupTest extends TestCase
 
         Schema::create('ak_orders', function (Blueprint $table): void {
             $table->id();
-            $table->unsignedInteger('code')->nullable();
-            $table->decimal('price', 10, 2)->nullable();
-            $table->decimal('subtotal', 10, 2)->nullable();
-            $table->decimal('discount_total', 10, 2)->nullable();
-            $table->decimal('campaign_discount_total', 10, 2)->nullable();
-            $table->decimal('promocode_discount_total', 10, 2)->nullable();
-            $table->decimal('bonus_discount_total', 10, 2)->nullable();
-            $table->decimal('personal_discount_total', 10, 2)->nullable();
-            $table->decimal('shipping_total', 10, 2)->nullable();
-            $table->decimal('tax_total', 10, 2)->nullable();
-            $table->decimal('grand_total', 10, 2)->nullable();
-            $table->string('currency_code', 3)->nullable();
-            $table->string('status', 64)->nullable();
-            $table->string('pay_status', 64)->nullable();
-            $table->string('delivery_status', 64)->nullable();
-            $table->string('country_code', 8)->nullable();
+            $table->char('country_code', 2)->nullable();
+            $table->char('orderable_id', 36)->nullable();
+            $table->string('orderable_type', 255)->nullable();
+            $table->string('code', 6)->nullable();
+            $table->string('status', 30)->nullable();
+            $table->string('pay_status', 30)->nullable();
+            $table->string('delivery_status', 30)->nullable();
+            $table->float('price')->default(0);
+            $table->char('currency_code', 3)->nullable();
+            $table->decimal('fx_rate', 16, 8)->nullable();
+            $table->decimal('subtotal', 14, 2)->nullable();
+            $table->decimal('discount_total', 14, 2)->nullable();
+            $table->decimal('shipping_total', 14, 2)->nullable();
+            $table->decimal('tax_total', 14, 2)->nullable();
+            $table->decimal('grand_total', 14, 2)->nullable();
+            $table->json('info')->nullable();
             $table->string('storefront_code', 64)->nullable();
-            $table->text('info')->nullable();
             $table->timestamps();
         });
-    }
 
-    public function test_orders_fall_back_to_profile_contacts_when_telegram_identity_is_missing_in_order(): void
-    {
         DB::table('ak_tg_profiles')->insert([
-            'telegram_user_id' => 123456,
-            'username' => 'telegram-user',
-            'first_name' => 'Test',
-            'last_name' => 'User',
-            'phone' => '+420111222333',
-            'email' => 'test@example.com',
+            'telegram_user_id' => 463516676,
+            'username' => 'doubleSilver',
+            'first_name' => 'Andrei',
+            'last_name' => null,
             'addresses' => json_encode([]),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+    }
 
+    public function test_orders_find_legacy_telegram_orders_by_info_json(): void
+    {
         DB::table('ak_orders')->insert([
             'id' => 1,
-            'code' => 427136,
-            'price' => 490,
-            'currency_code' => 'CZK',
+            'code' => '427136',
             'status' => 'new',
             'pay_status' => 'waiting',
             'delivery_status' => 'waiting',
+            'price' => 490,
+            'currency_code' => 'CZK',
             'country_code' => 'cz',
             'storefront_code' => 'telegram',
             'info' => json_encode([
                 'storefront' => 'telegram',
-                'user' => [
-                    'first_name' => 'Test',
-                    'last_name' => 'User',
-                    'phone' => '+420111222333',
-                    'email' => 'test@example.com',
-                ],
-                'delivery' => [
-                    'method' => 'default_pickup',
-                ],
-                'payment' => [
-                    'method' => 'default_cash',
+                'telegram_user_id' => 463516676,
+                'telegram_user' => [
+                    'id' => 463516676,
+                    'username' => 'doubleSilver',
                 ],
                 'products' => [],
             ]),
@@ -108,19 +98,19 @@ class TgOrdersFallbackLookupTest extends TestCase
 
         DB::table('ak_orders')->insert([
             'id' => 2,
-            'code' => 111111,
-            'price' => 490,
-            'currency_code' => 'CZK',
+            'code' => '111111',
             'status' => 'new',
             'pay_status' => 'waiting',
             'delivery_status' => 'waiting',
+            'price' => 490,
+            'currency_code' => 'CZK',
             'country_code' => 'cz',
             'storefront_code' => 'telegram',
             'info' => json_encode([
                 'storefront' => 'telegram',
-                'user' => [
-                    'phone' => '+420999888777',
-                    'email' => 'another@example.com',
+                'telegram_user_id' => 999999999,
+                'telegram_user' => [
+                    'id' => 999999999,
                 ],
                 'products' => [],
             ]),
@@ -128,21 +118,55 @@ class TgOrdersFallbackLookupTest extends TestCase
             'updated_at' => now()->subMinute(),
         ]);
 
-        $controller = app(TgProfileController::class);
-        $request = Request::create('/api/tg/orders', 'GET');
-        $request->headers->set('X-Telegram-Init-Data', $this->telegramInitData([
-            'id' => 123456,
-            'username' => 'telegram-user',
-            'first_name' => 'Test',
-            'last_name' => 'User',
-            'language_code' => 'cs',
-        ]));
-
-        $response = $controller->orders($request)->response()->getData(true);
+        $response = $this->fetchOrders();
 
         $this->assertCount(1, $response['data']);
         $this->assertSame(1, $response['data'][0]['id']);
-        $this->assertSame(427136, $response['data'][0]['code']);
+        $this->assertSame('427136', $response['data'][0]['code']);
+    }
+
+    public function test_orders_find_new_telegram_orders_by_orderable_fields(): void
+    {
+        DB::table('ak_orders')->insert([
+            'id' => 3,
+            'orderable_type' => 'telegram',
+            'orderable_id' => '463516676',
+            'code' => '222222',
+            'status' => 'new',
+            'pay_status' => 'waiting',
+            'delivery_status' => 'waiting',
+            'price' => 590,
+            'currency_code' => 'CZK',
+            'country_code' => 'cz',
+            'storefront_code' => 'telegram',
+            'info' => json_encode([
+                'storefront' => 'telegram',
+                'products' => [],
+            ]),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $response = $this->fetchOrders();
+
+        $this->assertCount(1, $response['data']);
+        $this->assertSame(3, $response['data'][0]['id']);
+        $this->assertSame('222222', $response['data'][0]['code']);
+    }
+
+    protected function fetchOrders(): array
+    {
+        $controller = app(TgProfileController::class);
+        $request = Request::create('/api/tg/orders', 'GET');
+        $request->headers->set('X-Telegram-Init-Data', $this->telegramInitData([
+            'id' => 463516676,
+            'username' => 'doubleSilver',
+            'first_name' => 'Andrei',
+            'last_name' => '',
+            'language_code' => 'ru',
+        ]));
+
+        return $controller->orders($request)->response()->getData(true);
     }
 
     protected function telegramInitData(array $user): string
