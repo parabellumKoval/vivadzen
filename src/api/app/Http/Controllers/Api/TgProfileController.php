@@ -8,7 +8,6 @@ use App\Services\Telegram\TelegramInitData;
 use Backpack\Store\app\Models\Order;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class TgProfileController extends Controller
 {
@@ -113,19 +112,12 @@ class TgProfileController extends Controller
     public function orders(Request $request)
     {
         $profile = $this->profileFromRequest($request);
-        $telegramUserId = (string) ((int) $profile->telegram_user_id);
+        $this->bindLegacyOrdersToProfile($profile);
 
         $orders = Order::query()
             ->where('storefront_code', 'telegram')
-            ->where(function ($query) use ($telegramUserId) {
-                $query->where(function ($ownedQuery) use ($telegramUserId) {
-                    $ownedQuery->where('orderable_type', 'telegram')
-                        ->where('orderable_id', $telegramUserId);
-                });
-
-                $this->orWhereOrderInfoValue($query, '$.telegram_user_id', $telegramUserId);
-                $this->orWhereOrderInfoValue($query, '$.telegram_user.id', $telegramUserId);
-            })
+            ->where('orderable_type', TgProfile::class)
+            ->where('orderable_id', (string) $profile->getKey())
             ->orderBy('created_at', 'desc')
             ->paginate((int) $request->get('per_page', 12));
 
@@ -237,16 +229,40 @@ class TgProfileController extends Controller
             ->implode(', ') ?: 'Address';
     }
 
-    protected function orWhereOrderInfoValue($query, string $path, string $value): void
+    protected function bindLegacyOrdersToProfile(TgProfile $profile): void
     {
-        $driver = $query->getConnection()->getDriverName();
-
-        if ($driver === 'sqlite') {
-            $query->orWhereRaw("CAST(json_extract(info, '{$path}') AS TEXT) = ?", [$value]);
+        $telegramUserId = (string) ((int) $profile->telegram_user_id);
+        if ($telegramUserId === '' || $telegramUserId === '0') {
             return;
         }
 
-        $query->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(info, '{$path}')) = ?", [$value]);
+        $query = Order::query()
+            ->where('storefront_code', 'telegram')
+            ->whereNull('orderable_type')
+            ->whereNull('orderable_id');
+
+        $driver = $query->getConnection()->getDriverName();
+
+        if ($driver === 'sqlite') {
+            $query->where(function ($innerQuery) use ($telegramUserId) {
+                $innerQuery
+                    ->whereRaw("CAST(json_extract(info, '$.telegram_user_id') AS TEXT) = ?", [$telegramUserId])
+                    ->orWhereRaw("CAST(json_extract(info, '$.telegram_user.id') AS TEXT) = ?", [$telegramUserId]);
+            })->update([
+                'orderable_type' => TgProfile::class,
+                'orderable_id' => (string) $profile->getKey(),
+            ]);
+            return;
+        }
+
+        $query->where(function ($innerQuery) use ($telegramUserId) {
+            $innerQuery
+                ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(info, '$.telegram_user_id')) = ?", [$telegramUserId])
+                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(info, '$.telegram_user.id')) = ?", [$telegramUserId]);
+        })->update([
+            'orderable_type' => TgProfile::class,
+            'orderable_id' => (string) $profile->getKey(),
+        ]);
     }
 
     protected function clean($value): ?string

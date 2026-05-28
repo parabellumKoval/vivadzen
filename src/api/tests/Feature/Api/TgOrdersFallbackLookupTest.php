@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api;
 
 use App\Http\Controllers\Api\TgProfileController;
+use App\Models\TgProfile;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -71,7 +72,7 @@ class TgOrdersFallbackLookupTest extends TestCase
         ]);
     }
 
-    public function test_orders_find_legacy_telegram_orders_by_info_json(): void
+    public function test_orders_bind_legacy_telegram_orders_and_then_read_them_by_orderable_fields(): void
     {
         DB::table('ak_orders')->insert([
             'id' => 1,
@@ -119,18 +120,26 @@ class TgOrdersFallbackLookupTest extends TestCase
         ]);
 
         $response = $this->fetchOrders();
+        $profileId = DB::table('ak_tg_profiles')->where('telegram_user_id', 463516676)->value('id');
+        $updatedOrder = DB::table('ak_orders')->where('id', 1)->first();
 
         $this->assertCount(1, $response['data']);
         $this->assertSame(1, $response['data'][0]['id']);
         $this->assertSame('427136', $response['data'][0]['code']);
+        $this->assertSame(TgProfile::class, $updatedOrder->orderable_type);
+        $this->assertSame((string) $profileId, (string) $updatedOrder->orderable_id);
     }
 
     public function test_orders_find_new_telegram_orders_by_orderable_fields(): void
     {
+        $profileId = DB::table('ak_tg_profiles')
+            ->where('telegram_user_id', 463516676)
+            ->value('id');
+
         DB::table('ak_orders')->insert([
             'id' => 3,
-            'orderable_type' => 'telegram',
-            'orderable_id' => '463516676',
+            'orderable_type' => TgProfile::class,
+            'orderable_id' => (string) $profileId,
             'code' => '222222',
             'status' => 'new',
             'pay_status' => 'waiting',

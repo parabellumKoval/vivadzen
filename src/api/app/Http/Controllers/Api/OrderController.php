@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\TgProfile;
 use App\Services\AgeVerification\AdultoClient;
 use App\Services\AgeVerification\AgeVerificationService;
 use App\Services\Telegram\TelegramInitData;
@@ -155,8 +156,20 @@ class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderCont
             return $order;
         }
 
-        $order->orderable_type = 'telegram';
-        $order->orderable_id = $telegramUserId;
+        $profile = TgProfile::firstOrCreate(
+            ['telegram_user_id' => (int) $telegramUserId],
+            [
+                'username' => data_get($data, 'telegram_user.username'),
+                'first_name' => data_get($data, 'telegram_user.first_name'),
+                'last_name' => data_get($data, 'telegram_user.last_name'),
+                'avatar_url' => data_get($data, 'telegram_user.photo_url'),
+                'language_code' => data_get($data, 'telegram_user.language_code'),
+                'addresses' => [],
+            ]
+        );
+
+        $order->orderable_type = TgProfile::class;
+        $order->orderable_id = (string) $profile->getKey();
 
         return $order;
     }
