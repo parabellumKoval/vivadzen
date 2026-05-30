@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2742fff75f079a7aee07900cba817dcf",
+    "content-hash": "fecaece6ead8a2c48bf5c26b5590768c",
     "packages": [
         {
             "name": "backpack/basset",
@@ -5764,16 +5764,10 @@
         {
             "name": "parabellumkoval/crud",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/parabellumKoval/CRUD.git",
-                "reference": "04c468f8522ba0043b71cd988357b7150bd6b530"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/CRUD/zipball/04c468f8522ba0043b71cd988357b7150bd6b530",
-                "reference": "04c468f8522ba0043b71cd988357b7150bd6b530",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/crud",
+                "reference": "2ebd985ee0f2481b486fffd8568043b9c29cb94b"
             },
             "require": {
                 "creativeorange/gravatar": "~1.0",
@@ -5794,20 +5788,19 @@
                 "backpack/revise-operation": "Optional operation to remember all entry changes, undo and redo them (aka audit trait).",
                 "digitallyhappy/toggle-field-for-backpack": "Optional field to toggle a boolean. Prettier alternative to the checkbox field."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                },
                 "laravel": {
+                    "providers": [
+                        "Backpack\\CRUD\\BackpackServiceProvider"
+                    ],
                     "aliases": {
                         "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade",
                         "Widget": "Backpack\\CRUD\\app\\Library\\Widget"
-                    },
-                    "providers": [
-                        "Backpack\\CRUD\\BackpackServiceProvider"
-                    ]
-                },
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
+                    }
                 }
             },
             "autoload": {
@@ -5815,35 +5808,56 @@
                     "Backpack\\CRUD\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Backpack\\CRUD\\Tests\\": "tests"
+                },
+                "files": [
+                    "src/helpers.php"
+                ],
+                "exclude-from-classmap": [
+                    "**/config"
+                ]
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit --testdox"
+                ],
+                "test-failing": [
+                    "vendor/bin/phpunit --order-by=defects --stop-on-failure"
+                ],
+                "test-coverage": [
+                    "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text"
+                ]
+            },
             "license": [
                 "proprietary"
             ],
             "description": "Quickly build an admin interfaces using Laravel, CoreUI, Bootstrap and jQuery.",
             "homepage": "https://github.com/parabellumkoval/CRUD",
             "keywords": [
-                "Admin Interface",
-                "Content management system",
+                "BREAD",
+                "CMS",
+                "CRUD",
+                "admin interface",
                 "admin panel",
                 "admin panel for laravel",
                 "base",
                 "bootstrap 4 admin panel laravel",
-                "bread",
-                "cms",
                 "content management framework",
+                "content management system",
                 "coreui for laravel",
                 "create",
-                "crud",
                 "delete",
                 "laravel admin",
-                "parabellumKoval",
+                "parabellumkoval",
                 "read",
                 "update"
             ],
-            "support": {
-                "source": "https://github.com/parabellumKoval/CRUD/tree/main"
-            },
-            "time": "2025-12-11T19:31:23+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "parabellumkoval/crud-filemanager",

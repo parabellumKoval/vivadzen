@@ -23,8 +23,13 @@ trait LicenseCheck
             return;
         }
 
-        // don't show notice bubble if debug is true
-        if (config('app.debug') == 'true' && config('app.env') == 'local') {
+        // don't show notice bubble in local debug mode
+        if (config('app.debug') && config('app.env') === 'local') {
+            return;
+        }
+
+        // don't show notice bubble on production when debug is disabled
+        if (config('app.env') === 'production' && ! config('app.debug')) {
             return;
         }
 
