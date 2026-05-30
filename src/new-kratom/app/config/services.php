@@ -35,4 +35,25 @@ return [
         ],
     ],
 
+    'google' => [
+        // OAuth (Socialite) — «Вход через Google».
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI', rtrim(env('APP_URL', 'http://localhost'), '/').'/auth/google/callback'),
+
+        // Ссылка «написать отзыв в Google» (Google Business write-review link).
+        'review_url' => env('GOOGLE_REVIEW_URL', 'https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID'),
+        // Ссылка «смотреть все отзывы в Google».
+        'reviews_url' => env('GOOGLE_REVIEWS_URL', 'https://www.google.com/maps/search/Vivadzen+Praha'),
+        'rating' => env('GOOGLE_RATING', '4,8'),
+        'reviews_count' => env('GOOGLE_REVIEWS_COUNT', '240+'),
+    ],
+
+    'facebook' => [
+        // OAuth (Socialite) — «Вход через Facebook».
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT_URI', rtrim(env('APP_URL', 'http://localhost'), '/').'/auth/facebook/callback'),
+    ],
+
 ];

@@ -2,8 +2,6 @@
     use App\Support\Locale;
     $payment = $checkout['payment'] ?? [];
     $delivery = $checkout['delivery'] ?? [];
-    $hideCod = ($delivery['delivery_method'] ?? '') === 'express';
-    $showStore = ($delivery['delivery_method'] ?? '') === 'pickup';
 @endphp
 
 <x-checkout.layout :step="2">
@@ -15,7 +13,7 @@
                 method="POST"
                 action="{{ Locale::url('/pokladna/platba') }}"
                 class="checkout-form"
-                x-data="checkout({ paymentMethod: '{{ $payment['payment_method'] ?? 'card' }}' })"
+                x-data="checkout({ paymentMethod: '{{ $payment['payment_method'] ?? ($paymentMethods->first()->code ?? '') }}' })"
             >
                 @csrf
 
@@ -23,43 +21,40 @@
                     <h2 class="checkout-section__title">{{ __('site.checkout.payment_title') }}</h2>
 
                     <div class="method-list" role="radiogroup">
-                        @php
-                            $methods = [
-                                ['value' => 'card', 'icon' => 'shield-check', 'title' => __('site.checkout.payment_card'), 'desc' => __('site.checkout.payment_card_desc'), 'tags' => ['Visa','MC','Apple Pay','Google Pay']],
-                                ['value' => 'qr',   'icon' => 'badge-check', 'title' => __('site.checkout.payment_qr'),   'desc' => __('site.checkout.payment_qr_desc')],
-                                ['value' => 'bank', 'icon' => 'mail',        'title' => __('site.checkout.payment_bank'), 'desc' => __('site.checkout.payment_bank_desc')],
-                            ];
-                            if (! $hideCod) {
-                                $methods[] = ['value' => 'cod', 'icon' => 'truck', 'title' => __('site.checkout.payment_cod'), 'desc' => str_replace(':fee', '39 ' . __('site.currency'), __('site.checkout.payment_cod_desc'))];
-                            }
-                            if ($showStore) {
-                                $methods[] = ['value' => 'store', 'icon' => 'store', 'title' => __('site.checkout.payment_store'), 'desc' => __('site.checkout.payment_store_desc')];
-                            }
-                        @endphp
-
-                        @foreach($methods as $m)
-                            <label class="method" :class="paymentMethod === '{{ $m['value'] }}' && 'is-active'">
+                        @forelse($paymentMethods as $m)
+                            @php
+                                $icon = match($m->type) {
+                                    'cod' => 'truck',
+                                    'qr' => 'badge-check',
+                                    'bank' => 'mail',
+                                    'online' => 'shield-check',
+                                    default => 'shield-check',
+                                };
+                                $title = $m->localized('name');
+                                $desc = $m->localized('description');
+                            @endphp
+                            <label class="method" :class="paymentMethod === '{{ $m->code }}' && 'is-active'">
                                 <input
                                     type="radio"
                                     name="payment_method"
-                                    value="{{ $m['value'] }}"
+                                    value="{{ $m->code }}"
                                     x-model="paymentMethod"
                                     required
                                 />
-                                <span class="method__icon"><x-ui.icon :name="$m['icon']" :size="22" /></span>
+                                <span class="method__icon"><x-ui.icon :name="$icon" :size="22" /></span>
                                 <span class="method__body">
-                                    <span class="method__title">{{ $m['title'] }}</span>
-                                    <span class="method__desc">{{ $m['desc'] }}</span>
-                                    @if(! empty($m['tags']))
-                                        <span class="method__tags">
-                                            @foreach($m['tags'] as $tag)
-                                                <span>{{ $tag }}</span>
-                                            @endforeach
-                                        </span>
-                                    @endif
+                                    <span class="method__title">
+                                        {{ $title }}
+                                        @if($m->fee > 0)
+                                            <span class="method__badge">+{{ $m->fee }} {{ __('site.currency') }}</span>
+                                        @endif
+                                    </span>
+                                    <span class="method__desc">{{ $desc }}</span>
                                 </span>
                             </label>
-                        @endforeach
+                        @empty
+                            <p class="checkout-empty">{{ __('site.checkout.no_payment_methods') }}</p>
+                        @endforelse
                     </div>
                 </section>
 

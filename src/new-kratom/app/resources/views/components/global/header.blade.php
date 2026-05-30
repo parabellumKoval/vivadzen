@@ -12,6 +12,7 @@
         ['label' => __('site.nav.lab'),        'href' => Locale::url('/laboratorni-testy')],
         ['label' => __('site.nav.prodejny'),   'href' => Locale::url('/prodejny')],
         ['label' => __('site.nav.pruvodce'),   'href' => Locale::url('/pruvodce')],
+        ['label' => __('site.nav.forum'),      'href' => Locale::url('/forum')],
     ];
     $cartCount = (int) collect(session('cart.items', []))->sum('qty');
 @endphp
@@ -40,9 +41,24 @@
         <div class="header__actions">
             <x-global.lang-switcher />
 
-            <a href="{{ Locale::url('/ucet') }}" class="header__icon-btn" aria-label="{{ __('site.header.account') }}">
-                <x-ui.icon name="user" />
-            </a>
+            @auth
+                <a href="{{ Locale::url('/ucet') }}" class="header__icon-btn" aria-label="{{ __('site.header.account') }}">
+                    @if(auth()->user()->avatar_url)
+                        <img src="{{ auth()->user()->avatar_url }}" alt="" class="header__avatar" />
+                    @else
+                        <x-ui.icon name="user" />
+                    @endif
+                </a>
+            @else
+                <button
+                    type="button"
+                    class="header__icon-btn"
+                    aria-label="{{ __('site.auth.open') }}"
+                    @click="$dispatch('auth:open', { view: 'login' })"
+                >
+                    <x-ui.icon name="user" />
+                </button>
+            @endauth
 
             <a
                 href="{{ Locale::url('/kosik') }}"

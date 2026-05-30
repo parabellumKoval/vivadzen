@@ -10,8 +10,7 @@
     S5 Categories       — sections/categories
     S6 Bestsellers      — sections/bestsellers
     S7 Why-Vivadzen     — sections/why-vivadzen
-    S8 Google Reviews   — sections/google-reviews
-    S9 Trusted          — sections/trusted
+    S8+S9 Reviews       — sections/reviews-showcase (заменил google-reviews + trusted)
     S10 Content Hub     — sections/content-hub
     S11 FAQ             — sections/faq (+ FAQPage JSON-LD)
     S12 Newsletter      — sections/newsletter
@@ -27,9 +26,9 @@
     <x-sections.categories />
     <x-sections.bestsellers />
     <x-sections.why-vivadzen />
-    <x-sections.google-reviews />
-    <x-sections.trusted />
+    <x-sections.reviews-showcase />
     <x-sections.content-hub />
+    <x-sections.forum-promo />
     <x-sections.faq />
     <x-sections.newsletter />
 

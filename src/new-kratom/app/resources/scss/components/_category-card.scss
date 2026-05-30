@@ -3,6 +3,8 @@
 // =============================================================
 
 .cat-card {
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,7 +27,21 @@
 
     &:active { transform: scale(0.98); }
 
+    // Декоративная ветка кратома — выглядывает справа из-под пиалы.
+    &__deco {
+        position: absolute;
+        z-index: 0;    
+        top: 64px;
+        right: 12px;
+        width: 63px;
+        height: auto;
+        pointer-events: none;
+        user-select: none;
+    }
+
     &__glyph {
+        position: relative;
+        z-index: 1;
         width: 96px;
         height: 96px;
         border-radius: var(--r-circle);
@@ -36,6 +52,90 @@
         margin-bottom: var(--sp-4);
 
         img, svg { width: 64px; height: 64px; object-fit: contain; }
+
+        // Иллюстрация-бейдж: картинка заполняет круг.
+        &--img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    // Forma produktu — крупная иллюстрация без подложки карточки.
+    &--cover {
+        background: transparent;
+        padding-inline: var(--sp-2);
+
+        &:hover, &:focus-visible {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .cat-card__glyph {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            border-radius: var(--r-lg);
+            background: transparent;
+            margin-bottom: var(--sp-3);
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+    }
+
+    // Barva žilky — фото пиалы с порошком (прозрачный фон, без круглой подложки).
+    &--plate {
+        justify-content: center; // содержимое по центру растянутой по высоте карточки
+
+        .cat-card__glyph {
+            width: 104px;
+            height: 104px;
+            background: transparent;
+            overflow: visible;
+
+            &--img img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                filter: drop-shadow(0 6px 12px rgba(20, 32, 27, 0.12));
+            }
+        }
+    }
+
+    // Odrůdy — иллюстрация-регион на собственном кружке, чуть выглядывает за его край.
+    // Тон карточки ≈ фону секции с еле заметным песочным градиентом книзу.
+    &--region {
+        padding: var(--sp-6) var(--sp-4) var(--sp-5);
+        overflow: visible; // иллюстрация может выходить за пределы кружка/карточки
+
+        .cat-card__glyph {
+            width: 116px;
+            height: 116px;
+            background: #fbf3e8; // фон кружка
+            overflow: visible;   // иллюстрация торчит за край кружка
+            margin-bottom: var(--sp-3);
+
+            &--img img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                transform: scale(1.3); // иллюстрация чуть выходит за край кружка
+            }
+        }
+
+        // .cat-card__title {
+        //     font-family: var(--ff-display);
+        //     font-size: 22px;
+        // }
+
+        .cat-card__subtitle {
+            margin-top: auto; // подпись прижата к низу карточки
+        }
     }
 
     &__title {
@@ -44,6 +144,15 @@
         font-size: 16px;
         color: var(--c-forest-900);
         margin-bottom: 4px;
+    }
+
+    // Короткая горизонтальная черта между названием и подписью (только карточки цветов).
+    &__divider {
+        width: 24px;
+        height: 2px;
+        border-radius: 2px;
+        background: #8C6A45; // приглушённый коричневый — чуть заметен на кремовом фоне
+        margin: 6px 0 8px;
     }
 
     &__subtitle {

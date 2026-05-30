@@ -20,7 +20,6 @@ const form = ref<any>({
   author_name: '',
   author_email: '',
   rating: 5,
-  package: '',
   body: '',
   verified_purchase: false,
   helpful_count: 0,
@@ -47,7 +46,6 @@ async function loadReview() {
     author_name: r.author_name,
     author_email: r.author_email || '',
     rating: r.rating,
-    package: r.package || '',
     body: r.body,
     verified_purchase: !!r.verified_purchase,
     helpful_count: r.helpful_count || 0,
@@ -69,7 +67,8 @@ function handlePhotos(e: Event) {
 }
 
 function removePhotoSelection(i: number) {
-  URL.revokeObjectURL(photoPreviews.value[i])
+  const preview = photoPreviews.value[i]
+  if (preview) URL.revokeObjectURL(preview)
   photos.value.splice(i, 1)
   photoPreviews.value.splice(i, 1)
 }
@@ -90,7 +89,6 @@ async function save() {
     fd.append('author_name', form.value.author_name || '')
     fd.append('author_email', form.value.author_email || '')
     fd.append('rating', String(form.value.rating || 5))
-    fd.append('package', form.value.package || '')
     fd.append('body', form.value.body || '')
     fd.append('verified_purchase', form.value.verified_purchase ? '1' : '0')
     fd.append('helpful_count', String(form.value.helpful_count || 0))
@@ -161,11 +159,6 @@ async function remove() {
             >★</button>
           </div>
         </div>
-
-        <label class="block">
-          <span class="text-xs uppercase tracking-wide text-ink-700/60">Упаковка</span>
-          <input v-model="form.package" class="field-input mt-1" maxlength="32" placeholder="напр. 25 g" />
-        </label>
 
         <label class="block">
           <span class="text-xs uppercase tracking-wide text-ink-700/60">Текст отзыва *</span>

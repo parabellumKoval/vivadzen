@@ -32,10 +32,22 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+COPY .docker/dev/new-kratom/ensure-composer-install.sh /usr/local/bin/ensure-composer-install
+RUN chmod +x /usr/local/bin/ensure-composer-install
 
 WORKDIR /var/www/html
 
 CMD ["sh", "-lc", "\
-  [ -f vendor/autoload.php ] || composer install --no-interaction --prefer-dist; \
+  target_hash=$(sha1sum composer.lock | awk '{print $1}'); \
+  waited=0; \
+  while [ $waited -lt 120 ]; do \
+    if [ -f vendor/autoload.php ] && [ -f vendor/.composer.lock.sha1 ] && [ \"$(cat vendor/.composer.lock.sha1)\" = \"$target_hash\" ]; then \
+      php artisan horizon; \
+      exit $?; \
+    fi; \
+    sleep 1; \
+    waited=$((waited + 1)); \
+  done; \
+  ensure-composer-install; \
   php artisan horizon \
 "]

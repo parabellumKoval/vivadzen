@@ -27,7 +27,6 @@ export default ({ slug, apiBase, seed = [], ratingAverage = 0, reviewsCount = 0 
             rating: 5,
             author_name: '',
             author_email: '',
-            package: '',
             body: '',
             photos: [],
             photoPreviews: [],
@@ -136,7 +135,6 @@ export default ({ slug, apiBase, seed = [], ratingAverage = 0, reviewsCount = 0 
             fd.append('author_name', this.form.author_name);
             fd.append('author_email', this.form.author_email);
             fd.append('rating', String(this.form.rating));
-            fd.append('package', this.form.package || '');
             fd.append('body', this.form.body);
             this.form.photos.forEach((file) => fd.append('photos[]', file));
 

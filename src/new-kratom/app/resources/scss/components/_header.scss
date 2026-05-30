@@ -103,6 +103,14 @@
         background: rgba(249, 244, 236, 0.08);
     }
 
+    .header__avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: var(--r-circle);
+        object-fit: cover;
+        border: 1px solid rgba(249, 244, 236, 0.4);
+    }
+
     .header__badge-count {
         position: absolute;
         top: 6px;

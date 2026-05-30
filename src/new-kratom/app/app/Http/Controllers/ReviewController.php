@@ -6,6 +6,9 @@ use App\Models\Product;
 use App\Models\ProductQuestion;
 use App\Models\ProductReview;
 use App\Models\ProductReviewImage;
+use App\Support\Catalog;
+use App\Support\Locale;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -52,34 +55,94 @@ class ReviewController extends Controller
             'author_name'  => 'required|string|max:120',
             'author_email' => 'nullable|email|max:190',
             'rating'       => 'required|integer|min:1|max:5',
-            'package'      => 'nullable|string|max:32',
             'body'         => 'required|string|min:10|max:4000',
             'photos'       => 'nullable|array|max:' . self::MAX_PHOTOS,
             'photos.*'     => 'image|mimes:jpg,jpeg,png,webp,heic|max:' . self::MAX_PHOTO_SIZE_KB,
         ]);
 
-        $review = ProductReview::create([
-            'product_id'    => $product->id,
-            'author_name'   => $data['author_name'],
-            'author_email'  => $data['author_email'] ?? null,
-            'rating'        => $data['rating'],
-            'package'       => $data['package'] ?? null,
-            'body'          => $data['body'],
-            'status'        => 'pending',
-            // published_at — менеджер выставит при подтверждении
+        $this->createPendingReview($product, $data, $request);
+
+        return response()->json([
+            'ok'      => true,
+            'message' => 'Děkujeme za recenzi! Po krátké kontrole se objeví na stránce.',
+        ], 201);
+    }
+
+    /**
+     * Страница «Recenze Vivadzen» — все отзывы о всех товарах.
+     */
+    public function page(): View
+    {
+        $products = collect(Catalog::products())
+            ->map(fn (array $p) => [
+                'slug'  => $p['slug'],
+                'name'  => $p['name'],
+                'url'   => Locale::url('/kratom/' . $p['slug']),
+                'image' => $p['image'] ?? null,
+                'price' => $p['price25'] ?? $p['price50'] ?? null,
+            ])
+            ->sortBy('name')
+            ->values()
+            ->all();
+
+        return view('pages.reviews', [
+            'products' => $products,
+        ]);
+    }
+
+    /**
+     * Глобальный список отзывов (все товары) с фильтрами/сортировкой.
+     */
+    public function listAllReviews(Request $request): JsonResponse
+    {
+        $query = ProductReview::query()->with(['images', 'product:id,slug'])->public();
+
+        if ($slug = $request->query('product')) {
+            $query->whereHas('product', fn ($q) => $q->where('slug', $slug));
+        }
+
+        $query = $this->applyReviewFilters($query, $request);
+        $query = $this->applyReviewSort($query, $request->query('sort', 'newest'));
+
+        $perPage = (int) $request->integer('per_page', 9);
+        $perPage = max(1, min(50, $perPage));
+
+        $reviews = $query->paginate($perPage);
+
+        $productLookup = collect(Catalog::products())->keyBy('slug');
+
+        return response()->json([
+            'data' => $reviews->getCollection()
+                ->map(fn (ProductReview $r) => $this->shapeReview($r) + [
+                    'product' => $this->productContext($productLookup->get($r->product?->slug)),
+                ])
+                ->all(),
+            'meta' => [
+                'current_page' => $reviews->currentPage(),
+                'last_page'    => $reviews->lastPage(),
+                'total'        => $reviews->total(),
+            ],
+        ]);
+    }
+
+    /**
+     * Отправка отзыва со страницы «Recenze» — товар выбирается из списка.
+     */
+    public function storeGlobalReview(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'product'      => 'required|string',
+            'author_name'  => 'required|string|max:120',
+            'author_email' => 'nullable|email|max:190',
+            'rating'       => 'required|integer|min:1|max:5',
+            'body'         => 'required|string|min:10|max:4000',
+            'photos'       => 'nullable|array|max:' . self::MAX_PHOTOS,
+            'photos.*'     => 'image|mimes:jpg,jpeg,png,webp,heic|max:' . self::MAX_PHOTO_SIZE_KB,
         ]);
 
-        if ($request->hasFile('photos')) {
-            foreach ($request->file('photos') as $i => $file) {
-                if ($i >= self::MAX_PHOTOS) break;
-                $path = $file->store('reviews/' . $product->id, 'public');
-                ProductReviewImage::create([
-                    'product_review_id' => $review->id,
-                    'path'              => '/storage/' . $path,
-                    'position'          => $i,
-                ]);
-            }
-        }
+        $product = $this->resolveProduct($data['product']);
+
+        $this->createPendingReview($product, $data, $request);
 
         return response()->json([
             'ok'      => true,
@@ -152,6 +215,56 @@ class ReviewController extends Controller
         return Product::where('slug', $slug)->firstOrFail();
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function createPendingReview(Product $product, array $data, Request $request): ProductReview
+    {
+        $review = ProductReview::create([
+            'product_id'   => $product->id,
+            'user_id'      => $request->user()?->id,
+            'author_name'  => $data['author_name'],
+            'author_email' => $data['author_email'] ?? null,
+            'rating'       => $data['rating'],
+            'body'         => $data['body'],
+            'status'       => 'pending',
+            // published_at — менеджер выставит при подтверждении
+        ]);
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $i => $file) {
+                if ($i >= self::MAX_PHOTOS) break;
+                $path = $file->store('reviews/' . $product->id, 'public');
+                ProductReviewImage::create([
+                    'product_review_id' => $review->id,
+                    'path'              => '/storage/' . $path,
+                    'position'          => $i,
+                ]);
+            }
+        }
+
+        return $review;
+    }
+
+    /**
+     * @param array<string, mixed>|null $product
+     * @return array<string, mixed>|null
+     */
+    private function productContext(?array $product): ?array
+    {
+        if (! $product) {
+            return null;
+        }
+
+        return [
+            'slug'  => $product['slug'],
+            'name'  => $product['name'],
+            'url'   => Locale::url('/kratom/' . $product['slug']),
+            'image' => $product['image'] ?? null,
+            'price' => $product['price25'] ?? $product['price50'] ?? null,
+        ];
+    }
+
     private function applyReviewFilters($query, Request $request)
     {
         if ($rating = $request->query('rating')) {
@@ -182,7 +295,6 @@ class ReviewController extends Controller
             'id'             => $r->id,
             'author'         => $r->author_name,
             'rating'         => (int) $r->rating,
-            'package'        => $r->package,
             'body'           => $r->body,
             'verified'       => (bool) $r->verified_purchase,
             'helpful'        => (int) $r->helpful_count,

@@ -4,6 +4,7 @@ import { Save, Trash2, ArrowLeft } from 'lucide-vue-next'
 const route = useRoute()
 const router = useRouter()
 const api = useApi()
+const { resolve: resolveMediaUrl } = useMediaUrl()
 const isNew = route.params.id === 'new'
 const {
   t,
@@ -161,7 +162,12 @@ async function remove() {
 
         <div>
           <label class="field-label">{{ t('products.description') }} ({{ activeLocale.toUpperCase() }})</label>
-          <textarea v-model="form.description[activeLocale]" rows="5" class="field-input" />
+          <AdminRichEditor
+            :key="`desc-${activeLocale}`"
+            v-model="form.description[activeLocale]"
+            placeholder="Опишите продукт — поддерживается форматирование и вставка изображений"
+            min-height="220px"
+          />
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -241,8 +247,19 @@ async function remove() {
           <input v-model="form.main_image" class="field-input" placeholder="/storage/products/…" />
         </div>
         <div v-if="form.main_image" class="border border-ink-700/10 rounded-lg p-2">
-          <img :src="form.main_image" class="w-full h-40 object-contain" />
+          <img :src="resolveMediaUrl(form.main_image)" class="w-full h-40 object-contain" />
         </div>
+      </div>
+
+      <div v-if="!isNew" class="card lg:col-span-3 space-y-4">
+        <AdminProductGallery
+          :product-id="route.params.id as string"
+          :main-image="form.main_image"
+          @update:main-image="form.main_image = $event"
+        />
+      </div>
+      <div v-else class="card lg:col-span-3 text-sm text-ink-700/60">
+        Сохраните товар, чтобы загружать изображения галереи.
       </div>
 
       <div class="card lg:col-span-3 space-y-3">

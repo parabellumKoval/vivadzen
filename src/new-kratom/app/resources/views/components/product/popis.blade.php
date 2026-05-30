@@ -7,7 +7,16 @@
         <h2 id="popis-title" class="t-heading-xl t-on-light-accent">Popis produktu</h2>
 
         <div class="popis-body">
-            <p>{{ $product['description'] }}</p>
+            @php
+                $descriptionHtml = (string) ($product['description'] ?? '');
+                $isHtml = $descriptionHtml !== strip_tags($descriptionHtml);
+            @endphp
+            @if($isHtml)
+                {{-- HTML из WYSIWYG-редактора: пропускаем через allow-list тэгов. --}}
+                <div class="rich-text">{!! strip_tags($descriptionHtml, '<p><br><strong><b><em><i><u><s><a><ul><ol><li><h2><h3><h4><blockquote><img><figure><figcaption>') !!}</div>
+            @else
+                <p>{{ $descriptionHtml }}</p>
+            @endif
             <p>
                 Více informací o této odrůdě najdete v sekci
                 <a href="{{ \App\Support\Locale::url('/kratom/' . $product['color']) }}">{{ $product['colorLabel'] }} kratom</a>

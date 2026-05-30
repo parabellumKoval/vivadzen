@@ -33,6 +33,12 @@ return [
             'calculable' => true,
         ],
         [
+            'name' => 'messenger',
+            'type' => 'express',
+            'label' => 'Экспресс-доставка Messenger.cz',
+            'calculable' => true,
+        ],
+        [
             'name' => 'default',
             'type' => 'pickup',
             'label' => 'Самовывоз',

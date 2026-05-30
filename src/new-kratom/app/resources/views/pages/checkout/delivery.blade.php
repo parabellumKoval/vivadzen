@@ -12,7 +12,7 @@
                 method="POST"
                 action="{{ Locale::url('/pokladna/doruceni') }}"
                 class="checkout-form"
-                x-data="checkout({ deliveryMethod: '{{ $delivery['delivery_method'] ?? 'courier' }}' })"
+                x-data="checkout({ deliveryMethod: '{{ $delivery['delivery_method'] ?? ($deliveryMethods->first()->code ?? '') }}' })"
             >
                 @csrf
 
@@ -76,46 +76,54 @@
                     <h2 class="checkout-section__title">{{ __('site.checkout.delivery_title') }}</h2>
 
                     <div class="method-list" role="radiogroup">
-                        @php
-                            $methods = [
-                                ['value' => 'courier',     'icon' => 'truck',  'price' => 89,  'title' => __('site.checkout.delivery_courier'),     'desc' => __('site.checkout.delivery_courier_desc'),     'free' => 1200],
-                                ['value' => 'express',     'icon' => 'zap',    'price' => 290, 'title' => __('site.checkout.delivery_express'),     'desc' => __('site.checkout.delivery_express_desc'),     'badge' => 'EXPRESS'],
-                                ['value' => 'pickup',      'icon' => 'store',  'price' => 0,   'title' => __('site.checkout.delivery_pickup'),      'desc' => __('site.checkout.delivery_pickup_desc')],
-                                ['value' => 'zasilkovna',  'icon' => 'map-pin','price' => 79,  'title' => __('site.checkout.delivery_zasilkovna'),  'desc' => __('site.checkout.delivery_zasilkovna_desc')],
-                            ];
-                        @endphp
-
-                        @foreach($methods as $m)
-                            <label class="method" :class="deliveryMethod === '{{ $m['value'] }}' && 'is-active'">
+                        @forelse($deliveryMethods as $m)
+                            @php
+                                $icon = $m->type === 'pickup' ? 'store' : ($m->code === 'messanger_express' ? 'zap' : 'truck');
+                                $title = $m->localized('name');
+                                $desc = $m->localized('description');
+                                $eta = $m->localized('eta');
+                                $addr = $m->address ?? null;
+                            @endphp
+                            <label class="method" :class="deliveryMethod === '{{ $m->code }}' && 'is-active'">
                                 <input
                                     type="radio"
                                     name="delivery_method"
-                                    value="{{ $m['value'] }}"
+                                    value="{{ $m->code }}"
                                     x-model="deliveryMethod"
                                     required
                                 />
-                                <span class="method__icon"><x-ui.icon :name="$m['icon']" :size="22" /></span>
+                                <span class="method__icon"><x-ui.icon :name="$icon" :size="22" /></span>
                                 <span class="method__body">
                                     <span class="method__title">
-                                        {{ $m['title'] }}
-                                        @if(! empty($m['badge']))
-                                            <span class="method__badge">{{ $m['badge'] }}</span>
+                                        {{ $title }}
+                                        @if($m->code === 'messanger_express')
+                                            <span class="method__badge">EXPRESS</span>
                                         @endif
                                     </span>
-                                    <span class="method__desc">{{ $m['desc'] }}</span>
+                                    <span class="method__desc">
+                                        {{ $desc }}
+                                        @if($eta) · <strong>{{ $eta }}</strong>@endif
+                                    </span>
+                                    @if($m->type === 'pickup' && $addr)
+                                        <span class="method__desc method__desc--meta">
+                                            {{ $addr['street'] ?? '' }}, {{ $addr['city'] ?? '' }} · {{ $addr['hours'] ?? '' }}
+                                        </span>
+                                    @endif
                                 </span>
                                 <span class="method__price">
-                                    @if($m['price'] === 0)
-                                        <strong>{{ __('site.cart.summary') === 'Order summary' ? 'Free' : 'Zdarma' }}</strong>
+                                    @if((int) $m->price === 0)
+                                        <strong>{{ __('site.checkout.free') }}</strong>
                                     @else
-                                        <strong>{{ $m['price'] }} {{ __('site.currency') }}</strong>
-                                        @if(! empty($m['free']))
-                                            <small>{{ str_replace(':amount', $m['free'] . ' ' . __('site.currency'), __('site.checkout.free_above')) }}</small>
+                                        <strong>{{ $m->price }} {{ __('site.currency') }}</strong>
+                                        @if($m->free_above)
+                                            <small>{{ str_replace(':amount', $m->free_above . ' ' . __('site.currency'), __('site.checkout.free_above')) }}</small>
                                         @endif
                                     @endif
                                 </span>
                             </label>
-                        @endforeach
+                        @empty
+                            <p class="checkout-empty">{{ __('site.checkout.no_delivery_methods') }}</p>
+                        @endforelse
                     </div>
                 </section>
 

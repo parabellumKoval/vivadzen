@@ -34,6 +34,7 @@ class CreateOrderJob implements ShouldQueue
         public readonly array $payment,
         public readonly string $locale = 'cs',
         public readonly ?string $ip = null,
+        public readonly ?int $userId = null,
     ) {
     }
 
@@ -42,6 +43,7 @@ class CreateOrderJob implements ShouldQueue
         $statusKey = "nk:v1:order:pending:{$this->publicId}";
 
         $order = Order::create([
+            'user_id' => $this->userId,
             'public_id' => $this->publicId,
             'status' => 'received',
             'email' => $this->delivery['email'],
@@ -58,8 +60,8 @@ class CreateOrderJob implements ShouldQueue
             'promo_code' => $this->cart['promo']['code'] ?? null,
             'subtotal' => $this->cart['subtotal'],
             'discount' => $this->cart['discount'],
-            'shipping' => 0,
-            'total' => $this->cart['total'],
+            'shipping' => $this->calculateShipping(),
+            'total' => $this->cart['total'] + $this->calculateShipping() + $this->calculatePaymentFee(),
             'items_count' => $this->cart['count'],
             'locale' => $this->locale,
             'marketing_consent' => (bool) ($this->delivery['marketing_consent'] ?? false),
@@ -103,5 +105,23 @@ class CreateOrderJob implements ShouldQueue
             'status' => 'failed',
             'error' => $e->getMessage(),
         ]));
+    }
+
+    private function calculateShipping(): int
+    {
+        $method = \App\Models\DeliveryMethod::where('code', $this->delivery['delivery_method'] ?? '')->first();
+        if (! $method) {
+            return 0;
+        }
+        if ($method->free_above && $this->cart['subtotal'] >= $method->free_above) {
+            return 0;
+        }
+        return (int) $method->price;
+    }
+
+    private function calculatePaymentFee(): int
+    {
+        $method = \App\Models\PaymentMethod::where('code', $this->payment['payment_method'] ?? '')->first();
+        return (int) ($method?->fee ?? 0);
     }
 }

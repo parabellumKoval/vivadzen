@@ -1,41 +1,44 @@
-{{-- S9 «Trusted by Thousands» — 04_HOMEPAGE.md §11 (Image 2) --}}
+{{-- S9 «Trusted by Thousands» — реальные отзывы о товарах, слайдер --}}
 @php
-    $reviews = [
-        ['name' => 'Martin K.',  'date' => 'březen 2026',  'chip' => 'Zelená Maeng Da', 'quote' => 'Profesionální balení, dodání druhý den. Šarže má COA. Důvěryhodný obchod.'],
-        ['name' => 'Tereza N.',  'date' => 'únor 2026',    'chip' => 'Bílý slon',       'quote' => 'Konečně český obchod, který otevřeně publikuje lab-výsledky. Vrátím se.'],
-        ['name' => 'Jakub H.',   'date' => 'únor 2026',    'chip' => 'Extrakt 10 ml',    'quote' => 'Vyzkoušel jsem mnoho českých obchodů, Vivadzen je férový a transparentní.'],
-        ['name' => 'Petra V.',   'date' => 'leden 2026',   'chip' => 'Zelený thajský',  'quote' => 'Vynikající kvalita, navíc kamenná prodejna v Praze. Personál odborný.'],
-        ['name' => 'David B.',   'date' => 'leden 2026',   'chip' => 'Červená Maeng Da','quote' => 'Vivadzen má top kvalitu, lab-testy publikované, COA otevřeně. Slušná akce.'],
-    ];
+    use App\Support\Locale;
+
+    $reviews = \App\Support\Reviews::featured(12);
 @endphp
 
+@if(!empty($reviews))
 <section class="section section--dark trusted bg-botanical" aria-labelledby="trusted-title">
     <div class="container">
         <header class="trusted__head section-head--center">
             <div class="trusted__icon-bubble"><x-ui.icon name="sparkles" /></div>
             <p class="t-overline section-head__eyebrow--grass">REAL PEOPLE, REAL RESULTS</p>
-            <h2 id="trusted-title" class="t-display-md t-on-dark mt-3">Důvěřuje nám tisíce zákazníků</h2>
+            <h2 id="trusted-title" class="t-display-md t-on-dark mt-3">Co říkají naši zákazníci</h2>
             <div class="trusted__rating">
                 <span class="stars" aria-hidden="true">★★★★★</span>
                 <span>4,9 z 5 — 2 500+ hodnocení</span>
             </div>
         </header>
 
-        <div class="trusted__grid">
-            @foreach($reviews as $r)
-                <x-ui.review-card
-                    :quote="$r['quote']"
-                    :name="$r['name']"
-                    :date="$r['date']"
-                    :chip="$r['chip']"
-                />
-            @endforeach
+        <div class="trusted__slider" x-data="reviewsSlider()">
+            <button type="button" class="trusted__nav trusted__nav--prev" @click="prev()" aria-label="Předchozí recenze">
+                <x-ui.icon name="chevron-down" :size="20" />
+            </button>
+
+            <div class="trusted__track" x-ref="track">
+                @foreach($reviews as $r)
+                    <x-ui.testimonial-card :review="$r" />
+                @endforeach
+            </div>
+
+            <button type="button" class="trusted__nav trusted__nav--next" @click="next()" aria-label="Další recenze">
+                <x-ui.icon name="chevron-down" :size="20" />
+            </button>
         </div>
 
         <div class="trusted__cta">
-            <x-ui.button href="/recenze" variant="secondary" size="lg" icon="arrow-right">
+            <x-ui.button :href="Locale::url('/recenze')" variant="secondary" size="lg" icon="arrow-right">
                 Číst všechny recenze
             </x-ui.button>
         </div>
     </div>
 </section>
+@endif

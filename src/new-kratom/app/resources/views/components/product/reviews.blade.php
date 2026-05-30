@@ -116,7 +116,6 @@
                     </div>
 
                     <footer class="review__foot">
-                        <span x-show="r.package">Balení: <span x-text="r.package"></span></span>
                         <button type="button" class="review__helpful" @click="markHelpful(r)" :disabled="r._busy">
                             👍 Doporučuje <span x-text="r.helpful"></span>
                         </button>
@@ -187,15 +186,6 @@
                         <input class="field__input" type="email" x-model.trim="form.author_email" maxlength="190" />
                     </label>
                 </div>
-
-                <label class="field">
-                    <span class="field__label">Velikost balení</span>
-                    <select class="field__input" x-model="form.package">
-                        <option value="">— vyberte —</option>
-                        <option value="25 g">25 g</option>
-                        <option value="50 g">50 g</option>
-                    </select>
-                </label>
 
                 <label class="field">
                     <span class="field__label">Recenze *</span>

@@ -100,6 +100,104 @@ textarea.input {
     resize: vertical;
 }
 
+// City autocomplete — backed by Meilisearch via /ucet/mesta.
+.city-picker {
+    position: relative;
+    width: 100%;
+
+    &__menu {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(100% + 4px);
+        z-index: 25;
+        background: #fff;
+        border: 1px solid var(--c-cream-300);
+        border-radius: var(--r-md);
+        box-shadow: var(--shadow-md);
+        max-height: 320px;
+        overflow-y: auto;
+        padding: 4px;
+    }
+
+    &__option {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        width: 100%;
+        padding: 10px 12px;
+        background: transparent;
+        border: 0;
+        border-radius: var(--r-sm);
+        text-align: left;
+        cursor: pointer;
+
+        &:hover, &.is-active {
+            background: var(--c-cream-300);
+        }
+    }
+
+    &__name {
+        font-weight: var(--fw-semibold);
+        color: var(--c-forest-900);
+    }
+
+    &__meta {
+        font-size: .82rem;
+        color: var(--c-ink-500);
+    }
+
+    &__meta-sep { color: var(--c-ink-300); }
+
+    &__empty {
+        padding: 12px;
+        color: var(--c-ink-500);
+        font-size: .85rem;
+        margin: 0;
+    }
+}
+
+// Phone input — wraps native <input type="tel"> with a tiny container so the
+// Blade <x-form.phone> component can grow (e.g. region picker) without changing
+// callers.
+.field__phone {
+    position: relative;
+    width: 100%;
+
+    .input { width: 100%; }
+}
+
+// Password input — adds a show/hide eye on the right.
+.field__password {
+    position: relative;
+    width: 100%;
+
+    .input { padding-right: 44px; }
+
+    &-toggle {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        background: transparent;
+        color: var(--c-ink-500);
+        cursor: pointer;
+        border-radius: var(--r-xs);
+
+        &:hover, &:focus-visible {
+            color: var(--c-forest-700);
+            background: var(--c-cream-300);
+        }
+    }
+}
+
 // Inline form (newsletter)
 .form-inline {
     display: flex;

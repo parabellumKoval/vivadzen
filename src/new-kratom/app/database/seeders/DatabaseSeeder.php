@@ -14,6 +14,10 @@ class DatabaseSeeder extends Seeder
             TaxonomySeeder::class,
             CatalogSeeder::class,
             ReviewsSeeder::class,
+            CzechCitiesSeeder::class,
+            DeliveryPaymentSeeder::class,
+            UserDemoSeeder::class,
+            ForumDemoSeeder::class,
         ]);
 
         // После seed-а сразу прогреваем Redis, чтобы фронт не упёрся

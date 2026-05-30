@@ -11,6 +11,12 @@
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.12.2",
     "@pinia/nuxt": "^0.11.3",
+    "@tiptap/extension-image": "^2.11.5",
+    "@tiptap/extension-link": "^2.11.5",
+    "@tiptap/extension-placeholder": "^2.11.5",
+    "@tiptap/pm": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5",
+    "@tiptap/vue-3": "^2.11.5",
     "@vueuse/core": "^14.3.0",
     "@vueuse/nuxt": "^14.3.0",
     "lucide-vue-next": "^0.451.0",
@@ -18,7 +24,9 @@
     "ofetch": "^1.4.1",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
-    "vue": "^3.5.13"
+    "sortablejs": "^1.15.6",
+    "vue": "^3.5.13",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

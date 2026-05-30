@@ -1,21 +1,14 @@
 @php
     use App\Support\Locale;
+    use App\Models\DeliveryMethod;
+    use App\Models\PaymentMethod;
     $d = $checkout['delivery'];
     $p = $checkout['payment'];
 
-    $deliveryLabels = [
-        'courier' => __('site.checkout.delivery_courier'),
-        'express' => __('site.checkout.delivery_express'),
-        'pickup' => __('site.checkout.delivery_pickup'),
-        'zasilkovna' => __('site.checkout.delivery_zasilkovna'),
-    ];
-    $paymentLabels = [
-        'card' => __('site.checkout.payment_card'),
-        'qr' => __('site.checkout.payment_qr'),
-        'bank' => __('site.checkout.payment_bank'),
-        'cod' => __('site.checkout.payment_cod'),
-        'store' => __('site.checkout.payment_store'),
-    ];
+    $deliveryModel = DeliveryMethod::where('code', $d['delivery_method'] ?? '')->first();
+    $paymentModel = PaymentMethod::where('code', $p['payment_method'] ?? '')->first();
+    $deliveryLabel = $deliveryModel?->localized('name') ?? ($d['delivery_method'] ?? '');
+    $paymentLabel = $paymentModel?->localized('name') ?? ($p['payment_method'] ?? '');
 @endphp
 
 <x-checkout.layout :step="3">
@@ -38,7 +31,7 @@
                     <div class="review-card">
                         <div class="review-card__head">
                             <x-ui.icon name="truck" :size="20" />
-                            <strong>{{ $deliveryLabels[$d['delivery_method']] ?? '' }}</strong>
+                            <strong>{{ $deliveryLabel }}</strong>
                             <a href="{{ Locale::url('/pokladna') }}" class="review-card__edit">{{ __('site.checkout.edit') }}</a>
                         </div>
                         <div class="review-card__body">
@@ -52,7 +45,7 @@
                     <div class="review-card">
                         <div class="review-card__head">
                             <x-ui.icon name="shield-check" :size="20" />
-                            <strong>{{ $paymentLabels[$p['payment_method']] ?? '' }}</strong>
+                            <strong>{{ $paymentLabel }}</strong>
                             <a href="{{ Locale::url('/pokladna/platba') }}" class="review-card__edit">{{ __('site.checkout.edit') }}</a>
                         </div>
                     </div>

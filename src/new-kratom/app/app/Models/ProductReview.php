@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ProductReview extends Model
 {
     protected $fillable = [
-        'product_id', 'author_name', 'author_email', 'rating',
-        'package', 'body', 'verified_purchase', 'helpful_count',
+        'product_id', 'user_id', 'author_name', 'author_email', 'rating',
+        'body', 'verified_purchase', 'helpful_count',
         'status', 'published_at', 'created_by_admin_id',
     ];
 
@@ -25,6 +25,11 @@ class ProductReview extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function images(): HasMany

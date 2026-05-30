@@ -137,9 +137,10 @@ class CacheWarmer
         $formTaxonomy = $p->form_slug ? ($taxonomyLookup['form'][$p->form_slug] ?? null) : null;
 
         $images = $p->images->map(fn ($img) => [
-            'path' => $img->path,
+            'path' => $img->public_url ?: $img->path,
             'alt' => $img->alt,
-            'renditions' => $img->renditions ?? $this->images->defaultRenditions($img->path),
+            'title' => $img->title,
+            'renditions' => $img->renditions ?? $this->images->defaultRenditions($img->public_url ?: $img->path),
         ])->all();
 
         $reviewsCollection = $p->relationLoaded('reviews') ? $p->reviews : collect();
@@ -162,7 +163,6 @@ class CacheWarmer
                 'id'                 => $r->id,
                 'author'             => $r->author_name,
                 'rating'             => (int) $r->rating,
-                'package'            => $r->package,
                 'body'               => $r->body,
                 'verified'           => (bool) $r->verified_purchase,
                 'helpful'            => (int) $r->helpful_count,

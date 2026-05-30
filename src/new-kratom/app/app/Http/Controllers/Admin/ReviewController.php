@@ -125,7 +125,6 @@ class ReviewController extends Controller
             'author_name'       => ($existing ? 'sometimes|' : '') . 'required|string|max:120',
             'author_email'      => 'nullable|email|max:190',
             'rating'            => ($existing ? 'sometimes|' : '') . 'required|integer|min:1|max:5',
-            'package'           => 'nullable|string|max:32',
             'body'              => ($existing ? 'sometimes|' : '') . 'required|string|min:5|max:4000',
             'verified_purchase' => 'boolean',
             'helpful_count'     => 'nullable|integer|min:0',

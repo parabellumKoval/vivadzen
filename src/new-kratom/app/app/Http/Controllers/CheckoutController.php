@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\CreateOrderJob;
+use App\Models\DeliveryMethod;
+use App\Models\PaymentMethod;
 use App\Support\Cart;
 use App\Support\Locale;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 
 class CheckoutController extends Controller
 {
@@ -29,11 +32,14 @@ class CheckoutController extends Controller
             'cart' => $cart,
             'step' => 1,
             'checkout' => Cart::checkout(),
+            'deliveryMethods' => DeliveryMethod::active()->get(),
         ]);
     }
 
     public function saveDelivery(Request $request)
     {
+        $codes = DeliveryMethod::active()->pluck('code')->all();
+
         $data = $request->validate([
             'email' => 'required|email',
             'phone' => 'required|string|max:64',
@@ -43,7 +49,7 @@ class CheckoutController extends Controller
             'city' => 'required|string|max:64',
             'zip' => 'required|string|max:16',
             'country' => 'nullable|string|max:64',
-            'delivery_method' => 'required|in:courier,express,pickup,zasilkovna',
+            'delivery_method' => ['required', Rule::in($codes)],
             'marketing_consent' => 'nullable|boolean',
         ]);
         Cart::setCheckout(['delivery' => $data]);
@@ -60,17 +66,33 @@ class CheckoutController extends Controller
             return redirect(Locale::url('/pokladna'));
         }
 
+        $deliveryCode = $checkout['delivery']['delivery_method'] ?? null;
+
+        // Only show payment methods compatible with the chosen delivery option.
+        $methods = PaymentMethod::active()->get()
+            ->filter(fn (PaymentMethod $m) => $m->isCompatibleWith($deliveryCode))
+            ->values();
+
         return view('pages.checkout.payment', [
             'cart' => $cart,
             'step' => 2,
             'checkout' => $checkout,
+            'paymentMethods' => $methods,
         ]);
     }
 
     public function savePayment(Request $request)
     {
+        $checkout = Cart::checkout();
+        $deliveryCode = $checkout['delivery']['delivery_method'] ?? null;
+
+        $available = PaymentMethod::active()->get()
+            ->filter(fn (PaymentMethod $m) => $m->isCompatibleWith($deliveryCode))
+            ->pluck('code')
+            ->all();
+
         $data = $request->validate([
-            'payment_method' => 'required|in:card,qr,bank,cod,store',
+            'payment_method' => ['required', Rule::in($available)],
         ]);
         Cart::setCheckout(['payment' => $data]);
         return redirect(Locale::url('/pokladna/potvrzeni'));
@@ -135,6 +157,7 @@ class CheckoutController extends Controller
             payment: $checkout['payment'],
             locale: app()->getLocale(),
             ip: $request->ip(),
+            userId: $request->user()?->id,
         )->onQueue('orders');
 
         Session::put('last_order_id', $publicId);

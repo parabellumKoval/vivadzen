@@ -13,6 +13,17 @@ import catalogFilter from './components/catalog-filter.js';
 import cartModal from './components/cart-modal.js';
 import productReviews from './components/product-reviews.js';
 import productQuestions from './components/product-questions.js';
+import reviewsSlider from './components/reviews-slider.js';
+import reviewsPage from './components/reviews-page.js';
+import authModal from './components/auth-modal.js';
+import accountPage from './components/account-page.js';
+import phoneMask from './components/phone-mask.js';
+import cityPicker from './components/city-picker.js';
+import forumIndex from './components/forum-index.js';
+import forumTopic from './components/forum-topic.js';
+import forumNew from './components/forum-new.js';
+import forumUser from './components/forum-user.js';
+import './components/lab-batch.js';
 import { initCart } from './cart.js';
 
 window.Alpine = Alpine;
@@ -28,6 +39,16 @@ Alpine.data('catalogFilter', catalogFilter);
 Alpine.data('cartModal', cartModal);
 Alpine.data('productReviews', productReviews);
 Alpine.data('productQuestions', productQuestions);
+Alpine.data('reviewsSlider', reviewsSlider);
+Alpine.data('reviewsPage', reviewsPage);
+Alpine.data('authModal', authModal);
+Alpine.data('accountPage', accountPage);
+Alpine.data('phoneMask', phoneMask);
+Alpine.data('cityPicker', cityPicker);
+Alpine.data('forumIndex', forumIndex);
+Alpine.data('forumTopic', forumTopic);
+Alpine.data('forumNew', forumNew);
+Alpine.data('forumUser', forumUser);
 
 Alpine.start();
 

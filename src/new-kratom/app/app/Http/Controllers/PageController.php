@@ -17,4 +17,19 @@ class PageController extends Controller
     public function cookies()      { return view('pages.static.cookies'); }
     public function subscription() { return view('pages.static.subscription'); }
     public function guide()        { return view('pages.static.guide'); }
+
+    public function labBatch(string $batch)
+    {
+        $batch = strtoupper($batch);
+        $data  = config("lab-batches.$batch");
+
+        if (!$data) {
+            abort(404);
+        }
+
+        return view('pages.static.lab-batch', [
+            'batchId' => $batch,
+            'batch'   => $data,
+        ]);
+    }
 }

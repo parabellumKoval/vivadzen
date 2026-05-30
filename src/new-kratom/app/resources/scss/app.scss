@@ -27,17 +27,24 @@
 @use 'components/product-card';
 @use 'components/category-card';
 @use 'components/review-card';
+@use 'components/testimonial-card';
 @use 'components/accordion';
 @use 'components/placeholder';
 @use 'components/header';
 @use 'components/footer';
 @use 'components/cart-modal';
+@use 'components/auth-modal';
 
 @use 'sections/hero';
 @use 'sections/sections';
+@use 'sections/reviews-showcase';
 
 @use 'pages/catalog';
 @use 'pages/product';
+@use 'pages/reviews';
 @use 'pages/cart';
 @use 'pages/checkout';
 @use 'pages/static';
+@use 'pages/lab-batch';
+@use 'pages/account';
+@use 'pages/forum';

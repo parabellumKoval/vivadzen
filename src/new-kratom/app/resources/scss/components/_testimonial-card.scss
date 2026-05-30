@@ -1,0 +1,176 @@
+// =============================================================
+// TestimonialCard — карточка отзыва для светлой карусели на главной.
+// =============================================================
+
+.testimonial-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 318px;
+    padding: var(--sp-5);
+    overflow: hidden;
+    border: 1px solid rgba(20, 32, 27, 0.14);
+    border-radius: 18px;
+    background: rgba(251, 248, 240, 0.62);
+    color: var(--c-ink-900);
+    text-align: left;
+    box-shadow: 0 18px 50px rgba(20, 32, 27, 0.06);
+    transition:
+        transform var(--dur-base) var(--ease-standard),
+        box-shadow var(--dur-base) var(--ease-standard),
+        border-color var(--dur-base) var(--ease-standard);
+
+    &:hover {
+        transform: translateY(-3px);
+        border-color: rgba(20, 32, 27, 0.22);
+        box-shadow: 0 24px 64px rgba(20, 32, 27, 0.1);
+    }
+
+    &__top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--sp-4);
+        min-height: 28px;
+    }
+
+    &__stars {
+        color: var(--c-amber-500);
+        font-size: 18px;
+        letter-spacing: 2px;
+        line-height: 1;
+    }
+
+    &__quote-mark {
+        margin-top: -10px;
+        color: rgba(126, 200, 85, 0.42);
+        font-family: var(--ff-display);
+        font-size: 58px;
+        font-weight: var(--fw-bold);
+        line-height: 0.8;
+    }
+
+    &__quote {
+        flex: 1;
+        margin: var(--sp-3) 0 var(--sp-4);
+        color: var(--c-ink-700);
+        font-size: 16px;
+        line-height: 1.58;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-4);
+        padding-top: var(--sp-4);
+        border-top: 1px solid rgba(20, 32, 27, 0.12);
+    }
+
+    &__author {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+    }
+
+    &__avatar {
+        flex: 0 0 auto;
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: var(--r-circle);
+        background:
+            radial-gradient(circle at 35% 25%, var(--c-forest-600), var(--c-forest-900));
+        color: var(--c-cream-100);
+        font-size: 13px;
+        font-weight: var(--fw-bold);
+        box-shadow: inset 0 1px 0 rgba(249, 244, 236, 0.12);
+    }
+
+    &__meta {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        line-height: 1.2;
+    }
+
+    &__name {
+        color: var(--c-forest-900);
+        font-size: 14px;
+        font-weight: var(--fw-bold);
+    }
+
+    &__date {
+        margin-top: 2px;
+        color: var(--c-ink-500);
+        font-size: 13px;
+    }
+
+    &__product {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        min-height: 66px;
+        padding: var(--sp-2) var(--sp-4);
+        border-radius: 12px;
+        background: rgba(236, 224, 194, 0.28);
+        color: inherit;
+        text-decoration: none;
+        transition:
+            background var(--dur-base) var(--ease-standard),
+            transform var(--dur-base) var(--ease-standard);
+    }
+
+    &__product:hover {
+        background: rgba(236, 224, 194, 0.48);
+        transform: translateY(-1px);
+    }
+
+    &__product-img {
+        flex: 0 0 auto;
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+        object-position: center;
+        border-radius: var(--r-sm);
+    }
+
+    &__product-text {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        line-height: 1.25;
+    }
+
+    &__product-name {
+        overflow: hidden;
+        color: var(--c-forest-900);
+        font-size: 14px;
+        font-weight: var(--fw-bold);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__product-price {
+        margin-top: 3px;
+        color: var(--c-ink-500);
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 720px) {
+    .testimonial-card {
+        min-height: 304px;
+        padding: var(--sp-5);
+
+        &__quote {
+            font-size: 15px;
+            -webkit-line-clamp: 4;
+        }
+    }
+}

@@ -1,0 +1,672 @@
+// =============================================================
+// Reviews Showcase — dark jungle proof block + cream review carousel.
+// Raster assets live in public/assets/reviews; vector details are inline SVG.
+// =============================================================
+
+.reviews-showcase {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--c-cream-100);
+
+    &__hero {
+        position: relative;
+        min-height: clamp(620px, 45vw, 760px);
+        padding: clamp(92px, 7vw, 132px) var(--container-padding) clamp(120px, 9vw, 168px);
+        color: var(--c-cream-100);
+        background:
+            radial-gradient(circle at 25% 28%, rgba(126, 200, 85, 0.22), transparent 26%),
+            linear-gradient(
+                90deg,
+                rgba(15, 36, 25, 0.16) 0%,
+                rgba(15, 36, 25, 0.36) 34%,
+                rgba(15, 36, 25, 0.88) 66%,
+                var(--c-forest-900) 100%
+            ),
+            var(--reviews-forest) left center / cover no-repeat,
+            var(--c-forest-900);
+        overflow: hidden;
+    }
+
+    &__hero-inner {
+        position: relative;
+        z-index: 4;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: center;
+        gap: 0;
+        width: min(100%, var(--container-wide));
+        min-height: clamp(430px, 35vw, 590px);
+        margin-inline: auto;
+    }
+
+    &__scene {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        min-height: clamp(430px, 35vw, 590px);
+        pointer-events: none;
+    }
+
+    &__man {
+        position: absolute;
+        left: 50%;
+        bottom: -114px;
+        z-index: 3;
+        width: auto;
+        height: clamp(620px, 49vw, 820px);
+        max-width: none;
+        transform: translateX(-50%);
+        filter: drop-shadow(0 26px 46px rgba(0, 0, 0, 0.42));
+    }
+
+    &__branch {
+        position: absolute;
+        width: auto;
+        max-width: none;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    &__branch--fore {
+        left: -22%;
+        bottom: -6%;
+        z-index: 5;
+        height: clamp(230px, 21vw, 330px);
+        filter: blur(3px);
+    }
+
+    &__badge {
+        position: absolute;
+        left: 62%;
+        bottom: -73px;
+        z-index: 6;
+        width: clamp(100px, 7.4vw, 124px);
+        height: clamp(100px, 7.4vw, 124px);
+        display: block;
+        border-radius: var(--r-circle);
+        background:
+            radial-gradient(circle at 50% 50%, rgba(27, 58, 45, 0.88), rgba(15, 36, 25, 0.9)),
+            var(--c-forest-800);
+        color: var(--c-amber-300);
+        border: 1px solid rgba(185, 225, 152, 0.54);
+        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(4px);
+    }
+
+    &__badge svg {
+        width: 100%;
+        height: 100%;
+        color: var(--c-amber-300);
+    }
+
+    &__badge-outer,
+    &__badge-inner {
+        fill: none;
+        stroke: rgba(185, 225, 152, 0.32);
+        stroke-width: 1;
+    }
+
+    &__badge-copy {
+        fill: currentColor;
+        font-family: var(--ff-sans);
+        font-size: 8px;
+        font-weight: var(--fw-bold);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+    }
+
+    &__badge-leaf {
+        stroke: currentColor;
+        stroke-width: 1.4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    &__content {
+        position: relative;
+        z-index: 5;
+        width: min(100%, 590px);
+        justify-self: center;
+        padding-bottom: var(--sp-8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        animation: reviews-rise 700ms var(--ease-entrance) both;
+    }
+
+    &__mark {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp-3);
+        width: 178px;
+        margin-bottom: var(--sp-3);
+        color: var(--c-grass-500);
+    }
+
+    &__mark span {
+        flex: 1;
+        height: 1px;
+        background: currentColor;
+        opacity: 0.72;
+    }
+
+    &__mark svg {
+        width: 42px;
+        height: auto;
+        stroke: currentColor;
+        stroke-width: 1.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    &__eyebrow {
+        margin: 0 0 var(--sp-4);
+        color: var(--c-grass-500);
+        font-size: 14px;
+        font-weight: var(--fw-semibold);
+        letter-spacing: 0.24em;
+        line-height: 1.2;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        margin: 0;
+        font-family: var(--ff-display);
+        font-size: clamp(48px, 4.3vw, 72px);
+        font-weight: var(--fw-bold);
+        letter-spacing: -0.03em;
+        line-height: 0.96;
+    }
+
+    &__title-line {
+        display: block;
+        color: var(--c-cream-100);
+        text-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+    }
+
+    &__title-line--accent {
+        color: var(--c-grass-300);
+    }
+
+    &__rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: var(--sp-3);
+        margin-top: var(--sp-5);
+        color: var(--c-cream-100);
+        font-size: 17px;
+        line-height: 1;
+    }
+
+    &__stars {
+        color: var(--c-amber-500);
+        font-size: 22px;
+        letter-spacing: 3px;
+    }
+
+    &__score {
+        font-weight: var(--fw-bold);
+    }
+
+    &__dot {
+        width: 5px;
+        height: 5px;
+        border-radius: var(--r-circle);
+        background: rgba(249, 244, 236, 0.78);
+    }
+
+    &__count {
+        color: rgba(249, 244, 236, 0.9);
+    }
+
+    &__google {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--sp-4);
+        min-width: min(100%, 370px);
+        min-height: 58px;
+        margin-top: var(--sp-5);
+        padding: var(--sp-3) var(--sp-6);
+        border: 1px solid rgba(185, 225, 152, 0.28);
+        border-radius: 18px;
+        background: rgba(249, 244, 236, 0.07);
+        color: var(--c-cream-100);
+        text-decoration: none;
+        box-shadow: inset 0 1px 0 rgba(249, 244, 236, 0.08), 0 18px 48px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(8px);
+        transition:
+            transform var(--dur-base) var(--ease-standard),
+            border-color var(--dur-base) var(--ease-standard),
+            background var(--dur-base) var(--ease-standard);
+    }
+
+    &__google:hover {
+        transform: translateY(-2px);
+        border-color: rgba(185, 225, 152, 0.5);
+        background: rgba(249, 244, 236, 0.1);
+    }
+
+    &__google-g,
+    &__google-check {
+        display: inline-flex;
+        flex: 0 0 auto;
+    }
+
+    &__google-check {
+        color: var(--c-grass-300);
+    }
+
+    &__google-text {
+        font-size: 16px;
+        color: rgba(249, 244, 236, 0.92);
+    }
+
+    &__google-text strong {
+        color: var(--c-cream-100);
+        font-weight: var(--fw-bold);
+    }
+
+    &__trust {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+        max-width: 680px;
+        margin: var(--sp-6) 0 0;
+        padding: 0;
+        list-style: none;
+        color: var(--c-grass-300);
+    }
+
+    &__trust li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--sp-2);
+        padding-inline: var(--sp-6);
+        font-size: 14px;
+        line-height: 1.3;
+    }
+
+    &__trust li + li {
+        border-left: 1px solid rgba(185, 225, 152, 0.22);
+    }
+
+    &__trust svg {
+        width: 34px;
+        height: 34px;
+        stroke: currentColor;
+        stroke-width: 1.45;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    &__wave {
+        position: absolute;
+        z-index: 8;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        width: 100%;
+        height: clamp(70px, 7vw, 108px);
+        color: var(--c-cream-100);
+    }
+
+    &__reviews {
+        position: relative;
+        z-index: 2;
+        padding: var(--sp-6) var(--container-padding) var(--sp-20);
+        background:
+            linear-gradient(180deg, var(--c-cream-100) 0%, var(--c-cream-100) 24%, rgba(251, 248, 240, 0) 78%),
+            radial-gradient(circle at 84% 74%, rgba(126, 200, 85, 0.1), transparent 28%),
+            var(--c-cream-100);
+        text-align: center;
+    }
+
+    &__reviews-head {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp-3);
+        color: var(--c-amber-500);
+    }
+
+    &__reviews-head svg {
+        width: 34px;
+        height: auto;
+        stroke: currentColor;
+        stroke-width: 1.45;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    &__reviews-line {
+        width: 48px;
+        height: 1px;
+        background: currentColor;
+        opacity: 0.8;
+    }
+
+    &__reviews-kicker {
+        margin: var(--sp-1) 0 var(--sp-4);
+        color: rgba(43, 58, 51, 0.72);
+        font-size: 13px;
+        font-weight: var(--fw-bold);
+        letter-spacing: 0.22em;
+        line-height: 1.35;
+        text-transform: uppercase;
+    }
+
+    &__carousel {
+        position: relative;
+        width: min(100%, 1108px);
+        margin-inline: auto;
+    }
+
+    &__track {
+        position: relative;
+        display: block;
+        min-height: 354px;
+        column-gap: var(--sp-5);
+        overflow: visible;
+    }
+
+    &__track > .testimonial-card {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 0;
+        opacity: 0;
+        filter: blur(12px);
+        pointer-events: none;
+        transform-origin: center;
+        will-change: transform, opacity, filter;
+        transition:
+            transform 560ms cubic-bezier(0.18, 0.86, 0.27, 1),
+            opacity 320ms var(--ease-standard),
+            filter 420ms var(--ease-standard),
+            border-color var(--dur-base) var(--ease-standard),
+            box-shadow var(--dur-base) var(--ease-standard);
+    }
+
+    &__track > .testimonial-card.active {
+        opacity: 1;
+        filter: blur(0);
+        pointer-events: auto;
+    }
+
+    &__nav-btn {
+        position: absolute;
+        top: 50%;
+        z-index: 4;
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(20, 32, 27, 0.14);
+        border-radius: var(--r-circle);
+        background: rgba(251, 248, 240, 0.78);
+        color: var(--c-forest-900);
+        box-shadow: 0 14px 34px rgba(20, 32, 27, 0.08);
+        cursor: pointer;
+        transform: translateY(-50%);
+        transition:
+            transform var(--dur-base) var(--ease-standard),
+            background var(--dur-base) var(--ease-standard),
+            border-color var(--dur-base) var(--ease-standard);
+    }
+
+    &__nav-btn:hover {
+        background: var(--c-cream-50);
+        border-color: rgba(20, 32, 27, 0.26);
+        transform: translateY(-50%) scale(1.04);
+    }
+
+    &__nav-btn--prev {
+        left: -74px;
+    }
+
+    &__nav-btn--next {
+        right: -74px;
+    }
+
+    &__nav-btn--prev svg {
+        transform: rotate(90deg);
+    }
+
+    &__nav-btn--next svg {
+        transform: rotate(-90deg);
+    }
+
+    &__dots {
+        display: flex;
+        justify-content: center;
+        gap: var(--sp-3);
+        min-height: 12px;
+        margin-top: var(--sp-2);
+    }
+
+    &__dot-btn {
+        width: 10px;
+        height: 10px;
+        padding: 0;
+        border: 0;
+        border-radius: var(--r-circle);
+        background: rgba(20, 32, 27, 0.14);
+        cursor: pointer;
+        transition:
+            transform var(--dur-base) var(--ease-standard),
+            background var(--dur-base) var(--ease-standard);
+    }
+
+    &__dot-btn.is-active {
+        background: var(--c-forest-700);
+        transform: scale(1.08);
+    }
+
+    &__cta {
+        margin-top: var(--sp-5);
+        box-shadow: 0 18px 42px rgba(15, 36, 25, 0.2);
+    }
+}
+
+@keyframes reviews-rise {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1240px) {
+    .reviews-showcase {
+        &__nav-btn--prev { left: -20px; }
+        &__nav-btn--next { right: -20px; }
+    }
+}
+
+@media (max-width: 1024px) {
+    .reviews-showcase {
+        &__hero {
+            min-height: 640px;
+            padding: var(--sp-20) var(--container-padding) var(--sp-24);
+            background:
+                linear-gradient(180deg, rgba(15, 36, 25, 0.52), rgba(15, 36, 25, 0.88) 54%, var(--c-forest-900) 100%),
+                var(--reviews-forest) 30% center / cover no-repeat,
+                var(--c-forest-900);
+        }
+
+        &__hero-inner {
+            min-height: 470px;
+        }
+
+        &__scene {
+            min-height: 470px;
+        }
+
+        &__man {
+            bottom: -36px;
+            height: 520px;
+        }
+
+        &__branch--fore {
+            left: -34%;
+            bottom: -8%;
+            height: 250px;
+        }
+
+        &__badge {
+            left: 54%;
+            bottom: -28px;
+            width: 96px;
+            height: 96px;
+        }
+
+        &__badge-copy {
+            font-size: 7.5px;
+        }
+
+        &__content {
+            width: min(100%, 520px);
+            padding-bottom: var(--sp-6);
+        }
+
+        &__trust {
+            width: min(100%, 620px);
+        }
+
+        &__track {
+            min-height: 356px;
+        }
+    }
+}
+
+@media (max-width: 720px) {
+    .reviews-showcase {
+        &__hero {
+            min-height: 0;
+            padding: var(--sp-16) var(--container-padding) 128px;
+        }
+
+        &__hero-inner {
+            grid-template-columns: 1fr;
+            min-height: 0;
+            gap: var(--sp-6);
+        }
+
+        &__scene {
+            order: 2;
+            min-height: 340px;
+        }
+
+        &__content {
+            order: 1;
+            padding-bottom: 0;
+        }
+
+        &__title {
+            font-size: clamp(42px, 13vw, 58px);
+        }
+
+        &__eyebrow {
+            font-size: 12px;
+        }
+
+        &__rating {
+            gap: var(--sp-2);
+            font-size: 15px;
+        }
+
+        &__stars {
+            width: 100%;
+            font-size: 20px;
+        }
+
+        &__google {
+            min-width: 0;
+            width: 100%;
+            gap: var(--sp-3);
+            padding-inline: var(--sp-4);
+        }
+
+        &__google-text {
+            font-size: 14px;
+        }
+
+        &__trust {
+            grid-template-columns: 1fr;
+            gap: var(--sp-4);
+            margin-top: var(--sp-6);
+        }
+
+        &__trust li {
+            flex-direction: row;
+            justify-content: center;
+            padding-inline: 0;
+        }
+
+        &__trust li + li {
+            border-left: 0;
+        }
+
+        &__man {
+            bottom: -58px;
+            height: 390px;
+        }
+
+        &__branch--fore {
+            left: -30%;
+            bottom: -12%;
+            height: 210px;
+        }
+
+        &__badge {
+            left: calc(50% + 52px);
+            bottom: -14px;
+            width: 82px;
+            height: 82px;
+        }
+
+        &__badge-copy {
+            font-size: 7px;
+        }
+
+        &__reviews {
+            padding-top: var(--sp-8);
+            padding-bottom: var(--sp-16);
+        }
+
+        &__reviews-kicker {
+            font-size: 11px;
+            letter-spacing: 0.18em;
+        }
+
+        &__carousel {
+            width: 100%;
+        }
+
+        &__track {
+            min-height: 342px;
+        }
+
+        &__nav-btn {
+            display: none;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reviews-showcase__content {
+        animation: none;
+    }
+
+    .reviews-showcase__track > .testimonial-card {
+        transition: none;
+    }
+}

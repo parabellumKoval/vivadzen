@@ -57,6 +57,29 @@
 
     <x-global.header :transparent="$transparentHeader ?? false" />
 
+    @auth
+        @if(! auth()->user()->hasVerifiedEmail())
+            <div class="verify-banner" x-data="{ sent: false }">
+                <span>{{ __('site.auth.verify.banner') }}</span>
+                <button
+                    type="button"
+                    class="verify-banner__btn"
+                    x-show="!sent"
+                    @click="
+                        fetch('{{ url('/email/verification-notification') }}', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                                'Accept': 'application/json',
+                            },
+                        }).then(() => sent = true)
+                    "
+                >{{ __('site.auth.verify.resend') }}</button>
+                <span x-show="sent" x-cloak>✓ {{ __('site.auth.verify.resent') }}</span>
+            </div>
+        @endif
+    @endauth
+
     <x-global.age-strip />
 
     <main id="main" tabindex="-1">
@@ -66,6 +89,10 @@
     <x-global.footer />
 
     <x-global.cart-modal />
+
+    @guest
+        <x-global.auth-modal />
+    @endguest
 
     <script id="cart-bootstrap" type="application/json">@json(\App\Support\Cart::snapshot())</script>
     <script>

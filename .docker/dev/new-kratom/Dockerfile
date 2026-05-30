@@ -50,6 +50,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 # PHP конфиг для prod-стиля (большой OPcache, jit on, без validate_timestamps в prod-режиме можно)
 COPY .docker/dev/new-kratom/php.ini /usr/local/etc/php/php.ini
 COPY .docker/dev/new-kratom/opcache.ini /usr/local/etc/php/conf.d/zz-opcache.ini
+COPY .docker/dev/new-kratom/ensure-composer-install.sh /usr/local/bin/ensure-composer-install
+RUN chmod +x /usr/local/bin/ensure-composer-install
 
 # Caddyfile с Brotli + gzip + static cache headers
 COPY .docker/dev/new-kratom/Caddyfile /etc/caddy/Caddyfile
@@ -61,7 +63,7 @@ EXPOSE 8000 443
 # Octane в worker-mode под FrankenPHP. Дев-режим: --watch для авто-релоада.
 CMD ["sh", "-lc", "\
   [ -f .env ] || cp .env.example .env; \
-  [ -f vendor/autoload.php ] || composer install --no-interaction --prefer-dist; \
+  ensure-composer-install; \
   grep -Eq '^APP_KEY=base64:' .env || php artisan key:generate --ansi; \
   php artisan migrate --force --graceful; \
   php artisan octane:frankenphp --host=0.0.0.0 --port=8000 --workers=auto --max-requests=500 \

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
@@ -13,7 +14,7 @@ class Order extends Model
     ];
 
     protected $fillable = [
-        'public_id', 'status',
+        'user_id', 'public_id', 'status',
         'email', 'phone', 'first_name', 'last_name',
         'street', 'city', 'zip', 'country',
         'delivery_method', 'payment_method', 'payment_status',
@@ -29,6 +30,11 @@ class Order extends Model
         'items_count' => 'integer',
         'marketing_consent' => 'boolean',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function items(): HasMany
     {

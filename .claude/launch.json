@@ -7,6 +7,38 @@
       "runtimeArgs": ["-d", "memory_limit=512M", "artisan", "serve", "--host=127.0.0.1", "--port=8765"],
       "port": 8765,
       "cwd": "src/new-kratom/app"
+    },
+    {
+      "name": "new-kratom-docker",
+      "runtimeExecutable": "tail",
+      "runtimeArgs": ["-f", "/dev/null"],
+      "port": 8002,
+      "autoPort": false,
+      "cwd": "src/new-kratom/app"
+    },
+    {
+      "name": "new-kratom-proxy",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "const http=require('http');const u=require('url');http.createServer((q,r)=>{const o=u.parse(q.url);const p=http.request({host:'127.0.0.1',port:8002,method:q.method,path:o.path,headers:{...q.headers,host:'127.0.0.1:8002'}},s=>{r.writeHead(s.statusCode,s.headers);s.pipe(r);});q.pipe(p);p.on('error',e=>{r.writeHead(502);r.end(String(e));});}).listen(Number(process.env.PORT||3030),'127.0.0.1',()=>console.log('proxy on '+(process.env.PORT||3030)));"
+      ],
+      "port": 3030,
+      "autoPort": true
+    },
+    {
+      "name": "new-kratom-vite",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 5173,
+      "cwd": "src/new-kratom/app"
+    },
+    {
+      "name": "tg",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3001,
+      "cwd": "src/tg"
     }
   ]
 }

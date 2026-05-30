@@ -15,7 +15,7 @@
                 x-show="active === {{ $i }}"
                 aria-label="Zvětšit fotografii {{ $i + 1 }}"
             >
-                <img src="{{ asset(ltrim($src, '/')) }}" alt="{{ $name }} — fotografie {{ $i + 1 }}" />
+                <img src="{{ \Illuminate\Support\Str::startsWith($src, ['http://', 'https://', '//']) ? $src : asset(ltrim($src, '/')) }}" alt="{{ $name }} — fotografie {{ $i + 1 }}" />
             </button>
         @endforeach
 
@@ -43,7 +43,7 @@
                     x-on:click="active = {{ $i }}"
                     aria-label="Zobrazit fotografii {{ $i + 1 }}"
                 >
-                    <img src="{{ asset(ltrim($src, '/')) }}" alt="" loading="lazy" />
+                    <img src="{{ \Illuminate\Support\Str::startsWith($src, ['http://', 'https://', '//']) ? $src : asset(ltrim($src, '/')) }}" alt="" loading="lazy" />
                 </button>
             @endforeach
         </div>
