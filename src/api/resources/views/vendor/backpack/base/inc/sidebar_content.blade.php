@@ -130,6 +130,12 @@
 	</a>
 </li>
 
+<li class='nav-item'>
+	<a class='nav-link' href='{{ backpack_url('horizon') }}'>
+		<i class='nav-icon las la-stream'></i> <span>Horizon</span>
+	</a>
+</li>
+
 <li class="nav-item nav-dropdown">
 	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-gear"></i> Настройки</a>
 	<ul class="nav-dropdown-items">
