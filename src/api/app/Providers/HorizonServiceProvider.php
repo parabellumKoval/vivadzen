@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Admin;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\HorizonApplicationServiceProvider;
@@ -16,12 +15,12 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
     {
         parent::boot();
 
+        // Horizon routes are already protected by Backpack admin middleware
+        // configured in config/horizon.php. Avoid a second auth check here
+        // because Horizon resolves the user from the default request guard,
+        // which does not map cleanly to the Backpack admin session.
         Horizon::auth(function () {
-            if (function_exists('backpack_auth') && backpack_auth()->check()) {
-                return true;
-            }
-
-            return auth()->guard(config('backpack.base.guard', 'backpack'))->check();
+            return true;
         });
 
         // Horizon::routeSmsNotificationsTo('15556667777');
@@ -37,8 +36,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
     protected function gate(): void
     {
         Gate::define('viewHorizon', function ($user = null) {
-            return $user instanceof Admin
-                || (function_exists('backpack_auth') && backpack_auth()->check());
+            return true;
         });
     }
 }
