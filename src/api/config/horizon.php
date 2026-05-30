@@ -116,7 +116,11 @@ return [
     |
     */
 
-    'middleware' => ['web', config('backpack.base.middleware_key', 'admin')],
+    'middleware' => [
+        'web',
+        \Backpack\CRUD\app\Http\Middleware\UseBackpackAuthGuardInsteadOfDefaultAuthGuard::class,
+        config('backpack.base.middleware_key', 'admin'),
+    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -16,6 +16,14 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
     {
         parent::boot();
 
+        Horizon::auth(function () {
+            if (function_exists('backpack_auth') && backpack_auth()->check()) {
+                return true;
+            }
+
+            return auth()->guard(config('backpack.base.guard', 'backpack'))->check();
+        });
+
         // Horizon::routeSmsNotificationsTo('15556667777');
         // Horizon::routeMailNotificationsTo('example@example.com');
         // Horizon::routeSlackNotificationsTo('slack-webhook-url', '#channel');
