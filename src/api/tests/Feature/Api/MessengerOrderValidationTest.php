@@ -9,6 +9,14 @@ use Tests\TestCase;
 
 class MessengerOrderValidationTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        \Settings::set('shipping.methods', ['messenger_address'], ['cast' => 'json']);
+        \Settings::set('shipping.messenger.express.enabled', true, ['cast' => 'bool']);
+    }
+
     public function test_validate_data_accepts_messenger_delivery_with_cod(): void
     {
         $controller = new OrderController();
@@ -18,6 +26,20 @@ class MessengerOrderValidationTest extends TestCase
         );
 
         $this->assertSame('messenger_address', data_get($data, 'delivery.method'));
+        $this->assertSame('messenger_cod', data_get($data, 'payment.method'));
+        $this->assertSame('Praha', data_get($data, 'delivery.settlement'));
+        $this->assertSame('1', data_get($data, 'delivery.house'));
+    }
+
+    public function test_validate_data_accepts_messenger_express_delivery_with_cod(): void
+    {
+        $controller = new OrderController();
+
+        $data = $controller->validateData(
+            Request::create('/api/order', 'POST', $this->validPayload('messenger_express'))
+        );
+
+        $this->assertSame('messenger_express', data_get($data, 'delivery.method'));
         $this->assertSame('messenger_cod', data_get($data, 'payment.method'));
         $this->assertSame('Praha', data_get($data, 'delivery.settlement'));
         $this->assertSame('1', data_get($data, 'delivery.house'));
@@ -42,15 +64,16 @@ class MessengerOrderValidationTest extends TestCase
         }
     }
 
-    protected function validPayload(): array
+    protected function validPayload(string $method = 'messenger_address'): array
     {
         return [
             'provider' => 'data',
+            'destinationCountry' => 'CZ',
             'payment' => [
                 'method' => 'messenger_cod',
             ],
             'delivery' => [
-                'method' => 'messenger_address',
+                'method' => $method,
                 'settlement' => 'Praha',
                 'street' => 'Libinska',
                 'house' => '1',

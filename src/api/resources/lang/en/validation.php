@@ -208,6 +208,7 @@ return [
                 'packeta_address' => '<b>Zasilkovna courier delivery</b>',
                 'packeta_warehouse' => '<b>Zasilkovna pickup point</b>',
                 'messenger_address' => '<b>Messenger.cz courier delivery</b>',
+                'messenger_express' => '<b>Messenger.cz express courier delivery</b>',
                 'default_pickup' => '<b>Pickup</b>',
                 'default_address' => '<b>Postal delivery</b>',
             ],

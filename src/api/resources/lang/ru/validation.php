@@ -213,6 +213,7 @@ return [
                 'packeta_address' => '<b>Курьер Zasilkovna</b>',
                 'packeta_warehouse' => '<b>Пункт выдачи Zasilkovna</b>',
                 'messenger_address' => '<b>Курьер Messenger.cz</b>',
+                'messenger_express' => '<b>Экспресс-курьер Messenger.cz</b>',
                 'default_pickup' => '<b>Самовывоз</b>',
                 'default_address' => '<b>Почтовая доставка</b>',
             ],

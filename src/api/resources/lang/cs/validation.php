@@ -195,6 +195,7 @@ return [
                 'packeta_address' => '<b>Doručení kurýrem Zasilkovna</b>',
                 'packeta_warehouse' => '<b>Pobočka/box Zasilkovna</b>',
                 'messenger_address' => '<b>Doručení kurýrem Messenger.cz</b>',
+                'messenger_express' => '<b>Expresní kurýr Messenger.cz</b>',
                 'default_pickup' => '<b>Osobní odběr</b>',
                 'default_address' => '<b>Poštovní doručení</b>',
             ],

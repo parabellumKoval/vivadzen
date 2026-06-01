@@ -1,0 +1,1906 @@
+[10322849ms] [LOG] [Content] WS reconnecting.. @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[10322870ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3000/_nuxt/@vite/client:963
+[10323862ms] [LOG] [Content] WS connect to ws://localhost:4000/ws @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[10323911ms] [LOG] [Content] WS connected! @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[10325031ms] [LOG] [nuxt-delay-hydration] Hydration event Event @ http://localhost:3000/delivery:165
+[10325261ms] [LOG] [nuxt-app] i18n:beforeLocaleSwitch: 2.282958984375 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325272ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nitro-runtime] request 0.028ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nitro-runtime] site-config:init 0.02ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nitro-runtime] render:before 0.013ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] i18n:beforeLocaleSwitch 0.02ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] page:loading:start 0.02ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] i18n:beforeLocaleSwitch 0.011ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] app:created 20.99ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] vue:setup 0.006ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.catalog' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.catalog' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.delivery' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.delivery' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.payment' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.payment' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.age_verification' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.age_verification' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.reviews' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.reviews' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.about' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.about' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.contacts' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325273ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.contacts' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'logo_alt' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'logo_alt' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at Proxy.t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'logo_alt' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'button.login' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'button.login' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'button.login' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.cart' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.cart' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at Proxy.t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.catalog' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.catalog' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.delivery' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.delivery' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.payment' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.payment' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.age_verification' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.age_verification' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.reviews' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.reviews' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.about' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.about' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.contacts' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.contacts' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found 'delivery.default_address' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found parent scope. use the global scope. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at useI18n (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at setup (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [WARNING] %cssr:warn%c [intlify] Not found parent scope. use the global scope. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at useI18n (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at setup (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] app:rendered 0.431ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] schema-org:meta 0.007ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10325274ms] [LOG] [nuxt-app] dev:ssr-logs: 3.096923828125 ms [Array(49)] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325281ms] [LOG] [nuxt-app] page:loading:start: 0.10498046875 ms [] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325294ms] [WARNING] Timer '[nuxt-app] i18n:beforeLocaleSwitch' already exists @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:261
+[10325294ms] [LOG] [nuxt-app] i18n:beforeLocaleSwitch: 35.40087890625 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325295ms] [LOG] [nuxt-app] app:created: 15.27001953125 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325295ms] [LOG] [nuxt-app] app:beforeMount: 0.01904296875 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325298ms] [LOG] [nuxt-app] vue:setup: 0.216064453125 ms [] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325298ms] [INFO] <Suspense> is an experimental feature and its API will likely change. @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:7155
+[10325299ms] [LOG] [nuxt-app] app:mounted: 0.089111328125 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325299ms] [LOG] [Content] WS connect to ws://localhost:4000/ws @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[10325417ms] [WARNING] [intlify] Not found 'title.catalog' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325417ms] [WARNING] [intlify] Fall back to translate 'title.catalog' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325417ms] [WARNING] [intlify] Not found 'title.delivery' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Fall back to translate 'title.delivery' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Not found 'title.payment' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Fall back to translate 'title.payment' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Not found 'title.age_verification' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Fall back to translate 'title.age_verification' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Not found 'title.reviews' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Fall back to translate 'title.reviews' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Not found 'title.about' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Fall back to translate 'title.about' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Not found 'title.contacts' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325418ms] [WARNING] [intlify] Fall back to translate 'title.contacts' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325419ms] [WARNING] [intlify] Not found 'button.login' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325419ms] [WARNING] [intlify] Fall back to translate 'button.login' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325420ms] [WARNING] [intlify] Not found 'button.login' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325420ms] [WARNING] [intlify] Not found 'title.cart' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325420ms] [WARNING] [intlify] Fall back to translate 'title.cart' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325423ms] [WARNING] [intlify] Not found 'logo_alt' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325423ms] [WARNING] [intlify] Fall back to translate 'logo_alt' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325423ms] [WARNING] [intlify] Not found 'logo_alt' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325426ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/nav-arrow-down.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS key=0 name="iconoir:nav-arrow-down" class="hero-header__nav-link-icon" > 
+  at <RouterLink ref=fn to="/catalog" activeClass=undefined  ... > 
+  at <NuxtLink to="/catalog" class="hero-header__nav-link hero-header__nav-link--catalog" onClick=fn > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325427ms] [ERROR] Hydration completed but contains mismatches. @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:1847
+[10325427ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/caret-right-bold.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:caret-right-bold" class="catalog-dropdown__icon" > 
+  at <RouterLink ref=fn to="/catalog" activeClass=undefined  ... > 
+  at <NuxtLink key="all" to="/catalog" class="catalog-dropdown__item"  ... > 
+  at <CatalogDropdown key=0 enabled=false onNavigate=fn<closeCatalogDropdown> > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325429ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/fluent/flash-24-regular.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="fluent:flash-24-regular" class="hero-header__promo-cta-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325429ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/nav-arrow-down.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="iconoir:nav-arrow-down" class="lang-switcher__chevron" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325429ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/user-circle-fill.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS key=1 name="ph:user-circle-fill" class="hero-header__account-icon" > 
+  at <RouterLink ref=fn to="/auth/login" activeClass=undefined  ... > 
+  at <NuxtLink to="/auth/login" class="hero-header__account" aria-label="button.login"  ... > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325430ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ci/shopping-cart-01.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ci:shopping-cart-01" class="hero-header__cart-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325432ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/mynaui/telephone-call.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="mynaui:telephone-call" class="hero-mobile-menu__contact-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325432ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ic/round-alternate-email.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ic:round-alternate-email" class="hero-mobile-menu__contact-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325433ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/mynaui/location.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="mynaui:location" class="hero-mobile-menu__contact-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325433ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/mynaui/clock-4.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="mynaui:clock-4" class="hero-mobile-menu__contact-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325433ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/fluent/flash-24-regular.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="fluent:flash-24-regular" class="icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325440ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/arrow-up-bold.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:arrow-up-bold" class="scroll-top-button__icon" > 
+  at <ScrollToTopButton> 
+  at <FloatingButtons> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325442ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/chat-circle-dots-fill.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:chat-circle-dots-fill" class="chat-support-button__icon" > 
+  at <ChatSupportButton> 
+  at <FloatingButtons> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325448ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/telegram-logo.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:telegram-logo" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325449ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/whatsapp-logo.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:whatsapp-logo" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325450ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/instagram.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="iconoir:instagram" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325450ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/facebook.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="iconoir:facebook" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325451ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/youtube.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="iconoir:youtube" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10325466ms] [LOG] [Content] WS connected! @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[10325474ms] [WARNING] [intlify] Not found 'delivery.default_address' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325480ms] [WARNING] [intlify] Not found parent scope. use the global scope. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325482ms] [WARNING] [intlify] Not found parent scope. use the global scope. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325484ms] [LOG] [nuxt-app] page:finish: 1.012939453125 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325485ms] [LOG] [nuxt-app] page:loading:end: 1.00390625 ms [] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325490ms] [WARNING] [intlify] Not found 'title.cart' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325490ms] [WARNING] [intlify] Fall back to translate 'title.cart' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325497ms] [WARNING] [intlify] Not found 'title.cart' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325497ms] [WARNING] [intlify] Fall back to translate 'title.cart' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325509ms] [LOG] [nuxt-app] schema-org:meta: 0.072021484375 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325510ms] [LOG] [nuxt-app] app:suspense:resolve: 14.9091796875 ms [] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325533ms] [WARNING] [intlify] Not found 'logo_alt' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325533ms] [WARNING] [intlify] Fall back to translate 'logo_alt' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325533ms] [WARNING] [intlify] Not found 'logo_alt' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10325534ms] [LOG] [nuxt-app] link:prefetch: 3.72802734375 ms [/] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325534ms] [LOG] [nuxt-app] link:prefetch : 3.301025390625 ms [/catalog] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325534ms] [LOG] [nuxt-app] link:prefetch  : 2.947998046875 ms [/catalog] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325534ms] [LOG] [nuxt-app] link:prefetch   : 2.891845703125 ms [/delivery] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325534ms] [LOG] [nuxt-app] link:prefetch    : 2.9130859375 ms [/payment] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325534ms] [LOG] [nuxt-app] link:prefetch     : 2.697021484375 ms [/age-verification] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325534ms] [LOG] [nuxt-app] link:prefetch      : 2.469970703125 ms [/reviews] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325535ms] [LOG] [nuxt-app] link:prefetch       : 2.36181640625 ms [/about] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325535ms] [LOG] [nuxt-app] link:prefetch        : 2.513916015625 ms [/contacts] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10325535ms] [LOG] [nuxt-app] link:prefetch         : 2.64013671875 ms [/auth/login] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10352884ms] [LOG] [Content] WS reconnecting.. @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[10352887ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3000/_nuxt/@vite/client:963
+[10353696ms] [LOG] [nuxt-app] i18n:beforeLocaleSwitch: 0.14404296875 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353699ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nitro-runtime] request 0.121ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nitro-runtime] site-config:init 0.019ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nitro-runtime] render:before 0.007ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] i18n:beforeLocaleSwitch 0.019ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] page:loading:start 0.006ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] i18n:beforeLocaleSwitch 0.015ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] app:created 3.055ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] vue:setup 0.005ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.catalog' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.catalog' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.delivery' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.delivery' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.payment' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.payment' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.age_verification' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.age_verification' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.reviews' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.reviews' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.about' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.about' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.contacts' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.contacts' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'logo_alt' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'logo_alt' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at Proxy.t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'logo_alt' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'button.login' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'button.login' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'button.login' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.cart' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.cart' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at Proxy.t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.catalog' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353700ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.catalog' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.delivery' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.delivery' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.payment' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.payment' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.age_verification' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.age_verification' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.reviews' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.reviews' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.about' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.about' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Not found 'title.contacts' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Fall back to translate 'title.contacts' with root locale. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at wrapWithDeps (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at t (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Not found 'delivery.default_address' key in 'cs' locale messages. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at handleMissing (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+  at resolveMessageFormat (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/core-base/dist/core-base.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Not found parent scope. use the global scope. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at warn (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@intlify/shared/dist/shared.mjs)
+  at useI18n (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+  at setup (/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/vue-i18n/dist/vue-i18n.mjs)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [WARNING] %cssr:warn%c [intlify] Not found parent scope. use the global scope. 
+      background: #f39c12;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] app:rendered 0.276ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [LOG] %cssr%c %s: %s 
+      background: #7f8c8d;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      [nuxt-app] schema-org:meta 0.01ms 
+  at timeLogImpl (node:internal/console/constructor)
+  at node:internal/console/constructor
+  at timeLogImpl (node:internal/util/debuglog)
+ @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/consola/dist/browser.mjs?v=e24895bf:47
+[10353701ms] [LOG] [nuxt-app] dev:ssr-logs: 1.7080078125 ms [Array(49)] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353703ms] [LOG] [nuxt-app] page:loading:start: 0.05078125 ms [] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353717ms] [WARNING] Timer '[nuxt-app] i18n:beforeLocaleSwitch' already exists @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:261
+[10353718ms] [LOG] [nuxt-app] i18n:beforeLocaleSwitch: 21.68115234375 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353722ms] [LOG] [nuxt-app] app:created: 18.7998046875 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353722ms] [LOG] [nuxt-app] app:beforeMount: 0.01708984375 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353722ms] [LOG] [nuxt-app] vue:setup: 0.067138671875 ms [] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353723ms] [INFO] <Suspense> is an experimental feature and its API will likely change. @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:7155
+[10353723ms] [LOG] [nuxt-app] app:mounted: 0.051025390625 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353776ms] [LOG] [Content] WS connect to ws://localhost:4000/ws @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[10353813ms] [WARNING] [intlify] Not found 'title.catalog' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353813ms] [WARNING] [intlify] Fall back to translate 'title.catalog' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353813ms] [WARNING] [intlify] Not found 'title.delivery' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353813ms] [WARNING] [intlify] Fall back to translate 'title.delivery' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353813ms] [WARNING] [intlify] Not found 'title.payment' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353813ms] [WARNING] [intlify] Fall back to translate 'title.payment' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353813ms] [WARNING] [intlify] Not found 'title.age_verification' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353813ms] [WARNING] [intlify] Fall back to translate 'title.age_verification' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353814ms] [WARNING] [intlify] Not found 'title.reviews' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353814ms] [WARNING] [intlify] Fall back to translate 'title.reviews' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353814ms] [WARNING] [intlify] Not found 'title.about' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353814ms] [WARNING] [intlify] Fall back to translate 'title.about' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353814ms] [WARNING] [intlify] Not found 'title.contacts' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353814ms] [WARNING] [intlify] Fall back to translate 'title.contacts' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353815ms] [WARNING] [intlify] Not found 'button.login' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353816ms] [WARNING] [intlify] Fall back to translate 'button.login' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353816ms] [WARNING] [intlify] Not found 'button.login' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353816ms] [WARNING] [intlify] Not found 'title.cart' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353816ms] [WARNING] [intlify] Fall back to translate 'title.cart' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353820ms] [WARNING] [intlify] Not found 'logo_alt' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353820ms] [WARNING] [intlify] Fall back to translate 'logo_alt' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353821ms] [WARNING] [intlify] Not found 'logo_alt' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353823ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/nav-arrow-down.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS key=0 name="iconoir:nav-arrow-down" class="hero-header__nav-link-icon" > 
+  at <RouterLink ref=fn to="/catalog" activeClass=undefined  ... > 
+  at <NuxtLink to="/catalog" class="hero-header__nav-link hero-header__nav-link--catalog" onClick=fn > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353824ms] [ERROR] Hydration completed but contains mismatches. @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:1847
+[10353826ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/caret-right-bold.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:caret-right-bold" class="catalog-dropdown__icon" > 
+  at <RouterLink ref=fn to="/catalog" activeClass=undefined  ... > 
+  at <NuxtLink key="all" to="/catalog" class="catalog-dropdown__item"  ... > 
+  at <CatalogDropdown key=0 enabled=false onNavigate=fn<closeCatalogDropdown> > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353828ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/fluent/flash-24-regular.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="fluent:flash-24-regular" class="hero-header__promo-cta-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353829ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/nav-arrow-down.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="iconoir:nav-arrow-down" class="lang-switcher__chevron" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353830ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/user-circle-fill.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS key=1 name="ph:user-circle-fill" class="hero-header__account-icon" > 
+  at <RouterLink ref=fn to="/auth/login" activeClass=undefined  ... > 
+  at <NuxtLink to="/auth/login" class="hero-header__account" aria-label="button.login"  ... > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353830ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ci/shopping-cart-01.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ci:shopping-cart-01" class="hero-header__cart-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353832ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/mynaui/telephone-call.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="mynaui:telephone-call" class="hero-mobile-menu__contact-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353832ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ic/round-alternate-email.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ic:round-alternate-email" class="hero-mobile-menu__contact-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353832ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/mynaui/location.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="mynaui:location" class="hero-mobile-menu__contact-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353832ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/mynaui/clock-4.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="mynaui:clock-4" class="hero-mobile-menu__contact-icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353833ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/fluent/flash-24-regular.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="fluent:flash-24-regular" class="icon" > 
+  at <Header> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353835ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/arrow-up-bold.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:arrow-up-bold" class="scroll-top-button__icon" > 
+  at <ScrollToTopButton> 
+  at <FloatingButtons> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353836ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/chat-circle-dots-fill.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:chat-circle-dots-fill" class="chat-support-button__icon" > 
+  at <ChatSupportButton> 
+  at <FloatingButtons> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353843ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/telegram-logo.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:telegram-logo" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353844ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/ph/whatsapp-logo.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="ph:whatsapp-logo" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353844ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/instagram.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="iconoir:instagram" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353845ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/facebook.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="iconoir:facebook" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353845ms] [WARNING] [Vue warn]: Hydration style mismatch on JSHandle@node 
+  - rendered on server: style="width:1em;height:1em;--c613ce94-iconUrl:url('https://api.iconify.design/iconoir/youtube.svg');"
+  - expected on client: style="width:1em;height:1em;"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. 
+  at <IconCSS name="iconoir:youtube" > 
+  at <SiteFooter> 
+  at <Body style= {background: #f8f1e6, --kratom-page-theme: light, --kratom-page-background: #f8f1e6, --kratom-page-text: #1f2b1d, --kratom-page-muted: rgba(31, 43, 29, 0.68)} data-page-theme="light" > 
+  at <Html lang="cs-CZ" dir="ltr" > 
+  at <Default ref=Ref< undefined > > 
+  at <AsyncComponentWrapper ref=Ref< undefined > > 
+  at <LayoutLoader key="default" layoutProps= {ref: RefImpl} name="default" > 
+  at <NuxtLayoutProvider layoutProps= {ref: RefImpl} key="default" name="default"  ... > 
+  at <NuxtLayout> 
+  at <App key=4 > 
+  at <NuxtRoot> @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=e24895bf:49
+[10353850ms] [LOG] [Content] WS connected! @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[10353859ms] [WARNING] [intlify] Not found 'delivery.default_address' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353860ms] [WARNING] [intlify] Not found parent scope. use the global scope. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353861ms] [WARNING] [intlify] Not found parent scope. use the global scope. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353865ms] [WARNING] [intlify] Not found 'title.cart' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353865ms] [WARNING] [intlify] Fall back to translate 'title.cart' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353868ms] [WARNING] [intlify] Not found 'title.cart' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353868ms] [WARNING] [intlify] Fall back to translate 'title.cart' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353870ms] [LOG] [nuxt-app] page:finish: 3.459228515625 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353871ms] [LOG] [nuxt-app] page:loading:end: 0.426025390625 ms [] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353876ms] [LOG] [nuxt-app] schema-org:meta: 0.06591796875 ms [Object] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353877ms] [LOG] [nuxt-app] app:suspense:resolve: 5.572021484375 ms [] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353902ms] [WARNING] [intlify] Not found 'logo_alt' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353903ms] [WARNING] [intlify] Fall back to translate 'logo_alt' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353903ms] [WARNING] [intlify] Not found 'logo_alt' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[10353904ms] [LOG] [nuxt-app] link:prefetch: 4.072021484375 ms [/] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353904ms] [LOG] [nuxt-app] link:prefetch : 3.89599609375 ms [/catalog] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353904ms] [LOG] [nuxt-app] link:prefetch  : 3.751953125 ms [/catalog] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353905ms] [LOG] [nuxt-app] link:prefetch   : 3.7958984375 ms [/delivery] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353905ms] [LOG] [nuxt-app] link:prefetch    : 3.869140625 ms [/payment] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353905ms] [LOG] [nuxt-app] link:prefetch     : 3.656005859375 ms [/age-verification] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353905ms] [LOG] [nuxt-app] link:prefetch      : 3.570068359375 ms [/reviews] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353905ms] [LOG] [nuxt-app] link:prefetch       : 3.509033203125 ms [/about] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353905ms] [LOG] [nuxt-app] link:prefetch        : 3.599853515625 ms [/contacts] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10353905ms] [LOG] [nuxt-app] link:prefetch         : 3.705078125 ms [/auth/login] @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/hookable/dist/index.mjs?v=e24895bf:271
+[10357553ms] [LOG] [nuxt-delay-hydration] Hydration event timeout @ http://localhost:3000/delivery:165
+[16238921ms] [ERROR] Failed to load resource: net::ERR_TIMED_OUT @ https://p.clarity.ms/collect:0
+[26282984ms] [WARNING] [intlify] Not found 'title.cart' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[26282992ms] [WARNING] [intlify] Fall back to translate 'title.cart' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[26283242ms] [WARNING] [intlify] Not found 'title.cart' key in 'cs' locale messages. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[26283243ms] [WARNING] [intlify] Fall back to translate 'title.cart' with root locale. @ http://localhost:3000/_nuxt/node_modules/.cache/vite/client/deps/chunk-LY4OWT6B.js?v=e24895bf:3
+[31750750ms] [LOG] [Content] WS reconnecting.. @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[31750805ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3000/_nuxt/@vite/client:963
+[31751772ms] [LOG] [Content] WS connect to ws://localhost:4000/ws @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[31751782ms] [LOG] [Content] WS connected! @ http://localhost:3000/_nuxt/@fs/Users/andrejkoval/Dev/vivadzen/src/front/node_modules/@nuxt/content/dist/runtime/composables/web-socket.js?v=e24895bf:4
+[31752831ms] [ERROR] %cssr:error%c Message compilation error: Unterminated closing brace
+1  |  you{''@''}example.com
+   |        ^ 
+      background: #c0392b;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at options.onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at emitError (node_modules/@intlify/message-compiler/dist/message-compiler.mjs)
+ @ http://localhost:3000/_nuxt/node_modules/consola/dist/browser.mjs?v=53805f2a:47
+[31752831ms] [ERROR] %cssr:error%c Message compilation error: Invalid linked format
+1  |  you{''@''}example.com
+   |         ^ 
+      background: #c0392b;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at options.onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at emitError (node_modules/@intlify/message-compiler/dist/message-compiler.mjs)
+ @ http://localhost:3000/_nuxt/node_modules/consola/dist/browser.mjs?v=53805f2a:47
+[31752831ms] [ERROR] %cssr:error%c Message compilation error: Unbalanced closing brace
+1  |  you{''@''}example.com
+   |           ^ 
+      background: #c0392b;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at options.onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at emitError (node_modules/@intlify/message-compiler/dist/message-compiler.mjs)
+ @ http://localhost:3000/_nuxt/node_modules/consola/dist/browser.mjs?v=53805f2a:47
+[31752912ms] [INFO] <Suspense> is an experimental feature and its API will likely change. @ http://localhost:3000/_nuxt/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=53805f2a:7239
+[31752948ms] [ERROR] Message compilation error: Unterminated closing brace
+1  |  you{''@''}example.com
+   |        ^ @ http://localhost:3000/_nuxt/node_modules/@intlify/core-base/dist/core-base.mjs?v=53805f2a:1650
+[31752948ms] [ERROR] Message compilation error: Invalid linked format
+1  |  you{''@''}example.com
+   |         ^ @ http://localhost:3000/_nuxt/node_modules/@intlify/core-base/dist/core-base.mjs?v=53805f2a:1650
+[31752948ms] [ERROR] Message compilation error: Unbalanced closing brace
+1  |  you{''@''}example.com
+   |           ^ @ http://localhost:3000/_nuxt/node_modules/@intlify/core-base/dist/core-base.mjs?v=53805f2a:1650
+[81413878ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:3000/_nuxt/@vite/client:864
+[81415306ms] [ERROR] %cssr:error%c Message compilation error: Unterminated closing brace
+1  |  you{''@''}example.com
+   |        ^ 
+      background: #c0392b;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at options.onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at emitError (node_modules/@intlify/message-compiler/dist/message-compiler.mjs)
+ @ http://localhost:3000/_nuxt/node_modules/consola/dist/browser.mjs?v=53805f2a:47
+[81415307ms] [ERROR] %cssr:error%c Message compilation error: Invalid linked format
+1  |  you{''@''}example.com
+   |         ^ 
+      background: #c0392b;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at options.onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at emitError (node_modules/@intlify/message-compiler/dist/message-compiler.mjs)
+ @ http://localhost:3000/_nuxt/node_modules/consola/dist/browser.mjs?v=53805f2a:47
+[81415307ms] [ERROR] %cssr:error%c Message compilation error: Unbalanced closing brace
+1  |  you{''@''}example.com
+   |           ^ 
+      background: #c0392b;
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+      
+  at onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at options.onError (node_modules/@intlify/core-base/dist/core-base.mjs)
+  at emitError (node_modules/@intlify/message-compiler/dist/message-compiler.mjs)
+ @ http://localhost:3000/_nuxt/node_modules/consola/dist/browser.mjs?v=53805f2a:47
+[81415348ms] [INFO] <Suspense> is an experimental feature and its API will likely change. @ http://localhost:3000/_nuxt/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js?v=53805f2a:7239
+[81415370ms] [ERROR] Message compilation error: Unterminated closing brace
+1  |  you{''@''}example.com
+   |        ^ @ http://localhost:3000/_nuxt/node_modules/@intlify/core-base/dist/core-base.mjs?v=53805f2a:1650
+[81415370ms] [ERROR] Message compilation error: Invalid linked format
+1  |  you{''@''}example.com
+   |         ^ @ http://localhost:3000/_nuxt/node_modules/@intlify/core-base/dist/core-base.mjs?v=53805f2a:1650
+[81415371ms] [ERROR] Message compilation error: Unbalanced closing brace
+1  |  you{''@''}example.com
+   |           ^ @ http://localhost:3000/_nuxt/node_modules/@intlify/core-base/dist/core-base.mjs?v=53805f2a:1650

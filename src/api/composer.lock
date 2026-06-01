@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fecaece6ead8a2c48bf5c26b5590768c",
+    "content-hash": "2742fff75f079a7aee07900cba817dcf",
     "packages": [
         {
             "name": "backpack/basset",
@@ -5568,12 +5568,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "452dacf382612559191ee9802a2685381457a92d"
+                "reference": "01f82db3ebabbb898bc214ab6311f80b226c8c24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/452dacf382612559191ee9802a2685381457a92d",
-                "reference": "452dacf382612559191ee9802a2685381457a92d",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/01f82db3ebabbb898bc214ab6311f80b226c8c24",
+                "reference": "01f82db3ebabbb898bc214ab6311f80b226c8c24",
                 "shasum": ""
             },
             "require": {
@@ -5634,7 +5634,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/multistore"
             },
-            "time": "2026-05-30T12:24:57+00:00"
+            "time": "2026-05-31T10:38:32+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",
@@ -5764,10 +5764,16 @@
         {
             "name": "parabellumkoval/crud",
             "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "packages/crud",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/CRUD.git",
                 "reference": "2ebd985ee0f2481b486fffd8568043b9c29cb94b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/CRUD/zipball/2ebd985ee0f2481b486fffd8568043b9c29cb94b",
+                "reference": "2ebd985ee0f2481b486fffd8568043b9c29cb94b",
+                "shasum": ""
             },
             "require": {
                 "creativeorange/gravatar": "~1.0",
@@ -5788,19 +5794,20 @@
                 "backpack/revise-operation": "Optional operation to remember all entry changes, undo and redo them (aka audit trait).",
                 "digitallyhappy/toggle-field-for-backpack": "Optional field to toggle a boolean. Prettier alternative to the checkbox field."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
-                },
                 "laravel": {
-                    "providers": [
-                        "Backpack\\CRUD\\BackpackServiceProvider"
-                    ],
                     "aliases": {
                         "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade",
                         "Widget": "Backpack\\CRUD\\app\\Library\\Widget"
-                    }
+                    },
+                    "providers": [
+                        "Backpack\\CRUD\\BackpackServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
                 }
             },
             "autoload": {
@@ -5808,56 +5815,35 @@
                     "Backpack\\CRUD\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Backpack\\CRUD\\Tests\\": "tests"
-                },
-                "files": [
-                    "src/helpers.php"
-                ],
-                "exclude-from-classmap": [
-                    "**/config"
-                ]
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit --testdox"
-                ],
-                "test-failing": [
-                    "vendor/bin/phpunit --order-by=defects --stop-on-failure"
-                ],
-                "test-coverage": [
-                    "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "proprietary"
             ],
             "description": "Quickly build an admin interfaces using Laravel, CoreUI, Bootstrap and jQuery.",
             "homepage": "https://github.com/parabellumkoval/CRUD",
             "keywords": [
-                "BREAD",
-                "CMS",
-                "CRUD",
-                "admin interface",
+                "Admin Interface",
+                "Content management system",
                 "admin panel",
                 "admin panel for laravel",
                 "base",
                 "bootstrap 4 admin panel laravel",
+                "bread",
+                "cms",
                 "content management framework",
-                "content management system",
                 "coreui for laravel",
                 "create",
+                "crud",
                 "delete",
                 "laravel admin",
-                "parabellumkoval",
+                "parabellumKoval",
                 "read",
                 "update"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/parabellumKoval/CRUD/tree/main"
+            },
+            "time": "2026-05-30T14:32:26+00:00"
         },
         {
             "name": "parabellumkoval/crud-filemanager",
@@ -13475,5 +13461,5 @@
     "platform-overrides": {
         "php": "8.2.29"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

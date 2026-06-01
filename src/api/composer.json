@@ -102,13 +102,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [{
-        "name": "local",
-        "type": "path",
-        "url": "packages/*",
-        "options": {
-            "symlink": true
-        }
-    }]
+    "prefer-stable": true
 }

@@ -12,3 +12,4 @@ use Illuminate\Support\Facades\Schedule;
 Schedule::command('store:currency:refresh')->everyTenMinutes();
 Schedule::command('reviews:google:sync')->hourly();
 Schedule::command('novaposhta:sync')->weeklyOn(1, '03:00');
+Schedule::command('horizon:snapshot')->everyFiveMinutes();

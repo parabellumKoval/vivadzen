@@ -68,19 +68,19 @@ return [
       ],
       'settlement' => [
         // 
-        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|exclude_if:delivery.method,messenger_express|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ],
       'street' => [
-        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|exclude_if:delivery.method,messenger_express|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ],
       'house' => [
-        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|exclude_if:delivery.method,messenger_express|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ],
       'room' => [
-        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|exclude_if:delivery.method,messenger_express|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ],
       'zip' => [
-        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
+        'rules' => 'exclude_if:delivery.method,packeta_address|exclude_if:delivery.method,default_address|exclude_if:delivery.method,messenger_address|exclude_if:delivery.method,messenger_express|required_if:payment.method,bank_transfer|nullable|string|min:2|max:500'
       ]
     ],
 
@@ -88,7 +88,7 @@ return [
       'rules' => 'array:settlement,settlementRef,street,streetRef,area,region,type,house,room,zip,method,warehouse,warehouseRef,price,priceCurrency',
       'store_in' => 'info',
       'method' => [
-        'rules' => 'required|in:novaposhta_address,novaposhta_warehouse,packeta_address,packeta_warehouse,messenger_address,default_pickup,default_address'
+        'rules' => 'required|in:novaposhta_address,novaposhta_warehouse,packeta_address,packeta_warehouse,messenger_address,messenger_express,default_pickup,default_address'
       ],
       'warehouse' => [
         'rules' => 'required_if:delivery.method,novaposhta_warehouse,packeta_warehouse,default_pickup|nullable|string|min:1|max:500'
@@ -97,7 +97,7 @@ return [
         'rules' => 'nullable|string|min:1|max:500'
       ],
       'settlement' => [
-        'rules' => 'required_if:delivery.method,novaposhta_address,novaposhta_warehouse,packeta_address,packeta_warehouse,messenger_address|nullable|string|min:2|max:500'
+        'rules' => 'required_if:delivery.method,novaposhta_address,novaposhta_warehouse,packeta_address,packeta_warehouse,messenger_address,messenger_express|nullable|string|min:2|max:500'
       ],
       'settlementRef' => [
         'rules' => 'nullable|string|min:1|max:500'
@@ -112,19 +112,19 @@ return [
         'rules' => 'nullable|string|min:1|max:500'
       ],
       'street' => [
-        'rules' => 'required_if:delivery.method,novaposhta_address,packeta_address,messenger_address|nullable|string|min:2|max:255'
+        'rules' => 'required_if:delivery.method,novaposhta_address,packeta_address,messenger_address,messenger_express|nullable|string|min:2|max:255'
       ],
       'streetRef' => [
         'rules' => 'nullable|string|min:2|max:255'
       ],
       'house' => [
-        'rules' => 'required_if:delivery.method,novaposhta_address,messenger_address|nullable|string|min:1|max:50'
+        'rules' => 'required_if:delivery.method,novaposhta_address,messenger_address,messenger_express|nullable|string|min:1|max:50'
       ],
       'room' => [
         'rules' => 'nullable|string|min:1|max:50'
       ],
       'zip' => [
-        'rules' => 'required_if:delivery.method,novaposhta_address,packeta_address,messenger_address|nullable|string|min:5|max:255'
+        'rules' => 'required_if:delivery.method,novaposhta_address,packeta_address,messenger_address,messenger_express|nullable|string|min:5|max:255'
       ]
     ],
     
