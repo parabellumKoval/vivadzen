@@ -203,9 +203,7 @@
     }
 
     &__stars {
-        color: var(--c-amber-500);
-        font-size: 22px;
-        letter-spacing: 3px;
+        // .stars controls colors; здесь ничего не нужно.
     }
 
     &__score {

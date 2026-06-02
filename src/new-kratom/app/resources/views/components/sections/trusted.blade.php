@@ -13,7 +13,7 @@
             <p class="t-overline section-head__eyebrow--grass">REAL PEOPLE, REAL RESULTS</p>
             <h2 id="trusted-title" class="t-display-md t-on-dark mt-3">Co říkají naši zákazníci</h2>
             <div class="trusted__rating">
-                <span class="stars" aria-hidden="true">★★★★★</span>
+                <x-ui.stars :rating="5" :size="18" class="stars--on-dark" />
                 <span>4,9 z 5 — 2 500+ hodnocení</span>
             </div>
         </header>

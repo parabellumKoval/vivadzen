@@ -5,7 +5,7 @@
     'inStock' => true,
 ])
 
-<div class="product-gallery" x-data="{ active: 0, total: {{ count($gallery) }} }">
+<div class="product-gallery" x-data="{ active: 0, total: {{ count($gallery) }}, prev() { this.active = (this.active - 1 + this.total) % this.total }, next() { this.active = (this.active + 1) % this.total } }">
     <div class="product-gallery__stage">
         @foreach($gallery as $i => $src)
             <button
@@ -19,16 +19,24 @@
             </button>
         @endforeach
 
-        <div class="product-gallery__badges">
-            @if($inStock)
-                <span class="badge badge--subscription">Skladem</span>
-            @else
-                <span class="badge badge--out">Vyprodáno</span>
-            @endif
-            @if($batch)
-                <span class="badge badge--lab">Lab-testováno · šarže {{ $batch }}</span>
-            @endif
-        </div>
+        @if(count($gallery) > 1)
+            <button
+                type="button"
+                class="product-gallery__arrow product-gallery__arrow--prev"
+                x-on:click.stop="prev()"
+                aria-label="Předchozí fotografie"
+            >
+                <x-ui.icon name="arrow-left" :size="18" />
+            </button>
+            <button
+                type="button"
+                class="product-gallery__arrow product-gallery__arrow--next"
+                x-on:click.stop="next()"
+                aria-label="Další fotografie"
+            >
+                <x-ui.icon name="arrow-right" :size="18" />
+            </button>
+        @endif
     </div>
 
     @if(count($gallery) > 1)

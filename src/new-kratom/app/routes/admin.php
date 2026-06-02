@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EditorMediaController;
 use App\Http\Controllers\Admin\ForumCategoryController;
 use App\Http\Controllers\Admin\ForumPostController;
 use App\Http\Controllers\Admin\ForumTopicController;
+use App\Http\Controllers\Admin\LabBatchController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentMethodController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\TaxonomyController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WikiArticleController;
+use App\Http\Controllers\Admin\WikiCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +51,17 @@ Route::prefix('admin-api')->group(function () {
         Route::put('/products/{product}/images/reorder', [ProductImageController::class, 'reorder']);
         Route::put('/products/{product}/images/{image}', [ProductImageController::class, 'update']);
         Route::delete('/products/{product}/images/{image}', [ProductImageController::class, 'destroy']);
+
+        // Lab batches (COA / Šarže)
+        Route::get('/lab-batches', [LabBatchController::class, 'index']);
+        Route::post('/lab-batches', [LabBatchController::class, 'store']);
+        Route::get('/lab-batches/{labBatch}', [LabBatchController::class, 'show']);
+        Route::put('/lab-batches/{labBatch}', [LabBatchController::class, 'update']);
+        Route::delete('/lab-batches/{labBatch}', [LabBatchController::class, 'destroy']);
+        Route::post('/lab-batches/{labBatch}/files', [LabBatchController::class, 'storeFile']);
+        Route::put('/lab-batches/{labBatch}/files/reorder', [LabBatchController::class, 'reorderFiles']);
+        Route::put('/lab-batches/{labBatch}/files/{file}', [LabBatchController::class, 'updateFile']);
+        Route::delete('/lab-batches/{labBatch}/files/{file}', [LabBatchController::class, 'destroyFile']);
 
         // Taxonomies (color/strain/form/region)
         Route::get('/taxonomies', [TaxonomyController::class, 'index']);
@@ -109,6 +123,22 @@ Route::prefix('admin-api')->group(function () {
         Route::delete('/forum/posts/{post}', [ForumPostController::class, 'destroy']);
         Route::post('/forum/posts/{post}/approve', [ForumPostController::class, 'approve']);
         Route::post('/forum/posts/{post}/reject', [ForumPostController::class, 'reject']);
+
+        // Pruvodce (wiki)
+        Route::get('/pruvodce/categories', [WikiCategoryController::class, 'index']);
+        Route::post('/pruvodce/categories', [WikiCategoryController::class, 'store']);
+        Route::get('/pruvodce/categories/{category}', [WikiCategoryController::class, 'show']);
+        Route::put('/pruvodce/categories/{category}', [WikiCategoryController::class, 'update']);
+        Route::delete('/pruvodce/categories/{category}', [WikiCategoryController::class, 'destroy']);
+
+        Route::get('/pruvodce/articles', [WikiArticleController::class, 'index']);
+        Route::post('/pruvodce/articles', [WikiArticleController::class, 'store']);
+        Route::get('/pruvodce/articles/{article}', [WikiArticleController::class, 'show']);
+        Route::put('/pruvodce/articles/{article}', [WikiArticleController::class, 'update']);
+        Route::delete('/pruvodce/articles/{article}', [WikiArticleController::class, 'destroy']);
+        Route::post('/pruvodce/articles/{article}/publish', [WikiArticleController::class, 'publish']);
+        Route::post('/pruvodce/articles/{article}/unpublish', [WikiArticleController::class, 'unpublish']);
+        Route::post('/pruvodce/articles/{article}/cover', [WikiArticleController::class, 'uploadCover']);
 
         // Customers
         Route::get('/users', [UserController::class, 'index']);

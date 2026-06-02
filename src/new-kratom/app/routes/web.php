@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PruvodceController;
 use App\Http\Controllers\ReviewController;
 use App\Support\Catalog;
 use App\Support\Locale;
@@ -140,8 +141,13 @@ $register = function () {
             ->where('order', 'VZ-[0-9]{4}-[0-9]{4}')->name('orders.detail');
 
         Route::get('/recenze', [AccountController::class, 'reviews'])->name('reviews');
+        Route::delete('/recenze/{review}', [AccountController::class, 'destroyReview'])->name('reviews.destroy');
         Route::get('/forum-temata', [AccountController::class, 'forumTopics'])->name('forum.topics');
         Route::get('/forum-prispevky', [AccountController::class, 'forumPosts'])->name('forum.posts');
+        Route::delete('/forum-tema/{topic}', [AccountController::class, 'destroyTopic'])->name('forum.topics.destroy');
+        Route::put('/forum-tema/{topic}', [AccountController::class, 'updateTopic'])->name('forum.topics.update');
+        Route::delete('/forum-prispevek/{post}', [AccountController::class, 'destroyPost'])->name('forum.posts.destroy');
+        Route::put('/forum-prispevek/{post}', [AccountController::class, 'updatePost'])->name('forum.posts.update');
     });
 
     // Static pages
@@ -160,7 +166,15 @@ $register = function () {
     Route::get('/ochrana-osobnich-udaju', [PageController::class, 'privacy'])->name('page.privacy');
     Route::get('/cookies', [PageController::class, 'cookies'])->name('page.cookies');
     Route::get('/predplatne', [PageController::class, 'subscription'])->name('page.subscription');
-    Route::get('/pruvodce', [PageController::class, 'guide'])->name('page.guide');
+    Route::get('/overeni-veku', [PageController::class, 'ageVerification'])->name('page.age-verification');
+    // Pruvodce (wiki)
+    Route::get('/pruvodce', [PruvodceController::class, 'index'])->name('pruvodce.index');
+    Route::get('/pruvodce/{category}', [PruvodceController::class, 'category'])
+        ->where('category', '[a-z0-9\-]+')
+        ->name('pruvodce.category');
+    Route::get('/pruvodce/{category}/{slug}', [PruvodceController::class, 'article'])
+        ->where(['category' => '[a-z0-9\-]+', 'slug' => '[a-z0-9\-]+'])
+        ->name('pruvodce.article');
 };
 
 // Default (cs) — no prefix

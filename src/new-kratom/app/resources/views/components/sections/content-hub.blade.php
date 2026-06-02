@@ -1,34 +1,19 @@
-{{-- S10 Content hub promo — 04_HOMEPAGE.md §12 --}}
+{{-- S10 Content hub — мини-версия /pruvodce на главной. --}}
 @php
-    $guides = [
-        [
-            'tag' => 'PRŮVODCE', 'tagVariant' => 'tag',
-            'title' => 'Co je kratom — vědecký pohled',
-            'excerpt' => 'Mitragyna speciosa, mitragynin, historie a botanika.',
-            'href' => '/pruvodce/co-je-kratom',
-            'placeholderHint' => '/assets/ai-generated/guides/cs-co-je-kratom-1200x800.avif',
-        ],
-        [
-            'tag' => 'LEGISLATIVA', 'tagVariant' => 'tag-amber',
-            'title' => 'Kratom v ČR — legislativa 2026',
-            'excerpt' => 'Zákon č. 321/2024 Sb., PML režim a kdo má licenci.',
-            'href' => '/pruvodce/kratom-zakon-2026',
-            'placeholderHint' => '/assets/ai-generated/guides/cs-legislativa-1200x800.avif',
-        ],
-        [
-            'tag' => 'KVALITA', 'tagVariant' => 'tag-terra',
-            'title' => 'Jak poznat kvalitní kratom — laboratorní testy a COA',
-            'excerpt' => 'Co hledat v COA, čistota, mitragynin a šarže.',
-            'href' => '/pruvodce/jak-poznat-kvalitni-kratom',
-            'placeholderHint' => '/assets/ai-generated/guides/cs-kvalita-coa-1200x800.avif',
-        ],
-    ];
+    use App\Models\WikiCategory;
+    use App\Support\Locale;
+
+    $hubCategories = WikiCategory::active()
+        ->withCount(['publishedArticles as articles_count'])
+        ->limit(4)
+        ->get();
 @endphp
 
+@if($hubCategories->isNotEmpty())
 <section class="section section--cream contenthub" aria-labelledby="hub-title">
     <div class="container">
         <x-ui.section-head
-            eyebrow="PRŮVODCE & FAKTA"
+            eyebrow="WIKI ENCYKLOPEDIE"
             eyebrowVariant="soft"
             title="Co stojí za to vědět o kratomu"
             titleTag="h2"
@@ -36,24 +21,29 @@
             center
         />
 
-        <div class="contenthub__grid">
-            @foreach($guides as $g)
-                <a href="{{ $g['href'] }}" class="contenthub__card">
-                    <x-ui.placeholder shape="wide" :hint="$g['placeholderHint']" label="Obrázek průvodce" icon="leaf" />
-                    <div class="contenthub__body">
-                        <x-ui.badge :variant="$g['tagVariant']">{{ $g['tag'] }}</x-ui.badge>
-                        <h3 class="contenthub__title">{{ $g['title'] }}</h3>
-                        <p class="contenthub__excerpt">{{ $g['excerpt'] }}</p>
-                        <span class="contenthub__more">Číst →</span>
-                    </div>
+        <div class="pruvodce-grid pruvodce-grid--4 contenthub__grid">
+            @foreach($hubCategories as $cat)
+                <a class="pruvodce-cat-card pruvodce-cat-card--{{ $cat->accent ?: 'cream' }}"
+                   href="{{ Locale::url('/pruvodce/'.$cat->slug) }}">
+                    <x-pruvodce.cat-icon :slug="$cat->slug" />
+
+                    @if ($cat->eyebrow)
+                        <p class="pruvodce-cat-card__eyebrow">{{ $cat->eyebrow }}</p>
+                    @endif
+                    <h3 class="pruvodce-cat-card__title">{{ $cat->title }}</h3>
+                    @if ($cat->description)
+                        <p class="pruvodce-cat-card__desc">{{ $cat->description }}</p>
+                    @endif
+                    <span class="pruvodce-cat-card__meta">{{ $cat->articles_count }} článků →</span>
                 </a>
             @endforeach
         </div>
 
         <div class="contenthub__cta">
-            <x-ui.button href="/pruvodce" variant="outline-light" icon="arrow-right">
+            <x-ui.button :href="Locale::url('/pruvodce')" variant="outline-light" icon="arrow-right">
                 Všechny průvodce
             </x-ui.button>
         </div>
     </div>
 </section>
+@endif

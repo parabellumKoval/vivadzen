@@ -6,7 +6,7 @@
     <div class="container">
         <h2 id="related-title" class="t-heading-xl t-on-light-accent">Mohlo by vás zaujmout</h2>
 
-        <div class="related-grid mt-8">
+        <x-ui.carousel class="related-grid mt-8" :desktop="3" :tablet="2" :mobile="1">
             @foreach($products as $p)
                 <x-ui.product-card
                     :name="$p['name']"
@@ -23,6 +23,6 @@
                     :image="asset(ltrim($p['image'], '/'))"
                 />
             @endforeach
-        </div>
+        </x-ui.carousel>
     </div>
 </section>

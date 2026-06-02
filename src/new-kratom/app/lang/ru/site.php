@@ -149,6 +149,169 @@ return [
         'gdpr' => 'Защита персональных данных',
         'cookies' => 'Cookies',
         'o_nas' => 'О нас',
+        'age_verification' => 'Подтверждение возраста 18+',
+    ],
+
+    'adulto' => [
+        'eyebrow' => 'Подтверждение возраста 18+',
+        'page_title' => 'Подтверждение возраста через Mobilní klíč',
+        'page_description' => 'Инструкция, как подтвердить возраст 18+ при покупке кратома через Mobilní klíč eGovernmentu или MojeID.',
+        'page_lead' => 'Vivadzen проверяет возраст каждого покупателя через государственный сервис Mobilní klíč eGovernmentu. Мы получаем только признак «18+» — никакие персональные данные нам не передаются.',
+        'modal_title' => 'Как подтвердить возраст',
+        'modal_close' => 'Понятно',
+        'open_full_guide' => 'Открыть полную инструкцию',
+        'checkout_title' => 'Подтверждение возраста 18+',
+        'checkout_desc' => 'Для оформления заказа необходимо подтвердить возраст через Mobilní klíč eGovernmentu (ADULTO.cz).',
+        'checkout_guide_hint' => 'Нужна помощь? Откроем краткую инструкцию.',
+        'checkout_open_guide' => 'Открыть инструкцию',
+        'widget_loading' => 'Загрузка проверки…',
+        'widget_verified' => 'Возраст подтверждён.',
+        'widget_error' => 'Не удалось загрузить проверку возраста.',
+        'widget_unavailable' => 'Проверка возраста временно недоступна.',
+        'required_error' => 'Для оформления заказа необходимо пройти проверку возраста.',
+        'skipped_notice' => 'Для вашего аккаунта проверка возраста подтверждена администратором — виджет не требуется.',
+
+        'intro' => [
+            'paragraphs' => [
+                'Согласно действующему законодательству Чехии, vivadzen s.r.o. как продавец психомодулирующих веществ обязан проверять возраст каждого покупателя.',
+                'Проверка проходит через государственный сервис <strong>Mobilní klíč eGovernmentu</strong> или другие средства <strong>Identity občana</strong>.',
+            ],
+            'alert' => 'ВАШИ ДАННЫЕ В БЕЗОПАСНОСТИ. Мы получаем только информацию о том, что вам 18+. Персональные данные к нам не передаются и не сохраняются.',
+        ],
+        'sections' => [
+            [
+                'number' => '1',
+                'title' => 'Установка приложения <strong>Mobilní klíč eGovernmentu</strong>',
+                'steps' => [
+                    '<strong>Скачайте приложение.</strong> Установите <strong>Mobilní klíč eGovernmentu</strong> из <a href="https://apps.apple.com/cz/app/mobiln%C3%AD-kl%C3%AD%C4%8D-egovernmentu/id1466762017" target="_blank" rel="noopener noreferrer">App Store</a> или <a href="https://play.google.com/store/apps/details?id=cz.mojedatovaschranka.mobilniklic" target="_blank" rel="noopener noreferrer">Google Play</a>. Оно бесплатное, выпускается государственными органами Чехии.',
+                    '<strong>Откройте сайт Identity občana.</strong> На компьютере перейдите на <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer"><strong>www.identita.gov.cz</strong></a>. Позже там добавите Mobilní klíč eGovernmentu в способы входа.',
+                ],
+            ],
+            [
+                'number' => '2',
+                'title' => 'Вход в <strong>Identity občana</strong>',
+                'steps' => [
+                    'На <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer"><strong>identita.gov.cz</strong></a> выберите <strong>Войти в Identity občana</strong>.',
+                    'Рекомендуем <strong>Bankovní identitu</strong> — войдёте так же, как в интернет-банкинг.',
+                    'После входа вы окажетесь в управлении своим профилем на портале Identity občana.',
+                ],
+                'note' => 'Авторизация проходит через Identity občana и сервис <strong>NIA</strong>.',
+            ],
+            [
+                'number' => '3',
+                'title' => 'Привязка приложения к профилю',
+                'lead' => 'После входа вы увидите список способов авторизации. Здесь добавите Mobilní klíč eGovernmentu.',
+                'steps' => [
+                    'В портале Identity občana откройте <strong>Способы входа</strong>.',
+                    'Найдите <strong>Mobilní klíč eGovernmentu</strong> и нажмите плюс.',
+                    'На экране появится QR-код, действует около 5 минут — при необходимости сгенерируйте новый.',
+                ],
+                'note' => 'QR-код используется только для привязки приложения к Identity občana.',
+            ],
+            [
+                'number' => '4',
+                'title' => 'Активация <strong>Mobilní klíč</strong>',
+                'steps' => [
+                    'Откройте приложение <strong>Mobilní klíč eGovernmentu</strong>.',
+                    'Выберите <strong>Активация ключа для Identity občana</strong>.',
+                    'Нажмите <strong>Готово, считать код для подключения</strong> и отсканируйте QR-код с экрана.',
+                    'Задайте PIN или биометрию — связка готова.',
+                ],
+                'tips' => [
+                    'Если приложение показывает ошибку, проверьте интернет и обновите приложение.',
+                ],
+            ],
+            [
+                'number' => '5',
+                'title' => 'Подтверждение возраста при покупке',
+                'lead' => 'После первой настройки каждое следующее подтверждение занимает несколько секунд.',
+                'steps' => [
+                    'Добавьте товары в корзину и перейдите к оформлению.',
+                    'Выберите проверку возраста через <strong>Mobilní klíč eGovernmentu</strong>.',
+                    'На экране появится QR-код — отсканируйте его в приложении и подтвердите отправку информации о возрасте.',
+                    'Приложение передаёт только факт, что вам больше 18. Никакие другие данные не отправляются.',
+                    'После подтверждения вы вернётесь к оформлению заказа.',
+                ],
+            ],
+        ],
+        'important' => [
+            'title' => 'Важно',
+            'paragraphs' => [
+                'Активацию Mobilní klíč вы проходите только один раз.',
+                'При следующих заказах нужно лишь:',
+            ],
+            'steps' => [
+                'открыть приложение Mobilní klíč eGovernmentu,',
+                'отсканировать QR-код на странице оформления,',
+                'подтвердить проверку возраста.',
+            ],
+            'footer' => 'Проверка занимает несколько секунд — и можно сразу завершать покупку.',
+        ],
+        'alternative' => [
+            'title' => 'Альтернатива: <strong>MojeID</strong>',
+            'text' => 'Если Mobilní klíč вам не подходит, можно использовать <a href="https://www.mojeid.cz/" target="_blank" rel="noopener noreferrer"><strong>MojeID</strong></a>.',
+            'bullets' => [
+                'Аккаунт MojeID привязывается к Identity občana онлайн (например, снова через Bankovní identitu).',
+                'Идентичность и возраст можно подтвердить и лично в любом отделении <a href="https://www.czechpoint.cz/public/" target="_blank" rel="noopener noreferrer"><strong>Czech POINT</strong></a>.',
+                'После привязки проверка на сайте работает так же — магазин получает только признак «18+».',
+            ],
+        ],
+
+        'short' => [
+            'intro' => [
+                'paragraphs' => [
+                    'Кратко: <strong>Mobilní klíč</strong> настраивается один раз, а дальше возраст подтверждается за несколько секунд.',
+                ],
+                'alert' => 'Vivadzen получает только подтверждение, что вам есть 18+. Персональные данные к нам не передаются.',
+            ],
+            'sections' => [
+                [
+                    'number' => '1',
+                    'title' => 'Подготовьте приложение и вход',
+                    'steps' => [
+                        'Установите <strong>Mobilní klíč eGovernmentu</strong> из <a href="https://apps.apple.com/cz/app/mobiln%C3%AD-kl%C3%AD%C4%8D-egovernmentu/id1466762017" target="_blank" rel="noopener noreferrer">App Store</a> или <a href="https://play.google.com/store/apps/details?id=cz.mojedatovaschranka.mobilniklic" target="_blank" rel="noopener noreferrer">Google Play</a>.',
+                        'На <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer"><strong>identita.gov.cz</strong></a> войдите в Identity občana, удобнее всего через Bankovní identitu.',
+                    ],
+                ],
+                [
+                    'number' => '2',
+                    'title' => 'Привяжите Mobilní klíč к Identity občana',
+                    'steps' => [
+                        'В портале Identity občana откройте способы входа и добавьте Mobilní klíč eGovernmentu.',
+                        'На телефоне откройте приложение, выберите активацию ключа и отсканируйте QR-код.',
+                        'Завершите настройку, задав PIN или биометрию.',
+                    ],
+                ],
+                [
+                    'number' => '3',
+                    'title' => 'Подтвердите возраст при заказе',
+                    'steps' => [
+                        'В корзине выберите проверку возраста через Mobilní klíč eGovernmentu.',
+                        'Откройте приложение, отсканируйте QR-код и подтвердите передачу информации, что вам 18+.',
+                        'Вернитесь к оформлению и завершите заказ.',
+                    ],
+                ],
+            ],
+            'important' => [
+                'title' => 'В следующий раз',
+                'paragraphs' => [
+                    'Первичная настройка нужна только один раз.',
+                ],
+                'steps' => [
+                    'открыть приложение,',
+                    'отсканировать QR-код,',
+                    'подтвердить проверку.',
+                ],
+                'footer' => 'Готово за несколько секунд.',
+            ],
+            'alternative' => [
+                'title' => 'Альтернатива',
+                'text' => 'Можно использовать <a href="https://www.mojeid.cz/" target="_blank" rel="noopener noreferrer"><strong>MojeID</strong></a>.',
+                'bullets' => [
+                    'Свяжите MojeID с Identity občana онлайн или подтвердите личность в отделении <a href="https://www.czechpoint.cz/public/" target="_blank" rel="noopener noreferrer"><strong>Czech POINT</strong></a>.',
+                ],
+            ],
+        ],
     ],
 
     // Authentication (login / register / social / reset)
@@ -277,8 +440,11 @@ return [
         'addresses' => [
             'title' => 'Адреса доставки',
             'head_hint' => 'Сохранённые адреса появятся на оформлении заказа.',
+            'empty_title' => 'Здесь будут ваши адреса',
             'empty' => 'Пока нет сохранённых адресов. Добавьте первый — он ускорит будущие покупки.',
             'add' => 'Добавить адрес',
+            'add_title' => 'Новый адрес',
+            'edit_title' => 'Изменить адрес',
             'phone' => 'Телефон (для курьера)',
             'phone_helper' => 'Используем только для доставки этой посылки.',
             'street' => 'Улица и номер дома',
@@ -292,6 +458,7 @@ return [
             'edit' => 'Изменить',
             'delete' => 'Удалить',
             'delete_confirm' => 'Удалить этот адрес?',
+            'delete_confirm_message' => 'Адрес исчезнет из списка и больше не будет предлагаться при оформлении.',
             'save' => 'Сохранить адрес',
             'cancel' => 'Отмена',
             'saved' => 'Адрес сохранён.',
@@ -327,6 +494,34 @@ return [
             'approved' => 'Опубликован',
             'rejected' => 'Отклонён',
             'view_product' => 'Открыть товар',
+            'delete' => 'Удалить отзыв',
+            'delete_confirm' => 'Удалить отзыв?',
+            'delete_confirm_message' => 'Отзыв и все прикреплённые фото будут удалены безвозвратно.',
+        ],
+        'forum' => [
+            'edit' => 'Изменить',
+            'delete' => 'Удалить',
+            'cancel' => 'Отмена',
+            'save' => 'Сохранить',
+            'topic_delete_confirm' => 'Удалить тему?',
+            'topic_delete_message' => 'Тема и все ответы к ней будут удалены. Это действие необратимо.',
+            'post_delete_confirm' => 'Удалить ответ?',
+            'post_delete_message' => 'Ваш ответ исчезнет из обсуждения.',
+            'edit_topic_title' => 'Изменить тему',
+            'edit_post_title' => 'Изменить ответ',
+            'public_profile' => 'Публичный профиль',
+            'open_topic' => 'Открыть',
+            'reputation' => 'Репутация',
+            'topics_count' => 'Тем',
+            'posts_count' => 'Ответов',
+            'next_level' => 'до уровня',
+            'title_label' => 'Заголовок',
+            'body_label' => 'Текст',
+        ],
+        'common' => [
+            'confirm' => 'Подтвердить',
+            'cancel' => 'Отмена',
+            'delete' => 'Удалить',
         ],
         'statuses' => [
             'pending' => 'Новый',

@@ -35,9 +35,8 @@
     }
 
     &__stars {
-        color: var(--c-amber-500);
-        font-size: 18px;
-        letter-spacing: 2px;
+        // Цвет/специфика управляется унифицированной утилитой .stars
+        // (см. base/_typography.scss).
         line-height: 1;
     }
 

@@ -16,6 +16,24 @@
     ];
 @endphp
 
+<script>
+    window.__accountStrings = Object.assign(window.__accountStrings || {}, {
+        addressDeleteTitle: @json(__('site.account.addresses.delete_confirm')),
+        addressDeleteMessage: @json(__('site.account.addresses.delete_confirm_message')),
+        reviewDeleteTitle: @json(__('site.account.reviews.delete_confirm')),
+        reviewDeleteMessage: @json(__('site.account.reviews.delete_confirm_message')),
+        topicDeleteTitle: @json(__('site.account.forum.topic_delete_confirm')),
+        topicDeleteMessage: @json(__('site.account.forum.topic_delete_message')),
+        postDeleteTitle: @json(__('site.account.forum.post_delete_confirm')),
+        postDeleteMessage: @json(__('site.account.forum.post_delete_message')),
+        confirmDelete: @json(__('site.account.common.delete')),
+        cancel: @json(__('site.account.common.cancel')),
+        confirm: @json(__('site.account.common.confirm')),
+        save: @json(__('site.account.forum.save')),
+        editTopicTitle: @json(__('site.account.forum.edit_topic_title')),
+        editPostTitle: @json(__('site.account.forum.edit_post_title')),
+    });
+</script>
 <div class="account" x-data="accountPage">
     <div class="container account__inner">
         <aside class="account__sidebar">

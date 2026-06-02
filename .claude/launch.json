@@ -38,7 +38,18 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3001,
+      "autoPort": true,
       "cwd": "src/tg"
+    },
+    {
+      "name": "new-kratom-admin",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "const http=require('http');const u=require('url');http.createServer((q,r)=>{const o=u.parse(q.url);const p=http.request({host:'127.0.0.1',port:3002,method:q.method,path:o.path,headers:{...q.headers,host:'127.0.0.1:3002'}},s=>{r.writeHead(s.statusCode,s.headers);s.pipe(r);});q.pipe(p);p.on('error',e=>{r.writeHead(502);r.end(String(e));});}).listen(Number(process.env.PORT||3032),'127.0.0.1',()=>console.log('admin proxy on '+(process.env.PORT||3032)));"
+      ],
+      "port": 3032,
+      "autoPort": true
     }
   ]
 }

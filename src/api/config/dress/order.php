@@ -118,13 +118,13 @@ return [
         'rules' => 'nullable|string|min:2|max:255'
       ],
       'house' => [
-        'rules' => 'required_if:delivery.method,novaposhta_address,messenger_address,messenger_express|nullable|string|min:1|max:50'
+        'rules' => 'required_if:delivery.method,novaposhta_address|nullable|string|min:1|max:50'
       ],
       'room' => [
         'rules' => 'nullable|string|min:1|max:50'
       ],
       'zip' => [
-        'rules' => 'required_if:delivery.method,novaposhta_address,packeta_address,messenger_address,messenger_express|nullable|string|min:5|max:255'
+        'rules' => 'nullable|string|min:5|max:255'
       ]
     ],
     

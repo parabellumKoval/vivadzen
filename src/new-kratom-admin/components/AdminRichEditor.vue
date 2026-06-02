@@ -18,7 +18,6 @@ import {
   Image as ImageIcon,
   Undo2,
   Redo2,
-  Loader2,
 } from 'lucide-vue-next'
 
 const props = defineProps<{
@@ -31,11 +30,8 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
 
-const api = useApi()
 const { resolve: resolveMediaUrl } = useMediaUrl()
-const fileInput = ref<HTMLInputElement | null>(null)
-const uploading = ref(false)
-const uploadError = ref('')
+const pickerOpen = ref(false)
 
 const editor = shallowRef<Editor | null>(null)
 const editorForContent = computed<Editor | undefined>(() => editor.value ?? undefined)
@@ -86,33 +82,12 @@ watch(
 )
 
 function pickImage() {
-  fileInput.value?.click()
+  pickerOpen.value = true
 }
 
-async function onImageFile(event: Event) {
-  const input = event.target as HTMLInputElement
-  const file = input.files?.[0]
-  if (!file) return
-
-  uploading.value = true
-  uploadError.value = ''
-  try {
-    const form = new FormData()
-    form.append('file', file)
-    form.append('folder', 'editor')
-    const res = await api<any>('/editor/image', { method: 'POST', body: form })
-    const url = res?.data?.url
-    if (url) {
-      // Если бекенд вернул относительный путь (/storage/...), префиксуем хостом
-      // Laravel, чтобы и в админке (порт 3002), и на витрине (8002) src был валидным.
-      editor.value?.chain().focus().setImage({ src: resolveMediaUrl(url), alt: file.name }).run()
-    }
-  } catch (e: any) {
-    uploadError.value = e?.data?.message || 'Не удалось загрузить изображение'
-  } finally {
-    uploading.value = false
-    if (fileInput.value) fileInput.value.value = ''
-  }
+function onMediaPicked(url: string, item: { filename?: string; alt?: string | null }) {
+  if (!url) return
+  editor.value?.chain().focus().setImage({ src: resolveMediaUrl(url), alt: item.alt || item.filename || '' }).run()
 }
 
 function toggleLink() {
@@ -180,9 +155,8 @@ const isActive = (name: string, attrs?: Record<string, unknown>) =>
       <button type="button" class="rt-btn" @click="unsetLink" title="Убрать ссылку" :disabled="!isActive('link')">
         <Unlink :size="16" />
       </button>
-      <button type="button" class="rt-btn" @click="pickImage" :disabled="uploading" title="Вставить изображение">
-        <Loader2 v-if="uploading" :size="16" class="animate-spin" />
-        <ImageIcon v-else :size="16" />
+      <button type="button" class="rt-btn" @click="pickImage" title="Вставить изображение из медиа-библиотеки">
+        <ImageIcon :size="16" />
       </button>
       <span class="rt-sep" />
       <button type="button" class="rt-btn" @click="editor?.chain().focus().undo().run()" title="Отменить">
@@ -193,13 +167,9 @@ const isActive = (name: string, attrs?: Record<string, unknown>) =>
       </button>
     </div>
 
-    <input ref="fileInput" type="file" accept="image/*" class="hidden" @change="onImageFile" />
-
     <EditorContent :editor="editorForContent" />
 
-    <div v-if="uploadError" class="text-xs text-terracotta-700 px-3 py-1.5 border-t border-terracotta-200 bg-terracotta-50">
-      {{ uploadError }}
-    </div>
+    <AdminMediaPicker v-model="pickerOpen" @pick="onMediaPicked" />
   </div>
 </template>
 

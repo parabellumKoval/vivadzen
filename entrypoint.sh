@@ -14,6 +14,27 @@ if command -v composer >/dev/null 2>&1; then
   composer dump-autoload -o || true
 fi
 
+# Гарантируем runtime-каталоги Laravel даже если bind-mount storage
+# затёр директории, созданные на этапе сборки образа.
+mkdir -p \
+  storage/app/public \
+  storage/framework/cache \
+  storage/framework/sessions \
+  storage/framework/views \
+  storage/logs \
+  bootstrap/cache
+
+chmod 775 \
+  storage \
+  storage/app \
+  storage/app/public \
+  storage/framework \
+  storage/framework/cache \
+  storage/framework/sessions \
+  storage/framework/views \
+  storage/logs \
+  bootstrap/cache || true
+
 # Оптимизация Laravel. В новых версиях включает config:cache, route:cache, view:cache (+ events в 11+)
 php artisan optimize || true
 

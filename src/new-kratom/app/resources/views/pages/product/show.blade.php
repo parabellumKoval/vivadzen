@@ -9,7 +9,7 @@
 
     $colors  = Catalog::colors();
     $strains = Catalog::strains();
-    $related = Catalog::related($product['slug'], 4);
+    $related = Catalog::related($product['slug'], 8);
 
     $colorLabel  = $colors[$product['color']]['label']  ?? $product['colorLabel'];
     $strainLabel = $strains[$product['strain']]['label'] ?? $product['strainLabel'];

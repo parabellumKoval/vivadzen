@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'forum_signature',
         'forum_reputation',
         'forum_avatar_color',
+        'age_verification_skipped',
     ];
 
     protected $hidden = [
@@ -42,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'blocked_at' => 'datetime',
             'marketing_consent' => 'boolean',
+            'age_verification_skipped' => 'boolean',
             'password' => 'hashed',
         ];
     }

@@ -4,8 +4,10 @@
     <x-account.shell active="orders">
         <script>window.__accountStatuses = @json(__('site.account.statuses'));</script>
         <header class="account__head">
-            <h1 class="account__title">{{ __('site.account.orders.title') }}</h1>
-            <p class="account__head-hint">{{ __('site.account.orders.head_hint') }}</p>
+            <div class="account__head-text">
+                <h1 class="account__title">{{ __('site.account.orders.title') }}</h1>
+                <p class="account__head-hint">{{ __('site.account.orders.head_hint') }}</p>
+            </div>
         </header>
 
         @if($orders->isEmpty())

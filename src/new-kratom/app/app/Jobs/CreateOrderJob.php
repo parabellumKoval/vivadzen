@@ -35,6 +35,7 @@ class CreateOrderJob implements ShouldQueue
         public readonly string $locale = 'cs',
         public readonly ?string $ip = null,
         public readonly ?int $userId = null,
+        public readonly ?string $ageVerificationUid = null,
     ) {
     }
 
@@ -65,6 +66,7 @@ class CreateOrderJob implements ShouldQueue
             'items_count' => $this->cart['count'],
             'locale' => $this->locale,
             'marketing_consent' => (bool) ($this->delivery['marketing_consent'] ?? false),
+            'age_verification_uid' => $this->ageVerificationUid,
             'ip' => $this->ip,
         ]);
 

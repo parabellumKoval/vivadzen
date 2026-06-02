@@ -4,6 +4,7 @@
     use App\Models\PaymentMethod;
     $d = $checkout['delivery'];
     $p = $checkout['payment'];
+    $age = $ageVerification ?? ['enabled' => false, 'required' => false, 'skipped' => false, 'public_key' => '', 'script_url' => ''];
 
     $deliveryModel = DeliveryMethod::where('code', $d['delivery_method'] ?? '')->first();
     $paymentModel = PaymentMethod::where('code', $p['payment_method'] ?? '')->first();
@@ -20,7 +21,26 @@
                 method="POST"
                 action="{{ Locale::url('/pokladna/dokoncit') }}"
                 class="checkout-form"
-                x-data="{ canSubmit: false, age: false, terms: false, safety: false, recompute(){ this.canSubmit = this.age && this.terms && this.safety; } }"
+                x-data="{
+                    age: false,
+                    terms: false,
+                    safety: false,
+                    adultoRequired: {{ $age['required'] ? 'true' : 'false' }},
+                    adultoUid: '',
+                    init() {
+                        const hidden = document.getElementById('age_verification_uid');
+                        if (hidden) {
+                            this.adultoUid = hidden.value || '';
+                            hidden.addEventListener('input', () => { this.adultoUid = hidden.value || ''; });
+                            hidden.addEventListener('change', () => { this.adultoUid = hidden.value || ''; });
+                        }
+                    },
+                    get canSubmit() {
+                        if (!this.age || !this.terms || !this.safety) return false;
+                        if (this.adultoRequired && !this.adultoUid) return false;
+                        return true;
+                    },
+                }"
             >
                 @csrf
 
@@ -71,16 +91,45 @@
                     </div>
                 </section>
 
+                {{-- ADULTO age verification --}}
+                @if($age['enabled'])
+                    @if($age['skipped'])
+                        <section class="checkout-section">
+                            <div class="adulto-verification adulto-verification--skipped">
+                                <div class="adulto-verification__head">
+                                    <span class="adulto-verification__icon"><x-ui.icon name="badge-check" :size="22" /></span>
+                                    <div>
+                                        <h3 class="adulto-verification__title">{{ __('site.adulto.checkout_title') }}</h3>
+                                        <p class="adulto-verification__desc">{{ __('site.adulto.skipped_notice') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    @elseif($age['required'])
+                        <section class="checkout-section">
+                            <x-checkout.adulto-verification
+                                :public-key="$age['public_key']"
+                                :script-url="$age['script_url']"
+                            />
+                        </section>
+                    @endif
+                @endif
+
                 {{-- Consents --}}
                 <section class="checkout-section">
                     <h2 class="checkout-section__title">{{ __('site.checkout.consents_title') }}</h2>
 
                     <label class="checkbox">
-                        <input type="checkbox" name="consent_age" value="1" required x-model="age" @change="recompute" />
-                        <span>{{ __('site.checkout.consent_age') }} *</span>
+                        <input type="checkbox" name="consent_age" value="1" required x-model="age" />
+                        <span>
+                            {{ __('site.checkout.consent_age') }} *
+                            <button type="button" class="checkbox__link" @click="window.dispatchEvent(new CustomEvent('adulto:open'))">
+                                {{ __('site.adulto.checkout_open_guide') }}
+                            </button>
+                        </span>
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="consent_terms" value="1" required x-model="terms" @change="recompute" />
+                        <input type="checkbox" name="consent_terms" value="1" required x-model="terms" />
                         <span>{!! str_replace(
                             ['obchodními podmínkami', 'zpracováním osobních údajů', 'terms and conditions', 'processing of personal data', 'условиями', 'обработкой персональных данных', 'умовами', 'обробкою персональних даних'],
                             ['<a href="' . Locale::url('/obchodni-podminky') . '" target="_blank">obchodními podmínkami</a>', '<a href="' . Locale::url('/ochrana-osobnich-udaju') . '" target="_blank">zpracováním osobních údajů</a>', '<a href="' . Locale::url('/obchodni-podminky') . '" target="_blank">terms and conditions</a>', '<a href="' . Locale::url('/ochrana-osobnich-udaju') . '" target="_blank">processing of personal data</a>', '<a href="' . Locale::url('/obchodni-podminky') . '" target="_blank">условиями</a>', '<a href="' . Locale::url('/ochrana-osobnich-udaju') . '" target="_blank">обработкой персональных данных</a>', '<a href="' . Locale::url('/obchodni-podminky') . '" target="_blank">умовами</a>', '<a href="' . Locale::url('/ochrana-osobnich-udaju') . '" target="_blank">обробкою персональних даних</a>'],
@@ -88,7 +137,7 @@
                         ) !!} *</span>
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="consent_safety" value="1" required x-model="safety" @change="recompute" />
+                        <input type="checkbox" name="consent_safety" value="1" required x-model="safety" />
                         <span>{{ __('site.checkout.consent_safety') }} *</span>
                     </label>
                     <label class="checkbox">

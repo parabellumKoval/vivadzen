@@ -1,0 +1,590 @@
+// =============================================================
+// ADULTO age-verification — guide content (full page + modal),
+// checkout widget block, and modal chrome.
+// =============================================================
+@use '../tokens' as *;
+
+// ---------- Guide content (shared by page + modal) ----------
+.adulto-guide {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+    color: var(--c-ink-700);
+    font-size: var(--fs-body-md);
+    line-height: 1.65;
+
+    &__intro p {
+        margin: 0 0 var(--sp-3);
+        font-size: var(--fs-body-md);
+        color: var(--c-ink-700);
+    }
+
+    &__alert {
+        margin-top: var(--sp-3);
+        padding: var(--sp-3) var(--sp-4);
+        background: var(--c-amber-100, #FBEFD8);
+        border-left: 3px solid var(--c-amber-500);
+        color: var(--c-ink-900);
+        font-size: var(--fs-body-sm);
+        line-height: 1.5;
+        border-radius: 0 var(--r-md) var(--r-md) 0;
+        font-weight: var(--fw-semibold);
+    }
+
+    &__section {
+        background: var(--c-cream-100);
+        border: 1px solid var(--c-ink-100);
+        border-radius: var(--r-xl);
+        padding: var(--sp-6);
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-3);
+
+        &--accent {
+            background: var(--c-forest-700);
+            color: var(--c-cream-100);
+            border-color: transparent;
+
+            .adulto-guide__section-title,
+            .adulto-guide__text { color: var(--c-cream-100); }
+
+            .adulto-guide__steps li {
+                color: rgba(249, 244, 236, 0.92);
+                &::marker { color: var(--c-grass-500); }
+            }
+        }
+    }
+
+    &__section-head {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        margin-bottom: var(--sp-2);
+    }
+
+    &__section-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: var(--r-circle);
+        background: var(--c-grass-500);
+        color: var(--c-forest-900);
+        font-family: var(--ff-display);
+        font-weight: var(--fw-bold);
+        font-size: 18px;
+        line-height: 1;
+        flex-shrink: 0;
+        // Playfair's baseline sits slightly low inside the circle — nudge the
+        // glyph up so the optical centre lines up.
+        padding-bottom: 2px;
+    }
+
+    &__section-title {
+        font-family: var(--ff-sans);
+        font-weight: var(--fw-semibold);
+        font-size: var(--fs-heading-md);
+        color: var(--c-ink-900);
+        margin: 0;
+        line-height: 1.3;
+    }
+
+    &__lead {
+        color: var(--c-ink-700);
+        font-size: var(--fs-body-md);
+        margin: 0;
+    }
+
+    &__steps {
+        margin: 0;
+        padding-left: var(--sp-5);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        li { color: var(--c-ink-700); line-height: 1.6; }
+
+        &--compact li { line-height: 1.5; }
+    }
+
+    &__images {
+        display: grid;
+        gap: var(--sp-3);
+        grid-template-columns: 1fr;
+
+        // Single-image steps always stretch to the full content width.
+        &--single { grid-template-columns: 1fr; }
+
+        // Two side-by-side screenshots — stack on mobile, split on tablet+.
+        &--pair {
+            @include bp-up(md) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        // Stacked variant keeps screenshots column-wise even on desktop
+        // (used when the second screenshot is a vertical continuation).
+        &--stacked { grid-template-columns: 1fr; }
+    }
+
+    &__image {
+        width: 100%;
+        height: auto;
+        border-radius: var(--r-md);
+        border: 1px solid var(--c-ink-100);
+        background: var(--c-cream-200);
+        display: block;
+    }
+
+    &__note {
+        margin: 0;
+        padding: var(--sp-3) var(--sp-4);
+        background: var(--c-cream-200);
+        border-radius: var(--r-md);
+        font-size: var(--fs-body-sm);
+        color: var(--c-ink-700);
+    }
+
+    &__tips {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        p {
+            margin: 0;
+            padding-left: var(--sp-4);
+            border-left: 2px solid var(--c-grass-500);
+            color: var(--c-ink-700);
+            font-size: var(--fs-body-sm);
+        }
+    }
+
+    &__text {
+        margin: 0;
+        color: var(--c-ink-700);
+    }
+
+    &__bullets {
+        margin: 0;
+        padding-left: var(--sp-5);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        li { color: var(--c-ink-700); }
+    }
+
+    a {
+        color: var(--c-forest-700);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+
+        &:hover { color: var(--c-grass-700); }
+    }
+
+    // Compact version used inside the checkout modal.
+    &--short {
+        gap: var(--sp-5);
+
+        .adulto-guide__section { padding: var(--sp-4) var(--sp-5); }
+        .adulto-guide__section-num { width: 30px; height: 30px; font-size: 15px; }
+        .adulto-guide__section-title { font-size: var(--fs-heading-sm); }
+    }
+}
+
+// ---------- Page layout (main + sticky sidebar) ----------
+.adulto-page {
+    &__grid {
+        display: grid;
+        gap: var(--sp-8);
+        grid-template-columns: 1fr;
+
+        @include bp-up(lg) {
+            grid-template-columns: minmax(0, 1fr) 320px;
+            gap: var(--sp-10);
+            align-items: start;
+        }
+    }
+
+    &__main { min-width: 0; }
+
+    &__sidebar {
+        // Header is `position: sticky; top: 0` with a 72px / 64px-mobile height,
+        // so the sidebar must clear it plus a small breathing gap.
+        --adulto-sticky-offset: 80px;
+
+        @include bp-up(lg) {
+            position: sticky;
+            top: var(--adulto-sticky-offset);
+            align-self: start;
+            max-height: calc(100vh - var(--adulto-sticky-offset) - var(--sp-6));
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+    }
+}
+
+// ---------- Sidebar cards (Důležité + MojeID) ----------
+.adulto-extras {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+
+    // Inline placement inside the modal — keeps the original full-bleed look.
+    &--inline {
+        margin-top: var(--sp-4);
+    }
+
+    &__card {
+        background: var(--c-cream-100);
+        border: 1px solid var(--c-ink-100);
+        border-radius: var(--r-xl);
+        padding: var(--sp-5);
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-2);
+
+        &--accent {
+            background: var(--c-forest-700);
+            color: var(--c-cream-100);
+            border-color: transparent;
+            box-shadow: var(--shadow-md);
+
+            .adulto-extras__title { color: var(--c-cream-100); }
+            .adulto-extras__text,
+            .adulto-extras__footer { color: rgba(249, 244, 236, 0.92); }
+            .adulto-extras__eyebrow { color: var(--c-grass-500); }
+            .adulto-extras__steps li { color: rgba(249, 244, 236, 0.92); }
+            // The default green badge already contrasts on the dark forest-700
+            // card — don't override its color, otherwise the number disappears.
+            a { color: var(--c-grass-500); }
+        }
+    }
+
+    &__eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: var(--fs-overline);
+        font-weight: var(--fw-bold);
+        color: var(--c-grass-700);
+        margin: 0 0 4px;
+    }
+
+    &__title {
+        font-family: var(--ff-sans);
+        font-weight: var(--fw-semibold);
+        font-size: var(--fs-heading-sm);
+        color: var(--c-ink-900);
+        margin: 0 0 var(--sp-2);
+        line-height: 1.3;
+
+        strong { font-weight: var(--fw-bold); }
+    }
+
+    &__text {
+        margin: 0;
+        font-size: var(--fs-body-sm);
+        line-height: 1.6;
+        color: var(--c-ink-700);
+    }
+
+    &__footer {
+        margin: var(--sp-2) 0 0;
+        font-size: var(--fs-body-sm);
+        line-height: 1.55;
+        font-weight: var(--fw-semibold);
+        color: var(--c-ink-900);
+    }
+
+    &__steps {
+        list-style: none;
+        padding: 0;
+        margin: var(--sp-2) 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        counter-reset: adulto-aside-step;
+
+        li {
+            position: relative;
+            padding-left: 24px;
+            font-size: var(--fs-body-sm);
+            line-height: 1.5;
+            color: var(--c-ink-700);
+            counter-increment: adulto-aside-step;
+
+            &::before {
+                content: counter(adulto-aside-step);
+                position: absolute;
+                left: 0;
+                top: 1px;
+                width: 18px;
+                height: 18px;
+                border-radius: var(--r-circle);
+                background: var(--c-grass-500);
+                color: var(--c-forest-900);
+                font-family: var(--ff-display);
+                font-weight: var(--fw-bold);
+                font-size: 11px;
+                line-height: 1;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding-bottom: 1px;
+            }
+        }
+    }
+
+    &__bullets {
+        list-style: none;
+        padding: 0;
+        margin: var(--sp-2) 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        li {
+            position: relative;
+            padding-left: 18px;
+            font-size: var(--fs-body-sm);
+            line-height: 1.55;
+            color: var(--c-ink-700);
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 8px;
+                width: 8px;
+                height: 8px;
+                border-radius: var(--r-circle);
+                background: var(--c-grass-500);
+            }
+        }
+    }
+
+    a {
+        color: var(--c-forest-700);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+
+        &:hover { color: var(--c-grass-700); }
+    }
+}
+
+// ---------- Modal chrome ----------
+.adulto-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    pointer-events: none;
+
+    &.is-open { pointer-events: auto; }
+
+    &__backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 26, 20, 0.55);
+        backdrop-filter: blur(2px);
+    }
+
+    &__panel {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(720px, calc(100vw - 2rem));
+        max-height: calc(100vh - 2rem);
+        background: var(--c-cream-100);
+        border-radius: var(--r-xl);
+        box-shadow: var(--shadow-xl);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: opacity .2s ease, transform .2s ease;
+
+        &--enter-start { opacity: 0; transform: translate(-50%, -48%) scale(.97); }
+        &--enter-end   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    &__head {
+        position: relative;
+        padding: var(--sp-5) var(--sp-6);
+        background: var(--c-forest-700);
+        color: var(--c-cream-100);
+        border-bottom: 1px solid rgba(249, 244, 236, 0.08);
+    }
+
+    &__eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: var(--fs-overline);
+        font-weight: var(--fw-bold);
+        color: var(--c-grass-500);
+        margin: 0 0 6px;
+    }
+
+    &__title {
+        font-family: var(--ff-display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-heading-lg);
+        color: var(--c-cream-100);
+        margin: 0;
+        padding-right: var(--sp-8);
+    }
+
+    &__close {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: none;
+        border: 0;
+        cursor: pointer;
+        padding: 8px;
+        color: var(--c-cream-100);
+        border-radius: var(--r-circle);
+
+        &:hover { background: rgba(249, 244, 236, 0.12); }
+    }
+
+    &__body {
+        padding: var(--sp-6);
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    &__foot {
+        padding: var(--sp-4) var(--sp-6);
+        display: flex;
+        justify-content: space-between;
+        gap: var(--sp-3);
+        background: var(--c-cream-200);
+        border-top: 1px solid var(--c-ink-100);
+
+        @include bp-down(sm) {
+            flex-direction: column-reverse;
+            .btn { width: 100%; }
+        }
+    }
+}
+
+// Inline guide trigger inside checkbox labels.
+.checkbox__link {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin-left: 4px;
+    color: var(--c-forest-700);
+    font-weight: var(--fw-semibold);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+    font-size: inherit;
+
+    &:hover { color: var(--c-grass-700); }
+}
+
+// Whitelisted-customer notice variant of the verification card.
+.adulto-verification--skipped {
+    background: var(--c-cream-200);
+    border-style: dashed;
+    border-color: var(--c-grass-500);
+}
+
+// ---------- Checkout widget ----------
+.adulto-verification {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    background: var(--c-cream-100);
+    border: 1px solid var(--c-ink-100);
+    border-radius: var(--r-xl);
+    padding: var(--sp-5);
+
+    &__head {
+        display: flex;
+        gap: var(--sp-3);
+        align-items: flex-start;
+    }
+
+    &__icon {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: var(--r-circle);
+        background: var(--c-grass-500);
+        color: var(--c-forest-900);
+        flex-shrink: 0;
+    }
+
+    &__title {
+        font-family: var(--ff-sans);
+        font-weight: var(--fw-semibold);
+        font-size: var(--fs-heading-sm);
+        color: var(--c-ink-900);
+        margin: 0 0 4px;
+    }
+
+    &__desc {
+        margin: 0;
+        font-size: var(--fs-body-sm);
+        color: var(--c-ink-500);
+        line-height: 1.5;
+    }
+
+    &__guide {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-3);
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--sp-3) var(--sp-4);
+        background: var(--c-cream-200);
+        border-radius: var(--r-md);
+        border: 1px solid var(--c-ink-100);
+
+        p {
+            margin: 0;
+            font-size: var(--fs-body-sm);
+            color: var(--c-ink-700);
+        }
+    }
+
+    &__guide-btn {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        color: var(--c-forest-700);
+        font-weight: var(--fw-semibold);
+        font-size: var(--fs-body-sm);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        cursor: pointer;
+
+        &:hover { color: var(--c-grass-700); }
+    }
+
+    &__widget {
+        min-height: 80px;
+        border-radius: var(--r-md);
+        background: var(--c-cream-200);
+        padding: var(--sp-3);
+
+        // Inner iframes shouldn't be confined to a low z-index — the upstream
+        // widget sometimes pops modals above the page.
+        :deep(.adulto-cz > div:not([class])) {
+            z-index: 1 !important;
+        }
+    }
+
+    &__status {
+        margin: 0;
+        font-size: var(--fs-body-sm);
+
+        &--loading { color: var(--c-ink-500); }
+        &--success { color: var(--c-grass-700); font-weight: var(--fw-semibold); }
+        &--error   { color: var(--c-terracotta-700, #B53C3C); font-weight: var(--fw-semibold); }
+    }
+}

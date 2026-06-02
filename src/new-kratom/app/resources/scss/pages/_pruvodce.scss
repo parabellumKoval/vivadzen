@@ -1,0 +1,409 @@
+@use '../tokens' as *;
+
+// Wiki /pruvodce — карточки без обложек, нейтральный кремовый фон,
+// акцент только цветной полоской слева у категорий.
+
+.pruvodce-hero {
+    padding: clamp(48px, 8vw, 96px) 0 32px;
+    border-bottom: 1px solid var(--c-ink-100);
+
+    &__eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.78rem;
+        color: var(--c-forest-700);
+        margin: 0 0 8px;
+    }
+    &__title {
+        font-family: var(--ff-display);
+        font-size: clamp(2rem, 3.5vw, 2.75rem);
+        margin: 0 0 12px;
+        color: var(--c-ink-900);
+    }
+    &__lead {
+        font-size: 1.05rem;
+        line-height: 1.55;
+        color: var(--c-ink-700);
+        max-width: 64ch;
+    }
+
+    &--grass  &__eyebrow { color: var(--c-grass-500); }
+    &--terra  &__eyebrow { color: var(--c-terracotta-500); }
+    &--amber  &__eyebrow { color: var(--c-amber-500); }
+    &--cream  &__eyebrow { color: var(--c-forest-700); }
+    &--moss   &__eyebrow { color: var(--c-forest-700); }
+}
+
+.pruvodce-section {
+    padding: clamp(40px, 6vw, 64px) 0;
+
+    &--alt  { background: var(--c-cream-50); }
+    &--note { padding: 24px 0 64px; }
+
+    &__title {
+        font-family: var(--ff-display);
+        font-size: 1.5rem;
+        margin: 0 0 24px;
+        color: var(--c-ink-900);
+
+        &--small { font-size: 1.25rem; }
+    }
+}
+
+.pruvodce-grid {
+    display: grid;
+    gap: 16px;
+
+    &--3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    &--4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+}
+
+.pruvodce-cat-card,
+.pruvodce-card,
+.pruvodce-sib-card {
+    display: block;
+    text-decoration: none;
+    color: var(--c-ink-900);
+    background: #fff;
+    border: 1px solid var(--c-ink-100);
+    border-radius: 10px;
+    padding: 20px 22px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+        border-color: var(--c-forest-700);
+        transform: translateY(-1px);
+    }
+}
+
+.pruvodce-cat-card {
+    border-left: 4px solid var(--c-forest-700);
+
+    &--grass { border-left-color: var(--c-grass-500); }
+    &--terra { border-left-color: var(--c-terracotta-500); }
+    &--amber { border-left-color: var(--c-amber-500); }
+    &--cream { border-left-color: var(--c-cream-300); }
+    &--moss  { border-left-color: var(--c-forest-700); }
+
+    &__icon {
+        display: inline-grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 12px;
+        background: var(--c-cream-100);
+        border-radius: var(--r-md);
+        color: var(--c-forest-700);
+
+        svg { width: 28px; height: 28px; }
+    }
+
+    &--grass &__icon { color: var(--c-grass-700); background: rgba(126, 200, 85, 0.12); }
+    &--terra &__icon { color: var(--c-terracotta-700); background: rgba(212, 92, 43, 0.1); }
+    &--amber &__icon { color: var(--c-amber-700); background: rgba(244, 160, 32, 0.12); }
+
+    &__eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.7rem;
+        color: var(--c-ink-500);
+        margin: 0 0 4px;
+    }
+    &__title {
+        font-family: var(--ff-display);
+        font-size: 1.15rem;
+        margin: 0 0 8px;
+    }
+    &__desc {
+        font-size: 0.92rem;
+        color: var(--c-ink-700);
+        margin: 0 0 12px;
+        line-height: 1.45;
+    }
+    &__meta {
+        font-size: 0.78rem;
+        color: var(--c-forest-700);
+    }
+}
+
+.pruvodce-card {
+    &__eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--c-forest-700);
+        margin: 0 0 6px;
+    }
+    &__title {
+        font-family: var(--ff-display);
+        font-size: 1.1rem;
+        line-height: 1.3;
+        margin: 0 0 8px;
+    }
+    &__desc {
+        font-size: 0.9rem;
+        color: var(--c-ink-700);
+        line-height: 1.5;
+        margin: 0 0 10px;
+    }
+    &__meta {
+        font-size: 0.75rem;
+        color: var(--c-ink-500);
+        margin: 0;
+    }
+}
+
+.pruvodce-sib-card {
+    h3 {
+        font-family: var(--ff-display);
+        font-size: 1.05rem;
+        margin: 0 0 6px;
+    }
+    p {
+        font-size: 0.88rem;
+        color: var(--c-ink-700);
+        margin: 0;
+        line-height: 1.45;
+    }
+}
+
+.pruvodce-empty {
+    padding: 40px;
+    text-align: center;
+    color: var(--c-ink-500);
+    font-style: italic;
+}
+
+.pruvodce-article {
+    padding: clamp(40px, 6vw, 64px) 0;
+
+    // Раскладка с боковым меню (актуально для страницы статьи).
+    &--with-toc &__layout {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: clamp(24px, 4vw, 48px);
+        align-items: start;
+
+        @media (max-width: 960px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__main {
+        min-width: 0;
+        max-width: 72ch;
+        margin-inline: auto;
+
+        @media (max-width: 960px) {
+            margin-inline: 0;
+        }
+    }
+
+    &__head { margin-bottom: 32px; }
+
+    &__eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.75rem;
+        margin: 0 0 8px;
+
+        a {
+            color: var(--c-forest-700);
+            text-decoration: none;
+        }
+    }
+    &__title {
+        font-family: var(--ff-display);
+        font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+        line-height: 1.2;
+        margin: 0 0 14px;
+    }
+    &__lead {
+        font-size: 1.1rem;
+        line-height: 1.55;
+        color: var(--c-ink-700);
+        margin: 0 0 12px;
+    }
+    &__meta {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 18px;
+        font-size: 0.82rem;
+        color: var(--c-ink-500);
+
+        li { display: inline; }
+    }
+    &__body { padding: 16px 0 32px; }
+
+    &__catalog-note {
+        margin: 48px auto 0;
+        padding: 14px 18px;
+        border: 1px dashed var(--c-ink-100);
+        border-radius: 8px;
+        color: var(--c-ink-500);
+        font-size: 0.85rem;
+        text-align: center;
+
+        a { color: var(--c-forest-700); }
+    }
+}
+
+.pruvodce-related {
+    margin-top: 48px;
+    padding: 32px;
+    background: var(--c-cream-50);
+    border-radius: 12px;
+
+    &__title {
+        font-family: var(--ff-display);
+        font-size: 1.3rem;
+        margin: 0 0 18px;
+    }
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    &__list a {
+        display: block;
+        padding: 14px 16px;
+        background: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--c-ink-900);
+        border: 1px solid transparent;
+        transition: border-color 0.15s ease;
+
+        &:hover { border-color: var(--c-forest-700); }
+    }
+    &__cat {
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--c-forest-700);
+        margin: 0 0 4px;
+    }
+    &__heading {
+        display: block;
+        font-family: var(--ff-display);
+        font-size: 1rem;
+        margin: 0 0 6px;
+    }
+    &__desc {
+        display: block;
+        font-size: 0.84rem;
+        color: var(--c-ink-700);
+        line-height: 1.45;
+    }
+}
+
+// Боковой TOC статей раздела (sidebar на странице статьи).
+.pruvodce-toc {
+    position: sticky;
+    top: 88px;
+    padding: 20px;
+    background: var(--c-cream-50);
+    border: 1px solid var(--c-ink-100);
+    border-radius: 12px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+
+    @media (max-width: 960px) {
+        position: static;
+        max-height: none;
+        margin-bottom: 24px;
+    }
+
+    &__eyebrow {
+        margin: 0 0 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--c-ink-500);
+    }
+
+    &__cat {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        margin-bottom: 14px;
+        padding: 8px 12px 8px 8px;
+        background: #fff;
+        border: 1px solid var(--c-ink-100);
+        border-radius: 8px;
+        color: var(--c-ink-900);
+        text-decoration: none;
+        font-family: var(--ff-display);
+        font-size: 0.95rem;
+        line-height: 1.2;
+        transition: border-color 0.15s ease, background 0.15s ease;
+
+        &:hover {
+            border-color: var(--c-forest-700);
+            background: var(--c-cream-100);
+        }
+
+        .pruvodce-cat-card__icon {
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            flex-shrink: 0;
+        }
+        .pruvodce-cat-card__icon svg { width: 20px; height: 20px; }
+    }
+
+    &__cat-text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__item { position: relative; }
+
+    &__link {
+        display: block;
+        padding: 8px 12px 8px 14px;
+        border-left: 2px solid transparent;
+        border-radius: 0 6px 6px 0;
+        font-size: 14px;
+        line-height: 1.4;
+        color: var(--c-ink-700);
+        text-decoration: none;
+        transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    a.pruvodce-toc__link:hover { color: var(--c-forest-700); background: rgba(27, 58, 45, 0.05); }
+
+    &__item.is-active &__link {
+        background: #fff;
+        color: var(--c-forest-900);
+        font-weight: 600;
+        border-left-color: var(--c-forest-700);
+    }
+}
+
+.pruvodce-note {
+    font-size: 0.88rem;
+    color: var(--c-ink-700);
+    border-left: 3px solid var(--c-amber-500);
+    padding-left: 14px;
+    line-height: 1.55;
+
+    a { color: var(--c-forest-700); }
+}

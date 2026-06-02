@@ -67,6 +67,7 @@ class UserController extends Controller
             'email' => ['required', 'email', 'max:191', Rule::unique('users', 'email')->ignore($user->id)],
             'phone' => 'nullable|string|max:64',
             'marketing_consent' => 'sometimes|boolean',
+            'age_verification_skipped' => 'sometimes|boolean',
             'forum_signature' => 'nullable|string|max:220',
             'forum_reputation' => 'nullable|integer|min:0',
         ]);

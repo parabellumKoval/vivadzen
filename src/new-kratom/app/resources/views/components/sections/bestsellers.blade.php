@@ -45,6 +45,50 @@
             'href' => '/produkt/extrakt-10ml',
             'image' => asset('assets/products/kratom-extrakt-zeleny-10ml/101-front.png'),
         ],
+        [
+            'name' => 'Zelená Maeng Da',
+            'strainLabel' => 'Zelená žilka · Borneo',
+            'vein' => 'green',
+            'mitragynin' => '1,48 % · jemně mletý',
+            'price25' => 290, 'price50' => 520,
+            'rating' => '4.9', 'reviewsCount' => '124 hodnocení',
+            'badge' => null,
+            'href' => '/produkt/zelena-maeng-da',
+            'image' => asset('assets/products/zelena-maeng-da/01-front.png'),
+        ],
+        [
+            'name' => 'Bílý Slon',
+            'strainLabel' => 'Bílá žilka · Indonésie',
+            'vein' => 'white',
+            'mitragynin' => '1,50 % · jemně mletý',
+            'price25' => 300, 'price50' => 540,
+            'rating' => '4.8', 'reviewsCount' => '112 hodnocení',
+            'badge' => null,
+            'href' => '/produkt/bily-slon',
+            'image' => asset('assets/products/bily-slon/01-front.png'),
+        ],
+        [
+            'name' => 'Zelený Thajský',
+            'strainLabel' => 'Zelená žilka · Thajsko',
+            'vein' => 'green',
+            'mitragynin' => '1,36 % · jemně mletý',
+            'price25' => 280, 'price50' => 500,
+            'rating' => '4.7', 'reviewsCount' => '86 hodnocení',
+            'badge' => null,
+            'href' => '/produkt/zeleny-thajsky',
+            'image' => asset('assets/products/zeleny-thajsky/01-front.png'),
+        ],
+        [
+            'name' => 'Zelený Rurut Nano',
+            'strainLabel' => 'Zelená žilka · Borneo',
+            'vein' => 'green',
+            'mitragynin' => '1,52 % · nano mletý',
+            'price25' => 320, 'price50' => 580,
+            'rating' => '4.9', 'reviewsCount' => '64 hodnocení',
+            'badge' => ['variant' => 'subscription', 'label' => 'Předplatné'],
+            'href' => '/produkt/zeleny-rurut-nano',
+            'image' => asset('assets/products/zeleny-rurut-nano/01-front.png'),
+        ],
     ];
 @endphp
 
@@ -60,7 +104,7 @@
             </x-ui.button>
         </header>
 
-        <div class="bestsellers__carousel">
+        <x-ui.carousel class="bestsellers__carousel" :desktop="3" :tablet="2" :mobile="1">
             @foreach($products as $p)
                 <x-ui.product-card
                     :name="$p['name']"
@@ -76,6 +120,6 @@
                     :image="$p['image']"
                 />
             @endforeach
-        </div>
+        </x-ui.carousel>
     </div>
 </section>

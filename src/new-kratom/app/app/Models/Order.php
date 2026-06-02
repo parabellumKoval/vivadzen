@@ -20,6 +20,7 @@ class Order extends Model
         'delivery_method', 'payment_method', 'payment_status',
         'promo_code', 'subtotal', 'discount', 'shipping', 'total', 'items_count',
         'locale', 'marketing_consent', 'note', 'ip',
+        'age_verification_uid',
     ];
 
     protected $casts = [

@@ -15,6 +15,34 @@ use Illuminate\Validation\Rule;
 
 class CheckoutController extends Controller
 {
+    /**
+     * Centralised state for the ADULTO age-verification widget. The widget is
+     * shown when the feature is enabled in config AND the current user has
+     * not been whitelisted by an admin (users.age_verification_skipped).
+     */
+    private function ageVerificationContext(Request $request): array
+    {
+        $enabled = (bool) config('services.adulto.enabled', false);
+        $publicKey = (string) config('services.adulto.public_key', '');
+        $scriptUrl = (string) config('services.adulto.script_url', 'https://api.js.m2a.cz/api.js');
+
+        $user = $request->user();
+        $skipped = $user ? (bool) $user->age_verification_skipped : false;
+
+        // We require verification whenever the feature is enabled and the user
+        // is not whitelisted. The catalogue is psychomodulating-only so the
+        // requirement applies to every cart.
+        $required = $enabled && ! $skipped;
+
+        return [
+            'enabled' => $enabled,
+            'required' => $required,
+            'skipped' => $skipped,
+            'public_key' => $publicKey,
+            'script_url' => $scriptUrl,
+        ];
+    }
+
     private function ensureCart()
     {
         $snapshot = Cart::snapshot();
@@ -98,7 +126,7 @@ class CheckoutController extends Controller
         return redirect(Locale::url('/pokladna/potvrzeni'));
     }
 
-    public function review()
+    public function review(Request $request)
     {
         $cart = $this->ensureCart();
         if (! is_array($cart)) return $cart;
@@ -112,6 +140,7 @@ class CheckoutController extends Controller
             'cart' => $cart,
             'step' => 3,
             'checkout' => $checkout,
+            'ageVerification' => $this->ageVerificationContext($request),
         ]);
     }
 
@@ -122,11 +151,25 @@ class CheckoutController extends Controller
      */
     public function submit(Request $request)
     {
-        $request->validate([
+        $ageVerification = $this->ageVerificationContext($request);
+
+        $rules = [
             'consent_age' => 'required|accepted',
             'consent_terms' => 'required|accepted',
             'consent_safety' => 'required|accepted',
+            'age_verification_uid' => 'nullable|string|max:128',
+        ];
+
+        if ($ageVerification['required']) {
+            $rules['age_verification_uid'] = ['required', 'string', 'max:128'];
+        }
+
+        $request->validate($rules, [
+            'age_verification_uid.required' => __('site.adulto.required_error'),
         ]);
+
+        $rawUid = trim((string) $request->input('age_verification_uid', ''));
+        $ageVerificationUid = ($ageVerification['skipped'] || $rawUid === '') ? null : $rawUid;
 
         $cart = Cart::snapshot();
         if ($cart['count'] === 0) {
@@ -158,6 +201,7 @@ class CheckoutController extends Controller
             locale: app()->getLocale(),
             ip: $request->ip(),
             userId: $request->user()?->id,
+            ageVerificationUid: $ageVerificationUid,
         )->onQueue('orders');
 
         Session::put('last_order_id', $publicId);

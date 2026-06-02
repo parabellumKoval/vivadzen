@@ -13,7 +13,7 @@ const user = computed(() => data.value?.data ?? {})
 const orders = computed(() => data.value?.orders ?? [])
 const reviews = computed(() => data.value?.reviews ?? [])
 
-const form = reactive({ name: '', email: '', phone: '', marketing_consent: false, forum_signature: '', forum_reputation: 0 })
+const form = reactive({ name: '', email: '', phone: '', marketing_consent: false, age_verification_skipped: false, forum_signature: '', forum_reputation: 0 })
 const saving = ref(false)
 const saveError = ref('')
 
@@ -23,6 +23,7 @@ watchEffect(() => {
     form.email = user.value.email ?? ''
     form.phone = user.value.phone ?? ''
     form.marketing_consent = !!user.value.marketing_consent
+    form.age_verification_skipped = !!user.value.age_verification_skipped
     form.forum_signature = user.value.forum_signature ?? ''
     form.forum_reputation = user.value.forum_reputation ?? 0
   }
@@ -94,6 +95,13 @@ async function remove() {
           <label class="flex items-center gap-2 mt-5">
             <input v-model="form.marketing_consent" type="checkbox" />
             <span class="text-sm">{{ t('users.marketing') }}</span>
+          </label>
+          <label class="flex items-start gap-2 sm:col-span-2 p-3 rounded-lg bg-amber-500/5 border border-amber-500/30">
+            <input v-model="form.age_verification_skipped" type="checkbox" class="mt-0.5" />
+            <span class="text-sm">
+              <span class="font-semibold block">{{ t('users.skip_age_verification') }}</span>
+              <span class="text-ink-700/60">{{ t('users.skip_age_verification_hint') }}</span>
+            </span>
           </label>
           <label class="block sm:col-span-2">
             <span class="text-xs text-ink-700/60">Подпись на форуме</span>

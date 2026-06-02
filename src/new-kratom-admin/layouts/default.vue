@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  LayoutDashboard, Package, Tags, ShoppingCart, Image as ImageIcon, LogOut, ExternalLink, RefreshCw, Star, MessageSquare, Users, Truck, CreditCard, MessagesSquare, FolderTree,
+  LayoutDashboard, Package, Tags, ShoppingCart, Image as ImageIcon, LogOut, ExternalLink, RefreshCw, Star, MessageSquare, Users, Truck, CreditCard, MessagesSquare, FolderTree, FlaskConical, BookOpen, FileText, FolderKanban,
 } from 'lucide-vue-next'
 
 const auth = useAuthStore()
@@ -12,6 +12,7 @@ const { t, contentLocales, previewContentLocale } = useAdminI18n()
 const nav = [
   { to: '/',           label: t('nav.dashboard'),  icon: LayoutDashboard },
   { to: '/products',   label: t('nav.products'),   icon: Package },
+  { to: '/lab-batches', label: t('nav.lab_batches'), icon: FlaskConical },
   { to: '/taxonomies', label: t('nav.taxonomies'), icon: Tags },
   { to: '/orders',     label: t('nav.orders'),     icon: ShoppingCart },
   { to: '/users',      label: t('nav.users'),      icon: Users },
@@ -26,6 +27,11 @@ const forumNav = [
   { to: '/forum/topics', label: 'Темы', icon: MessagesSquare },
   { to: '/forum/posts', label: 'Ответы', icon: MessageSquare },
   { to: '/forum/categories', label: 'Разделы', icon: FolderTree },
+]
+
+const pruvodceNav = [
+  { to: '/pruvodce', label: 'Články', icon: FileText, exact: true },
+  { to: '/pruvodce/categories', label: 'Kategorie', icon: FolderKanban },
 ]
 
 const warming = ref(false)
@@ -48,6 +54,9 @@ const isActive = (path: string) =>
   path === '/' ? route.path === '/' : route.path.startsWith(path)
 
 const isForumActive = computed(() => route.path.startsWith('/forum'))
+const isPruvodceActive = computed(() => route.path.startsWith('/pruvodce'))
+
+const isExactActive = (path: string) => route.path === path || route.path === path + '/'
 </script>
 
 <template>
@@ -88,6 +97,30 @@ const isForumActive = computed(() => route.path.startsWith('/forum'))
               :to="item.to"
               class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors"
               :class="isActive(item.to)
+                ? 'bg-moss-700 text-white'
+                : 'text-cream-50/70 hover:bg-moss-700/60 hover:text-white'"
+            >
+              <component :is="item.icon" :size="15" />
+              <span>{{ item.label }}</span>
+            </NuxtLink>
+          </div>
+        </div>
+
+        <div class="pt-3 mt-3 border-t border-moss-700/40">
+          <div
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium"
+            :class="isPruvodceActive ? 'bg-moss-800 text-white' : 'text-cream-50/70'"
+          >
+            <BookOpen :size="18" />
+            <span>{{ t('nav.pruvodce') }}</span>
+          </div>
+          <div class="mt-1 ml-5 pl-3 border-l border-moss-700/50 space-y-1">
+            <NuxtLink
+              v-for="item in pruvodceNav"
+              :key="item.to"
+              :to="item.to"
+              class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors"
+              :class="(item.exact ? isExactActive(item.to) : isActive(item.to))
                 ? 'bg-moss-700 text-white'
                 : 'text-cream-50/70 hover:bg-moss-700/60 hover:text-white'"
             >

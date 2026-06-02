@@ -27,7 +27,7 @@
         font-size: 14px;
         font-weight: var(--fw-semibold);
 
-        .stars { color: var(--c-amber-500); letter-spacing: 2px; }
+        // .stars в base/_typography.scss
     }
 
     &__cta { margin-top: var(--sp-6); display: flex; justify-content: center; }

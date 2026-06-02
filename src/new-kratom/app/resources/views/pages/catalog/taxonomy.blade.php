@@ -99,40 +99,68 @@
         ['value' => 'extrakt',  'label' => 'Extrakt'],
     ];
 
-    // Filter sidebar
+    // Filter modal groups (V2)
     $filterGroups = [
         [
-            'title' => 'Barva žilky', 'open' => true,
+            'title' => 'Forma', 'key' => 'form',
+            'options' => collect($forms)->map(fn ($f) => [
+                'label' => $f['label'], 'value' => $f['slug'],
+                'count' => collect($allProducts)->where('form', $f['slug'])->count(),
+            ])->values()->all(),
+        ],
+        [
+            'title' => 'Žilka', 'key' => 'color', 'open' => true,
             'options' => collect($colors)->map(fn ($c) => [
-                'label' => $c['label'], 'vein' => $c['vein'],
+                'label' => $c['label'], 'value' => $c['slug'], 'vein' => $c['vein'],
                 'count' => collect($allProducts)->where('color', $c['slug'])->count(),
                 'disabled' => !empty($c['comingSoon']),
             ])->values()->all(),
         ],
         [
-            'title' => 'Odrůda', 'open' => true,
+            'title' => 'Štamm', 'key' => 'strain', 'open' => true,
             'options' => collect($strains)->map(fn ($s) => [
-                'label' => $s['label'],
+                'label' => $s['label'], 'value' => $s['slug'],
                 'count' => collect($allProducts)->where('strain', $s['slug'])->count(),
                 'disabled' => !empty($s['comingSoon']),
             ])->values()->all(),
         ],
         [
-            'title' => 'Forma',
-            'options' => collect($forms)->map(fn ($f) => [
-                'label' => $f['label'],
-                'count' => collect($allProducts)->where('form', $f['slug'])->count(),
-            ])->values()->all(),
+            'title' => 'Mitragynin %',
+            'type'  => 'range',
+            'rangeKey'      => 'mitragynin',
+            'rangeMinValue' => 1.00,
+            'rangeMaxValue' => 2.00,
+            'rangeStep'     => 0.05,
+            'rangeUnit'     => ' %',
         ],
-        ['title' => 'Dostupnost', 'open' => true, 'options' => [
-            ['label' => 'Skladem',      'count' => count($allProducts)],
-            ['label' => 'Připravujeme', 'count' => count($placeholders)],
-        ]],
-        ['title' => 'Cena (Kč)', 'type' => 'range', 'min' => '0 Kč', 'max' => '1 000 Kč'],
+        [
+            'title' => 'Skladem', 'key' => 'availability', 'open' => true,
+            'options' => [
+                ['label' => 'Skladem v Praze', 'value' => 'in-stock',    'count' => count($allProducts)],
+                ['label' => 'Předobjednávka',  'value' => 'coming-soon', 'count' => count($placeholders)],
+            ],
+        ],
     ];
 
     $activeFilters = [
         ['label' => $taxonomyName, 'value' => $taxonomyKey],
+    ];
+
+    // Изображения категорий — те же, что использует секция cats-section на главной
+    $colorImages = [
+        'zeleny'  => asset('assets/categories/green.png'),
+        'bily'    => asset('assets/categories/white.png'),
+        'cerveny' => asset('assets/categories/red.png'),
+        'zluty'   => asset('assets/categories/gold.png'),
+    ];
+
+    $strainImages = [
+        'maeng-da' => asset('assets/categories/regions/maeng-da.png'),
+        'sumatra'  => asset('assets/categories/regions/sumatra.png'),
+        'thajsky'  => asset('assets/categories/regions/thai.png'),
+        'slon'     => asset('assets/categories/regions/eliph.png'),
+        'bali'     => asset('assets/categories/regions/bali.png'),
+        'borneo'   => asset('assets/categories/regions/borneo.png'),
     ];
 
     // Cross-link
@@ -140,11 +168,13 @@
         'count'  => collect($allProducts)->where('color', $c['slug'])->count(),
         'href'   => Locale::url('/kratom/' . $c['slug']),
         'active' => ($taxonomyType === 'color' && $taxonomyKey === $c['slug']),
+        'image'  => $colorImages[$c['slug']] ?? null,
     ]))->all();
 
     $crossLinkStrains = collect($strains)->map(fn ($s) => array_merge($s, [
         'href'   => Locale::url('/kratom/' . $s['slug']),
         'active' => ($taxonomyType === 'strain' && $taxonomyKey === $s['slug']),
+        'image'  => $strainImages[$s['slug']] ?? null,
     ]))->all();
 
     // Breadcrumbs
@@ -241,14 +271,18 @@
         </div>
     @endif
 
-    <x-catalog.chip-row :chips="$chips" :activeValue="$activeChip" />
+    <div x-data x-init="$store.catalog.recount()">
+        <x-catalog.chip-row :chips="$chips" :activeValue="$activeChip" :withFilter="true" />
 
-    <x-catalog.main
-        :groups="$filterGroups"
-        :products="$products"
-        :total="count($products)"
-        :activeFilters="$activeFilters"
-    />
+        <x-catalog.main-v2
+            :groups="$filterGroups"
+            :products="$products"
+            :total="count($products)"
+            :activeFilters="$activeFilters"
+            :fullCatalogHref="Locale::url('/kratom')"
+            :fullCatalogCount="count($allProducts)"
+        />
+    </div>
 
     <x-catalog.coming-soon :placeholders="array_slice($placeholders, 0, 3)" />
 

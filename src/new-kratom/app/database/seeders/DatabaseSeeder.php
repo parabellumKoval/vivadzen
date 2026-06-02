@@ -13,11 +13,17 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             TaxonomySeeder::class,
             CatalogSeeder::class,
+            LabBatchesSeeder::class,
             ReviewsSeeder::class,
             CzechCitiesSeeder::class,
             DeliveryPaymentSeeder::class,
             UserDemoSeeder::class,
             ForumDemoSeeder::class,
+            WikiCategoriesSeeder::class,
+            WikiContentVedaSeeder::class,
+            WikiContentHistorieSeeder::class,
+            WikiContentLegislativaSeeder::class,
+            WikiContentKvalitaSeeder::class,
         ]);
 
         // После seed-а сразу прогреваем Redis, чтобы фронт не упёрся

@@ -33,17 +33,24 @@ export default () => ({
     },
 
     next() {
-        this.goTo(this.activeIndex + 1);
+        this.goTo(this.activeIndex + 1, { loop: true });
     },
 
     prev() {
-        this.goTo(this.activeIndex - 1);
+        this.goTo(this.activeIndex - 1, { loop: true });
     },
 
-    goTo(index) {
+    goTo(index, { loop = false } = {}) {
         this.updateState();
-        this.activeIndex = this.clampIndex(index);
+        this.activeIndex = loop ? this.wrapIndex(index) : this.clampIndex(index);
         this.pageIndex = this.activeIndex;
+    },
+
+    wrapIndex(index) {
+        const max = this.maxIndex();
+        if (max <= 0) return 0;
+        const span = max + 1;
+        return ((index % span) + span) % span;
     },
 
     isActive(index) {

@@ -2,16 +2,19 @@
     'products' => [],
     'total' => null,
     'activeFilters' => [],   // [['label' => 'Zelený', 'value' => 'zeleny'], …]
+    'fullCatalogHref' => null, // when set, the empty-state CTA links here instead of clearing filters
+    'fullCatalogCount' => null, // count to display in the empty-state CTA
 ])
 
 @php($total = $total ?? count($products))
+@php($emptyCount = $fullCatalogCount ?? $total)
 
 <section class="product-grid-area" aria-labelledby="grid-title">
     <h2 id="grid-title" class="sr-only">Produkty</h2>
 
     <div class="product-grid-area__bar">
         <p class="product-grid-area__count">
-            Zobrazujeme <strong><span x-text="visibleCount">{{ count($products) }}</span> z {{ $total }} produktů</strong>
+            Zobrazujeme <strong><span x-text="$store.catalog.visibleCount">{{ count($products) }}</span> z {{ $total }} produktů</strong>
         </p>
 
         <label class="sort-dropdown">
@@ -40,14 +43,30 @@
         </div>
     @endif
 
-    <div class="product-grid" id="grid">
+    <div class="catalog-empty" x-show="$store.catalog.visibleCount === 0" x-cloak>
+        <x-ui.icon name="search" :size="32" />
+        <h3 class="catalog-empty__title">Žádné produkty neodpovídají vašemu výběru</h3>
+        <p class="catalog-empty__lead">Zkuste uvolnit filtry nebo se podívejte na celý sortiment.</p>
+        @if($fullCatalogHref)
+            <x-ui.button :href="$fullCatalogHref" variant="primary" size="md" icon="arrow-right">
+                Přejít do plného katalogu ({{ $emptyCount }} produktů)
+            </x-ui.button>
+        @else
+            <x-ui.button variant="primary" size="md" x-on:click="$store.catalog.clear()">
+                Zobrazit všechny produkty (<span x-text="$store.catalog.totalCount"></span>)
+            </x-ui.button>
+        @endif
+    </div>
+
+    <div class="product-grid" id="grid" x-show="$store.catalog.visibleCount > 0">
         @foreach($products as $p)
             <div
                 data-product-card
                 data-color="{{ $p['color'] ?? '' }}"
                 data-strain="{{ $p['strain'] ?? '' }}"
                 data-form="{{ $p['form'] ?? '' }}"
-                x-show="matches({ color: @js($p['color'] ?? ''), strain: @js($p['strain'] ?? ''), form: @js($p['form'] ?? '') })"
+                data-mitragynin="{{ $p['mitragynin'] ?? '' }}"
+                x-show="$store.catalog.matches({ color: @js($p['color'] ?? ''), strain: @js($p['strain'] ?? ''), form: @js($p['form'] ?? ''), mitragynin: @js($p['mitragynin'] ?? '') })"
             >
                 <x-ui.product-card
                     :name="$p['name']"

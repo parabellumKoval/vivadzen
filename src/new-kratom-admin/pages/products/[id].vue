@@ -4,7 +4,6 @@ import { Save, Trash2, ArrowLeft } from 'lucide-vue-next'
 const route = useRoute()
 const router = useRouter()
 const api = useApi()
-const { resolve: resolveMediaUrl } = useMediaUrl()
 const isNew = route.params.id === 'new'
 const {
   t,
@@ -219,7 +218,15 @@ async function remove() {
       </div>
 
       <div class="card lg:col-span-2 space-y-4">
-        <h2 class="font-display text-lg">{{ t('products.lab') }}</h2>
+        <div class="flex items-center justify-between">
+          <h2 class="font-display text-lg">{{ t('products.lab') }}</h2>
+          <NuxtLink to="/lab-batches" class="text-xs text-moss-700 hover:underline">
+            {{ t('nav.lab_batches') }} →
+          </NuxtLink>
+        </div>
+        <p class="text-xs text-ink-700/60">
+          Полные данные тестов с разбивкой по партиям и оригинальными PDF — в разделе «{{ t('nav.lab_batches') }}». Ниже — кэшированные показатели для быстрых фильтров каталога.
+        </p>
         <div class="grid grid-cols-3 gap-3">
           <div>
             <label class="field-label">{{ t('products.mitragynin') }} %</label>
@@ -238,28 +245,6 @@ async function remove() {
           <label class="field-label">{{ t('products.tested_at') }}</label>
           <input v-model="form.tested_at" type="date" class="field-input" />
         </div>
-      </div>
-
-      <div class="card space-y-4">
-        <h2 class="font-display text-lg">{{ t('products.image') }}</h2>
-        <div>
-          <label class="field-label">{{ t('products.main_image') }}</label>
-          <input v-model="form.main_image" class="field-input" placeholder="/storage/products/…" />
-        </div>
-        <div v-if="form.main_image" class="border border-ink-700/10 rounded-lg p-2">
-          <img :src="resolveMediaUrl(form.main_image)" class="w-full h-40 object-contain" />
-        </div>
-      </div>
-
-      <div v-if="!isNew" class="card lg:col-span-3 space-y-4">
-        <AdminProductGallery
-          :product-id="route.params.id as string"
-          :main-image="form.main_image"
-          @update:main-image="form.main_image = $event"
-        />
-      </div>
-      <div v-else class="card lg:col-span-3 text-sm text-ink-700/60">
-        Сохраните товар, чтобы загружать изображения галереи.
       </div>
 
       <div class="card lg:col-span-3 space-y-3">
@@ -296,6 +281,17 @@ async function remove() {
         <button class="btn-ghost" @click="form.variants.push({ size: 25, unit: 'g', price: 0, stock: 0, sku: '' })">
           {{ t('products.add_variant') }}
         </button>
+      </div>
+
+      <div v-if="!isNew" class="card lg:col-span-3 space-y-4">
+        <AdminProductGallery
+          :product-id="route.params.id as string"
+          :main-image="form.main_image"
+          @update:main-image="form.main_image = $event"
+        />
+      </div>
+      <div v-else class="card lg:col-span-3 text-sm text-ink-700/60">
+        Сохраните товар, чтобы загружать изображения галереи.
       </div>
     </div>
   </div>

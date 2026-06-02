@@ -32,11 +32,7 @@
         <div class="reviews-top">
             <div class="reviews-score">
                 <p class="reviews-score__num t-display-md">{{ str_replace('.', ',', (string) $rating) }}</p>
-                <p class="reviews-score__stars" aria-hidden="true">
-                    @for($i = 0; $i < 5; $i++)
-                        <span class="reviews-score__star{{ $i < round($rating) ? ' is-on' : '' }}">★</span>
-                    @endfor
-                </p>
+                <x-ui.stars class="reviews-score__stars" :rating="$rating" :size="22" />
                 <p class="reviews-score__count">{{ $reviewsCount }} recenzí</p>
                 <p class="reviews-score__verified">{{ $verifiedCount }} ověřených kupců</p>
 
@@ -92,10 +88,10 @@
             <template x-for="r in items" :key="r.id">
                 <li class="review">
                     <header class="review__head">
-                        <span class="review__stars" :aria-label="r.rating + ' z 5'">
+                        <span class="stars review__stars" :aria-label="r.rating + ' z 5'">
                             <template x-for="i in 5" :key="i">
-                                <svg class="review__star" :class="i <= r.rating && 'is-on'" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path d="M12 2.5l2.97 6.02 6.65.96-4.81 4.69 1.13 6.61L12 17.66l-5.94 3.12 1.13-6.61L2.38 9.48l6.65-.96L12 2.5z"/>
+                                <svg class="icon stars__icon" :class="i <= r.rating && 'is-on'" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                 </svg>
                             </template>
                         </span>
@@ -171,7 +167,9 @@
                                 :aria-checked="n === form.rating"
                                 :aria-label="n + ' z 5'"
                                 @click="form.rating = n"
-                            >★</button>
+                            >
+                                <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </button>
                         </template>
                     </div>
                 </div>

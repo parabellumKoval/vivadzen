@@ -40,7 +40,16 @@
 
     $filterGroups = [
         [
-            'title' => 'Barva žilky',
+            'title' => 'Forma',
+            'key'   => 'form',
+            'options' => [
+                ['label' => 'Prášek',  'value' => 'prasek',  'count' => collect($products)->where('form', 'prasek')->count()],
+                ['label' => 'Extrakt', 'value' => 'extrakt', 'count' => collect($products)->where('form', 'extrakt')->count()],
+                ['label' => 'Nano',    'value' => 'nano',    'count' => collect($products)->where('form', 'nano')->count()],
+            ],
+        ],
+        [
+            'title' => 'Žilka',
             'open'  => true,
             'key'   => 'color',
             'options' => [
@@ -51,7 +60,7 @@
             ],
         ],
         [
-            'title' => 'Odrůda',
+            'title' => 'Štamm',
             'open'  => true,
             'key'   => 'strain',
             'options' => [
@@ -64,29 +73,23 @@
             ],
         ],
         [
-            'title' => 'Forma',
-            'key'   => 'form',
+            'title' => 'Mitragynin %',
+            'type'  => 'range',
+            'rangeKey'      => 'mitragynin',
+            'rangeMinValue' => 1.00,
+            'rangeMaxValue' => 12.00,
+            'rangeStep'     => 0.05,
+            'rangeUnit'     => ' %',
+        ],
+        [
+            'title' => 'Skladem',
+            'key'   => 'availability',
+            'open'  => true,
             'options' => [
-                ['label' => 'Prášek',  'value' => 'prasek',  'count' => collect($products)->where('form', 'prasek')->count()],
-                ['label' => 'Extrakt', 'value' => 'extrakt', 'count' => collect($products)->where('form', 'extrakt')->count()],
-                ['label' => 'Nano',    'value' => 'nano',    'count' => collect($products)->where('form', 'nano')->count()],
+                ['label' => 'Skladem v Praze', 'value' => 'in-stock',    'count' => count($products)],
+                ['label' => 'Předobjednávka',  'value' => 'coming-soon', 'count' => count($placeholders)],
             ],
         ],
-        ['title' => 'Balení', 'options' => [
-            ['label' => '25 g', 'count' => count($products)],
-            ['label' => '50 g', 'count' => count($products) - 1],
-        ]],
-        ['title' => 'Mitragynin %', 'type' => 'range', 'min' => '1,00 %', 'max' => '12,00 %'],
-        ['title' => 'Dostupnost', 'open' => true, 'options' => [
-            ['label' => 'Skladem',       'count' => count($products)],
-            ['label' => 'Připravujeme',  'count' => count($placeholders)],
-        ]],
-        ['title' => 'Cena (Kč)', 'type' => 'range', 'min' => '0 Kč', 'max' => '1 000 Kč'],
-        ['title' => 'Hodnocení', 'options' => [
-            ['label' => '5★ only',    'count' => 4],
-            ['label' => '4★ a více',  'count' => count($products)],
-            ['label' => '3★ a více',  'count' => count($products)],
-        ]],
     ];
 
     $faqItems = [
@@ -137,10 +140,10 @@
         :stats="$heroStats"
     />
 
-    <div x-data="catalogFilter" x-init="recount()">
-        <x-catalog.chip-row :chips="$chips" activeValue="all" />
+    <div x-data x-init="$store.catalog.recount()">
+        <x-catalog.chip-row :chips="$chips" activeValue="all" :withFilter="true" />
 
-        <x-catalog.main
+        <x-catalog.main-v2
             :groups="$filterGroups"
             :products="$products"
             :total="count($products)"

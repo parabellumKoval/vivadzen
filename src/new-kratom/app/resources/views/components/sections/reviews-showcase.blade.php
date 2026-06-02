@@ -176,7 +176,7 @@
                 </h2>
 
                 <div class="reviews-showcase__rating">
-                    <span class="reviews-showcase__stars" aria-hidden="true">★★★★★</span>
+                    <x-ui.stars :rating="5" :size="20" class="reviews-showcase__stars stars--on-dark" />
                     <strong class="reviews-showcase__score">4,9 z 5</strong>
                     <span class="reviews-showcase__dot" aria-hidden="true"></span>
                     <span class="reviews-showcase__count">2 500+ hodnocení</span>

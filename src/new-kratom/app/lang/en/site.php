@@ -149,6 +149,169 @@ return [
         'gdpr' => 'Privacy policy',
         'cookies' => 'Cookies',
         'o_nas' => 'About us',
+        'age_verification' => 'Age verification 18+',
+    ],
+
+    'adulto' => [
+        'eyebrow' => 'Age verification 18+',
+        'page_title' => 'Age verification via Mobile Key',
+        'page_description' => 'How to verify your 18+ age via Mobile Key eGovernment or MojeID when ordering kratom.',
+        'page_lead' => 'Vivadzen verifies the age of every customer via the state Mobile Key eGovernment service. We only receive a flag whether you are 18+ — no personal data is transferred to us.',
+        'modal_title' => 'How to verify your age',
+        'modal_close' => 'Got it',
+        'open_full_guide' => 'Open the full guide',
+        'checkout_title' => 'Age verification 18+',
+        'checkout_desc' => 'To finish your order please complete age verification via Mobile Key eGovernment (ADULTO.cz).',
+        'checkout_guide_hint' => 'Need help? Open the short guide.',
+        'checkout_open_guide' => 'Open guide',
+        'widget_loading' => 'Loading verification…',
+        'widget_verified' => 'Age verified.',
+        'widget_error' => 'Failed to load the age-verification widget.',
+        'widget_unavailable' => 'Age verification is temporarily unavailable.',
+        'required_error' => 'Please complete age verification to finish your order.',
+        'skipped_notice' => 'Age verification is permanently confirmed for this account — no widget is needed.',
+
+        'intro' => [
+            'paragraphs' => [
+                'Under current Czech legislation, vivadzen s.r.o. must verify the age of every customer when selling psychomodulating substances.',
+                'The process runs through the state <strong>Mobile Key eGovernment</strong> service or other <strong>Citizen Identity</strong> methods.',
+            ],
+            'alert' => 'YOUR DATA IS SAFE. We only receive the information whether you are 18+ years old. No personal data is transferred or stored.',
+        ],
+        'sections' => [
+            [
+                'number' => '1',
+                'title' => 'Download the <strong>Mobile Key eGovernment</strong> app',
+                'steps' => [
+                    '<strong>Install the app.</strong> Get <strong>Mobile Key eGovernment</strong> from the <a href="https://apps.apple.com/cz/app/mobiln%C3%AD-kl%C3%AD%C4%8D-egovernmentu/id1466762017" target="_blank" rel="noopener noreferrer">App Store</a> or <a href="https://play.google.com/store/apps/details?id=cz.mojedatovaschranka.mobilniklic" target="_blank" rel="noopener noreferrer">Google Play</a>. It is free and officially issued by the Czech state.',
+                    '<strong>Open the Citizen Identity site.</strong> On your computer go to <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer"><strong>www.identita.gov.cz</strong></a>. Later you will add Mobile Key in the sign-in methods section.',
+                ],
+            ],
+            [
+                'number' => '2',
+                'title' => 'Sign in to <strong>Citizen Identity</strong>',
+                'steps' => [
+                    'On <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer"><strong>identita.gov.cz</strong></a> choose <strong>Sign in to Citizen Identity</strong>.',
+                    'We recommend <strong>Bank Identity</strong> — sign in the same way as to internet banking.',
+                    'You will land in your profile in the Citizen Identity Portal.',
+                ],
+                'note' => 'The sign-in runs via Citizen Identity and the <strong>NIA</strong> service.',
+            ],
+            [
+                'number' => '3',
+                'title' => 'Link the app to your profile',
+                'lead' => 'After signing in you will see an overview of sign-in methods. Add Mobile Key eGovernment here.',
+                'steps' => [
+                    'Open <strong>Sign-in methods</strong> in the Citizen Identity Portal.',
+                    'Find <strong>Mobile Key eGovernment</strong> in the list and click the plus icon.',
+                    'A QR code is shown on the screen. It is valid for around 5 minutes — generate a new one if needed.',
+                ],
+                'note' => 'The QR code only links the app to your Citizen Identity.',
+            ],
+            [
+                'number' => '4',
+                'title' => 'Activate <strong>Mobile Key</strong>',
+                'steps' => [
+                    'Open the <strong>Mobile Key eGovernment</strong> app.',
+                    'Pick <strong>Activate a key for Citizen Identity</strong>.',
+                    'Tap <strong>I am ready – scan the code to connect</strong> and scan the QR code from your monitor.',
+                    'Set a PIN or biometrics — the link is complete.',
+                ],
+                'tips' => [
+                    'If the app shows an error, check your connection and update the app.',
+                ],
+            ],
+            [
+                'number' => '5',
+                'title' => 'Verify your age during checkout',
+                'lead' => 'Once Mobile Key is set up, every next verification takes a few seconds.',
+                'steps' => [
+                    'Add products to the cart and proceed to checkout.',
+                    'Pick verification via <strong>Mobile Key eGovernment</strong>.',
+                    'A QR code appears — scan it in the app and confirm sending the age info.',
+                    'The app only transmits whether you are over 18. No other personal data is passed.',
+                    'After confirmation you return to checkout and finish the order.',
+                ],
+            ],
+        ],
+        'important' => [
+            'title' => 'Important',
+            'paragraphs' => [
+                'You complete the Mobile Key setup only once.',
+                'For future orders you only:',
+            ],
+            'steps' => [
+                'open the Mobile Key eGovernment app,',
+                'scan the QR code at checkout,',
+                'confirm the age verification.',
+            ],
+            'footer' => 'The whole check takes just a few seconds and you can immediately finish your purchase.',
+        ],
+        'alternative' => [
+            'title' => 'Alternative: <strong>MojeID</strong>',
+            'text' => 'If Mobile Key does not suit you, you can also use <a href="https://www.mojeid.cz/" target="_blank" rel="noopener noreferrer"><strong>MojeID</strong></a>.',
+            'bullets' => [
+                'Link your MojeID account to Citizen Identity online (e.g. via Bank Identity).',
+                'You can also verify your identity and age in person at any <a href="https://www.czechpoint.cz/public/" target="_blank" rel="noopener noreferrer"><strong>Czech POINT</strong></a> branch.',
+                'After linking the e-shop verification works the same — it only confirms that you are 18+.',
+            ],
+        ],
+
+        'short' => [
+            'intro' => [
+                'paragraphs' => [
+                    'Quick overview: set up <strong>Mobile Key</strong> once and verify your age in a few seconds.',
+                ],
+                'alert' => 'Vivadzen receives only confirmation that you are 18+. No personal data is transferred to us.',
+            ],
+            'sections' => [
+                [
+                    'number' => '1',
+                    'title' => 'Prepare the app and sign-in',
+                    'steps' => [
+                        'Install <strong>Mobile Key eGovernment</strong> from the <a href="https://apps.apple.com/cz/app/mobiln%C3%AD-kl%C3%AD%C4%8D-egovernmentu/id1466762017" target="_blank" rel="noopener noreferrer">App Store</a> or <a href="https://play.google.com/store/apps/details?id=cz.mojedatovaschranka.mobilniklic" target="_blank" rel="noopener noreferrer">Google Play</a>.',
+                        'Sign in to Citizen Identity at <a href="https://www.identita.gov.cz" target="_blank" rel="noopener noreferrer"><strong>identita.gov.cz</strong></a>, ideally via Bank Identity.',
+                    ],
+                ],
+                [
+                    'number' => '2',
+                    'title' => 'Link Mobile Key to Citizen Identity',
+                    'steps' => [
+                        'In the Citizen Identity Portal open sign-in methods and add Mobile Key eGovernment.',
+                        'On the phone open the app, choose key activation and scan the QR code.',
+                        'Finish setup with a PIN or biometrics.',
+                    ],
+                ],
+                [
+                    'number' => '3',
+                    'title' => 'Verify your age at checkout',
+                    'steps' => [
+                        'In the cart choose age verification via Mobile Key eGovernment.',
+                        'Open the app, scan the QR code and confirm sending the 18+ info.',
+                        'Return to checkout and finish the order.',
+                    ],
+                ],
+            ],
+            'important' => [
+                'title' => 'Next time',
+                'paragraphs' => [
+                    'You only set it up once.',
+                ],
+                'steps' => [
+                    'open the app,',
+                    'scan the QR code,',
+                    'confirm verification.',
+                ],
+                'footer' => 'Done in a few seconds.',
+            ],
+            'alternative' => [
+                'title' => 'Alternative',
+                'text' => 'You can also use <a href="https://www.mojeid.cz/" target="_blank" rel="noopener noreferrer"><strong>MojeID</strong></a>.',
+                'bullets' => [
+                    'Link MojeID with Citizen Identity online or verify your identity at <a href="https://www.czechpoint.cz/public/" target="_blank" rel="noopener noreferrer"><strong>Czech POINT</strong></a>.',
+                ],
+            ],
+        ],
     ],
 
     // Authentication (login / register / social / reset)
@@ -277,8 +440,11 @@ return [
         'addresses' => [
             'title' => 'Delivery addresses',
             'head_hint' => 'Saved addresses will be offered at checkout.',
+            'empty_title' => 'Your addresses will appear here',
             'empty' => 'You have no saved addresses yet. Add one to speed up future orders.',
             'add' => 'Add address',
+            'add_title' => 'New address',
+            'edit_title' => 'Edit address',
             'phone' => 'Phone (for the courier)',
             'phone_helper' => 'Used only for this delivery.',
             'street' => 'Street and number',
@@ -292,6 +458,7 @@ return [
             'edit' => 'Edit',
             'delete' => 'Delete',
             'delete_confirm' => 'Really delete this address?',
+            'delete_confirm_message' => 'The address will disappear from your list and won\'t be offered at checkout.',
             'save' => 'Save address',
             'cancel' => 'Cancel',
             'saved' => 'Address has been saved.',
@@ -327,6 +494,34 @@ return [
             'approved' => 'Published',
             'rejected' => 'Rejected',
             'view_product' => 'View product',
+            'delete' => 'Delete review',
+            'delete_confirm' => 'Delete this review?',
+            'delete_confirm_message' => 'Your review and any attached photos will be permanently removed.',
+        ],
+        'forum' => [
+            'edit' => 'Edit',
+            'delete' => 'Delete',
+            'cancel' => 'Cancel',
+            'save' => 'Save',
+            'topic_delete_confirm' => 'Delete this topic?',
+            'topic_delete_message' => 'The topic and all replies will be removed. This cannot be undone.',
+            'post_delete_confirm' => 'Delete this reply?',
+            'post_delete_message' => 'Your reply will disappear from the discussion.',
+            'edit_topic_title' => 'Edit topic',
+            'edit_post_title' => 'Edit reply',
+            'public_profile' => 'Public profile',
+            'open_topic' => 'Open',
+            'reputation' => 'Reputation',
+            'topics_count' => 'Topics',
+            'posts_count' => 'Replies',
+            'next_level' => 'to level',
+            'title_label' => 'Title',
+            'body_label' => 'Body',
+        ],
+        'common' => [
+            'confirm' => 'Confirm',
+            'cancel' => 'Cancel',
+            'delete' => 'Delete',
         ],
         'statuses' => [
             'pending' => 'New',

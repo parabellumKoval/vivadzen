@@ -83,6 +83,41 @@ body { font-size: var(--fs-body-md); }
     line-height: var(--lh-snug);
 }
 
+// --- Stars (rating) ---
+// Единый компонент рейтинга — пять звёзд, активные — амбер, неактивные — мьют.
+.stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    line-height: 0;
+    color: rgba(20, 32, 27, 0.18);
+
+    &__icon {
+        flex-shrink: 0;
+        color: inherit;
+
+        &.is-on { color: var(--c-amber-500); }
+    }
+
+    // На тёмных подложках неактивные звёзды светлее.
+    &--on-dark {
+        color: rgba(249, 244, 236, 0.22);
+    }
+}
+
+// --- Eyebrow base ---
+// Применяется ко всем BEM-эйбровам (`*__eyebrow`) и утилитарному `.eyebrow`.
+// Цвет и размер задаются дочерним компонентом / контекстом.
+.eyebrow,
+[class*="__eyebrow"] {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    font-weight: 600;
+    color: #5A6B62;
+    line-height: var(--lh-snug);
+}
+
 // --- Metric (числа в hero) ---
 .t-metric-lg {
     font-family: var(--ff-display);

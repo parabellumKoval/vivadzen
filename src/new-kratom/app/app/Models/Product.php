@@ -53,6 +53,12 @@ class Product extends Model
         return $this->hasMany(CoaFile::class)->orderByDesc('tested_at');
     }
 
+    public function labBatches(): BelongsToMany
+    {
+        return $this->belongsToMany(LabBatch::class, 'lab_batch_product')
+            ->orderByDesc('issued_at');
+    }
+
     public function taxonomies(): BelongsToMany
     {
         return $this->belongsToMany(Taxonomy::class, 'product_taxonomy');

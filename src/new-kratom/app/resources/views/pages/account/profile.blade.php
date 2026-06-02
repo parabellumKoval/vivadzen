@@ -4,8 +4,10 @@
     <x-account.shell active="profile">
         <div x-init="initAvatar(@js($user->avatar_url))">
             <header class="account__head">
-                <h1 class="account__title">{{ __('site.account.profile.title') }}</h1>
-                <p class="account__head-hint">{{ __('site.account.profile.head_hint') }}</p>
+                <div class="account__head-text">
+                    <h1 class="account__title">{{ __('site.account.profile.title') }}</h1>
+                    <p class="account__head-hint">{{ __('site.account.profile.head_hint') }}</p>
+                </div>
             </header>
 
             {{-- Avatar --}}

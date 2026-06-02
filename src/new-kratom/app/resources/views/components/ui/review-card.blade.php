@@ -7,9 +7,7 @@
 ])
 
 <article class="review-card">
-    <div class="review-card__stars" aria-label="Hodnocení {{ $rating }} z 5">
-        {!! str_repeat('★', (int) $rating) . str_repeat('☆', 5 - (int) $rating) !!}
-    </div>
+    <x-ui.stars :rating="$rating" :size="16" class="review-card__stars stars--on-dark" />
 
     <blockquote class="review-card__quote">«{{ $quote }}»</blockquote>
 

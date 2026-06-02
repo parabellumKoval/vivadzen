@@ -42,30 +42,28 @@
             <a href="{{ $href }}">{{ $name }}</a>
         </h3>
 
-        <p class="product-card__meta">Mitragynin {{ $mitragynin }}</p>
-
-        @if($price25 && $price50)
-            <div class="product-card__toggle" role="group" aria-label="Velikost balení">
-                <button type="button" :aria-pressed="size === 25" :class="size === 25 && 'is-active'" @click="setSize(25)">25 g</button>
-                <button type="button" :aria-pressed="size === 50" :class="size === 50 && 'is-active'" @click="setSize(50)">50 g</button>
+        @if($rating)
+            <div class="product-card__rating">
+                <x-ui.stars :rating="$rating" :size="13" />
+                <span class="product-card__rating-value">{{ $rating }}</span>
+                @if($reviewsCount)
+                    <span class="t-on-light-2">· {{ $reviewsCount }}</span>
+                @endif
             </div>
         @endif
 
         <div class="product-card__price-row">
-            <div>
+            <div class="product-card__price-block">
                 <span class="product-card__price"><span x-text="price"></span> Kč</span>
                 @if($price25 && $price50)
                     <div class="product-card__price-per"><span x-text="pricePerGram"></span> Kč / g</div>
                 @endif
             </div>
 
-            @if($rating)
-                <div class="product-card__rating">
-                    <span class="star"><x-ui.icon name="star" :size="14" /></span>
-                    <span>{{ $rating }}</span>
-                    @if($reviewsCount)
-                        <span class="t-on-light-2">· {{ $reviewsCount }}</span>
-                    @endif
+            @if($price25 && $price50)
+                <div class="product-card__toggle" role="group" aria-label="Velikost balení">
+                    <button type="button" :aria-pressed="size === 25" :class="size === 25 && 'is-active'" @click="setSize(25)">25 g</button>
+                    <button type="button" :aria-pressed="size === 50" :class="size === 50 && 'is-active'" @click="setSize(50)">50 g</button>
                 </div>
             @endif
         </div>

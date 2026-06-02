@@ -173,9 +173,26 @@ class AccountController extends Controller
         $reviews = $request->user()
             ->reviews()
             ->with(['product', 'images'])
+            ->latest()
             ->paginate(10);
 
         return view('pages.account.reviews', ['reviews' => $reviews]);
+    }
+
+    public function destroyReview(Request $request, \App\Models\ProductReview $review): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($review->user_id === $request->user()->id, 403);
+
+        // Drop attached photos from disk, then the row (images cascade by FK).
+        foreach ($review->images as $img) {
+            if ($img->path && str_starts_with($img->path, '/storage/')) {
+                Storage::disk('public')->delete(substr($img->path, strlen('/storage/')));
+            }
+        }
+
+        $review->delete();
+
+        return response()->json(['ok' => true]);
     }
 
     public function forumTopics(Request $request): View
@@ -207,5 +224,64 @@ class AccountController extends Controller
             'forumUser' => Forum::userPayload($user),
             'levels' => Forum::levels(),
         ]);
+    }
+
+    public function updateTopic(Request $request, \App\Models\ForumTopic $topic): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($topic->user_id === $request->user()->id, 403);
+
+        $data = $request->validate([
+            'title' => 'required|string|min:4|max:160',
+            'body' => 'required|string|min:10|max:12000',
+        ]);
+
+        $topic->update($data);
+
+        return response()->json([
+            'ok' => true,
+            'data' => [
+                'id' => $topic->id,
+                'title' => $topic->title,
+                'body' => $topic->body,
+                'slug' => $topic->slug,
+            ],
+        ]);
+    }
+
+    public function destroyTopic(Request $request, \App\Models\ForumTopic $topic): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($topic->user_id === $request->user()->id, 403);
+
+        $topic->delete();
+
+        return response()->json(['ok' => true]);
+    }
+
+    public function updatePost(Request $request, \App\Models\ForumPost $post): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($post->user_id === $request->user()->id, 403);
+
+        $data = $request->validate([
+            'body' => 'required|string|min:2|max:8000',
+        ]);
+
+        $post->update(['body' => $data['body']]);
+
+        return response()->json([
+            'ok' => true,
+            'data' => [
+                'id' => $post->id,
+                'body' => $post->body,
+            ],
+        ]);
+    }
+
+    public function destroyPost(Request $request, \App\Models\ForumPost $post): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($post->user_id === $request->user()->id, 403);
+
+        $post->delete();
+
+        return response()->json(['ok' => true]);
     }
 }

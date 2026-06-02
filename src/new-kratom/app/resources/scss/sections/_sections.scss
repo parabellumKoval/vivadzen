@@ -202,26 +202,14 @@
         @media (max-width: 768px) { flex-direction: column; align-items: flex-start; }
     }
 
+    // карусель управляется .carousel (см. components/_carousel.scss).
+    // Здесь — только тонкая настройка под секцию.
     &__carousel {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: var(--sp-6);
+        --carousel-max-w: var(--container-wide, 1208px);
+        --carousel-min-h: 660px;
 
-        @media (max-width: 1024px) { grid-template-columns: repeat(3, 1fr); }
-        @media (max-width: 768px) {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-padding-inline: var(--container-padding);
-            margin-inline: calc(var(--container-padding) * -1);
-            padding-inline: var(--container-padding);
-            gap: var(--sp-4);
-
-            > * {
-                flex: 0 0 78%;
-                scroll-snap-align: start;
-            }
-        }
+        @media (max-width: 1024px) { --carousel-min-h: 660px; }
+        @media (max-width: 720px)  { --carousel-min-h: 660px; }
     }
 }
 
@@ -291,7 +279,7 @@
         font-size: 15px;
         color: var(--c-forest-700);
 
-        .stars { color: var(--c-amber-500); letter-spacing: 2px; }
+        // .stars стилизован глобально в base/_typography.scss
     }
 
     &__hint {
@@ -337,7 +325,7 @@
         font-size: 14px;
         font-weight: var(--fw-semibold);
 
-        .stars { color: var(--c-amber-500); letter-spacing: 2px; }
+        // .stars стилизован глобально в base/_typography.scss
     }
 
     &__slider {

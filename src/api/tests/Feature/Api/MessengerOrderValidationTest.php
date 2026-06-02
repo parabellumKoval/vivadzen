@@ -4,7 +4,6 @@ namespace Tests\Feature\Api;
 
 use Backpack\Store\app\Http\Controllers\Api\OrderController;
 use Illuminate\Http\Request;
-use Rd\app\Exceptions\DetailedException;
 use Tests\TestCase;
 
 class MessengerOrderValidationTest extends TestCase
@@ -28,7 +27,7 @@ class MessengerOrderValidationTest extends TestCase
         $this->assertSame('messenger_address', data_get($data, 'delivery.method'));
         $this->assertSame('messenger_cod', data_get($data, 'payment.method'));
         $this->assertSame('Praha', data_get($data, 'delivery.settlement'));
-        $this->assertSame('1', data_get($data, 'delivery.house'));
+        $this->assertNull(data_get($data, 'delivery.house'));
     }
 
     public function test_validate_data_accepts_messenger_express_delivery_with_cod(): void
@@ -42,26 +41,22 @@ class MessengerOrderValidationTest extends TestCase
         $this->assertSame('messenger_express', data_get($data, 'delivery.method'));
         $this->assertSame('messenger_cod', data_get($data, 'payment.method'));
         $this->assertSame('Praha', data_get($data, 'delivery.settlement'));
-        $this->assertSame('1', data_get($data, 'delivery.house'));
+        $this->assertNull(data_get($data, 'delivery.house'));
     }
 
-    public function test_validate_data_requires_house_for_messenger_delivery(): void
+    public function test_validate_data_accepts_messenger_delivery_without_house_and_zip(): void
     {
         $controller = new OrderController();
         $payload = $this->validPayload();
 
         unset($payload['delivery']['house']);
+        unset($payload['delivery']['zip']);
 
-        try {
-            $controller->validateData(Request::create('/api/order', 'POST', $payload));
-            $this->fail('Expected messenger delivery validation to fail without house.');
-        } catch (DetailedException $exception) {
-            $this->assertSame(403, $exception->getCode());
-            $errors = data_get($exception->getOptions(), 'delivery.house');
+        $data = $controller->validateData(Request::create('/api/order', 'POST', $payload));
 
-            $this->assertIsArray($errors);
-            $this->assertNotEmpty($errors);
-        }
+        $this->assertSame('messenger_address', data_get($data, 'delivery.method'));
+        $this->assertNull(data_get($data, 'delivery.house'));
+        $this->assertNull(data_get($data, 'delivery.zip'));
     }
 
     protected function validPayload(string $method = 'messenger_address'): array
@@ -75,8 +70,7 @@ class MessengerOrderValidationTest extends TestCase
             'delivery' => [
                 'method' => $method,
                 'settlement' => 'Praha',
-                'street' => 'Libinska',
-                'house' => '1',
+                'street' => 'Libinska 1',
                 'room' => '5',
                 'zip' => '18000',
             ],

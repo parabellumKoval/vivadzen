@@ -148,7 +148,7 @@ onMounted(load)
       v-model="images"
       item-key="id"
       handle=".drag-handle"
-      class="grid grid-cols-1 sm:grid-cols-2 gap-3"
+      class="grid grid-cols-1 gap-3"
       :animation="150"
       @end="persistOrder"
     >
@@ -166,23 +166,25 @@ onMounted(load)
           />
 
           <div class="flex-1 min-w-0 space-y-2">
-            <div>
-              <label class="field-label">Alt</label>
-              <input
-                v-model="image.alt"
-                class="field-input"
-                placeholder="Описание для поисковых систем"
-                @change="saveMeta(image)"
-              />
-            </div>
-            <div>
-              <label class="field-label">Title</label>
-              <input
-                v-model="image.title"
-                class="field-input"
-                placeholder="Подсказка при наведении"
-                @change="saveMeta(image)"
-              />
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="field-label">Alt</label>
+                <input
+                  v-model="image.alt"
+                  class="field-input"
+                  placeholder="Описание для поисковых систем"
+                  @change="saveMeta(image)"
+                />
+              </div>
+              <div>
+                <label class="field-label">Title</label>
+                <input
+                  v-model="image.title"
+                  class="field-input"
+                  placeholder="Подсказка при наведении"
+                  @change="saveMeta(image)"
+                />
+              </div>
             </div>
             <div class="flex items-center justify-between text-xs text-ink-700/60">
               <span>{{ image.disk }} · {{ image.path.split('/').pop() }}</span>

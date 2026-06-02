@@ -24,6 +24,7 @@
 @use 'components/badge';
 @use 'components/input';
 @use 'components/card';
+@use 'components/carousel';
 @use 'components/product-card';
 @use 'components/category-card';
 @use 'components/review-card';
@@ -34,6 +35,8 @@
 @use 'components/footer';
 @use 'components/cart-modal';
 @use 'components/auth-modal';
+@use 'components/adulto';
+@use 'components/confirm-modal';
 
 @use 'sections/hero';
 @use 'sections/sections';
@@ -48,3 +51,4 @@
 @use 'pages/lab-batch';
 @use 'pages/account';
 @use 'pages/forum';
+@use 'pages/pruvodce';

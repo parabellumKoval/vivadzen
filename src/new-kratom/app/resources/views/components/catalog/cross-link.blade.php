@@ -22,10 +22,16 @@
                         @php($disabled = !empty($c['active']) || !empty($c['comingSoon']))
                         <a
                             href="{{ $disabled ? '#' : $c['href'] }}"
-                            class="color-card @if(!empty($c['active'])) color-card--active @endif @if(!empty($c['comingSoon'])) color-card--coming @endif"
+                            class="color-card @if(!empty($c['image'])) color-card--with-image @endif @if(!empty($c['active'])) color-card--active @endif @if(!empty($c['comingSoon'])) color-card--coming @endif"
                             @if($disabled) aria-disabled="true" tabindex="-1" @endif
                         >
-                            <span class="color-card__dot vein-dot vein-dot--{{ $c['vein'] ?? 'green' }}"></span>
+                            @if(!empty($c['image']))
+                                <img class="color-card__image"
+                                     src="{{ $c['image'] }}"
+                                     alt="" aria-hidden="true" loading="lazy" decoding="async">
+                            @else
+                                <span class="color-card__dot vein-dot vein-dot--{{ $c['vein'] ?? 'green' }}"></span>
+                            @endif
                             <span class="color-card__label">{{ $c['label'] }}</span>
                             <span class="color-card__meta">
                                 @if(!empty($c['comingSoon']))
@@ -51,12 +57,18 @@
                         @php($disabled = !empty($s['active']) || !empty($s['comingSoon']))
                         <a
                             href="{{ $disabled ? '#' : $s['href'] }}"
-                            class="strain-card @if(!empty($s['active'])) strain-card--active @endif"
+                            class="strain-card @if(!empty($s['image'])) strain-card--with-image @endif @if(!empty($s['active'])) strain-card--active @endif"
                             @if($disabled) aria-disabled="true" tabindex="-1" @endif
                         >
-                            <span class="strain-card__icon" aria-hidden="true">
-                                <x-ui.icon name="leaf" :size="32" />
-                            </span>
+                            @if(!empty($s['image']))
+                                <img class="strain-card__image"
+                                     src="{{ $s['image'] }}"
+                                     alt="" aria-hidden="true" loading="lazy" decoding="async">
+                            @else
+                                <span class="strain-card__icon" aria-hidden="true">
+                                    <x-ui.icon name="leaf" :size="32" />
+                                </span>
+                            @endif
                             <span class="strain-card__label">{{ $s['label'] }}</span>
                             <span class="strain-card__origin">{{ $s['origin'] ?? '' }}</span>
                             @if(!empty($s['comingSoon']))

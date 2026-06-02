@@ -118,12 +118,25 @@ export default () => ({
         }
     },
 
-    async deleteAddress(id) {
-        if (!window.confirm(this.confirmText)) return;
-        try {
-            await window.axios.delete(`/ucet/adresy/${id}`, { headers: { 'X-CSRF-TOKEN': this.csrf() } });
-            this.addresses = this.addresses.filter((a) => a.id !== id);
-        } catch (e) { /* noop */ }
+    async deleteAddress(address) {
+        const strings = window.__accountStrings || {};
+        window.dispatchEvent(new CustomEvent('confirm:open', {
+            detail: {
+                title: strings.addressDeleteTitle || this.confirmText,
+                message: address?.city?.full_label
+                    ? `${address.city.full_label}${address.street ? ', ' + address.street : ''}`
+                    : '',
+                confirm: strings.confirmDelete || 'Delete',
+                cancel: strings.cancel || 'Cancel',
+                tone: 'danger',
+                onConfirm: async () => {
+                    await window.axios.delete(`/ucet/adresy/${address.id}`, {
+                        headers: { 'X-CSRF-TOKEN': this.csrf() },
+                    });
+                    this.addresses = this.addresses.filter((a) => a.id !== address.id);
+                },
+            },
+        }));
     },
 
     async makeDefault(id) {
@@ -131,6 +144,14 @@ export default () => ({
             await window.axios.post(`/ucet/adresy/${id}/vychozi`, {}, { headers: { 'X-CSRF-TOKEN': this.csrf() } });
             this.addresses = this.addresses.map((a) => ({ ...a, is_default: a.id === id }));
         } catch (e) { /* noop */ }
+    },
+
+    // Star toggle on the card: turns a non-default into default. We don't
+    // support "unset" here — the server keeps at least one default if one is
+    // requested. Clicking the star on an already-default address is a no-op.
+    async toggleDefault(address) {
+        if (address.is_default) return;
+        await this.makeDefault(address.id);
     },
 
     upsertAddress(saved) {
@@ -146,6 +167,130 @@ export default () => ({
 
     get confirmText() {
         return window.__accountConfirmDelete || 'Delete?';
+    },
+
+    // ── reviews / forum cards: tracked deletions ────────────
+    // Pages drive a Set of soft-deleted ids and hide the matching cards with
+    // `x-show`. The actual server delete fires from the confirm modal's
+    // `onConfirm`; cancelling does nothing.
+    deletedReviews: {},
+    deletedTopics: {},
+    deletedPosts: {},
+
+    deleteReview(review) {
+        const strings = window.__accountStrings || {};
+        window.dispatchEvent(new CustomEvent('confirm:open', {
+            detail: {
+                title: strings.reviewDeleteTitle || 'Delete this review?',
+                message: review?.name
+                    ? `${strings.reviewDeleteMessage || ''} (${review.name})`.trim()
+                    : (strings.reviewDeleteMessage || ''),
+                confirm: strings.confirmDelete || 'Delete',
+                cancel: strings.cancel || 'Cancel',
+                tone: 'danger',
+                onConfirm: async () => {
+                    await window.axios.delete(`/ucet/recenze/${review.id}`, {
+                        headers: { 'X-CSRF-TOKEN': this.csrf() },
+                    });
+                    this.deletedReviews = { ...this.deletedReviews, [review.id]: true };
+                },
+            },
+        }));
+    },
+
+    deleteTopic(topic) {
+        const strings = window.__accountStrings || {};
+        window.dispatchEvent(new CustomEvent('confirm:open', {
+            detail: {
+                title: strings.topicDeleteTitle || 'Delete this topic?',
+                message: (strings.topicDeleteMessage || '') + (topic?.title ? ` (${topic.title})` : ''),
+                confirm: strings.confirmDelete || 'Delete',
+                cancel: strings.cancel || 'Cancel',
+                tone: 'danger',
+                onConfirm: async () => {
+                    await window.axios.delete(`/ucet/forum-tema/${topic.id}`, {
+                        headers: { 'X-CSRF-TOKEN': this.csrf() },
+                    });
+                    this.deletedTopics = { ...this.deletedTopics, [topic.id]: true };
+                },
+            },
+        }));
+    },
+
+    deletePost(post) {
+        const strings = window.__accountStrings || {};
+        window.dispatchEvent(new CustomEvent('confirm:open', {
+            detail: {
+                title: strings.postDeleteTitle || 'Delete this reply?',
+                message: strings.postDeleteMessage || '',
+                confirm: strings.confirmDelete || 'Delete',
+                cancel: strings.cancel || 'Cancel',
+                tone: 'danger',
+                onConfirm: async () => {
+                    await window.axios.delete(`/ucet/forum-prispevek/${post.id}`, {
+                        headers: { 'X-CSRF-TOKEN': this.csrf() },
+                    });
+                    this.deletedPosts = { ...this.deletedPosts, [post.id]: true };
+                },
+            },
+        }));
+    },
+
+    // Inline-edit state. We host both editor flavors on the parent
+    // accountPage so blade templates can simply call openEditTopic /
+    // openEditPost from the row context — without any per-card local state.
+    editorOpen: false,
+    editorKind: null,       // 'topic' | 'post'
+    editorId: null,
+    editorTitle: '',
+    editorBody: '',
+    editorBusy: false,
+    editorError: '',
+
+    openEditTopic(topic) {
+        this.editorKind = 'topic';
+        this.editorId = topic.id;
+        this.editorTitle = topic.title || '';
+        this.editorBody = topic.body || '';
+        this.editorError = '';
+        this.editorOpen = true;
+    },
+
+    openEditPost(post) {
+        this.editorKind = 'post';
+        this.editorId = post.id;
+        this.editorTitle = '';
+        this.editorBody = post.body || '';
+        this.editorError = '';
+        this.editorOpen = true;
+    },
+
+    closeEditor() {
+        if (this.editorBusy) return;
+        this.editorOpen = false;
+    },
+
+    async saveEditor() {
+        const id = this.editorId;
+        const isTopic = this.editorKind === 'topic';
+        const url = isTopic ? `/ucet/forum-tema/${id}` : `/ucet/forum-prispevek/${id}`;
+        const payload = isTopic
+            ? { title: this.editorTitle, body: this.editorBody }
+            : { body: this.editorBody };
+        this.editorBusy = true;
+        this.editorError = '';
+        try {
+            await window.axios.put(url, payload, { headers: { 'X-CSRF-TOKEN': this.csrf() } });
+            // Reload to surface server-side recomputed fields (slug, summary
+            // counts, last_post_at). The page is small and this avoids a
+            // bunch of bespoke client-side patching.
+            window.location.reload();
+        } catch (err) {
+            this.editorError = err.response?.data?.message
+                || (err.response?.data?.errors && Object.values(err.response.data.errors).flat().join(', '))
+                || 'Error';
+            this.editorBusy = false;
+        }
     },
 
     // ── order detail modal ──────────────────────────────────

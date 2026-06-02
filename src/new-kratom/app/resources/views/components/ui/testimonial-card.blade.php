@@ -13,9 +13,7 @@
 
 <article {{ $attributes->class('testimonial-card') }}>
     <div class="testimonial-card__top">
-        <span class="testimonial-card__stars" aria-label="Hodnocení {{ $rating }} z 5">
-            {!! str_repeat('★', $rating) . str_repeat('☆', 5 - $rating) !!}
-        </span>
+        <x-ui.stars class="testimonial-card__stars" :rating="$rating" :size="18" />
         <span class="testimonial-card__quote-mark" aria-hidden="true">“</span>
     </div>
 

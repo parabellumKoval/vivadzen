@@ -29,7 +29,7 @@
                     a zde najdete zkušenosti lidí, kteří kratom Vivadzen už vyzkoušeli.
                 </p>
                 <div class="reviews-hero__rating">
-                    <span class="stars" aria-hidden="true">★★★★★</span>
+                    <x-ui.stars :rating="5" :size="20" class="stars--on-dark" />
                     <span>4,9 z 5 — 2 500+ hodnocení</span>
                 </div>
                 <div class="reviews-hero__cta">
@@ -94,10 +94,10 @@
                             </a>
 
                             <header class="rvp-card__head">
-                                <span class="rvp-card__stars" :aria-label="r.rating + ' z 5'">
+                                <span class="stars rvp-card__stars" :aria-label="r.rating + ' z 5'">
                                     <template x-for="i in 5" :key="i">
-                                        <svg class="rvp-card__star" :class="i <= r.rating && 'is-on'" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                            <path d="M12 2.5l2.97 6.02 6.65.96-4.81 4.69 1.13 6.61L12 17.66l-5.94 3.12 1.13-6.61L2.38 9.48l6.65-.96L12 2.5z"/>
+                                        <svg class="icon stars__icon" :class="i <= r.rating && 'is-on'" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                         </svg>
                                     </template>
                                 </span>
@@ -161,7 +161,7 @@
                     <p class="t-overline section-head__eyebrow--soft">HODNOCENÍ NA GOOGLE</p>
                     <h2 class="t-heading-md t-on-light-accent">Recenze o obchodu jako celku</h2>
                     <div class="greviews__score">
-                        <span class="stars" aria-hidden="true">★★★★★</span>
+                        <x-ui.stars :rating="5" :size="18" />
                         <strong>{{ $googleRating }} z 5</strong>
                         <span class="t-on-light-2">· {{ $googleCount }} hodnocení</span>
                     </div>
@@ -223,7 +223,9 @@
                                     :aria-checked="n === form.rating"
                                     :aria-label="n + ' z 5'"
                                     @click="form.rating = n"
-                                >★</button>
+                                >
+                                    <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                </button>
                             </template>
                         </div>
                     </div>

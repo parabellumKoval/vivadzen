@@ -14,6 +14,7 @@
         ['label' => 'Laboratorní testy',   'href' => '/laboratorni-testy'],
         ['label' => 'Licence MZ ČR',       'href' => '/licence'],
         ['label' => 'Prodejny v Praze',    'href' => '/prodejny'],
+        ['label' => 'Ověření věku 18+',    'href' => '/overeni-veku'],
         ['label' => 'Reklamace a vrácení', 'href' => '/reklamace'],
         ['label' => 'Časté dotazy',        'href' => '/podpora'],
         ['label' => 'Kontakt',             'href' => '/kontakt'],
@@ -37,10 +38,16 @@
                     Každá šarže testovaná v akreditované laboratoři VŠCHT Praha.
                     Dvě kamenné prodejny v Praze.
                 </p>
-                <div class="footer__badges">
-                    <x-ui.badge variant="lab" icon="flask">Akreditovaná laboratoř</x-ui.badge>
-                    <x-ui.badge variant="licence" icon="shield-check">Autorizovaný prodejce PML</x-ui.badge>
-                    <x-ui.badge variant="age">18+</x-ui.badge>
+                <div class="footer__trust" aria-label="Garance kvality">
+                    <a class="footer__trust-mark" href="/laboratorni-testy" title="Akreditovaná laboratoř VŠCHT Praha">
+                        <img src="{{ asset('assets/trust/vscht.jpeg') }}" alt="Akreditovaná laboratoř VŠCHT Praha" width="56" height="56" loading="lazy" />
+                        <span>Akreditovaná<br>laboratoř</span>
+                    </a>
+                    <a class="footer__trust-mark" href="/licence" title="Autorizovaný prodejce PML — MZ ČR">
+                        <img src="{{ asset('assets/trust/mzcz.png') }}" alt="MZ ČR — Autorizovaný prodejce PML" width="56" height="56" loading="lazy" />
+                        <span>Autorizovaný<br>prodejce PML</span>
+                    </a>
+                    <span class="footer__trust-age" aria-label="Pouze pro osoby 18+">18+</span>
                 </div>
             </div>
 
@@ -87,11 +94,18 @@
         <div class="footer__bottom">
             <span>© {{ date('Y') }} Vivadzen s.r.o. · IČO 00000000 · DIČ CZ00000000</span>
             <div class="footer__pay" aria-label="Platební metody">
-                <span class="pay-logo">VISA</span>
-                <span class="pay-logo">MC</span>
-                <span class="pay-logo">APAY</span>
-                <span class="pay-logo">GPAY</span>
-                <span class="pay-logo">QR</span>
+                <span class="pay-logo"><img src="{{ asset('assets/payment/visa.png') }}" alt="Visa" loading="lazy" /></span>
+                <span class="pay-logo"><img src="{{ asset('assets/payment/mastercard.png') }}" alt="Mastercard" loading="lazy" /></span>
+                <span class="pay-logo"><img src="{{ asset('assets/payment/apple-pay.png') }}" alt="Apple Pay" loading="lazy" /></span>
+                <span class="pay-logo"><img src="{{ asset('assets/payment/google-pay.png') }}" alt="Google Pay" loading="lazy" /></span>
+                <span class="pay-logo pay-logo--qr" aria-label="QR platba">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/>
+                        <path d="M14 14h3v3h-3zM20 14v3M14 20h7M17 17v3"/>
+                    </svg>
+                </span>
             </div>
         </div>
     </div>

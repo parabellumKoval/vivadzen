@@ -49,6 +49,18 @@ return [
         'reviews_count' => env('GOOGLE_REVIEWS_COUNT', '240+'),
     ],
 
+    // ADULTO age-verification widget (https://adulto.cz).
+    // The public key is rendered into the front-end widget; the widget calls
+    // ADULTO and posts back a UID that we persist on the order as proof we ran
+    // the check. `enabled` is the global feature switch (per-user opt-out lives
+    // on users.age_verification_skipped). When the public key is empty the
+    // checkout falls back to the plain age-confirmation checkbox.
+    'adulto' => [
+        'enabled' => env('ADULTO_ENABLED', true),
+        'public_key' => env('ADULTO_PUBLIC_KEY', ''),
+        'script_url' => env('ADULTO_SCRIPT_URL', 'https://api.js.m2a.cz/api.js'),
+    ],
+
     'facebook' => [
         // OAuth (Socialite) — «Вход через Facebook».
         'client_id' => env('FACEBOOK_CLIENT_ID'),

@@ -19,31 +19,41 @@
     })"
 >
     <div class="buy-box__eyebrow">
-        <span class="buy-box__chip">
-            <span class="vein-dot vein-dot--{{ $product['vein'] ?? 'green' }}"></span>
-            {{ $product['colorLabel'] }} · {{ $product['origin'] }}
-        </span>
         <span class="badge badge--licence">
             <x-ui.icon name="shield-check" :size="12" /> LICENCE MZ ČR
         </span>
+        @if($product['inStock'] ?? true)
+            <span class="badge badge--subscription">
+                <span class="buy-box__stock-dot"></span> SKLADEM V PRAZE
+            </span>
+        @else
+            <span class="badge badge--out">Vyprodáno</span>
+        @endif
+        <span class="badge badge--lab">Testováno</span>
+        <span class="badge badge--age">18+</span>
     </div>
 
     <h1 class="buy-box__title">{{ $product['name'] }}</h1>
 
+    <p class="buy-box__subtitle">
+        <span class="vein-dot vein-dot--{{ $product['vein'] ?? 'green' }}"></span>
+        {{ $product['colorLabel'] }} · {{ $product['origin'] }} · Mitragyna speciosa, prášek
+    </p>
+
     <div class="buy-box__rating">
-        <span class="buy-box__stars" aria-label="Hodnocení {{ $product['rating'] }} z 5">
-            @for($i = 0; $i < 5; $i++)
-                <x-ui.icon name="star" :size="18" />
-            @endfor
+        <x-ui.stars class="buy-box__stars" :rating="$product['rating']" :size="18" />
+        <span class="buy-box__rating-text">
+            <a href="#recenze" class="buy-box__rating-link">
+                <strong>{{ str_replace('.', ',', (string)$product['rating']) }}</strong> · {{ $product['reviewsCount'] }} recenzí
+            </a>
+            <span class="buy-box__batch">· Šarže <a href="#laboratorni-test"><strong>{{ $product['batch'] }}</strong></a></span>
         </span>
-        <a href="#recenze" class="buy-box__rating-link">
-            <strong>{{ str_replace('.', ',', (string)$product['rating']) }}</strong> · {{ $product['reviewsCount'] }} recenzí · {{ $product['questionsCount'] }} otázek
-        </a>
     </div>
 
-    <p class="buy-box__meta">
-        Mitragynin {{ $product['mitragynin'] }} % · {{ $product['grind'] }} · <a href="#laboratorni-test">šarže {{ $product['batch'] }}</a>
-    </p>
+    <div class="buy-box__price">
+        <span class="buy-box__price-main"><span x-text="totalPrice"></span> Kč</span>
+        <span class="buy-box__price-unit">/ <span x-text="size"></span> {{ $unit }} · <span x-text="pricePerUnit"></span> Kč/{{ $unit }}</span>
+    </div>
 
     @if($hasTwoSizes)
         <fieldset class="buy-box__sizes">
@@ -51,11 +61,11 @@
             <div class="buy-box__seg">
                 <button type="button" class="buy-box__seg-btn" :class="size === 25 && 'is-active'" x-on:click="setSize(25)">
                     <span class="buy-box__seg-size">25 {{ $unit }}</span>
-                    <span class="buy-box__seg-price">{{ $product['price25'] }} Kč</span>
+                    <span class="buy-box__seg-price">· {{ $product['price25'] }} Kč</span>
                 </button>
                 <button type="button" class="buy-box__seg-btn" :class="size === 50 && 'is-active'" x-on:click="setSize(50)">
                     <span class="buy-box__seg-size">50 {{ $unit }}</span>
-                    <span class="buy-box__seg-price">{{ $product['price50'] }} Kč</span>
+                    <span class="buy-box__seg-price">· {{ $product['price50'] }} Kč</span>
                 </button>
             </div>
         </fieldset>
@@ -66,27 +76,22 @@
         </p>
     @endif
 
-    <div class="buy-box__qty">
-        <span class="buy-box__label">Počet</span>
-        <div class="buy-box__stepper">
+    <div class="buy-box__actions">
+        <div class="buy-box__stepper" aria-label="Počet kusů">
             <button type="button" class="buy-box__step" x-on:click="qty > 1 && qty--" :disabled="qty === 1" aria-label="O jeden méně">
-                <x-ui.icon name="x" :size="14" />
+                <x-ui.icon name="minus" :size="16" />
             </button>
             <input type="number" min="1" max="99" class="buy-box__qty-input" x-model.number="qty" aria-label="Počet kusů">
             <button type="button" class="buy-box__step" x-on:click="qty < 99 && qty++" aria-label="O jeden více">
-                <x-ui.icon name="arrow-right" :size="14" />
+                <x-ui.icon name="plus" :size="16" />
             </button>
         </div>
+        <x-ui.button variant="primary" size="lg" block class="buy-box__cta" x-on:click="addToCart()">
+            <span class="btn__icon"><x-ui.icon name="shopping-bag" /></span>
+            <span x-text="ctaLabel">Do košíku</span>
+            <span class="buy-box__cta-price">· <span x-text="totalPrice"></span> Kč</span>
+        </x-ui.button>
     </div>
-
-    <div class="buy-box__price">
-        <span class="buy-box__price-main"><span x-text="totalPrice"></span> Kč</span>
-        <span class="buy-box__price-unit">(<span x-text="pricePerUnit"></span> Kč / {{ $unit }})</span>
-    </div>
-
-    <x-ui.button variant="primary" size="lg" block icon="arrow-right" x-on:click="addToCart()">
-        <span x-text="ctaLabel">Přidat do košíku</span>
-    </x-ui.button>
 
     <button type="button" class="btn btn--outline-light btn--md btn--block buy-box__sub-cta">
         <span class="btn__icon"><x-ui.icon name="sparkles" /></span>

@@ -19,31 +19,133 @@
     padding-block: var(--sp-12);
 
     &--dark {
-        background: var(--c-forest-800);
+        // фон даёт обёртка .forum-stage — секция остаётся прозрачной,
+        // чтобы hero + featured смотрелись как одна сцена.
+        background: transparent;
         color: var(--c-cream-100);
+        padding-top: var(--sp-6);
+        padding-bottom: 150px;
     }
 
     &--paper {
+        position: relative;
         background: var(--c-cream-100);
+        overflow: hidden;
+        isolation: isolate;
+
+        // Декоративные листья: выглядывают за экран слева и справа,
+        // не сверху. От верхнего края секции — отступ.
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            width: clamp(200px, 24vw, 340px);
+            aspect-ratio: 1122 / 1402;
+            background-repeat: no-repeat;
+            background-size: contain;
+            pointer-events: none;
+            opacity: 0.55;
+            z-index: 0;
+        }
+
+        &::before {
+            top: var(--sp-6);
+            left: -50px;
+            transform: rotate(14deg);
+            background-image: var(--forum-paper-left);
+            background-position: center;
+        }
+
+        &::after {
+            top: var(--sp-10);
+            right: -50px;
+            transform: rotate(337deg);
+            background-image: var(--forum-paper-right);
+            background-position: center;
+        }
+
+        > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            &::before { opacity: 0.4; }
+            &::after  { opacity: 0.4; }
+        }
+    }
+}
+
+// ─── Stage: общая dark-сцена для hero + featured ───────────────
+.forum-stage {
+    position: relative;
+    background: linear-gradient(160deg, var(--c-forest-900) 0%, var(--c-forest-700) 100%);
+    color: var(--c-cream-100);
+    overflow: hidden;
+    isolation: isolate;
+
+    // Правое изображение (forum-right.png, 2508×1412) — нижний слой.
+    // Псевдо имеет точный аспект исходной картинки и заполняет высоту stage,
+    // чтобы прозрачные края не «обрезали» содержимое.
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        aspect-ratio: 2508 / 1412;
+        background-image: var(--forum-stage-right);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    // Левое изображение (forum-left.png, 1271×1412) — поверх правого.
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        aspect-ratio: 1271 / 1412;
+        background-image: var(--forum-stage-left);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    // Контент над декоративными слоями
+    > * {
+        position: relative;
+        z-index: 2;
+    }
+
+    // Волна-переход к forum-section--paper (как reviews-showcase__wave)
+    &__wave {
+        position: absolute;
+        z-index: 3;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        width: 100%;
+        height: clamp(60px, 6vw, 96px);
+        color: var(--c-cream-100);
+        pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+        &::before { opacity: 0.55; }
+        &::after  { opacity: 0.55; }
     }
 }
 
 // ─── Hero ───────────────────────────────────────────────────────
 .forum-hero {
-    background: linear-gradient(160deg, var(--c-forest-900) 0%, var(--c-forest-700) 100%);
     color: var(--c-cream-100);
     padding-block: var(--sp-20) var(--sp-16);
     position: relative;
-    overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at 100% 0%, rgba(126, 200, 85, 0.15) 0%, transparent 50%),
-                    radial-gradient(circle at 0% 100%, rgba(244, 160, 32, 0.08) 0%, transparent 50%);
-        pointer-events: none;
-    }
 
     &__inner {
         position: relative;
@@ -139,24 +241,10 @@
         grid-template-columns: 1fr;
     }
 
-    &__main { min-width: 0; }
-}
-
-.forum-block__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--sp-4);
-    margin-bottom: var(--sp-6);
-
-    h2 {
-        margin: 0;
-        color: rgba(245, 237, 216, 0.7);
-    }
-
-    @media (max-width: 600px) {
+    &__main {
+        min-width: 0;
+        display: flex;
         flex-direction: column;
-        align-items: stretch;
     }
 }
 
@@ -168,7 +256,8 @@
     background: rgba(249, 244, 236, 0.08);
     border: 1px solid rgba(249, 244, 236, 0.12);
     border-radius: var(--r-pill);
-    transition: border-color var(--dur-base) var(--ease-standard);
+    transition: border-color var(--dur-base) var(--ease-standard),
+                background var(--dur-base) var(--ease-standard);
 
     &:focus-within {
         border-color: var(--c-grass-500);
@@ -183,6 +272,7 @@
         padding: var(--sp-3) var(--sp-5);
         color: var(--c-cream-100);
         font: inherit;
+        min-width: 0;
 
         &::placeholder { color: rgba(245, 237, 216, 0.5); }
     }
@@ -199,6 +289,28 @@
         &:hover { color: var(--c-grass-500); }
     }
 
+    // Light variant — для размещения в forum-listhead (на cream-фоне)
+    &--light {
+        background: #fff;
+        border-color: var(--c-ink-100);
+        box-shadow: var(--shadow-sm);
+
+        &:focus-within {
+            background: #fff;
+            border-color: var(--c-grass-500);
+        }
+
+        .forum-search__input {
+            color: var(--c-forest-900);
+            &::placeholder { color: rgba(27, 58, 45, 0.45); }
+        }
+
+        .forum-search__btn {
+            color: var(--c-forest-700);
+            &:hover { color: var(--c-grass-700); }
+        }
+    }
+
     @media (max-width: 600px) { width: 100%; }
 }
 
@@ -206,7 +318,9 @@
 .forum-featured {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
     gap: var(--sp-5);
+    flex: 1; // тянуться по высоте до forum-grid__aside
 
     @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
     @media (max-width: 560px) { grid-template-columns: 1fr; }
@@ -216,6 +330,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    min-height: 320px;
     background: var(--c-forest-700);
     border: 1px solid rgba(249, 244, 236, 0.08);
     border-radius: var(--r-lg);
@@ -232,13 +348,15 @@
         box-shadow: var(--shadow-lg);
     }
 
+    // Обложка тянется на всю карточку.
     &__cover {
-        position: relative;
-        aspect-ratio: 4 / 3;
+        position: absolute;
+        inset: 0;
+        z-index: 0;
         background:
             linear-gradient(135deg, var(--c-forest-600), var(--c-forest-800));
-        display: grid;
-        place-items: center;
+        background-size: cover;
+        background-position: center;
         overflow: hidden;
 
         &--kratom-leaves { background: linear-gradient(135deg, #2A5640, #6D9482); }
@@ -247,16 +365,11 @@
         &--default       { background: linear-gradient(135deg, var(--c-forest-600), var(--c-forest-800)); }
     }
 
-    &__emoji {
-        font-size: 72px;
-        line-height: 1;
-        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
-    }
-
     &__pill {
         position: absolute;
         top: var(--sp-3);
         right: var(--sp-3);
+        z-index: 2;
         background: var(--c-amber-500);
         color: var(--c-ink-900);
         font-size: 11px;
@@ -266,12 +379,21 @@
         letter-spacing: 0.04em;
     }
 
+    // Текст прижат ко дну поверх градиента,
+    // который снизу — тёмно-зелёный, наверх плавно переходит в прозрачный.
     &__body {
-        padding: var(--sp-5);
+        position: relative;
+        z-index: 1;
+        padding: var(--sp-12) var(--sp-5) var(--sp-5);
         display: flex;
         flex-direction: column;
         gap: var(--sp-3);
-        flex: 1;
+        background: linear-gradient(
+            180deg,
+            rgba(15, 36, 25, 0) 0%,
+            rgba(15, 36, 25, 0.55) 45%,
+            rgba(15, 36, 25, 0.92) 100%
+        );
     }
 
     &__title {
@@ -282,10 +404,11 @@
         margin: 0;
         text-transform: uppercase;
         letter-spacing: 0.02em;
+        color: var(--c-cream-100);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     }
 
     &__author {
-        margin-top: auto;
         display: flex;
         align-items: center;
         gap: var(--sp-2);
@@ -293,7 +416,7 @@
 
     &__author-name {
         font-size: 13px;
-        color: rgba(245, 237, 216, 0.7);
+        color: rgba(245, 237, 216, 0.85);
     }
 
     // Preview variant on the create-topic page
@@ -380,12 +503,13 @@
 
 // ─── List header ───────────────────────────────────────────────
 .forum-listhead {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: var(--sp-6);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--sp-5);
     margin-bottom: var(--sp-6);
-    flex-wrap: wrap;
+
+    &__heading { min-width: 0; }
 
     &__title {
         font-family: var(--ff-display);
@@ -402,9 +526,43 @@
         font-size: 14px;
     }
 
+    &__search {
+        width: clamp(200px, 28vw, 320px);
+        justify-self: end;
+    }
+
+    &__actions { justify-self: end; }
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr auto;
+
+        &__search {
+            grid-column: 1 / -1;
+            width: 100%;
+            justify-self: stretch;
+        }
+    }
+
     @media (max-width: 600px) {
-        &__actions { width: 100%; }
+        grid-template-columns: 1fr;
+
+        &__search { width: 100%; }
+        &__actions { width: 100%; justify-self: stretch; }
         &__actions .btn { width: 100%; }
+    }
+}
+
+// ─── Toolbar: chips + sort на одной линии ─────────────────────
+.forum-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-5);
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--sp-3);
     }
 }
 
@@ -412,7 +570,8 @@
 .forum-cats {
     display: flex;
     gap: var(--sp-2);
-    margin-bottom: var(--sp-5);
+    flex: 1;
+    min-width: 0;
     overflow-x: auto;
     scrollbar-width: none;
     &::-webkit-scrollbar { display: none; }
@@ -431,9 +590,9 @@
 
 // ─── Sort row ───────────────────────────────────────────────────
 .forum-sort {
-    margin-bottom: var(--sp-5);
     display: flex;
     justify-content: flex-end;
+    flex-shrink: 0;
 }
 
 // ─── Topic list (rows) ─────────────────────────────────────────
@@ -448,8 +607,9 @@
 }
 
 .forum-row {
+    position: relative;
     display: grid;
-    grid-template-columns: 48px minmax(0, 1.4fr) minmax(0, 1.6fr) auto;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr) auto;
     gap: var(--sp-5);
     padding: var(--sp-5);
     align-items: center;
@@ -459,28 +619,21 @@
     &:last-child { border-bottom: 0; }
     &:hover { background: var(--c-cream-50); }
 
+    // Закреплённое: лёгкий cream-фон + амбровая полоска слева,
+    // вместо градиента. Тонкий «значок» pin справа в forum-row__tag--pin.
     &.is-pinned {
-        background: linear-gradient(90deg, rgba(244, 160, 32, 0.08) 0%, transparent 60%);
+        background: var(--c-cream-50);
+        box-shadow: inset 3px 0 0 var(--c-amber-500);
+
+        &:hover { background: var(--c-cream-100); }
     }
 
     @media (max-width: 900px) {
-        grid-template-columns: 40px 1fr;
+        grid-template-columns: 1fr;
         gap: var(--sp-3);
         padding: var(--sp-4);
-        &__reply, &__members { grid-column: 2; }
         &__reply { margin-top: var(--sp-2); }
         &__members { margin-top: var(--sp-2); }
-    }
-
-    &__emoji {
-        width: 48px;
-        height: 48px;
-        border-radius: var(--r-md);
-        background: var(--c-cream-200);
-        display: grid;
-        place-items: center;
-        font-size: 24px;
-        flex-shrink: 0;
     }
 
     &__main { min-width: 0; }
@@ -493,6 +646,9 @@
     }
 
     &__title {
+        display: inline-flex;
+        align-items: baseline;
+        gap: var(--sp-2);
         font-weight: 600;
         font-size: 15px;
         color: var(--c-forest-900);
@@ -501,6 +657,18 @@
         letter-spacing: 0.02em;
 
         &:hover { color: var(--c-grass-700); }
+    }
+
+    &__title-emoji {
+        font-size: 14px;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: 0;
+        flex-shrink: 0;
+    }
+
+    &__title-text {
+        display: inline;
     }
 
     &__tag {

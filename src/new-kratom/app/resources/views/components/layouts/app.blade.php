@@ -23,6 +23,10 @@
     <meta name="description"
           content="{{ $description ?? 'Specializovaný e-shop kratomu pod licencí PML. Každá šarže testovaná VŠCHT Praha. 2 prodejny v Praze. Doručení do 180 min v Praze a Ostravě.' }}" />
 
+    @isset($canonical)
+        <link rel="canonical" href="{{ $canonical }}" />
+    @endisset
+
     {{-- Preconnect / fonts. Загружаем CSS асинхронно — это вытащит ~200ms
          render-blocking из waterfall и не даст fonts.googleapis.com быть
          bottleneck-ом. Браузер уже знает о connect-е к fonts.gstatic.com,
@@ -89,10 +93,16 @@
     <x-global.footer />
 
     <x-global.cart-modal />
+    <x-global.adulto-modal />
+    <x-global.confirm-modal />
 
     @guest
         <x-global.auth-modal />
     @endguest
+
+    {{-- Stack for page-pushed modals that must render at body level
+         (escaping <main>'s isolate stacking context). --}}
+    @stack('modals')
 
     <script id="cart-bootstrap" type="application/json">@json(\App\Support\Cart::snapshot())</script>
     <script>
