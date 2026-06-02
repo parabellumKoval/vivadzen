@@ -5568,12 +5568,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "7ce0117d76c0a2ac199864e211e99329e8de7b12"
+                "reference": "426eed5578101514455492136b3b957f4851e882"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/7ce0117d76c0a2ac199864e211e99329e8de7b12",
-                "reference": "7ce0117d76c0a2ac199864e211e99329e8de7b12",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/426eed5578101514455492136b3b957f4851e882",
+                "reference": "426eed5578101514455492136b3b957f4851e882",
                 "shasum": ""
             },
             "require": {
@@ -5634,7 +5634,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/multistore"
             },
-            "time": "2026-06-02T18:09:13+00:00"
+            "time": "2026-06-02T18:28:26+00:00"
         },
         {
             "name": "parabellumkoval/backpack-tag",
