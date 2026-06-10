@@ -79,6 +79,11 @@ return [
     'payment_card' => 'Карта',
     'payment_reference' => 'Платёжная ссылка',
     'invoice_number' => 'Номер счёта',
+    'payment_details' => 'Реквизиты для оплаты',
+    'payment_recipient' => 'Получатель',
+    'payment_iban' => 'IBAN',
+    'payment_edrpou' => 'ЄДРПОУ',
+    'payment_bank_name' => 'Банк',
 
     'invoice_status_pending' => 'Счёт формируется, ссылка на оплату будет отправлена отдельно.',
     'invoice_download_link' => 'Скачать счёт',

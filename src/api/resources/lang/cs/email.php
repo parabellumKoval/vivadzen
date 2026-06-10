@@ -79,6 +79,11 @@ return [
     'payment_card' => 'Karta',
     'payment_reference' => 'Platební odkaz',
     'invoice_number' => 'Číslo faktury',
+    'payment_details' => 'Platební údaje',
+    'payment_recipient' => 'Příjemce',
+    'payment_iban' => 'IBAN',
+    'payment_edrpou' => 'EDRPOU',
+    'payment_bank_name' => 'Banka',
 
     'invoice_status_pending' => 'Faktura se připravuje, odkaz na platbu zašleme zvlášť.',
     'invoice_download_link' => 'Stáhnout fakturu',

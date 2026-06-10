@@ -79,6 +79,11 @@ return [
     'payment_card' => 'Card',
     'payment_reference' => 'Payment link',
     'invoice_number' => 'Invoice number',
+    'payment_details' => 'Payment details',
+    'payment_recipient' => 'Recipient',
+    'payment_iban' => 'IBAN',
+    'payment_edrpou' => 'EDRPOU',
+    'payment_bank_name' => 'Bank',
 
     'invoice_status_pending' => 'Invoice is being prepared, the payment link will be sent separately.',
     'invoice_download_link' => 'Download invoice',

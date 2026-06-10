@@ -72,6 +72,36 @@ class OrderController extends \Backpack\Store\app\Http\Controllers\Api\OrderCont
         return response()->json(new self::$resources['order']['large']($order));
     }
 
+    public function validateData($request)
+    {
+        $this->bootstrapDynamicFieldRules($request);
+        $this->relaxUaBankTransferPaymentFieldRules($request);
+
+        return parent::validateData($request);
+    }
+
+    protected function relaxUaBankTransferPaymentFieldRules(Request $request): void
+    {
+        $country = strtolower((string) ($this->resolveRequestedCountry($request) ?? ''));
+        $paymentMethod = strtolower((string) data_get($request->all(), 'payment.method', ''));
+
+        if ($country !== 'ua' || $paymentMethod !== 'bank_transfer') {
+            return;
+        }
+
+        foreach ([
+            'settlement' => 'nullable|string|min:2|max:500',
+            'street' => 'nullable|string|min:2|max:500',
+            'house' => 'nullable|string|min:1|max:500',
+            'room' => 'nullable|string|min:1|max:500',
+            'zip' => 'nullable|string|min:2|max:500',
+        ] as $field => $rules) {
+            if (isset($this->rd_fields['payment'][$field])) {
+                $this->rd_fields['payment'][$field]['rules'] = $rules;
+            }
+        }
+    }
+
     protected function applyTelegramIdentity(array $data, Request $request): array
     {
         $storefront = strtolower(trim((string) (

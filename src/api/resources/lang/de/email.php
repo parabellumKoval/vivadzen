@@ -79,6 +79,11 @@ return [
     'payment_card' => 'Karte',
     'payment_reference' => 'Zahlungslink',
     'invoice_number' => 'Rechnungsnummer',
+    'payment_details' => 'Zahlungsdaten',
+    'payment_recipient' => 'Empfänger',
+    'payment_iban' => 'IBAN',
+    'payment_edrpou' => 'EDRPOU',
+    'payment_bank_name' => 'Bank',
 
     'invoice_status_pending' => 'Die Rechnung wird erstellt, der Zahlungslink wird separat gesendet.',
     'invoice_download_link' => 'Rechnung herunterladen',

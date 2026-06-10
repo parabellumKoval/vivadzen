@@ -80,6 +80,11 @@ return [
     'payment_card' => 'Картка',
     'payment_reference' => 'Платіжне посилання',
     'invoice_number' => 'Номер рахунку',
+    'payment_details' => 'Реквізити для оплати',
+    'payment_recipient' => 'Отримувач',
+    'payment_iban' => 'IBAN',
+    'payment_edrpou' => 'ЄРДОПУ',
+    'payment_bank_name' => 'Банк',
 
     'invoice_status_pending' => 'Рахунок формується, посилання на оплату буде надіслане пізніше.',
     'invoice_download_link' => 'Завантажити рахунок',

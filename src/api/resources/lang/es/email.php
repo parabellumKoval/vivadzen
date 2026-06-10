@@ -79,6 +79,11 @@ return [
     'payment_card' => 'Tarjeta',
     'payment_reference' => 'Enlace de pago',
     'invoice_number' => 'Número de factura',
+    'payment_details' => 'Datos de pago',
+    'payment_recipient' => 'Beneficiario',
+    'payment_iban' => 'IBAN',
+    'payment_edrpou' => 'EDRPOU',
+    'payment_bank_name' => 'Banco',
 
     'invoice_status_pending' => 'La factura se está preparando, el enlace se enviará por separado.',
     'invoice_download_link' => 'Descargar factura',

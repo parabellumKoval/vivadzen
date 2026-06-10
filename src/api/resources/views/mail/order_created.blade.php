@@ -62,7 +62,7 @@
       <td class="cell-value">
         @include('mail.partials.lines', ['lines' => $payment ?? []])
 
-        @if(!empty($invoice['download_url']) || !empty($invoice['qr_url']))
+        @if(($invoice['show_assets'] ?? true) && (!empty($invoice['download_url']) || !empty($invoice['qr_url'])))
           <div class="invoice-block">
             @if(!empty($invoice['download_url']))
               <div class="invoice-link">
@@ -74,6 +74,12 @@
                 <img src="{{ $invoice['qr_url'] }}" alt="@lang('email.invoice_qr_alt')" class="invoice-qr-image" />
               </div>
             @endif
+          </div>
+        @endif
+
+        @if(!empty($bankDetails))
+          <div class="invoice-block">
+            @include('mail.partials.lines', ['lines' => $bankDetails])
           </div>
         @endif
       </td>

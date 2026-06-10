@@ -24,6 +24,7 @@ class Order extends Mailable
     public $pricing = [];
     public $adjustments = [];
     public $invoice = [];
+    public $bankDetails = [];
     public $currency = '';
 
     /**
@@ -62,6 +63,7 @@ class Order extends Mailable
         $this->customer = $this->buildCustomerLines();
         $this->delivery = $this->buildDeliveryLines();
         $this->payment = $this->buildPaymentLines();
+        $this->bankDetails = $this->buildBankDetails();
         $this->products = $this->formatProducts();
 
         // Expose legacy aliases for existing templates.
@@ -448,6 +450,7 @@ class Order extends Mailable
             'required' => $this->order->requiresInvoice(),
             'download_url' => $invoiceDownload,
             'qr_url' => $invoiceQr,
+            'show_assets' => strtolower((string) ($this->regionalRegion() ?: $this->order->country_code ?: '')) !== 'ua',
         ];
 
         if ($this->invoice['required'] && ! $invoiceDownload && ! $invoiceQr) {
@@ -455,6 +458,24 @@ class Order extends Mailable
         }
 
         return $this->filterLines($lines);
+    }
+
+    protected function buildBankDetails(): array
+    {
+        $paymentMethod = (string) data_get($this->order->info, 'payment.method', '');
+        $region = strtolower((string) ($this->regionalRegion() ?: $this->order->country_code ?: ''));
+
+        if ($paymentMethod !== 'bank_transfer' || $region !== 'ua') {
+            return [];
+        }
+
+        return $this->filterLines([
+            '<b>' . e(__('email.payment_details')) . ':</b>',
+            e(__('email.payment_recipient')) . ': <b>ФОП Тарасенко Мирослав Васильович</b>',
+            e(__('email.payment_iban')) . ': <b>UA639358710000067329000102077</b>',
+            e(__('email.payment_edrpou')) . ': <b>3519712799</b>',
+            e(__('email.payment_bank_name')) . ': <b>ТОВ НоваПей</b>',
+        ]);
     }
 
     protected function formatProducts(): array
